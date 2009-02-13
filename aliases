@@ -89,7 +89,6 @@ alias lff='ls fred*'
 alias llt='ls -lhtr *.test*'
 alias lsh='ls *.sh'
 
-alias rff='r fred* *~;'
 
 alias try='p ~/python/try.py '
 
