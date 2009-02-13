@@ -1,0 +1,38 @@
+#! /bin/sh
+
+. environ
+
+export PROMPT_COLOUR=none
+if [ "$1" == "green" ]
+then
+	export PROMPT_COLOUR="$PROMPT_LIGHT_GREEN"
+elif [ "$1" == "red" ]
+then
+	export PROMPT_COLOUR="$PROMPT_LIGHT_RED"
+elif [ "$1" == "blue" ]
+then
+	export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
+else
+	export PROMPT_COLOUR=none
+fi
+
+coloured_status ()
+{
+	if [[ $1 == 0 ]]
+	then
+		export STATUS="${PROMPT_GREEN}$1${PROMPT_NO_COLOUR}"
+	else
+		export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
+	fi
+	echo -ne $STATUS
+}
+
+if [[ "$PROMPT_COLOUR" == "none" ]]
+then
+	PROMPT_COMMAND=
+	export PS1="\$? [\u@\H \W] $ "
+else
+	PROMPT_COMMAND='coloured_status $?'
+	export PS1=" ${PROMPT_COLOUR}[\u@\H \W]${PROMPT_NO_COLOUR} $ "
+fi
+

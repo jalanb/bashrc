@@ -1,0 +1,32 @@
+#! /bin/sh
+
+kd ()
+{ 
+    cd `python ~/.jab/python/kd.py $*`
+}
+
+fsh ()
+{
+	if [ -f fred.sh ]
+	then
+		sh fred.sh
+	else
+		sh fred
+	fi
+}
+
+fpy ()
+{
+	if [ -f fred.py ]
+	then
+		p fred.py
+	else
+		p fred
+	fi
+}
+
+which ()
+{ 
+    ( alias; declare -f ) | \
+		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+}

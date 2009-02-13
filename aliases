@@ -1,0 +1,129 @@
+#! /bin/sh
+
+# all alan's aliases
+# 	as ordered by strcmp()
+
+# 	and none from anyone else
+
+unalias -a 
+
+# x
+
+alias a='a'
+alias b='b'
+alias c='kd '
+alias d='d'
+alias e='e'
+alias f='find '
+alias g='grep '
+alias h='history | tail -n 25'
+alias i='i'
+alias j='j'
+alias k='k'
+alias l='/bin/ls '
+alias m='m'
+alias m='mount ie-build-1:/mnt/releases /Users/shared/alto/releases'
+alias n='n'
+alias o='o'
+alias p='python '
+alias q='exit 0'
+alias r='rm -vrf'
+alias s='sed '
+alias t='t'
+alias u='u'
+alias v='$EDITOR '
+alias w='which '
+alias x='x'
+alias y='ry;cly'
+alias z='du -sh'
+
+# xx
+
+alias ..='cd ..'
+
+alias ab='ssh abrogan@192.168.0.103'
+
+alias c.='cd ~'
+alias c-='cd - >/dev/null 2>&1'
+alias cb='cd ~/bin'
+alias cj='cd ~/.jab'
+alias cl='clear'
+alias cy='cd ~/python'
+
+alias la='l -hltra '
+alias lj='l ~/.jab'
+alias ll='l -hltr '
+ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto' || ( ls -@ >/dev/null 2>&1 && alias ls='ls -@')
+alias lt='ls *.test*'
+alias lx='p ~/python/lx.py '
+alias ly='p ~/python/ly.py '
+
+alias pi='ipython '
+
+alias sa='. ~/.jab/aliases'
+alias sb='. ~/.jab/bashrc'
+alias se='. ~/.jab/environ'
+alias sf='. ~/.jab/functons'
+alias so='sort '
+alias sp='. ~/.jab/prompt'
+
+alias v.='v .'
+alias va='v ~/.jab/aliases; sa'
+alias vb='v ~/.jab/bashrc; sb'
+alias ve='v ~/.jab/environ; se'
+alias vf='v ~/.jab/functons; sf'
+alias vj='v ~/.jab'
+alias vp='v ~/.jab/prompt; sp'
+alias vt='v -p *.txt'
+alias vv='v ~/.vim'
+
+# xxx
+
+alias c--='cd -'
+alias clx='cl; lx '
+alias cly='cl; ly '
+
+alias jab='ssh jab@192.168.0.103'
+
+alias lff='ls fred*'
+alias llt='ls -lhtr *.test*'
+alias lsh='ls *.sh'
+
+alias rff='r fred* *~;'
+
+alias try='p ~/python/try.py '
+
+alias vff='v -p fred*'
+
+# bigger ones are kept for seentimental reasons
+
+# xxxx
+
+alias down='cd ~/Download'
+
+alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
+
+alias junk='mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk'
+
+alias stat='svn stat'
+
+# xxxx
+
+alias cisco='ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart'
+
+alias build='ssh builder@ie-build-1'
+
+alias floka='ssh floka@192.168.0.103'
+
+alias track='ssh abrogan@ie-track-1'
+
+# xxxxx
+
+
+# xxxxxx
+
+alias public='mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public'
+
+# xxxxxxx
+
+alias abrogan='ssh abrogan@192.168.0.103'
