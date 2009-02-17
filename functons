@@ -5,40 +5,14 @@ kd ()
     cd `python ~/.jab/python/kd.py $*`
 }
 
-ry ()
+ru ()
 {
-	if [ -n $1 ]
-	then
-		dir=$1
+	if [ -z "$*" ]
+	then 
+		sudo -i
 	else
-		dir=.
+		sudo $*
 	fi
-	r $dir/*.pyc
-	r $dir/*.pyo
-	rff $dir
-}
-
-rff ()
-{
-	if [ -n $1 ]
-	then
-		dir=$1
-	else
-		dir=.
-	fi
-	r $dir/*~
-	r $dir/fred*
-}
-
-
-svl ()
-{
-	svn log $* 2>/dev/null | head
-}
-
-svu ()
-{
-	svn info $* | grep URL
 }
 
 fsh ()

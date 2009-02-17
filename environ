@@ -2,6 +2,12 @@
 
 export COLUMNS
 
+if [ -d /amg ]
+then
+	export AMG=file:///amg
+else
+	export AMG=svn+ssh://ie-track-1/amg
+fi
 if [ -x ~/bin/vim ]
 then
 	export EDITOR=~/bin/vim
@@ -20,6 +26,18 @@ export DISPLAY=:0
 
 export HISTSIZ=100000
 
+if [ -d /usr/local/svn/lcp ]
+then
+	export LCP=file:///usr/local/svn/lcp
+else
+	export LCP=http://intranet.altobridge.com/svn/lcp
+fi
+if [ -d /usr/local/abrogan/jabs ]
+then
+	export JAB=file:///usr/local/abrogan/jabs
+else
+	export JAB=http://intranet.altobridge.com/jab
+fi
 export MONTYLINGUA="$PYTHONPATH/monty/data"
 
 export PS1
