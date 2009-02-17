@@ -1,0 +1,25 @@
+#! /bin/cat
+
+If you have any of these back them up now
+
+	rm -rf ~/.jab
+	rm -rf ~/.vim
+	rm -rf ~/.vimrc
+
+Go $HOME
+	
+	cd
+
+Check out from the main branch of the repository
+
+	svn co http://intranet.altobridge.com/jab .jab
+
+Add links where vim expects to find them
+
+	ln -s .jab/vim .vim
+	ln -s .jab/vimrc .vimrc
+ 
+Start using it
+
+	echo "test -f .jab/bashrc && (cd .jab;. bashrc; cd)" >> ~/.bashrc
+
