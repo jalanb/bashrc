@@ -5,6 +5,10 @@
 kd ()
 { 
     cd `python ~/.jab/python/kd.py $*`
+	if [ -d .svn ]
+	then
+		svn stat .
+	fi
 }
 
 ru ()
