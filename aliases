@@ -39,20 +39,19 @@ alias z='du -sh'
 
 # xx
 
-alias ..='cd ..'
+alias ..='kd ..'
 
 alias ab='ssh abrogan@192.168.0.103'
 
-alias c.='cd ~'
-alias c-='cd - >/dev/null 2>&1'
-alias ca='cd $SITE/altobridge'
-alias cb='cd ~/bin'
-alias ci='cd $SITE'
-alias cj='cd ~/.jab'
+alias c-='kd - >/dev/null 2>&1'
+alias ca='kd $SITE/altobridge'
+alias cb='kd ~/bin'
+alias ci='kd $SITE'
+alias cj='kd ~/.jab'
 alias cl='clear'
-alias cr='cd $SITE/roundup'
+alias cr='kd $SITE/roundup'
 alias ct='kd /usr/local/trackers'
-alias cy='cd ~/python'
+alias cy='kd ~/python'
 
 alias la='ll -a '
 alias lj='ls ~/.jab'
