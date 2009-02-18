@@ -8,18 +8,6 @@ then
 else
 	export AMG=svn+ssh://ie-track-1/amg
 fi
-if [ -x ~/bin/vim ]
-then
-	export EDITOR=~/bin/vim
-elif [ -x /usr/bin/vim ]
-then
-	export EDITOR=/usr/bin/vim
-elif [ -x /bin/vim ]
-then 
-	export EDITOR=/bin/vim
-else
-	export EDITOR=vim
-fi
 export EXITSTATUS="$?"
 
 export DISPLAY=:0
@@ -40,19 +28,18 @@ else
 fi
 export MONTYLINGUA="$PYTHONPATH/monty/data"
 
-export PATH="~/.jab/bin:~/bin:/bin:/usr/bin:/usr/local/bin:/sbin"
+export PATH="~/.jab/bin:~/bin:/usr/bin:/bin:/usr/local/bin:/sbin"
 
 export PS1
-export PYTHONPATH='/Users/jab/python/site'
-
-export QUIET=' >/dev/null 2>&1'
+export PYTHONPATH='$HOME/python/site'
 
 if [ -x /opt/local/bin/gwhich ]
 then
 	export WHICH=/opt/local/bin/gwhich
 else
-	export WHICH=which
+	export WHICH=/usr/bin/which
 fi
+export EDITOR=`which vim`
 
 export   NO_COLOUR="\[\033[0m\]"
 export         FOO="\[\033[0;31m\]"
