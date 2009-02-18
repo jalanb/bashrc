@@ -155,4 +155,3 @@ alias service='sudo /sbin/service '
 # xxxxxxxx
 
 alias itissues='mysql -u root -D itissues'
-
