@@ -89,6 +89,7 @@ alias lff='ls fred*'
 alias llt='ls -lhtr *.test*'
 alias lsh='ls *.sh'
 
+alias rff='r fred*'
 
 alias try='p ~/python/try.py '
 
@@ -118,10 +119,15 @@ alias track='ssh abrogan@ie-track-1'
 
 # xxxxx
 
+alias sdiff='svnDiff diff '
 
 # xxxxxx
 
 alias public='mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public'
+alias skdiff='svnDiff kdiff '
+alias sxdiff='svnDiff xdiff '
+alias svdiff='svnDiff vimdiff '
+alias shdiff='svnDiff "vimdiff -o" '
 
 # xxxxxxx
 

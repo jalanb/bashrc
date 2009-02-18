@@ -40,3 +40,12 @@ which ()
     ( alias; declare -f ) | \
 		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
 }
+
+svnDiff() {
+    dir=`dirname $2`
+    file=`basename $2`
+    pushd "$dir" > /dev/null
+    /usr/bin/$1 .svn/text-base/"$file".svn-base "$file"
+    popd > /dev/null
+}
+
