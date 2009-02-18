@@ -2,37 +2,40 @@
 
 export COLUMNS
 
-if [ -d /amg ]
-then
-	export AMG=file:///amg
-else
-	export AMG=svn+ssh://ie-track-1/amg
-fi
 export EXITSTATUS="$?"
 
 export DISPLAY=:0
 
 export HISTSIZ=100000
 
-if [ -d /usr/local/svn/lcp ]
+if ls -@ >/dev/null 2>&1 
 then
-	export LCP=file:///usr/local/svn/lcp
+	export LS_COLOUR_OPTION='-@'
 else
-	export LCP=http://intranet.altobridge.com/svn/lcp
-fi
-if [ -d /usr/local/abrogan/jabs ]
-then
-	export JAB=file:///usr/local/abrogan/jabs
-else
-	export JAB=http://intranet.altobridge.com/jab
+	export LS_COLOUR_OPTION='--color=auto'
 fi
 export MONTYLINGUA="$PYTHONPATH/monty/data"
 
 export PATH="~/.jab/bin:~/bin:/usr/bin:/bin:/usr/local/bin:/sbin"
 
 export PS1
-export PYTHONPATH='$HOME/python/site'
+export PYTHONPATH="$HOME/python/site"
+export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages')][0]"`
 
+#
+# Path dependencies
+#
+
+if [ -d /amg ]
+then
+	export AMG=file:///amg
+	export LCP=file:///usr/local/svn/lcp
+	export JAB=file:///usr/local/abrogan/jabs
+else
+	export AMG=svn+ssh://ie-track-1/amg
+	export LCP=http://intranet.altobridge.com/svn/lcp
+	export JAB=http://intranet.altobridge.com/jab
+fi
 if [ -x /opt/local/bin/gwhich ]
 then
 	export WHICH=/opt/local/bin/gwhich
@@ -40,6 +43,16 @@ else
 	export WHICH=/usr/bin/which
 fi
 export EDITOR=`which vim`
+
+if [ -d /usr/local/trunk/trackers/ ]
+then
+	export TRACKERS=/usr/local/trunk/trackers/
+elif [ -d /mnt/source/amg/trunk/trackers ]
+then
+	export TRACKERS=/mnt/source/amg/trunk/trackers
+else
+	export TRACKERS=NONE
+fi
 
 export   NO_COLOUR="\[\033[0m\]"
 export         FOO="\[\033[0;31m\]"

@@ -1,5 +1,7 @@
 #! /bin/sh
 
+# xx
+
 kd ()
 { 
     cd `python ~/.jab/python/kd.py $*`
@@ -13,6 +15,20 @@ ru ()
 	else
 		sudo $*
 	fi
+}
+
+# xxx
+
+cls ()
+{
+    clean
+    clear
+    if [ -z "$*" ]
+    then
+        ls -d `pwd`
+        echo
+    fi
+    ls $*
 }
 
 fsh ()
@@ -35,13 +51,78 @@ fpy ()
 	fi
 }
 
+# xxxx
+
+stat ()
+{
+    if [ -z "$*" ]
+    then
+        svn stat .
+    else
+        svn stat $*
+    fi
+}
+
+wash ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	find $dir -name "*~" -exec /bin/rm -rf {} \;
+	find $dir -name "fred*" -exec /bin/rm -i {} \;
+}
+
+# xxxxx
+
+build ()
+{
+	if [ -d /mnt/source ]
+	then 
+		vb
+	else
+		ssh builder@ie-build-1
+	fi
+}
+
+vfile ()
+{
+    `echo "$*" | sed -e"s/^File/vim/" | sed -e"s/, line \([0-9]*\).*/ +\1/"`
+}
+
 which ()
 { 
     ( alias; declare -f ) | \
 		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
 }
 
-svnDiff() {
+track ()
+{
+	if [ -d ~/alans_tests ]
+	then
+		cd ~/alans_tests
+		try
+	else
+		ssh abrogan@ie-track-1
+	fi
+}
+
+# xxxxx
+
+# xxxxxx
+
+# xxxxxxx
+
+svn_log ()
+{
+    svn log $* | head
+}
+
+svn_url ()
+{
+    svn info $* | grep URL
+}
+
+# xxxxxxxx
+
+svn_diff () {
     dir=`dirname $2`
     file=`basename $2`
     pushd "$dir" > /dev/null
@@ -49,3 +130,18 @@ svnDiff() {
     popd > /dev/null
 }
 
+# xxxxxxxxx
+
+svn_issue ()
+{
+    svn log $* | grep -i "^issue" | head
+}
+
+get_pinky_ip ()
+{
+	pinky_ip=192.168.0.103
+	if [ -r ~/pinky.txt ]
+	then
+		pinky_ip=`cat ~/pinky.txt`
+	fi
+}

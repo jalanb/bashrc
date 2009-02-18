@@ -15,7 +15,7 @@ alias c='kd '
 alias d='d'
 alias e='e'
 alias f='find '
-alias g='grep '
+alias g='grep --color'
 alias h='history | tail -n 25'
 alias i='i'
 alias j='j'
@@ -45,20 +45,27 @@ alias ab='ssh abrogan@192.168.0.103'
 
 alias c.='cd ~'
 alias c-='cd - >/dev/null 2>&1'
+alias ca='cd $SITE/altobridge'
 alias cb='cd ~/bin'
+alias ci='cd $SITE'
 alias cj='cd ~/.jab'
 alias cl='clear'
+alias cr='cd $SITE/roundup'
+alias ct='kd /usr/local/trackers'
 alias cy='cd ~/python'
 
-alias la='l -hltra '
-alias lj='l ~/.jab'
-alias ll='l -hltr '
-ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto' || ( ls -@ >/dev/null 2>&1 && alias ls='ls -@')
+alias la='ll -a '
+alias lj='ls ~/.jab'
+alias ll='ls -lh '
+alias ls='l $LS_COLOUR_OPTION -tr'
 alias lt='ls *.test*'
 alias lx='p ~/python/lx.py '
 alias ly='p ~/python/ly.py '
 
 alias pi='ipython '
+
+alias ri='sudo -i -u issue'
+alias rs='sudo -i -u svn'
 
 alias sa='. ~/.jab/aliases'
 alias sb='. ~/.jab/bashrc'
@@ -72,6 +79,7 @@ alias va='v ~/.jab/aliases; sa'
 alias vb='v ~/.jab/bashrc; sb'
 alias ve='v ~/.jab/environ; se'
 alias vf='v ~/.jab/functons; sf'
+alias vi='v $SITE'
 alias vj='v ~/.jab'
 alias vp='v ~/.jab/prompt; sp'
 alias vt='v -p *.txt'
@@ -82,8 +90,11 @@ alias vv='v ~/.vim'
 alias c--='cd -'
 alias clx='cl; lx '
 alias cly='cl; ly '
+alias clt='kd /usr/local/trunk/trackers/'
+alias cit='kd /usr/local/trackers/itTracker'
+alias cst='kd /usr/local/trackers/csTracker'
 
-alias jab='ssh jab@192.168.0.103'
+alias jab='get_pinky_ip && ssh jab@${pinky_ip}'
 
 alias lff='ls fred*'
 alias llt='ls -lhtr *.test*'
@@ -92,8 +103,12 @@ alias lsh='ls *.sh'
 alias rff='r fred*'
 
 alias try='p ~/python/try.py '
+alias tri='sh $TRACKERS/testing/regulars.sh'
+alias tra='try ~/alans_tests'
 
 alias vff='v -p fred*'
+
+alias url='python ~/bin/show_url.py '
 
 # bigger ones are kept for seentimental reasons
 
@@ -105,30 +120,37 @@ alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 
 alias junk='mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk'
 
-alias stat='svn stat'
-
 # xxxx
 
 alias cisco='ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart'
 
-alias build='ssh builder@ie-build-1'
-
-alias floka='ssh floka@192.168.0.103'
-
-alias track='ssh abrogan@ie-track-1'
+alias floka='get_pinky_ip && ssh floka@${pinky_ip}'
 
 # xxxxx
 
-alias sdiff='svnDiff diff '
+alias clean='r *~ fred*'
+
+alias denis='mysql -u root -D issues -e"select id, _title from _issue where _module = 37 and _creator = 39 and __retired__ = 0 and _status != 8"'
+
+alias sdiff='svn_diff diff '
 
 # xxxxxx
 
+alias issues='mysql -u root -D issues'
+
 alias public='mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public'
-alias skdiff='svnDiff kdiff '
-alias sxdiff='svnDiff xdiff '
-alias svdiff='svnDiff vimdiff '
-alias shdiff='svnDiff "vimdiff -o" '
+
+alias skdiff='svn_diff kdiff '
+alias sxdiff='svn_diff xdiff '
+alias svdiff='svn_diff vimdiff '
+alias shdiff='svn_diff "vimdiff -o" '
 
 # xxxxxxx
 
 alias abrogan='ssh abrogan@192.168.0.103'
+alias service='sudo /sbin/service '
+
+# xxxxxxxx
+
+alias itissues='mysql -u root -D itissues'
+
