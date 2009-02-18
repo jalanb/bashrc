@@ -40,6 +40,8 @@ else
 fi
 export MONTYLINGUA="$PYTHONPATH/monty/data"
 
+export PATH="~/.jab/bin:~/bin:/bin:/usr/bin:/usr/local/bin:/sbin"
+
 export PS1
 export PYTHONPATH='/Users/jab/python/site'
 
@@ -47,7 +49,7 @@ export QUIET=' >/dev/null 2>&1'
 
 if [ -x /opt/local/bin/gwhich ]
 then
-	export WHICH=gwhich
+	export WHICH=/opt/local/bin/gwhich
 else
 	export WHICH=which
 fi
