@@ -1,6 +1,6 @@
 #! /bin/sh
 
-. environ
+. ~/.jab/environ
 
 export PROMPT_COLOUR=none
 if [ "$1" == "green" ]
@@ -29,10 +29,10 @@ coloured_status ()
 
 if [[ "$PROMPT_COLOUR" == "none" ]]
 then
-	PROMPT_COMMAND=
+	export PROMPT_COMMAND=
 	export PS1="\$? [\u@\H \W] $ "
 else
-	PROMPT_COMMAND='coloured_status $?'
+	export PROMPT_COMMAND='coloured_status $?'
 	export PS1=" ${PROMPT_COLOUR}[\u@\H \W]${PROMPT_NO_COLOUR} $ "
 fi
 
