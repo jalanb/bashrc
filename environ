@@ -19,7 +19,7 @@ export MONTYLINGUA="$PYTHONPATH/monty/data"
 export PATH="~/.jab/bin:~/bin:/usr/bin:/bin:/usr/local/bin:/sbin"
 
 export PS1
-export PYTHONPATH="$HOME/python/site"
+export PYTHONPATH=$HOME/python/site
 export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages')][0]"`
 
 #
