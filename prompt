@@ -30,9 +30,9 @@ coloured_status ()
 if [[ "$PROMPT_COLOUR" == "none" ]]
 then
 	export PROMPT_COMMAND=
-	export PS1="\$? [\u@\H \W] $ "
+	export PS1="\$? [\u@\h \W] $ "
 else
 	export PROMPT_COMMAND='coloured_status $?'
-	export PS1=" ${PROMPT_COLOUR}[\u@\H \W]${PROMPT_NO_COLOUR} $ "
+	export PS1=" ${PROMPT_COLOUR}[\u@\h \W]${PROMPT_NO_COLOUR} $ "
 fi
 
