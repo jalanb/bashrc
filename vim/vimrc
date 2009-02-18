@@ -1,0 +1,374 @@
+" My stuff
+"
+
+" Behave like on Windows
+"
+behave mswin
+source $VIMRUNTIME/mswin.vim
+"
+" Keyboard
+"
+" function keys 
+"
+ noremap  <F1>		:help<cr>
+"noremap  <F2> 
+ noremap  <F3> #
+ noremap  <F4> W
+"noremap  <F5>
+"noremap  <F6>
+"noremap  <F7>
+ noremap  <F8>      :SeeTab<CR>
+ noremap  <F9>      :w!<CR>
+ noremap <F10>      :qa!<CR>
+ noremap <F11>      :x<CR>
+ noremap <F12>      :map 
+"inoremap <F1>
+"inoremap <F2>
+inoremap  <F3>      #
+inoremap  <F4> <C-w>W
+"inoremap <F5>
+"inoremap <F6>
+"inoremap  <F7>
+inoremap  <F8> <Esc>:SeeTab<CR>a
+inoremap  <F9> <Esc>:w!<CR>a
+inoremap <F10> <Esc>:q<CR>
+inoremap <F11> <Esc>:x<CR>
+inoremap <F12> <Esc>:map 
+
+ noremap <S-F3> *
+ noremap <S-F4> <C-W>P
+nnoremap <C-F4> <C-W>c
+"
+" ordinary keys 
+"
+" letters
+"
+"noremap a - append
+"noremap b - backword
+ noremap db bdw
+"noremap c - start cutting
+"noremap d - delete
+"noremap e 
+"noremap h - go left
+"noremap i - insert
+ noremap j jzz
+ noremap k kzz
+"noremap l - go right
+"noremap m - mark
+"noremap n - next match in same dir
+"noremap o - open new line
+"noremap p - paste
+ noremap q :q<CR>
+"noremap r - change one char
+"noremap s - start replacing
+"noremap t
+"noremap u - undo
+ noremap v :noh<cr>
+"noremap w - forword
+"noremap x - remove char
+"noremap y - yank
+ noremap yb byw
+"noremap z - folds. centering, ...
+"
+" Punctuation
+"
+"noremap [
+"noremap ]
+ noremap ; qa " record to register a
+ noremap ;; q " stop recording
+ noremap ' @a " play register a
+ noremap '' "ap
+"noremap \ - leader
+ noremap , `
+ noremap ,, ``
+"noremap . - repeat
+"noremap / - search
+"noremap `
+"
+" Shifted punctuation
+"
+"noremap {
+"noremap }
+"noremap : - command line
+"noremap "
+"noremap |
+"noremap < - 
+"noremap > - 
+"noremap ? - 
+"noremap ~ - 
+"noremap !
+"noremap @
+"noremap L
+"noremap $ - 
+"noremap %
+"noremap ^
+"noremap &
+"noremap * - 
+"noremap (
+"noremap )
+"noremap -
+"noremap _
+"noremap =
+"noremap +
+"
+" LETTERS
+"
+"noremap A - Append
+"noremap B
+"noremap C
+"noremap D
+"noremap E
+"noremap F
+"noremap G
+"noremap H
+"noremap I - Insert
+"noremap J - Join lines
+nnoremap K <PageUp>zz
+"noremap L
+"noremap M
+"noremap N - next match in opposite dir
+"noremap O - Open line above
+"noremap P
+ noremap Q :qa!<CR>
+"noremap R
+ noremap S :set nospell<CR>
+"noremap T
+"noremap U
+ noremap V :set nohlsearch<CR>
+ noremap W :w!<CR>
+ noremap X :x!<CR>
+"noremap Y
+ noremap Z :q!<cr>
+"
+" ordinary keys 
+"     for movement
+"
+noremap <Space> <PageDown>zz
+noremap <BS> <PageUp>zz
+noremap <left> :tabprev<cr>
+noremap <right> :tabnext<cr>
+noremap <down> <down>zz
+noremap <up> <up>zz
+"
+" control keys
+"
+ noremap     <C-d> :qa!<CR>
+ noremap     <C-n> :next<CR>
+ noremap     <C-p> :prev<CR>
+ noremap     <C-q> :qa!<CR>
+ noremap <C-Right> w
+ noremap <C-Left>  b
+inoremap     <C-q> <Esc>:qa!<CR>
+inoremap <C-Right> <Esc>lwi
+inoremap <C-Left>  <Esc>bi
+"
+" Alt keys
+"
+ noremap     <A-q>      :qa!<CR>
+ noremap <A-Right>      :tabnext<Cr>
+ noremap  <A-Left>      :tabprev<Cr>
+inoremap     <A-q> <Esc>:qa!<CR>
+inoremap <A-Right> <Esc>:tabnext<CR>
+inoremap  <A-Left> <Esc>:tabprev<CR>
+"
+" Leader keys
+"
+"noremap <leader>a
+"noremap <leader>b
+ noremap <leader>c :call PythonDec("class", -1)<CR>
+ noremap <leader>C :call PythonDec("class", +1)<CR>
+ noremap <leader>d :call PythonDec("function", -1)<CR>
+ noremap <leader>D :call PythonDec("function", +1)<CR>
+"noremap <leader>e 
+"noremap <leader>h
+"noremap <leader>i
+"noremap <leader>j
+"noremap <leader>k
+"noremap <leader>l
+"noremap <leader>m
+"noremap <leader>n
+"noremap <leader>o
+"noremap <leader>p
+"noremap <leader>q
+"noremap <leader>r
+"noremap <leader>s
+"noremap <leader>t
+"noremap <leader>u
+"noremap <leader>v
+"noremap <leader>w
+"noremap <leader>x
+"noremap <leader>y
+"noremap <leader>z
+"
+" Kinda keys
+"
+set backspace=eol,start,indent
+set autoindent smartindent
+set matchpairs+=<:>
+set listchars=tab:>-,trail:?,eol:$
+"
+" Screen
+"
+set background=dark
+colorscheme alan-colour
+let g:SeeTabGuiFG="Cyan"
+set title
+set number
+set showmode
+set showcmd
+set nowrap
+set ts=4
+set shiftwidth=4
+set noexpandtab
+set nospell
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+"
+" Ok, ok, so I have some spelling blind-spots:
+"
+abbreviate becuase because
+abbreviate seperate separate
+"
+" Miscellaneous
+"
+autocmd FileType c,cpp,h,java set cindent
+"
+" From http://items.sjbach.com/319/configuring-vim-right
+"
+set hidden
+set scrolloff=3
+set ruler
+set shortmess=atI
+set visualbell
+"
+" From http://www.pixelbeat.org/settings/.vimrc
+"
+set nojoinspaces
+set cursorline
+"Ignore these files when completing names and in Explorer
+set wildmenu
+set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
+let g:is_posix = 1
+"
+" for searching
+"
+set ignorecase
+set smartcase
+set incsearch
+"
+" for Tab Completion
+"	from vim's help
+"
+"function! CleverTab()
+   "if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+      "return "\<Tab>"
+   "else
+      "return "\<C-N>"
+"endfunction
+"
+" and if we need a Tab in the middle of a line: use <S-Tab>
+"
+"
+" for history
+"
+set history=1000
+set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
+"
+" for filename completion (with Tab)
+"
+set wildmode=list:longest,full
+
+let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
+let g:explVertical=1
+let g:explWinSize=1
+let g:explSplitRight=1
+let g:explDetailedList=1
+let g:explSortBy='date'
+
+let g:netrw_altv = 1
+let g:netrw_browse_split = 2
+let g:netrw_list_hide='^\.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[oce],\~\([^\i]\|$\)'
+let g:netrw_keepdir=0
+
+let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
+let g:jabVertical=1
+let g:jabWinSize=1
+let g:jabSplitRight=1
+let g:jabDetailedList=1
+let g:jabSortBy='date'
+"
+" pim
+"
+function CompletePython(findstart,base)
+	if a:findstart
+		let line = getline('.')
+		let start = col('.') - 1
+		while start > 0 && line[start - 1] =~ '\h'
+			let start -= 1
+		endwhile
+		"return start
+		return col('.')
+"	else
+"		py import pim
+"		py base = vim.eval("a:base")
+"		py result = pim.complete(base)
+"		py import vim
+"		py vim.command('let l:result = %s' % result)
+"		return l:result
+	endif
+endfunction
+
+"function StartPython()
+"	if exists("b:current_syntax") && b:current_syntax == "python"
+"		python import pim
+"		" \d = add doctest running()
+"		noremap <leader>d :py pim.addDoctest()<CR>
+"		" \m = add a main()
+"		noremap <leader>m :py pim.addMain()<CR>
+"		" \p = parse
+"		noremap <leader>p :py pim.parseBuffer()<CR>
+"		" \u = add unittest running()
+"		noremap <leader>u :py pim.addUnittest()<CR>
+"		" \# = toggle comment
+"		noremap <leader>~ :py pim.toggleComment()<CR>
+"		noremap ( :py pim.blockBackward()<CR>
+"		noremap ) :py pim.blockForward()<CR>
+"		" \j = translate from java
+"		noremap <leader>j :py pim.translate()<CR>
+"
+"		" \o = show output of script at bottom right
+"		noremap <leader>o :w<CR>:let @a = system('`which python` ' .  bufname('%'))<CR>:silent botright new output<CR>:silent normal "aP<CR
+"		" \v = introduce variable
+"		noremap <leader>v O<C-r>. = <C-r>"<Esc>
+"		inoremap <Tab> <C-R>=CleverTab()<CR>
+"		set completefunc=CompletePython
+"	endif
+"	normal zv
+"	normal zz
+"endfunction
+
+"function SavePython()
+"	if exists("b:current_syntax") && b:current_syntax == "python"
+"		python << EOF
+"try:
+"	from pim import SaveBuffer
+"	SaveBuffer()
+"except ImportError:
+"	pass
+"EOF
+"	endif
+"endfunction
+"
+"	
+"au BufRead *.py call StartPython()
+"au BufWrite *.py call SavePython()
+
+set paste
+
+noremap \\ :NERDTree<CR>
+noremap \' :NERDTree $HOME<CR>
+noremap \/ :NERDTree /<CR>
+let NERDTreeIgnore=['\~$', 'pyc$', '\..*swp$']
+let NERDTreeSortOrder=[ '\/$', '\(\(py\)\|\(test\)\|\(tests\)\)$', '\(\(java\)\|\(sh\)\|\(cpp\)\)$', '\(\(csv\)\|\(html\)\|\(css\)|\(txt\)\|\(log\)\)$', '*', '\(\(jpg\)\|\(jpeg\)\|\(gif\)\|\(png\)\|\(ico\)\|\(bmp\)\)$', '\.swp$', '\~$']

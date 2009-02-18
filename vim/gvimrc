@@ -1,0 +1,12 @@
+"gui
+syntax on
+set guifont=Monospace\ 13
+winpos 100 30
+winsize 90 24
+"
+" Some keys that only work in gui
+inoremap <C-Space> <C-X><C-U>
+noremap <C-[> <C-t>
+
+set tabpagemax=20
+set guioptions=abegimrLtT
