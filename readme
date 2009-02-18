@@ -17,9 +17,9 @@ Check out from the main branch of the repository
 Add links where vim expects to find them
 
 	ln -s .jab/vim .vim
-	ln -s .jab/vimrc .vimrc
+	ln -s .jab/vim/vimrc .vimrc
  
 Start using it
 
-	echo "test -f .jab/bashrc && (cd .jab;. bashrc; cd)" >> ~/.bashrc
+	echo "test -f .jab/bashrc && cd .jab && . bashrc && cd" >> ~/.bashrc
 
