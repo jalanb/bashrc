@@ -51,6 +51,16 @@ fpy ()
 	fi
 }
 
+upj ()
+{
+	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
+	then
+		cj
+		. bashrc
+		c-
+	fi
+}
+
 # xxxx
 
 stat ()
