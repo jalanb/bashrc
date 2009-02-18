@@ -111,7 +111,6 @@ alias tra='try ~/alans_tests'
 alias vff='v -p fred*'
 
 alias url='python ~/bin/show_url.py '
-alias upj='svn up ~/.jab'
 
 # bigger ones are kept for seentimental reasons
 
