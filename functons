@@ -102,11 +102,6 @@ upj ()
 
 # xxxx
 
-fred () 
-{
-	echo fred
-}
-
 tags ()
 {
 	test -n "$1" && dir=$1 || dir="."
