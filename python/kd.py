@@ -10,6 +10,8 @@ def show_not_dir(p):
 	raise ValueError('%s is not a directory' % prev)
 	
 def find_dir(dirr,sub_dir=None):
+	if dirr == '':
+		return path('~').abspath()
 	if dirr == '-':
 		try: dirr = os.environ['OLDPWD']
 		except KeyError: dirr = '~'
@@ -29,10 +31,14 @@ def find_dir(dirr,sub_dir=None):
 	return whither
 
 def parse_command_line(args):
-	if len(args) < 1 or len(args) > 2:
+	if len(args) > 2:
 		raise ValueError('Usage: kd directory [sub-dir]')
-	if len(args) == 1:
+	elif len(args) < 1:
+		args = '', None
+	elif len(args) == 1:
 		args += [ None ]
+	else:
+		raise ValueError('I cannot count')
 	return args
 
 def chdir(whither):
