@@ -42,6 +42,11 @@ ru ()
 	fi
 }
 
+sj ()
+{
+	svn ci ~/.jab -m\"$*\"
+}
+
 # xxx
 
 cls ()
