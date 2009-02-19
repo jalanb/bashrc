@@ -97,13 +97,9 @@ upj ()
 
 # xxxx
 
-clean ()
+fred () 
 {
-	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" -exec /bin/rm -rf {} \;
-	find $dir -name ".*~" -exec /bin/rm -rf {} \;
-	find $dir -name "fred*" -exec /bin/rm -i {} \;
-	find $dir -name "*.py[co]" -exec /bin/rm -i {} \;
+	echo fred
 }
 
 tags ()
@@ -123,6 +119,15 @@ stat ()
 }
 
 # xxxxx
+
+clean ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	find $dir -name "*~" -exec /bin/rm -rf {} \;
+	find $dir -name ".*~" -exec /bin/rm -rf {} \;
+	find $dir -name "fred*" -exec /bin/rm -i {} \;
+	find $dir -name "*.py[co]" -exec /bin/rm -i {} \;
+}
 
 build ()
 {
