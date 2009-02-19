@@ -70,9 +70,9 @@ fsh ()
 {
 	if [ -f fred.sh ]
 	then
-		sh fred.sh
+		sh fred.sh $*
 	else
-		sh fred
+		sh fred $*
 	fi
 }
 
@@ -80,9 +80,9 @@ fpy ()
 {
 	if [ -f fred.py ]
 	then
-		p fred.py
+		p fred.py $*
 	else
-		p fred
+		p fred $*
 	fi
 }
 
