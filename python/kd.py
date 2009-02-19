@@ -11,7 +11,7 @@ def show_not_dir(p):
 	
 def find_dir(dirr,sub_dir=None):
 	if dirr == '':
-		return path('~').abspath()
+		return path('~').expanduser()
 	if dirr == '-':
 		try: dirr = os.environ['OLDPWD']
 		except KeyError: dirr = '~'
