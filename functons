@@ -83,10 +83,10 @@ fpy ()
 
 lly ()
 {
-    ll *.tests;
-    echo;
-    ll *.test;
-    echo;
+    ll *.tests
+    echo
+    ll *.test
+    echo
     ll *.py
 }
 
@@ -96,7 +96,7 @@ upj ()
 	then
 		cj
 		. bashrc
-		c-
+		cd -
 	fi
 }
 
@@ -105,7 +105,7 @@ upj ()
 tags ()
 {
 	test -n "$1" && dir=$1 || dir="."
-	p ~/bin/ptags.py $dir/*.py
+	p ~/.jab/python/ptags.py $dir/*.py
 }
 
 stat ()
