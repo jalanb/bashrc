@@ -44,7 +44,7 @@ ru ()
 
 sj ()
 {
-	svn ci ~/.jab -m"\"$*\""
+	svn ci ~/.jab -m"$*"
 }
 
 # xxx
