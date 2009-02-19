@@ -102,6 +102,7 @@ alias cly="cl; ly "
 alias clt="kd /usr/local/trunk/trackers/"
 alias cit="kd /usr/local/trackers/itTracker"
 alias cst="kd /usr/local/trackers/csTracker"
+alias ctt="kd /usr/local/trackers/tracker"
 
 alias jab="get_pinky_ip && ssh jab@${pinky_ip}"
 
