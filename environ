@@ -16,7 +16,23 @@ else
 fi
 export MONTYLINGUA="$PYTHONPATH/monty/data"
 
-export PATH="~/.jab/bin:~/bin:/usr/bin:/bin:/usr/local/bin:/sbin"
+add_to_path ()
+{
+	if [ -d $1 ]
+	then
+		export PATH=${PATH}:$1
+	fi
+}
+export PATH=~/.jab/bin
+add_to_path ~/bin
+add_to_path ~/git/bin
+add_to_path ~/python25/bin
+add_to_path /usr/bin
+add_to_path /usr/local/bin
+add_to_path /opt/local/bin
+add_to_path $TRACKERS/repository/bin
+add_to_path /bin
+add_to_path /sbin
 
 export PS1
 export PYTHONDOCS=/home/builder/python25/share/doc/html
@@ -50,19 +66,22 @@ else
 	export SOURCE=~/.jab
 fi
 export AMG_SOURCE=$SOURCE/amg
-export AMG_TRUNK=$AMG_SOURCE/trunk
-if [ -d /usr/local/trunk/ ]
+if [ -d $AMG_SOURCE ]
 then
-	export AMG_TRUNK=/usr/local/trunk
-fi
-export AMG_BUILDS=${AMG_SOURCE}/builds
-export AMG_RELEASES=${AMG_SOURCE}/releases
-export AMG_DISTRIBUTION=${AMG_SOURCE}/distribution
-export AMG_IT=${AMG_SOURCE}/IT
+	export AMG_TRUNK=$AMG_SOURCE/trunk
+	if [ -d /usr/local/trunk/ ]
+	then
+		export AMG_TRUNK=/usr/local/trunk
+	fi
+	export AMG_BUILDS=${AMG_SOURCE}/builds
+	export AMG_RELEASES=${AMG_SOURCE}/releases
+	export AMG_DISTRIBUTION=${AMG_SOURCE}/distribution
+	export AMG_IT=${AMG_SOURCE}/IT
 
-export TRACKER_WORKING=$AMG_TRUNK/trackers
-export BUILDER_WORKING=$TRACKER_WORKING/builder
-export VERSION=`grep version $BUILDER_WORKING/configBuild.py | head -n 1 | cut -f2 -d\' `	
+	export TRACKER_WORKING=$AMG_TRUNK/trackers
+	export BUILDER_WORKING=$TRACKER_WORKING/builder
+	export VERSION=`grep version $BUILDER_WORKING/configBuild.py | head -n 1 | cut -f2 -d\' `	
+fi
 
 if [ -d /mnt/source ]
 then
