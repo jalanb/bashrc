@@ -224,7 +224,11 @@ set nospell
 filetype on
 filetype plugin on
 filetype indent on
-syntax on
+if &diff
+	syntax off
+else
+	syntax on
+endif
 "
 " Ok, ok, so I have some spelling blind-spots:
 "
@@ -367,4 +371,3 @@ endfunction
 "au BufWrite *.py call SavePython()
 
 set paste
-
