@@ -21,5 +21,5 @@ Add links where vim expects to find them
  
 Start using it
 
-	echo "test -f ~/.jab/bashrc && cd ~/.jab && . bashrc && cd" >> ~/.bashrc
+	echo "test -f ~/.jab/bashrc && cd ~/.jab && . bashrc && cd >/dev/null 2>&1" >> ~/.bashrc
 
