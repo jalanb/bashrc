@@ -133,8 +133,6 @@ alias cdsi="cd /usr/lib/python2.4/site-packages"
 
 alias down="cd ~/Download"
 
-alias gvim="/Applications/MacVim.app/Contents/MacOS/Vim -g"
-
 alias mine="sudo chown $USER:allstaff "
 
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
