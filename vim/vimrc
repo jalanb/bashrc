@@ -120,13 +120,13 @@ nnoremap <C-F4> <C-W>c
 "noremap E
 "noremap F
 "noremap G
-"noremap H
+ noremap H :set hlsearch<cr>
 "noremap I - Insert
 "noremap J - Join lines
 nnoremap K <PageUp>zz
 "noremap L
 "noremap M
-"noremap N - next match in opposite dir
+ noremap N :noh<cr>
 "noremap O - Open line above
 "noremap P
  noremap Q :qa!<CR>
@@ -134,7 +134,7 @@ nnoremap K <PageUp>zz
  noremap S :set nospell<CR>
 "noremap T
 "noremap U
- noremap V :set nohlsearch<CR>
+"noremap V
  noremap W :w!<CR>
  noremap X :x!<CR>
 "noremap Y
@@ -257,6 +257,7 @@ let g:is_posix = 1
 set ignorecase
 set smartcase
 set incsearch
+set nohlsearch
 "
 " for Tab Completion
 "	from vim's help
