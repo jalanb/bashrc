@@ -367,8 +367,3 @@ endfunction
 
 set paste
 
-noremap \\ :NERDTree<CR>
-noremap \' :NERDTree $HOME<CR>
-noremap \/ :NERDTree /<CR>
-let NERDTreeIgnore=['\~$', 'pyc$', '\..*swp$']
-let NERDTreeSortOrder=[ '\/$', '\(\(py\)\|\(test\)\|\(tests\)\)$', '\(\(java\)\|\(sh\)\|\(cpp\)\)$', '\(\(csv\)\|\(html\)\|\(css\)|\(txt\)\|\(log\)\)$', '*', '\(\(jpg\)\|\(jpeg\)\|\(gif\)\|\(png\)\|\(ico\)\|\(bmp\)\)$', '\.swp$', '\~$']
