@@ -4,17 +4,20 @@ from path import path
 
 def show_not_dir(p):
 	while not p.isdir():
-	    prev = p
-	    p = p.parent
-	    if p == '/': break
+		prev = p
+		p = p.parent
+		if p == '/': break
 	raise ValueError('%s is not a directory' % prev)
 	
 def find_dir(dirr,sub_dir=None):
+	if dirr == '-':
+		try: dirr = os.environ['OLDPWD']
+		except KeyError: dirr = '~'
 	whither = path(dirr)
 	if whither.isfile():
 		whither = whither.parent
 	if not whither.isdir():
-	    show_not_dir(whither)
+		show_not_dir(whither)
 	if sub_dir:
 		possibles = [ x for x in whither.walkdirs() if sub_dir in x.name ]
 		if len(possibles) == 1:
@@ -36,7 +39,7 @@ def chdir(whither):
 	if whither.isfile():
 		whither = whither.parent
 	if not whither.isdir():
-	    show_not_dir(whither)
+		show_not_dir(whither)
 	oldpwd = os.environ['PWD']
 	os.chdir(whither)
 	os.environ['OLDPWD'] = oldpwd
