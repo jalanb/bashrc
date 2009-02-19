@@ -26,10 +26,7 @@ y ()
 kd ()
 { 
     cd `python ~/.jab/python/kd.py $*`
-	if [ -d .svn ]
-	then
-		svn stat .
-	fi
+	stat
 }
 
 ru ()
@@ -110,12 +107,11 @@ tags ()
 
 stat ()
 {
-    if [ -z "$*" ]
-    then
-        svn stat .
-    else
-        svn stat $*
-    fi
+	test -n "$1" && dir=$1 || dir="."
+	if [ -d $dir/.svn ]
+	then
+		svn stat $dir
+	fi
 }
 
 # xxxxx
