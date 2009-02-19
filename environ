@@ -4,11 +4,11 @@ export COLUMNS
 
 export EXITSTATUS="$?"
 
-export DISPLAY=:0
+#export DISPLAY=:0
 
 export HISTSIZ=100000
 
-export XAUTHORITY=/home/abrogan/.Xauthority
+export XAUTHORITY=$HOME/.Xauthority
 
 if ls -@ >/dev/null 2>&1 
 then
