@@ -4,10 +4,14 @@ import sys
 import path
 
 def main():
-	for arg in sys.argv[1:]:
-	    p = path.path(arg)
-	    print p.abspath()
-	return 1
+	args = sys.argv[1:]
+	if not args:
+		print path.path('.').abspath()
+	else:
+		for arg in args:
+			p = path.path(arg)
+			print p.abspath()
+	return 0
 
 if __name__ == '__main__':
 	sys.exit(main())

@@ -19,13 +19,14 @@ export MONTYLINGUA="$PYTHONPATH/monty/data"
 export PATH="~/.jab/bin:~/bin:/usr/bin:/bin:/usr/local/bin:/sbin"
 
 export PS1
-export PYTHONPATH=$HOME/python/site
+export PYTHONDOCS=/home/builder/python25/share/doc/html
 export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages')][0]"`
 
 #
 # Path dependencies
 #
 
+# Altobridge repositories
 if [ -d /amg ]
 then
 	export AMG=file:///amg
@@ -36,24 +37,71 @@ else
 	export LCP=http://intranet.altobridge.com/svn/lcp
 	export JAB=http://intranet.altobridge.com/jab
 fi
+#
+# Working directories
+#
+if [ -d /mnt/source ]
+then
+	export SOURCE=/mnt/source
+elif [ -d $SITE/altobridge ]
+then
+	export SOURCE=$SITE/altobridge
+else
+	export SOURCE=~/.jab
+fi
+export AMG_SOURCE=$SOURCE/amg
+export AMG_TRUNK=$AMG_SOURCE/trunk
+if [ -d /usr/local/trunk/ ]
+then
+	export AMG_TRUNK=/usr/local/trunk
+fi
+export AMG_BUILDS=${AMG_SOURCE}/builds
+export AMG_RELEASES=${AMG_SOURCE}/releases
+export AMG_DISTRIBUTION=${AMG_SOURCE}/distribution
+export AMG_IT=${AMG_SOURCE}/IT
+
+export TRACKER_WORKING=$AMG_TRUNK/trackers
+export BUILDER_WORKING=$TRACKER_WORKING/builder
+export VERSION=`grep version $BUILDER_WORKING/configBuild.py | head -n 1 | cut -f2 -d\' `	
+
+if [ -d /mnt/source ]
+then
+	MAIN_PYTHON=$BUILDER_WORKING
+elif [ -d ~/alans_tests ]
+then
+	MAIN_PYTHON=$SITE/altobridge
+else
+	MAIN_PYTHON=~/.jab/python
+fi
+
+export LCP_SOURCE=$SOURCE/lcp
+export NSN_SOURCE=$LCP_SOURCE/nsn
+export NSN_BUILDS=${SOURCE_NSN}/builds
+export NSN_RELEASES=${SOURCE_NSN}/releases
+
+export RELEASES=/mnt/releases
+export BUILDING=${RELEASES}/building
+export BUILD_DEBUG=${RELEASES}/building/debug
+export NOTES=${RELEASES}/building/notes
+
+export PYTHONPATH=$HOME/python/site
+add_to_pythonpath ()
+{
+	export PYTHONPATH=$PYTHONPATH:$1
+}
+add_to_pythonpath $BUILDER_WORKING
+
 if [ -x /opt/local/bin/gwhich ]
 then
 	export WHICH=/opt/local/bin/gwhich
 else
 	export WHICH=/usr/bin/which
 fi
-export EDITOR=`which vim`
+export EDITOR=`$WHICH vim`
 
-if [ -d /usr/local/trunk/trackers/ ]
-then
-	export TRACKERS=/usr/local/trunk/trackers/
-elif [ -d /mnt/source/amg/trunk/trackers ]
-then
-	export TRACKERS=/mnt/source/amg/trunk/trackers
-else
-	export TRACKERS=NONE
-fi
-
+#
+# colours
+#
 export   NO_COLOUR="\[\033[0m\]"
 export         FOO="\[\033[0;31m\]"
 export   LIGHT_RED="\[\033[1;31m\]"

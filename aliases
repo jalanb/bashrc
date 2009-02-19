@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# all alan's aliases
+# all alan"s aliases
 # 	as ordered by strcmp()
 
 # 	and none from anyone else
@@ -9,39 +9,40 @@ unalias -a
 
 # x
 
-alias a='a'
-alias b='b'
-alias c='kd '
-alias d='d'
-alias e='e'
-alias f='find '
-alias g='grep --color'
-alias h='history | tail -n 25'
-alias i='i'
-alias j='j'
-alias k='k'
-alias l='/bin/ls '
-alias m='m'
-alias m='mount ie-build-1:/mnt/releases /Users/shared/alto/releases'
-alias n='n'
-alias o='o'
-alias p='python '
-alias q='exit 0'
-alias r='rm -vrf'
-alias s='sed '
-alias t='t'
-alias u='u'
-alias v='$EDITOR '
-alias w='which '
-alias x='x'
-alias y='ry;cly'
-alias z='du -sh'
+alias 2="cat ~/todo.txt"
+alias a="a"
+alias b="b"
+alias c="kd "
+alias d="d"
+alias e="e"
+alias f="find "
+alias g="grep --color"
+alias h="history | tail -n 25"
+alias i="i"
+alias j="j"
+alias k="k"
+alias l="/bin/ls "
+alias m="m"
+alias m="mount ie-build-1:/mnt/releases /Users/shared/alto/releases"
+alias n="n"
+alias o="o"
+alias p="python "
+alias q="exit 0"
+alias r="rm -vrf"
+alias s="sed "
+alias t="t"
+alias u="u"
+alias v="$EDITOR "
+alias w="which "
+alias x="x"
+# y is a function
+alias z="du -sh"
 
 # xx
 
 alias ..='kd ..'
 
-alias ab='ssh abrogan@192.168.0.103'
+alias ab="ssh abrogan@192.168.0.103"
 
 alias c-='kd - >/dev/null 2>&1'
 alias ca='kd $SITE/altobridge'
@@ -51,106 +52,117 @@ alias cj='kd ~/.jab'
 alias cl='clear'
 alias cr='kd $SITE/roundup'
 alias ct='kd /usr/local/trackers'
-alias cy='kd ~/python'
+alias cu="kd /usr/local/builders"
+alias cy="kd $MAIN_PYTHON"
 
-alias la='ll -a '
-alias lj='ls ~/.jab'
-alias ll='ls -lh '
-alias ls='l $LS_COLOUR_OPTION -tr'
-alias lt='ls *.test*'
-alias lx='p ~/python/lx.py '
-alias ly='p ~/python/ly.py '
+alias in="to_source"
 
-alias pi='ipython '
+alias la="ll -a "
+alias lj="ls ~/.jab"
+alias ll="ls -lh "
+alias ls="l $LS_COLOUR_OPTION -tr"
+alias lt="ls *.test*"
+alias lx="p ~/python/lx.py "
+alias ly="p ~/python/ly.py "
 
-alias ri='sudo -i -u issue'
-alias rs='sudo -i -u svn'
+alias pi="ipython "
+alias py="y ~/python"
 
-alias sa='. ~/.jab/aliases'
-alias sb='. ~/.jab/bashrc'
-alias se='. ~/.jab/environ'
-alias sf='. ~/.jab/functons'
-alias so='sort '
-alias sp='. ~/.jab/prompt'
+alias rf="r *~ .*~ fred*"
+alias ri="sudo -i -u issue"
+alias rs="sudo -i -u svn"
+alias ry="rm -rf *.py[co]"
 
-alias v.='v .'
-alias va='v ~/.jab/aliases; sa'
-alias vb='v ~/.jab/bashrc; sb'
-alias ve='v ~/.jab/environ; se'
-alias vf='v ~/.jab/functons; sf'
-alias vi='v $SITE'
-alias vj='v ~/.jab'
-alias vp='v ~/.jab/prompt; sp'
-alias vt='v -p *.txt'
-alias vv='v ~/.vim'
+alias sa=". ~/.jab/aliases"
+alias sb=". ~/.jab/bashrc"
+alias se=". ~/.jab/environ"
+alias sf=". ~/.jab/functons"
+alias so="sort "
+alias sp=". ~/.jab/prompt"
+
+alias v.="v ."
+alias va="v ~/.jab/aliases; sa"
+alias vb="v ~/.jab/bashrc; sb"
+alias ve="v ~/.jab/environ; se"
+alias vf="v ~/.jab/functons; sf"
+alias vi="v $SITE"
+alias vj="v ~/.jab"
+alias vp="v ~/.jab/prompt; sp"
+alias vt="v -p *.txt"
+alias vv="v ~/.vim"
+alias vy="v $MAIN_PYTHON"
+
+alias xk="exchange_keys"
 
 # xxx
 
-alias c--='cd -'
-alias clx='cl; lx '
-alias cly='cl; ly '
-alias clt='kd /usr/local/trunk/trackers/'
-alias cit='kd /usr/local/trackers/itTracker'
-alias cst='kd /usr/local/trackers/csTracker'
+alias c--="cd -"
+alias clx="cl; lx "
+alias cly="cl; ly "
+alias clt="kd /usr/local/trunk/trackers/"
+alias cit="kd /usr/local/trackers/itTracker"
+alias cst="kd /usr/local/trackers/csTracker"
 
-alias jab='get_pinky_ip && ssh jab@${pinky_ip}'
+alias jab="get_pinky_ip && ssh jab@${pinky_ip}"
 
-alias lff='ls fred*'
-alias llt='ls -lhtr *.test*'
-alias lsh='ls *.sh'
+alias lff="ls fred*"
+alias llt="ls -lhtr *.test*"
+alias lsh="ls *.sh"
 
-alias rff='r fred*'
+alias out="to_release"
 
-alias stj='stat ~/.jab'
+alias rff="r fred*"
 
-alias try='p ~/python/try.py '
-alias tri='sh $TRACKERS/testing/regulars.sh'
-alias tra='try ~/alans_tests'
+alias stj="stat ~/.jab"
 
-alias vff='v -p fred*'
+alias try="p ~/python/try.py "
+alias tri="sh $TRACKERS/testing/regulars.sh"
+alias tra="try ~/alans_tests"
 
-alias url='python ~/bin/show_url.py '
+alias vff="v -p fred*"
+alias vib="v ~/.bashrc"
+alias vbb="v $BUILDER_WORKING/build.py"
 
-# bigger ones are kept for seentimental reasons
-
-# xxxx
-
-alias down='cd ~/Download'
-
-alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
-
-alias junk='mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk'
+alias url="python ~/bin/show_url.py "
 
 # xxxx
 
-alias cisco='ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart'
+alias cdsi="cd /usr/lib/python2.4/site-packages"
 
-alias floka='get_pinky_ip && ssh floka@${pinky_ip}'
+alias down="cd ~/Download"
+
+alias gvim="/Applications/MacVim.app/Contents/MacOS/Vim -g"
+
+alias mine="sudo chown $USER:allstaff "
+
+alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
 # xxxxx
 
-alias clean='r *~ fred*'
+alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
+
+alias floka="get_pinky_ip && ssh floka@${pinky_ip}"
 
 alias denis='mysql -u root -D issues -e"select id, _title from _issue where _module = 37 and _creator = 39 and __retired__ = 0 and _status != 8"'
 
-alias sdiff='svn_diff diff '
+alias sdiff="svn_diff diff "
 
 # xxxxxx
 
-alias issues='mysql -u root -D issues'
+alias issues="mysql -u root -D issues"
 
-alias public='mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public'
+alias public="mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public"
 
-alias skdiff='svn_diff kdiff '
-alias sxdiff='svn_diff xdiff '
-alias svdiff='svn_diff vimdiff '
+alias skdiff="svn_diff kdiff "
+alias sxdiff="svn_diff xdiff "
+alias svdiff="svn_diff vimdiff "
 alias shdiff='svn_diff "vimdiff -o" '
 
 # xxxxxxx
 
-alias abrogan='ssh abrogan@192.168.0.103'
-alias service='sudo /sbin/service '
+alias abrogan="ssh abrogan@192.168.0.103"
+alias service="sudo /sbin/service "
 
 # xxxxxxxx
 
-alias itissues='mysql -u root -D itissues'
+alias itissues="mysql -u root -D itissues"

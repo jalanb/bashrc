@@ -1,5 +1,26 @@
 #! /bin/sh
 
+# x
+
+y ()
+{
+	test -n "$1" && dir=`abspath $1` || dir=$MAIN_PYTHON
+	if [[ $dir != `abspath` ]]
+	then
+		cd $dir
+	fi
+	clear
+	rf
+	ry
+	if [ -x ./clean ]
+	then 
+		./clean
+	fi
+	tags
+	ly
+	stat
+}
+
 # xx
 
 kd ()
@@ -55,6 +76,15 @@ fpy ()
 	fi
 }
 
+lly ()
+{
+    ll *.tests;
+    echo;
+    ll *.test;
+    echo;
+    ll *.py
+}
+
 upj ()
 {
 	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
@@ -67,6 +97,21 @@ upj ()
 
 # xxxx
 
+clean ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	find $dir -name "*~" -exec /bin/rm -rf {} \;
+	find $dir -name ".*~" -exec /bin/rm -rf {} \;
+	find $dir -name "fred*" -exec /bin/rm -i {} \;
+	find $dir -name "*.py[co]" -exec /bin/rm -i {} \;
+}
+
+tags ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	p ~/bin/ptags.py $dir/*.py
+}
+
 stat ()
 {
     if [ -z "$*" ]
@@ -75,13 +120,6 @@ stat ()
     else
         svn stat $*
     fi
-}
-
-wash ()
-{
-	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" -exec /bin/rm -rf {} \;
-	find $dir -name "fred*" -exec /bin/rm -i {} \;
 }
 
 # xxxxx
@@ -96,15 +134,11 @@ build ()
 	fi
 }
 
-vfile ()
+kodos ()
 {
-    `echo "$*" | sed -e"s/^File/vim/" | sed -e"s/, line \([0-9]*\).*/ +\1/"`
-}
-
-which ()
-{ 
-    ( alias; declare -f ) | \
-		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+    pushd /home/builder/Download/ie-build-1/kodos-2.4.9/ >/dev/null
+    /usr/bin/python kodos.py &
+    popd >/dev/null
 }
 
 track ()
@@ -118,9 +152,26 @@ track ()
 	fi
 }
 
+vfile ()
+{
+    `echo "$*" | sed -e"s/^File/vim/" | sed -e"s/, line \([0-9]*\).*/ +\1/"`
+}
+
+which ()
+{ 
+    ( alias; declare -f ) | \
+		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+}
+
 # xxxxx
 
 # xxxxxx
+
+revert ()
+{
+	cp $1 $1.changed
+	svn revert $1
+}
 
 # xxxxxxx
 
@@ -151,6 +202,28 @@ svn_issue ()
     svn log $* | grep -i "^issue" | head
 }
 
+# xxxxxxxxxx
+
+to_source ()
+{
+	cd $SOURCE/$*
+	clear
+	ls
+}
+
+# xxxxxxxxxx
+
+to_release ()
+{
+	cd $RELEASES/$*
+	clear
+	ls
+}
+
+# xxxxxxxxxxx
+
+# xxxxxxxxxxxx
+
 get_pinky_ip ()
 {
 	pinky_ip=192.168.0.103
@@ -159,3 +232,4 @@ get_pinky_ip ()
 		pinky_ip=`cat ~/pinky.txt`
 	fi
 }
+
