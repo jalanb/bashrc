@@ -8,6 +8,8 @@ export DISPLAY=:0
 
 export HISTSIZ=100000
 
+export XAUTHORITY=/home/abrogan/.Xauthority
+
 if ls -@ >/dev/null 2>&1 
 then
 	export LS_COLOUR_OPTION='-@'
