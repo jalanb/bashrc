@@ -106,9 +106,14 @@ export NOTES=${RELEASES}/building/notes
 export PYTHONPATH=$HOME/python/site
 add_to_pythonpath ()
 {
-	export PYTHONPATH=$PYTHONPATH:$1
+	if [ -d $1 ]
+	then
+		export PYTHONPATH=$PYTHONPATH:$1
+	fi
 }
+add_to_pythonpath $HOME/.jab/python/site
 add_to_pythonpath $BUILDER_WORKING
+add_to_pythonpath $SITE/altobridge
 
 if [ -x /opt/local/bin/gwhich ]
 then
