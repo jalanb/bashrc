@@ -44,6 +44,14 @@ sj ()
 	svn ci ~/.jab -m"$*"
 }
 
+
+uj ()
+{
+	cj
+	. bashrc
+	c-
+}
+
 # xxx
 
 cls ()
@@ -91,9 +99,7 @@ upj ()
 {
 	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
 	then
-		cj
-		. bashrc
-		cd -
+		uj
 	fi
 }
 

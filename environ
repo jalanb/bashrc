@@ -71,16 +71,18 @@ export AMG_SOURCE=$SOURCE/amg
 if [ -d $AMG_SOURCE ]
 then
 	export AMG_TRUNK=$AMG_SOURCE/trunk
-	if [ -d /usr/local/trunk/ ]
-	then
-		export AMG_TRUNK=/usr/local/trunk
-	fi
+else
+	export AMG_TRUNK=/usr/local/trunk
+fi
+if [ -d $AMG_TRUNK ]
+then
 	export AMG_BUILDS=${AMG_SOURCE}/builds
 	export AMG_RELEASES=${AMG_SOURCE}/releases
 	export AMG_DISTRIBUTION=${AMG_SOURCE}/distribution
 	export AMG_IT=${AMG_SOURCE}/IT
 
 	export TRACKER_WORKING=$AMG_TRUNK/trackers
+	export TRACKER_TESTING=$TRACKER_WORKING/testing
 	export BUILDER_WORKING=$TRACKER_WORKING/builder
 	export VERSION=`grep version $BUILDER_WORKING/configBuild.py | head -n 1 | cut -f2 -d\' `	
 fi
