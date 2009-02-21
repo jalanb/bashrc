@@ -233,10 +233,10 @@ to_release ()
 
 get_pinky_ip ()
 {
-	pinky_ip=192.168.0.103
+	export pinky_ip=$PINKY_IP
 	if [ -r ~/pinky.txt ]
 	then
-		pinky_ip=`cat ~/pinky.txt`
+		export pinky_ip=`cat ~/pinky.txt`
 	fi
 }
 
