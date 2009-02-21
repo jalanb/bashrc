@@ -4,8 +4,8 @@ test -n "$PS1" || return
 
 . environ
 . prompt green
-. functons
 . aliases
+. functons
 . bin/j.sh
 /bin/rm -rf tmp/*
 echo
