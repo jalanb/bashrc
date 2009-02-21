@@ -9,7 +9,8 @@ unalias -a
 
 # x
 
-alias 2="cat ~/todo.txt"
+alias 1="v ~/.jab/todo.txt"
+alias 2="cat ~/.jab/todo.txt"
 alias a="a"
 alias b="b"
 alias c="kd "
@@ -66,7 +67,7 @@ alias lx="p ~/python/lx.py "
 alias ly="p ~/python/ly.py "
 
 alias pi="ipython "
-alias py="y ~/python"
+alias py="y $MAIN_PYTHON"
 
 alias rf="r *~ .*~ fred*"
 alias ri="sudo -i -u issue"
@@ -74,7 +75,7 @@ alias rs="sudo -i -u svn"
 alias ry="rm -rf *.py[co]"
 
 alias sa=". ~/.jab/aliases"
-alias sb=". ~/.jab/bashrc"
+alias sb="cd ~/.jab && . bashrc && c-"
 alias se=". ~/.jab/environ"
 alias sf=". ~/.jab/functons"
 alias so="sort "

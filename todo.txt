@@ -1,0 +1,3 @@
+
+svn ci -m"functions use aliases bashrc"
+	should notice that bashrc is a file in the current directory
