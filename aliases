@@ -105,7 +105,7 @@ alias cit="kd /usr/local/trackers/itTracker"
 alias cst="kd /usr/local/trackers/csTracker"
 alias ctt="kd /usr/local/trackers/tracker"
 
-alias jab="get_pinky_ip && ssh jab@${pinky_ip}"
+alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
 
 alias lff="ls fred*"
 alias llt="ls -lhtr *.test*"
