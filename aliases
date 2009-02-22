@@ -126,7 +126,6 @@ alias tri="sh $TRACKER_TESTING/regulars.sh"
 alias try="p ~/python/try.py "
 alias trz="p $TRACKER_TESTING/run_test.py"
 
-alias vff="v -p fred*"
 alias vib="v ~/.bashrc"
 alias vbb="v $BUILDER_WORKING/build.py"
 

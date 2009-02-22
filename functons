@@ -103,6 +103,31 @@ upj ()
 	fi
 }
 
+vff ()
+{
+	FRED=
+	found_fred=0
+	test -f fred && FRED=fred
+	if [[ -n $FRED ]]
+	then
+		found_fred=1
+	fi
+	found_wild=0
+	for f in fred*[^~]
+	do
+		test -f $f && found_wild=1
+	done
+	if [[ $found_fred == 1 && $found_wild == 1 ]]
+	then 
+		v -p fred fred*[^~]
+	elif [[ $found_wild == 1 ]]
+	then 
+		v -p fred*[^~] 
+	else
+		v fred
+	fi
+}
+
 # xxxx
 
 tags ()
@@ -184,12 +209,14 @@ revert ()
 
 svn_log ()
 {
-    svn log $* | head
+	test -n "$1" && dir=$1 || dir="."
+    svn log $dir | head
 }
 
 svn_url ()
 {
-    svn info $* | grep URL
+	test -n "$1" && dir=$1 || dir="."
+    svn info $dir | grep URL
 }
 
 # xxxxxxxx
@@ -200,6 +227,12 @@ svn_diff () {
     pushd "$dir" > /dev/null
     /usr/bin/$1 .svn/text-base/"$file".svn-base "$file"
     popd > /dev/null
+}
+
+svn_info ()
+{
+	test -n "$1" && dir=$1 || dir="."
+    svn info $dir 
 }
 
 # xxxxxxxxx
