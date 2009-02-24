@@ -138,10 +138,10 @@ tags ()
 
 stat ()
 {
-	test -n "$1" && dir=$1 || dir="."
-	if [ -d $dir/.svn ]
+	test -n "$1" && path=$1 || path="."
+	if [[ -f $path || -d $path/.svn ]]
 	then
-		svn stat $dir
+		svn stat $path
 	fi
 }
 
@@ -210,7 +210,8 @@ revert ()
 svn_log ()
 {
 	test -n "$1" && dir=$1 || dir="."
-    svn log $dir | head
+	shift
+    svn log $dir | head $*
 }
 
 svn_url ()
