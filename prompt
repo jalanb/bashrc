@@ -16,23 +16,27 @@ else
 	export PROMPT_COLOUR=none
 fi
 
-coloured_status ()
+prompt_command ()
 {
-	if [[ $1 == 0 ]]
+	if [ -z "$1" ]
+	then
+		how_do_you_do_nothing_in_a_bash_script=0
+	elif [[ $1 == 0 ]]
 	then
 		export STATUS="${PROMPT_GREEN}$1${PROMPT_NO_COLOUR}"
 	else
 		export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
 	fi
 	echo -ne $STATUS
+	j --add "$(pwd -P)"
 }
 
 if [[ "$PROMPT_COLOUR" == "none" ]]
 then
 	export PROMPT_COMMAND=
-	export PS1="\$? [\u@\h \W] $ "
+	export PS1="\$? [\u@\h \W]\n$ "
 else
-	export PROMPT_COMMAND='coloured_status $?'
-	export PS1=" ${PROMPT_COLOUR}[\u@\h \W]${PROMPT_NO_COLOUR} $ "
+	export PROMPT_COMMAND='prompt_command $?'
+	export PS1=" ${PROMPT_COLOUR}[\d:\@ \u@\h \w]${PROMPT_NO_COLOUR}\n$ "
 fi
 
