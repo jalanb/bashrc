@@ -33,7 +33,8 @@ add_to_path ~/python25/bin
 add_to_path /usr/bin
 add_to_path /usr/local/bin
 add_to_path /opt/local/bin
-add_to_path $TRACKERS/repository/bin
+add_to_path $TRACKERS/repository/bin/
+add_to_path $TRACKERS/issues/bin/
 add_to_path /bin
 add_to_path /sbin
 
