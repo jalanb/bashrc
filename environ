@@ -84,6 +84,7 @@ then
 	export AMG_IT=${AMG_SOURCE}/IT
 
 	export TRACKER_WORKING=$AMG_TRUNK/trackers
+	export TRACKERS=$AMG_TRUNK/trackers
 	export TRACKER_TESTING=$TRACKER_WORKING/testing
 	export BUILDER_WORKING=$TRACKER_WORKING/builder
 	export VERSION=`grep version $BUILDER_WORKING/configBuild.py | head -n 1 | cut -f2 -d\' `	
