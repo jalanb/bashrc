@@ -37,6 +37,6 @@ then
 	export PS1="\$? [\u@\h \W]\n$ "
 else
 	export PROMPT_COMMAND='prompt_command $?'
-	export PS1=" ${PROMPT_COLOUR}[\d:\@ \u@\h \w]${PROMPT_NO_COLOUR}\n$ "
+	export PS1=" ${PROMPT_COLOUR}[\d \@ \u@\h \w]${PROMPT_NO_COLOUR}\n$ "
 fi
 
