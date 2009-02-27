@@ -57,6 +57,7 @@ alias ct='kd /usr/local/trackers'
 alias cu="kd /usr/local/builders"
 alias cy="kd $MAIN_PYTHON"
 
+alias hg="history | grep "
 alias in="to_source"
 
 alias la="ll -a "
@@ -67,11 +68,13 @@ alias lt="ls *.test*"
 alias lx="p ~/python/lx.py "
 alias ly="p ~/python/ly.py "
 
+alias p-="echo $OLDPWD"
 alias pi="ipython "
 alias py="y $MAIN_PYTHON"
 
 alias rf="r *~ .*~ fred*"
 alias ri="sudo -i -u issue"
+alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
 alias ry="rm -rf *.py[co]"
 
@@ -119,6 +122,7 @@ alias lsh="ls *.sh"
 
 alias out="to_release"
 
+alias rqa="/bin/rm -rf ./*"
 alias rff="r fred*"
 
 alias stj="stat ~/.jab"
