@@ -51,6 +51,7 @@ alias cb='kd ~/bin'
 alias ci='kd $SITE'
 alias cj='kd ~/.jab'
 alias cl='clear'
+alias cm='kd /usr/local/trackers/tracker/db/files/msg'
 alias cr='kd $SITE/roundup'
 alias ct='kd /usr/local/trackers'
 alias cu="kd /usr/local/builders"
