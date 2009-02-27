@@ -160,7 +160,7 @@ build ()
 {
 	if [ -d /mnt/source ]
 	then 
-		vb
+		ssh builder@ie-build-2
 	else
 		ssh builder@ie-build-1
 	fi
