@@ -27,6 +27,7 @@ prompt_command ()
 	else
 		export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
 	fi
+	echo
 	echo -ne $STATUS
 	j --add "$(pwd -P)"
 }
