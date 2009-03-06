@@ -97,6 +97,7 @@ alias ve="v ~/.jab/environ; se"
 alias vf="v ~/.jab/functons; sf"
 alias vi="v $SITE"
 alias vj="v ~/.jab"
+alias vm='v /usr/local/trackers/tracker/db/files/msg/'
 alias vp="v ~/.jab/prompt; sp"
 alias vt="v -p *.txt"
 alias vv="v ~/.vim"
@@ -107,11 +108,14 @@ alias xk="exchange_keys"
 # xxx
 
 alias c--="cd -"
+
 alias clx="cl; lx "
 alias cly="cl; ly "
-alias clt="kd /usr/local/trunk/trackers/"
 alias cit="kd /usr/local/trackers/itTracker"
+alias cjt='kd /usr/local/trunk/trackers/issues/tracker'
+alias clt="kd /usr/local/trunk/trackers/"
 alias cst="kd /usr/local/trackers/csTracker"
+alias cta="c  ~/trackers/issues/tracker"
 alias ctt="kd /usr/local/trackers/tracker"
 
 alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
@@ -125,6 +129,7 @@ alias out="to_release"
 alias rqa="/bin/rm -rf ./*"
 alias rff="r fred*"
 
+alias sib=". ~/.bashrc"
 alias stj="stat ~/.jab"
 
 alias tra="try ~/alans_tests"
@@ -132,7 +137,7 @@ alias tri="sh $TRACKER_TESTING/regulars.sh"
 alias try="p ~/python/try.py "
 alias trz="p $TRACKER_TESTING/run_test.py"
 
-alias vib="v ~/.bashrc"
+alias vib="v ~/.bashrc; sib"
 alias vbb="v $BUILDER_WORKING/build.py"
 
 alias url="python ~/bin/show_url.py "
@@ -176,3 +181,7 @@ alias service="sudo /sbin/service "
 # xxxxxxxx
 
 alias itissues="mysql -u root -D itissues"
+
+# xxxxxxxx
+
+alias stopwatch="killall -9 watch"
