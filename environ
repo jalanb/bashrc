@@ -92,18 +92,19 @@ fi
 
 if [ -d /mnt/source ]
 then
-	MAIN_PYTHON=$BUILDER_WORKING
+	export MAIN_PYTHON=$BUILDER_WORKING
+	export SCRIPTS=$BUILDER_WORKING
 elif [ -d ~/alans_tests ]
 then
-	MAIN_PYTHON=$SITE/altobridge
+	export MAIN_PYTHON=$SITE/altobridge
 else
-	MAIN_PYTHON=~/.jab/python
+	export MAIN_PYTHON=~/.jab/python
 fi
 
 export LCP_SOURCE=$SOURCE/lcp
 export NSN_SOURCE=$LCP_SOURCE/nsn
-export NSN_BUILDS=${SOURCE_NSN}/builds
-export NSN_RELEASES=${SOURCE_NSN}/releases
+export NSN_BUILDS=${NSN_SOURCE}/builds
+export NSN_RELEASES=${NSN_SOURCE}/releases
 
 export RELEASES=/mnt/releases
 export BUILDING=${RELEASES}/building
