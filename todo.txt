@@ -1,3 +1,11 @@
+Write RIAS tri-lingually
 
-svn ci -m"functions use aliases bashrc"
-	should notice that bashrc is a file in the current directory
+Read current Java implementation
+	Parse
+Read Alan Qs C++ code
+	Parse to the same tree
+	Match his code to the Java code
+Write Python
+	Generate a parse tree from Java, write C++
+	Idiomatically
+

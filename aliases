@@ -60,6 +60,8 @@ alias cy="kd $MAIN_PYTHON"
 alias hg="history | grep "
 alias in="to_source"
 
+alias jj="cd ~/jab"
+
 alias la="ll -a "
 alias lj="ls ~/.jab"
 alias ll="ls -lh "
