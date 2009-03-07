@@ -11,3 +11,4 @@ test -n "$PS1" || return
 echo
 echo Welcome jab, to $HOSTNAME
 echo
+test -f todo.txt && cat todo.txt
