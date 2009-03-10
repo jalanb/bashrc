@@ -121,6 +121,7 @@ alias cta="c  ~/trackers/issues/tracker"
 alias ctt="kd /usr/local/trackers/tracker"
 
 alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
+alias jlf="ssh jlfieblu@jlf.ie"
 
 alias lff="ls fred*"
 alias llt="ls -lhtr *.test*"
