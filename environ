@@ -98,7 +98,7 @@ elif [ -d ~/alans_tests ]
 then
 	export MAIN_PYTHON=$SITE/altobridge
 else
-	export MAIN_PYTHON=~/.jab/python
+	export MAIN_PYTHON=~/python
 fi
 
 export LCP_SOURCE=$SOURCE/lcp
