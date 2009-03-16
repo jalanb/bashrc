@@ -60,7 +60,7 @@ alias cy="kd $MAIN_PYTHON"
 alias hg="history | grep "
 alias in="to_source"
 
-alias jj="cd ~/jab"
+alias jj="cd ~/jab; ls"
 
 alias la="ll -a "
 alias lj="ls ~/.jab"
@@ -148,6 +148,7 @@ alias url="python ~/bin/show_url.py "
 # xxxx
 
 alias cdsi="cd /usr/lib/python2.4/site-packages"
+alias cdev="cd ~/jab/alto/dev"
 
 alias down="cd ~/Download"
 
