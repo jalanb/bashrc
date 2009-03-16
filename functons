@@ -4,7 +4,16 @@
 
 y ()
 {
-	test -n "$1" && dir=`abspath $1` || dir=$MAIN_PYTHON
+	dir=
+	if [ -d "$1" ] 
+	then
+		dir=`abspath $1`
+		shift
+	fi
+	if [ -z "$dir" ]
+	then
+		dir=$MAIN_PYTHON
+	fi
 	if [[ $dir != `abspath` ]]
 	then
 		cd $dir
@@ -17,7 +26,7 @@ y ()
 		./clean
 	fi
 	tags
-	ly
+	ly $*
 	stat
 }
 
