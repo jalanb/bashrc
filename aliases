@@ -97,7 +97,6 @@ alias va="v ~/.jab/aliases; sa"
 alias vb="v ~/.jab/bashrc; sb"
 alias ve="v ~/.jab/environ; se"
 alias vf="v ~/.jab/functons; sf"
-alias vi="v $SITE"
 alias vj="v ~/.jab"
 alias vm='v /usr/local/trackers/tracker/db/files/msg/'
 alias vp="v ~/.jab/prompt; sp"
