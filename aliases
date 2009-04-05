@@ -48,7 +48,6 @@ alias ab="ssh abrogan@192.168.0.103"
 alias c-='kd - >/dev/null 2>&1'
 alias ca='kd $SITE/altobridge'
 alias cb='kd ~/bin'
-alias ci='kd $SITE'
 alias cj='kd ~/.jab'
 alias cl='clear'
 alias cm='kd /usr/local/trackers/tracker/db/files/msg'
@@ -57,12 +56,12 @@ alias ct='kd /usr/local/trackers'
 alias cu="kd /usr/local/builders"
 alias cy="kd $MAIN_PYTHON"
 
-alias hg="history | grep "
+alias gh="history | grep "
 alias in="to_source"
 
 alias jj="cd ~/jab; ls"
 
-alias la="ll -a "
+alias la="ls -a "
 alias lj="ls ~/.jab"
 alias ll="ls -lh "
 alias ls="l $LS_COLOUR_OPTION -tr"
