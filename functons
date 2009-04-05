@@ -145,7 +145,7 @@ tags ()
 	p ~/.jab/python/ptags.py $dir/*.py
 }
 
-stat ()
+do_stat ()
 {
 	test -n "$1" && path=$1 || path="."
 	if [[ -f $path || -d $path/.svn ]]
@@ -154,6 +154,18 @@ stat ()
 	fi
 }
 
+stat ()
+{
+	if [[ -z "$1" ]]
+	then
+		do_stat
+	else
+		for file in $*
+		do 
+			do_stat $file
+		done
+	fi
+}
 # xxxxx
 
 clean ()
