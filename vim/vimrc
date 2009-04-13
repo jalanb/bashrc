@@ -226,6 +226,7 @@ filetype plugin on
 filetype indent on
 if &diff
 	syntax off
+	set diffopt=filler,iwhite
 else
 	syntax on
 endif
