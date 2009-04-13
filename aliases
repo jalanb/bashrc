@@ -73,7 +73,7 @@ alias p-="echo $OLDPWD"
 alias pi="ipython "
 alias py="y $MAIN_PYTHON"
 
-alias rf="r *~ .*~ fred*"
+alias rf="r *~ .*~ *.orig fred* *.tmp *.bak"
 alias ri="sudo -i -u issue"
 alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
@@ -126,6 +126,8 @@ alias llt="ls -lhtr *.test*"
 alias lsh="ls *.sh"
 
 alias out="to_release"
+
+alias ps3="ps axjf | vim -"
 
 alias rqa="/bin/rm -rf ./*"
 alias rff="r fred*"
