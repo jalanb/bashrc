@@ -174,7 +174,6 @@ clean ()
 	find $dir -name "*~" -exec /bin/rm -rf {} \;
 	find $dir -name ".*~" -exec /bin/rm -rf {} \;
 	find $dir -name "fred*" -exec /bin/rm -i {} \;
-	find $dir -name "*.py[co]" -exec /bin/rm -i {} \;
 }
 
 build ()
@@ -255,7 +254,7 @@ svn_diff () {
     dir=`dirname $2`
     file=`basename $2`
     pushd "$dir" > /dev/null
-    /usr/bin/$1 .svn/text-base/"$file".svn-base "$file"
+    /usr/bin/$1 "$file" .svn/text-base/"$file".svn-base
     popd > /dev/null
 }
 
