@@ -12,20 +12,20 @@ NoMatchParen
 
 set autowrite
 let s:file_py = expand("%")
-let s:file_gy = substitute(s:file_py,'\.py$','.gy',"")
-if filereadable(s:file_gy) && s:file_py != s:file_gy
-	exec "tabnew " s:file_gy
+let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
+if filereadable(s:file_grammar) && s:file_py != s:file_grammar
+	exec "tabnew " s:file_grammar
 endif
 let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
 if filereadable(s:file_tests) && s:file_py != s:file_tests
 	exec "tabnew " s:file_tests
 endif
 let s:file_test = substitute(s:file_py,'\.py$','.test',"")
-if s:file_py != s:file_test
+if filereadable(s:file_test) && s:file_py != s:file_test
 	exec "tabnew " s:file_test
 endif
 let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
-if s:file_py != s:file_fail
+if filereadable(s:file_fail) && s:file_py != s:file_fail
 	exec "tabnew " s:file_fail
 endif
 tabnext
