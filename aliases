@@ -167,8 +167,6 @@ alias sdiff="svn_diff diff "
 
 # xxxxxx
 
-alias issues="mysql -u root -D issues"
-
 alias public="mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public"
 
 alias skdiff="svn_diff kdiff "
