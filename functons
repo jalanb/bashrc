@@ -43,7 +43,7 @@ rf ()
 	/bin/rm -vrf *~ .*~ *.orig fred* *.tmp *.bak
 	for fail in *.fail
 	do
-		if [ -s $fail ]
+		if [ ! -s $fail ]
 		then
 			/bin/rm -vrf $fail
 		fi
@@ -77,7 +77,7 @@ uj ()
 
 cls ()
 {
-    clean
+    rf
     clear
     if [ -z "$*" ]
     then
@@ -183,8 +183,9 @@ stat ()
 clean ()
 {
 	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" -exec /bin/rm -rf {} \;
-	find $dir -name ".*~" -exec /bin/rm -rf {} \;
+	find $dir -name "*~" -exec /bin/rm -vrf {} \;
+	find $dir -name ".*~" -exec /bin/rm -vrf {} \;
+	find $dir -name "*.fail" -size -1 -exec /bin/rm -vrf {} \;
 	find $dir -name "fred*" -exec /bin/rm -i {} \;
 }
 
