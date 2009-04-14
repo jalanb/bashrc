@@ -239,7 +239,12 @@ issues ()
 	then
 		$HOME/bin/issues $*
 	else
-		mysql -u root -D issues $*
+		if [ -z "$*" ]
+		then
+			mysql -u root -D issues 
+		else
+			mysql -u root -D issues -e $*
+		fi
 	fi
 }
 
