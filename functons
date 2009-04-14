@@ -38,6 +38,18 @@ kd ()
 	stat
 }
 
+rf ()
+{
+	/bin/rm -vrf *~ .*~ *.orig fred* *.tmp *.bak
+	for fail in *.fail
+	do
+		if [ -s $fail ]
+		then
+			/bin/rm -vrf $fail
+		fi
+	done
+}
+
 ru ()
 {
 	if [ -z "$*" ]

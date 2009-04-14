@@ -73,7 +73,6 @@ alias p-="echo $OLDPWD"
 alias pi="ipython "
 alias py="y $MAIN_PYTHON"
 
-alias rf="r *~ .*~ *.orig fred* *.tmp *.bak"
 alias ri="sudo -i -u issue"
 alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
