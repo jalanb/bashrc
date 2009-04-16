@@ -1,0 +1,10 @@
+"
+" Keys and such for the vimperator
+"
+
+noremap q			:q<cr>
+noremap r			:restart<cr>
+noremap i			:tabopen http://intranet.altobridge.com/issues/issue
+
+noremap <Tab>		:tabnext<cr>
+noremap <S-Tab>		:tabprev<cr>

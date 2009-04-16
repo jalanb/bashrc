@@ -18,6 +18,7 @@ Add links where vim expects to find them
 
 	ln -s .jab/vim .vim
 	ln -s .jab/vim/vimrc .vimrc
+	ln -s .jab/vim/vimperatorrc .vimperatorrc
  
 Start using it
 
