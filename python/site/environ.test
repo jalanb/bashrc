@@ -1,0 +1,29 @@
+	>>> from altobridge.testing import show
+	>>> import environ 
+
+A method to read the keys set in ~/.jab/environ
+	>>> keys = environ.read_environ_keys()
+	>>> show( keys[ 5 : 15 ] )
+	['AMG_SOURCE',
+	 'AMG_TRUNK',
+	 'BUILDER_WORKING',
+	 'BUILDING',
+	 'BUILD_DEBUG',
+	 'EDITOR',
+	 'EXITSTATUS',
+	 'HISTSIZ',
+	 'JAB',
+	 'LCP']
+
+Turn those keys into a dictionary with values from bash's environment
+	>>> bash = environ.read_bash(keys)
+	>>> print bash['JAB']
+	http://intranet.altobridge.com/jab
+	>>> print bash['EDITOR']
+	/bin/vim
+
+Bash's environment variables are attributes of the module
+	>>> print environ.JAB
+	http://intranet.altobridge.com/jab
+	>>> print environ.EDITOR
+	/bin/vim

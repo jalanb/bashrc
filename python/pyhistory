@@ -1,6 +1,0 @@
-from path import path
-import os
-os.path
-import os
-os.path
-print os.path.sep
