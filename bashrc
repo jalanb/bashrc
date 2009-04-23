@@ -8,7 +8,8 @@ test -n "$PS1" || return
 . functons
 . bin/j.sh
 /bin/rm -rf tmp/*
+test -f todo.txt && cat todo.txt
+test -f ~/.oldpwd && . ~/.oldpwd
 echo
 echo Welcome jab, to $HOSTNAME
 echo
-test -f todo.txt && cat todo.txt
