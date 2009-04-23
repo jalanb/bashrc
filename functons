@@ -151,6 +151,11 @@ vff ()
 
 # xxxx
 
+dark ()
+{
+	svn revert -q ~/.jab/vim/vimrc
+}
+
 tags ()
 {
 	test -n "$1" && dir=$1 || dir="."
@@ -233,6 +238,10 @@ which ()
 
 # xxxxxx
 
+bright ()
+{
+	sed -i -e/color/d ~/.vimrc
+}
 
 issues ()
 {
