@@ -14,11 +14,12 @@ Check out from the main branch of the repository
 
 	svn co http://intranet.altobridge.com/jab .jab
 
-Add links where vim expects to find them
+Add links where programs expect to find them
 
-	ln -s .jab/vim .vim
-	ln -s .jab/vim/vimrc .vimrc
-	ln -s .jab/vim/vimperatorrc .vimperatorrc
+	ln -s ~/.jab/vim ~/.vim
+	ln -s ~/.jab/vim/vimrc ~/.vimrc
+	ln -s ~/.jab/vim/vimperatorrc ~/.vimperatorrc
+	ln -s ~/.jab/python/pythonrc.py ~/.pythonrc.py
  
 Start using it
 
