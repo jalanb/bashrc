@@ -40,3 +40,7 @@ The first one doesn't exist
 	[<path "'/home/builder/.jab/python/site'">,
 	 <path "'/mnt/source/amg/trunk/trackers/builder'">,
 	 <path "'/home/builder/python25/lib/python2.5/site-packages/altobridge'">]
+
+	>>> bashrc = paths.home / '.bashrc'
+	>>> bashrc.isfile()
+	True

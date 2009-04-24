@@ -27,3 +27,6 @@ def environ_paths():
 
 globals().update(environ_paths())
 
+here = path('.')
+home = path('~').expanduser()
+
