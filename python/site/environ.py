@@ -21,7 +21,8 @@ def read_environ_keys():
 def read_bash(keys):
 	result = {}
 	for key in keys:
-		result[key] = environ[key]
+		try: result[key] = environ[key]
+		except KeyError: pass
 	return result
 
 jab = {}
