@@ -38,7 +38,7 @@ if !exists("Try")
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
 		let command = "! python ~/python/try.py -qa "
-		let command_line = command . item_name . " > " . fails . " 2>&1"
+		let command_line = command . item_name . " > " . fails . " 2>&1 || true"
 		try
 			exec command_line
 			redraw!
@@ -51,11 +51,11 @@ if !exists("Try")
 		if ! z
 			return
 		endif
-		if expand("%:e") != "fail"
-			" next command depends on the taborder from start of this script
-			" 	because it assumes *.fail is in the last tab
-			exec "tablast"
+		exec "tablast"
+		if expand("%:e") == "fail"
+			exec "quit!"
 		endif
+		exec "tabnew! " . fails
 	endfunction
 	command -nargs=0 Try :call Try()
 	noremap T :Try<cr>
