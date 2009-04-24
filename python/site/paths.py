@@ -19,13 +19,15 @@ def environ_paths():
 				result[key] = paths
 			else:
 				result[key] = paths[0]
-		elif '/' in value:
-			result[key] = value
-	return result
+#       elif '/' in value: result[key] = value
+	class paths: pass
+	paths = paths()
+	paths.__dict__.update(result)
+	return paths
 	raise str(result['MONTYLINGUA'])
 	if key == 'MONTYLINGUA': raise str(result[key])
 
-globals().update(environ_paths())
+environ = environ_paths()
 
 here = path('.')
 home = path('~').expanduser()

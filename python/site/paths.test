@@ -1,3 +1,7 @@
+The paths module
+================
+
+	>>> import sys
 	>>> from pprint import pprint
 	>>> import paths
 	>>> paths.path('.').mp3_files()
@@ -8,38 +12,39 @@ paths reads from environ
 
 And looks for paths therein
 	It tries anything with a "/"
-	>>> environ.AMG_SOURCE
-	'/mnt/source/amg'
-	>>> paths.AMG_SOURCE
-	<path "'/mnt/source/amg'">
-	>>> paths.EDITOR
-	<path "'/bin/vim'">
-
-If it looks like a path, but does not exist 
-	then it is not converted to a path
-	>>> environ.VERSION
-	'4.5/RC30'
-	>>> paths.VERSION
-	'4.5/RC30'
+	>>> environ.EDITOR
+	'/Users/jab/bin/vim'
+	>>> paths.environ.EDITOR
+	path('/Users/jab/bin/vim')
 
 And not all are tried
 	>>> print environ.HISTSIZ
 	100000
-	>>> print paths.HISTSIZ
+	>>> print paths.environ.HISTSIZ
 	Traceback (most recent call last):
 	  ...
-	AttributeError: 'module' object has no attribute 'HISTSIZ'
+	AttributeError: paths instance has no attribute 'HISTSIZ'
 
 Path lists are split up,
-	only existing paths are kept in the resulting list
-	>>> pprint( environ.PYTHONPATH )
-	'/home/builder/python/site:/home/builder/.jab/python/site:/mnt/source/amg/trunk/trackers/builder:/home/builder/python25/lib/python2.5/site-packages/altobridge'
+	>>> environ.PYTHONPATH 
+	'...:...:'
+	>>> len(paths.environ.PYTHONPATH) > 1 
+	True
 
-The first one doesn't exist
-	>>> pprint( paths.PYTHONPATH )
-	[<path "'/home/builder/.jab/python/site'">,
-	 <path "'/mnt/source/amg/trunk/trackers/builder'">,
-	 <path "'/home/builder/python25/lib/python2.5/site-packages/altobridge'">]
+We use PYTHONPATH to get local directories into sys.path
+	>>> strings = environ.PYTHONPATH.split(':')
+	>>> strips = [ str(p) for p in paths.environ.PYTHONPATH ]
+	>>> all( [ s in sys.path for s in strings ] )
+	False
+	>>> all( [ s in sys.path for s in strips ] )
+	True
+
+The paths module got into sys.path through $PYTHONPATH
+	>>> path(paths.__file__).parent in paths.environ.PYTHONPATH
+	True
+
+Handy paths.attributes
+----------------------
 
 	>>> bashrc = paths.home / '.bashrc'
 	>>> bashrc.isfile()

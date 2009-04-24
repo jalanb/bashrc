@@ -45,6 +45,17 @@ if !exists("Try")
 		catch /.*/
 			" echo fred
 		endtry
+		let old_tab = expand("%")
+		exec "tablast"
+		let last_tab = expand("%")
+		if expand("%:e") == "fail"
+			exec "quit!"
+		endif
+		if old_tab != last_tab
+			while old_tab != expand("%")
+				exec "tabnext"
+			endwhile
+		endif
 		let path_to_fails = expand(fails)
 		let z = getfsize(path_to_fails)
 		" echo "Size of " . path_to_fails . " is " . z
@@ -52,13 +63,10 @@ if !exists("Try")
 			return
 		endif
 		exec "tablast"
-		if expand("%:e") == "fail"
-			exec "quit!"
-		endif
 		exec "tabnew! " . fails
 	endfunction
 	command -nargs=0 Try :call Try()
-	noremap T :Try<cr>
+	noremap t :Try<cr>
 endif
 if !exists("Mash")
 	function Mash()
