@@ -123,9 +123,10 @@ add_to_pythonpath $HOME/.jab/python/site
 add_to_pythonpath $BUILDER_WORKING
 add_to_pythonpath $SITE/altobridge
 if [ -f ~/.pythonrc.py ]
+then
 	export PYTHONSTARTUP=~/.pythonrc.py
 else
-	export PYTHONSTARTUP=~/.jab/pythonrc.py
+	export PYTHONSTARTUP=~/.jab/python/pythonrc.py
 fi
 
 if [ -x /opt/local/bin/gwhich ]
