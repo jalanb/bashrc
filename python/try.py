@@ -11,8 +11,40 @@ from optparse import OptionParser
 try:
 	from path import path
 except ImportError:
-	from altobridge.path import path
+	print >> sys.stderr, 'Cannot import path'
+	sys.exit(3)
 
+def run_command(command):
+	status, output = commands.getstatusoutput(command)
+	if status:
+		print 'FAIL: %s:%s' % (status,output)
+		return False
+	print output
+	return True
+
+class Test_Being_Run:
+	def __init__(self,that):
+		self.runner = path(sys.argv[0])
+		self.here = path('.')
+		self.Here = path(os.path.abspath('.'))
+		self.home = path(os.path.expanduser('~'))
+		self.username = os.environ['USER']
+		try:
+			self.host = os.environ['HOST']
+		except KeyError:
+			try:
+				self.host = os.environ['HOSTNAME']
+			except KeyError:
+				self.host = None
+				if self.home.startswith('/Users'):
+					self.host = 'jab.ook'
+		self.user = '%s@%s' % ( self.username, self.host )
+		self.path = self.here.relpathto(that)
+		self.python_path = os.environ['PYTHONPATH']
+		self.bash_path = os.environ['PATH']
+
+	def __repr__(self):
+		return pformat(self.__dict__.keys())
 
 class UserMessage(Exception):
 	pass
@@ -195,8 +227,8 @@ def make_module(path_to_python):
 			fp.close()
 
 def test():
-	options, args = command_line()
 	sys_paths = Sys_Path_Handler()
+	options, args = command_line()
 	doctest_options = doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE
 	if not options.all:
 		doctest_options |= doctest.REPORT_ONLY_FIRST_FAILURE
@@ -206,7 +238,6 @@ def test():
 	run_all = 0
 	failures_all = 0
 	sys_paths.add('.')
-	runtime_path = path(os.path.abspath('.'))
 	try:
 		for test_script in get_test_scripts(options,args):
 			os.chdir(pwd)

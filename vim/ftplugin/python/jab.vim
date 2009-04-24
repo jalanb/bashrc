@@ -37,7 +37,7 @@ if !exists("Try")
 	function Try()
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
-		let command = "! python ~/python/try.py -qa "
+		let command = "! python ~/.jab/python/try.py -qa "
 		let command_line = command . item_name . " > " . fails . " 2>&1 || true"
 		try
 			exec command_line
