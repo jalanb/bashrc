@@ -112,6 +112,7 @@ alias clx="cl; lx "
 alias cly="cl; ly "
 alias cit="kd /usr/local/trackers/itTracker"
 alias cjt='kd /usr/local/trunk/trackers/issues/tracker'
+alias cjy='kd ~/.jab/python'
 alias clt="kd /usr/local/trunk/trackers/"
 alias cst="kd /usr/local/trackers/csTracker"
 alias cta="c  ~/trackers/issues/tracker"
