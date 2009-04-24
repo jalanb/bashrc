@@ -3,8 +3,9 @@ import imp
 import sys
 import doctest
 import fnmatch
+import commands
 import datetime
-from pprint import pprint
+from pprint import pprint, pformat
 from optparse import OptionParser
 
 try:
@@ -12,7 +13,6 @@ try:
 except ImportError:
 	from altobridge.path import path
 
-runtime_path = path(os.path.abspath('.'))
 
 class UserMessage(Exception):
 	pass
@@ -73,7 +73,6 @@ def find_test_file(arg):
 	return None
 
 def get_dir_path(item):
-
 	p = path(item)
 	if p.isdir():
 		return p
@@ -100,7 +99,7 @@ class Sys_Path_Handler:
 def any_extension(p):
 	if p.isfile():
 		dirr = p.parent
-		glob = p.namebase + '*'
+		glob = p.namebase + '.*'
 	elif p.isdir():
 		dirr = p
 		glob = '*'
@@ -109,7 +108,7 @@ def any_extension(p):
 			dirr = p.parent
 		else:
 			dirr = path('.')
-		glob = '%s*' % p.namebase
+		glob = '%s.*' % p.namebase
 	if not dirr.isdir(): return []
 	return [ f for f in dirr.files(glob)  ]
 
@@ -207,6 +206,7 @@ def test():
 	run_all = 0
 	failures_all = 0
 	sys_paths.add('.')
+	runtime_path = path(os.path.abspath('.'))
 	try:
 		for test_script in get_test_scripts(options,args):
 			os.chdir(pwd)
@@ -220,8 +220,19 @@ def test():
 					failures, testsRun = doctest.testmod(module,optionflags=doctest_options)
 					del module
 				else:
-					message = 'try %s;' % runtime_path.relpathto(test_script)
-					failures, testsRun = doctest.testfile(test_script,optionflags=doctest_options,module_relative=False)
+					message = 'try %s;' % test_script
+					failures, testsRun = doctest.testfile(
+						test_script,
+						optionflags=doctest_options,
+						module_relative=False,
+						globs = {
+							'test' : Test_Being_Run(test_script),
+							'sys' : sys,
+							'path' : path,
+							'show' : pprint,
+							'bash' : run_command,
+						}
+					)
 			finally:
 				sys_paths.remove(test_script)
 			if testsRun:
