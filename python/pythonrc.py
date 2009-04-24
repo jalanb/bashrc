@@ -4,3 +4,6 @@
 from path import path
 import environ
 
+here = path('.')
+home = path('~').expanduser()
+
