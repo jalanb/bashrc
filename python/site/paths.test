@@ -1,0 +1,42 @@
+	>>> from pprint import pprint
+	>>> import paths
+	>>> paths.path('.').mp3_files()
+	[]
+
+paths reads from environ
+	>>> import environ
+
+And looks for paths therein
+	It tries anything with a "/"
+	>>> environ.AMG_SOURCE
+	'/mnt/source/amg'
+	>>> paths.AMG_SOURCE
+	<path "'/mnt/source/amg'">
+	>>> paths.EDITOR
+	<path "'/bin/vim'">
+
+If it looks like a path, but does not exist 
+	then it is not converted to a path
+	>>> environ.VERSION
+	'4.5/RC30'
+	>>> paths.VERSION
+	'4.5/RC30'
+
+And not all are tried
+	>>> print environ.HISTSIZ
+	100000
+	>>> print paths.HISTSIZ
+	Traceback (most recent call last):
+	  ...
+	AttributeError: 'module' object has no attribute 'HISTSIZ'
+
+Path lists are split up,
+	only existing paths are kept in the resulting list
+	>>> pprint( environ.PYTHONPATH )
+	'/home/builder/python/site:/home/builder/.jab/python/site:/mnt/source/amg/trunk/trackers/builder:/home/builder/python25/lib/python2.5/site-packages/altobridge'
+
+The first one doesn't exist
+	>>> pprint( paths.PYTHONPATH )
+	[<path "'/home/builder/.jab/python/site'">,
+	 <path "'/mnt/source/amg/trunk/trackers/builder'">,
+	 <path "'/home/builder/python25/lib/python2.5/site-packages/altobridge'">]
