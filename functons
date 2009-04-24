@@ -175,6 +175,7 @@ stat ()
 {
 	if [[ -z "$1" ]]
 	then
+		clean
 		do_stat
 	else
 		for file in $*
