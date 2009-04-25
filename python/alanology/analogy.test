@@ -3,24 +3,28 @@ The analogy module
 
 	>>> import analogy 
 
-The analogy module reads *.j such as it's own
-	>>> module_j = analogy.__file__.replace('.pyc','.j').replace('.py','.j')
+Dog food time
+	>>> analogy_grammar = analogy.module_grammar(analogy)
+	>>> string = analogy.string_to_list(analogy_grammar)
 
-Convert a string to a list of characters
-	>>> text = file(module_j).read()
-	>>> lyst = analogy.string_to_list(text)
-	>>> show( lyst[0:7] )
-	[<lower 'i'>,
-	 <lower 's'>,
-	 <space ' '>,
-	 <lower 'i'>,
-	 <lower 's'>,
-	 <space ' '>,
-	 <lower 'a'>]
+Our grammar starts off looking like this
+	>>> print string
+	is is a verb
+	A is a noun
+
+Which is stored in a string
+	>>> string
+	<string 'is is a verb
+	A is a noun
+	'>
+
+Which is made up of letters and stuff
+	>>> print string.to_str(0,3)
+	[<lower 'i'>, <lower 's'>, <space ' '>]
 
 Group them by their class
 	And convert the groups to strings with plural names
-	>>> lyst = analogy.lysted( lyst )
+	>>> lyst = analogy.lysted( string )
 	>>> show( lyst[0:7] )
 	[<lowers 'is'>,
 	 <spaces ' '>,

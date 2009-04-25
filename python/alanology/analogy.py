@@ -2,7 +2,11 @@ import twine
 import tally
 import lists
 
+def module_grammar(module):
+	return file(module.__file__.replace('.pyc','.j').replace('.py','.j')).read()
+
 def string_to_list(string_of_characters):
+	'''Convert a Python string to a Tally of twisted characters'''
 	lyst = tally.tlist('string')([ twisted(c) for c in string_of_characters ])
 	return lyst
 
