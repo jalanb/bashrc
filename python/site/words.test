@@ -1,0 +1,22 @@
+	>>> from words import matchCase
+	>>> print matchCase('ALAN','alanies')
+	ALANIES
+	>>> print matchCase('Alan','alanies')
+	Alanies
+	>>> print matchCase('alaN','alanies')
+	alaNies
+	>>> print matchCase('alan','alanies')
+	alanies
+
+	>>> from words import pluralize
+	>>> print pluralize('fred')
+	freds
+	>>> print pluralize('freddy')
+	freddies
+	>>> print pluralize('punch')
+	punches
+	>>> print pluralize('fish')
+	fish
+	>>> print pluralize('index')
+	indices
+	

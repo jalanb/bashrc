@@ -1,0 +1,12 @@
+**********************************************************************
+File "/Users/jab/python/words.test", line 20, in words.test
+Failed example:
+    print pluralize('index')
+Expected:
+    indices
+Got:
+    indexes
+**********************************************************************
+1 items had failures:
+   1 of  11 in words.test
+***Test Failed*** 1 failures.

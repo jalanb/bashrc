@@ -1,0 +1,57 @@
+The twine module
+================
+
+	>>> from twine import Twine
+
+A Twine is ako string
+	>>> fred = Twine('Fred')
+	>>> print fred
+	Fred
+
+With a better %r than string
+	>>> fred
+	<Twine 'Fred'>
+
+And can parse out its class name
+	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	Twine twine.Twine Twines
+
+A subclass of Twine
+	>>> class Freddy(Twine): pass
+	>>> fred = Freddy('fred')
+
+is also ako string
+	>>> print fred
+	fred
+
+and knows its class
+	>>> fred
+	<Freddy 'fred'>
+
+and parses its name
+	Note:
+		full class name has no module
+		it was created in this script
+	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	Freddy Freddy Freddies
+
+I think this one is a meta-sub-class
+	but it might be a sub-meta-class.
+	Anyway, the class name you provide is sent into a method
+	>>> from twine import twist
+	>>> Teddy = twist('Teddy')
+
+And that gives you a new class
+	>>> ted = Teddy('ted')
+
+which is also ako string
+	>>> print ted
+	ted
+
+and knows its class
+	>>> ted
+	<Teddy 'ted'>
+
+and parses its name
+	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()
+	Teddy twine.Teddy Teddies

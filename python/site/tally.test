@@ -1,0 +1,58 @@
+The tally module
+================
+
+	>>> from tally import Tally
+
+A Tally is ako list
+	>>> fred = Tally([0, 1, 'hello', 2, 3])
+	>>> print fred
+	[0, 1, 'hello', 2, 3]
+
+With a different %r than list
+	>>> fred
+	<Tally [0, 1, 'hello', 2, 3]>
+
+And can parse out its class name
+	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	Tally tally.Tally Tallies
+
+A subclass of Tally
+	>>> class Freddy(Tally): pass
+	>>> fred = Freddy([0, 1, 'hello', 2, 3])
+
+is also ako list
+	>>> print fred
+	[0, 1, 'hello', 2, 3]
+
+and knows its class
+	>>> fred
+	<Freddy [0, 1, 'hello', 2, 3]>
+
+and parses its name
+	Note:
+		full class name has no module
+		it was created in this script
+	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	Freddy Freddy Freddies
+
+I think this one is a meta-sub-class
+	but it might be a sub-meta-class.
+	Anyway, the class name you provide is sent into a method
+	>>> from tally import tlist
+	>>> Teddy = tlist('Teddy')
+
+And that gives you a new class
+	Initialised from a string, just for a change
+	>>> ted = Teddy('ted')
+
+which is still ako list
+	>>> print ted
+	['t', 'e', 'd']
+
+and knows its class
+	>>> ted
+	<Teddy ['t', 'e', 'd']>
+
+and parses its name
+	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()
+	Teddy tally.Teddy Teddies
