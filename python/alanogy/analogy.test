@@ -1,0 +1,54 @@
+The analogy module
+==================
+
+	>>> import analogy 
+
+The analogy module reads *.j such as it's own
+	>>> module_j = analogy.__file__.replace('.pyc','.j').replace('.py','.j')
+
+Convert a string to a list of characters
+	>>> text = file(module_j).read()
+	>>> lyst = analogy.string_to_list(text)
+	>>> show( [l for l in lyst][0:7] )
+	[<lower 'i'>,
+	 <lower 's'>,
+	 <space ' '>,
+	 <lower 'i'>,
+	 <lower 's'>,
+	 <space ' '>,
+	 <lower 'a'>]
+
+Group them by their class
+	And convert the groups to strings with plural names
+	>>> lyst = analogy.lysted( lyst )
+	>>> show( lyst[0:7] )
+	[<lowers 'is'>,
+	 <spaces ' '>,
+	 <lowers 'is'>,
+	 <spaces ' '>,
+	 <lowers 'a'>,
+	 <spaces ' '>,
+	 <lowers 'verb'>]
+
+	>>> lyst = analogy.wordied( lyst )
+	>>> show( lyst[0:7] )
+	[<word 'is'>,
+	 <word 'is'>,
+	 <word 'a'>,
+	 <word 'verb'>,
+	 <word 'A'>]]
+
+	>>> lyst = analogy.classed( lyst )
+	>>> show( lyst[0:7] )
+	[[<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>],
+	 [<uppers 'A'>],
+	 [<spaces ' '>],
+	 [<word 'is'>, <word 'a'>],
+	 [<lowers 'word'>]]
+	>>> lyst = analogy.pluralled( lyst )
+	>>> show( lyst[0:7] )
+	[<words 'isisaverb'>,
+	 <upperss 'A'>,
+	 <spacess ' '>,
+	 <words 'isa'>,
+	 <lowerss 'word'>]
