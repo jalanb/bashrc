@@ -2,6 +2,47 @@ import twine
 import tally
 import lists
 
+def string_to_list(string_of_characters):
+	lyst = tally.tlist('string')([ twisted(c) for c in string_of_characters ])
+	return lyst
+
+def lysted(lyst):
+	return pluralled(classed(lyst))
+
+def pluralled(lyst):
+	result = []
+	for items in lyst:
+		item = items[0]
+		name = item.list_name()
+		value = tally.enjoin(items)
+		result += [ tally.tlist(name)(value) ]
+	return result
+
+def classed(lyst):
+	def same_class(a,b): return a.class_name() == b.class_name()
+	return lists.groups(same_class,[l for l in lyst])
+
+def a_word(prev,curr):
+	if curr.class_name() == 'spaces':
+		if prev.class_name() == 'lowers':
+			return tally.tlist('word')(str(prev)), None
+	return prev,curr
+
+def wordied(lyst):
+	return [l for l in wordled(lyst)]
+
+def wordled(lyst):
+	i = iter(lyst)
+	prev = i.next()
+	while i:
+		curr = i.next()
+		prev, curr = a_word(prev,curr)
+		yield prev
+		if not curr:
+			prev = curr
+			curr = i.next()
+		prev = curr
+
 def twisted(c):
 	if c.isupper():
 		name = 'upper'
@@ -55,45 +96,4 @@ def twisted(c):
 		}
 		name = names[c]
 	return twine.twist(name)(c)
-
-def string_to_list(string_of_characters):
-	lyst = tally.tlist('string')([ twisted(c) for c in string_of_characters ])
-	return lyst
-
-def lysted(lyst):
-	return pluralled(classed(lyst))
-
-def classed(lyst):
-	def same_class(a,b): return a.class_name() == b.class_name()
-	return lists.groups(same_class,[l for l in lyst])
-
-def pluralled(lyst):
-	result = []
-	for items in lyst:
-		item = items[0]
-		name = item.list_name()
-		value = tally.enjoin(items)
-		result += [ tally.tlist(name)(value) ]
-	return result
-
-def a_word(prev,curr):
-	if curr.class_name() == 'spaces':
-		if prev.class_name() == 'lowers':
-			return tally.tlist('word')(str(prev)), None
-	return prev,curr
-
-def wordied(lyst):
-	return [l for l in wordled(lyst)]
-
-def wordled(lyst):
-	i = iter(lyst)
-	prev = i.next()
-	while i:
-		curr = i.next()
-		prev, curr = a_word(prev,curr)
-		yield prev
-		if not curr:
-			prev = curr
-			curr = i.next()
-		prev = curr
 
