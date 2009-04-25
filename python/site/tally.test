@@ -1,10 +1,10 @@
 The tally module
 ================
 
-	>>> from tally import Tally
+	>>> import tally
 
 A Tally is ako list
-	>>> fred = Tally([0, 1, 'hello', 2, 3])
+	>>> fred = tally.Tally([0, 1, 'hello', 2, 3])
 	>>> print fred
 	[0, 1, 'hello', 2, 3]
 
@@ -17,7 +17,7 @@ And can parse out its class name
 	Tally tally.Tally Tallies
 
 A subclass of Tally
-	>>> class Freddy(Tally): pass
+	>>> class Freddy(tally.Tally): pass
 	>>> fred = Freddy([0, 1, 'hello', 2, 3])
 
 is also ako list
@@ -45,14 +45,20 @@ And that gives you a new class
 	Initialised from a string, just for a change
 	>>> ted = Teddy('ted')
 
-which is still ako list
+When it starts from a string it still looks like a string
 	>>> print ted
-	['t', 'e', 'd']
-
-and knows its class
+	ted
 	>>> ted
-	<Teddy ['t', 'e', 'd']>
+	<Teddy 'ted'>
 
-and parses its name
+But it is really ako list
+	>>> try: print ted.upper()
+	... except AttributeError: print ted.pop()
+	d
+
+It still parses its name the same way
 	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()
 	Teddy tally.Teddy Teddies
+
+	>>> tally.enjoin([])
+	[]

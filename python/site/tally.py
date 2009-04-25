@@ -15,10 +15,18 @@ class Tally(list):
 	at http://mail.python.org/pipermail/python-dev/2006-January/060115.html
 	'''
 	def __str__(self):
-		return '[%s]' % ', '.join([repr(s) for s in self])
+		try: return self.as_str()
+		except TypeError: return self.to_str()
 
 	def __repr__(self):
-		return "<%s %s>" % (self.class_name(),str(self))
+		try: return "<%s '%s'>" % (self.class_name(),self.as_str())
+		except TypeError: return "<%s %s>" % (self.class_name(),self.to_str())
+
+	def as_str(self):
+		return ''.join(self)
+
+	def to_str(self):
+		return '[%s]' % ', '.join([repr(s) for s in self])
 
 	def full_class_name(self):
 		class_repr = str(self.__class__)
@@ -51,3 +59,5 @@ def tlist(name,bases=None,ns=None):
 	escaped = name.replace(' ','_')
 	return MySecondMeta(escaped, (Tally,), ns)
 
+def enjoin(lyst):
+	return lyst

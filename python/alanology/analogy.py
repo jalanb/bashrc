@@ -1,4 +1,5 @@
-from twine import twist
+import twine
+import tally
 import lists
 
 def twisted(c):
@@ -53,10 +54,10 @@ def twisted(c):
 			'|' : 'bar',
 		}
 		name = names[c]
-	return twist(name)(c)
+	return twine.twist(name)(c)
 
 def string_to_list(string_of_characters):
-	lyst = [ twisted(c) for c in string_of_characters ]
+	lyst = tally.tlist('string')([ twisted(c) for c in string_of_characters ])
 	return lyst
 
 def lysted(lyst):
@@ -71,14 +72,14 @@ def pluralled(lyst):
 	for items in lyst:
 		item = items[0]
 		name = item.list_name()
-		value = ''.join(items)
-		result += [ twist(name)(value) ]
+		value = tally.enjoin(items)
+		result += [ tally.tlist(name)(value) ]
 	return result
 
 def a_word(prev,curr):
 	if curr.class_name() == 'spaces':
 		if prev.class_name() == 'lowers':
-			return twist('word')(str(prev)), None
+			return tally.tlist('word')(str(prev)), None
 	return prev,curr
 
 def wordied(lyst):
@@ -95,3 +96,4 @@ def wordled(lyst):
 			prev = curr
 			curr = i.next()
 		prev = curr
+

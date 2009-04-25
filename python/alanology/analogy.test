@@ -9,7 +9,7 @@ The analogy module reads *.j such as it's own
 Convert a string to a list of characters
 	>>> text = file(module_j).read()
 	>>> lyst = analogy.string_to_list(text)
-	>>> show( [l for l in lyst][0:7] )
+	>>> show( lyst[0:7] )
 	[<lower 'i'>,
 	 <lower 's'>,
 	 <space ' '>,
