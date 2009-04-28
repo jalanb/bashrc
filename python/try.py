@@ -14,6 +14,9 @@ except ImportError:
 	print >> sys.stderr, 'Cannot import path'
 	sys.exit(3)
 
+def public_dir(x):
+	return [ d for d in dir(x) if not d.startswith('__') ]
+	
 def run_command(command):
 	status, output = commands.getstatusoutput(command)
 	if status:
@@ -262,6 +265,7 @@ def test():
 							'path' : path,
 							'show' : pprint,
 							'bash' : run_command,
+							'public_dir' : public_dir,
 						}
 					)
 			finally:
