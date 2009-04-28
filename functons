@@ -35,7 +35,7 @@ y ()
 kd ()
 { 
     cd `python ~/.jab/python/kd.py $*`
-	stat
+	stat 
 }
 
 rf ()
@@ -175,7 +175,12 @@ stat ()
 {
 	if [[ -z "$1" ]]
 	then
-		clean
+		if pwd | grep -q site-packages
+		then
+			clean keep_pycos
+		else
+			clean
+		fi
 		do_stat
 	else
 		for file in $*
@@ -188,12 +193,22 @@ stat ()
 
 clean ()
 {
+	if [[ "x$1" == "xkeep_pycos" ]]
+	then
+		KEEP_PYCOS=true
+		shift
+	else
+		KEEP_PYCOS=false
+	fi
 	test -n "$1" && dir=$1 || dir="."
 	find $dir -name "*~" 			-exec /bin/rm -vrf {} \;
 	find $dir -name ".*~" 			-exec /bin/rm -vrf {} \;
-	find $dir -name "*.py[co]" 		-exec /bin/rm -vrf {} \;
 	find $dir -name "*.fail" -size -1 	-exec /bin/rm -vrf {} \;
 	find $dir -name "fred*" 		-exec /bin/rm -vrf {} \;
+	if ! $KEEP_PYCOS
+	then
+		find $dir -name "*.py[co]" 		-exec /bin/rm -vrf {} \;
+	fi
 }
 
 build ()

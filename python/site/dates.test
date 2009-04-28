@@ -1,0 +1,15 @@
+The dates module
+================
+
+now is hard to test, reprodicibly
+
+	>>> import dates
+	>>> p = path('test_me_now')
+	>>> if p.exists(): p.remove()
+	>>> p.touch()
+	>>> now = dates.now()
+	>>> import time
+	>>> year, month, day, hour, minute, second, _, _, _ = time.gmtime(p.getctime())
+	>>> p.remove()
+	>>> now.year == year and now.day == day and now.second == second
+	True
