@@ -1,0 +1,45 @@
+l
+==
+
+	>>> import l
+
+If that worked, then we can test for these files:
+
+	>>> py = path('l.py')
+	>>> test = path('l.test')
+
+This one might be mising
+
+	>>> tests = path('l.tests')
+
+	>>> l_files = py, test, tests
+
+get_dirs
+--------
+
+get_dirs converts a list of strings to a list of paths
+	if they exist
+
+	>>> print l.get_dirs(['.', '..', 'No such directory'])
+	[path('.'), path('..')]
+
+It defaults to only the current directory
+
+	>>> here = l.get_dirs()
+	>>> print here
+	[path('.')]
+
+get_files
+---------
+
+get_files converts a list of directories to a list of all their files' paths
+	(The list of files is flat)
+
+	>>> dirs = l.get_dirs()
+	>>> files = l.get_files(dirs)
+	>>> #show( files )
+	>>> filenames = [ f.name for f in files] 
+	>>> #show( l_files )
+	>>> [ x in files for x in l_files ]
+	[True, True, True]
+

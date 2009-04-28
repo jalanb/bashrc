@@ -1,0 +1,50 @@
+ly
+==
+
+	>>> import ly
+	>>> py = path('ly.py')
+	>>> test = path('ly.test')
+	>>> tests = path('ly.tests')
+	>>> ly_files = py, test, tests
+	>>> files = ly.get_files()
+
+get_stems
+---------
+
+This method converts a list of files to a dctionary
+	keys are file "stems"
+		the "stem" of "alan/was/here.txt" is "here"
+	values are a list of all the files with the same stem
+
+	>>> stems = ly.get_stems(files)
+	>>> show( stems['ly'] )
+	[path('ly.py'), path('ly.pyc'), path('ly.test')]
+
+filter_stems
+------------
+This method removes all keys from a stems dictionary
+	which do not have at least one file with a sought extension
+
+
+The test depends on this file
+	>>> path('trace.log').isfile()
+	True
+
+trace.log exists, so "trace" must be a stem
+	>>> 'trace' in stems
+	True
+
+But we are only interested in files with these extensions
+	>>> print ly.py_exts
+	['.py', '.test', '.tests']
+
+So, after we filter, "trace" is no longer a stem
+	>>> ly.filter_stems(stems,ly.py_exts)
+	>>> 'trace' in stems
+	False
+
+But ly still is a stem
+	>>> show( stems['ly'] )
+	[path('ly.py'), path('ly.pyc'), path('ly.test')]
+
+	>>> ly.show(stems)

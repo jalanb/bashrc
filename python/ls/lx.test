@@ -1,0 +1,16 @@
+lx
+==
+
+	>>> import lx
+	>>> py = path('lx.py')
+	>>> test = path('lx.test')
+	>>> tests = path('lx.tests')
+	>>> lx_files = py, test, tests
+
+get_exts
+--------
+
+	>>> files = lx.get_files()
+	>>> exts = lx.get_exts(files)
+	>>> print py in exts['.py'], test in exts['.test'], tests in exts['.tests']
+	True True True
