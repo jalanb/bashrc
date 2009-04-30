@@ -26,26 +26,35 @@ def classed(lyst):
 	def same_class(a,b): return a.class_name() == b.class_name()
 	return lists.groups(same_class,[l for l in lyst])
 
-def a_word(prev,curr):
-	if curr.class_name() == 'spaces':
-		if prev.class_name() == 'lowers':
-			return tally.tlist('word')(str(prev)), None
-	return prev,curr
-
-def wordied(lyst):
-	return [l for l in wordled(lyst)]
-
-def wordled(lyst):
-	i = iter(lyst)
-	prev = i.next()
-	while i:
-		curr = i.next()
-		prev, curr = a_word(prev,curr)
-		yield prev
-		if not curr:
-			prev = curr
+def pairer(name,before,after):
+	def take_every_two(lyst,take_two):
+		i = iter(lyst)
+		prev = i.next()
+		while i:
 			curr = i.next()
-		prev = curr
+			prev, curr = take_two(prev,curr)
+			yield prev
+			if not curr:
+				prev = curr
+				curr = i.next()
+			prev = curr
+
+	def named_pair(name,*outer_args):
+
+			if all(i.class_name() == o for i,o in zip(inner_args,outer_args)):
+				return tally.tlist(name)(inner_args[0]), None
+			return inner_args
+		return take_two
+
+	method = named_pair(name,before,after)
+	def reduce_by_pairs(lyst):
+		new_list = take_every_two(lyst,method)
+		return [l for l in new_list]
+
+	return reduce_by_pairs
+
+worded = pairer('word','lowers','spaces')
+sentenced = pairer('sentence','words','eols')
 
 def twisted(c):
 	if c.isupper():

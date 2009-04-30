@@ -1,2 +1,2 @@
-is is a verb
-A is a noun
+is is a verb 
+verb is a noun 

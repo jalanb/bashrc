@@ -10,12 +10,12 @@ Dog food time
 Our grammar starts off looking like this
 	>>> print string
 	is is a verb
-	A is a noun
+	verb is a noun
 
 Which is stored in a string
 	>>> string
 	<string 'is is a verb
-	A is a noun
+	verb is a noun
 	'>
 
 Which is made up of letters and stuff
@@ -25,34 +25,20 @@ Which is made up of letters and stuff
 Group them by their class
 	And convert the groups to strings with plural names
 	>>> lyst = analogy.lysted( string )
-	>>> show( lyst[0:7] )
-	[<lowers 'is'>,
-	 <spaces ' '>,
-	 <lowers 'is'>,
-	 <spaces ' '>,
-	 <lowers 'a'>,
-	 <spaces ' '>,
-	 <lowers 'verb'>]
+	>>> show( lyst[0:4] )
+	[<lowers 'is'>, <spaces ' '>, <lowers 'is'>, <spaces ' '>]
 
-	>>> lyst = analogy.wordied( lyst )
-	>>> show( lyst[0:7] )
-	[<word 'is'>,
-	 <word 'is'>,
-	 <word 'a'>,
-	 <word 'verb'>,
-	 <word 'A'>]]
+	>>> lyst = analogy.worded( lyst )
+	>>> show( lyst[0:4] )
+	[<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]
 
-	>>> lyst = analogy.classed( lyst )
-	>>> show( lyst[0:7] )
-	[[<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>],
-	 [<uppers 'A'>],
-	 [<spaces ' '>],
-	 [<word 'is'>, <word 'a'>],
-	 [<lowers 'word'>]]
-	>>> lyst = analogy.pluralled( lyst )
-	>>> show( lyst[0:7] )
-	[<words 'isisaverb'>,
-	 <upperss 'A'>,
-	 <spacess ' '>,
-	 <words 'isa'>,
-	 <lowerss 'word'>]
+	>>> lyst = analogy.lysted( lyst )
+	>>> show( lyst[0:4] )
+	[<words [<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]>,
+	 <eols [<eols '
+	'>]>,
+	 <words [<word 'verb'>, <word 'is'>, <word 'a'>, <word 'noun'>]>]
+
+	>>> lyst = analogy.sentenced( lyst )
+	>>> show( lyst[0:4] )
+	[<sentence [<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]>]
