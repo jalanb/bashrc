@@ -40,7 +40,7 @@ def pairer(name,before,after):
 			prev = curr
 
 	def named_pair(name,*outer_args):
-
+		def take_two(*inner_args):
 			if all(i.class_name() == o for i,o in zip(inner_args,outer_args)):
 				return tally.tlist(name)(inner_args[0]), None
 			return inner_args
