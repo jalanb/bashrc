@@ -30,14 +30,17 @@ def pairer(name,before,after):
 	def take_every_two(lyst,take_two):
 		i = iter(lyst)
 		prev = i.next()
-		while i:
-			curr = i.next()
-			prev, curr = take_two(prev,curr)
-			yield prev
-			if not curr:
-				prev = curr
+		try:
+			while i:
 				curr = i.next()
-			prev = curr
+				prev, curr = take_two(prev,curr)
+				yield prev
+				if not curr:
+					prev = curr
+					curr = i.next()
+				prev = curr
+		finally:
+			if prev: yield prev
 
 	def named_pair(name,*outer_args):
 		def take_two(*inner_args):

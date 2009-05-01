@@ -25,20 +25,54 @@ Which is made up of letters and stuff
 Group them by their class
 	And convert the groups to strings with plural names
 	>>> lyst = analogy.lysted( string )
-	>>> show( lyst[0:4] )
-	[<lowers 'is'>, <spaces ' '>, <lowers 'is'>, <spaces ' '>]
+	>>> show( lyst )
+	[<lowers 'is'>,
+	 <spaces ' '>,
+	 <lowers 'is'>,
+	 <spaces ' '>,
+	 <lowers 'a'>,
+	 <spaces ' '>,
+	 <lowers 'verb'>,
+	 <spaces ' '>,
+	 <eols '
+	'>,
+	 <lowers 'verb'>,
+	 <spaces ' '>,
+	 <lowers 'is'>,
+	 <spaces ' '>,
+	 <lowers 'a'>,
+	 <spaces ' '>,
+	 <lowers 'noun'>,
+	 <spaces ' '>,
+	 <eols '
+	<BLANKLINE>
+	'>]
 
 	>>> lyst = analogy.worded( lyst )
-	>>> show( lyst[0:4] )
-	[<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]
+	>>> show( lyst )
+	[<word 'is'>,
+	 <word 'is'>,
+	 <word 'a'>,
+	 <word 'verb'>,
+	 <eols '
+	'>,
+	 <word 'verb'>,
+	 <word 'is'>,
+	 <word 'a'>,
+	 <word 'noun'>,
+	 <eols '
+	'>]
 
 	>>> lyst = analogy.lysted( lyst )
-	>>> show( lyst[0:4] )
+	>>> show( lyst )
 	[<words [<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]>,
 	 <eols [<eols '
 	'>]>,
-	 <words [<word 'verb'>, <word 'is'>, <word 'a'>, <word 'noun'>]>]
+	 <words [<word 'verb'>, <word 'is'>, <word 'a'>, <word 'noun'>]>,
+	 <eols [<eols '
+	'>]>]
 
 	>>> lyst = analogy.sentenced( lyst )
-	>>> show( lyst[0:4] )
-	[<sentence [<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]>]
+	>>> show( lyst )
+	[<sentence [<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]>,
+	 <sentence [<word 'verb'>, <word 'is'>, <word 'a'>, <word 'noun'>]>]

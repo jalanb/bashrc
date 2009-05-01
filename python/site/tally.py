@@ -22,11 +22,21 @@ class Tally(list):
 		try: return "<%s '%s'>" % (self.class_name(),self.as_str())
 		except TypeError: return "<%s %s>" % (self.class_name(),self.to_str())
 
-	def as_str(self):
-		return ''.join(self)
+	def as_str(self,separator=None):
+		if separator is None: separator = ''
+		return separator.join(self)
 
-	def to_str(self):
-		return '[%s]' % ', '.join([repr(s) for s in self])
+	def to_str(self,i=None,j=None,separator=None):
+		if i is None and j is None:
+			items = self
+		elif i is None:
+			items = self[:j]
+		elif j is None:
+			items = self[i:]
+		else:
+			items = self[i:j]
+		if separator is None: separator = ', '
+		return '[%s]' % separator.join([repr(s) for s in items])
 
 	def full_class_name(self):
 		class_repr = str(self.__class__)
@@ -45,6 +55,12 @@ class Tally(list):
 		return result[i:]
 
 	def list_name(self):
+		try:
+			list_of_items = self[0].list_name()
+		except AttributeError:
+			list_of_items = ''
+		if self.class_name() == list_of_items:
+			return self.class_name()
 		return pluralize( self.class_name() )
 
 	def str_class_and_list(self):
