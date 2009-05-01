@@ -69,6 +69,10 @@ nnoremap <C-F4> <C-W>c
 "noremap y - yank
  noremap yb byw
 "noremap z - folds. centering, ...
+ noremap zx zo
+ noremap zs zR
+"noremap zc  
+ noremap zd zM 
 "
 " Punctuation
 "
