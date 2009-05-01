@@ -12,23 +12,30 @@ NoMatchParen
 
 set autowrite
 let s:file_py = expand("%")
+let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
+if filereadable(s:file_jabber) && s:file_py != s:file_jabber
+	exec "tabnew " s:file_jabber
+endif
 let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
 if filereadable(s:file_grammar) && s:file_py != s:file_grammar
 	exec "tabnew " s:file_grammar
 endif
-let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
-if filereadable(s:file_tests) && s:file_py != s:file_tests
-	exec "tabnew " s:file_tests
-endif
 let s:file_test = substitute(s:file_py,'\.py$','.test',"")
 if filereadable(s:file_test) && s:file_py != s:file_test
 	exec "tabnew " s:file_test
+endif
+let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
+if filereadable(s:file_tests) && s:file_py != s:file_tests
+	exec "tabnew " s:file_tests
 endif
 let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
 if filereadable(s:file_fail) && s:file_py != s:file_fail
 	exec "tabnew " s:file_fail
 endif
 tabnext
+1,$foldopen
+" tabnext
+" set filetype=doctest
 
 " 
 " Try to run this file(s) through doctest
