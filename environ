@@ -94,11 +94,8 @@ if [ -d /mnt/source ]
 then
 	export MAIN_PYTHON=$BUILDER_WORKING
 	export SCRIPTS=$BUILDER_WORKING
-elif [ -d ~/alans_tests ]
-then
-	export MAIN_PYTHON=$SITE/altobridge
 else
-	export MAIN_PYTHON=~/python
+	export MAIN_PYTHON=~/.jab/python
 fi
 
 export LCP_SOURCE=$SOURCE/lcp
