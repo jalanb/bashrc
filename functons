@@ -190,10 +190,10 @@ clean ()
 {
 	if [[ "x$1" == "xpycos" ]]
 	then
-		KEEP_PYCOS=false
+		REMOVE_PYCOS=true
 		shift
 	else
-		KEEP_PYCOS=true
+		REMOVE_PYCOS=false
 	fi
 	if [[ "x$1" == "xquietly" ]]
 	then
@@ -207,7 +207,7 @@ clean ()
 	find $dir -name ".*~" 			-exec /bin/rm $options {} \;
 	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} \;
 	find $dir -name "fred*" 		-exec /bin/rm $options {} \;
-	if ! $KEEP_PYCOS
+	if $REMOVE_PYCOS
 	then
 		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} \;
 	fi
