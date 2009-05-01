@@ -149,6 +149,8 @@ alias url="python ~/bin/show_url.py "
 
 alias cdsi="cd /usr/lib/python2.4/site-packages"
 alias cdev="cd ~/jab/alto/dev"
+alias cjya='kd ~/.jab/python/alanology'
+alias cjys='kd ~/.jab/python/site'
 
 alias down="cd ~/Download"
 
