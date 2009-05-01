@@ -1,5 +1,8 @@
 #! /bin/sh
 
+JAB=$HOME/.jab
+BIN=$JAB/bin
+
 export pinky_ip=192.168.0.103
 export COLUMNS
 
@@ -26,7 +29,7 @@ add_to_path ()
 		export PATH=${PATH}:$1
 	fi
 }
-export PATH=~/.jab/bin
+export PATH=BIN
 add_to_path ~/bin
 add_to_path ~/git/bin
 add_to_path ~/python25/bin
@@ -51,11 +54,11 @@ if [ -d /amg ]
 then
 	export AMG=file:///amg
 	export LCP=file:///usr/local/svn/lcp
-	export JAB=file:///usr/local/abrogan/jabs
+	export JABS=file:///usr/local/abrogan/jabs
 else
 	export AMG=svn+ssh://ie-track-1/amg
 	export LCP=http://intranet.altobridge.com/svn/lcp
-	export JAB=http://intranet.altobridge.com/jab
+	export JABS=http://intranet.altobridge.com/jab
 fi
 #
 # Working directories
@@ -116,7 +119,7 @@ add_to_pythonpath ()
 		export PYTHONPATH=$PYTHONPATH:$1
 	fi
 }
-add_to_pythonpath $HOME/.jab/python/site
+add_to_pythonpath $JAB/python/site
 add_to_pythonpath $BUILDER_WORKING
 add_to_pythonpath $SITE/altobridge
 if [ -f ~/.pythonrc.py ]
