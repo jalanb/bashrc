@@ -175,12 +175,12 @@ stat ()
 {
 	if [[ -z "$1" ]]
 	then
+		options=quietly
 		if pwd | grep -q site-packages
 		then
-			clean keep_pycos
-		else
-			clean
+			options="$options keep_pycos"
 		fi
+		clean $options
 		do_stat
 	else
 		for file in $*
@@ -200,14 +200,21 @@ clean ()
 	else
 		KEEP_PYCOS=false
 	fi
+	if [[ "x$1" == "xquietly" ]]
+	then
+		options=-vrf
+		shift
+	else
+		options=-rf
+	fi
 	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" 			-exec /bin/rm -vrf {} \;
-	find $dir -name ".*~" 			-exec /bin/rm -vrf {} \;
-	find $dir -name "*.fail" -size -1 	-exec /bin/rm -vrf {} \;
-	find $dir -name "fred*" 		-exec /bin/rm -vrf {} \;
+	find $dir -name "*~" 			-exec /bin/rm $options {} \;
+	find $dir -name ".*~" 			-exec /bin/rm $options {} \;
+	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} \;
+	find $dir -name "fred*" 		-exec /bin/rm $options {} \;
 	if ! $KEEP_PYCOS
 	then
-		find $dir -name "*.py[co]" 		-exec /bin/rm -vrf {} \;
+		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} \;
 	fi
 }
 
