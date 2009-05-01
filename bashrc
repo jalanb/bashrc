@@ -1,8 +1,8 @@
 #! /bin/sh
 
-test -n "$PS1" || return
 
 . environ
+test -n "$PS1" || return
 . prompt green
 . aliases
 . functons
