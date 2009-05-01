@@ -175,12 +175,7 @@ stat ()
 {
 	if [[ -z "$1" ]]
 	then
-		options=quietly
-		if pwd | grep -q site-packages
-		then
-			options="$options keep_pycos"
-		fi
-		clean $options
+		clean quietly
 		do_stat
 	else
 		for file in $*
@@ -193,12 +188,12 @@ stat ()
 
 clean ()
 {
-	if [[ "x$1" == "xkeep_pycos" ]]
+	if [[ "x$1" == "xpycos" ]]
 	then
-		KEEP_PYCOS=true
+		KEEP_PYCOS=false
 		shift
 	else
-		KEEP_PYCOS=false
+		KEEP_PYCOS=true
 	fi
 	if [[ "x$1" == "xquietly" ]]
 	then
