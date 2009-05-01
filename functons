@@ -203,13 +203,13 @@ clean ()
 		options=-rf
 	fi
 	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" 			-exec /bin/rm $options {} \;
-	find $dir -name ".*~" 			-exec /bin/rm $options {} \;
-	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} \;
-	find $dir -name "fred*" 		-exec /bin/rm $options {} \;
+	find $dir -name "*~" 			-exec /bin/rm $options {} 2>/dev/null \;
+	find $dir -name ".*~" 			-exec /bin/rm $options {} 2>/dev/null \;
+	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} 2>/dev/null \;
+	find $dir -name "fred*" 		-exec /bin/rm $options {} 2>/dev/null \;
 	if $REMOVE_PYCOS
 	then
-		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} \;
+		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} 2>/dev/null \;
 	fi
 }
 
