@@ -46,7 +46,8 @@ cj ()
 
 kd ()
 { 
-    cd `python ~/.jab/python/kd.py $*`
+# cd to filename as well as directory
+	cd `python ~/.jab/python/kd.py $*`
 	stat 
 }
 
@@ -65,6 +66,7 @@ rf ()
 
 ru ()
 {
+# do da root root route, do da ru !
 	if [ -z "$*" ]
 	then 
 		sudo -i
@@ -85,24 +87,29 @@ uj ()
 
 cls ()
 {
-    rf
-    clear
-    if [ -z "$*" ]
-    then
-        ls -d `pwd`
-        echo
-    fi
-    ls $*
+# clean, clear, ls
+	rf
+	clear
+	if [ -z "$*" ]
+	then
+	    ls -d `pwd`
+	    echo
+	fi
+	ls $*
 }
 
 fsh ()
 {
+# run fred by his extension
 	if [ -f fred.sh ]
 	then
 		sh fred.sh $*
 	elif [ -f fred.py ]
 	then
 		p fred.py $*
+	elif [ -f "fred.test" ]
+	then
+		try "fred.test" $*
 	elif [ -f fred.c ]
 	then
 		/bin/rm -vf a.out
@@ -118,6 +125,7 @@ fsh ()
 
 fpy ()
 {
+# run fred.py if fred.sh exists
 	if [ -f fred.py ]
 	then
 		p fred.py $*
@@ -126,15 +134,16 @@ fpy ()
 
 lly ()
 {
-    ll *.tests
-    echo
-    ll *.test
-    echo
-    ll *.py
+	ll *.tests
+	echo
+	ll *.test
+	echo
+	ll *.py
 }
 
 upj ()
 {
+# update jab from the repository
 	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
 	then
 		uj
@@ -220,13 +229,13 @@ clean ()
 		options=-rf
 	fi
 	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" 			-exec /bin/rm $options {} 2>/dev/null \;
-	find $dir -name ".*~" 			-exec /bin/rm $options {} 2>/dev/null \;
-	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} 2>/dev/null \;
-	find $dir -name "fred*" 		-exec /bin/rm $options {} 2>/dev/null \;
+	find $dir -name "*~" 			-exec /bin/rm $options {} \;
+	find $dir -name ".*~" 			-exec /bin/rm $options {} \;
+	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} \;
+	find $dir -name "fred*" 		-exec /bin/rm $options {} \;
 	if $REMOVE_PYCOS
 	then
-		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} 2>/dev/null \;
+		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} \;
 	fi
 }
 
@@ -242,9 +251,9 @@ build ()
 
 kodos ()
 {
-    pushd /home/builder/Download/ie-build-1/kodos-2.4.9/ >/dev/null
-    /usr/bin/python kodos.py &
-    popd >/dev/null
+	pushd /home/builder/Download/ie-build-1/kodos-2.4.9/ >/dev/null
+	/usr/bin/python kodos.py &
+	popd >/dev/null
 }
 
 track ()
@@ -260,12 +269,12 @@ track ()
 
 vfile ()
 {
-    `echo "$*" | sed -e"s/^File/vim/" | sed -e"s/, line \([0-9]*\).*/ +\1/"`
+	`echo "$*" | sed -e"s/^File/vim/" | sed -e"s/, line \([0-9]*\).*/ +\1/"`
 }
 
 which ()
 { 
-    ( alias; declare -f ) | \
+	( alias; declare -f ) | \
 		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
 }
 
@@ -313,36 +322,36 @@ svn_log ()
 	else
 		path="."
 	fi
-    svn log $path | head $*
+	svn log $path | head $*
 }
 
 svn_url ()
 {
 	test -n "$1" && dir=$1 || dir="."
-    svn info $dir | grep URL
+	svn info $dir | grep URL
 }
 
 # xxxxxxxx
 
 svn_diff () {
-    dir=`dirname $2`
-    file=`basename $2`
-    pushd "$dir" > /dev/null
-    /usr/bin/$1 "$file" .svn/text-base/"$file".svn-base
-    popd > /dev/null
+	dir=`dirname $2`
+	file=`basename $2`
+	pushd "$dir" > /dev/null
+	/usr/bin/$1 "$file" .svn/text-base/"$file".svn-base
+	popd > /dev/null
 }
 
 svn_info ()
 {
 	test -n "$1" && dir=$1 || dir="."
-    svn info $dir 
+	svn info $dir 
 }
 
 # xxxxxxxxx
 
 svn_issue ()
 {
-    svn log $* | grep -i "^issue" | head
+	svn log $* | grep -i "^issue" | head
 }
 
 # xxxxxxxxxx
