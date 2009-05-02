@@ -57,7 +57,6 @@ alias ab="ssh abrogan@192.168.0.103"
 alias c-='kd - >/dev/null 2>&1'
 alias ca='kd $SITE/altobridge'
 alias cb='kd ~/bin'
-alias cj='kd ~/.jab'
 alias cl='clear'
 alias cm='kd /usr/local/trackers/tracker/db/files/msg'
 alias cr='kd $SITE/roundup'
