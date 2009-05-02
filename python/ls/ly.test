@@ -18,7 +18,11 @@ This method converts a list of files to a dctionary
 
 	>>> stems = ly.get_stems(files)
 	>>> show( stems['ly'] )
-	[path('ly.py'), path('ly.pyc'), path('ly.test')]
+	[path('ly.fail'),
+	 path('ly.py'),
+	 path('ly.pyc'),
+	 path('ly.test'),
+	 path('ly.tests')]
 
 filter_stems
 ------------
@@ -45,6 +49,9 @@ So, after we filter, "trace" is no longer a stem
 
 But ly still is a stem
 	>>> show( stems['ly'] )
-	[path('ly.py'), path('ly.pyc'), path('ly.test')]
+	[path('ly.fail'),
+	 path('ly.py'),
+	 path('ly.pyc'),
+	 path('ly.test'),
+	 path('ly.tests')]
 
-	>>> ly.show(stems)

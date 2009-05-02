@@ -1,18 +1,26 @@
 l
-==
+=
 
 	>>> import l
 
 If that worked, then we can test for these files:
 
-	>>> py = path('l.py')
-	>>> test = path('l.test')
+	>>> this_python_file = path('l.py')
+	>>> this_test_file = path('l.test')
+	>>> this_tests_file = path('l.tests')
 
-This one might be mising
+These files should exist in this directory
+	>>> these_files = this_python_file, this_test_file, this_tests_file
 
-	>>> tests = path('l.tests')
+as_paths
+--------
 
-	>>> l_files = py, test, tests
+This method turns its arguments into a list of paths
+
+	>>> show(l.as_paths([ 'fred', '~', path('.') ]))
+	[path('fred'),
+	 path('/Users/jab'),
+	 path('.')]
 
 get_dirs
 --------
@@ -20,9 +28,13 @@ get_dirs
 get_dirs converts a list of strings to a list of paths
 	if they exist
 
-	>>> print l.get_dirs(['.', '..', 'No such directory'])
+	>>> print l.get_dirs(['l.test', '..', 'No such directory'])
 	[path('.'), path('..')]
 
+It expands paths if possible
+	>>> print l.get_dirs([ '~', '$MAIN_PYTHON/site', '/' ])
+	[path('/Users/jab'), path('/Users/jab/python/site'), path('/')]
+ 
 It defaults to only the current directory
 
 	>>> here = l.get_dirs()
@@ -35,11 +47,34 @@ get_files
 get_files converts a list of directories to a list of all their files' paths
 	(The list of files is flat)
 
-	>>> dirs = l.get_dirs()
-	>>> files = l.get_files(dirs)
-	>>> #show( files )
-	>>> filenames = [ f.name for f in files] 
-	>>> #show( l_files )
-	>>> [ x in files for x in l_files ]
+So we should expect to find all of these files here
+	>>> [ this_file in l.get_files(here) for this_file in these_files ]
 	[True, True, True]
+
+remove_ignored
+--------------
+
+this method removes commonly ignored globs
+
+	>>> files = [ path('fred.py'), path('fred.py~'),   path('fred.pyc'), ]
+	>>> l.remove_ignored(files)
+	[path('fred.py')]
+
+The method can also take a specific list of globs to be ignored
+
+	>>> l.remove_ignored(files,['*c','*y'])
+	[path('fred.py~')]
+	>>> l.remove_ignored(files,['*[cy]'])
+	[path('fred.py~')]
+
+finding common starts paths
+---------------------------
+
+	>>> path1 = 'some/path/to/file1.py'
+	>>> path2 = 'some/path/to/file2.py'
+	>>> i = l.common_start(path1,path2)
+	>>> print '%s | %s' % (path1[:i], path1[i:])
+	some/path/to/file | 1.py
+	>>> l.common_start_dirs('a/an','a/as')
+	2
 
