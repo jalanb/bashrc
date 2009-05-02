@@ -1,0 +1,113 @@
+The options module
+==================
+
+	>>> import options
+
+The module provides helper functions to make options
+	which can be used to create an optparse.OptionParser
+
+Making options
+--------------
+
+Make options from a list of tuples
+	Each tuple has name, help text, default value
+	An absent default uses ""
+	>>> strings = [
+	...     ('one','just once','1'),
+	...     ('two','twee','2'),
+	...     ('six','whee'),
+	... ]
+
+For boolean options use boolean defaults
+	>>> booleans = [
+	...     ('ay','nice little earner',True),
+	...     ('bee','good while you dare',True),
+	...     ('cene','but not heard',False),
+	... ]
+
+Call the respective methods to convert list of tuples to list of options
+	>>> all = options.strings(strings) + options.booleans(booleans)
+	>>> show(all)
+	[<Option at ...: -o/--one>,
+	 <Option at ...: -t/--two>,
+	 <Option at ...: -s/--six>,
+	 <Option at ...: -a/--ay>,
+	 <Option at ...: -b/--bee>,
+	 <Option at ...: -c/--cene>]
+
+Making the parser
+-----------------
+
+Send a list of premade options
+	>>> opt_parser = options.options_to_parser(all)
+	>>> opt_parser.print_help()
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -o ONE, --one=ONE  just once
+	  -t TWO, --two=TWO  twee
+	  -s SIX, --six=SIX  whee
+	  -a, --ay           nice little earner
+	  -b, --bee          good while you dare
+	  -c, --cene         but not heard
+	  -h, --help         show this help message and exit
+
+Or just send a list of tuples
+	tuples can have
+		2 values: a string defaulting to ""
+		3 values: name, help, default
+		4 values: letter, name, help, default
+	Type of the default sets the type of option
+	>>> help_string = 'Default is %default'
+	>>> all = [
+	...     ('alan',help_string),
+	...     ('fred',help_string,'Fred'),
+	...     ('good',help_string,True),
+	...     ('ok',help_string,False,'y'),
+	...     ('exit',help_string,'quit','x'),
+	... ]
+	>>> opt_parser = options.tuples_to_parser(all)
+
+Running the parser
+------------------
+
+	>>> opt_parser.print_help()
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -a ALAN, --alan=ALAN  Default is
+	  -f FRED, --fred=FRED  Default is Fred
+	  -g, --good             Default is True
+	  -y, --ok              Default is False
+	  -x EXIT, --exit=EXIT  Default is quit
+	  -h, --help            show this help message and exit
+
+	>>> opts, args = opt_parser.parse_args(['arg','-a','brogan'])
+	>>> show( opts.__dict__ )
+	{'alan': 'brogan', 'exit': 'quit', 'fred': 'Fred', 'good': True, 'ok': False}
+	>>> print args[0]
+	arg
+
+If the user includes a boolean it means "not default"
+	Set your help text accordingly
+	In this example it seems
+		-y means "it is ok"
+		-g means "it is not good"
+	>>> opts, args = opt_parser.parse_args(['arg','-a','brogan','-y','-g'])
+	>>> show( opts.__dict__ )
+	{'alan': 'brogan', 'exit': 'quit', 'fred': 'Fred', 'good': False, 'ok': True}
+
+run()
+-----
+
+Or do it all in one go
+	I will not write this as a test as we do not know what is on command line
+But it takes a list of options, and calls
+	options, args = tuples_to_parser().parse_args()
+and the assignees are globals, so you'd do:
+
+	options.run(all)
+	if 'fred' in options.args:
+		pass
+	if options.options.good:
+		pass
