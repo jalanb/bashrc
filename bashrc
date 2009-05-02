@@ -1,6 +1,5 @@
 #! /bin/sh
 
-
 . environ
 test -n "$PS1" || return
 . prompt green
