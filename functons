@@ -78,9 +78,18 @@ ru ()
 uj ()
 {
 # update jab
-	cj
+	PWD=`pwd`
+	if [ $PWD != "$HOME/.jab" ]
+	then
+		jj
+	else
+		PWD=
+	fi
 	. bashrc
-	c-
+	if [ -n $PWD ]
+	then
+		c-
+	fi
 }
 
 # xxx
