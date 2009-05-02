@@ -1,0 +1,29 @@
+	>>> import ly
+	>>> args = []
+	>>> dirs = ly.get_dirs(args)
+	>>> show( dirs )
+	[path('.')]
+	>>> files = ly.get_files(dirs)
+	>>> show( files[-5:] )
+	[path('vy.py'),
+	 path('vy.test'),
+	 path('vy.tests'),
+	 path('yvi.py'),
+	 path('yvi_cmd.py')]
+	>>> files = ly.remove_ignored(files)
+	>>> show( files[-5:] )
+	[path('vy.py'),
+	 path('vy.test'),
+	 path('vy.tests'),
+	 path('yvi.py'),
+	 path('yvi_cmd.py')]
+	>>> stems = ly.get_stems(files)
+	>>> show( stems['path_parser'] )
+	[path('path_parser.text')]
+	>>> print ly.py_exts
+	['.py', '.test', '.tests']
+	>>> ly.filter_stems(stems,ly.py_exts)
+	>>> show( stems['path_parser'] )
+	Traceback (most recent call last):
+	  ...
+	KeyError: 'path_parser'

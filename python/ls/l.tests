@@ -1,0 +1,22 @@
+The l module
+============
+
+	>>> import l
+
+	>>> l.as_paths('fred')
+	[path('fred')]
+
+	>>> l.as_paths()
+	[]
+
+	>>> l.as_paths(path('.'))
+	[path('.')]
+
+	>>> l.as_paths([ 'fred', path('.') ])
+	[path('fred'), path('.')]
+
+	>>> l.as_paths([ 'fred', 999, path('.') ])
+	Traceback (most recent call last):
+	  ...
+	NotImplementedError: Cannot convert 999 to a path
+
