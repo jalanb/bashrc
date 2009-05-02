@@ -1,9 +1,14 @@
 #! /bin/sh
 
+# Called functons because "functions" is ... something else
+
+# sorted by strcmp of function name
+
 # x
 
 y ()
 {
+# Go to a directory (or here), then scrub, tag, list and stat it
 	dir=
 	if [ -d "$1" ] 
 	then
@@ -32,6 +37,13 @@ y ()
 
 # xx
 
+cj ()
+{
+# commit jab
+	svn ci ~/.jab -m"$*"
+}
+
+
 kd ()
 { 
     cd `python ~/.jab/python/kd.py $*`
@@ -40,6 +52,7 @@ kd ()
 
 rf ()
 {
+# Clean one directory
 	/bin/rm -vrf *~ .*~ *.orig fred* *.tmp *.bak
 	for fail in *.fail
 	do
@@ -60,14 +73,9 @@ ru ()
 	fi
 }
 
-sj ()
-{
-	svn ci ~/.jab -m"$*"
-}
-
-
 uj ()
 {
+# update jab
 	cj
 	. bashrc
 	c-
@@ -92,6 +100,17 @@ fsh ()
 	if [ -f fred.sh ]
 	then
 		sh fred.sh $*
+	elif [ -f fred.py ]
+	then
+		p fred.py $*
+	elif [ -f fred.c ]
+	then
+		/bin/rm -vf a.out
+		gcc fred.c
+		if [ -f a.out ]
+		then
+			./a.out
+		fi
 	else
 		sh fred $*
 	fi
@@ -102,8 +121,6 @@ fpy ()
 	if [ -f fred.py ]
 	then
 		p fred.py $*
-	else
-		p fred $*
 	fi
 }
 
