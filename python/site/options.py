@@ -3,9 +3,9 @@ Convenience methods for populating an OptionPraser
 
 	>>> import options
 	>>> option_parser = options.tuples_to_parser( [
-	...     ('exit','stop this nonsense'),
-	...     ('save','backups are fun',False),
-	...     ('name','who am i','Fred','f'),
+	...	 ('exit','stop this nonsense'),
+	...	 ('save','backups are fun',False),
+	...	 ('name','who am i','Fred','f'),
 	... ] )
 
 That's an optparse.OptParser,
@@ -48,7 +48,7 @@ def letter_boolean_option(long_name,help,default,short_name):
 	'''Make a boolean option that can be passed to OptionParser.__init__()'''
 	action = 'store_true'
 	if default:
-	    action = 'store_false'
+		action = 'store_false'
 	return ordered_option((short_name,long_name,action,help,default))
 
 def letter_string_option(long_name,help,default,short_name):
@@ -70,19 +70,19 @@ def as_four_tuple(tupel):
 	Add a default "" to a 2-tuple
 	Then add a short name to a 3-tuple
 	Any other n-tuple
-	     raise Value Erro
+		 raise Value Erro
 	'''
 	if len(tupel) == 4:
-	    long, help, default, short = tupel
+		long, help, default, short = tupel
 	elif len(tupel) == 3:
-	    long, help, default = tupel
-	    short = long[0]
+		long, help, default = tupel
+		short = long[0]
 	elif len(tupel) == 2:
-	    long, help = tupel
-	    short = long[0]
-	    default = ''
+		long, help = tupel
+		short = long[0]
+		default = ''
 	else:
-	    raise ValueError('Use 2, 3, or 4 arguments, not %r' % tupel)
+		raise ValueError('Use 2, 3, or 4 arguments, not %r' % tupel)
 	return long, help, default, short
 
 def listize(method):
@@ -91,11 +91,11 @@ def listize(method):
 	Using method(tuple) for each onversion
 	'''
 	def to_options(tuples):
-	    options = []
-	    for tupel in tuples:
-	        long, help, default, short = as_four_tuple(tupel)
-	        options += [ method(long, help, default, short) ]
-	    return options
+		options = []
+		for tupel in tuples:
+			long, help, default, short = as_four_tuple(tupel)
+			options += [ method(long, help, default, short) ]
+		return options
 	return to_options
 
 strings = listize(letter_string_option)
@@ -109,20 +109,30 @@ def tuples_to_parser(tuples):
 	'''Make an OptionParser from a list of tuples'''
 	options = []
 	for tupel in tuples:
-	    tupel = as_four_tuple(tupel)
-	    for t in tupel:
-	        if type(t) == type(True):
-	            options += [ letter_boolean_option(tupel[0],tupel[1],tupel[2],tupel[3]) ]
-	            break
-	    else:
-	        options += [ letter_string_option(tupel[0],tupel[1],tupel[2],tupel[3]) ]
+		tupel = as_four_tuple(tupel)
+		for t in tupel:
+			if type(t) == type(True):
+				options += [ letter_boolean_option(tupel[0],tupel[1],tupel[2],tupel[3]) ]
+				break
+		else:
+			options += [ letter_string_option(tupel[0],tupel[1],tupel[2],tupel[3]) ]
 	return options_to_parser(options)
 
 options = None
 args = None
 
-def run(tuples):
+def run(tuples,post_parse=None):
 	option_parser = tuples_to_parser(tuples)
 	global options
 	global args
 	options, args = option_parser.parse_args()
+	if post_parse:
+		options, args = post_parse(options,args)
+
+def test(command_line,tuples,post_parse=None):
+	option_parser = tuples_to_parser(tuples)
+	global options
+	global args
+	options, args = option_parser.parse_args(command_line.split())
+	if post_parse:
+		options, args = post_parse(options,args)
