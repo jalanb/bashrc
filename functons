@@ -51,8 +51,10 @@ cj ()
 kd ()
 { 
 # cd to filename as well as directory
-	cd `python ~/.jab/python/kd.py $*`
-	stat 
+	echo $* | grep -q " st" && show_more=true || show_more=false 
+	args=`echo $* | sed -e"s/ st//"`
+	cd `python ~/.jab/python/kd.py $args`
+	$show_more && st 
 }
 
 ru ()
