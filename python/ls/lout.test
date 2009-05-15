@@ -1,0 +1,6 @@
+lout
+====
+
+This module handles output for other scripts in this directory
+
+	>>> import lout

@@ -1,8 +1,8 @@
 '''
 Convenience methods for populating an OptionPraser
 
-	>>> import options
-	>>> option_parser = options.make_parser( [
+	>>> import argv
+	>>> option_parser = argv.make_parser( [
 	...	 ('exit','stop this nonsense'),
 	...	 ('save','backups are fun',False),
 	...	 ('name','who am i','Fred','f'),
@@ -17,7 +17,7 @@ That's an optparse.OptParser,
 	>>> print args
 	['crash.log']
 
-See options.test* for more
+See argv.test* for more
 
 '''
 from optparse import make_option, OptionParser
@@ -127,20 +127,21 @@ options = None
 args = None
 post_parses = []
 
-def run(tuples=None):
+def parse_args(tuples=None):
 	option_parser = make_parser(tuples)
 	global options
 	global args
 	options, args = option_parser.parse_args()
-	for post_parse in post_parses::
+	for post_parse in post_parses:
 		options, args = post_parse(options,args)
 
-def test(command_line,tuples=None):
+def test_args(command_line=None,tuples=None):
+	if not command_line: command_line = ''
 	option_parser = make_parser(tuples)
 	global options
 	global args
 	try:
 		options, args = option_parser.parse_args(command_line.split())
-		for post_parse in post_parses::
+		for post_parse in post_parses:
 			options, args = post_parse(options,args)
 	except SystemExit: pass

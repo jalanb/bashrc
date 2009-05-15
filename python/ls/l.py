@@ -81,10 +81,6 @@ def get_dirs(args=None):
 				raise ValueError('No such directories: %s' % ', '.join(args))
 	return dirs
 
-def show_dirs(dirs):
-	os.system('/bin/ls -d %s' % ' '.join([ ' '.join(d.dirs()) for d in dirs]))
-	print
-
 def as_paths(thing=None):
 	'''Convert thing to a list of path.path() instances.
 
@@ -113,6 +109,8 @@ def as_paths(thing=None):
 			try:
 				for thing in things:
 					result.extend(as_paths(thing))
+			except TypeError:
+				raise NotImplementedError('Cannot convert %r to a path' % thing)
 			except ValueError:
 				raise NotImplementedError('Cannot convert %r to a path' % thing)
 			return result
@@ -129,6 +127,17 @@ def get_files(dirs=None):
 		files.extend([ here.relpathto(f) for f in d.files()])
 	return files
 
+def get_names(files=None):
+	if not files: files = get_files()
+	names = {}
+	for f in files:
+		name = f.namebase
+		got = names.get(name,[])
+		got.append(f)
+		try: names[name] = got
+		except Exception, e: raise ', '.join([ str(got), str(names), name, f ])
+	return names
+		
 def show(groups):
 	all = sorted([ (name,files) for name, files in groups.iteritems()])
 	for name, files in all:

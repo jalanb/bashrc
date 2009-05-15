@@ -1,7 +1,7 @@
-The options module
+The argv module
 ==================
 
-	>>> import options
+	>>> import argv
 
 The module provides helper functions to make options
 	which can be used to create an optparse.OptionParser
@@ -26,7 +26,7 @@ For boolean options use boolean defaults
 	... ]
 
 Call the respective methods to convert list of tuples to list of options
-	>>> all = options.strings(strings) + options.booleans(booleans)
+	>>> all = argv.strings(strings) + argv.booleans(booleans)
 	>>> show(all)
 	[<Option at ...: -o/--one>,
 	 <Option at ...: -t/--two>,
@@ -39,7 +39,7 @@ Making the parser
 -----------------
 
 Send a list of premade options
-	>>> opt_parser = options.options_to_parser(all)
+	>>> opt_parser = argv.options_to_parser(all)
 	>>> opt_parser.print_help()
 	Usage: try.py [options]
 	<BLANKLINE>
@@ -66,7 +66,7 @@ Or just send a list of tuples
 	...     ('ok',help_string,False,'y'),
 	...     ('exit',help_string,'quit','x'),
 	... ]
-	>>> opt_parser = options.make_parser(all)
+	>>> opt_parser = argv.make_parser(all)
 
 Running the parser
 ------------------
@@ -97,7 +97,7 @@ If the user includes a boolean it means "not default"
 	>>> show( opts.__dict__ )
 	{'alan': 'brogan', 'exit': 'quit', 'fred': 'Fred', 'good': False, 'ok': True}
 
-run()
+parse_args()
 -----
 
 Or do it all in one go
@@ -106,8 +106,17 @@ But it takes a list of options, and calls
 	options, args = make_parser().parse_args()
 and the assignees are globals, so you'd do:
 
-	options.run(all)
-	if 'fred' in options.args:
+	argv.parse_args(all)
+	if 'fred' in argv.args:
 		pass
-	if options.options.good:
+	if argv.options.good:
 		pass
+
+This method id better suited to test files
+	Send in a string with your desired command line
+	try.py is the script running these tests
+	>>> argv.test_args('-h')
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -h, --help  show this help message and exit

@@ -1,7 +1,15 @@
 lx
 ==
 
-	>>> import lx
+	>>> import l, lx
+
+lx is a script
+	>>> lx.argv.test_args('-h ')
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -q, --quiet  hide directories, blank lines, ...
+	  -h, --help   show this help message and exit
 
 We know these files exist
 	>>> this_python_file = path('lx.py')
@@ -12,8 +20,7 @@ We know these files exist
 get_exts
 --------
 
-	>>> here = lx.get_dirs()
-	>>> files_here = lx.get_files(here)
+	>>> files_here = l.get_files()
 
 The get_exts() method turns the list of files into a dictionary 
 	>>> files_by_extension = lx.get_exts(files_here)
@@ -34,10 +41,10 @@ And values are a list of file paths,
 
 Despite best intentions there's always more python files than test files
 	And this directory should be "mature" by now
-	>>> 21 < len(files_by_extension['.test']) <= len(files_by_extension['.py']) > 21
+	>>> len(files_by_extension['.test']) <= len(files_by_extension['.py']) 
 	True
 
-	>>> files_in_the_home_directory = lx.get_files(lx.get_dirs('~'))
+	>>> files_in_the_home_directory = l.get_files(l.get_dirs('~'))
 
 Special rule for dot files: 
 	they are all lumped together under the ext "."

@@ -1,9 +1,10 @@
 import os
 import sys
 import path
-'from optparse import OptParser'
+import argv
 
-from l import get_dirs, get_files, show, show_dirs
+from l import get_dirs, get_files
+import lout
 
 def get_exts(files):
 	exts = {}
@@ -18,7 +19,8 @@ def get_exts(files):
 		except Exception, e: raise ', '.join([ str(got), str(exts), ext, f ])
 	return exts
 
-def main(args):
+def main():
+	argv.parse_args()
 	dirs = get_dirs(args)
 	show_dirs(dirs)
 	exts = get_exts(get_files(dirs))
@@ -27,4 +29,4 @@ def main(args):
 	return 0
 
 if __name__ == '__main__':
-	sys.exit(main(sys.argv[1:]))
+	sys.exit(main())
