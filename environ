@@ -1,7 +1,6 @@
 #! /bin/sh
 
 JAB=$HOME/.jab
-BIN=$JAB/bin
 
 export pinky_ip=192.168.0.103
 export COLUMNS
@@ -30,7 +29,7 @@ add_to_path ()
 		export PATH=${PATH}:$1
 	fi
 }
-export PATH=BIN
+export PATH=$JAB/bin
 add_to_path ~/bin
 add_to_path ~/git/bin
 add_to_path ~/python25/bin

@@ -112,6 +112,8 @@ alias vy="v $MAIN_PYTHON"
 
 alias xk="exchange_keys"
 
+alias yy="y $MAIN_PYTHON"
+
 # xxx
 
 alias c--="cd -"

@@ -12,27 +12,31 @@ y ()
 	dir=
 	if [ -d "$1" ] 
 	then
-		dir=`abspath $1`
+		dir="$1"
 		shift
 	fi
 	if [ -z "$dir" ]
 	then
-		dir=$MAIN_PYTHON
+		dir=`pwd`
 	fi
-	if [[ $dir != `abspath` ]]
+	if [[ $dir != `pwd` ]]
 	then
-		cd $dir
+		old=$OLDPWD
+		back=`pwd`
+		cd $dir >> /dev/null
 	fi
 	clear
-	rf
 	ry
-	if [ -x ./clean ]
-	then 
-		./clean
-	fi
-	tags
+	clean quietly
+	tags >> /dev/null
+	pwd
 	ly $*
 	stat
+	if [[ -n $back ]]
+	then
+		cd $back >> /dev/null
+		export OLDPWD=$old
+	fi
 }
 
 # xx
@@ -49,19 +53,6 @@ kd ()
 # cd to filename as well as directory
 	cd `python ~/.jab/python/kd.py $*`
 	stat 
-}
-
-rf ()
-{
-# Clean one directory
-	/bin/rm -vrf *~ .*~ *.orig fred* *.tmp *.bak
-	for fail in *.fail
-	do
-		if [ ! -s $fail ]
-		then
-			/bin/rm -vrf $fail
-		fi
-	done
 }
 
 ru ()
@@ -97,7 +88,7 @@ uj ()
 cls ()
 {
 # clean, clear, ls
-	rf
+	rf quietly
 	clear
 	if [ -z "$*" ]
 	then
@@ -215,33 +206,6 @@ stat ()
 }
 # xxxxx
 
-clean ()
-{
-	if [[ "x$1" == "xpycos" ]]
-	then
-		REMOVE_PYCOS=true
-		shift
-	else
-		REMOVE_PYCOS=false
-	fi
-	if [[ "x$1" == "xquietly" ]]
-	then
-		options=-vrf
-		shift
-	else
-		options=-rf
-	fi
-	test -n "$1" && dir=$1 || dir="."
-	find $dir -name "*~" 			-exec /bin/rm $options {} \;
-	find $dir -name ".*~" 			-exec /bin/rm $options {} \;
-	find $dir -name "*.fail" -size -1 	-exec /bin/rm $options {} \;
-	find $dir -name "fred*" 		-exec /bin/rm $options {} \;
-	if $REMOVE_PYCOS
-	then
-		find $dir -name "*.py[co]" 		-exec /bin/rm $options {} \;
-	fi
-}
-
 build ()
 {
 	if [ -d /mnt/source ]
@@ -351,6 +315,8 @@ svn_info ()
 }
 
 # xxxxxxxxx
+
+. ~/.jab/bin/first_dir
 
 svn_issue ()
 {
