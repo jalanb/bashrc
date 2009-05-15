@@ -38,6 +38,8 @@ def pluralize(s):
 	result = s + 's'
 	if lowered in exceptional_plurals:
 		result = exceptional_plurals[lowered]
+	elif lowered.endswith('ex'):
+		return lowered[:-2] + 'ices'
 	elif any_true(lowered.endswith, ['x', 'ch', 'sh', 'ss']):
 		result = s+'es'
 	elif ends_in_consonant_y.search(lowered):
