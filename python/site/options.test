@@ -66,7 +66,7 @@ Or just send a list of tuples
 	...     ('ok',help_string,False,'y'),
 	...     ('exit',help_string,'quit','x'),
 	... ]
-	>>> opt_parser = options.tuples_to_parser(all)
+	>>> opt_parser = options.make_parser(all)
 
 Running the parser
 ------------------
@@ -103,7 +103,7 @@ run()
 Or do it all in one go
 	I will not write this as a test as we do not know what is on command line
 But it takes a list of options, and calls
-	options, args = tuples_to_parser().parse_args()
+	options, args = make_parser().parse_args()
 and the assignees are globals, so you'd do:
 
 	options.run(all)

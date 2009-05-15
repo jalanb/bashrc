@@ -2,7 +2,7 @@
 Convenience methods for populating an OptionPraser
 
 	>>> import options
-	>>> option_parser = options.tuples_to_parser( [
+	>>> option_parser = options.make_parser( [
 	...	 ('exit','stop this nonsense'),
 	...	 ('save','backups are fun',False),
 	...	 ('name','who am i','Fred','f'),
@@ -105,9 +105,14 @@ def options_to_parser(options):
 	'''Make an OptionParser from a list of options'''
 	return OptionParser(option_list=options)
 
-def tuples_to_parser(tuples):
+added_args = []
+def add(args): added_args[:0] = args
+
+def make_parser(args):
 	'''Make an OptionParser from a list of tuples'''
 	options = []
+	if not args: args = []
+	tuples = args + added_args
 	for tupel in tuples:
 		tupel = as_four_tuple(tupel)
 		for t in tupel:
@@ -120,19 +125,22 @@ def tuples_to_parser(tuples):
 
 options = None
 args = None
+post_parses = []
 
-def run(tuples,post_parse=None):
-	option_parser = tuples_to_parser(tuples)
+def run(tuples=None):
+	option_parser = make_parser(tuples)
 	global options
 	global args
 	options, args = option_parser.parse_args()
-	if post_parse:
+	for post_parse in post_parses::
 		options, args = post_parse(options,args)
 
-def test(command_line,tuples,post_parse=None):
-	option_parser = tuples_to_parser(tuples)
+def test(command_line,tuples=None):
+	option_parser = make_parser(tuples)
 	global options
 	global args
-	options, args = option_parser.parse_args(command_line.split())
-	if post_parse:
-		options, args = post_parse(options,args)
+	try:
+		options, args = option_parser.parse_args(command_line.split())
+		for post_parse in post_parses::
+			options, args = post_parse(options,args)
+	except SystemExit: pass
