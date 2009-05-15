@@ -2,6 +2,7 @@ ly
 ==
 
 	>>> import ly
+	>>> ly.options.test('-a ',ly.my_options,ly.post_parse)
 	>>> py = path('ly.py')
 	>>> test = path('ly.test')
 	>>> tests = path('ly.tests')
@@ -38,12 +39,9 @@ trace.log exists, so "trace" must be a stem
 	>>> 'trace' in stems
 	True
 
-But we are only interested in files with these extensions
-	>>> print ly.py_exts
-	['.py', '.test', '.tests']
-
-So, after we filter, "trace" is no longer a stem
-	>>> ly.filter_stems(stems,ly.py_exts)
+But we are only interested in python files
+	So, after we filter, "trace" is no longer a stem
+	>>> ly.filter_stems(stems)
 	>>> 'trace' in stems
 	False
 
