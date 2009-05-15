@@ -165,6 +165,7 @@ alias down="cd ~/Download"
 alias mine="sudo chown $USER:allstaff "
 
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
+alias tags="p ~/.jab/python/ptags.py "
 
 # xxxxx
 
@@ -173,6 +174,8 @@ alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
 alias floka="get_pinky_ip && ssh floka@${pinky_ip}"
 
 alias denis='mysql -u root -D issues -e"select id, _title from _issue where _module = 37 and _creator = 39 and __retired__ = 0 and _status != 8"'
+
+alias ptags="p ~/.jab/python/ptags.py "
 
 alias sdiff="svn_diff diff "
 

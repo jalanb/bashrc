@@ -191,12 +191,6 @@ dark ()
 	svn revert -q ~/.jab/vim/vimrc
 }
 
-tags ()
-{
-	test -n "$1" && dir=$1 || dir="."
-	p ~/.jab/python/ptags.py $dir/*.py
-}
-
 do_stat ()
 {
 	test -n "$1" && path=$1 || path="."
