@@ -1,4 +1,4 @@
-from path import path
+from path import makepath,path
 
 home = path('~').expanduser()
 here = path('.')
@@ -13,13 +13,13 @@ def environ_paths():
 	result = {}
 	for key,value in environ.jab.iteritems():
 		if key in result: raise KeyError('%s:%s -> %s' % (key,result[key],value))
-		paths = [ path(v) for v in value.split(':') if path(v).exists() ]
+		paths = [ makepath(v) for v in value.split(':') ]
+		paths = [ p for p in paths if p.exists() ]
 		if paths:
 			if paths[1:]:
 				result[key] = paths
 			else:
 				result[key] = paths[0]
-#       elif '/' in value: result[key] = value
 	class paths: pass
 	paths = paths()
 	paths.__dict__.update(result)

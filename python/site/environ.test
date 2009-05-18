@@ -1,4 +1,3 @@
-	>>> from altobridge.testing import show
 	>>> import environ 
 
 A method to read the keys set in ~/.jab/environ
@@ -12,18 +11,18 @@ A method to read the keys set in ~/.jab/environ
 	 'EDITOR',
 	 'EXITSTATUS',
 	 'HISTSIZ',
-	 'JAB',
+	 'JABS',
 	 'LCP']
 
 Turn those keys into a dictionary with values from bash's environment
 	>>> bash = environ.read_bash(keys)
-	>>> print bash['JAB']
-	http://intranet.altobridge.com/jab
-	>>> print bash['EDITOR']
-	/bin/vim
+	>>> bash['JABS'].endswith('jab')
+	True
+	>>> bash['EDITOR'].endswith('/vim')
+	True
 
 Bash's environment variables are attributes of the module
-	>>> print environ.JAB
-	http://intranet.altobridge.com/jab
-	>>> print environ.EDITOR
-	/bin/vim
+	>>> print environ.JABS == bash['JABS']
+	True
+	>>> print environ.EDITOR == bash['EDITOR']
+	True

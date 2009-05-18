@@ -15,15 +15,7 @@ And looks for paths therein
 	>>> environ.EDITOR
 	'/Users/jab/bin/vim'
 	>>> paths.environ.EDITOR
-	path('/Users/jab/bin/vim')
-
-And not all are tried
-	>>> print environ.HISTSIZ
-	100000
-	>>> print paths.environ.HISTSIZ
-	Traceback (most recent call last):
-	  ...
-	AttributeError: paths instance has no attribute 'HISTSIZ'
+	<Path '/Users/jab/bin/vim'>
 
 Path lists are split up,
 	>>> environ.PYTHONPATH 
@@ -32,15 +24,12 @@ Path lists are split up,
 	True
 
 We use PYTHONPATH to get local directories into sys.path
-	>>> strings = environ.PYTHONPATH.split(':')
 	>>> strips = [ str(p) for p in paths.environ.PYTHONPATH ]
-	>>> all( [ s in sys.path for s in strings ] )
-	False
 	>>> all( [ s in sys.path for s in strips ] )
 	True
 
 The paths module got into sys.path through $PYTHONPATH
-	>>> path(paths.__file__).parent in paths.environ.PYTHONPATH
+	>>> paths.makepath(paths.__file__).parent in paths.environ.PYTHONPATH
 	True
 
 Handy paths.attributes

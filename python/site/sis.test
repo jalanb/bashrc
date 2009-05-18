@@ -4,52 +4,26 @@ The sis module
 Is a companion to sys
 	>>> import sis
 
-path
-----
+paths
+-----
 
 For example, sys.path is a list of strings
-	>>> show( sys.path )
-	[<path "'.'">,
-	 '/home/abrogan/.jab/python',
-	 '/home/abrogan/python/site',
-	 '/home/abrogan/.jab/python/site',
-	 '/usr/local/trunk/trackers/builder',
-	 '/usr/lib/python2.4/site-packages/altobridge',
-	 '/usr/lib/python24.zip',
-	 '/usr/lib/python2.4',
-	 '/usr/lib/python2.4/plat-linux2',
-	 '/usr/lib/python2.4/lib-tk',
-	 '/usr/lib/python2.4/lib-dynload',
-	 '/usr/lib/python2.4/site-packages',
-	 '/usr/lib/python2.4/site-packages/Numeric',
-	 '/usr/lib/python2.4/site-packages/gtk-2.0']
+	>>> sys.path[-1]
+	'/System/Library/Frameworks/Python.framework/Versions/2.5/Extras/lib/python/PyObjC'
 
 Wonder who added that path('.') at the start ?
 Anyway,
 	sis module also has path,
 		but every item in the list is a path
 
-	>>> show( sis.path )
+	>>> sis.path[-1]
 	Traceback (most recent call last):
 	...
 	AttributeError: 'module' object has no attribute 'path'
 
 Ooops, silly me, if it is a list, then it should be called paths
-	>>> show( sis.paths )
-	[<path "'.'">,
-	 <path "'/home/abrogan/.jab/python'">,
-	 <path "'/home/abrogan/python/site'">,
-	 <path "'/home/abrogan/.jab/python/site'">,
-	 <path "'/usr/local/trunk/trackers/builder'">,
-	 <path "'/usr/lib/python2.4/site-packages/altobridge'">,
-	 <path "'/usr/lib/python24.zip'">,
-	 <path "'/usr/lib/python2.4'">,
-	 <path "'/usr/lib/python2.4/plat-linux2'">,
-	 <path "'/usr/lib/python2.4/lib-tk'">,
-	 <path "'/usr/lib/python2.4/lib-dynload'">,
-	 <path "'/usr/lib/python2.4/site-packages'">,
-	 <path "'/usr/lib/python2.4/site-packages/Numeric'">,
-	 <path "'/usr/lib/python2.4/site-packages/gtk-2.0'">]
+	>>> sis.paths[-1]
+	<path '/System/Library/Frameworks/Python.framework/Versions/2.5/Extras/lib/python/PyObjC'>
 
 The two attributes are not kept in sync
 	>>> sys.path[-1] == str(sis.paths[-1])
@@ -72,19 +46,18 @@ So, if you change sys.path, call this
 Filtering path
 --------------
 
-A method to filter out 
-	>>> show( sis.sites() )
-	[<path "'/usr/lib/python2.4/site-packages/altobridge'">,
-	 <path "'/usr/lib/python2.4/site-packages'">,
-	 <path "'/usr/lib/python2.4/site-packages/Numeric'">,
-	 <path "'/usr/lib/python2.4/site-packages/gtk-2.0'">]
+A method to filter out any site-packages directory
+	(will include sub-directories)
+	>>> all( [ 'site-packages' in p.splitall()  for p in sis.sites() ] )
+	True
 
 You could supply your own list of paths to filter
 	the default is sis.paths
 	>>> sis.sites(sis.paths) == sis.sites()
 	True
 	
-And a method to filter out site_packages
+And a method to filter out directories whose name is site_packages
+	(will not include sub-directories)
 	which also defaults to sis.paths
-	>>> show( sis.site_packages() )
-	[<path "'/usr/lib/python2.4/site-packages'">]
+	>>> all( [ p.name == 'site-packages' for p in sis.site_packages() ] )
+	True

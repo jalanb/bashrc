@@ -1,11 +1,11 @@
-from os import environ
-from path import path
+import os
+import path
 
 def read_environ_keys():
-	environ_file = path('~/.jab/environ').expanduser()
+	environ_file = path.makepath('~/.jab/environ').expanduser()
 	lines = [ l.strip() for l in environ_file.lines() ]
 	lines = [ l for l in lines if l and l[0] != '#' ]
-	lines = [ l for l in lines if '=' in l ]
+	lines = [ l for l in lines if 'export' in l and '=' in l ]
 	while_i_was_debugging ='\n'.join([l for l in lines if l.count('=') > 1])
 	lines = [ l.replace('export','') for l in lines ]
 	lines = [ l.strip() for l in lines ]
@@ -21,10 +21,10 @@ def read_environ_keys():
 def read_bash(keys):
 	result = {}
 	for key in keys:
-		try: result[key] = environ[key]
+		try: result[key] = os.environ[key]
 		except KeyError: pass
 	return result
 
 jab = {}
 jab.update(read_bash(read_environ_keys()))
-globals().update(environ)
+globals().update(os.environ)
