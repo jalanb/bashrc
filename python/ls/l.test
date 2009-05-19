@@ -2,6 +2,9 @@ l
 =
 
 	>>> import l
+	>>> from path import cd, pwd
+	>>> cd(l.__file__)
+	True
 
 If that worked, then we can test for these files:
 
@@ -20,7 +23,7 @@ as_paths
 This method turns its arguments into a list of paths
 
 	>>> l.as_paths([ 'fred', '~', path('.') ])
-	[path('fred'), path('/Users/jab'), path('.')]
+	[<path 'fred'>, <path '/Users/jab'>, <path '.'>]
 
 get_dirs
 --------
@@ -29,17 +32,17 @@ get_dirs converts a list of strings to a list of paths
 	if they exist
 
 	>>> print l.get_dirs([this_test_file, '..', 'No such path'])
-	[path('.'), path('..')]
+	[<path '.'>, <path '..'>]
 
 It expands paths if possible
 	>>> print l.get_dirs([ '~', '$MAIN_PYTHON/site', '/' ])
-	[path('/Users/jab'), path('/Users/jab/.jab/python/site'), path('/')]
+	[<path '/Users/jab'>, <path '/Users/jab/.jab/python/site'>, <path '/'>]
  
 It defaults to only the current directory
 	but always returns a list
 	>>> here = l.get_dirs()[0]
 	>>> here
-	path('.')
+	<path '.'>
 
 get_files
 ---------
@@ -67,7 +70,7 @@ In the current directory, there should be a few files named l
 
 All the paths to l:
 	>>> names['l']
-	[path('l.fail'), path('l.py'), path('l.pyc'), path('l.test'), path('l.tests')]
+	[<path 'l.fail'>, <path 'l.py'>, <path 'l.pyc'>, <path 'l.test'>, <path 'l.tests'>]
 
 remove_ignored
 --------------
@@ -88,22 +91,22 @@ The default list of globs comes from ~/.subversion/config
 	I usually ignore fred on the advice of Dr Mike Smith,
 		so I'd normally only see alan and mary
 	>>> l.remove_ignored(files)
-	[path('mary.py'), path('alan.txt')]
+	[<path 'mary.py'>, <path 'alan.txt'>]
 
 But sometimes we need to ignore program managers too 
 	Fred and Mary are taking program manager roles today
 	>>> l.remove_ignored(files,project_managers)
-	[path('alan.txt')]
+	[<path 'alan.txt'>]
 
 The globs can be used instead of the default
 	What do we have apart from source code?
 	>>> l.remove_ignored(files,sources)
-	[path('fred.py~'), path('fred.pyc'), path('alan.txt')]
+	[<path 'fred.py~'>, <path 'fred.pyc'>, <path 'alan.txt'>]
 
 Or the globs can be added to the default
 	What do we have that's neither Fred's, nor source ?
 	>>> l.remove_ignored(files,extra_ignores=sources)
-	[path('alan.txt')]
+	[<path 'alan.txt'>]
 
 finding common starts paths
 ---------------------------
