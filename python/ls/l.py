@@ -5,12 +5,6 @@ from fnmatch import fnmatch
 
 from glob_path import glob_path
 
-try:
-	screen_width = int(os.environ['COLUMNS']) - 1
-except KeyError:
-	print >> sys.stderr, 'Please export $COLUMNS'
-	sys.exit(1)
-
 def common_start(a,b):
 	for i, j in enumerate(zip(a,b)):
 		c, d = j
