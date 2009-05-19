@@ -6,7 +6,6 @@ import fnmatch
 import commands
 import datetime
 from pprint import pprint, pformat
-from optparse import OptionParser
 
 try:
 	from path import path
@@ -53,13 +52,17 @@ class UserMessage(Exception):
 	pass
 
 def command_line():
+	from optparse import OptionParser
 	parser = OptionParser()
 	parser.add_option("-v", "--verbose", dest="verbose", help="Hello World", action='store_true')
 	parser.add_option("-r", "--recusrive", dest="recursive", help="recurse into any sud-directories found", action='store_true', default=False)
 	parser.add_option('-a','--all', dest='all', help='run all tests in each file (do not stop on first FAIL)', action='store_true', default=False)
 	parser.add_option('-d','--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q','--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
-	return parser.parse_args()
+	result = parser.parse_args()
+	parser.destroy()
+	del parser
+	return result
 
 def files(path,glob):
 	names = fnmatch.filter(os.listdir(path),glob)
