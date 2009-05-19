@@ -4,16 +4,16 @@ The l module
 	>>> import l
 
 	>>> l.as_paths('fred')
-	[path('fred')]
+	[<path 'fred'>]
 
 	>>> l.as_paths()
 	[]
 
 	>>> l.as_paths(path('.'))
-	[path('.')]
+	[<path '.'>]
 
 	>>> l.as_paths([ 'fred', path('.') ])
-	[path('fred'), path('.')]
+	[<path 'fred'>, <path '.'>]
 
 	>>> l.as_paths([ 'fred', 999, path('.') ])
 	Traceback (most recent call last):
@@ -26,31 +26,23 @@ The l module
 	>>> l.remove_ignored(files,sources) == l.remove_ignored(files,ignores=sources)
 	True
 
-	>>> import l
-	>>> args = []
+	>>> args = [ '~/.jab/python/ls' ]
+	>>> from path import cd
+	>>> cd(args[0])
+	True
 	>>> dirs = l.get_dirs(args)
-	>>> show( dirs )
-	[path('.')]
+	>>> show( [p.name for p in dirs] )
+	['ls']
 	>>> files = l.get_files(dirs)
-	>>> show( [f for f in files if not f.ext == '.fail'][-6:] )
-	[path('lx.test'),
-	 path('lx.tests'),
-	 path('ly.py'),
-	 path('ly.pyc'),
-	 path('ly.test'),
-	 path('tags')]
+	>>> show( [f.name for f in files if not f.ext == '.fail'][-6:] )
+	['lx.test', 'lx.tests', 'ly.py', 'ly.pyc', 'ly.test', 'tags']
 	>>> files = l.remove_ignored(files,extra_ignores=['*.fail'])
-	>>> show( files[-6:] )
-	[path('lout.test'),
-	 path('lx.py'),
-	 path('lx.test'),
-	 path('lx.tests'),
-	 path('ly.py'),
-	 path('ly.test')]
+	>>> show( [p.name for p in files][-6:] )
+	['lout.test', 'lx.py', 'lx.test', 'lx.tests', 'ly.py', 'ly.test']
 	>>> names = l.get_names(files)
 	>>> show( names )
-	{'glob_path': [path('glob_path.py'), path('glob_path.test')],
-	 'l': [path('l.py'), path('l.test'), path('l.tests')],
-	 'lout': [path('lout.py'), path('lout.test')],
-	 'lx': [path('lx.py'), path('lx.test'), path('lx.tests')],
-	 'ly': [path('ly.py'), path('ly.test')]}
+	{'glob_path': [<path 'glob_path.py'>, <path 'glob_path.test'>],
+	 'l': [<path 'l.py'>, <path 'l.test'>, <path 'l.tests'>],
+	 'lout': [<path 'lout.py'>, <path 'lout.test'>],
+	 'lx': [<path 'lx.py'>, <path 'lx.test'>, <path 'lx.tests'>],
+	 'ly': [<path 'ly.py'>, <path 'ly.test'>]}
