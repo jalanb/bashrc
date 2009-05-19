@@ -2,6 +2,9 @@ ly
 ==
 
 	>>> import l, ly
+	>>> from path import cd
+	>>> cd(ly.__file__)
+	True
 
 
 ly is a script
