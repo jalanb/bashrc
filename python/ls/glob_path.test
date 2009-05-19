@@ -2,6 +2,9 @@ The glob_path module
 ====================
 
 	>>> import glob_path
+	>>> from path import cd
+	>>> cd(glob_path.__file__)
+	True 
 
 The module provides a class,
 	which is like a path, except it allows wild cards
@@ -25,4 +28,4 @@ Remove temporary files
 	>>> files = [ f for f in files if not f.endswith('~') ]
 	>>> files = [ f for f in files if not f.endswith('pyc') ]
 	>>> show( files )
-	[path('./glob_path.fail'), path('./glob_path.py'), path('./glob_path.test')]
+	[<path './glob_path.fail'>, <path './glob_path.py'>, <path './glob_path.test'>]
