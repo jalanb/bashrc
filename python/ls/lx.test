@@ -2,6 +2,9 @@ lx
 ==
 
 	>>> import l, lx
+	>>> from path import cd
+	>>> cd(lx.__file__)
+	True
 
 lx is a script
 	>>> lx.argv.test_args('-h ')
