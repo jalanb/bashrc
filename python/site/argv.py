@@ -160,3 +160,7 @@ def parse_args(command_line=None):
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
 	return options, args
+
+def test_args(s):
+	try: return parse_args(s)
+	except SystemExit: pass
