@@ -162,5 +162,5 @@ def parse_args(command_line=None):
 	return options, args
 
 def test_args(s):
-	try: return parse_args(s)
+	try: parse_args(s)
 	except SystemExit: pass
