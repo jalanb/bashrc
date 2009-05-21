@@ -2,14 +2,88 @@
 	>>> argv.ordered_option(('a','alan','store','was here','brogan'))
 	<Option at ...: -a/--alan>
 
-	>>> argv.letter_string_option('fred','here too','Murphy','f')
+	>>> argv.make_argv_option('fred','here too','Murphy','f','store')
 	<Option at ...: -f/--fred>
 
-	>>> argv.letter_boolean_option('ken','here three',True,'k')
+	>>> argv.make_argv_option('ken','here three',True,'k','store_true')
 	<Option at ...: -k/--ken>
 
-	>>> argv.string_option('alan','still here','Brogan')
+	>>> argv.make_argv_option('alan','still here','Brogan')
 	<Option at ...: -a/--alan>
 
-	>>> argv.boolean_option('ken','for ever','Brogan')
+	>>> argv.make_argv_option('ken','for ever','Brogan')
 	<Option at ...: -k/--ken>
+
+Making options
+--------------
+
+Make options from a list of tuples
+	Each tuple has name, help text, default value
+	For boolean options use boolean defaults
+	>>> values = [
+	...     ('one','just once','1'),
+	...     ('two','twee','2'),
+	...     ('six','whee'),
+	...     ('ay','nice little earner',True),
+	...     ('bee','good while you dare',True),
+	...     ('cene','but not heard',False),
+	... ]
+
+Call the respective methods to convert list of tuples to list of options
+	>>> all = argv.make_argv_options(values)
+	>>> show(all)
+	[<Option at ...: -o/--one>,
+	 <Option at ...: -t/--two>,
+	 <Option at ...: -s/--six>,
+	 <Option at ...: -a/--ay>,
+	 <Option at ...: -b/--bee>,
+	 <Option at ...: -c/--cene>]
+
+Send a list of premade options
+	>>> opt_parser = argv.options_to_parser(all)
+	>>> opt_parser.print_help()
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -o ONE, --one=ONE  just once
+	  -t TWO, --two=TWO  twee
+	  -s SIX, --six=SIX  whee
+	  -a, --ay           nice little earner
+	  -b, --bee          good while you dare
+	  -c, --cene         but not heard
+	  -h, --help         show this help message and exit
+
+Used to be you had to separate string options
+	>>> strings = [
+	...     ('one','just once','1'),
+	...     ('two','twee','2'),
+	...     ('six','whee'),
+	... ]
+
+For boolean options use boolean defaults
+	>>> booleans = [
+	...     ('ay','nice little earner',True),
+	...     ('bee','good while you dare',True),
+	...     ('cene','but not heard',False),
+	... ]
+
+This separation of calls is not required
+	>>> opts = argv.make_argv_options(strings) + argv.make_argv_options(booleans)
+	>>> show(opts)
+	[<Option at ...: -o/--one>,
+	 <Option at ...: -t/--two>,
+	 <Option at ...: -s/--six>,
+	 <Option at ...: -a/--ay>,
+	 <Option at ...: -b/--bee>,
+	 <Option at ...: -c/--cene>]
+
+As this one produces the same thing
+	>>> opts = argv.make_argv_options(strings + booleans)
+	>>> show(opts)
+	[<Option at ...: -o/--one>,
+	 <Option at ...: -t/--two>,
+	 <Option at ...: -s/--six>,
+	 <Option at ...: -a/--ay>,
+	 <Option at ...: -b/--bee>,
+	 <Option at ...: -c/--cene>]
+
