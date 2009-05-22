@@ -2,7 +2,7 @@ l
 =
 
 	>>> import l
-	>>> from path import cd, pwd
+	>>> from path import cd, pwd, path
 	>>> cd(l.__file__)
 	True
 
@@ -84,8 +84,7 @@ The method can take a specific list of globs to be ignored
 
 It defaults to here (again) for its files
 	but we'll test with these ones
-	>>> files = [ path('fred.py'), path('fred.py~'), path('fred.pyc'),
-	...           path('mary.py'), path('alan.txt')]
+	>>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
 
 The default list of globs comes from ~/.subversion/config
 	I usually ignore fred on the advice of Dr Mike Smith,
