@@ -166,7 +166,9 @@ alias down="cd ~/Download"
 
 alias mine="sudo chown $USER:allstaff "
 
+alias jjys='kd ~/.jab/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
+
 alias tags="p ~/.jab/python/ptags.py "
 
 # xxxxx
