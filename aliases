@@ -122,13 +122,13 @@ alias clx="cl; lx "
 alias cly="cl; ly "
 alias cit="kd /usr/local/trackers/itTracker"
 alias cjt='kd /usr/local/trunk/trackers/issues/tracker'
-alias cjy='kd ~/.jab/python'
 alias clt="kd /usr/local/trunk/trackers/"
 alias cst="kd /usr/local/trackers/csTracker"
 alias cta="c  ~/trackers/issues/tracker"
 alias ctt="kd /usr/local/trackers/tracker"
 
 alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
+alias jjy='kd ~/.jab/python'
 alias jlf="ssh jlfieblu@jlf.ie"
 
 alias lff="ls fred*"
