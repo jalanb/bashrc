@@ -47,7 +47,7 @@ def associates(thing):
 	raise ValueError('%r cannot associate' % thing)
 
 class Tangle(Twine):
-	'''A Tangle is a Twine associated with another twine.'''
+	'''A Tangle is a Twine associated with another Twine.'''
 	def associate(self,thing):
 		children = associates(thing)
 		for child in children:

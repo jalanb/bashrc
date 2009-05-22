@@ -18,15 +18,15 @@ And can parse out its class name
 
 A subclass of Twine
 	>>> class Freddy(Twine): pass
-	>>> fred = Freddy('fred')
+	>>> fred = Freddy('Fred')
 
 is also ako string
 	>>> print fred
-	fred
+	Fred
 
 and knows its class
 	>>> fred
-	<Freddy 'fred'>
+	<Freddy 'Fred'>
 
 and parses its name
 	Note:

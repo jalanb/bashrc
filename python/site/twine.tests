@@ -1,0 +1,4 @@
+	>>> from twine import Twine
+	>>> fred = Twine('Fred')
+	>>> print fred.str_class_and_list()
+	('Fred', 'Twine', 'Twines')
