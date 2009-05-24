@@ -20,7 +20,6 @@ then
 else
 	export LS_COLOUR_OPTION='--color=auto'
 fi
-export MONTYLINGUA="$PYTHONPATH/monty/data"
 
 add_to_path ()
 {
@@ -111,17 +110,23 @@ export BUILDING=${RELEASES}/building
 export BUILD_DEBUG=${RELEASES}/building/debug
 export NOTES=${RELEASES}/building/notes
 
-export PYTHONPATH=$HOME/python/site
+export PYTHONPATH=
 add_to_pythonpath ()
 {
 	if [ -d $1 ]
 	then
-		export PYTHONPATH=$PYTHONPATH:$1
+		if [ -z $PYTHONPATH ]
+		then
+			export PYTHONPATH=$1
+		else
+			export PYTHONPATH=$PYTHONPATH:$1
+		fi
 	fi
 }
-add_to_pythonpath $JAB/python/site
 add_to_pythonpath $BUILDER_WORKING
 add_to_pythonpath $SITE/altobridge
+add_to_pythonpath $JAB/python/site
+add_to_pythonpath $HOME/python/site
 if [ -f ~/.pythonrc.py ]
 then
 	export PYTHONSTARTUP=~/.pythonrc.py
