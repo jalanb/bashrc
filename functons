@@ -41,6 +41,11 @@ y ()
 
 # xx
 
+ag ()
+{
+	alias | grep $*
+}
+
 cj ()
 {
 # commit jab
