@@ -5,4 +5,4 @@
 rf $*
 first_dir $*
 echo $* | grep -q deep && options= || options="-maxdepth 1"
-find $dir -type d $options -exec rf $* {} \;
+find $dir $options -type d -exec rf $* {} \;
