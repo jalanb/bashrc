@@ -7,8 +7,11 @@ test -n "$PS1" || return
 . functons
 . bin/j.sh
 /bin/rm -rf tmp/*
-test -f todo.txt && cat todo.txt
+if [[ $USER != "builder" ]]
+then
+	test -f todo.txt && cat todo.txt
+	echo
+	echo Welcome jab, to $HOSTNAME
+	echo
+fi
 test -f ~/.oldpwd && . ~/.oldpwd
-echo
-echo Welcome jab, to $HOSTNAME
-echo
