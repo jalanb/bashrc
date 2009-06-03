@@ -212,9 +212,9 @@ build ()
 {
 	if [ -d /mnt/source ]
 	then 
-		ssh builder@ie-build-2
+		ssh ie-build-2
 	else
-		ssh builder@ie-build-1
+		ssh ie-build-1
 	fi
 }
 
