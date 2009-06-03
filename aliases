@@ -64,6 +64,8 @@ alias ct='kd /usr/local/trackers'
 alias cu="kd /usr/local/builders"
 alias cy="kd $MAIN_PYTHON"
 
+alias eg="env | grep "
+
 alias gh="history | grep "
 alias in="to_source"
 
@@ -81,6 +83,7 @@ alias p-="echo $OLDPWD"
 alias pi="ipython "
 alias py="y $MAIN_PYTHON"
 
+alias ra="sudo -i -u abrogan"
 alias ri="sudo -i -u issue"
 alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
