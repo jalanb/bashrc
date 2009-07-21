@@ -25,23 +25,28 @@ The l module
 	>>> l.remove_ignored(files,sources) == l.remove_ignored(files,ignores=sources)
 	True
 
-	>>> args = [ '~/.jab/python/ls' ]
 	>>> from path import cd
-	>>> cd(args[0])
-	True
-	>>> dirs = l.get_dirs(args)
-	>>> show( [p.name for p in dirs] )
-	['ls']
-	>>> files = l.get_files(dirs)
-	>>> show( [f.name for f in files if not f.ext == '.fail'][-6:] )
-	['lx.test', 'lx.tests', 'ly.py', 'ly.pyc', 'ly.test', 'tags']
-	>>> files = l.remove_ignored(files,extra_ignores=['*.fail'])
-	>>> show( [p.name for p in files][-6:] )
-	['lout.test', 'lx.py', 'lx.test', 'lx.tests', 'ly.py', 'ly.test']
+	>>> import  glob_path
+	>>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
+	>>> show( files )
+	[<path 'l.py'>,
+	 <path 'l.test'>,
+	 <path 'lout.py'>,
+	 <path 'lout.test'>,
+	 <path 'lx.py'>,
+	 <path 'lx.test'>,
+	 <path 'ly.py'>,
+	 <path 'ly.test'>]
+	>>> files = l.remove_ignored(files,extra_ignores=['lout*'])
+	>>> show( files )
+	[<path 'l.py'>,
+	 <path 'l.test'>,
+	 <path 'lx.py'>,
+	 <path 'lx.test'>,
+	 <path 'ly.py'>,
+	 <path 'ly.test'>]
 	>>> names = l.get_names(files)
 	>>> show( names )
-	{'glob_path': [<path 'glob_path.py'>, <path 'glob_path.test'>],
-	 'l': [<path 'l.py'>, <path 'l.test'>, <path 'l.tests'>],
-	 'lout': [<path 'lout.py'>, <path 'lout.test'>],
-	 'lx': [<path 'lx.py'>, <path 'lx.test'>, <path 'lx.tests'>],
+	{'l': [<path 'l.py'>, <path 'l.test'>],
+	 'lx': [<path 'lx.py'>, <path 'lx.test'>],
 	 'ly': [<path 'ly.py'>, <path 'ly.test'>]}
