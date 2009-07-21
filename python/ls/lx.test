@@ -2,7 +2,7 @@ lx
 ==
 
 	>>> import l, lx
-	>>> from path import cd
+	>>> from path import cd,path
 	>>> cd(lx.__file__)
 	True
 
