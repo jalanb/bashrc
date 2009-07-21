@@ -68,9 +68,9 @@ In the current directory, there should be a few files named l
 	>>> 'l' in names
 	True
 
-All the paths to l:
-	>>> names['l']
-	[<path 'l.fail'>, <path 'l.py'>, <path 'l.pyc'>, <path 'l.test'>, <path 'l.tests'>]
+All the permanent paths to l:
+	>>> [p for p in names['l'] if p.ext not in [ '.fail', '.pyc'] ]
+	[<path 'l.py'>, <path 'l.test'>, <path 'l.tests'>]
 
 remove_ignored
 --------------
