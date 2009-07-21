@@ -29,7 +29,7 @@ filter_names
 ------------
 
 Set up
-	>>> path('trace.log').write_text('hello')
+	>>> makepath('trace.log').write_text('hello')
 	>>> names = l.get_names()
 
 This method removes all names
@@ -44,4 +44,4 @@ This method removes all names
 	(True, False)
 
 Tear down
-	>>> path('trace.log').remove()
+	>>> makepath('trace.log').remove()
