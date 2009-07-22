@@ -45,9 +45,10 @@ if !exists("Try")
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
 		let command = "! python ~/.jab/python/try.py -qa "
-		let command_line = command . item_name . " > " . fails . " 2>&1 || true"
+		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
+		let quiet_line = command_line . " > " . fails . " 2>&1 || true"
 		try
-			exec command_line
+			exec quiet_line
 			redraw!
 		catch /.*/
 			" echo fred
