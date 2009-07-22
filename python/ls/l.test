@@ -61,7 +61,7 @@ get_names
 ---------
 
 This method converts a list of files to a dictionary of names
-	The name of of this file is 'l' (filename without extension) 
+	The name of this file is 'l' (filename without extension) 
 	>>> names = l.get_names()
 
 In the current directory, there should be a few files named l
