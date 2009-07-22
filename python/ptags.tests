@@ -1,0 +1,7 @@
+	>>> import ptags
+	>>> tags = ptags.read_dirs()
+
+	>>> print ptags.tags_to_text([ t for t in tags if 'cd' in t.address ])
+	.cd	/Users/jab/.jab/python/site/path.py	/^ +def +cd(/
+	cd	/Users/jab/.jab/python/site/path.py	/^def +cd(/
+

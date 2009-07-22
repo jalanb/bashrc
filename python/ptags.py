@@ -18,7 +18,13 @@ I am targeting vim, so
 	http://ctags.sourceforge.net/ctags.html#TAG%20FILE%20FORMAT
 '''
 
-import sys, re, os
+import sys
+import re
+import os
+
+import sis
+import argv
+argv.add([ ( 'verbose', 'Report disk changes', False ) ])
 
 from path import makepath, here
 
@@ -40,13 +46,14 @@ class Tag:
 		s = line.rstrip()
 		self.__dict__.update(self.def_or_class.match(s).groupdict())
 		self.path = path
-		self.address = '/^%s/' % self.address
+		self.address = re.sub('[ \t]+',' +','/^%s/' % self.address)
+		if not self.name: self.name = ''
 		
 	def __str__(self):
 		return '\t'.join([self.name,self.path,self.address])
 
 	def __repr__(self):
-		return '<Tag "%s">' % self
+		return '<Tag "%s">' % self.name
 
 	def __cmp__(self,other):
 		return cmp(str(self),str(other))
@@ -63,63 +70,98 @@ class FileTag(Tag):
 		self.address = '1'
 
 	def __repr__(self):
-		return '<FileTag "%s">' % self
+		return '<FileTag "%s">' % self.name
 		
 def best_of(old,new):
 	if old.path == new.path:
 		if isinstance(old,FileTag):
-			return new
-		if str(old) == str(new):
-			return new
-	raise NotImplementedError('\n\t%r\n\t%r' % ( old, new ))
+			return None, new
+		if old.address == new.address:
+			return None, new
+		old_pattern = old.address[2:-1]
+		new_pattern = new.address[2:-1]
+		if new_pattern[0:2] == ' +' and new_pattern[2:] == old_pattern:
+			new.name = '.%s' % new.name
+			return old, new
+		elif old_pattern[0:2] == ' +' and old_pattern[2:] == new_pattern:
+			old.name = '.%s' % old.name
+			return old, new
+		elif ('+class' in new.address and '+def' in old.address) or ('+class' in old.address and '+def' in new.address):
+			return old, new
+		else:
+			raise ValueError('%s\n\t"%s" != "%s"' % (old.path, old.address , new.address))
+	raise NotImplementedError('\n\t%r\n\t%r' % ( old.path, new.path ))
 	
-def tag_file(path_to_python):
+def read_file(path_to_python):
 	tags = []	# ex Modified global variable!
 	t = FileTag(path_to_python)
 	tags.append(t)
 	def_or_class = re.compile('^[ \t]*(def|class)[ \t]+([a-zA-Z0-9_]+)[ \t]*[:\(]')
+	problems = []
 	for line in t.path.lines():
 		try:
 			tag = Tag(t.path,line)
 			for t in tags:
 				if t.name == tag.name:
-					tag = best_of( t, tag )
+					try: want_t, tag = best_of( t, tag )
+					except ValueError,e: problems += [ str(e) ]
 					break
 			else:
 				tags += [ tag ]
 				continue
-			tags.remove(t)
+			if not want_t: tags.remove(t)
 			tags += [ tag ]
 		except AttributeError: pass
-		continue
-		m = def_or_class.match(line)
-		if m:
-			address = m.group(0)
-			name = m.group(2)
-			s = '%s\t%s\t/^%s/\n' % ( name , path_to_python , address )
-			tags.append(s)
+	if problems:
+		raise ValueError('\n'.join(problems))
 	return tags
 
-def tag_dir(p):
+def read_dir(path_to_directory=None):
+	if not path_to_directory: path_to_directory = here()
 	tags = []
-	for py in p.files('*.py'):
-		for tag in tag_file(py):
+	for py in path_to_directory.files('*.py'):
+		for tag in read_file(py):
 			tags += [ tag ]
-	for d in p.dirs():
-		tags += tag_dir(d)
 	return tags
 
-def write_dir(p,tags):
-	for d in p.dirs(): write_dir(d,tags)
-	out = makepath('%s/tags' % p)
-	out.write_lines( sorted([str(t) for t in tags]) )
+def read_dirs(path_to_directory=None):
+	if not path_to_directory: path_to_directory = here()
+	tags = read_dir(path_to_directory)
+	for p in path_to_directory.all_dirs():
+		tags += read_dir(p)
+	return tags
+
+def tags_to_text(tags):
+	str_tags = [ str(t) for t in tags ]
+	sorted_tags = sorted(str_tags)
+	return '\n'.join(sorted_tags)
+
+def write_dir(path_to_directory,tags):
+	out = makepath('%s/tags' % path_to_directory)
+	text = tags_to_text(tags)
+	out.write_text(text)
+	print 'Wrote tags to ', out
+
+def read_write_dir(path_to_directory=None):
+	tags = read_dir(path_to_directory)
+	write_dir(path_to_directory,tags)
+
+def read_write_dirs(path_to_directory=None):
+	if not path_to_directory: path_to_directory = here()
+	for p in path_to_directory.all_dirs():
+		tags = read_dirs(p)
+		write_dir(p,tags)
+
+def read_sys_dirs():
+	tags = []
+	sis.get_sys_path()
+	for p in sis.paths:
+		tags += read_dir(p)
+	return tags
 
 def main():
-	p = here()
-	tags = tag_dir(p)
-	tags.sort()
-	write_dir(p,tags)
-	print 'Wrote tags to ', p
+	argv.parse_args()
+	read_write_dirs()
 
 if __name__ == '__main__':
 	try:

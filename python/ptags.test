@@ -1,196 +1,64 @@
 Testsing the ptags script
 =========================
 
-	>>> from ptags import tag_file
-	>>> show(tag_file('ptags.py'))
-	[<FileTag "ptags	/Users/jab/.jab/python/ptags.py	1">,
-	 <Tag "Tag	/Users/jab/.jab/python/ptags.py	/^class Tag:/">,
-	 <Tag "FileTag	/Users/jab/.jab/python/ptags.py	/^class FileTag(/">,
-	 <Tag "best_of	/Users/jab/.jab/python/ptags.py	/^def best_of(/">,
-	 <Tag "tag_file	/Users/jab/.jab/python/ptags.py	/^def tag_file(/">,
-	 <Tag "tag_dir	/Users/jab/.jab/python/ptags.py	/^def tag_dir(/">,
-	 <Tag "write_dir	/Users/jab/.jab/python/ptags.py	/^def write_dir(/">,
-	 <Tag "main	/Users/jab/.jab/python/ptags.py	/^def main(/">]
+ptags is a script
+	>>> import ptags
+	>>> ptags.argv.test_args('-h')
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -v, --verbose  Report disk changes
+	  -h, --help     show this help message and exit
 
-	>>> print '\n'.join([str(t) for t in tag_file('ptags.py')])
-	ptags	/Users/jab/.jab/python/ptags.py	1
-	Tag	/Users/jab/.jab/python/ptags.py	/^class Tag:/
-	FileTag	/Users/jab/.jab/python/ptags.py	/^class FileTag(/
-	best_of	/Users/jab/.jab/python/ptags.py	/^def best_of(/
-	tag_file	/Users/jab/.jab/python/ptags.py	/^def tag_file(/
-	tag_dir	/Users/jab/.jab/python/ptags.py	/^def tag_dir(/
-	write_dir	/Users/jab/.jab/python/ptags.py	/^def write_dir(/
-	main	/Users/jab/.jab/python/ptags.py	/^def main(/
+The read_file() method creates a list of tags for a python file
+	>>> tags = ptags.read_file('ptags.py')
+	>>> tags = tags[0:5]
+	>>> show(tags)
+	[<FileTag "ptags">,
+	 <Tag "Tag">,
+	 <Tag "FileTag">,
+	 <Tag "best_of">,
+	 <Tag "read_file">]
 
-	>>> from ptags import tag_dir,here
-	>>> print '\n'.join(sorted([str(t) for t in tag_dir(here())]))
-	EmptyString	/Users/jab/.jab/python/new/rule.py	/^class EmptyString(/
-	FileTag	/Users/jab/.jab/python/ptags.py	/^class FileTag(/
-	MyFirstMeta	/Users/jab/.jab/python/site/twine.py	/^	class MyFirstMeta(/
-	MySecondMeta	/Users/jab/.jab/python/site/tally.py	/^	class MySecondMeta(/
-	Rule	/Users/jab/.jab/python/new/rule.py	/^class Rule(/
-	Sys_Path_Handler	/Users/jab/.jab/python/try.py	/^class Sys_Path_Handler:/
-	Tag	/Users/jab/.jab/python/ptags.py	/^class Tag:/
-	Tally	/Users/jab/.jab/python/site/tally.py	/^class Tally(/
-	Tangle	/Users/jab/.jab/python/site/twine.py	/^class Tangle(/
-	Test_Being_Run	/Users/jab/.jab/python/try.py	/^class Test_Being_Run:/
-	Twine	/Users/jab/.jab/python/site/twine.py	/^class Twine(/
-	UserMessage	/Users/jab/.jab/python/try.py	/^class UserMessage(/
-	__init__	/Users/jab/.jab/python/site/__init__.py	1
-	add	/Users/jab/.jab/python/try.py	/^	def add(/
-	add_dir	/Users/jab/.jab/python/ls/l.py	/^def add_dir(/
-	add_sub_dirs	/Users/jab/.jab/python/try.py	/^def add_sub_dirs(/
-	add_to_class	/Users/jab/.jab/python/site/twine.py	/^	def add_to_class(/
-	analogy	/Users/jab/.jab/python/alanology/analogy.py	1
-	analogy.early	/Users/jab/.jab/python/new/analogy.early.py	1
-	any	/Users/jab/.jab/python/ls/ly.py	/^	def any(/
-	any_extension	/Users/jab/.jab/python/try.py	/^def any_extension(/
-	any_true	/Users/jab/.jab/python/site/words.py	/^def any_true(/
-	as_four_tuple	/Users/jab/.jab/python/site/options.py	/^def as_four_tuple(/
-	as_paths	/Users/jab/.jab/python/ls/l.py	/^def as_paths(/
-	as_str	/Users/jab/.jab/python/site/tally.py	/^	def as_str(/
-	associate	/Users/jab/.jab/python/site/twine.py	/^	def associate(/
-	associates	/Users/jab/.jab/python/site/twine.py	/^def associates(/
-	before	/Users/jab/.jab/python/site/lists.py	/^def before(/
-	before	/Users/jab/.jab/python/site/strip.py	/^def before(/
-	before_and_after	/Users/jab/.jab/python/site/lists.py	/^def before_and_after(/
-	before_and_after	/Users/jab/.jab/python/site/strip.py	/^def before_and_after(/
-	befores_and_afters	/Users/jab/.jab/python/site/lists.py	/^def befores_and_afters(/
-	befores_and_afters	/Users/jab/.jab/python/site/strip.py	/^def befores_and_afters(/
-	best_of	/Users/jab/.jab/python/ptags.py	/^def best_of(/
-	can_join	/Users/jab/.jab/python/new/analogy.early.py	/^def can_join(/
-	chdir	/Users/jab/.jab/python/kd.py	/^def chdir(/
-	class_name	/Users/jab/.jab/python/site/tally.py	/^	def class_name(/
-	class_name	/Users/jab/.jab/python/site/twine.py	/^	def class_name(/
-	classed	/Users/jab/.jab/python/alanology/analogy.py	/^def classed(/
-	command_line	/Users/jab/.jab/python/try.py	/^def command_line(/
-	common_start	/Users/jab/.jab/python/ls/l.py	/^def common_start(/
-	common_start_dirs	/Users/jab/.jab/python/ls/l.py	/^def common_start_dirs(/
-	dates	/Users/jab/.jab/python/site/dates.py	1
-	default_ignores	/Users/jab/.jab/python/ls/l.py	/^def default_ignores(/
-	depluralize	/Users/jab/.jab/python/site/words.py	/^def depluralize(/
-	doublets	/Users/jab/.jab/python/site/lists.py	/^def doublets(/
-	enjoin	/Users/jab/.jab/python/site/tally.py	/^def enjoin(/
-	environ	/Users/jab/.jab/python/site/environ.py	1
-	environ_paths	/Users/jab/.jab/python/site/paths.py	/^def environ_paths(/
-	exists	/Users/jab/.jab/python/ls/glob_path.py	/^	def exists(/
-	files	/Users/jab/.jab/python/ls/glob_path.py	/^	def files(/
-	files	/Users/jab/.jab/python/try.py	/^def files(/
-	filter_stems	/Users/jab/.jab/python/ls/ly.py	/^def filter_stems(/
-	find_dir	/Users/jab/.jab/python/kd.py	/^def find_dir(/
-	find_test_file	/Users/jab/.jab/python/try.py	/^def find_test_file(/
-	format	/Users/jab/.jab/python/ls/ly.py	/^def format(/
-	fred	/Users/jab/.jab/python/new/analogy.early.py	/^def fred(/
-	freddy	/Users/jab/.jab/python/site/options.py	/^	def freddy(/
-	full_class_name	/Users/jab/.jab/python/site/tally.py	/^	def full_class_name(/
-	full_class_name	/Users/jab/.jab/python/site/twine.py	/^	def full_class_name(/
-	get_dir_path	/Users/jab/.jab/python/try.py	/^def get_dir_path(/
-	get_dirs	/Users/jab/.jab/python/ls/l.py	/^def get_dirs(/
-	get_exts	/Users/jab/.jab/python/ls/lx.py	/^def get_exts(/
-	get_files	/Users/jab/.jab/python/ls/l.py	/^def get_files(/
-	get_glob	/Users/jab/.jab/python/ls/glob_path.py	/^	def get_glob(/
-	get_parent	/Users/jab/.jab/python/ls/glob_path.py	/^	def get_parent(/
-	get_paths	/Users/jab/.jab/python/try.py	/^def get_paths(/
-	get_stems	/Users/jab/.jab/python/ls/ly.py	/^def get_stems(/
-	get_subversion_ignores	/Users/jab/.jab/python/ls/l.py	/^def get_subversion_ignores(/
-	get_sys_path	/Users/jab/.jab/python/site/sis.py	/^def get_sys_path(/
-	get_test_dir	/Users/jab/.jab/python/try.py	/^def get_test_dir(/
-	get_test_scripts	/Users/jab/.jab/python/try.py	/^def get_test_scripts(/
-	glob_path	/Users/jab/.jab/python/ls/glob_path.py	/^class glob_path:/
-	groups	/Users/jab/.jab/python/site/lists.py	/^def groups(/
-	head_rest	/Users/jab/.jab/python/site/lists.py	/^def head_rest(/
-	head_rest	/Users/jab/.jab/python/site/strip.py	/^def head_rest(/
-	initialise	/Users/jab/.jab/python/site/options.py	/^def initialise(/
-	integer	/Users/jab/.jab/python/new/analogy.early.py	/^def integer(/
-	join_by_rules	/Users/jab/.jab/python/new/analogy.early.py	/^def join_by_rules(/
-	kd	/Users/jab/.jab/python/kd.py	1
-	l	/Users/jab/.jab/python/ls/l.py	1
-	letter_boolean_option	/Users/jab/.jab/python/site/options.py	/^def letter_boolean_option(/
-	letter_string_option	/Users/jab/.jab/python/site/options.py	/^def letter_string_option(/
-	list_name	/Users/jab/.jab/python/site/tally.py	/^	def list_name(/
-	list_name	/Users/jab/.jab/python/site/twine.py	/^	def list_name(/
-	list_of_characters	/Users/jab/.jab/python/new/analogy.early.py	/^def list_of_characters(/
-	list_of_rules	/Users/jab/.jab/python/new/analogy.early.py	/^def list_of_rules(/
-	listize	/Users/jab/.jab/python/site/options.py	/^def listize(/
-	lists	/Users/jab/.jab/python/site/lists.py	1
-	lx	/Users/jab/.jab/python/ls/lx.py	1
-	ly	/Users/jab/.jab/python/ls/ly.py	1
-	lysted	/Users/jab/.jab/python/alanology/analogy.py	/^def lysted(/
-	main	/Users/jab/.jab/python/kd.py	/^def main(/
-	main	/Users/jab/.jab/python/ls/lx.py	/^def main(/
-	main	/Users/jab/.jab/python/ls/ly.py	/^def main(/
-	main	/Users/jab/.jab/python/ptags.py	/^def main(/
-	main	/Users/jab/.jab/python/try.py	/^def main(/
-	make_module	/Users/jab/.jab/python/try.py	/^def make_module(/
-	match	/Users/jab/.jab/python/new/rule.py	/^	def match(/
-	matchCase	/Users/jab/.jab/python/site/words.py	/^def matchCase(/
-	module_grammar	/Users/jab/.jab/python/alanology/analogy.py	/^def module_grammar(/
-	mp3_files	/Users/jab/.jab/python/site/paths.py	/^def mp3_files(/
-	named_pair	/Users/jab/.jab/python/alanology/analogy.py	/^	def named_pair(/
-	now	/Users/jab/.jab/python/site/dates.py	/^def now(/
-	options	/Users/jab/.jab/python/site/options.py	1
-	options_to_parser	/Users/jab/.jab/python/site/options.py	/^def options_to_parser(/
-	ordered_option	/Users/jab/.jab/python/site/options.py	/^def ordered_option(/
-	pad	/Users/jab/.jab/python/ls/ly.py	/^def pad(/
-	pairer	/Users/jab/.jab/python/alanology/analogy.py	/^def pairer(/
-	parse_command_line	/Users/jab/.jab/python/kd.py	/^def parse_command_line(/
-	paths	/Users/jab/.jab/python/site/paths.py	/^	class paths:/
-	plural	/Users/jab/.jab/python/new/analogy.early.py	/^def plural(/
-	pluralize	/Users/jab/.jab/python/site/words.py	/^def pluralize(/
-	pluralled	/Users/jab/.jab/python/alanology/analogy.py	/^def pluralled(/
-	ptags	/Users/jab/.jab/python/ptags.py	1
-	public_dir	/Users/jab/.jab/python/try.py	/^def public_dir(/
-	pythonrc	/Users/jab/.jab/python/pythonrc.py	1
-	read_bash	/Users/jab/.jab/python/site/environ.py	/^def read_bash(/
-	read_environ_keys	/Users/jab/.jab/python/site/environ.py	/^def read_environ_keys(/
-	reduce_by_pairs	/Users/jab/.jab/python/alanology/analogy.py	/^	def reduce_by_pairs(/
-	remove	/Users/jab/.jab/python/try.py	/^	def remove(/
-	remove_ignored	/Users/jab/.jab/python/ls/l.py	/^def remove_ignored(/
-	rule	/Users/jab/.jab/python/new/rule.py	1
-	rule	/Users/jab/.jab/python/new/template.py	/^def rule(/
-	run	/Users/jab/.jab/python/site/options.py	/^def run(/
-	run_command	/Users/jab/.jab/python/try.py	/^def run_command(/
-	same_class	/Users/jab/.jab/python/alanology/analogy.py	/^	def same_class(/
-	show	/Users/jab/.jab/python/ls/l.py	/^def show(/
-	show	/Users/jab/.jab/python/ls/ly.py	/^def show(/
-	show_dirs	/Users/jab/.jab/python/ls/l.py	/^def show_dirs(/
-	show_line	/Users/jab/.jab/python/ls/ly.py	/^def show_line(/
-	show_not_dir	/Users/jab/.jab/python/kd.py	/^def show_not_dir(/
-	sis	/Users/jab/.jab/python/site/sis.py	1
-	site_packages	/Users/jab/.jab/python/site/sis.py	/^def site_packages(/
-	sites	/Users/jab/.jab/python/site/sis.py	/^def sites(/
-	some_extensions	/Users/jab/.jab/python/try.py	/^def some_extensions(/
-	sort_by_name	/Users/jab/.jab/python/ls/ly.py	/^def sort_by_name(/
-	str_class_and_list	/Users/jab/.jab/python/site/tally.py	/^	def str_class_and_list(/
-	str_class_and_list	/Users/jab/.jab/python/site/twine.py	/^	def str_class_and_list(/
-	string_to_list	/Users/jab/.jab/python/alanology/analogy.py	/^def string_to_list(/
-	strip	/Users/jab/.jab/python/site/strip.py	1
-	sys_path	/Users/jab/.jab/python/site/sis.py	/^def sys_path(/
-	tag_dir	/Users/jab/.jab/python/ptags.py	/^def tag_dir(/
-	tag_file	/Users/jab/.jab/python/ptags.py	/^def tag_file(/
-	take	/Users/jab/.jab/python/site/lists.py	/^def take(/
-	take	/Users/jab/.jab/python/site/strip.py	/^def take(/
-	take_every_two	/Users/jab/.jab/python/alanology/analogy.py	/^	def take_every_two(/
-	take_first	/Users/jab/.jab/python/site/lists.py	/^def take_first(/
-	take_first	/Users/jab/.jab/python/site/strip.py	/^def take_first(/
-	take_next	/Users/jab/.jab/python/site/lists.py	/^def take_next(/
-	take_next	/Users/jab/.jab/python/site/strip.py	/^def take_next(/
-	take_two	/Users/jab/.jab/python/alanology/analogy.py	/^		def take_two(/
-	tally	/Users/jab/.jab/python/site/tally.py	1
-	template	/Users/jab/.jab/python/new/template.py	1
-	test	/Users/jab/.jab/python/try.py	/^def test(/
-	tlist	/Users/jab/.jab/python/site/tally.py	/^def tlist(/
-	to_options	/Users/jab/.jab/python/site/options.py	/^	def to_options(/
-	to_str	/Users/jab/.jab/python/site/tally.py	/^	def to_str(/
-	triplets	/Users/jab/.jab/python/site/lists.py	/^def triplets(/
-	try	/Users/jab/.jab/python/try.py	1
-	try_testing_sub_dir	/Users/jab/.jab/python/try.py	/^def try_testing_sub_dir(/
-	tuples_to_parser	/Users/jab/.jab/python/site/options.py	/^def tuples_to_parser(/
-	twine	/Users/jab/.jab/python/site/twine.py	1
-	twist	/Users/jab/.jab/python/site/twine.py	/^def twist(/
-	twisted	/Users/jab/.jab/python/alanology/analogy.py	/^def twisted(/
-	wanted	/Users/jab/.jab/python/ls/ly.py	/^def wanted(/
-	weight	/Users/jab/.jab/python/new/rule.py	/^def weight(/
-	word	/Users/jab/.jab/python/new/analogy.early.py	/^def word(/
-	words	/Users/jab/.jab/python/site/words.py	1
-	write_dir	/Users/jab/.jab/python/ptags.py	/^def write_dir(/
+The tags_to_text() method converts those objects to ctags format
+	>>> print ptags.tags_to_text(tags)
+	FileTag	.../.jab/python/ptags.py	/^class +FileTag(/
+	Tag	.../.jab/python/ptags.py	/^class +Tag:/
+	best_of	.../.jab/python/ptags.py	/^def +best_of(/
+	ptags	.../.jab/python/ptags.py	1
+	read_file	.../.jab/python/ptags.py	/^def +read_file(/
+
+Quick testing method to see all the directories for a list of tags
+	>>> def show_dirs(tags):
+	...     show( sorted(list(set([t.path.parent.from_home() for t in tags]))) )
+	>>> show_dirs(tags)
+	[<Path '.jab/python'>]
+
+The read_dirs method gets tags for all python files in a directory
+	It defaults to the current directory, and recurses into sub-dirs
+	>>> tags = ptags.read_dirs()
+	>>> show_dirs(tags)
+	[<Path '.jab/python'>,
+	 <Path '.jab/python/alanology'>,
+	 <Path '.jab/python/ls'>,
+	 <Path '.jab/python/new'>,
+	 <Path '.jab/python/site'>]
+
+The read_dir method does the same, but does not recurse
+	>>> tags = ptags.read_dir()
+	>>> show_dirs(tags)
+	[<Path '.jab/python'>]
+
+The tags are for all python files in the selected directory (ies)
+	and for the given dir three of the scripts are programs
+	>>> main_tags = [t for t in tags if 'main' in t.name]
+	>>> print ptags.tags_to_text(main_tags)
+	main	.../.jab/python/kd.py	/^def +main(/
+	main	.../.jab/python/ptags.py	/^def +main(/
+	main	.../.jab/python/try.py	/^def +main(/
+
+Another method is used to read python's system direcories
+	Which would, for example, tag the pformat method in the pprint module
+	>>> show( [ t.path.name for t in ptags.read_sys_dirs() if t.name == 'pformat'] )
+	['pprint.py']
+
