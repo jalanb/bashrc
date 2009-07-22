@@ -1,0 +1,18 @@
+The test_files module
+=====================
+
+	>>> print test.path
+	test_files.test
+
+	>>> print test.host
+	jab.ook
+
+	>>> print test.username
+	jab
+
+	>>> print test.user
+	jab@jab.ook
+
+	>>> import test_files
+	>>> print test_files.get_test_scripts(recursive=False,args=['test_files'])
+	[<path './test_files.tests'>, <path './test_files.test'>, <path './test_files.py'>]
