@@ -112,7 +112,7 @@ def test():
 	failures_all = 0
 	sys_paths.add('.')
 	try:
-		for test_script in test_files.get_test_scripts(options.recursive,args):
+		for test_script in test_files.get_test_scripts(args,options.recursive):
 			os.chdir(pwd)
 			start = datetime.datetime.now()
 			if not test_script: continue
