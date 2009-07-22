@@ -906,6 +906,8 @@ class Path(path):
 		return Path(path(self).relpathto(p))
 	def expand(self):
 		return Path(path(self).expand())
+	def expanduser(self):
+		return Path(path(self).expanduser())
 	def abspath(self):
 		return Path(path(self).abspath())
 	# extra convenience methods
@@ -964,6 +966,9 @@ class Path(path):
 	def all_dirs(self,pattern=None,ignore_subversion=True):
 		d = self.directory()
 		return filter_svn( [ d ] + d.walkdirs(pattern), ignore_subversion )
+
+	def from_home(self):
+		return Path('~').expanduser().relpathto(self)
 
 def filter_svn(dirs,ignore_subversion):
 	if ignore_subversion:

@@ -237,6 +237,13 @@ The module-level dirs() method gives a recursive list
 			two
 		two
 			two
-
 	>>> bash('rm -rf ~/x')
 	True
+
+Simplified path
+---------------
+
+	>>> p
+	<Path '/Users/jab/x/fred'>
+	>>> p.from_home()
+	<Path 'x/fred'>
