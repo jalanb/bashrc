@@ -8,22 +8,22 @@ paths
 -----
 
 For example, sys.path is a list of strings
-	>>> sys.path[-1]
-	'/System/Library/Frameworks/Python.framework/Versions/2.5/Extras/lib/python/PyObjC'
+	>>> jab_sys = [ p for p in sys.path if '.jab' in p ]
 
-Wonder who added that path('.') at the start ?
-Anyway,
-	sis module also has path,
-		but every item in the list is a path
-
-	>>> sis.path[-1]
+The sis module has similar
+	>>> jab_sis = [ p for p in sis.path if '.jab' in p ]
 	Traceback (most recent call last):
 	...
 	AttributeError: 'module' object has no attribute 'path'
 
-Ooops, silly me, if it is a list, then it should be called paths
-	>>> sis.paths[-1]
-	<path '/System/Library/Frameworks/Python.framework/Versions/2.5/Extras/lib/python/PyObjC'>
+Ooops, silly me, if it is a list, then it should be a plural
+	>>> jab_sis = [ p for p in sis.paths if '.jab' in p ]
+
+But, whereas sys has a list of strings, sis has a list of paths
+	>>> type(jab_sys[0])
+	<type 'str'>
+	>>> type(jab_sis[0])
+	<class 'path.path'>
 
 The two attributes are not kept in sync
 	>>> sys.path[-1] == str(sis.paths[-1])
@@ -32,7 +32,7 @@ The two attributes are not kept in sync
 	>>> sys.path[-1] == str(sis.paths[-1])
 	False
 
-So, if you change sys.path, call this
+So, if you change sys.path, call the sis.sys_path() method to update sys.paths
 	>>> sis.sys_path()
 	>>> sys.path[-1] == str(sis.paths[-1])
 	True
@@ -43,10 +43,10 @@ So, if you change sys.path, call this
 	>>> sys.path[-1] == str(sis.paths[-1])
 	True
 
-Filtering path
---------------
+Filtering sis.paths
+-------------------
 
-A method to filter out any site-packages directory
+sis.sites() is a method to filter out any site-packages directory
 	(will include sub-directories)
 	>>> all( [ 'site-packages' in p.splitall()  for p in sis.sites() ] )
 	True
