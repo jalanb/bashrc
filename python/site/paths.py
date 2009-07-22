@@ -32,3 +32,5 @@ environ = environ_paths()
 here = path('.')
 home = path('~').expanduser()
 
+def from_home(p):
+	return home.relpathto(p)

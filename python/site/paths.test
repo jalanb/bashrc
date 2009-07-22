@@ -35,6 +35,16 @@ The paths module got into sys.path through $PYTHONPATH
 Handy paths.attributes
 ----------------------
 
+The user's home directory
 	>>> bashrc = paths.home / '.bashrc'
 	>>> bashrc.isfile()
 	True
+
+Handy paths.methods
+-------------------
+
+A path relative to the home directory
+	(could be handy for removing the home dir in tests)
+
+	>>> paths.from_home(paths.__file__)
+	<path '.jab/python/site/paths.pyc'>
