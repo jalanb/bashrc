@@ -150,7 +150,6 @@ alias stj="stat ~/.jab"
 
 alias tra="try ~/alans_tests"
 alias tri="sh $TRACKER_TESTING/regulars.sh"
-alias try="p ~/.jab/python/try.py "
 alias trz="p $TRACKER_TESTING/run_test.py"
 
 alias vib="v ~/.bashrc; sib"

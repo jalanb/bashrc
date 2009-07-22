@@ -148,6 +148,11 @@ lly ()
 	ll *.py
 }
 
+try ()
+{
+	p ~/.jab/python/try.py $*
+}
+
 upj ()
 {
 # update jab from the repository
