@@ -2,7 +2,7 @@ import os
 import path
 
 def read_environ_keys():
-	environ_file = path.makepath('~/.jab/environ').expanduser()
+	environ_file = path.path('~/.jab/environ').expanduser()
 	lines = [ l.strip() for l in environ_file.lines() ]
 	lines = [ l for l in lines if l and l[0] != '#' ]
 	lines = [ l for l in lines if 'export' in l and '=' in l ]
