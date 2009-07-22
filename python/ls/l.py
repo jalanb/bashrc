@@ -3,7 +3,14 @@ import sys
 import path
 from fnmatch import fnmatch
 
+import argv
 from glob_path import glob_path
+
+argv.add([
+	('ignore','Ignore files like those that subversion ignores', True),
+	('qignore','Ignore files like those that subversion ignores', True),
+	('ass','Ignore files like those that subversion ignores', True),
+])
 
 def common_start(a,b):
 	for i, j in enumerate(zip(a,b)):
@@ -27,22 +34,26 @@ def common_start_dirs(a,b):
 def get_subversion_ignores():
 	home = path.path(os.path.expanduser('~'))
 	svn_config = home / '.subversion/config'
-	if not svn_config.isfile(): return []
+	if not svn_config.isfile():
+		raise ValueError('%s is not a file' % svn_config)
+		return []
 	try: return  [ l for l in svn_config.lines() if l.startswith('global-ignores') ][0].split()
 	except IndexError: return []
 
 def default_ignores():
 	ignores = set(get_subversion_ignores())
-	ignores.update( [ '*~', '.*.sw[op]' ] )
+	ignores.update( [ '*~', '.*.sw[lmnop]' ] )
 	return list( ignores )
 
 def remove_ignored(files,ignores=None,extra_ignores=None):
 	result = []
+	if not argv.options.ignore: return files
 	if not ignores: ignores = default_ignores()
 	if extra_ignores: ignores.extend(extra_ignores)
 	for f in files:
 		for glob in ignores:
-			if f.fnmatch(glob): break
+			if f.fnmatch(glob):
+				break
 		else:
 			result += [ f ]
 	return result
@@ -128,14 +139,6 @@ def get_names(files=None):
 		name = f.namebase
 		got = names.get(name,[])
 		got.append(f)
-		try: names[name] = got
+		try: names[name] = sorted( got )
 		except Exception, e: raise ', '.join([ str(got), str(names), name, f ])
 	return names
-		
-def show(groups):
-	all = sorted([ (name,files) for name, files in groups.iteritems()])
-	for name, files in all:
-		joined_files = ', '.join([ f.name for f in files ])
-		print joined_files
-# print '%s: %s' % (name,joined_files))
-

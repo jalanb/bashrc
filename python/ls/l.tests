@@ -2,6 +2,7 @@ The l module
 ============
 
 	>>> import l
+	>>> l.argv.test_args('')
 
 	>>> l.as_paths('fred')
 	[<path 'fred'>]
@@ -24,11 +25,13 @@ The l module
 	>>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
 	>>> l.remove_ignored(files,sources) == l.remove_ignored(files,ignores=sources)
 	True
+	>>> l.remove_ignored(files,sources)
+	[<path 'fred.py~'>, <path 'fred.pyc'>, <path 'alan.txt'>]
 
 	>>> from path import cd
 	>>> import  glob_path
 	>>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
-	>>> show( files )
+	>>> show( sorted( files ) )
 	[<path 'l.py'>,
 	 <path 'l.test'>,
 	 <path 'lout.py'>,
@@ -38,7 +41,7 @@ The l module
 	 <path 'ly.py'>,
 	 <path 'ly.test'>]
 	>>> files = l.remove_ignored(files,extra_ignores=['lout*'])
-	>>> show( files )
+	>>> show( sorted( files ) )
 	[<path 'l.py'>,
 	 <path 'l.test'>,
 	 <path 'lx.py'>,
