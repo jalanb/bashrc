@@ -943,6 +943,18 @@ class Path(path):
 			return False
 		return sh.passed()
 
+	def touchable(self):
+		if self.isfile():
+			test = self
+		else:
+			test = self.parent / 'fred'
+		try:
+			test.touch()
+			test.remove()
+		except OSError:
+			return False
+		return True
+
 	def splitext(self):
 		f, ext = os.path.splitext(_base(self))
 		return Path(f), ext
