@@ -1,0 +1,1 @@
+	>>> from pythonrc import os, sys, path, show, environ, paths
