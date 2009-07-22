@@ -1,16 +1,16 @@
 	>>> print test.runner
-	/Users/jab/.jab/python/try.py
+	.../.jab/python/try.py
 
 	>>> print test.here
-	/Users/jab/.jab/python
+	.../.jab/python
 	>>> print test.home
-	/Users/jab
+	...
 	>>> print test.path
 	test_files.tests
 	>>> print test.python_path
-	/Users/jab/python/site:/Users/jab/.jab/python/site:
+	.../python/site:.../.jab/python/site:
 	>>> print test.bash_path
-	/Users/jab/.jab/bin:/Users/jab/bin:/usr/bin:/usr/local/bin:/opt/local/bin:/bin:/sbin
+	.../.jab/bin:.../bin:/usr/bin:/usr/local/bin:/opt/local/bin:/bin:/sbin
 	>>> import test_files
 	>>> print test_files.get_test_scripts(recursive=False,args=['l'])
 	Traceback (most recent call last):
