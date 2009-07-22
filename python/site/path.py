@@ -958,12 +958,17 @@ class Path(path):
 			return self
 		return self.parent
 
-	def sub_dirs(self,pattern=None):
-		return self.directory().walkdirs(pattern)
+	def sub_dirs(self,pattern=None,ignore_subversion=True):
+		return filter_svn( self.directory().walkdirs(pattern), ignore_subversion)
 	
-	def all_dirs(self,pattern=None):
+	def all_dirs(self,pattern=None,ignore_subversion=True):
 		d = self.directory()
-		return [ d ] + d.walkdirs(pattern)
+		return filter_svn( [ d ] + d.walkdirs(pattern), ignore_subversion )
+
+def filter_svn(dirs,ignore_subversion):
+	if ignore_subversion:
+		return [ p for p in dirs if '.svn' not in p.splitall() ]
+	return dirs
 
 def dirs(p):
 	def my_dirs(p):
