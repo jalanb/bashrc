@@ -76,8 +76,8 @@ nnoremap <C-F4> <C-W>c
 "
 " Punctuation
 "
-"noremap [
-"noremap ]
+ noremap ] <C-]>
+ noremap [ <C-T>
  noremap ; qa " record to register a
  noremap ;; q " stop recording
  noremap ' @a " play register a
@@ -136,7 +136,7 @@ nnoremap K <PageUp>zz
  noremap Q :qa!<CR>
 "noremap R
  noremap S :set nospell<CR>
-"noremap T
+ noremap T :!tags
 "noremap U
 "noremap V
  noremap W :w!<CR>
