@@ -1,0 +1,9 @@
+The try module
+==============
+
+Well ! That's a good name,
+	No one will ever import that
+
+# >>> import try
+
+How to test the test script ?

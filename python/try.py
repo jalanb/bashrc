@@ -7,11 +7,8 @@ import commands
 import datetime
 from pprint import pprint, pformat
 
-try:
-	from path import path
-except ImportError:
-	print >> sys.stderr, 'Cannot import path'
-	sys.exit(3)
+from path import makepath
+import test_files
 
 def public_dir(x):
 	return [ d for d in dir(x) if not d.startswith('__') ]
@@ -26,10 +23,9 @@ def run_command(command):
 
 class Test_Being_Run:
 	def __init__(self,that):
-		self.runner = path(sys.argv[0])
-		self.here = path('.')
-		self.Here = path(os.path.abspath('.'))
-		self.home = path(os.path.expanduser('~'))
+		self.runner = makepath(sys.argv[0])
+		self.here = makepath('.')
+		self.home = makepath('~')
 		self.username = os.environ['USER']
 		try:
 			self.host = os.environ['HOST']
@@ -47,9 +43,6 @@ class Test_Being_Run:
 
 	def __repr__(self):
 		return pformat(self.__dict__.keys())
-
-class UserMessage(Exception):
-	pass
 
 def command_line():
 	from optparse import OptionParser
@@ -74,148 +67,23 @@ def try_testing_sub_dir(p):
 		return t
 	return p
 
-def get_test_dir():
-	args = sys.argv[1:]
-	result = path('.')
-	for arg in args:
-		arg_path = path(arg)
-		if arg_path.isdir():
-			result = arg_path
-			break
-	else:
-		for arg in args:
-			arg_path = path(arg)
-			if arg_path.parent and arg_path.isfile():
-				result = arg_path.parent
-				break
-	result = try_testing_sub_dir(result)
-	if not result.isdir():
-		raise UserMessage('%s is not a directory' % result)
-	if not result.files('*.test*') or result.files('*.py'):
-		raise UserMessage('%s/*.test*, *.py not found' % result)
-	return result
-
-def find_test_file(arg):
-	test_dir = get_test_dir()
-	if arg == str(test_dir): return None
-	p = path(arg)
-	if p.isfile(): return p
-	t = p.splitext()[0] + '.test'
-	if t.isfile(): return t
-	if p.parent:
-		return None
-	p = test_dir / arg
-	if p.isfile(): return p
-	t = p.splitext()[0] + '.test'
-	if t.isfile(): return t
-	return None
-
-def get_dir_path(item):
-	p = path(item)
-	if p.isdir():
-		return p
-	return p.parent
-
 class Sys_Path_Handler:
 	def __init__(self):
 		self.paths = []
 
 	def add(self,item):
-		item_path = get_dir_path(item)
-		if item_path not in self.paths:
-			self.paths.insert(0,item_path)
-			if item_path not in sys.path:
-				sys.path.insert(0,item_path)
+		directory = makepath(item).directory()
+		if directory not in self.paths:
+			self.paths.insert(0,directory)
+			if directory not in sys.path:
+				sys.path.insert(0,directory)
 			
 	def remove(self,item):
-		item_path = get_dir_path(item)
-		if item_path in self.paths:
-			self.paths.remove(item_path)
-			if item_path in sys.path:
-				sys.path.remove(item_path)
-
-def any_extension(p):
-	if p.isfile():
-		dirr = p.parent
-		glob = p.namebase + '.*'
-	elif p.isdir():
-		dirr = p
-		glob = '*'
-	else:
-		if p.parent:
-			dirr = p.parent
-		else:
-			dirr = path('.')
-		glob = '%s.*' % p.namebase
-	if not dirr.isdir(): return []
-	return [ f for f in dirr.files(glob)  ]
-
-def some_extensions(p,exts):
-	return [ f for f in any_extension(p) if f.ext in exts ]
-			
-def get_paths(args):
-	here = path('.')
-	paths = []
-	for arg in args:
-		if '/' in arg:
-			p = path(arg)
-		else:
-			p = here / arg
-		paths += [ p ]
-	return paths
-
-def add_sub_dirs(paths):
-	dirs = []
-	for p in paths:
-		if p.isdir():
-			top_dir = p
-		else:
-			top_dir = p.parent
-		if top_dir not in dirs:
-			dirs += [ top_dir ]
-	result = []
-	for p in dirs:
-		for sub_dir in p.walkdirs():
-			if sub_dir not in result:
-				result += [ sub_dir ]
-	return result
-
-def get_test_scripts(options,args):
-	exts = [ '.py' ,'.tests' , '.test']
-	test_scripts = []
-	paths = get_paths(args)
-	if options.recursive:
-		paths = add_sub_dirs(paths)
-	if not paths:
-		here = path('.')
-		if options.recursive:
-			method = here.walkfiles
-		else:
-			method = here.files
-		test_scripts = [ ]
-		for ext in exts:
-			a_glob = '*%s' % ext
-			for f in method(a_glob):
-				test_scripts.append(f)
-	else:
-		extension_scripts = []
-		for p in paths:
-			if p.isfile():
-				extension_scripts += [ p ]
-			else:
-				extension_scripts += some_extensions(p,exts)
-		if extension_scripts:
-			test_scripts += extension_scripts
-		else:
-			raise UserMessage('%s.test*, %s.py not found' % (paths[0],paths[0]))
-
-	if not test_scripts:
-		p = get_test_dir()
-		test_scripts = p.files('*.test')
-	result = [ s for s in test_scripts if s.ext == '.tests' ]
-	result += [ s for s in test_scripts if s.ext == '.test' ]
-	result += [ s for s in test_scripts if s.ext == '.py' ]
-	return result
+		directory = makepath(item).directory()
+		if directory in self.paths:
+			self.paths.remove(directory)
+			if directory in sys.path:
+				sys.path.remove(directory)
 
 def make_module(path_to_python):
 	name = path_to_python.namebase
@@ -245,7 +113,7 @@ def test():
 	failures_all = 0
 	sys_paths.add('.')
 	try:
-		for test_script in get_test_scripts(options,args):
+		for test_script in test_files.get_test_scripts(options.recursive,args):
 			os.chdir(pwd)
 			start = datetime.datetime.now()
 			if not test_script: continue
@@ -265,7 +133,7 @@ def test():
 						globs = {
 							'test' : Test_Being_Run(test_script),
 							'sys' : sys,
-							'path' : path,
+							'makepath' : makepath,
 							'show' : pprint,
 							'bash' : run_command,
 							'public_dir' : public_dir,
@@ -301,7 +169,7 @@ def test():
 def main():
 	try:
 		return test()
-	except UserMessage, e:
+	except test_files.UserMessage, e:
 		print >> sys.stderr, e
 	except KeyboardInterrupt:
 		print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
