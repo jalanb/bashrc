@@ -47,13 +47,23 @@ It defaults to only the current directory
 get_files
 ---------
 
+	>>> dirs = l.get_dirs(['/usr/local/lib','/usr/bin','/usr/local/bin'])
+
 get_files converts a list of directories to a list of all their files' paths
-	(The list of files is flat)
-	It also defaults to here
-	>>> l.get_files()[0].parent.abspath() == here.abspath()
+	>>> files = l.get_files(dirs)
+
+The list of files is flat
+	>>> all([ f.isfile() for f in files ])
 	True
 
-So we can expect to find all of these files here
+It also defaults to here
+	>>> files = l.get_files()
+	>>> len(files) > 3
+	True
+	>>> all([ f.parent.abspath() == here.abspath() for f in files ])
+	True
+
+So we can expect to find all of these files
 	>>> [ f in l.get_files() for f in these_files ]
 	[True, True, True]
 
@@ -87,7 +97,8 @@ It defaults to here (again) for its files
 	>>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
 
 The default list of globs comes from ~/.subversion/config
-	I usually ignore fred on the advice of Dr Mike Smith,
+	It includes *~ and *.pyc
+	It also includes fred* (on the advice of Dr Mike Smith),
 		so I'd normally only see alan and mary
 	>>> l.remove_ignored(files)
 	[<path 'mary.py'>, <path 'alan.txt'>]

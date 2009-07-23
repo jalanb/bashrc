@@ -2,7 +2,12 @@ The l module
 ============
 
 	>>> import l
-	>>> l.argv.test_args('')
+	>>> l.argv.test_args('-h')
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -i, --ignore  Do not ignore files (that subversion ignores)
+	  -h, --help    show this help message and exit
 
 	>>> l.as_paths('fred')
 	[<path 'fred'>]
