@@ -161,6 +161,20 @@ def parse_args(command_line=None):
 		options, args = post_parse(options,args)
 	return options, args
 
-def test_args(s):
-	try: parse_args(s)
-	except SystemExit: pass
+def test_args(command_line=None):
+	option_parser = make_parser()
+	global options
+	global args
+	if command_line is None:
+		command_line = '-h'
+	if command_line:
+		try: command_line = command_line.split()
+		except AttributeError: pass
+		if '-h' in command_line:
+			command_line.remove('-h')
+			option_parser.print_help()
+		options, args = option_parser.parse_args(command_line)
+	else:
+		options, args = option_parser.parse_args()
+	for post_parse in post_parses:
+		options, args = post_parse(options,args)
