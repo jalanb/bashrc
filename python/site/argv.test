@@ -24,12 +24,15 @@ Usually add() is called with the tuples (e.g. each module imported calls it)
 	>>> argv.add( [ ('welcome',help_string,'Fred'), ])
 
 Then call parse_args() once, e.g. in main()
-	(Not doing that here - do not know what is on command line
+	(Not doing that here - do not know what is on command line)
 
 	options, args = argv.parse_args()
 
 Or, you could get it to parse a specific command line
 
+	>>> options, args = argv.parse_args('Hello')
+	>>> print ' '.join(args + [ options.welcome ])
+	Hello Fred
 	>>> options, args = argv.parse_args('Hello -w World')
 	>>> print ' '.join(args + [ options.welcome ])
 	Hello World
@@ -42,10 +45,11 @@ Post processing options
 You can write a method to process args after the OptionParser has made them
 	It should take in an options, args tuple, and return the same
 	>>> def changer(options, args):
-	...     options.welcome = 'Alan'
+	...     options.welcome = 'Martin'
 	...     return options, args + [ 'and' ]
 
 	>>> def finisher(options, args):
+	...     options.welcome = 'Alan'
 	...     return options, args + [ 'Goodbye' ]
 
 Add it on to the list of such processors
@@ -53,6 +57,7 @@ Add it on to the list of such processors
 	>>> argv.post_parses.append( finisher )
 
 These methods will be called from parse_args()  
+	in the order they were added (so Martin will disappear)
 Test with the same command line as before
 	>>> options, args = argv.parse_args('Hello -w World')
 	>>> print ' '.join(args + [ options.welcome ])
