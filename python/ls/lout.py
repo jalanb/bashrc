@@ -38,9 +38,12 @@ def format(names):
 	names_and_extensions = []
 	for name, files in names.iteritems():
 		ordered_exts = [ 'py', 'j', 'g', 'test', 'tests', 'fail', 'pyc', 'pyo' ]
-		oo = argv.options
-		missing = [ e for e in oo.exts if e[1:] not in ordered_exts ]
-		assert not missing
+		try:
+			opt_exts = argv.options.exts
+			missing = [ e for e in argv.options.exts if e[1:] not in ordered_exts ]
+			assert not missing
+		except AttributeError:
+			pass
 		f_exts = [ f.ext[1:] for f in files ]
 		lout_rules(f_exts)
 		exts = [ e for e in ordered_exts if e in f_exts ] + [ e for e in f_exts if e not in ordered_exts ]
