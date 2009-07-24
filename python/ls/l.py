@@ -1,15 +1,12 @@
 import os
 import sys
 import path
-from fnmatch import fnmatch
 
 import argv
-from glob_path import glob_path
+from glob_path import glob_path, any_fnmatch
 
 argv.add([
-	('ignore','Ignore files like those that subversion ignores', True),
-	('qignore','Ignore files like those that subversion ignores', True),
-	('ass','Ignore files like those that subversion ignores', True),
+	('ignore','Do not ignore files (that subversion ignores)', True),
 ])
 
 def common_start(a,b):
@@ -45,18 +42,19 @@ def default_ignores():
 	ignores.update( [ '*~', '.*.sw[lmnop]' ] )
 	return list( ignores )
 
+def all_ignores(ignores=None,extra_ignores=None):
+	if not ignores:
+		ignores = default_ignores()
+	if extra_ignores:
+		ignores.extend(extra_ignores)
+	return ignores
+	
 def remove_ignored(files,ignores=None,extra_ignores=None):
 	result = []
-	if not argv.options.ignore: return files
-	if not ignores: ignores = default_ignores()
-	if extra_ignores: ignores.extend(extra_ignores)
-	for f in files:
-		for glob in ignores:
-			if f.fnmatch(glob):
-				break
-		else:
-			result += [ f ]
-	return result
+	if not argv.options.ignore:
+		return files
+	globs = all_ignores(ignores,extra_ignores)
+	return [ f for f in files if not any_fnmatch(f,globs) ]
 
 def add_dir(dirs,d):
 	if d in dirs: return
