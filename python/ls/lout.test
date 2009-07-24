@@ -3,4 +3,17 @@ lout
 
 This module handles output for other scripts in this directory
 
-	>>> import lout
+	>>> import l, lout
+	>>> lout.argv.test_args('-h ')
+	Usage: try.py [options]
+	<BLANKLINE>
+	Options:
+	  -q, --quiet   hide directories, blank lines, ...
+	  -l, --lines   separate by returns (tabs is default)
+	  -i, --ignore  Ignore files like those that subversion ignores
+	  -h, --help    show this help message and exit
+
+	>>> files = l.get_files()
+	>>> files = l.remove_ignored(files)
+	>>> names = l.get_names(files)
+	>>> show( lout.format(names) )
