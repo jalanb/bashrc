@@ -58,8 +58,19 @@ kd ()
 # cd to filename as well as directory
 	echo $* | grep -q " st" && show_more=true || show_more=false 
 	args=`echo $* | sed -e"s/ st//"`
-	cd `python ~/.jab/python/kd.py $args`
-	$show_more && st 
+	destination=`python ~/.jab/python/kd.py $args 2>&1`
+	first_word=`echo "$destination" | cut -d\   -f1`
+	if [[ "x$first_word" == "xError" ]]
+	then
+		echo $destination
+	else
+		if [[ $destination != $1 ]]
+		then
+			echo "cd $destination"
+		fi
+		cd "$destination"
+	fi
+	# $show_more && st 
 }
 
 ru ()

@@ -3,12 +3,32 @@ import sys
 from path import path
 
 def show_not_dir(p):
+	if not p:
+		raise ValueError('bad argument: %r' % p)
 	while not p.isdir():
 		prev = p
 		p = p.parent
-		if p == '/': break
+		if not p or p == '/': break
 	raise ValueError('%s is not a directory' % prev)
 	
+def try_others(sought):
+	p = path(sought)
+	if p.parent.isdir():
+		return p.parent
+	if p.parent:
+		p = p.parent
+	else:
+		p = path(os.getcwd())
+	try:
+		return [ d for d in p.dirs() if d.startswith(sought) ][0]
+	except IndexError:
+		print 'No directory in %s startswith "%s"' % (p,sought)
+		try:
+			return [ d.parent for d in p.files() if d.startswith(sought) ][0]
+		except IndexError:
+			print 'No file in %s startswith "%s"' % (p,sought)
+	return path(sought)
+
 def find_dir(dirr,sub_dir=None):
 	if dirr == '':
 		return path('~').expanduser()
@@ -19,7 +39,10 @@ def find_dir(dirr,sub_dir=None):
 	if whither.isfile():
 		whither = whither.parent
 	if not whither.isdir():
+		whither = try_others(dirr)
+	if not whither.isdir():
 		show_not_dir(whither)
+		return None
 	if sub_dir:
 		possibles = [ x for x in whither.walkdirs() if sub_dir in x.name ]
 		if len(possibles) == 1:
@@ -41,25 +64,15 @@ def parse_command_line(args):
 		raise ValueError('I cannot count')
 	return args
 
-def chdir(whither):
-	if whither.isfile():
-		whither = whither.parent
-	if not whither.isdir():
-		show_not_dir(whither)
-	oldpwd = os.environ['PWD']
-	os.chdir(whither)
-	os.environ['OLDPWD'] = oldpwd
-	os.environ['PWD'] = whither
-
 def main():
 	try:
 		args = parse_command_line(sys.argv[1:])
 		whither = find_dir(args[0], args[1])
-		print str(whither)
+		if whither:
+			print str(whither)
 		return 0
 	except Exception, e:
-		print os.getcwd()
-		print >> sys.stderr, str(e)
+		print >> sys.stderr, "Error", str(e)
 		return 1
 
 if __name__ == '__main__':
