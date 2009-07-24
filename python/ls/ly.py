@@ -90,7 +90,7 @@ def main():
 	lout.show_dirs(dirs)
 	files = l.get_files(dirs)
 	show_ignored = False
-	if not show_ignored:
+	if argv.options.ignored:
 		files = l.remove_ignored(files)
 	names = l.get_names(files)
 	if not names: return 0

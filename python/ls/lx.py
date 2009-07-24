@@ -21,11 +21,11 @@ def get_exts(files):
 
 def main():
 	argv.parse_args()
-	dirs = get_dirs(args)
-	show_dirs(dirs)
+	dirs = get_dirs(argv.args)
+	lout.show_dirs(dirs)
 	exts = get_exts(get_files(dirs))
 	if not exts: return 0
-	show(exts)
+	lout.show(exts)
 	return 0
 
 if __name__ == '__main__':
