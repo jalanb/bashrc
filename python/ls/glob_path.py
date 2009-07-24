@@ -34,3 +34,9 @@ class glob_path:
 			return True
 		return False
 
+def any_fnmatch(f,globs):
+	for glob in globs:
+		if f.fnmatch(glob):
+			return True
+	return False
+
