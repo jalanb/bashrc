@@ -6,7 +6,7 @@ export pinky_ip=192.168.0.103
 export COLUMNS
 
 export EXITSTATUS="$?"
-export FIGNORE=.test:.tests:.pyc:.swp:~:.o
+export FIGNORE=.test:.tests:.pyc:.swp:~:.o:.fail
 
 #export DISPLAY=:0
 
