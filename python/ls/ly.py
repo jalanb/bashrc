@@ -2,14 +2,14 @@ import os
 import sys
 import path
 import argv
+import l 
+import lout
 
 
 try: any([])
 except NameError:
 	def any(x): return [a for a in x if a]
 
-import l 
-import lout
 
 def post_parse(options,args):
 	anything = False
