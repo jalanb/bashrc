@@ -19,6 +19,6 @@ This module handles output for other scripts in this directory
 	>>> show( lout.format(names) )
 	['glob_path.py,test',
 	 'l.py,test,tests',
-	 'lout.py,test...',
+	 'lout.py,test',
 	 'lx.py,test,tests',
 	 'ly.py,test']

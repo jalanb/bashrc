@@ -1,7 +1,7 @@
 ly
 ==
 
-	>>> import l, ly
+	>>> import ly
 	>>> from path import cd
 	>>> cd(ly.__file__)
 	True
@@ -19,11 +19,15 @@ ly is a script
 	  -f, --fails     show fails
 	  -a, --all       show all python related files
 	  -o, --others    show non python related files as well
-	  -q, --quiet     hide directories, blank lines, ...
+	  -q, --quiet     hide directories, blank lines, etc
+	  -l, --lines     separate by returns (tabs is default)
+	  -i, --ignore    Do not ignore files (that subversion ignores)
 	  -h, --help      show this help message and exit
 
 The command line tells it which files to get
 	>>> ly.argv.test_args('-a ')
+
+	>>> import l
 
 filter_names
 ------------

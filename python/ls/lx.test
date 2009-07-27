@@ -11,8 +11,10 @@ lx is a script
 	Usage: try.py [options]
 	<BLANKLINE>
 	Options:
-	  -q, --quiet  hide directories, blank lines, ...
-	  -h, --help   show this help message and exit
+	  -q, --quiet   hide directories, blank lines, etc
+	  -l, --lines   separate by returns (tabs is default)
+	  -i, --ignore  Do not ignore files (that subversion ignores)
+	  -h, --help    show this help message and exit
 
 We know these files exist
 	>>> this_python_file = path('lx.py')
