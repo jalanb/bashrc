@@ -3,7 +3,7 @@ import sys
 import path
 import argv
 
-from l import get_dirs, get_files
+import l
 import lout
 
 def get_exts(files):
@@ -21,9 +21,9 @@ def get_exts(files):
 
 def main():
 	argv.parse_args()
-	dirs = get_dirs(argv.args)
+	dirs = l.get_dirs(argv.args)
 	lout.show_dirs(dirs)
-	exts = get_exts(get_files(dirs))
+	exts = get_exts(l.get_files(dirs))
 	if not exts: return 0
 	lout.show(exts)
 	return 0
