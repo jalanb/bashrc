@@ -1,10 +1,9 @@
 import os
-from l import remove_ignored
 import argv
 
 argv.add( [
-	( 'quiet', 'hide directories, blank lines, ...', False), 
-	( 'lines', 'separate by returns (tabs is default)', False), 
+	( 'quiet', 'hide directories, blank lines, etc', False),
+	( 'lines', 'separate by returns (tabs is default)', False),
 ] )
 
 def local_rules(*args):
