@@ -9,6 +9,17 @@ The l module
 	  -i, --ignore  Do not ignore files (that subversion ignores)
 	  -h, --help    show this help message and exit
 
+	>>> print l.get_dirs(['No such directory'])
+	Traceback (most recent call last):
+	...
+	ValueError: No such directory: No such directory
+
+	>>> print l.get_dirs(['No such directory', 'Nor is this'])
+	Traceback (most recent call last):
+	...
+	ValueError: No such directories: No such directory, Nor is this
+
+	
 	>>> l.as_paths('fred')
 	[<path 'fred'>]
 
