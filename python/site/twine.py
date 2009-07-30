@@ -15,9 +15,19 @@ class Twine(str):
 	at http://mail.python.org/pipermail/python-dev/2006-January/060115.html
 	'''
 	def __repr__(self):
+		'''Represent the Twine
+
+		>>> Twine('stuff')
+		<Twine 'stuff'>
+		'''
 		return "<%s '%s'>" % (self.class_name(),str(self))
 
 	def full_class_name(self):
+		'''The fully qualified class name for the Twine (or sub-class)
+
+		>>> Twine('stuff').full_class_name()
+		'twine.Twine'
+		'''
 		class_repr = str(self.__class__)
 		prefix = "<class '"
 		suffix = "'>"
@@ -25,6 +35,11 @@ class Twine(str):
 		return trimmed
 
 	def class_name(self):
+		'''The class name for the Twine (or sub-class)
+
+		>>> Twine('stuff').class_name()
+		'Twine'
+		'''
 		result = self.full_class_name()
 		i = 0
 		try:
@@ -34,14 +49,34 @@ class Twine(str):
 		return result[i:]
 
 	def list_name(self):
+		'''The list name for the Twine (or sub-class)
+
+		What should a collection of these things be called ?
+
+		>>> Twine('stuff').list_name()
+		'Twines'
+		'''
 		return pluralize( self.class_name() )
 
 	def str_class_and_list(self):
+		'''A tuple with three strings for the value, class and list names
+
+		>>> print Twine().str_class_and_list()
+		('', 'Twine', 'Twines')
+		'''
 		return str(self), self.class_name(), self.list_name()
 
 def associates(thing):
+	'''The associated things of a Tangle
+
+	>>> associates(Tangle('8888'))
+	[<Tangle '8888'>]
+	'''
 	if hasattr(thing,'associate'):
 		return [ thing ]
+	try: first_thing = thing[0]
+	except TypeError:
+		raise ValueError('%r cannot associate' % thing)
 	if hasattr(thing[0],'associate'):
 		return thing
 	raise ValueError('%r cannot associate' % thing)
