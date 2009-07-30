@@ -19,4 +19,6 @@
 	fish
 	>>> print pluralize('index')
 	indices
+	>>> print pluralize('Index')
+	Indices
 	

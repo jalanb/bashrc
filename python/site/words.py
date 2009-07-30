@@ -6,7 +6,11 @@ import re
 from itertools import ifilter
 
 def matchCase(s1, s2):
-	"""Matches the case of s1 in s2"""
+	'''Matches the case of s1 in s2
+	
+	>>> matchCase('MATCHcase','somestuff')
+	'SOMEStuff'
+	'''
 	if s1.isupper():
 		return s2.upper()
 	else:
@@ -14,11 +18,13 @@ def matchCase(s1, s2):
 		for (i, char) in enumerate(s1[:len(s2)]):
 			if char.isupper():
 				L[i] = L[i].upper()
+			elif char.islower():
+				L[i] = L[i].lower()
 		return ''.join(L)
 
 
 def any_true(function, iterable):
-	"""Returns true if any element in iterable satisfies the function."""
+	'''Returns true if any element in iterable satisfies the function.'''
 	for _ in ifilter(function, iterable):
 		return True
 	else:
@@ -31,15 +37,17 @@ exceptional_plurals = {
 }
 
 def pluralize(s):
-	"""Returns the plural of s.  Put any exceptions to the general English
-	rule of appending 's' in the exceptional_plurals dictionary.
-	"""
+	'''Returns the plural of s. 
+	
+	>>> pluralize('Index')
+	'Indices'
+	'''
 	lowered = s.lower()
 	result = s + 's'
 	if lowered in exceptional_plurals:
 		result = exceptional_plurals[lowered]
 	elif lowered.endswith('ex'):
-		return lowered[:-2] + 'ices'
+		result = lowered[:-2] + 'ices'
 	elif any_true(lowered.endswith, ['x', 'ch', 'sh', 'ss']):
 		result = s+'es'
 	elif ends_in_consonant_y.search(lowered):
@@ -51,7 +59,11 @@ exceptional_singlulars = {}
 for k,v in exceptional_plurals.iteritems(): exceptional_singlulars[v] = k
 
 def depluralize(s):
-	"""Returns the singular of s."""
+	'''Returns the singular of s.
+	
+	>>> depluralize('Cows')
+	'Cow'
+	'''
 	lowered = s.lower()
 	if lowered in exceptional_plurals:
 		return matchCase(s, exceptional_plurals[lowered])
