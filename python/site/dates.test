@@ -4,7 +4,7 @@ The dates module
 now is hard to test, reprodicibly
 
 	>>> import dates
-	>>> p = path('test_me_now')
+	>>> p = makepath('test_me_now')
 	>>> if p.exists(): p.remove()
 	>>> p.touch()
 	>>> now = dates.now()
