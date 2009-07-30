@@ -66,44 +66,6 @@ class Twine(str):
 		'''
 		return str(self), self.class_name(), self.list_name()
 
-def associates(thing):
-	'''The associated things of a Tangle
-
-	>>> associates(Tangle('8888'))
-	[<Tangle '8888'>]
-	'''
-	if hasattr(thing,'associate'):
-		return [ thing ]
-	try: first_thing = thing[0]
-	except TypeError:
-		raise ValueError('%r cannot associate' % thing)
-	if hasattr(thing[0],'associate'):
-		return thing
-	raise ValueError('%r cannot associate' % thing)
-
-class Tangle(Twine):
-	'''A Tangle is a Twine associated with another Twine.'''
-	def associate(self,thing):
-		children = associates(thing)
-		for child in children:
-			self.add_to_class(child)
-			child.add_to_class(self)
-		return self
-
-	def add_to_class(self,child):
-		class_name = child.class_name().lower()
-		known_classname = hasattr(self,class_name)
-		if not known_classname:
-			setattr(self,class_name,child)
-
-		list_name = child.list_name().lower()
-		known_listname = hasattr(self,list_name)
-		if not known_listname:
-			setattr(self,list_name,{})
-		cousins = getattr(self,list_name)
-		if child not in cousins:
-			cousins[str(child)] = child
-
 def twist(name,bases=None,ns=None):
 	if bases is None: bases = []
 	if ns is None: ns = {}
