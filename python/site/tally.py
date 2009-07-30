@@ -75,5 +75,3 @@ def tlist(name,bases=None,ns=None):
 	escaped = name.replace(' ','_')
 	return MySecondMeta(escaped, (Tally,), ns)
 
-def enjoin(lyst):
-	return lyst

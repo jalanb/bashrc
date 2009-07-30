@@ -4,11 +4,14 @@ The tally module
 	>>> import tally
 
 A Tally is ako list
-	>>> fred = tally.Tally([0, 1, 'hello', 2, 3])
+	>>> l = [0, 1, 'hello', 2, 3]
+	>>> fred = tally.Tally(l)
 	>>> print fred
 	[0, 1, 'hello', 2, 3]
 
 With a different %r than list
+	>>> l
+	[0, 1, 'hello', 2, 3]
 	>>> fred
 	<Tally [0, 1, 'hello', 2, 3]>
 
@@ -18,7 +21,7 @@ And can parse out its class name
 
 A subclass of Tally
 	>>> class Freddy(tally.Tally): pass
-	>>> fred = Freddy([0, 1, 'hello', 2, 3])
+	>>> fred = Freddy(l)
 
 is also ako list
 	>>> print fred
@@ -60,5 +63,3 @@ It still parses its name the same way
 	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()
 	Teddy tally.Teddy Teddies
 
-	>>> tally.enjoin([])
-	[]
