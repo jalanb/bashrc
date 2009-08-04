@@ -111,7 +111,8 @@ def options_to_parser(options):
 	return OptionParser(option_list=options)
 
 added_args = []
-def add(args): added_args[:0] = args
+def add(args):
+	added_args[:0] = args
 
 def make_parser(args=None):
 	'''Make an OptionParser from a list of tuples
