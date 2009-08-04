@@ -6,13 +6,6 @@ class Tally(list):
 	This tally is intended to be sub-classed,
 		and provides conveniences to represent the class name nicely
 
-	BTW:
-	Inheritance from str seems OK, given 
-		"Remember that the Path module have existed for three years in the wild and is
-		extra-ordinarily well-liked. If the fact that Path inherits from
-		string is such a big deal, then *why* is the path module so hugely
-		popular?? :)"
-	at http://mail.python.org/pipermail/python-dev/2006-January/060115.html
 	'''
 	def __str__(self):
 		'''Represent the list as a string
