@@ -87,7 +87,7 @@ alias ra="sudo -i -u abrogan"
 alias ri="sudo -i -u issue"
 alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
-alias ry="rm -rf *.py[co]"
+alias ry="rf pycos"
 
 alias sa=". ~/.jab/aliases"
 alias sb="cd ~/.jab && . bashrc && c-"
