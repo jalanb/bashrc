@@ -187,6 +187,7 @@ alias sdiff="svn_diff diff "
 
 # xxxxxx
 
+alias build2="ssh abrogan@ie-build-2"
 alias public="mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public"
 
 alias skdiff="svn_diff kdiff "
