@@ -87,3 +87,10 @@ As this one produces the same thing
 	 <Option at ...: -b/--bee>,
 	 <Option at ...: -c/--cene>]
 
+	>>> argv.added_args = []
+	>>> argv.post_processors = []
+
+Reset
+-----
+Do not interfere with other tests
+	>>> argv.reset()

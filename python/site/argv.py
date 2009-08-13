@@ -9,12 +9,13 @@ Convenience methods for populating an OptionPraser
 	... ] )
 
 	>>> my_parser = argv.make_parser( my_opts )
+
 That's an optparse.OptParser,
 	which handles command line options and args
 
 More commonly:
 	>>> argv.add(my_opts)
-	>>> options, args = option_parser.parse_args(command_line='-s crash.log'])
+	>>> options, args = argv.parse_args(command_line='-s crash.log')
 	>>> print options.__dict__
 	{'save': True, 'exit': '', 'name': 'Fred'}
 	>>> print args
@@ -135,6 +136,17 @@ def make_parser(args=None):
 options = None
 args = None
 post_parses = []
+
+def reset():
+	'''Reset the module variables back to empty values'''
+	global options
+	options = None
+	global args
+	args = None
+	global added_args
+	added_args = []
+	global post_parses
+	post_parses = []
 
 def parse_args(command_line=None):
 	'''Use options are made from a list of tuples

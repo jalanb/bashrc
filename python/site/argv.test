@@ -134,3 +134,7 @@ Use all flag options - most values have changed
 	>>> print opts.ok, opts.good, opts.bad
 	True False False
 
+Reset
+-----
+Do not interfere with other tests
+	>>> argv.reset()
