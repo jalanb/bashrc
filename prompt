@@ -41,3 +41,6 @@ else
 	export PS1=" ${PROMPT_COLOUR}[\d \@ \u@\h \w]${PROMPT_NO_COLOUR}\n$ "
 fi
 
+bind '"\e[A"':history-search-backward
+bind '"\e[B"':history-search-forward
+
