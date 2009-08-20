@@ -119,6 +119,7 @@ alias yy="y $MAIN_PYTHON"
 
 # xxx
 
+alias ...='kd ../..'
 alias c--="cd -"
 
 alias clx="cl; lx "
