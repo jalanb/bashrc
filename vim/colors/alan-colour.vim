@@ -16,6 +16,7 @@ highlight Search		ctermfg=Red	ctermbg=DarkRed			guifg=Red	guibg=#402020
 
 highlight Comment	 	ctermfg=Grey					guifg=#808080
 highlight Constant	 	ctermfg=Cyan			cterm=none	guifg=#0066FF
+highlight CursorLine		cterm=underline					gui=underline guibg=#080808
 highlight string		ctermfg=Blue					guifg=Blue
 highlight pythonEscape		ctermfg=Blue					guifg=#000088
 highlight Identifier	 	ctermfg=Green					guifg=#44ff44
