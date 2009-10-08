@@ -231,11 +231,22 @@ stat ()
 
 build ()
 {
-	if [ -d /mnt/source ]
+	if [[ -n "$*" ]]
+	then
+		if [[ "$1" == "2" ]]
+		then
+			ssh builder@ie-build-2
+		fi
+	elif [[ -d /mnt/source ]]
 	then 
 		ssh ie-build-2
 	else
-		ssh ie-build-1
+		if [[ "$USER" == "abrogan" ]]
+		then
+			ssh ie-build-1
+		else
+			ssh builder@ie-build-1
+		fi
 	fi
 }
 
@@ -327,7 +338,14 @@ svn_diff () {
 	dir=`dirname $2`
 	file=`basename $2`
 	pushd "$dir" > /dev/null
-	/usr/bin/$1 "$file" .svn/text-base/"$file".svn-base
+	if [[ -f $1 ]]
+	then 
+		exe=$1
+	elif [[ -f /usr/bin/$1 ]]
+	then
+		exe=/usr/bin/$1
+	fi
+	$exe "$file" .svn/text-base/"$file".svn-base
 	popd > /dev/null
 }
 
