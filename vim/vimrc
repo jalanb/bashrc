@@ -151,8 +151,8 @@ noremap <Space> <PageDown>zz
 noremap <BS> <PageUp>zz
 noremap <left> :tabprev<cr>
 noremap <right> :tabnext<cr>
-noremap <down> <down>zz
-noremap <up> <up>zz
+"noremap <down> <down>zz
+"noremap <up> <up>zz
 "
 " control keys
 "
