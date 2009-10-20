@@ -22,3 +22,26 @@ This module handles output for other scripts in this directory
 	 'lout.py,test',
 	 'lx.py,test,tests',
 	 'ly.py,test']
+
+	>>> lout.show(lout.format(names))
+	glob_path.py,test l.py,test,tests   lout.py,test      lx.py,test,tests  ly.py,test        
+
+	>>> lout.os.environ['COLUMNS'] = '60'
+	>>> lout.show(lout.format(names))
+	glob_path.py,test l.py,test,tests   lout.py,test      
+	lx.py,test,tests  ly.py,test        
+
+	>>> lout.os.environ['COLUMNS'] = '40'
+	>>> lout.show(lout.format(names))
+	glob_path.py,test l.py,test,tests   
+	lout.py,test      lx.py,test,tests  
+	ly.py,test        
+
+	>>> lout.os.environ['COLUMNS'] = '80'
+	>>> lout.argv.test_args('-l ')
+	>>> lout.show(lout.format(names))
+	glob_path.py,test 
+	l.py,test,tests   
+	lout.py,test      
+	lx.py,test,tests  
+	ly.py,test        
