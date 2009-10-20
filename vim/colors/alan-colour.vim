@@ -22,7 +22,7 @@ highlight pythonEscape		ctermfg=Blue					guifg=#000088
 highlight Identifier	 	ctermfg=Green					guifg=#44ff44
 highlight Keyword    		ctermfg=LightRed		cterm=bold	guifg=Red			gui=bold
 highlight Statement 		ctermfg=Red			cterm=bold	guifg=Red			gui=bold
-highlight PreProc	 	ctermfg=LightRed				guifg=#ff4444	gui=bold
+highlight PreProc	 	ctermfg=brown				guifg=#ff4444	gui=bold
 highlight Type		 	ctermfg=2					guifg=#ff4444	gui=bold
 highlight Special	 	ctermfg=red					guifg=#ff4444  gui=bold
 highlight Error					ctermbg=Red					guibg=Red
