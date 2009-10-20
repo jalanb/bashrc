@@ -18,8 +18,7 @@ def pluralled(lyst):
 	for items in lyst:
 		item = items[0]
 		name = item.list_name()
-		value = tally.enjoin(items)
-		result += [ tally.tlist(name)(value) ]
+		result += [ tally.tlist(name)(items) ]
 	return result
 
 def classed(lyst):
