@@ -3,8 +3,6 @@ if exists("g:loaded_jab_python")
 endif
 let g:loaded_jab_python = "v001"
 
-noremap <up> i k <esc>
-noremap <down> i j <esc>
 noremap <right> :tabnext<cr>
 noremap <left> :tabprev<cr>
 set foldmethod=indent
