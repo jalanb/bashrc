@@ -54,13 +54,13 @@ def format(names):
 
 def show_line(outs,columns_per_line):
 	columns_this_line, remainder = outs[:columns_per_line], outs[columns_per_line:]
-	separator = '\t'
+	separator = ''
 	if argv.options.lines: separator = '\n'
 	print separator.join(columns_this_line)
 	if remainder: show_line(remainder,columns_per_line)
 		
 def show(outs):
-	try: column_width = max( [ len(o) for o in outs ] )
+	try: column_width = max( [ len(o) for o in outs ] ) + 1
 	except ValueError: return
 	columns_per_line = screen_width() / column_width
 	padded = [ '%-*s' % ( column_width, o ) for o in outs ]
