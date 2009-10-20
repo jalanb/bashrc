@@ -1,12 +1,1 @@
-Write RIAS tri-lingually
-
-Read current Java implementation
-	Parse
-Read Alan Qs C++ code
-	Parse to the same tree
-	Match his code to the Java code
-Write Python
-	Generate a parse tree from Java, write C++
-	Idiomatically
-
 Find FOSS docgen package
