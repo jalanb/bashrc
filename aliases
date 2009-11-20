@@ -183,6 +183,7 @@ alias floka="get_pinky_ip && ssh floka@${pinky_ip}"
 alias denis='mysql -u root -D issues -e"select id, _title from _issue where _module = 37 and _creator = 39 and __retired__ = 0 and _status != 8"'
 
 alias ptags="p ~/.jab/python/ptags.py "
+alias trepp="trep -pvc"
 
 alias sdiff="svn_diff diff "
 
@@ -197,9 +198,12 @@ alias sxdiff="svn_diff xdiff "
 alias svdiff="svn_diff vimdiff "
 alias shdiff='svn_diff "vimdiff -o" '
 
+alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
+
 # xxxxxxx
 
 alias abrogan="ssh abrogan@192.168.0.103"
+alias pfidler="ssh root@172.16.1.249"
 alias service="sudo /sbin/service "
 
 # xxxxxxxx
