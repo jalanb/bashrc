@@ -338,9 +338,12 @@ svn_diff () {
 	dir=`dirname $2`
 	file=`basename $2`
 	pushd "$dir" > /dev/null
-	if [[ -f $1 ]]
+	if [[ "$1" == "vimdiff -o" ]]
 	then 
-		exe=$1
+		exe="/usr/bin/vimdiff -o"
+	elif [[ -f $1 ]]
+	then 
+		exe="$1"
 	elif [[ -f /usr/bin/$1 ]]
 	then
 		exe=/usr/bin/$1
