@@ -6,11 +6,11 @@ export pinky_ip=192.168.0.103
 export COLUMNS
 
 export EXITSTATUS="$?"
-export FIGNORE=.test:.tests:.pyc:.swp:~:.o:.fail
+export FIGNORE=.pyc:.swp:~:.o:.fail
 
 #export DISPLAY=:0
 
-export HISTSIZ=100000
+export HISTSIZE=100000
 
 export XAUTHORITY=$HOME/.Xauthority
 
