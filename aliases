@@ -149,6 +149,12 @@ alias rff="r fred*"
 alias sib=". ~/.bashrc"
 alias stj="stat ~/.jab"
 
+alias skd="svn_diff kdiff "
+alias sxd="svn_diff xdiff "
+alias svd="svn_diff vimdiff "
+alias shd='svn_diff "vimdiff -o" '
+
+
 alias tra="try ~/alans_tests"
 alias tri="sh $TRACKER_TESTING/regulars.sh"
 alias trz="p $TRACKER_TESTING/run_test.py"
@@ -193,11 +199,6 @@ alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
 alias public="mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public"
 
-alias skdiff="svn_diff kdiff "
-alias sxdiff="svn_diff xdiff "
-alias svdiff="svn_diff vimdiff "
-alias shdiff='svn_diff "vimdiff -o" '
-
 alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
 
 # xxxxxxx
@@ -205,10 +206,12 @@ alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
 alias abrogan="ssh abrogan@192.168.0.103"
 alias pfidler="ssh root@172.16.1.249"
 alias service="sudo /sbin/service "
+alias cleaner="clean deep"
 
 # xxxxxxxx
 
 alias itissues="mysql -u root -D itissues"
+alias cleanest="clean deep pycos"
 
 # xxxxxxxx
 
