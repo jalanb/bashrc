@@ -10,3 +10,12 @@ first_dir()
 	done
 }
 
+last_dir()
+{
+	dir=`pwd`
+	for d in $*
+	do
+		test -d $d && dir=$d || continue
+	done
+}
+
