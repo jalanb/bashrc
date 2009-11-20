@@ -89,7 +89,6 @@ if !exists("Mash")
 	endfunction
 	command -nargs=0 Mash :call Mash()
 	noremap M :Mash<cr>
-	autocmd BufWrite * exec "Mash"
 endif
 "	From ie-build-1:/usr/share/vim/vim70/vimrc_example.vim
 
