@@ -1,0 +1,181 @@
+The fail_file module
+====================
+Facilities to understand *.fail
+	which are files containing doctest output
+
+	>>> from fail_file import fail_file
+
+	>>> def to_tree(rule,source):
+	...     show(fail_file(source).apply(rule))
+
+	>>> def to_text(rule,source):
+	...     print fail_file([source]).apply(rule)
+
+	>>> def tree_text(tree,source,text=None):
+	...     if not text: text = '%s_text' % tree
+	...     ast = fail_file(source).apply(tree)
+	...     show(ast)
+	...     print '=== header ==='
+	...     translate.write_file = 'header'
+	...     print fail_file([ast]).apply(text)
+	...     print '=== cpp ==='
+	...     translate.write_file = 'cpp'
+	...     print fail_file([ast]).apply(text)
+
+
+	
+	>>> to_tree('string','"free"')
+	'free'
+	>>> to_tree('string',"'free'")
+	'free'
+
+	>>> to_tree('file_line','File "/Users/jab/jab/alto/dev/RIAS_XP/src/python/translate.tests", line 16, in translate.tests\n')
+	['/Users/jab/jab/alto/dev/RIAS_XP/src/python/translate.tests', 16]
+
+	>>> to_tree('line','Failed example:\n')
+	'Failed example:'
+
+	>>> to_tree('lines',"    to_tree('method_call', 'fred.murphy()')\n")
+	["    to_tree('method_call', 'fred.murphy()')"]
+
+	>>> to_tree('expected_header','Expected:\n')
+	[]
+
+	>>> to_tree('lines',"    [['Fred', 'Murphy'], None]\n")
+	["    [['Fred', 'Murphy'], None]"]
+
+	>>> to_tree('actual_header','Got:\n')
+	[]
+
+	>>> to_tree('lines',"    [['Fred', 'Murphy'], []]\n")
+	["    [['Fred', 'Murphy'], []]"]
+
+	>>> fail_text = '''**********************************************************************
+	... File "fail_file.tests", line 39, in fail_file.tests
+	... Failed example:
+	...     to_tree('lines',"    [['Fred', 'Murphy'], []]")
+	... Expected:
+	...     ["    [['red', 'Murphy'], []]"]
+	... Got:
+	...     ["    [['Fred', 'Murphy'], []]"]
+	... **********************************************************************
+	... File "fail_file.tests", line 39, in fail_file.tests
+	... Failed example:
+	...     import sorting
+	... Exception raised:
+	...     Traceback (most recent call last):
+	...       File "/System/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/doctest.py", line 1212, in __run
+	...         compileflags, 1) in test.globs
+	...       File "<doctest fred.test[1]>", line 1, in <module>
+	...         import sorting
+	...     ImportError: No module named sorting
+	... **********************************************************************
+	... 2 items had failures:
+	...    2 of  13 in fail_file.tests
+	... ***Test Failed*** 2 failures.
+	... '''
+
+	>>> to_tree('fail_file',fail_text)
+	<FailFile fail_file.tests>
+
+	>>> fixer = fail_file(fail_text).apply('failure')
+
+	>>> print fixer.filename
+	fail_file.tests
+
+	>>> fixer.exists()
+	False
+
+	>>> fixer.needed()
+	False
+
+Testing a real fail file
+-----------------------
+
+Here's one I made earlier
+	>>> bash('cp test_me.back test_me.tests')
+	<BLANKLINE>
+	True
+
+Let's get that text
+	>>> test_text = file('test_me.tests').read()
+
+Cannot print it directly (as it looks like a test file !)
+	So it, kinda, looks like this:
+
+	>>> print test_text.replace('>','.')
+	Test Me
+	=======
+		... print 1
+		... print 2
+		3
+		... print 1 / 0
+		... print 0
+
+And we parse the same file
+	>>> from test_file import parse
+	>>> tests = parse('test_me.tests')
+
+That file had just the one section
+	>>> show(tests.sections)
+	[<Section Test Me>]
+
+It had 4 examples, all of which were failures
+	>>> from fail_file import read_fail_file
+	>>> fail_file = read_fail_file('test_me.fail')
+	>>> len(fail_file.failures)
+	4
+
+The line numbers were
+	>>> line_numbers = [ f.line for f in fail_file.failures ]
+	>>> line_numbers
+	[3, 4, 6, 7]
+
+All the fails should have a file that exists
+	>>> [ f.exists() for f in fail_file.failures ]
+	[True, True, True, True]
+
+And they should all still need fixing
+	>>> [ f.needed() for f in fail_file.failures ]
+	[True, True, True, True]
+
+
+And these are actual values from the parsed tests
+	>>> print '\n'.join([ '\n'.join(f.actual) for f in fail_file.failures ])
+	1
+	2
+	Traceback (most recent call last):
+	...
+	ZeroDivisionError: integer division or modulo by zero
+	0
+
+Anyway, we call the fix method for the fail file
+	>>> fail_file.fix()
+
+And that should update the test file
+	so that it now has those absolute paths
+	>>> print file('test_me.tests').read().replace('>','.')
+	Test Me
+	=======
+	    ... print 1
+	    1
+	    ... print 2
+	    2
+	    ... print 1 / 0
+	    Traceback (most recent call last):
+	    ...
+	    ZeroDivisionError: integer division or modulo by zero
+	    ... print 0
+	    0
+
+The fix method wrote out a backup file
+	>>> _ = bash('sed -e "s/>/./g" test_me.tests~')
+	Test Me
+	=======
+		... print 1
+		... print 2
+		3
+		... print 1 / 0
+		... print 0
+	>>> _ = bash('sed -e "s/>/./g" test_me.tests ')
+

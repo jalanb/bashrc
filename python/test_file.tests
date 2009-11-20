@@ -1,0 +1,202 @@
+Parsing test files
+==================
+Facilities to understand *.test
+	which are files containing doctest input 
+
+	>>> from test_file import test_file
+
+	>>> def to_tree(rule,source):
+	...     show(test_file(source).apply(rule))
+
+
+	>>> to_tree("main_section_head",'''Alan was here
+	... ======
+	... ''')
+	'Alan was here'
+
+	>>> to_tree("sub_section_head",'''And here
+	... ------
+	... ''')
+	'And here'
+
+
+	>>> to_tree("example_text_line",'''This test expects a 0
+	... ''')
+	'This test expects a 0'
+
+	>>> to_tree("example_paragraph",'''This test expects a 0
+	... Not a section header
+	... ''')
+	['This test expects a 0']
+
+	>>> to_tree("example_python",'''	>>> 1 - 1
+	... 	0
+	... ''')
+	[['1 - 1'], ['0']]
+
+	>>> to_tree("example",'''This test expects a 0
+	... 	>>> 1 - 1
+	... 	0
+	... ''')
+	<Example This test expects a 0
+		>.> 1 - 1
+		0>
+
+
+	>>> to_tree("sub_section",'''And here
+	... ------
+	... This test expects a 0
+	... 	>>> 1 - 1
+	... 	0
+	... And this one a 1
+	... 	>>> 1 - 0
+	... 	1
+	... ''')
+	('And here',
+	 [<Example This test expects a 0
+		>.> 1 - 1
+		0>,
+	  <Example And this one a 1
+		>.> 1 - 0
+		1>])
+	>>> to_tree("main_section",'''Alan was here
+	... =======
+	... This test expects a 0
+	... 	>>> 1 - 1
+	... 	0
+	... And here
+	... --------
+	... And this one a 1
+	... 	>>> 1 - 0
+	... 	1
+	... ''')
+	<Section Alan was here
+		And here>
+	>>> to_tree("test_file",'''Alan was here
+	... =======
+	... This test expects a 0
+	... 	>>> 1 - 1
+	... 	0
+	... And here
+	... --------
+	... And this one a 1
+	... 	>>> 1 - 0
+	... 	1
+	... Section 2
+	... =========
+	... And this should be True
+	... 	>>> 1 > 0
+	... 	True
+	... ''')
+	[<Section Alan was here
+		And here>, <Section Section 2>]
+	>>> to_tree("main_section",'''Another main section
+	... ====================
+	... 
+	... I rarely use a second main section myself.
+	... 	but it is a test file
+	... 	so we better test it
+	... 
+	... Every section must include some python
+	... 	>>> i
+	... 	4
+	... ''')
+	<Section Another main section>
+	>>> to_tree("sub_section",'''Continuations
+	... -------------
+	... 
+	... Python can be continued over many lines
+	... 	so can the data
+	... 	>>> for i in range(0,5):
+	... 	...     if i > 2:
+	... 	...         print i
+	... 	3
+	... 	4
+	... ''')
+	('Continuations',
+	 [<Example Python can be continued over many lines
+		so can the data
+		>.> for i in range(0,5):
+		...     if i > 2:
+		...         print i
+		3
+		4>])
+	>>> to_tree("sub_section",''' Data
+	... ----
+	... 
+	... The python can give some data
+	... 	>>> 3 + 5
+	... 	8
+	... 
+	... 	>>> print 'hello world'
+	... 	hello world
+	... 
+	... This is the first subscetion of the first section of the file
+	... 	>>> print test_file.sections[0].sections[0].examples[2].text
+	... 	This is the first subscetion of the first section of the file
+	... 
+	... The test file also has the collection of examples as a single list
+	... 	There were 7 examples in first part of the main section
+	... 	plus 2 examples before "This is the first ..."
+	... 	So that should be the 10th in this file
+	... 	>>> test_file.sections[0].sections[0].examples[2] == test_file.examples[9]
+	... 	True
+	... ''')
+	(' Data',
+	 [<Example The python can give some data
+		>.> 3 + 5
+		8>,
+	  <Example 
+		>.> print 'hello world'
+		hello world>,
+	  <Example This is the first subscetion of the first section of the file
+		>.> print test_file.sections[0].sections[0].examples[2].text
+		This is the first subscetion of the first section of the file>,
+	  <Example The test file also has the collection of examples as a single list
+		There were 7 examples in first part of the main section
+		plus 2 examples before "This is the first ..."
+		So that should be the 10th in this file
+		>.> test_file.sections[0].sections[0].examples[2] == test_file.examples[9]
+		True>])
+	>>> to_tree("main_section",''' Parsing test files
+	... ==================
+	... 
+	... Facilities to parse *.test
+	... 
+	... The test_file module provides a method
+	... 	to parse files like these
+	... 	>>> from test_file import parse
+	... 	>>> test_file = parse('test_file.test')
+	... 
+	... Having parsed it, we can see that this file has some sections
+	... 	(Scroll down to verify these)
+	... 	>>> show(test_file.sections)
+	... 	[<Section Parsing test files
+	... 		Data
+	... 		Continuations>,
+	... 	 <Section Another main section>]
+	... 
+	... This is the first section of this file
+	... 
+	... 	It has some examples
+	... 		which are counted once for each full line of python
+	... 		regardless of other lines
+	... 
+	... 	So the next line of python is the fourth example
+	... 	>>> example = test_file.sections[0].examples[4]
+	... 
+	... I expect this example to have one line each for text, code, result
+	... 
+	... 	>>> print example.python[0]
+	... 	print example.python[0]
+	... 
+	... That was an unusual test:
+	... 	what we expected was the same as the python
+	... 	>>> print example.expected == example.python
+	... 	True
+	... 
+	... The text was collected up from before the code:
+	... 	>>> print example.text
+	... 	I expect this example to have one line each for text, code, result
+	... ''')
+	<Section  Parsing test files>

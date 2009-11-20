@@ -1,0 +1,53 @@
+**********************************************************************
+File "/Users/jab/.jab/python/fail_file.test", line 157, in fail_file.test
+Failed example:
+    print file('test_me.tests').read().replace('>','.')
+Expected:
+    Test Me
+    =======
+        ... print 1
+        1
+        ... print 2
+        2
+        ... print 1 / 0
+        Traceback (most recent call last):
+        ...
+        ZeroDivisionError: integer division or modulo by zero
+        ... print 0
+        0
+Got:
+    Test Me
+    =======
+    	... print 1
+    	1
+    	... print 2
+    	3
+    	Traceback (most recent call last):
+    	0
+    	...
+    	ZeroDivisionError: integer division or modulo by zero
+    	... print 1 / 0
+    	... print 0
+    <BLANKLINE>
+**********************************************************************
+File "/Users/jab/.jab/python/fail_file.test", line 180, in fail_file.test
+Failed example:
+    _ = bash('sed -e "s/>/./g" test_me.tests ')
+Expected nothing
+Got:
+    Test Me
+    =======
+    	... print 1
+    	1
+    	... print 2
+    	3
+    	Traceback (most recent call last):
+    	0
+    	...
+    	ZeroDivisionError: integer division or modulo by zero
+    	... print 1 / 0
+    	... print 0
+**********************************************************************
+1 items had failures:
+   2 of  37 in fail_file.test
+***Test Failed*** 2 failures.
