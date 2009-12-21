@@ -231,22 +231,17 @@ stat ()
 
 build ()
 {
-	if [[ -n "$*" ]]
+	if [[ $USER == "jab" ]]
 	then
-		if [[ "$1" == "2" ]]
-		then
-			ssh builder@ie-build-2
-		fi
-	elif [[ -d /mnt/source ]]
-	then 
-		ssh ie-build-2
+		user=builder
 	else
-		if [[ "$USER" == "abrogan" ]]
-		then
-			ssh ie-build-1
-		else
-			ssh builder@ie-build-1
-		fi
+		user=$USER
+	fi
+	if [[ -n "$1" && "$1" == "2" ]]
+	then
+		ssh $user@ie-build-2
+	else
+		ssh $user@ie-build-1
 	fi
 }
 
