@@ -207,6 +207,7 @@ alias abrogan="ssh abrogan@192.168.0.103"
 alias pfidler="ssh root@172.16.1.249"
 alias service="sudo /sbin/service "
 alias cleaner="clean deep"
+alias roundup="roundup-admin -i /usr/local/trackers/tracker -u $USER:alrb3002"
 
 # xxxxxxxx
 
