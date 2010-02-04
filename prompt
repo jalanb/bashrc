@@ -35,10 +35,10 @@ prompt_command ()
 if [[ "$PROMPT_COLOUR" == "none" ]]
 then
 	export PROMPT_COMMAND=
-	export PS1="\$? [\u@\h:$PWD]\n$ "
+	export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
 	export PROMPT_COMMAND='prompt_command $?'
-	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$PWD]${PROMPT_NO_COLOUR}\n$ "
+	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:\$PWD]${PROMPT_NO_COLOUR}\n$ "
 fi
 
 bind '"\e[A"':history-search-backward
