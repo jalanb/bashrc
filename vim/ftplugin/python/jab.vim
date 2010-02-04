@@ -39,12 +39,16 @@ tabnext
 " Try to run this file(s) through doctest
 "
 if !exists("Try")
-	function Try()
+	function Try(quietly)
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
 		let command = "! python ~/.jab/python/try.py -qa "
 		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
-		let quiet_line = command_line . " > " . fails . " 2>&1 || true"
+		if a:quietly
+			let quiet_line = command_line . " > " . fails . " 2>&1 || true"
+		else
+			let quiet_line = command_line
+		endif
 		try
 			exec quiet_line
 			redraw!
@@ -71,7 +75,7 @@ if !exists("Try")
 		exec "tablast"
 		exec "tabnew! " . fails
 	endfunction
-	command -nargs=0 Try :call Try()
+	command -nargs=0 Try :call Try(1)
 	noremap t :Try<cr>
 endif
 if !exists("Mash")

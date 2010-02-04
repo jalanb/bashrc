@@ -47,6 +47,8 @@ nnoremap <C-F4> <C-W>c
 "noremap a - append
 "noremap b - backword
  noremap db bdw
+ noremap dg :diffget<cr>
+ noremap dp :diffput<cr>
 "noremap c - start cutting
 "noremap d - delete
 "noremap e 
