@@ -77,7 +77,7 @@ if !exists("Try")
 endif
 if !exists("Mash")
 	function Mash()
-		" replace 4 spaces with a tab
+		" replace spaces with a tab
 		try
 			if &filetype == "doctest"
 				exec "%s/^    /\t/"
