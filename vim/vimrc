@@ -152,8 +152,8 @@ nnoremap K <PageUp>zz
 "
 noremap <Space> <PageDown>zz
 noremap <BS> <PageUp>zz
-noremap <left> :tabprev<cr>
-noremap <right> :tabnext<cr>
+noremap t<left> :tabprev<cr>
+noremap t<right> :tabnext<cr>
 "noremap <down> <down>zz
 "noremap <up> <up>zz
 "
@@ -263,6 +263,12 @@ set cursorline
 set wildmenu
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
 let g:is_posix = 1
+
+"
+" From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html
+"
+set backupskip=/tmp/*,/private/tmp/*
+
 "
 " for searching
 "
