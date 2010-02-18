@@ -31,10 +31,7 @@ if filereadable(s:file_fail) && s:file_py != s:file_fail
 	exec "tabnew " s:file_fail
 endif
 tabnext
-1,$foldopen
-" tabnext
-" set filetype=doctest
-
+1,$foldopen!
 " 
 " Try to run this file(s) through doctest
 "
