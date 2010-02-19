@@ -185,6 +185,6 @@ if version >= 508 || !exists("did_python_syn_inits")
 endif
 
 let b:current_syntax = "python"
-setlocal spell spelllang=en_gb
+setlocal spelllang=en_gb
 
 " vim: ts=8
