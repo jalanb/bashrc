@@ -1,0 +1,72 @@
+#! /bin/sh
+#
+# fim is a slight variation on vim
+# 	It manipulates the command line for vim
+#
+test -f debugging && set -x
+
+# Recover any files which have corresponding swap files
+for file in $*
+do
+	cd `dirname $file`
+	base=`basename $file`
+	export swap_file=`$EDITOR -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep $base`
+	cd - > /dev/null 2>&1
+	swap_file=`dirname $file`/$swap_file
+	if [[ -f "$swap_file" ]]
+	then
+		echo
+		echo    A swap \ file \ exists: $swap_file
+		if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.*$file"
+		then
+			echo -n A process is running:\ 
+			ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.*$file" 
+			echo
+			echo It is not safe to run \"$EDITOR $*\"
+			exit 2
+		else
+			echo Recovering $swap_file
+			recovered_file="${file}.recovered"
+			#
+			# I use the "g:recovering" variable to prevent opening of extra tabs, YMMV
+			#
+			$EDITOR -r ${file} --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
+			/bin/rm -f $swap_file 
+			if ! diff -q $file $recovered_file
+			then
+				$EDITOR -d $file $recovered_file
+			fi
+			/bin/rm -f $recovered_file
+			break
+		fi
+	fi
+done
+
+# Finish file names "left short" by tab-completion
+# For example, if file name is "fred.", which does not exist, 
+#     but "fred.py" does exist, then we'll edit fred.py
+#
+# Files "left short" by tab-completion are those which would have same stem, but different extension
+# So we will complete for "*.py", "*.cpp"
+args=
+for arg in $*
+do
+	if [[ ! -f ${arg} && ${arg%%.} != $arg ]]
+	then
+		if [[ -f ${arg}py ]]
+		then
+			args="$args ${arg}py"
+		elif [[ -f ${arg}cpp ]]
+		then
+			args="$args ${arg}cpp"
+		else
+			args="$args $arg"
+		fi
+	else
+		args="$args $arg"
+	fi
+done
+
+test -f debugging && set +x
+$EDITOR $args
+exit 0
