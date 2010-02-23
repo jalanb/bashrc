@@ -116,26 +116,6 @@ cls ()
 	ls $*
 }
 
-old_rating ()
-{
-	grep "$*" ~/jab/ratings/[1-9]s*u | cut -d: -f1 | cut -d\/ -f6 | sed "s/\(.\).*/\1/"
-}
-
-old ()
-{
-	grep "$*" ~/jab/ratings/[1-9]s*u | cut -d: -f2 | sed "s|/Users/jab/Music/iTunes/iTunes Music/||"
-	old_rating $*
-}
-
-new ()
-{
-	grep "$*" ~/jab/ratings/[1-9]s*u | cut -d: -f2 | cut -d\/ -f 7,8,9
-	for x in `old_rating $*`
-	do
-		python -c "print ($x / 2.0) + 0.5"
-	done
-}
-
 fsh ()
 {
 # run fred by his extension
