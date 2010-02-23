@@ -42,7 +42,7 @@ alias r="rm -vrf"
 alias s="sed "
 alias t="t"
 alias u="u"
-alias v="$EDITOR "
+alias v="~/.jab/bin/fim "
 alias w="which "
 alias x="x"
 # y is a function
