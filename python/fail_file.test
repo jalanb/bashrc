@@ -92,39 +92,93 @@ Facilities to understand *.fail
 Testing a real fail file
 -----------------------
 
+For looking at files, with line numbers
+	>>> def looks_like_this(filename):
+	...     for i, line in enumerate( file(filename).readlines() ):
+	...         print '%2d: %s' % (i,line.rstrip())
+
 Here's one I made earlier
-	>>> bash('cp test_me.back test_me.tests')
-	<BLANKLINE>
+	>>> test_me_text = '''Test Me
+	... =======
+	... 	>>> print 1
+	... 	>>> print 2
+	... 	3
+	... 	>>> print 1 / 0
+	... 	>>> print 0
+	... '''
+
+Write that out to a test file
+	>>> test_me_file = file('test_me.tests','w')
+	>>> test_me_file.write(test_me_text)
+	>>> test_me_file.close()
+
+Which looks like this
+	>>> looks_like_this('test_me.tests')
+	 0: Test Me
+	 1: =======
+	 2:     >>> print 1
+	 3:     >>> print 2
+	 4:     3
+	 5:     >>> print 1 / 0
+	 6:     >>> print 0
+
+Run the test through doctest to generate some failures
+	>>> bash('python -c"import doctest; doctest.testfile(\'test_me.tests\')" > test_me.fail')
 	True
 
-Let's get that text
-	>>> test_text = file('test_me.tests').read()
+Which looks like this
+	>>> looks_like_this('test_me.fail')
+	 0: **********************************************************************
+	 1: File "test_me.tests", line 3, in test_me.tests
+	 2: Failed example:
+	 3:     print 1
+	 4: Expected nothing
+	 5: Got:
+	 6:     1
+	 7: **********************************************************************
+	 8: File "test_me.tests", line 4, in test_me.tests
+	 9: Failed example:
+	10:     print 2
+	11: Expected:
+	12:     3
+	13: Got:
+	14:     2
+	15: **********************************************************************
+	16: File "test_me.tests", line 6, in test_me.tests
+	17: Failed example:
+	18:     print 1 / 0
+	19: Exception raised:
+	20:     Traceback (most recent call last):
+	21:       File "/System/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/doctest.py", line 1212, in __run
+	22:         compileflags, 1) in test.globs
+	23:       File "<doctest test_me.tests[2]>", line 1, in <module>
+	24:         print 1 / 0
+	25:     ZeroDivisionError: integer division or modulo by zero
+	26: **********************************************************************
+	27: File "test_me.tests", line 7, in test_me.tests
+	28: Failed example:
+	29:     print 0
+	30: Expected nothing
+	31: Got:
+	32:     0
+	33: **********************************************************************
+	34: 1 items had failures:
+	35:    4 of   4 in test_me.tests
+	36: ***Test Failed*** 4 failures.
 
-Cannot print it directly (as it looks like a test file !)
-	So it, kinda, looks like this:
-
-	>>> print test_text.replace('>','.')
-	Test Me
-	=======
-		... print 1
-		... print 2
-		3
-		... print 1 / 0
-		... print 0
-
-And we parse the same file
+Parse those files
 	>>> from test_file import parse
 	>>> tests = parse('test_me.tests')
+	>>> from fail_file import read_fail_file
+	>>> fail_file = read_fail_file('test_me.fail')
 
-That file had just the one section
+The test text had just the one section
 	>>> show(tests.sections)
 	[<Section Test Me>]
 
-It had 4 examples, all of which were failures
-	>>> from fail_file import read_fail_file
-	>>> fail_file = read_fail_file('test_me.fail')
-	>>> len(fail_file.failures)
-	4
+And it had 4 examples, all of which were failures
+	>>> 4 == len(tests.examples) == len(fail_file.failures)
+	True
 
 The line numbers were
 	>>> line_numbers = [ f.line for f in fail_file.failures ]
@@ -139,43 +193,33 @@ And they should all still need fixing
 	>>> [ f.needed() for f in fail_file.failures ]
 	[True, True, True, True]
 
-
-And these are actual values from the parsed tests
-	>>> print '\n'.join([ '\n'.join(f.actual) for f in fail_file.failures ])
-	1
-	2
-	Traceback (most recent call last):
-	...
-	ZeroDivisionError: integer division or modulo by zero
-	0
-
 Anyway, we call the fix method for the fail file
 	>>> fail_file.fix()
 
 And that should update the test file
-	so that it now has those absolute paths
-	>>> print file('test_me.tests').read().replace('>','.')
-	Test Me
-	=======
-	    ... print 1
-	    1
-	    ... print 2
-	    2
-	    ... print 1 / 0
-	    Traceback (most recent call last):
-	    ...
-	    ZeroDivisionError: integer division or modulo by zero
-	    ... print 0
-	    0
+	so that it now has passing tests
+	>>> looks_like_this('test_me.tests')
+	 2:     >>> print 1
+	 3: 	1
+	 4:     >>> print 2
+	 5: 	2
+	 6:     >>> print 1 / 0
+	 7: 	Traceback (most recent call last):
+	 8: 	...
+	 9: 	ZeroDivisionError: integer division or modulo by zero
+	10:     >>> print 0
+	11: 	0
 
 The fix method wrote out a backup file
-	>>> _ = bash('sed -e "s/>/./g" test_me.tests~')
-	Test Me
-	=======
-		... print 1
-		... print 2
-		3
-		... print 1 / 0
-		... print 0
-	>>> _ = bash('sed -e "s/>/./g" test_me.tests ')
+	>>> looks_like_this('test_me.tests~')
+	 0: Test Me
+	 1: =======
+	 2:     >>> print 1
+	 3:     >>> print 2
+	 4:     3
+	 5:     >>> print 1 / 0
+	 6:     >>> print 0
 
+Re-test the file, should produce no failures
+	>>> bash('python -c"import doctest; doctest.testfile(\'test_me.tests\',optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)"')
+	True

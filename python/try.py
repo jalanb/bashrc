@@ -8,6 +8,7 @@ import datetime
 from pprint import pprint, pformat
 
 from path import makepath
+from see import see
 import test_files
 
 def public_dir(x):
@@ -157,6 +158,7 @@ def test():
 						globs = {
 							'test' : Test_Being_Run(test_script),
 							'sys' : sys,
+							'see' : see,
 							'makepath' : makepath,
 							'show' : pprint,
 							'long_show' : long_show,

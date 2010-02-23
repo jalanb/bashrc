@@ -36,7 +36,7 @@ tabnext
 " Try to run this file(s) through doctest
 "
 if !exists("Try")
-	function Try(quietly)
+	function TryTest(quietly)
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
 		let command = "! python ~/.jab/python/try.py -qa "
@@ -72,7 +72,31 @@ if !exists("Try")
 		exec "tablast"
 		exec "tabnew! " . fails
 	endfunction
-	command -nargs=0 Try :call Try(1)
+	function TryFix()
+		let item_name = expand("%:~:r")
+		let fails = item_name . ".fail"
+		let path_to_fails = expand(fails)
+		let z = getfsize(path_to_fails)
+		if ! z
+			return
+		endif
+		let command_line = "! python ~/.jab/python/fix_failures.py "
+		let quiet_line = command_line . fails . " || true"
+		try
+			exec quiet_line
+			redraw!
+		catch /.*/
+			" echo fred
+		endtry
+	endfunction
+"	function Try(quietly)
+"		if expand("%:e") == "fail"
+"			call TryFix()
+"		else
+"			call TryTest(quietly)
+"		endif
+"	endfunction
+	command -nargs=0 Try :call TryTest(1)
 	noremap t :Try<cr>
 endif
 if !exists("Mash")

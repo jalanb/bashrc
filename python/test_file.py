@@ -1,26 +1,28 @@
 from mymeta.jab import jab
 
-def __repr__(self):
-	return '<test_file %s>' % self
-
-def __str__(self):
-	return self.path_to_file
 
 test_file_grammar = file('test_file.g').read()
 test_file = jab.makeGrammar(test_file_grammar, globals(), name="test_file")
 
 def parse(path_to_file):
-	source = file(path_to_file).read()
-	test_file.path_to_file = path_to_file
-	test_file.__str__ = __str__
-	test_file.__repr__ = __repr__
-	test_file.sections = test_file(source).apply('test_file')
-	test_file.examples = []
-	for main in test_file.sections:
-		test_file.examples.extend(main.examples)
-		for sub in main.sections:
-			test_file.examples.extend(sub.examples)
-	return test_file
+	return TestFile(path_to_file)
+
+class TestFile:
+	def __init__(self,path_to_file):
+		self.path_to_file = path_to_file
+		self.source = file(path_to_file).read()
+		self.sections = test_file(self.source).apply('test_file')
+		self.examples = []
+		for section in self.sections:
+			self.examples.extend(section.examples)
+			for sub in section.sections:
+				self.examples.extend(sub.examples)
+
+	def __repr__(self):
+		return '<test_file %s>' % self
+
+	def __str__(self):
+		return self.path_to_file
 
 class Section:
 	def __init__(self,section,sub_sections):

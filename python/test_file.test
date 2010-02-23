@@ -7,6 +7,8 @@ The test_file module provides a method
 	to parse files like these
 	>>> from test_file import parse
 	>>> test_file = parse('test_file.test')
+	>>> see( test_file )
+	repr()    str()    .examples    .path_to_file    .sections    .source
 
 Having parsed it, we can see that this file has some sections
 	(Scroll down to verify these)
@@ -22,8 +24,8 @@ This is the first section of this file
 		which are counted once for each full line of python
 		regardless of other lines
 
-	So the next line of python is the fourth example
-	>>> example = test_file.sections[0].examples[4]
+	So the next line of python is the fifth example
+	>>> example = test_file.sections[0].examples[5]
 
 I expect this example to have one line each for text, code, result
 
@@ -49,15 +51,15 @@ The python can give some data
 	>>> print 'hello world'
 	hello world
 
-This is the first subscetion of the first section of the file
+This is the first subsection of the first section of the file
 	>>> print test_file.sections[0].sections[0].examples[2].text
-	This is the first subscetion of the first section of the file
+	This is the first subsection of the first section of the file
 
 The test file also has the collection of examples as a single list
 	There were 7 examples in first part of the main section
 	plus 2 examples before "This is the first ..."
 	So that should be the 10th in this file
-	>>> test_file.sections[0].sections[0].examples[2] == test_file.examples[9]
+	>>> test_file.sections[0].sections[0].examples[2] == test_file.examples[10]
 	True
 
 Continuations

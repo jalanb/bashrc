@@ -2,6 +2,11 @@ import os
 
 from mymeta.jab import jab
 
+def show(name,lines):
+	return
+	print name
+	print '....%s' % '\n....'.join([str([c for c in l]) for l in lines])
+
 class FailFile:
 	def __init__(self,fails):
 		self.failures = fails
@@ -14,8 +19,11 @@ class FailFile:
 		if backup:
 			expected_text = file(self.filename).read()
 			file('%s%s' % (self.filename,backup),'w').write(expected_text)
+		extra = 0
 		for failure in self.failures:
-			failure.fix(backup=None)
+			failure.line += extra
+			fixed = failure.fix(backup=None)
+			extra += fixed
 
 	def __repr__(self):
 		return '<FailFile %s>' % self.filename
@@ -52,8 +60,12 @@ class Failure:
 		if not self.needed(): return
 		lines = file(self.filename).readlines()
 		actual_lines = lines[:self.line]
+		show( 'Before', lines[:self.line] )
 		actual_lines += [ str('\t%s\n' % a) for a in self.actual ]
+		show( 'New', [ str('\t%s\n' % a) for a in self.actual ] )
 		actual_lines += lines[self.line + len(self.expected):]
+		show('After', lines[self.line + len(self.expected):])
+		show('All',actual_lines)
 		return actual_lines
 
 	def fix(self,backup='~'):
@@ -63,6 +75,7 @@ class Failure:
 			expected_text = file(self.filename).read()
 			file('%s%s' % (self.filename,backup),'w').write(expected_text)
 		file(self.filename,'w').write(''.join(fixed))
+		return len(self.actual) - len(self.expected)
 
 fail_file_grammar = '''
 fail_file ::= (
