@@ -7,4 +7,7 @@ $remove $*
 first_dir $*
 echo $* | grep -q deep && options= || options="-maxdepth 1"
 find $dir $options -type d -exec $remove $* {} \;
-test -f ./clean && sh ./clean
+if [[ $0 != "./clean" ]]
+then
+	test -f ./clean && sh ./clean
+fi
