@@ -18,6 +18,7 @@ unalias -a
 
 # x
 
+alias -- -='kd - >/dev/null 2>&1'
 alias 1="v ~/.jab/todo.txt"
 alias 2="cat ~/.jab/todo.txt"
 alias a="a"
