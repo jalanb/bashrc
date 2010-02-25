@@ -6,12 +6,15 @@ export PROMPT_COLOUR=none
 if [ "$1" == "green" ]
 then
 	export PROMPT_COLOUR="$PROMPT_LIGHT_GREEN"
+	export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
 elif [ "$1" == "red" ]
 then
 	export PROMPT_COLOUR="$PROMPT_LIGHT_RED"
+	export PROMPT_OPPOSITE_COLOUR="$PROMPT_CYAN"
 elif [ "$1" == "blue" ]
 then
 	export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
+	export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
 else
 	export PROMPT_COLOUR=none
 fi
@@ -29,6 +32,11 @@ prompt_command ()
 	fi
 	echo
 	echo -ne $STATUS
+	if svn stat -q | wc -l | grep -q 0
+	then dir="\$PWD"
+	else dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+	fi
+	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$dir]${PROMPT_NO_COLOUR}\n$ "
 	j --add "$(pwd -P)"
 }
 
@@ -38,7 +46,6 @@ then
 	export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
 	export PROMPT_COMMAND='prompt_command $?'
-	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:\$PWD]${PROMPT_NO_COLOUR}\n$ "
 fi
 
 bind '"\e[A"':history-search-backward
