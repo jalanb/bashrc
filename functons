@@ -278,21 +278,6 @@ bright ()
 	sed -i -e/color/d ~/.vimrc
 }
 
-issues ()
-{
-	if [ -f $HOME/bin/issues ]
-	then
-		$HOME/bin/issues $*
-	else
-		if [ -z "$*" ]
-		then
-			mysql -u root -D issues 
-		else
-			mysql -u root -D issues -e $*
-		fi
-	fi
-}
-
 revert ()
 {
 	cp $1 $1.changed
@@ -315,7 +300,7 @@ statvim ()
 	if [[ -z "$1" ]]
 	then
 		clean quietly
-		do_stat | sed -e "s/^M/shd/" -e "s/^A/vim/"
+		do_stat | sed -e "s/^M/shd/" -e "s/^A/vim/" -e"s/^?/r/"
 	else
 		for file in $*
 		do 
