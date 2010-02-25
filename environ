@@ -73,11 +73,14 @@ else
 	export SOURCE=~/.jab
 fi
 export AMG_SOURCE=$SOURCE/amg
-if [ -d $AMG_SOURCE ]
+if [ -d /usr/local/trunk ]
+then
+	export AMG_TRUNK=/usr/local/trunk
+elif [ -d $AMG_SOURCE ]
 then
 	export AMG_TRUNK=$AMG_SOURCE/trunk
 else
-	export AMG_TRUNK=/usr/local/trunk
+	export AMG_TRUNK=
 fi
 if [ -d $AMG_TRUNK ]
 then
