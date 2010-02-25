@@ -131,9 +131,9 @@ Facilities to understand *.test
 	... 	>>> print 'hello world'
 	... 	hello world
 	... 
-	... This is the first subscetion of the first section of the file
+	... This is the first subsection of the first section of the file
 	... 	>>> print test_file.sections[0].sections[0].examples[2].text
-	... 	This is the first subscetion of the first section of the file
+	... 	This is the first subsection of the first section of the file
 	... 
 	... The test file also has the collection of examples as a single list
 	... 	There were 7 examples in first part of the main section
@@ -149,9 +149,9 @@ Facilities to understand *.test
 	  <Example 
 		>.> print 'hello world'
 		hello world>,
-	  <Example This is the first subscetion of the first section of the file
+	  <Example This is the first subsection of the first section of the file
 		>.> print test_file.sections[0].sections[0].examples[2].text
-		This is the first subscetion of the first section of the file>,
+		This is the first subsection of the first section of the file>,
 	  <Example The test file also has the collection of examples as a single list
 		There were 7 examples in first part of the main section
 		plus 2 examples before "This is the first ..."

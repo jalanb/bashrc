@@ -3,8 +3,7 @@ Parsing test files
 
 Facilities to parse *.test
 
-The test_file module provides a method
-	to parse files like these
+The test_file module provides a method to parse files like these
 	>>> from test_file import parse
 	>>> test_file = parse('test_file.test')
 	>>> see( test_file )
@@ -70,6 +69,15 @@ Python can be continued over many lines
 	>>> for i in range(0,5):
 	...     if i > 2:
 	...         print i
+	3
+	4
+
+	>>> print '\n'.join(test_file.sections[0].sections[1].examples[0].python)
+	for i in range(0,5):
+	    if i > 2:
+	        print i
+
+	>>> print '\n'.join(test_file.sections[0].sections[1].examples[0].expected)
 	3
 	4
 

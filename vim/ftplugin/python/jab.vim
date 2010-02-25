@@ -13,25 +13,52 @@ let s:file_py = expand("%")
 let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
 if filereadable(s:file_jabber) && s:file_py != s:file_jabber
 	exec "tabnew " s:file_jabber
+	if getfsize(expand('%')) > 0
+		1,$foldopen!
+	endif
 endif
 let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
 if filereadable(s:file_grammar) && s:file_py != s:file_grammar
 	exec "tabnew " s:file_grammar
+	set filetype=doctest
+	if getfsize(expand('%')) > 0
+		1,$foldopen!
+	endif
 endif
 let s:file_test = substitute(s:file_py,'\.py$','.test',"")
 if filereadable(s:file_test) && s:file_py != s:file_test
+	setl autoread
 	exec "tabnew " s:file_test
+	set filetype=doctest
+	if getfsize(expand('%')) > 0
+		1,$foldopen!
+	endif
 endif
 let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
 if filereadable(s:file_tests) && s:file_py != s:file_tests
+	setl autoread
 	exec "tabnew " s:file_tests
+	set filetype=doctest
+	if getfsize(expand('%')) > 0
+		1,$foldopen!
+	endif
 endif
 let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
 if filereadable(s:file_fail) && s:file_py != s:file_fail
+	setl autoread
 	exec "tabnew " s:file_fail
+	set filetype=doctest_fail
+	if getfsize(expand('%')) > 0
+		1,$foldopen!
+	endif
 endif
 tabnext
-1,$foldopen!
+if getfsize(expand('%')) > 0
+	1,$foldopen!
+else
+	tabnext
+	syntax on
+endif
 " 
 " Try to run this file(s) through doctest
 "
@@ -72,7 +99,7 @@ if !exists("Try")
 		exec "tablast"
 		exec "tabnew! " . fails
 	endfunction
-	function TryFix()
+	function TryFix(quietly)
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
 		let path_to_fails = expand(fails)
@@ -81,7 +108,11 @@ if !exists("Try")
 			return
 		endif
 		let command_line = "! python ~/.jab/python/fix_failures.py "
-		let quiet_line = command_line . fails . " || true"
+		if a:quietly
+			let quiet_line = command_line . fails . " 2>&1 || true"
+		else
+			let quiet_line = command_line . fails
+		endif
 		try
 			exec quiet_line
 			redraw!
@@ -91,12 +122,13 @@ if !exists("Try")
 	endfunction
 "	function Try(quietly)
 "		if expand("%:e") == "fail"
-"			call TryFix()
+"			call TryFix(quietly)
 "		else
 "			call TryTest(quietly)
 "		endif
 "	endfunction
 	command -nargs=0 Try :call TryTest(1)
+	command -nargs=0 Fix :call TryFix(0)
 	noremap t :Try<cr>
 endif
 if !exists("Mash")

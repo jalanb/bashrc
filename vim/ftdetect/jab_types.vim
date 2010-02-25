@@ -1,4 +1,4 @@
 
-au BufNewFile,BufRead,TabEnter *.test,*.tests		setf doctest
-au BufNewFile,BufRead,TabEnter *.fail				setf doctest_fail
-au BufNewFile,BufRead,TabEnter *.gy					setf python_grammar
+au BufNewFile,BufRead,TabEnter *.test,*.tests		set filetype=doctest
+au BufNewFile,BufRead,TabEnter *.fail				set filetype=doctest_fail
+au BufNewFile,BufRead,TabEnter *.g					set filetype=python_grammar
