@@ -205,15 +205,6 @@ dark ()
 	svn revert -q ~/.jab/vim/vimrc
 }
 
-do_stat ()
-{
-	test -n "$1" && path=$1 || path="."
-	if [[ -f $path || -d $path/.svn ]]
-	then
-		svn stat $path
-	fi
-}
-
 stat ()
 {
 	if [[ -z "$1" ]]
@@ -227,6 +218,7 @@ stat ()
 		done
 	fi
 }
+
 # xxxxx
 
 build ()
@@ -308,6 +300,29 @@ revert ()
 }
 
 # xxxxxxx
+
+do_stat ()
+{
+	test -n "$1" && path=$1 || path="."
+	if [[ -f $path || -d $path/.svn ]]
+	then
+		svn stat $path
+	fi
+}
+
+statvim ()
+{
+	if [[ -z "$1" ]]
+	then
+		clean quietly
+		do_stat | sed -e "s/^M/shd/" -e "s/^A/vim/"
+	else
+		for file in $*
+		do 
+			do_stat $file | sed -e "s/^M/shd/" -e "s/^A/vim/"
+		done
+	fi
+}
 
 svn_log ()
 {

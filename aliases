@@ -150,10 +150,11 @@ alias rff="r fred*"
 alias sib=". ~/.bashrc"
 alias stj="stat ~/.jab"
 
-alias skd="svn_diff kdiff "
-alias sxd="svn_diff xdiff "
-alias svd="svn_diff vimdiff "
 alias shd='svn_diff "vimdiff -o" '
+alias skd="svn_diff kdiff "
+alias stv="statvim "
+alias svd="svn_diff vimdiff "
+alias sxd="svn_diff xdiff "
 
 
 alias tra="try ~/alans_tests"
@@ -169,13 +170,12 @@ alias url="python ~/bin/show_url.py "
 
 alias cdsi="cd /usr/lib/python2.4/site-packages"
 alias cdev="cd ~/jab/alto/dev"
-alias cjya='kd ~/.jab/python/alanology'
-alias cjys='kd ~/.jab/python/site'
 
 alias down="cd ~/Download"
 
 alias mine="sudo chown $USER:allstaff "
 
+alias jjya='kd ~/.jab/python/alanology'
 alias jjys='kd ~/.jab/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
