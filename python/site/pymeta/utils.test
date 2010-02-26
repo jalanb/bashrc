@@ -7,8 +7,17 @@ Utilities to help use and understand PyMeta
 
 It generates some source I'd like to see
 
-	>>> utils.save_source('import utils','fred')
-	>>> print file('/Users/jab/python/site/mymeta/generated/fred.py').read()
-	import utils
-	
+	>>> import path
+	>>> expected_directory = path.path( utils.__file__ ).parent / 'generated'
+	>>> generated_file = expected_directory / 'fred.py'
+	>>> try: generated_file.remove()
+	... except: pass
 
+	>>> generated_file.isfile()
+	False
+	>>> utils.save_source('x = 0','fred')
+	>>> generated_file.isfile()
+	True
+
+	>>> print file(generated_file).read()
+	x = 0
