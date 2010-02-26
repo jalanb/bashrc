@@ -1,0 +1,19 @@
+
+	>>> from jab import jab
+	>>> show(jab('*').apply('asterisk'))
+	'*'
+
+	>>> show(jab('\talan\n').apply('indented_text_line'))
+	[1, 'alan']
+	>>> show(jab('    >>> from test_file import TestFile\n').apply('indented_line'))
+	[1, '>>> from test_file import TestFile']
+
+	>>> show(jab('\n').apply('eol'))
+	1
+	>>> show(jab('''line one
+	... second line
+	... line three''').apply('lines'))
+	['line one', 'second line']
+
+	>>> show(jab('isexsl').apply('not_x'))
+	'ise'
