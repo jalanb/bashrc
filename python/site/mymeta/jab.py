@@ -89,7 +89,7 @@ open_brick ::= '['
 double_quote ::= '"'
 """
 from path import path
-from mymeta.grammar import OMeta
+from pymeta.grammar import OMeta
 
 ometa_jab = OMeta.makeGrammar(jab_grammar, globals(), name="jab")
 
