@@ -1,0 +1,14 @@
+The utils module
+================
+	
+Utilities to help use and understand PyMeta
+
+	>>> import utils
+
+It generates some source I'd like to see
+
+	>>> utils.save_source('import utils','fred')
+	>>> print file('/Users/jab/python/site/mymeta/generated/fred.py').read()
+	import utils
+	
+
