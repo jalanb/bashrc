@@ -137,7 +137,6 @@ alias jjy='kd ~/.jab/python'
 alias jlf="ssh jlfieblu@jlf.ie"
 
 alias lff="ls fred*"
-alias llt="ls -lhtr | tail"
 alias lsh="ls *.sh"
 
 alias out="to_release"

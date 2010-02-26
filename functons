@@ -150,6 +150,14 @@ fpy ()
 	fi
 }
 
+. $JAB/bin/first_dir
+
+llt ()
+{
+	first_dir $*
+	ls -lhtr $dir | tail
+}
+
 lly ()
 {
 	ll *.tests
@@ -357,8 +365,6 @@ svn_info ()
 }
 
 # xxxxxxxxx
-
-. ~/.jab/bin/first_dir
 
 svn_issue ()
 {
