@@ -10,54 +10,56 @@ NoMatchParen
 
 set autowrite
 let s:file_py = expand("%")
-let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
-if filereadable(s:file_jabber) && s:file_py != s:file_jabber
-	exec "tabnew " s:file_jabber
-	if getfsize(expand('%')) > 0
-		1,$foldopen!
+if ! &diff && ! exists("g:recovering")
+	let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
+	if filereadable(s:file_jabber) && s:file_py != s:file_jabber
+		exec "tabnew " s:file_jabber
+		if getfsize(expand('%')) > 0
+			1,$foldopen!
+		endif
 	endif
-endif
-let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
-if filereadable(s:file_grammar) && s:file_py != s:file_grammar
-	exec "tabnew " s:file_grammar
-	set filetype=doctest
-	if getfsize(expand('%')) > 0
-		1,$foldopen!
+	let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
+	if filereadable(s:file_grammar) && s:file_py != s:file_grammar
+		exec "tabnew " s:file_grammar
+		set filetype=doctest
+		if getfsize(expand('%')) > 0
+			1,$foldopen!
+		endif
 	endif
-endif
-let s:file_test = substitute(s:file_py,'\.py$','.test',"")
-if filereadable(s:file_test) && s:file_py != s:file_test
-	setl autoread
-	exec "tabnew " s:file_test
-	set filetype=doctest
-	if getfsize(expand('%')) > 0
-		1,$foldopen!
+	let s:file_test = substitute(s:file_py,'\.py$','.test',"")
+	if filereadable(s:file_test) && s:file_py != s:file_test
+		setl autoread
+		exec "tabnew " s:file_test
+		set filetype=doctest
+		if getfsize(expand('%')) > 0
+			1,$foldopen!
+		endif
 	endif
-endif
-let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
-if filereadable(s:file_tests) && s:file_py != s:file_tests
-	setl autoread
-	exec "tabnew " s:file_tests
-	set filetype=doctest
-	if getfsize(expand('%')) > 0
-		1,$foldopen!
+	let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
+	if filereadable(s:file_tests) && s:file_py != s:file_tests
+		setl autoread
+		exec "tabnew " s:file_tests
+		set filetype=doctest
+		if getfsize(expand('%')) > 0
+			1,$foldopen!
+		endif
 	endif
-endif
-let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
-if filereadable(s:file_fail) && s:file_py != s:file_fail
-	setl autoread
-	exec "tabnew " s:file_fail
-	set filetype=doctest_fail
-	if getfsize(expand('%')) > 0
-		1,$foldopen!
+	let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
+	if filereadable(s:file_fail) && s:file_py != s:file_fail
+		setl autoread
+		exec "tabnew " s:file_fail
+		set filetype=doctest_fail
+		if getfsize(expand('%')) > 0
+			1,$foldopen!
+		endif
 	endif
-endif
-tabnext
-if getfsize(expand('%')) > 0
-	1,$foldopen!
-else
 	tabnext
-	syntax on
+	if getfsize(expand('%')) > 0
+		1,$foldopen!
+	else
+		tabnext
+		syntax on
+	endif
 endif
 " 
 " Try to run this file(s) through doctest
