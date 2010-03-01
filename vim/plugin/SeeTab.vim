@@ -62,7 +62,7 @@ fun! s:SeeTab()
 "  call Dfunc("SeeTab()")
 
   if !exists("g:SeeTabEnabled")
-"   call Decho("make tab bars visible (et=".&et.")")
+"   echo "make tab bars visible (et=" . &et .")"
    " -----------------------
    " Make tab bar(s) visible
    " -----------------------
@@ -83,7 +83,7 @@ fun! s:SeeTab()
     let tsm1= &ts - 1
     exe 'syn match SeeTabBar        /  \{'.tsm1.'}/hs=s,he=s+1 contained'
     hi link SeeTabBar SpecialKey
-"    call Decho('et: exe silent! hi SpecialKey ctermfg='.g:SeeTabCtermBG.' ctermbg='.g:SeeTabCtermFG.' guifg=.'g:SeeTabGuiBG.' guibg='.g:SeeTabGuiFG)
+"    call echo('et: exe silent! hi SpecialKey ctermfg='.g:SeeTabCtermBG.' ctermbg='.g:SeeTabCtermFG.' guifg=.'g:SeeTabGuiBG.' guibg='.g:SeeTabGuiFG)
     exe 'silent! hi SpecialKey ctermfg='.g:SeeTabCtermBG.' ctermbg='.g:SeeTabCtermFG.' guifg=.'g:SeeTabGuiBG.' guibg='.g:SeeTabGuiFG
    else
     let s:SeeTab_list      = &list
@@ -96,7 +96,7 @@ fun! s:SeeTab()
    endif
 
   else
-"   call Decho("remove tab bars from display")
+"   call echo("remove tab bars from display")
    " -------------------------
    " restore display to normal
    " -------------------------
