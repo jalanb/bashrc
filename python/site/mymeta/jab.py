@@ -89,7 +89,11 @@ open_brick ::= '['
 double_quote ::= '"'
 """
 from path import path
-from pymeta.grammar import OMeta
+try: from pymeta.grammar import OMeta
+except TypeError, e:
+	if 'getlines' in str(e):
+		import platform
+		raise ImportError, 'PyMeta needs Python version >= 2.5, not %s' % platform.python_version()
 
 ometa_jab = OMeta.makeGrammar(jab_grammar, globals(), name="jab")
 
