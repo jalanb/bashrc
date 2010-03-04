@@ -810,6 +810,7 @@ class path(_base):
 # jab extensions
 #
 class PathError(Exception):
+	prefix = 'Path Error'
 	def __init__(self,message):
 		Exception.__init__(self,message)
 
@@ -829,6 +830,8 @@ def cd(to):
 		os.chdir(to.parent)
 	elif not to.exists():
 		return False
+	else:
+		raise PathError('Cannot cd to %s' % to)
 	Previous = previous
 	return True
 
@@ -843,6 +846,16 @@ class Path(path):
 	def assertExists(self):
 		if not self.exists():
 			raise PathError('%s does not exist' % self)
+		return self
+
+	def assert_isdir(self):
+		if not os.path.isdir(self):
+			raise PathError('%s is not a directory' % self)
+		return self
+
+	def assert_isfile(self):
+		if not os.path.isfile(self):
+			raise PathError('%s is not a file' % self)
 		return self
 
 	def __add__(self, more):
@@ -910,6 +923,19 @@ class Path(path):
 		return Path(path(self).expanduser())
 	def abspath(self):
 		return Path(path(self).abspath())
+	def write_text(self,text,append=False):
+		path(self).write_text(text,append=append)
+	def write_lines(self,lines,append=False):
+		path(self).write_lines(lines,append=append)
+	def write_line(self,line,append=False):
+		path(self).write_lines([line],append=append)
+	def lines(self):
+		return path(self).lines()
+	def text(self):
+		return path(self).text()
+	def access(self,mode):
+		return path(self).access(mode)
+
 	# extra convenience methods
 
 	def cd(self):
@@ -947,13 +973,18 @@ class Path(path):
 		if self.isfile():
 			test = self
 		else:
-			test = self.parent / 'fred'
+			test = self.parent / 'path.test'
 		try:
+			existed = test.exists()
 			test.touch()
-			test.remove()
+			if not existed:
+				test.remove()
 		except OSError:
 			return False
 		return True
+
+	def can_write(self):
+		return False
 
 	def splitext(self):
 		f, ext = os.path.splitext(_base(self))
@@ -966,6 +997,61 @@ class Path(path):
 			filename, ext = os.path.splitext(filename)
 			ext += '.gz'
 		return Path(filename), ext
+
+	def walkfiles(self, pattern=None,exclude=None):
+		""" D.walkfiles() -> iterator over files in D, recursively.
+
+		The optional argument, pattern, limits the results to files
+		with names that match the pattern.  For example,
+		mydir.walkfiles('*.tmp') yields only files with the .tmp
+		extension.
+
+		The optional argument, exclude, is a list of directory names
+			No files will be returned from those directories
+			or their sub-directories
+		"""
+		if not exclude: exclude = []
+		for child in path(self).listdir():
+			if child.isfile():
+				if pattern is None or child.fnmatch(pattern):
+					yield Path(child)
+			elif child.isdir():
+				if child.name in exclude: continue
+				for f in child.walkfiles(pattern):
+					yield Path(f)
+
+
+	def replaceLine(self,pattern,replacement):
+		'''Replace the pattern with the replacement
+		
+		Only for lines which contain nothing else except pattern
+		'''
+		def replace_only_one_line():
+			joined = '%s%s' % (pattern,replacement)
+			if '\n' in joined:
+				errors = '\n' in pattern and [ 'pattern' ] or []
+				errors += '\n' in replacement and [ 'replacement' ] or []
+				singular = len(errors) == 1
+				pronoun = singular and 'it' or 'them'
+				verb = singular and 'has' or 'have'
+				values = '%s' % '","'.join([ locals()[e] for e in errors ])
+				errors = ' and '.join(errors)
+				message = 'replaceLine should be used for single lines only\n\tYour %s %s a return in %s: "%s"' % (
+					errors, verb, pronoun, values )
+				raise NotImplementedError(message)
+			return True
+		if not self.isfile():
+			raise ValueError('%s is not a file' % self)
+		replace_only_one_line()
+		if pattern[0] != '^' or pattern[-1] != '$':
+			pattern = '^%s$' % pattern
+		command = 'sed -i -e"s|%s|%s|" %s' % ( pattern, replacement, self )
+		sh.hide(command)
+		return sh.passed()
+
+	def change_text(self,change):
+		'''Read text, call change(text), write text'''
+		self.write_text( change(self.text()) )
 
 	def directory(self):
 		if self.isdir():
@@ -1052,6 +1138,8 @@ def popd():
 	except IndexError:
 		raise PathError, 'pop from empty directory stack'
 	return cd(to)
+
+home = makepath('~')
 
 def here():
 	return makepath('.')

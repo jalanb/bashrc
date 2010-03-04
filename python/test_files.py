@@ -1,18 +1,56 @@
-try:
-	from path import path
-except ImportError:
-	print >> sys.stderr, 'Cannot import path'
-	sys.exit(3)
+from pprint import pprint
+
+from path import makepath
 
 class UserMessage(Exception):
 	pass
 
+def get_test_dir():
+	args = sys.argv[1:]
+	result = path('.')
+	for arg in args:
+		arg_path = path(arg)
+		if arg_path.isdir():
+			result = arg_path
+			break
+	else:
+		for arg in args:
+			arg_path = path(arg)
+			if arg_path.parent and arg_path.isfile():
+				result = arg_path.parent
+				break
+	result = try_testing_sub_dir(result)
+	if not result.isdir():
+		raise UserMessage('%s is not a directory' % result)
+	if not result.files('*.test*') or result.files('*.py'):
+		raise UserMessage('%s/*.test*, *.py not found' % result)
+	return result
+
+def any_extension(p):
+	if p.isfile():
+		dirr = p.parent
+		glob = p.namebase + '.*'
+	elif p.isdir():
+		dirr = p
+		glob = '*'
+	else:
+		if p.parent:
+			dirr = p.parent
+		else:
+			dirr = path('.')
+		glob = '%s.*' % p.namebase
+	if not dirr.isdir(): return []
+	return [ f for f in dirr.files(glob) ]
+
+def some_extensions(p,exts):
+	return [ f for f in any_extension(p) if f.ext in exts ]
+
 def get_paths(args):
-	here = path('.')
+	here = makepath('.')
 	paths = []
 	for arg in args:
 		if '/' in arg:
-			p = path(arg)
+			p = makepath(arg)
 		else:
 			p = here / arg
 		paths += [ p ]
@@ -27,9 +65,11 @@ def add_sub_dirs(paths):
 			top_dir = p.parent
 		if top_dir not in dirs:
 			dirs += [ top_dir ]
-	result = []
+	result = dirs
 	for p in dirs:
 		for sub_dir in p.walkdirs():
+			if '.svn' in sub_dir:
+				continue
 			if sub_dir not in result:
 				result += [ sub_dir ]
 	return result
@@ -39,9 +79,12 @@ def get_test_scripts(args,recursive):
 	test_scripts = []
 	paths = get_paths(args)
 	if recursive:
+		files = [ f for f in paths if f.isfile() ]
+		if files:
+			raise UserMessage('Do not use -r (recursive) with files: %s' % files)
 		paths = add_sub_dirs(paths)
 	if not paths:
-		here = path('.')
+		here = makepath('.')
 		if recursive:
 			method = here.walkfiles
 		else:
@@ -71,43 +114,4 @@ def get_test_scripts(args,recursive):
 	result += [ s for s in test_scripts if s.ext == '.py' ]
 	return result
 
-def any_extension(p):
-	if p.isfile():
-		dirr = p.parent
-		glob = p.namebase + '.*'
-	elif p.isdir():
-		dirr = p
-		glob = '*'
-	else:
-		if p.parent:
-			dirr = p.parent
-		else:
-			dirr = path('.')
-		glob = '%s.*' % p.namebase
-	if not dirr.isdir(): return []
-	return [ f for f in dirr.files(glob)  ]
-
-def some_extensions(p,exts):
-	return [ f for f in any_extension(p) if f.ext in exts ]
-
-def get_test_dir():
-	args = sys.argv[1:]
-	result = path('.')
-	for arg in args:
-		arg_path = path(arg)
-		if arg_path.isdir():
-			result = arg_path
-			break
-	else:
-		for arg in args:
-			arg_path = path(arg)
-			if arg_path.parent and arg_path.isfile():
-				result = arg_path.parent
-				break
-	result = try_testing_sub_dir(result)
-	if not result.isdir():
-		raise UserMessage('%s is not a directory' % result)
-	if not result.files('*.test*') or result.files('*.py'):
-		raise UserMessage('%s/*.test*, *.py not found' % result)
-	return result
 

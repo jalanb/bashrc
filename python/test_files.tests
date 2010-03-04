@@ -1,21 +1,33 @@
-	>>> print test.runner
-	.../.jab/python/try.py
+	>>> print test.runner.name
+	try.py
 
-	>>> print test.here
-	.../.jab/python
-	>>> print test.home
-	...
-	>>> print test.path
+	>>> import os
+	>>> print test.here == os.getcwd()
+	True
+
+	>>> print test.home == makepath('~')
+	True
+
+	>>> print test.path.name
 	test_files.tests
-	>>> print test.python_path
-	.../python/site:.../.jab/python/site:
-	>>> print test.bash_path
-	.../.jab/bin:.../bin:/usr/bin:/usr/local/bin:/opt/local/bin:/bin:/sbin
+
+	>>> print test.python_path == os.environ['PYTHONPATH']
+	True
+
+	>>> print test.bash_path == os.environ['PATH']
+	True 
+
+	>>> print test.host == os.environ['HOSTNAME']
+	True
+
+	>>> print test.user == '%s@%s' % (os.environ['USER'], os.environ['HOSTNAME'])
+	True
+
 	>>> import test_files
-	>>> print test_files.get_test_scripts(recursive=False,args=['l'])
+	>>> print test_files.get_test_scripts(recursive=False,args=['no_such_file'])
 	Traceback (most recent call last):
 	...
-	UserMessage: ./l.test*, ./l.py not found
+	UserMessage: /.../no_such_file.test*, /.../no_such_file.py not found
 
 
 
