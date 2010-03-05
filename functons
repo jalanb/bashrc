@@ -169,7 +169,9 @@ lly ()
 
 try ()
 {
-	p ~/.jab/python/try.py $*
+	TRY=~/.jab/python/try.py
+	test -f ./try.py && TRY=./try.py
+	p $TRY $*
 }
 
 upj ()
