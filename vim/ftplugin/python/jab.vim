@@ -68,7 +68,12 @@ if !exists("Try")
 	function TryTest(quietly)
 		let item_name = expand("%:~:r")
 		let fails = item_name . ".fail"
-		let command = "! python ~/.jab/python/try.py -qa "
+		if filereadable('./try.py')
+			let try_py = './try.py'
+		else
+			let try_py = '~/.jab/python/try.py'
+		endif
+		let command = "! python " . try_py . " -qa "
 		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
 		if a:quietly
 			let quiet_line = command_line . " > " . fails . " 2>&1 || true"
