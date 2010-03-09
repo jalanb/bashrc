@@ -2,7 +2,6 @@
 
 JAB=$HOME/.jab
 
-export pinky_ip=192.168.0.103
 export COLUMNS
 
 export EXITSTATUS="$?"
@@ -65,17 +64,17 @@ fi
 if [ -d /mnt/source ]
 then
 	export SOURCE=/mnt/source
+	export AMG_SOURCE=/mnt/source/amg
 elif [ -d $SITE/altobridge ]
 then
 	export SOURCE=$SITE/altobridge
 else
 	export SOURCE=~/.jab
 fi
-export AMG_SOURCE=$SOURCE/amg
 if [ -d /usr/local/trunk ]
 then
 	export AMG_TRUNK=/usr/local/trunk
-elif [ -d $AMG_SOURCE ]
+elif [ -n "$AMG_SOURCE" && -d "$AMG_SOURCE" ]
 then
 	export AMG_TRUNK=$AMG_SOURCE/trunk
 else
