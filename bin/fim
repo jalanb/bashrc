@@ -8,7 +8,10 @@ test -f debugging && set -x
 # Recover any files which have corresponding swap files
 for file in $*
 do
-	[[ ${file#+} == $file && ${file#-} == $file ]] && continue
+	if [[ ${file#+} != $file || ${file#-} != $file ]] 
+	then
+		continue
+	fi
 	cd `dirname $file`
 	base=`basename $file`
 	export swap_file=`$EDITOR -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep $base`
@@ -68,6 +71,7 @@ do
 	fi
 done
 
-test -f debugging && set +x
+# EDITOR=fred
 $EDITOR $args
+# echo "$EDITOR $args"
 exit 0
