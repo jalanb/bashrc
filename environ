@@ -26,19 +26,18 @@ add_to_path ()
 {
 	if [ -d $1 ]
 	then
-		export PATH=${PATH}:$1
+		if ! echo $PATH | grep -q "$1"
+		then
+			export PATH=${PATH}:$1
+		fi
 	fi
 }
-export PATH=$JAB/bin
+export PATH=/bin:/usr/bin:/usr/local/bin:
+add_to_path $JAB/bin
 add_to_path ~/bin
 add_to_path ~/git/bin
 add_to_path ~/python25/bin
-add_to_path /usr/bin
-add_to_path /usr/local/bin
 add_to_path /opt/local/bin
-add_to_path $TRACKERS/repository/bin/
-add_to_path $TRACKERS/issues/bin/
-add_to_path /bin
 add_to_path /sbin
 
 export PS1
@@ -88,12 +87,6 @@ then
 	export AMG_RELEASES=${AMG_SOURCE}/releases
 	export AMG_DISTRIBUTION=${AMG_SOURCE}/distribution
 	export AMG_IT=${AMG_SOURCE}/IT
-
-	export TRACKER_WORKING=$AMG_TRUNK/trackers
-	export TRACKERS=$AMG_TRUNK/trackers
-	export TRACKER_TESTING=$TRACKER_WORKING/testing
-	export BUILDER_WORKING=$TRACKER_WORKING/builder
-	export VERSION=`grep version $BUILDER_WORKING/configBuild.py | head -n 1 | cut -f2 -d\' `	
 fi
 
 if [ -d /mnt/source ]

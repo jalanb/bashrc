@@ -56,13 +56,8 @@ alias ..='kd ..'
 alias ab="ssh abrogan@192.168.0.103"
 
 alias c-='kd - >/dev/null 2>&1'
-alias ca='kd $SITE/altobridge'
 alias cb='kd ~/bin'
 alias cl='clear'
-alias cm='kd /usr/local/trackers/tracker/db/files/msg'
-alias cr='kd $SITE/roundup'
-alias ct='kd /usr/local/trackers'
-alias cu="kd /usr/local/builders"
 alias cy="kd $MAIN_PYTHON"
 
 alias eg="env | grep "
@@ -85,21 +80,20 @@ alias pi="ipython "
 alias py="y $MAIN_PYTHON"
 
 alias ra="sudo -i -u abrogan"
-alias ri="sudo -i -u issue"
 alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
 alias ry="rf pycos"
 
-alias sa=". ~/.jab/aliases"
-alias sb="cd ~/.jab && . bashrc && c-"
+alias sa="source ~/.jab/aliases"
+alias sb="cd ~/.jab && source bashrc && c-"
 alias sc="svn ci -m"
 alias sd="sdiff "
-alias se=". ~/.jab/environ"
-alias sf=". ~/.jab/functons"
+alias se="source ~/.jab/environ"
+alias sf="source ~/.jab/functons"
 alias si="svn_info "
 alias sl="svn_log "
 alias so="sort "
-alias sp=". ~/.jab/prompt"
+alias sp="source ~/.jab/prompt"
 alias st="stat "
 
 alias v.="v ."
@@ -108,7 +102,6 @@ alias vb="v ~/.jab/bashrc; sb"
 alias ve="v ~/.jab/environ; se"
 alias vf="v ~/.jab/functons; sf"
 alias vj="v ~/.jab"
-alias vm='v /usr/local/trackers/tracker/db/files/msg/'
 alias vp="v ~/.jab/prompt; sp"
 alias vt="v -p *.txt"
 alias vv="v ~/.vim"
@@ -125,13 +118,6 @@ alias c--="cd -"
 
 alias clx="cl; lx "
 alias cly="cl; ly "
-alias cit="c /usr/local/trackers/itTracker"
-alias cjt='c /usr/local/trunk/trackers/issues/tracker'
-alias clt="c /usr/local/trunk/trackers/"
-alias cst="c /usr/local/trackers/csTracker"
-alias cta="c ~/trackers/issues/tracker"
-alias ctl="c /usr/local/trackers/logs"
-alias ctt="c /usr/local/trackers/tracker"
 
 alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
 alias jjy='kd ~/.jab/python'
@@ -158,8 +144,6 @@ alias sxd="svn_diff xdiff "
 
 
 alias tra="try ~/alans_tests"
-alias tri="sh $TRACKER_TESTING/regulars.sh"
-alias trz="p $TRACKER_TESTING/run_test.py"
 
 alias vib="v ~/.bashrc; sib"
 alias vbb="v $BUILDER_WORKING/build.py"
@@ -187,10 +171,7 @@ alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
 
 alias floka="get_pinky_ip && ssh floka@${pinky_ip}"
 
-alias denis='mysql -u root -D issues -e"select id, _title from _issue where _module = 37 and _creator = 39 and __retired__ = 0 and _status != 8"'
-
 alias ptags="p ~/.jab/python/ptags.py "
-alias trepp="trep -pvc"
 
 alias sdiff="svn_diff diff "
 
@@ -205,14 +186,12 @@ alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
 # xxxxxxx
 
 alias abrogan="ssh abrogan@192.168.0.103"
-alias pfidler="ssh root@172.16.1.249"
 alias service="sudo /sbin/service "
 alias cleaner="clean deep"
 alias roundup="roundup-admin -i /usr/local/trackers/tracker -u $USER:alrb3002"
 
 # xxxxxxxx
 
-alias itissues="mysql -u root -D itissues"
 alias cleanest="clean deep pycos"
 
 # xxxxxxxx
