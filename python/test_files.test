@@ -5,8 +5,26 @@ The test_files module
 	test_files.test
 
 	>>> import test_files
-	>>> args = ['test_files']
+
+The module provides a method which gets all possible test files
+	which means *.test, *.tests, *.py
+	We expect to find such extensions for test_files.*, and test_file.* here
+	>>> show( test_files.get_test_scripts() )
+	[...
+	 <Path '/Users/jab/.jab/python/test_file.tests'>,
+	 <Path '/Users/jab/.jab/python/test_files.tests'>,
+	...
+	 <Path '/Users/jab/.jab/python/test_file.test'>,
+	 <Path '/Users/jab/.jab/python/test_files.test'>,
+	...
+	 <Path '/Users/jab/.jab/python/test_file.py'>,
+	 <Path '/Users/jab/.jab/python/test_files.py'>,
+	...
+
+The method can also take arguments to search directories recursively
+	and args is a list of possible stems 
 	>>> show( test_files.get_test_scripts(recursive=False,args=['test_files']) )
 	[<Path '/.../test_files.tests'>,
 	 <Path '/.../test_files.test'>,
 	 <Path '/.../test_files.py'>]
+

@@ -17,10 +17,13 @@
 	>>> print test.bash_path == os.environ['PATH']
 	True 
 
-	>>> print test.host == os.environ['HOSTNAME']
+	>>> try: host = os.environ['HOSTNAME']
+	... except KeyError: host = 'jab.ook'
+
+	>>> print test.host == host
 	True
 
-	>>> print test.user == '%s@%s' % (os.environ['USER'], os.environ['HOSTNAME'])
+	>>> print test.user == '%s@%s' % (os.environ['USER'], host)
 	True
 
 	>>> import test_files
@@ -30,4 +33,8 @@
 	UserMessage: /.../no_such_file.test*, /.../no_such_file.py not found
 
 
+	>>> show( test_files.get_test_scripts(args=['test_files.']) )
+	[<Path '/.../test_files.tests'>,
+	 <Path '/.../test_files.test'>,
+	 <Path '/.../test_files.py'>]
 

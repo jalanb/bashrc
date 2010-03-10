@@ -74,7 +74,9 @@ def add_sub_dirs(paths):
 				result += [ sub_dir ]
 	return result
 
-def get_test_scripts(args,recursive):
+def get_test_scripts(args=None,recursive=False):
+	if not args:
+		args = []
 	exts = [ '.py' ,'.tests' , '.test']
 	test_scripts = []
 	paths = get_paths(args)
@@ -108,7 +110,7 @@ def get_test_scripts(args,recursive):
 
 	if not test_scripts:
 		p = get_test_dir()
-		test_scripts = p.files('*.test')
+		test_scripts = p.files('*.test*')
 	result = [ s for s in test_scripts if s.ext == '.tests' ]
 	result += [ s for s in test_scripts if s.ext == '.test' ]
 	result += [ s for s in test_scripts if s.ext == '.py' ]
