@@ -4,8 +4,6 @@ The fail_file module
 Facilities to understand *.fail
 	which are files containing doctest output
 
-	>>> from fail_file import fail_file
-
 For looking at files, with line numbers
 	>>> def looks_like_this(filename):
 	...     for i, line in enumerate( file(filename).readlines() ):
@@ -86,8 +84,17 @@ Which looks like this
 Parse those files
 	>>> from test_file import parse
 	>>> tests = parse('test_me.tests')
+	>>> see(tests)
+	repr()    str()    .examples    .path_to_file    .sections    .source
+	>>> tests
+	<test_file test_me.tests>
+
 	>>> from fail_file import read_fail_file
 	>>> fail_file = read_fail_file('test_me.fail')
+	>>> see( fail_file )
+	repr()    .failures    .filename    .fix()
+	>>> fail_file
+	<FailFile test_me.tests>
 
 The test text had 4 examples, all of which were failures
 	>>> 4 == len(tests.examples) == len(fail_file.failures)
