@@ -1,9 +1,19 @@
 The try module
 ==============
 
+	>>> import try
+	Traceback (most recent call last):
+	...
+	     import try
+	              ^
+	SyntaxError: invalid syntax
+
 Well ! That's a good name,
 	No one will ever import that
 
-# >>> import try
 
 How to test the test script ?
+
+	>>> import this
+	...
+	Explicit is better than implicit.
