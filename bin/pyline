@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# http://code.activestate.com/recipes/437932-pyline-a-grep-like-sed-like-command-line-tool/
+
 # updated 2005.07.21, thanks to Jacob Oscarson
 # updated 2006.03.30, thanks to Mark Eichin
 
