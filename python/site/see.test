@@ -38,3 +38,14 @@
 	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
 	.setcheckinterval()    .setdlopenflags()    .settrace()
 
+	>>> from see import see_attributes
+	>>> see_attributes(sys,pattern="*a*")
+	.api_version    .argv    .builtin_module_names    .executable    .maxint
+	.maxunicode    .meta_path    .path    .path_hooks    .path_importer_cache
+	.platform    .warnoptions
+
+	>>> from see import see_methods
+	>>> see_methods(sys,pattern="*a*")
+	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
+	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
+	.setcheckinterval()    .setdlopenflags()    .settrace()

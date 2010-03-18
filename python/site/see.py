@@ -161,6 +161,13 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
 
     return _SeeOutput(actions)
 
+def see_methods(*args,**kwargs):
+    kwargs['methods'] = True
+    return see(*args,**kwargs)
+
+def see_attributes(*args,**kwargs):
+    kwargs['attributes'] = True
+    return see(*args,**kwargs)
 
 PY_300 = sys.version_info >= (3, 0)
 PY_301 = sys.version_info >= (3, 0, 1)
