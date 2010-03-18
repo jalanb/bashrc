@@ -8,7 +8,7 @@ A human alternative to dir().
     >>> help(see)
     Help on function see in module see:
     <BLANKLINE>
-    see(obj=anything, pattern=None, r=None, callables=True, uncallables=True)
+    see(obj=anything, pattern=None, r=None, methods=True, attributes=True)
         Inspect an object. Like the dir() builtin, but easier on the eyes.
     <BLANKLINE>
         Keyword arguments (all optional):
@@ -103,7 +103,7 @@ class _SeeDefault(object):
 _LOCALS = _SeeDefault()
 
 
-def see(obj=_LOCALS, pattern=None, r=None, callables=True, uncallables=True):
+def see(obj=_LOCALS, pattern=None, r=None, methods=True, attributes=True):
     """
     Inspect an object. Like the dir() builtin, but easier on the eyes.
 
@@ -149,8 +149,8 @@ def see(obj=_LOCALS, pattern=None, r=None, callables=True, uncallables=True):
             prop = getattr(obj, attr)
         except AttributeError:
             continue
-        if not callables and is_callable(prop): continue
-        if not uncallables and not is_callable(prop): continue
+        if not methods and is_callable(prop): continue
+        if not attributes and not is_callable(prop): continue
         actions.append(name(attr, prop))
 
     if pattern is not None:
