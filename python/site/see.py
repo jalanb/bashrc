@@ -6,6 +6,26 @@ A human alternative to dir().
 
     >>> from see import see
     >>> help(see)
+    Help on function see in module see:
+    <BLANKLINE>
+    see(obj=anything, pattern=None, r=None, callables=True, uncallables=True)
+        Inspect an object. Like the dir() builtin, but easier on the eyes.
+    <BLANKLINE>
+        Keyword arguments (all optional):
+        obj -- object to be inspected
+        pattern -- shell-style search pattern (e.g. '*len*')
+        r -- regular expression
+    <BLANKLINE>
+        If obj is omitted, objects in the current scope are listed instead.
+    <BLANKLINE>
+        Some unique symbols are used:
+    <BLANKLINE>
+            .*      implements obj.anything
+            []      implements obj[key]
+            in      implements membership tests (e.g. x in obj)
+            +obj    unary positive operator (e.g. +2)
+            -obj    unary negative operator (e.g. -2)
+    <BLANKLINE>
 
 Copyright (c) 2009 Liam Cooke
 http://inky.github.com/see/
@@ -83,7 +103,7 @@ class _SeeDefault(object):
 _LOCALS = _SeeDefault()
 
 
-def see(obj=_LOCALS, pattern=None, r=None):
+def see(obj=_LOCALS, pattern=None, r=None, callables=True, uncallables=True):
     """
     Inspect an object. Like the dir() builtin, but easier on the eyes.
 
@@ -121,11 +141,16 @@ def see(obj=_LOCALS, pattern=None, r=None):
                     continue
             actions.append(symbol)
 
+    def is_callable(p):
+        return hasattr(p,"__call__")
+
     for attr in filter(lambda a: not a.startswith('_'), attrs):
         try:
             prop = getattr(obj, attr)
         except AttributeError:
             continue
+        if not callables and is_callable(prop): continue
+        if not uncallables and not is_callable(prop): continue
         actions.append(name(attr, prop))
 
     if pattern is not None:
