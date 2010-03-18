@@ -8,7 +8,7 @@ A human alternative to dir().
     >>> help(see)
     Help on function see in module see:
     <BLANKLINE>
-    see(obj=anything, pattern=None, r=None, methods=True, attributes=True)
+    see(obj=anything, pattern=None, r=None, methods=None, attributes=None)
         Inspect an object. Like the dir() builtin, but easier on the eyes.
     <BLANKLINE>
         Keyword arguments (all optional):
@@ -103,7 +103,7 @@ class _SeeDefault(object):
 _LOCALS = _SeeDefault()
 
 
-def see(obj=_LOCALS, pattern=None, r=None, methods=True, attributes=True):
+def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
     """
     Inspect an object. Like the dir() builtin, but easier on the eyes.
 
@@ -128,7 +128,8 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=True, attributes=True):
     dot = not use_locals and '.' or ''
     func = lambda f: hasattr(f, '__call__') and '()' or ''
     name = lambda a, f: ''.join((dot, a, func(f)))
-
+    if methods is None and attributes is None:
+        methods = attributes = True
     if use_locals:
         obj.__dict__ = inspect.currentframe().f_back.f_locals
     attrs = dir(obj)

@@ -28,12 +28,12 @@
 	.call_tracing()    .callstats()    .getcheckinterval()
 	.setcheckinterval()
 
-	>>> see(sys,pattern="*a*",methods=False)
+	>>> see(sys,pattern="*a*",attributes=True)
 	.api_version    .argv    .builtin_module_names    .executable    .maxint
 	.maxunicode    .meta_path    .path    .path_hooks    .path_importer_cache
 	.platform    .warnoptions
 
-	>>> see(sys,pattern="*a*",attributes=False)
+	>>> see(sys,pattern="*a*",methods=True)
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
 	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
 	.setcheckinterval()    .setdlopenflags()    .settrace()
