@@ -1,3 +1,4 @@
+import re
 from pprint import pprint
 
 from path import makepath
@@ -77,7 +78,7 @@ def add_sub_dirs(paths):
 def get_test_scripts(args=None,recursive=False):
 	if not args:
 		args = []
-	exts = [ '.py' ,'.tests' , '.test']
+	exts = [ '', '.py' ,'.tests' , '.test']
 	test_scripts = []
 	paths = get_paths(args)
 	if recursive:
@@ -114,6 +115,6 @@ def get_test_scripts(args=None,recursive=False):
 	result = [ s for s in test_scripts if s.ext == '.tests' ]
 	result += [ s for s in test_scripts if s.ext == '.test' ]
 	result += [ s for s in test_scripts if s.ext == '.py' ]
+	result += [ s for s in test_scripts if s.ext == '' and re.match('#!.*python.*',s.lines()[0]) ]
 	return result
-
 

@@ -9,7 +9,9 @@ set foldmethod=indent
 NoMatchParen
 
 set autowrite
-let s:file_py = expand("%")
+let s:file_name = expand("%")
+let s:file_stem = fnamemodify(s:file_name,":r")
+let s:file_py = s:file_stem . '.py'
 if ! &diff && ! exists("g:recovering")
 	let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
 	if filereadable(s:file_jabber) && s:file_py != s:file_jabber
@@ -66,7 +68,7 @@ endif
 "
 if !exists("Try")
 	function TryTest(quietly)
-		let item_name = expand("%:~:r")
+		let item_name = s:file_stem . "."
 		let fails = item_name . ".fail"
 		if filereadable('./try.py')
 			let try_py = './try.py'

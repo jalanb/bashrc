@@ -8,7 +8,7 @@ import datetime
 from pprint import pprint, pformat
 
 from path import makepath
-from see import see
+from see import see, see_methods, see_attributes
 import test_files
 
 	
@@ -89,9 +89,12 @@ def make_module(path_to_python):
 	except KeyError: pass
 	# If any of the following calls raises an exception,
 	# there's a problem we can't handle -- let the caller handle it.
-	fp, pathname, description = imp.find_module(name,[path_to_python.parent])
 	try:
-		# print '"%s","%s","%s","%s"' % (name, fp, pathname, description)
+		fp, pathname, description = imp.find_module(name,[path_to_python.parent])
+	except ImportError:
+		fp, pathname, description = file(name), path_to_python, ('','r',imp.PY_SOURCE)
+	try:
+		#raise ValueError( '"%s","%s","%s","%s"' % (name, fp, pathname, description) )
 		x = imp.load_module(name, fp, pathname, description)
 		return x
 	finally:
@@ -117,9 +120,11 @@ def test():
 			if not test_script: continue
 			try:
 				sys_paths.add(test_script)
-				if test_script.ext == '.py':
+				if test_script.ext in [ '', '.py']:
+					#print test_script
 					message = 'py %s;' % test_script
 					module = make_module(test_script)
+					#print module
 					failures, testsRun = doctest.testmod(module,optionflags=doctest_options)
 					del module
 				else:
@@ -132,6 +137,8 @@ def test():
 							'test' : Test_Being_Run(test_script),
 							'sys' : sys,
 							'see' : see,
+							'see_methods' : see_methods,
+							'see_attributes' : see_attributes,
 							'makepath' : makepath,
 							'show' : pprint,
 							'bash' : run_command,
