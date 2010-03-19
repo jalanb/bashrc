@@ -23,7 +23,7 @@ fi
 
 add_to_path ()
 {
-	if [ -n "$1" && -d "$1" ]
+	if [[ -n "$1" && -d "$1" ]]
 	then
 		if ! echo $PATH | grep -q "$1"
 		then
