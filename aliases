@@ -37,7 +37,7 @@ alias m="m"
 alias m="mount ie-build-1:/mnt/releases /Users/shared/alto/releases"
 alias n="n"
 alias o="o"
-alias p="python "
+alias p="test -z \"\$PYTHON\" && PYTHON=python; \$PYTHON"
 alias q="exit 0"
 alias r="rm -vrf"
 alias s="s"
@@ -146,7 +146,7 @@ alias sxd="svn_diff xdiff "
 alias tra="try ~/alans_tests"
 
 alias vib="v ~/.bashrc; sib"
-alias vbb="v $BUILDER_WORKING/build.py"
+alias vbb="v \$BUILDER_WORKING/build.py"
 
 alias url="python ~/bin/show_url.py "
 
