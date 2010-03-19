@@ -252,7 +252,7 @@ build ()
 
 kodos ()
 {
-	pushd /home/builder/Download/ie-build-1/kodos-2.4.9/ >/dev/null
+	pushd ~/bin/kodos-2.4.9/ >/dev/null
 	/usr/bin/python kodos.py &
 	popd >/dev/null
 }
