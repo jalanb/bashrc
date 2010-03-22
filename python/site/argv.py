@@ -24,6 +24,7 @@ More commonly:
 See argv.test* for more
 
 '''
+import sys
 from optparse import make_option, OptionParser
 
 def ordered_option(option_arguments):
@@ -191,3 +192,16 @@ def test_args(command_line=None):
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
+
+def main(method,ctrl_c=None):
+	if ctrl_c is not None:
+		if ctrl_c in [ True, '' ]:
+			ctrl_c = ' Exitting ^c'
+		try:
+			return_value = method()
+		except KeyboardInterrupt:
+			print ctrl_c
+			return_value = 1
+	else:
+		return_value = method()
+	sys.exit(return_value)

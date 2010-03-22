@@ -1,8 +1,20 @@
 Testsing the ptags script
 =========================
 
-ptags is a script
+ptags is a module
 	>>> import ptags
+
+which resides in this directory
+	>>> ptags_directory = makepath(ptags.__file__).parent
+
+and has this source file
+	>>> ptags_file = ptags_directory / str('%s.py' % ptags.__name__)
+
+which looks like this
+	>>> print ptags_file.name
+	ptags.py
+
+It is intended to be run as a script
 	>>> ptags.argv.test_args('-h')
 	Usage: try.py [options]
 	<BLANKLINE>
@@ -10,8 +22,17 @@ ptags is a script
 	  -v, --verbose  Report disk changes
 	  -h, --help     show this help message and exit
 
+	>>> ptags.argv.test_args('-v')
+	>>> ptags.argv.options.verbose
+	True
+
+	>>> see(ptags.argv.options)
+
+methods
+-------
+
 The read_file() method creates a list of tags for a python file
-	>>> tags = ptags.read_file('ptags.py')
+	>>> tags = ptags.read_file(ptags.__file__.replace('.pyc','.py'))
 	>>> tags = tags[0:5]
 	>>> show(tags)
 	[<FileTag "ptags">,
@@ -20,7 +41,7 @@ The read_file() method creates a list of tags for a python file
 	 <Tag "best_of">,
 	 <Tag "read_file">]
 
-The tags_to_text() method converts those objects to ctags format
+The tags_to_text() method converts a list of tags to ctags format
 	>>> print ptags.tags_to_text(tags)
 	FileTag	.../.jab/python/ptags.py	/^class +FileTag(/
 	Tag	.../.jab/python/ptags.py	/^class +Tag:/
@@ -28,37 +49,40 @@ The tags_to_text() method converts those objects to ctags format
 	ptags	.../.jab/python/ptags.py	1
 	read_file	.../.jab/python/ptags.py	/^def +read_file(/
 
-Quick testing method to see all the directories for a list of tags
-	>>> def show_dirs(tags):
-	...     show( sorted(list(set([t.path.parent.from_home() for t in tags]))) )
-	>>> show_dirs(tags)
-	[<Path '.jab/python'>]
-
 The read_dirs method gets tags for all python files in a directory
 	It defaults to the current directory, and recurses into sub-dirs
-	>>> tags = ptags.read_dirs()
-	>>> show_dirs(tags)
+	>>> tags = ptags.read_dirs(ptags_directory)
+	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
 	[<Path '.jab/python'>,
 	 <Path '.jab/python/alanology'>,
 	 <Path '.jab/python/ls'>,
 	 <Path '.jab/python/new'>,
-	 <Path '.jab/python/site'>]
+	 <Path '.jab/python/site'>,
+	 <Path '.jab/python/site/mymeta'>,
+	 <Path '.jab/python/site/pymeta'>,
+	 <Path '.jab/python/site/pymeta/generated'>]
 
 The read_dir method does the same, but does not recurse
-	>>> tags = ptags.read_dir()
-	>>> show_dirs(tags)
+	>>> tags = ptags.read_dir(ptags_directory)
+	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
 	[<Path '.jab/python'>]
 
 The tags are for all python files in the selected directory (ies)
-	and for the given dir three of the scripts are programs
+In .jab/python there should be three scripts which are programs (have a main)
+	kd, ptags and try
 	>>> main_tags = [t for t in tags if 'main' in t.name]
 	>>> print ptags.tags_to_text(main_tags)
 	main	.../.jab/python/kd.py	/^def +main(/
 	main	.../.jab/python/ptags.py	/^def +main(/
 	main	.../.jab/python/try.py	/^def +main(/
 
-Another method is used to read python's system direcories
+read_sys_dirs() is used to read python's system direcories
 	Which would, for example, tag the pformat method in the pprint module
-	>>> show( [ t.path.name for t in ptags.read_sys_dirs() if t.name == 'pformat'] )
+	>>> sys_tags = ptags.read_sys_dirs()
+	>>> show( [ t.path.name for t in sys_tags if t.name == 'pformat'] )
 	['pprint.py']
 
+It actually tags all files found in sys.paths,
+	so should include path.py, so should include a tag for makedirs
+	>>> print [ t for t in sys_tags if t.name == 'makedirs'][0]
+	makedirs	.../path.py	/^ +def +makedirs(/

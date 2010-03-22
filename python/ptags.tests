@@ -1,7 +1,8 @@
 	>>> import ptags
-	>>> tags = ptags.read_dirs()
+	>>> ptags_dir = ptags.makepath(ptags.__file__).parent
+	>>> tags = ptags.read_dirs(ptags_dir)
 
-	>>> print ptags.tags_to_text([ t for t in tags if 'cd' in t.address ])
-	.cd	/Users/jab/.jab/python/site/path.py	/^ +def +cd(/
-	cd	/Users/jab/.jab/python/site/path.py	/^def +cd(/
+	>>> print ptags.tags_to_text([ t for t in tags if 'best_of' in t.address ])
+	best_of	/Users/jab/.jab/python/ptags.py	/^def +best_of(/
+	best_of	/Users/jab/.jab/python/ptags.py	/^def +best_of(/
 

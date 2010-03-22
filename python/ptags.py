@@ -25,6 +25,7 @@ import os
 import sis
 import argv
 argv.add([ ( 'verbose', 'Report disk changes', False ) ])
+argv.add([ ( 'recursive', 'Recurse into sub-directories', False ) ])
 
 from path import makepath, here
 
@@ -58,7 +59,6 @@ class Tag:
 	def __cmp__(self,other):
 		return cmp(str(self),str(other))
 		
-
 class FileTag(Tag):
 	def __init__(self,path):
 		try:
@@ -89,7 +89,7 @@ def best_of(old,new):
 		elif ('+class' in new.address and '+def' in old.address) or ('+class' in old.address and '+def' in new.address):
 			return old, new
 		else:
-			raise ValueError('%s\n\t"%s" != "%s"' % (old.path, old.address , new.address))
+			raise ValueError('%s\n%s\n\t"%s" != "%s"' % (old.where(), new.where(), old.address , new.address))
 	raise NotImplementedError('\n\t%r\n\t%r' % ( old.path, new.path ))
 	
 def read_file(path_to_python):
@@ -99,6 +99,7 @@ def read_file(path_to_python):
 	def_or_class = re.compile('^[ \t]*(def|class)[ \t]+([a-zA-Z0-9_]+)[ \t]*[:\(]')
 	problems = []
 	for line in t.path.lines():
+		if not line: continue
 		try:
 			tag = Tag(t.path,line)
 			for t in tags:
@@ -109,7 +110,8 @@ def read_file(path_to_python):
 			else:
 				tags += [ tag ]
 				continue
-			if not want_t: tags.remove(t)
+			if not want_t:
+				tags.remove(t)
 			tags += [ tag ]
 		except AttributeError: pass
 	if problems:
@@ -138,11 +140,17 @@ def tags_to_text(tags):
 
 def write_dir(path_to_directory,tags):
 	out = makepath('%s/tags' % path_to_directory)
-	text = tags_to_text(tags)
-	out.write_text(text)
-	print 'Wrote tags to ', out
+	if out.isdir():
+		message = 'Wrote no tags to %s' % out
+	else:
+		text = tags_to_text(tags)
+		out.write_text(text)
+		message = 'Wrote tags to %s' % out
+	if argv.options.verbose:
+		print message
 
 def read_write_dir(path_to_directory=None):
+	if not path_to_directory: path_to_directory = here()
 	tags = read_dir(path_to_directory)
 	write_dir(path_to_directory,tags)
 
@@ -154,18 +162,19 @@ def read_write_dirs(path_to_directory=None):
 
 def read_sys_dirs():
 	tags = []
-	sis.get_sys_path()
 	for p in sis.paths:
 		tags += read_dir(p)
 	return tags
 
+def all_directories_in_a_list_of_tags(tags):
+	return sorted(list(set([t.path.parent.from_home() for t in tags])))
+
 def main():
 	argv.parse_args()
-	read_write_dirs()
+	if argv.options.recursive:
+		read_write_dirs()
+	else:
+		read_write_dir()
 
 if __name__ == '__main__':
-	try:
-		print sys.argv[1]
-		print 'Usage:', sys.argv[0]
-	except:
-		sys.exit(main())
+	argv.main(main,ctrl_c=True)
