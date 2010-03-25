@@ -6,6 +6,16 @@
 
 # x
 
+p ()
+{
+	if [[ -n "$PYTHON" ]]
+	then
+		$PYTHON $*
+	else
+		python $*
+	fi
+}
+
 y ()
 {
 # Go to a directory (or here), then scrub, tag, list and stat it

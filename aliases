@@ -37,7 +37,7 @@ alias m="m"
 alias m="mount ie-build-1:/mnt/releases /Users/shared/alto/releases"
 alias n="n"
 alias o="o"
-alias p="test -z \"\$PYTHON\" && PYTHON=python; \$PYTHON"
+# p is a function
 alias q="exit 0"
 alias r="rm -vrf"
 alias s="s"
