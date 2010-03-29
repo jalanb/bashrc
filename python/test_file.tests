@@ -1,5 +1,6 @@
-Parsing test files
-==================
+The test_file module
+====================
+
 Facilities to understand *.test
 	which are files containing doctest input 
 
