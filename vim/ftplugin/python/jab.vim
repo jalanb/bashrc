@@ -67,9 +67,18 @@ endif
 " Try to run this file(s) through doctest
 "
 if !exists("Try")
+	function NewTestFile(filename)
+		exec "tabnew! " . s:file_test
+		exec "normal I\<cr>	>>> \<Esc>"
+		set cmdheight+=1
+		write
+		set cmdheight-=1
+	endfunction
 	function TryTest(quietly)
 		let item_name = s:file_stem . "."
-		let fails = item_name . ".fail"
+		if ! filereadable(s:file_test)
+			call NewTestFile(s:file_test)
+		endif
 		if filereadable('./try.py')
 			let try_py = './try.py'
 		else
@@ -78,7 +87,7 @@ if !exists("Try")
 		let command = "! python " . try_py . " -qa "
 		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
 		if a:quietly
-			let quiet_line = command_line . " > " . fails . " 2>&1 || true"
+			let quiet_line = command_line . " > " . s:file_fail . " 2>&1 || true"
 		else
 			let quiet_line = command_line
 		endif
@@ -99,28 +108,27 @@ if !exists("Try")
 				exec "tabnext"
 			endwhile
 		endif
-		let path_to_fails = expand(fails)
+		let path_to_fails = expand(s:file_fail)
 		let z = getfsize(path_to_fails)
 		" echo "Size of " . path_to_fails . " is " . z
 		if ! z
 			return
 		endif
 		exec "tablast"
-		exec "tabnew! " . fails
+		exec "tabnew! " . s:file_fail
 	endfunction
 	function TryFix(quietly)
 		let item_name = expand("%:~:r")
-		let fails = item_name . ".fail"
-		let path_to_fails = expand(fails)
+		let path_to_fails = expand(s:file_fail)
 		let z = getfsize(path_to_fails)
 		if ! z
 			return
 		endif
 		let command_line = "! python ~/.jab/python/fix_failures.py "
 		if a:quietly
-			let quiet_line = command_line . fails . " 2>&1 || true"
+			let quiet_line = command_line . s:file_fail . " 2>&1 || true"
 		else
-			let quiet_line = command_line . fails
+			let quiet_line = command_line . s:file_fail
 		endif
 		try
 			exec quiet_line
