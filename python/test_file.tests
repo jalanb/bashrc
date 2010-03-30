@@ -1,5 +1,5 @@
-The test_file module
-====================
+Detailed testing of the test_file module
+========================================
 
 Facilities to understand *.test
 	which are files containing doctest input 
@@ -52,6 +52,9 @@ Facilities to understand *.test
 	... And this one a 1
 	... 	>>> 1 - 0
 	... 	1
+	... And this one a .
+	... 	>>> print '.'
+	...     .
 	... ''')
 	('And here',
 	 [<Example This test expects a 0
@@ -59,7 +62,10 @@ Facilities to understand *.test
 		0>,
 	  <Example And this one a 1
 		>.> 1 - 0
-		1>])
+		1>,
+	  <Example And this one a .
+		>.> print '.'
+		.>])
 	>>> to_tree("main_section",'''Alan was here
 	... =======
 	... This test expects a 0

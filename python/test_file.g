@@ -84,7 +84,6 @@ example_data ::= <example_data_line>*
 
 example_data_line ::= (
 		<some_indentation> 
-		(<anything>:i ?(i not in '>.\n')) 
-		<line>:j 
-	) => i + j
+		(<line>:i ?(i[:4] not in ['>>> ', '... '])) 
+	) => i
 
