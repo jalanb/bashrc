@@ -37,6 +37,7 @@ class Test_Being_Run:
 					self.host = 'jab.ook'
 		self.user = '%s@%s' % ( self.username, self.host )
 		self.path = self.here.relpathto(that)
+		self.path_to_fail = self.path.splitext()[0] + '.fail'
 		self.python_path = os.environ['PYTHONPATH']
 		self.bash_path = os.environ['PATH']
 
