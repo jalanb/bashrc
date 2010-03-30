@@ -69,7 +69,7 @@ endif
 if !exists("Try")
 	function NewTestFile(filename)
 		exec "tabnew! " . s:file_test
-		exec "normal I\<cr>	>>> \<Esc>"
+		exec "normal IThe " . s:file_stem . " module\<cr>============\<cr>	>>> import ". s:file_stem . "\<cr>	>>> see(" . s:file_stem . ")\<Esc>"
 		set cmdheight+=1
 		write
 		set cmdheight-=1
@@ -87,12 +87,17 @@ if !exists("Try")
 		let command = "! python " . try_py . " -qa "
 		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
 		if a:quietly
-			let quiet_line = command_line . " > " . s:file_fail . " 2>&1 || true"
+			let tmpfile = tempname()
+			let quiet_line = command_line . " > " . tmpfile . " 2>&1 || true"
 		else
+			let tmpfile = 'none'
 			let quiet_line = command_line
 		endif
 		try
 			exec quiet_line
+			if tmpfile != 'none'
+				call rename(tmpfile,s:file_fail)
+			endif
 			redraw!
 		catch /.*/
 			" echo fred

@@ -5,7 +5,7 @@ JAB=$HOME/.jab
 export COLUMNS
 
 export EXITSTATUS="$?"
-export FIGNORE=.pyc:.swp:~:.o:.fail
+export FIGNORE=.pyc:.swp:~:.o
 
 #export DISPLAY=:0
 
