@@ -1,0 +1,20 @@
+The doctests module
+===================
+
+This script handles collections of files used for doctests
+	>>> import doctests
+
+It imports modules which handle such files
+	>>> see(doctests)
+	.fail_file    .test_file
+
+	>>> this_test_file = doctests.test_file.parse(test.path)
+
+	>>> show( this_test_file.examples[0] )
+	<Example This script handles collections of files used for doctests
+		>.> import doctests>
+
+	>>> this_fail_file = doctests.fail_file.read_fail_file(test.path_to_fail)
+	>>> failure = this_fail_file.failures[0]
+	>>> print failure.expected[0]
+	fred
