@@ -35,8 +35,10 @@ get_dirs converts a list of strings to a list of paths
 	[<path '.'>, <path '..'>]
 
 It expands paths if possible
-	>>> print l.get_dirs([ '~', '$PYTHONSTARTUP', '/' ])
-	[<path '...'>, <path '.../.jab/python'>, <path '/'>]
+	>>> import os
+	>>> expected = [ path(os.environ['HOME']), path( os.environ['MAIN_PYTHON']), path('/') ]
+	>>> l.get_dirs([ '~', '$MAIN_PYTHON', '/' ]) == expected
+	True
  
 It defaults to only the current directory
 	but always returns a list

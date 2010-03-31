@@ -5,7 +5,7 @@ import path
 import argv
 from glob_path import glob_path, any_fnmatch
 
-argv.add([
+argv.add_options([
 	('ignore','Do not ignore files (that subversion ignores)', True),
 ])
 

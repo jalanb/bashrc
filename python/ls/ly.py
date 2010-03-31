@@ -30,7 +30,7 @@ def post_parse(options,args):
 
 argv.post_parses.append(post_parse)
 
-argv.add([
+argv.add_options([
 	( 'ython', 'hide python scripts', False),
 	( 'tests', 'show tests', False),
 	( 'compiled', 'show compiled python', False),

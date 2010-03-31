@@ -1,7 +1,7 @@
 import os
 import argv
 
-argv.add( [
+argv.add_options( [
 	( 'quiet', 'hide directories, blank lines, etc', False),
 	( 'lines', 'separate by returns (tabs is default)', False),
 ] )
