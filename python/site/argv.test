@@ -21,7 +21,7 @@ If you do not supply these they will be:
 	appropriate to type of the default
 
 Usually add() is called with the tuples (e.g. each module imported calls it)
-	>>> argv.add( [ ('welcome',help_string,'Fred'), ])
+	>>> argv.add_options( [ ('welcome',help_string,'Fred'), ])
 
 Then call parse_args() once, e.g. in main()
 	(Not doing that here - do not know what is on command line)
@@ -36,6 +36,17 @@ Or, you could get it to parse a specific command line
 	>>> options, args = argv.parse_args('Hello -w World')
 	>>> print ' '.join(args + [ options.welcome ])
 	Hello World
+
+The module retains the last options, args which it parsed 
+	>>> args == argv.args and options == argv.options
+	True
+
+The module will catch any files or directories in the command line
+	>>> _, _ = argv.parse_args('-w alan ~/.jab ~/.bashrc ~/.jab/vim/vimrc fred /usr')
+	>>> print argv.files[0], argv.files[1]
+	/.../.bashrc /.../.jab/vim/vimrc
+	>>> print argv.directories[0], argv.directories[1]
+	/.../.jab /usr
 
 Most of the time: that's it.
 

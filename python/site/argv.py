@@ -14,7 +14,7 @@ That's an optparse.OptParser,
 	which handles command line options and args
 
 More commonly:
-	>>> argv.add(my_opts)
+	>>> argv.add_options(my_opts)
 	>>> options, args = argv.parse_args(command_line='-s crash.log')
 	>>> print options.__dict__
 	{'save': True, 'exit': '', 'name': 'Fred'}
@@ -24,10 +24,8 @@ More commonly:
 See argv.test* for more
 
 '''
-import sys
-from optparse import make_option, OptionParser
 
-def ordered_option(option_arguments):
+def _ordered_option(option_arguments):
 	'''Make an option that can be passed to OptionParser.__init__()
 
 	option_arguments is a tuple with values in this order
@@ -40,6 +38,7 @@ def ordered_option(option_arguments):
 
 	dest will be set == long name
 	'''
+	from optparse import make_option
 	return make_option(
 		'-%s' % option_arguments[0],
 		'--%s' % option_arguments[1],
@@ -49,18 +48,18 @@ def ordered_option(option_arguments):
 		default = option_arguments[4]
 	)
 
-def make_argv_option(long_name,help,default,short=None,action=None):
+def _make_argv_option(long_name,help,default,short=None,action=None):
 	'''Return an optparse option
 	
 	Short name defaulted to long name's initial.
-	Action defaults to default_action()
+	Action defaults to _default_action()
 	'''
 	if not short:
 		short = long_name[0]
-	action = default_action(default,action)
-	return ordered_option((short,long_name,action,help,default))
+	action = _default_action(default,action)
+	return _ordered_option((short,long_name,action,help,default))
 
-def default_action(default,action=None):
+def _default_action(default,action=None):
 	'''Default action for that type of default'''
 	if action: return action
 	if type(default) == type(True):
@@ -69,7 +68,7 @@ def default_action(default,action=None):
 		return'store_true'
 	return 'store'
 
-def as_five_tuple(tupel):
+def _as_five_tuple(tupel):
 	'''Convert the tuple to a 4 tuple.
 
 	Add a default "" to a 2-tuple
@@ -91,9 +90,9 @@ def as_five_tuple(tupel):
 		default = ''
 	else:
 		raise ValueError('Use 2, 3, 4 or 5 arguments, not %r' % tupel)
-	return long, help, default, short, default_action(default,action)
+	return long, help, default, short, _default_action(default,action)
 
-def listize(method):
+def _listize(method):
 	'''Return a method which converts a list of tuples to a list of options.
 
 	Using method(tuple) for each onversion
@@ -101,41 +100,55 @@ def listize(method):
 	def to_options(tuples):
 		options = []
 		for tupel in tuples:
-			long, help, default, short, action = as_five_tuple(tupel)
+			long, help, default, short, action = _as_five_tuple(tupel)
 			options += [ method(long, help, default, short, action) ]
 		return options
 	return to_options
 
-make_argv_options = listize(make_argv_option)
+_make_argv_options = _listize(_make_argv_option)
 
 def options_to_parser(options):
 	'''Make an OptionParser from a list of options'''
+	from optparse import OptionParser
 	return OptionParser(option_list=options)
 
-added_args = []
-def add(args):
-	added_args[:0] = args
-
-def make_parser(args=None):
-	'''Make an OptionParser from a list of tuples
-
+_added_tuples = []
+def add_options(options):
+	'''Add a list of tuples to be used as options
+	
 	tuples can have
+		2 values: a string defaulting to ""
+		3 values: name, help, default
+		4 values: name, help, default, short name
+		5 values: name, help, default, short name, action
+	Type of the default sets the type of option
+		It also sets the action (unless supplied)
+	'''
+	_added_tuples[:0] = options
+
+def make_parser(tuples=None):
+	'''Make an OptionParser from a list of all_tuples
+
+	all_tuples can have
 		2 values: a string defaulting to ""
 		3 values: name, help, default
 		4 values: name, help, default, short name
 		5 values: name, help, default, short name, action
 	'''
 	options = []
-	if not args: args = []
-	tuples = args + added_args
-	for tupel in tuples:
-		try: five_tuple = as_five_tuple(tupel)
-		except: raise ValueError(repr(tupel))
-		options += [ make_argv_option(*five_tuple) ]
+	if tuples is None: tuples = []
+	for tupl in tuples + _added_tuples:
+		try:
+			five_tuple = _as_five_tuple(tupl)
+			options += [ _make_argv_option(*five_tuple) ]
+		except:
+			raise ValueError(repr(tupl))
 	return options_to_parser(options)
 
 options = None
 args = None
+directories = []
+files = []
 post_parses = []
 
 def reset():
@@ -144,23 +157,16 @@ def reset():
 	options = None
 	global args
 	args = None
-	global added_args
-	added_args = []
+	global _added_tuples
+	_added_tuples = []
 	global post_parses
 	post_parses = []
 
 def parse_args(command_line=None):
-	'''Use options are made from a list of tuples
+	'''Parse a command line using options added eralier
 
-	The list used is: those as args here, and any sent in to add() earlier
+	The options were sent in to add_options() earlier
 
-	tuples can have
-		2 values: a string defaulting to ""
-		3 values: name, help, default
-		4 values: name, help, default, short name
-		5 values: name, help, default, short name, action
-	Type of the default sets the type of option
-		It also sets the action (unless supplied)
 	'''
 	option_parser = make_parser()
 	global options
@@ -173,9 +179,17 @@ def parse_args(command_line=None):
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
+	from path import makepath
+	paths = [ makepath(a) for a in args ]
+	files[:0] = [ p for p in paths if p.isfile() ]
+	directories[:0] = [ p for p in paths if p.isdir() ]
 	return options, args
 
 def test_args(command_line=None):
+	'''Convenience method for testing prse_args
+
+	It does not sys.exit() if the command line includes "-h"
+	'''
 	option_parser = make_parser()
 	global options
 	global args
@@ -194,14 +208,22 @@ def test_args(command_line=None):
 		options, args = post_parse(options,args)
 
 def main(method,ctrl_c=None):
+	'''Treat method as a typical main()
+
+	Calls the method, then sends its return value to sys.exit()
+	If ctrl_c is not None, then catch KeyboardInterrupts and exit gracefully
+		ctrl_c might be a string, which is sent to stderr
+	'''
+	import sys
 	if ctrl_c is not None:
 		if ctrl_c in [ True, '' ]:
 			ctrl_c = ' Exitting ^c'
 		try:
 			return_value = method()
 		except KeyboardInterrupt:
-			print ctrl_c
+			print >> sys.stderr, ctrl_c
 			return_value = 1
 	else:
 		return_value = method()
 	sys.exit(return_value)
+

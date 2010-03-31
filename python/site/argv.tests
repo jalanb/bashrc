@@ -1,17 +1,17 @@
 	>>> import argv
-	>>> argv.ordered_option(('a','alan','store','was here','brogan'))
+	>>> argv._ordered_option(('a','alan','store','was here','brogan'))
 	<Option at ...: -a/--alan>
 
-	>>> argv.make_argv_option('fred','here too','Murphy','f','store')
+	>>> argv._make_argv_option('fred','here too','Murphy','f','store')
 	<Option at ...: -f/--fred>
 
-	>>> argv.make_argv_option('ken','here three',True,'k','store_true')
+	>>> argv._make_argv_option('ken','here three',True,'k','store_true')
 	<Option at ...: -k/--ken>
 
-	>>> argv.make_argv_option('alan','still here','Brogan')
+	>>> argv._make_argv_option('alan','still here','Brogan')
 	<Option at ...: -a/--alan>
 
-	>>> argv.make_argv_option('ken','for ever','Brogan')
+	>>> argv._make_argv_option('ken','for ever','Brogan')
 	<Option at ...: -k/--ken>
 
 Making options
@@ -30,7 +30,7 @@ Make options from a list of tuples
 	... ]
 
 Call the respective methods to convert list of tuples to list of options
-	>>> all = argv.make_argv_options(values)
+	>>> all = argv._make_argv_options(values)
 	>>> show(all)
 	[<Option at ...: -o/--one>,
 	 <Option at ...: -t/--two>,
@@ -68,7 +68,7 @@ For boolean options use boolean defaults
 	... ]
 
 This separation of calls is not required
-	>>> opts = argv.make_argv_options(strings) + argv.make_argv_options(booleans)
+	>>> opts = argv._make_argv_options(strings) + argv._make_argv_options(booleans)
 	>>> show(opts)
 	[<Option at ...: -o/--one>,
 	 <Option at ...: -t/--two>,
@@ -78,7 +78,7 @@ This separation of calls is not required
 	 <Option at ...: -c/--cene>]
 
 As this one produces the same thing
-	>>> opts = argv.make_argv_options(strings + booleans)
+	>>> opts = argv._make_argv_options(strings + booleans)
 	>>> show(opts)
 	[<Option at ...: -o/--one>,
 	 <Option at ...: -t/--two>,
