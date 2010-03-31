@@ -24,8 +24,10 @@ import os
 
 import sis
 import argv
-argv.add([ ( 'verbose', 'Report disk changes', False ) ])
-argv.add([ ( 'recursive', 'Recurse into sub-directories', False ) ])
+argv.add_options([
+	( 'verbose', 'Report disk changes', False ),
+	( 'recursive', 'Recurse into sub-directories', False )
+])
 
 from path import makepath, here
 
