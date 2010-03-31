@@ -8,7 +8,7 @@ Convenience methods for populating an OptionPraser
 	...	 ('name','who am i','Fred','f'),
 	... ] )
 
-	>>> my_parser = argv.make_parser( my_opts )
+	>>> my_parser = argv._make_parser( my_opts )
 
 That's an optparse.OptParser,
 	which handles command line options and args
@@ -107,7 +107,7 @@ def _listize(method):
 
 _make_argv_options = _listize(_make_argv_option)
 
-def options_to_parser(options):
+def _options_to_parser(options):
 	'''Make an OptionParser from a list of options'''
 	from optparse import OptionParser
 	return OptionParser(option_list=options)
@@ -126,7 +126,7 @@ def add_options(options):
 	'''
 	_added_tuples[:0] = options
 
-def make_parser(tuples=None):
+def _make_parser(tuples=None):
 	'''Make an OptionParser from a list of all_tuples
 
 	all_tuples can have
@@ -143,7 +143,7 @@ def make_parser(tuples=None):
 			options += [ _make_argv_option(*five_tuple) ]
 		except:
 			raise ValueError(repr(tupl))
-	return options_to_parser(options)
+	return _options_to_parser(options)
 
 options = None
 args = None
@@ -168,7 +168,7 @@ def parse_args(command_line=None):
 	The options were sent in to add_options() earlier
 
 	'''
-	option_parser = make_parser()
+	option_parser = _make_parser()
 	global options
 	global args
 	if command_line:
@@ -190,7 +190,7 @@ def test_args(command_line=None):
 
 	It does not sys.exit() if the command line includes "-h"
 	'''
-	option_parser = make_parser()
+	option_parser = _make_parser()
 	global options
 	global args
 	if command_line is None:

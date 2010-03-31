@@ -88,7 +88,7 @@ You could also get the parser and use it your way
 	...     ('bad',help_string,False,'n','store_false'),
 	...     ('exit',help_string,'quit','x'),
 	... ])
-	>>> opt_parser = argv.make_parser(all)
+	>>> opt_parser = argv._make_parser(all)
 
 That is a normal OptionParser
 For example to show some help
