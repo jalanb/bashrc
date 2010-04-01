@@ -48,11 +48,12 @@ The module will catch any files or directories in the command line
 	>>> print argv.directories[0], argv.directories[1]
 	/.../.jab /usr
 
-Many scripts act on the first directory you give them which is separated out
+Many scripts act on the first directory you give them
+	This is separated out as well
 	>>> argv.first_directory == argv.directories[0]
 	True
 
-If you didn't give any, it defaults to here
+If you didn't give any directories on command line, it defaults to here
 	>>> argv.test_args('-w alan fred')
 	>>> argv.first_directory == test.here
 	True

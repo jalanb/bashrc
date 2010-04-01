@@ -180,10 +180,10 @@ def parse_args(command_line=None):
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
-	find_files_in_args(args)
+	_find_files_in_args(args)
 	return options, args
 
-def find_files_in_args(args):
+def _find_files_in_args(args):
 	global files
 	global directories
 	global first_directory
@@ -215,15 +215,18 @@ def test_args(command_line=None):
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
-	find_files_in_args(args)
+	_find_files_in_args(args)
 
-def main(method,ctrl_c=None):
+def main(method,ctrl_c=None,no_args=False):
 	'''Treat method as a typical main()
 
 	Calls the method, then sends its return value to sys.exit()
 	If ctrl_c is not None, then catch KeyboardInterrupts and exit gracefully
 		ctrl_c might be a string, which is sent to stderr
+	Set no_args to True to stop parsing of command line args
 	'''
+	if not no_args:
+		parse_args()
 	import sys
 	if ctrl_c is not None:
 		if ctrl_c in [ True, '' ]:
