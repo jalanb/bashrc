@@ -78,6 +78,17 @@ uj ()
 	fi
 }
 
+ky ()
+{
+	if [[ -z "$1" ]]
+	then
+		cd $MAIN_PYTHON
+	else
+		kd $* > /dev/null
+	fi
+	y
+}
+
 # xxx
 
 cls ()

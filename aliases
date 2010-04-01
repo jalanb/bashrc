@@ -46,7 +46,7 @@ alias u="u"
 alias v="~/.jab/bin/fim "
 alias w="which "
 alias x="x"
-alias y='p ~/.jab/python/y.py '
+alias y='clear; p ~/.jab/python/y.py '
 alias z="du -sh"
 
 # xx
@@ -120,7 +120,7 @@ alias clx="cl; lx "
 alias cly="cl; ly "
 
 alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
-alias jjy='kd ~/.jab/python'
+alias jjy='ky ~/.jab/python'
 alias jlf="ssh jlfieblu@jlf.ie"
 
 alias lff="ls fred*"
