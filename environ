@@ -67,7 +67,7 @@ elif [ -d $SITE/altobridge ]
 then
 	export SOURCE=$SITE/altobridge
 else
-	export SOURCE=~/.jab
+	export SOURCE=$JAB
 fi
 if [ -d /usr/local/trunk ]
 then

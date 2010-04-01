@@ -26,7 +26,7 @@ ag ()
 cj ()
 {
 # commit jab
-	svn ci ~/.jab -m"$*"
+	svn ci $JAB -m"$*"
 }
 
 
@@ -35,7 +35,7 @@ kd ()
 # cd to filename as well as directory
 	echo $* | grep -q " st" && show_more=true || show_more=false 
 	args=`echo $* | sed -e"s/ st//"`
-	destination=`python ~/.jab/python/kd.py $args 2>&1`
+	destination=`python $JAB/python/kd.py $args 2>&1`
 	first_word=`echo "$destination" | cut -d\   -f1`
 	if [[ "x$first_word" == "xError" ]]
 	then
@@ -63,8 +63,8 @@ ru ()
 
 uj ()
 {
-# update ~/.jab from the repository
-	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
+# update $JAB from the repository
+	if [[ `svn up $JAB | grep -v "At revision" | wc -l` != "0" ]]
 	then
 		BACK=`pwd`
 		if [[ $BACK != "$HOME/.jab" ]]
@@ -157,7 +157,7 @@ lly ()
 
 try ()
 {
-	TRY=~/.jab/python/try.py
+	TRY=$JAB/python/try.py
 	test -f ./try.py && TRY=./try.py
 	p $TRY $*
 }
@@ -191,7 +191,7 @@ vff ()
 
 dark ()
 {
-	svn revert -q ~/.jab/vim/vimrc
+	svn revert -q $JAB/vim/vimrc
 }
 
 stat ()

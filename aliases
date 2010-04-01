@@ -19,8 +19,8 @@ unalias -a
 # x
 
 alias -- -='kd - >/dev/null 2>&1'
-alias 1="v ~/.jab/todo.txt"
-alias 2="cat ~/.jab/todo.txt"
+alias 1="v $JAB/todo.txt"
+alias 2="cat $JAB/todo.txt"
 alias a="a"
 alias b="b"
 alias c="kd "
@@ -43,10 +43,10 @@ alias r="rm -vrf"
 alias s="s"
 alias t="t"
 alias u="u"
-alias v="~/.jab/bin/fim "
+alias v="$JAB/bin/fim "
 alias w="which "
 alias x="x"
-alias y='clear; p ~/.jab/python/y.py '
+alias y='clear; p $JAB/python/y.py '
 alias z="du -sh"
 
 # xx
@@ -65,15 +65,15 @@ alias eg="env | grep "
 alias gh="history | grep "
 alias in="to_source"
 
-alias jj="kd ~/.jab"
+alias jj="kd $JAB"
 
 alias la="ls -a "
-alias lj="ls ~/.jab"
+alias lj="ls $JAB"
 alias ll="ls -lh "
 alias ls="l $LS_COLOUR_OPTION -tr"
 alias lt="ls *.test*"
-alias lx="p ~/.jab/python/ls/lx.py "
-alias ly="p ~/.jab/python/ls/ly.py "
+alias lx="p $JAB/python/ls/lx.py "
+alias ly="p $JAB/python/ls/ly.py "
 
 alias p-="echo $OLDPWD"
 alias pi="ipython "
@@ -84,25 +84,25 @@ alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
 alias ry="rf pycos"
 
-alias sa="source ~/.jab/aliases"
-alias sb="cd ~/.jab && source bashrc && c-"
+alias sa="source $JAB/aliases"
+alias sb="cd $JAB && source bashrc && c-"
 alias sc="svn ci -m"
 alias sd="sdiff "
-alias se="source ~/.jab/environ"
-alias sf="source ~/.jab/functons"
+alias se="source $JAB/environ"
+alias sf="source $JAB/functons"
 alias si="svn_info "
 alias sl="svn_log "
 alias so="sort "
-alias sp="source ~/.jab/prompt"
+alias sp="source $JAB/prompt"
 alias st="stat "
 
 alias v.="v ."
-alias va="v ~/.jab/aliases; sa"
-alias vb="v ~/.jab/bashrc; sb"
-alias ve="v ~/.jab/environ; se"
-alias vf="v ~/.jab/functons; sf"
-alias vj="v ~/.jab"
-alias vp="v ~/.jab/prompt; sp"
+alias va="v $JAB/aliases; sa"
+alias vb="v $JAB/bashrc; sb"
+alias ve="v $JAB/environ; se"
+alias vf="v $JAB/functons; sf"
+alias vj="v $JAB"
+alias vp="v $JAB/prompt; sp"
 alias vt="v -p *.txt"
 alias vv="v ~/.vim"
 alias vy="v $MAIN_PYTHON"
@@ -120,7 +120,7 @@ alias clx="cl; lx "
 alias cly="cl; ly "
 
 alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
-alias jjy='ky ~/.jab/python'
+alias jjy='ky $JAB/python'
 alias jlf="ssh jlfieblu@jlf.ie"
 
 alias lff="ls fred*"
@@ -134,12 +134,13 @@ alias rqa="/bin/rm -rf ./*"
 alias rff="r fred*"
 
 alias sib=". ~/.bashrc"
-alias stj="stat ~/.jab"
 
 alias shd='svn_diff "vimdiff -o" '
 alias skd="svn_diff kdiff "
-alias stv="statvim "
+alias spe="source $JAB/python-environ"
 alias sta="statvim | sed -e s/^r/svn\ add/"
+alias stj="statvim $JAB"
+alias stv="statvim "
 alias svd="svn_diff vimdiff "
 alias sxd="svn_diff xdiff "
 
@@ -148,6 +149,7 @@ alias tra="try ~/alans_tests"
 
 alias vib="v ~/.bashrc; sib"
 alias vbb="v \$BUILDER_WORKING/build.py"
+alias vpe="v $JAB/python-environ; spe"
 
 alias url="python ~/bin/show_url.py "
 
@@ -160,11 +162,11 @@ alias down="cd ~/Download"
 
 alias mine="sudo chown $USER:allstaff "
 
-alias jjya='kd ~/.jab/python/alanology'
-alias jjys='kd ~/.jab/python/site'
+alias jjya='kd $JAB/python/alanology'
+alias jjys='kd $JAB/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
-alias tags="p ~/.jab/python/ptags.py "
+alias tags="p $JAB/python/ptags.py "
 
 # xxxxx
 
@@ -172,7 +174,7 @@ alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
 
 alias floka="get_pinky_ip && ssh floka@${pinky_ip}"
 
-alias ptags="p ~/.jab/python/ptags.py "
+alias ptags="p $JAB/python/ptags.py "
 
 alias sdiff="svn_diff diff "
 
