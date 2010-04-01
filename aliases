@@ -104,7 +104,7 @@ alias vf="v $JAB/functons; sf"
 alias vj="v $JAB"
 alias vp="v $JAB/prompt; sp"
 alias vt="v -p *.txt"
-alias vv="v ~/.vim"
+alias vv="v $JAB/bin/fim"
 alias vy="v $MAIN_PYTHON"
 
 alias xk="exchange_keys"
@@ -150,6 +150,7 @@ alias tra="try ~/alans_tests"
 alias vib="v ~/.bashrc; sib"
 alias vbb="v \$BUILDER_WORKING/build.py"
 alias vpe="v $JAB/python-environ; spe"
+alias vvv="v $JAB/vim"
 
 alias url="python ~/bin/show_url.py "
 
@@ -167,6 +168,8 @@ alias jjys='kd $JAB/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
 alias tags="p $JAB/python/ptags.py "
+
+alias vvvv="v $JAB/vim/vimrc"
 
 # xxxxx
 
