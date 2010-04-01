@@ -95,7 +95,6 @@ def make_module(path_to_python):
 	except ImportError:
 		fp, pathname, description = file(name), path_to_python, ('','r',imp.PY_SOURCE)
 	try:
-		#raise ValueError( '"%s","%s","%s","%s"' % (name, fp, pathname, description) )
 		x = imp.load_module(name, fp, pathname, description)
 		return x
 	finally:
@@ -122,10 +121,8 @@ def test():
 			try:
 				sys_paths.add(test_script)
 				if test_script.ext in [ '', '.py']:
-					#print test_script
 					message = 'py %s;' % test_script
 					module = make_module(test_script)
-					#print module
 					failures, testsRun = doctest.testmod(module,optionflags=doctest_options)
 					del module
 				else:
