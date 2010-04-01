@@ -27,6 +27,29 @@ def environ_paths():
 	raise str(result['MONTYLINGUA'])
 	if key == 'MONTYLINGUA': raise str(result[key])
 
+def strings_to_paths(strings):
+	if type(strings) == type(''):
+		strings = strings.split(' ')
+	return [ makepath(s) for s in strings ]
+
+def split_directories(strings):
+	strings = strings_to_paths(strings)
+	return [ p for p in strings if p.isdir() ], [ p for p in strings if not p.isdir() ]
+
+def split_files(strings):
+	strings = strings_to_paths(strings)
+	return [ p for p in strings if p.isfile() ], [ p for p in strings if not p.isfile() ]
+
+def split_directories_files(strings):
+	strings = strings_to_paths(strings)
+	return [ p for p in strings if p.isdir() ], [ p for p in strings if p.isfile() ], [ p for p in strings if not (p.isfile() or p.isdir())]
+
+def files(strings):
+	return split_files(strings)[0]
+
+def directories(strings):
+	return split_directories(strings)[0]
+
 environ = environ_paths()
 
 here = path('.')

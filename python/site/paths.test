@@ -13,23 +13,23 @@ paths reads from environ
 And looks for paths therein
 	It tries anything with a "/"
 	>>> environ.EDITOR
-	'/Users/jab/bin/vim'
+	'/usr/bin/vim'
 	>>> paths.environ.EDITOR
-	<Path '/Users/jab/bin/vim'>
+	<Path '/usr/bin/vim'>
 
 Path lists are split up,
 	>>> environ.PYTHONPATH 
-	'...:...:'
+	'...:...'
 	>>> len(paths.environ.PYTHONPATH) > 1 
 	True
 
-We use PYTHONPATH to get local directories into sys.path
-	>>> strips = [ str(p) for p in paths.environ.PYTHONPATH ]
-	>>> all( [ s in sys.path for s in strips ] )
+PYTHONPATH is normally used to get local directories into sys.path
+	>>> python_paths = [ str(p) for p in paths.environ.PYTHONPATH ]
+	>>> all( [ s in sys.path for s in python_paths ] )
 	True
 
-The paths module got into sys.path through $PYTHONPATH
-	>>> paths.makepath(paths.__file__).parent in paths.environ.PYTHONPATH
+The paths module that we are testing got into sys.path through $PYTHONPATH
+	>>> test.path.Parent in paths.environ.PYTHONPATH
 	True
 
 Handy paths.attributes
@@ -47,4 +47,18 @@ A path relative to the home directory
 	(could be handy for removing the home dir in tests)
 
 	>>> paths.from_home(paths.__file__)
-	<path '.jab/python/site/paths.pyc'>
+	<path '.jab/python/site/paths.py...'>
+
+	>>> strings = ['~/.jab', '~/.bashrc', '~/.jab/vim/vimrc', 'fred', '/usr']
+	>>> paths.files(strings)
+	[<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>]
+	>>> paths.files(strings) == paths.files('~/.jab ~/.bashrc ~/.jab/vim/vimrc fred /usr')
+	True
+	>>> paths.directories(strings)
+	[<Path '/.../.jab'>, <Path '/usr'>]
+
+	>>> paths.split_files(strings)
+    ([<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>], [<Path '/.../.jab'>, <Path '/.../.jab/python/site/fred'>, <Path '/usr'>])
+	>>> paths.split_directories(strings)
+    ([<Path '/.../.jab'>, <Path '/usr'>], [<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>, <Path '/.../.jab/python/site/fred'>])
+

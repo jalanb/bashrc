@@ -148,6 +148,7 @@ def _make_parser(tuples=None):
 options = None
 args = None
 directories = []
+first_directory = None
 files = []
 post_parses = []
 
@@ -179,11 +180,16 @@ def parse_args(command_line=None):
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
-	from path import makepath
-	paths = [ makepath(a) for a in args ]
-	files[:0] = [ p for p in paths if p.isfile() ]
-	directories[:0] = [ p for p in paths if p.isdir() ]
+	find_files_in_args(args)
 	return options, args
+
+def find_files_in_args(args):
+	global files
+	global directories
+	global first_directory
+	import paths
+	directories, files, _ = paths.split_directories_files(args)
+	first_directory = directories and directories[0] or paths.makepath('.')
 
 def test_args(command_line=None):
 	'''Convenience method for testing prse_args
@@ -195,6 +201,9 @@ def test_args(command_line=None):
 	global args
 	if command_line is None:
 		command_line = '-h'
+	if command_line == '':
+		import sys
+		command_line = sys.argv[0]
 	if command_line:
 		try: command_line = command_line.split()
 		except AttributeError: pass
@@ -206,6 +215,7 @@ def test_args(command_line=None):
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
 		options, args = post_parse(options,args)
+	find_files_in_args(args)
 
 def main(method,ctrl_c=None):
 	'''Treat method as a typical main()
@@ -226,4 +236,5 @@ def main(method,ctrl_c=None):
 	else:
 		return_value = method()
 	sys.exit(return_value)
+
 

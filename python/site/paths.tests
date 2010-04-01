@@ -1,9 +1,0 @@
-	>>> import environ
-	>>> import paths 
-	>>> print environ.HISTSIZ
-	100000
-	>>> print paths.environ.HISTSIZ
-	Traceback (most recent call last):
-	...
-	AttributeError: paths instance has no attribute 'HISTSIZ'
-
