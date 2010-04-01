@@ -1,6 +1,6 @@
 #! /bin/sh
 
-JAB=$HOME/.jab
+export JAB=$HOME/.jab
 
 export COLUMNS
 
