@@ -33,10 +33,10 @@ prompt_command ()
 	echo
 	echo -ne $STATUS
 	if svn stat -q | wc -l | grep -q 0
-	then dir="\$PWD"
-	else dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+	then Dir="\$PWD"
+	else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	fi
-	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$dir]${PROMPT_NO_COLOUR}\n$ "
+	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
 	j --add "$(pwd -P)"
 }
 
