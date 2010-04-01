@@ -1,6 +1,7 @@
 
 	>>> see()
-	bash()    makepath()    see()    show()    sys    test
+	bash()    makepath()    see()    see_attributes()    see_methods()
+	show()    sys    test
 
 	>>> see(sys)
 	help()    .api_version    .argv    .builtin_module_names    .byteorder
