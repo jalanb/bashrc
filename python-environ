@@ -3,14 +3,6 @@
 export PYTHONDOCS=/home/builder/python25/share/doc/html
 export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages')][0]"`
 
-export MAIN_PYTHON=~/.jab/python
-if [[ $USER == "builder" ]]
-then
-	export MAIN_PYTHON=$BUILDER_WORKING
-	export SCRIPTS=$BUILDER_WORKING
-else
-fi
-
 export PYTHONPATH=
 add_to_pythonpath ()
 {
@@ -28,17 +20,8 @@ add_to_pythonpath ()
 		export MAIN_PYTHON=$1
 	fi
 }
-if [[ $USER == "builder" ]] 
-then
-	add_to_pythonpath $BUILDER_WORKING
-	add_to_pythonpath $SITE/altobridge
-fi
+add_to_pythonpath $SITE/altobridge
 add_to_pythonpath $JAB/python/site
 add_to_pythonpath $HOME/python/site
-if [[ $USER != "builder" ]] 
-then
-	add_to_pythonpath $BUILDER_WORKING
-	add_to_pythonpath $SITE/altobridge
-fi
 
 [[ -f ~/.pythonrc.py ]] &&  export PYTHONSTARTUP=~/.pythonrc.py
