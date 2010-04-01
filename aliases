@@ -46,7 +46,7 @@ alias u="u"
 alias v="~/.jab/bin/fim "
 alias w="which "
 alias x="x"
-# y is a function
+alias y='p ~/.jab/python/y.py '
 alias z="du -sh"
 
 # xx

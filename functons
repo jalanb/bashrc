@@ -16,39 +16,6 @@ p ()
 	fi
 }
 
-y ()
-{
-# Go to a directory (or here), then scrub, tag, list and stat it
-	dir=
-	if [ -d "$1" ] 
-	then
-		dir="$1"
-		shift
-	fi
-	if [ -z "$dir" ]
-	then
-		dir=`pwd`
-	fi
-	if [[ $dir != `pwd` ]]
-	then
-		old=$OLDPWD
-		back=`pwd`
-		cd $dir >> /dev/null
-	fi
-	clear
-	ry
-	clean quietly
-	tags >> /dev/null
-	pwd
-	ly $*
-	stat
-	if [[ -n $back ]]
-	then
-		cd $back >> /dev/null
-		export OLDPWD=$old
-	fi
-}
-
 # xx
 
 ag ()
