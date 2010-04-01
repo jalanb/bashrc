@@ -45,7 +45,7 @@ def main():
 	print argv.first_directory
 	for method in argv.methods:
 		method()
-	ly.show_dirs([p.relpathto(argv.first_directory) for p in argv.directories])
+	ly.show()
 	if argv.options.stat:
 		svn_stat()
 

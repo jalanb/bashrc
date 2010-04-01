@@ -86,10 +86,10 @@ lout.lout_rules = ly_rules
 
 def main():
 	argv.parse_args()
-	dirs = l.get_dirs(argv.args)
-	show_dirs(dirs)
+	show()
 
-def show_dirs(dirs):
+def show():
+	dirs = l.get_dirs(argv.args)
 	lout.show_dirs(dirs)
 	files = l.get_files(dirs)
 	show_ignored = False
