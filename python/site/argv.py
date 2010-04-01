@@ -25,6 +25,7 @@ See argv.test* for more
 
 '''
 
+_ordered_options = []
 def _ordered_option(option_arguments):
 	'''Make an option that can be passed to OptionParser.__init__()
 
@@ -39,6 +40,7 @@ def _ordered_option(option_arguments):
 	dest will be set == long name
 	'''
 	from optparse import make_option
+	_ordered_options.append(option_arguments[1])
 	return make_option(
 		'-%s' % option_arguments[0],
 		'--%s' % option_arguments[1],
@@ -151,6 +153,7 @@ directories = []
 first_directory = None
 files = []
 post_parses = []
+methods = []
 
 def reset():
 	'''Reset the module variables back to empty values'''
@@ -217,7 +220,7 @@ def test_args(command_line=None):
 		options, args = post_parse(options,args)
 	_find_files_in_args(args)
 
-def main(method,ctrl_c=None,no_args=False):
+def main(Globals,ctrl_c=None,no_args=False):
 	'''Treat method as a typical main()
 
 	Calls the method, then sends its return value to sys.exit()
@@ -227,17 +230,24 @@ def main(method,ctrl_c=None,no_args=False):
 	'''
 	if not no_args:
 		parse_args()
+	global methods
+	methods = []
+	for name in _ordered_options:
+		try:
+			Global = Globals[name]
+			if callable(Global):
+				methods.append(Global)
+		except KeyError: pass
 	import sys
 	if ctrl_c is not None:
 		if ctrl_c in [ True, '' ]:
 			ctrl_c = ' Exitting ^c'
 		try:
-			return_value = method()
+			return_value = Globals['main']()
 		except KeyboardInterrupt:
 			print >> sys.stderr, ctrl_c
 			return_value = 1
 	else:
-		return_value = method()
+		return_value = Globals['main']()
 	sys.exit(return_value)
-
 
