@@ -223,7 +223,12 @@ build ()
 {
 	if [[ $USER == "jab" ]]
 	then
-		user=builder
+		if [[ -n "$1" && "$1" == "2" ]]
+		then
+			user=abrogan
+		else
+			user=builder
+		fi
 	else
 		user=$USER
 	fi
