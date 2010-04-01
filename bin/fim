@@ -5,12 +5,24 @@
 #
 test -f debugging && set -x
 
+
+JAB_TESTING=$JAB/python/testing
+edit_testers ()
+{
+	arg=$JAB_TESTING/$1
+	if [[ -n $TRACKER_TESTING && -d $TRACKER_TESTING ]]
+	then
+		POST_PROCESSING="rsync -v --exclude=.svn $JAB_TESTING/* $TRACKER_TESTING/"
+	fi
+}
+
 # Finish file names "left short" by tab-completion
 # For example, if file name is "fred.", which does not exist, 
 #     but "fred.py" does exist, then we'll edit fred.py
 #
 # Files "left short" by tab-completion are those which would have same stem, but different extension
 # So we will complete for "*.py", "*.cpp"
+POST_PROCESSING=
 args=
 for arg in $*
 do
@@ -26,6 +38,16 @@ do
 			args="$args $arg"
 		fi
 	else
+		if [[ `basename $arg` == "try.py" ]]
+		then
+			edit_testers try.py
+		elif [[ `basename $arg` == "test_files.py" ]]
+		then
+			edit_testers test_files.py
+		elif [[ `basename $arg` == "see.py" ]]
+		then
+			edit_testers see.py
+		fi
 		args="$args $arg"
 	fi
 done
@@ -98,6 +120,7 @@ else
 		if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
 		then
 			$EDITOR $args
+			$POST_PROCESSING
 		fi
 	fi
 fi
