@@ -63,18 +63,18 @@ ru ()
 
 uj ()
 {
-# update jab
-	PWD=`pwd`
-	if [ $PWD != "$HOME/.jab" ]
+# update ~/.jab from the repository
+	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
 	then
-		jj
-	else
-		PWD=
-	fi
-	. bashrc
-	if [ -n $PWD ]
-	then
-		c-
+		BACK=`pwd`
+		if [[ $BACK != "$HOME/.jab" ]]
+		then
+			cd $JAB
+			. bashrc
+			cd $BACK
+		else
+			. bashrc
+		fi
 	fi
 }
 
@@ -160,15 +160,6 @@ try ()
 	TRY=~/.jab/python/try.py
 	test -f ./try.py && TRY=./try.py
 	p $TRY $*
-}
-
-upj ()
-{
-# update jab from the repository
-	if [[ `svn up ~/.jab | grep -v "At revision" | wc -l` != "0" ]]
-	then
-		uj
-	fi
 }
 
 vff ()
