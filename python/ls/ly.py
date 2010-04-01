@@ -31,16 +31,16 @@ def post_parse(options,args):
 argv.post_parses.append(post_parse)
 
 argv.add_options([
-	( 'ython', 'hide python scripts', False),
-	( 'tests', 'show tests', False),
-	( 'compiled', 'show compiled python', False),
-	( 'grammar', 'show grammars', False),
-	( 'fails', 'show fails', False),
-	( 'all', 'show all python related files', False),
-	( 'others', 'show non python related files as well', False),
+		( 'ython', 'hide python scripts', False),
+		( 'tests', 'show tests', False),
+		( 'compiled', 'show compiled python', False),
+		( 'grammar', 'show grammars', False),
+		( 'fails', 'show fails', False),
+		( 'all', 'show all python related files', False),
+		( 'others', 'show non python related files as well', False),
 ])
+		
 
-	
 def python_wanted(path_to_file):
 	ext = path_to_file.ext
 	oo = argv.options
@@ -87,6 +87,9 @@ lout.lout_rules = ly_rules
 def main():
 	argv.parse_args()
 	dirs = l.get_dirs(argv.args)
+	show_dirs(dirs)
+
+def show_dirs(dirs):
 	lout.show_dirs(dirs)
 	files = l.get_files(dirs)
 	show_ignored = False
