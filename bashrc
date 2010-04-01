@@ -1,6 +1,7 @@
 #! /bin/sh
 
 . environ
+. python-environ
 test -f local/environ && . local/environ
 test -n "$PS1" || return
 . prompt green

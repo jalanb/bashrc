@@ -40,8 +40,6 @@ add_to_path /opt/local/bin
 add_to_path /sbin
 
 export PS1
-export PYTHONDOCS=/home/builder/python25/share/doc/html
-export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages')][0]"`
 
 #
 # Path dependencies
@@ -88,14 +86,6 @@ then
 	export AMG_IT=${AMG_SOURCE}/IT
 fi
 
-if [ -d /mnt/source ]
-then
-	export MAIN_PYTHON=$BUILDER_WORKING
-	export SCRIPTS=$BUILDER_WORKING
-else
-	export MAIN_PYTHON=~/.jab/python
-fi
-
 export LCP_SOURCE=$SOURCE/lcp
 export NSN_SOURCE=$LCP_SOURCE/nsn
 export NSN_BUILDS=${NSN_SOURCE}/builds
@@ -105,30 +95,6 @@ export RELEASES=/mnt/releases
 export BUILDING=${RELEASES}/building
 export BUILD_DEBUG=${RELEASES}/building/debug
 export NOTES=${RELEASES}/building/notes
-
-export PYTHONPATH=
-add_to_pythonpath ()
-{
-	if [ -d $1 ]
-	then
-		if [ -z $PYTHONPATH ]
-		then
-			export PYTHONPATH=$1
-		else
-			export PYTHONPATH=$PYTHONPATH:$1
-		fi
-	fi
-}
-add_to_pythonpath $BUILDER_WORKING
-add_to_pythonpath $SITE/altobridge
-add_to_pythonpath $JAB/python/site
-add_to_pythonpath $HOME/python/site
-if [ -f ~/.pythonrc.py ]
-then
-	export PYTHONSTARTUP=~/.pythonrc.py
-else
-	export PYTHONSTARTUP=~/.jab/python/pythonrc.py
-fi
 
 if [ -x /opt/local/bin/gwhich ]
 then
