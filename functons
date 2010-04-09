@@ -157,7 +157,7 @@ lly ()
 
 try ()
 {
-	TRY=$JAB/python/try.py
+	TRY=$JAB/python/testing/try.py
 	test -f ./try.py && TRY=./try.py
 	p $TRY $*
 }
