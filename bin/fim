@@ -12,7 +12,7 @@ edit_testers ()
 	arg=$JAB_TESTING/$1
 	if [[ -n $TRACKER_TESTING && -d $TRACKER_TESTING ]]
 	then
-		POST_PROCESSING="rsync -v --exclude=.svn $JAB_TESTING/* $TRACKER_TESTING/"
+		POST_PROCESSING="rsync -q --exclude=.svn $JAB_TESTING/* $TRACKER_TESTING/"
 	fi
 }
 
