@@ -82,7 +82,7 @@ if !exists("Try")
 		if filereadable('./try.py')
 			let try_py = './try.py'
 		else
-			let try_py = '~/.jab/python/try.py'
+			let try_py = '~/.jab/python/testing/try.py'
 		endif
 		let command = "! python " . try_py . " -qa "
 		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
@@ -142,14 +142,21 @@ if !exists("Try")
 			" echo fred
 		endtry
 	endfunction
-"	function Try(quietly)
-"		if expand("%:e") == "fail"
-"			call TryFix(quietly)
-"		else
-"			call TryTest(quietly)
-"		endif
-"	endfunction
-	command -nargs=0 Try :call TryTest(1)
+	function Vim_Difference_Between_Expected_And_Got()
+		exec "/Expected/+1,/Got:/-1 w! fred.one"
+		exec "/Got:/+1,/had failures/-2 w! fred.two"
+		exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! fred.two"
+		exec "! vimdiff fred.one fred.two"
+		exec "! rm -f fred.one fred.two"
+	endfunction
+	function Try(quietly)
+		if expand("%:e") == "fail"
+			call Vim_Difference_Between_Expected_And_Got()
+		else
+			call TryTest(a:quietly)
+		endif
+	endfunction
+	command -nargs=0 Try :call Try(1)
 	command -nargs=0 Fix :call TryFix(0)
 	noremap t :Try<cr>
 endif
