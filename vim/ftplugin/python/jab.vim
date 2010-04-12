@@ -143,11 +143,32 @@ if !exists("Try")
 		endtry
 	endfunction
 	function Vim_Difference_Between_Expected_And_Got()
-		exec "/Expected/+1,/Got:/-1 w! fred.one"
-		exec "/Got:/+1,/had failures/-2 w! fred.two"
-		exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! fred.two"
-		exec "! vimdiff fred.one fred.two"
-		exec "! rm -f fred.one fred.two"
+		if bufloaded("fred.one")
+			exec "bunload fred.one"
+		endif
+		if bufloaded("fred.two")
+			exec "bunload fred.two"
+		endif
+		if line('.') < 3
+			call cursor(4,1)
+		endif
+		let a:wrapscan=&wrapscan
+		set nowrapscan
+		call search("Failed","b")
+		let v:errmsg = ""
+		silent! exec "/Expected/+1,/Got:/-1 w! fred.one"
+		if v:errmsg != ""
+			echoerr "\"Expected\" not found after the cursor"
+			return
+		endif
+		silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! fred.two"
+		silent exec "tabnew fred.two"
+		set buftype=nofile
+		silent exec "diffsplit fred.one"
+		set buftype=nofile
+		call delete("fred.one")
+		call delete("fred.two")
+		let &wrapscan=a:wrapscan
 	endfunction
 	function Try(quietly)
 		if expand("%:e") == "fail"
