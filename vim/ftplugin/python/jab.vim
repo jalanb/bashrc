@@ -12,6 +12,8 @@ set autowrite
 let s:file_name = expand("%")
 let s:file_stem = fnamemodify(s:file_name,":r")
 let s:file_py = s:file_stem . '.py'
+let s:file_expected = s:file_stem . '.expected'
+let s:file_actual = s:file_stem . '.actual'
 if ! &diff && ! exists("g:recovering")
 	let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
 	if filereadable(s:file_jabber) && s:file_py != s:file_jabber
@@ -143,11 +145,11 @@ if !exists("Try")
 		endtry
 	endfunction
 	function Vim_Difference_Between_Expected_And_Got()
-		if bufloaded("fred.one")
-			exec "bunload fred.one"
+		if bufloaded(s:file_expected)
+			exec "bunload " . s:file_expected
 		endif
-		if bufloaded("fred.two")
-			exec "bunload fred.two"
+		if bufloaded(s:file_actual)
+			exec "bunload " . s:file_actual
 		endif
 		if line('.') < 3
 			call cursor(4,1)
@@ -156,18 +158,18 @@ if !exists("Try")
 		set nowrapscan
 		call search("Failed","b")
 		let v:errmsg = ""
-		silent! exec "/Expected/+1,/Got:/-1 w! fred.one"
+		silent! exec "/Expected/+1,/Got:/-1 w! " . s:file_expected
 		if v:errmsg != ""
 			echoerr "\"Expected\" not found after the cursor"
 			return
 		endif
-		silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! fred.two"
-		silent exec "tabnew fred.one"
+		silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! " . s:file_actual
+		silent exec "tabnew " . s:file_expected
 		set buftype=nofile
-		silent exec "diffsplit fred.two"
+		silent exec "diffsplit " . s:file_actual
 		set buftype=nofile
-		call delete("fred.one")
-		call delete("fred.two")
+		call delete(s:file_expected)
+		call delete(s:file_actual)
 		let &wrapscan=a:wrapscan
 	endfunction
 	function Try(quietly)
