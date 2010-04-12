@@ -143,7 +143,7 @@ fpy ()
 llt ()
 {
 	first_dir $*
-	ls -lhtr $dir | tail
+	ls -lhtr "$dir" | tail
 }
 
 lly ()
