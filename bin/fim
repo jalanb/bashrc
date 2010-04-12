@@ -93,12 +93,15 @@ do
 			break
 		fi
 	else
-		if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.*$file"
+		if [[ -d $file ]]
 		then
-			echo    No swap \ file \ exists
-			echo -n A process is running:\ 
-			ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.*$file" 
-			safe=
+			if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.*$file"
+			then
+				echo    No swap \ file \ exists
+				echo -n A process is running:\ 
+				ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.*$file" 
+				safe=
+			fi
 		fi
 	fi
 done
