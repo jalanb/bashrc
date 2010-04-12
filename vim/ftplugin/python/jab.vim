@@ -162,9 +162,9 @@ if !exists("Try")
 			return
 		endif
 		silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! fred.two"
-		silent exec "tabnew fred.two"
+		silent exec "tabnew fred.one"
 		set buftype=nofile
-		silent exec "diffsplit fred.one"
+		silent exec "diffsplit fred.two"
 		set buftype=nofile
 		call delete("fred.one")
 		call delete("fred.two")
