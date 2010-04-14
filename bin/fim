@@ -93,7 +93,7 @@ do
 			break
 		fi
 	else
-		if [[ -d $file ]]
+		if [[ ! -d $file ]]
 		then
 			if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.*$file"
 			then
