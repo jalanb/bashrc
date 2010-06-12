@@ -1,0 +1,33 @@
+Edge cases for kd
+================
+
+	>>> import kd
+
+No more than two args on command line
+
+	>>> kd.parse_command_line(['alan','was','here'])
+	Traceback (most recent call last):
+	...
+	ValueError: Usage: kd directory [sub-dir]
+
+And no less than 1
+
+	>>> kd.parse_command_line([])
+	('', None)
+
+Directories found must be real
+
+	>>> kd.find_dir('rubbish')
+	Traceback (most recent call last):
+	...
+	ValueError: rubbish is not a directory
+
+Can send a blank as the sub-dir
+
+	>>> kd.find_dir('/usr/local','')
+	<path '/usr/local'>
+
+Same effect if sub-dir is not found
+	>>> kd.find_dir('/usr/local','this_is_not_real')
+	<path '/usr/local'>
+
