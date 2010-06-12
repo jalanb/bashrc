@@ -893,10 +893,6 @@ class Path(path):
 	def dirname(self):
 		return Path(os.path.dirname(self))
 	parent = property( dirname, None, None,)
-	def Dirname(self):
-		return makepath(os.path.dirname(self))
-	Parent = property( Dirname, None, None,)
-
 	getctime = os.path.getctime
 	ctime = property( getctime, None, None, )
 
@@ -927,8 +923,6 @@ class Path(path):
 		return Path(path(self).expanduser())
 	def abspath(self):
 		return Path(path(self).abspath())
-	def relpathto(self, dest):
-		return Path(path(self).relpathto(dest))
 	def write_text(self,text,append=False):
 		path(self).write_text(text,append=append)
 	def write_lines(self,lines,append=False):
@@ -941,6 +935,10 @@ class Path(path):
 		return path(self).text()
 	def access(self,mode):
 		return path(self).access(mode)
+
+	def Dirname(self):
+		return makepath(os.path.dirname(self))
+	Parent = property( Dirname, None, None,)
 
 	# extra convenience methods
 
