@@ -89,7 +89,10 @@ def main():
 	show()
 
 def show():
-	dirs = l.get_dirs(argv.args)
+	try: dirs = l.get_dirs(argv.args)
+	except ValueError, e:
+		print e
+		return
 	lout.show_dirs(dirs)
 	files = l.get_files(dirs)
 	show_ignored = False

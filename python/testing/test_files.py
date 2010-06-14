@@ -112,9 +112,13 @@ def get_test_scripts(args=None,recursive=False):
 	if not test_scripts:
 		p = get_test_dir()
 		test_scripts = p.files('*.test*')
-	result = [ s for s in test_scripts if s.ext == '.tests' ]
-	result += [ s for s in test_scripts if s.ext == '.test' ]
-	result += [ s for s in test_scripts if s.ext == '.py' ]
-	result += [ s for s in test_scripts if s.ext == '' and re.match('#!.*python.*',s.lines()[0]) ]
+	result = []
+	for script in test_scripts:
+		if script.ext in [ '.tests', '.test', '.py' ]:
+			if script not in result:
+				result.append(script)
+		if script.ext == '' and re.match('#!.*python.*',script.lines()[0]):
+			if script not in result and str('%s.py' % script) not in result:
+				result.append(script)
 	return result
 
