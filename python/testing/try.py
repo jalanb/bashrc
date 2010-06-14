@@ -83,7 +83,7 @@ class Sys_Path_Handler:
 			self.paths.remove(directory)
 			if directory in sys.path:
 				sys.path.remove(directory)
-
+	
 def make_module(path_to_python):
 	name = path_to_python.namebase
 	try: return sys.modules[name]
@@ -114,12 +114,14 @@ def test():
 	failures_all = 0
 	sys_paths.add('.')
 	try:
-		for test_script in test_files.get_test_scripts(args,options.recursive):
+		test_scripts = test_files.get_test_scripts(args,options.recursive)
+		for test_script in test_scripts:
 			os.chdir(pwd)
 			start = datetime.datetime.now()
 			if not test_script: continue
 			try:
 				sys_paths.add(test_script)
+				if options.verbose: print 'Test', test_script
 				if test_script.ext in [ '', '.py']:
 					message = 'py %s;' % test_script
 					module = make_module(test_script)
