@@ -9,7 +9,7 @@
 	True
 
 	>>> test.path
-    <Path 'test_files.tests'>
+	<Path 'test_files.tests'>
 
 	>>> print test.path.name
 	test_files.tests

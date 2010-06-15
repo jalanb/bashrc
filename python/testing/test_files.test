@@ -7,24 +7,15 @@ The test_files module
 	>>> import test_files
 
 The module provides a method which gets all possible test files
-	which means *.test, *.tests, *.py
-	We expect to find such extensions for test_files.*, and test_file.* here
-	>>> show( test_files.get_test_scripts() )
-	[...
-	 <Path '/Users/jab/.jab/python/test_file.tests'>,
-	 <Path '/Users/jab/.jab/python/test_files.tests'>,
-	...
-	 <Path '/Users/jab/.jab/python/test_file.test'>,
-	 <Path '/Users/jab/.jab/python/test_files.test'>,
-	...
-	 <Path '/Users/jab/.jab/python/test_file.py'>,
-	 <Path '/Users/jab/.jab/python/test_files.py'>,
-	...
+	which means *.tests, *.test, *.py, in that order
+	We expect to find such extensions for this file here
+	>>> scripts_here = test_files.get_test_scripts()
+	>>> this_files_here = [ ts.basename() for ts in scripts_here if 'test_files' in ts]
+	>>> show( this_files_here )
+	['test_files.tests', 'test_files.test', 'test_files.py']
 
 The method can also take arguments to search directories recursively
 	and args is a list of possible stems 
-	>>> show( test_files.get_test_scripts(recursive=False,args=['test_files']) )
-	[<Path '/.../test_files.tests'>,
-	 <Path '/.../test_files.test'>,
-	 <Path '/.../test_files.py'>]
-
+	>>> stems = [ 'test_files', 'try' ]
+	>>> show( [ ts.basename() for ts in test_files.get_test_scripts(recursive=False,args=stems) ])
+	['test_files.tests', 'test_files.test', 'try.test', 'test_files.py', 'try.py']
