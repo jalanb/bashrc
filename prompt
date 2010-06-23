@@ -32,7 +32,8 @@ prompt_command ()
 	fi
 	echo
 	echo -ne $STATUS
-	if svn stat -q | wc -l | grep -q 0
+	lines_changed=`svn stat -q | wc -l`
+	if [[ $lines_changed == "0" ]]
 	then Dir="\$PWD"
 	else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	fi
