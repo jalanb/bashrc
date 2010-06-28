@@ -76,7 +76,7 @@ Facilities to understand *.fail
 	... '''
 
 	>>> to_tree('fail_file',fail_text)
-	<FailFile not_a_real_file.tests>
+	<FailFile 'not_a_real_file.tests'>
 
 	>>> fixer = fail_file(fail_text).apply('failure')
 
@@ -89,3 +89,5 @@ Facilities to understand *.fail
 	>>> fixer.needed()
 	False
 
+	>>> fail_file('').apply('fail_file')
+	<FailFile ''>

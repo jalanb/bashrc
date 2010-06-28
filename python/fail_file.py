@@ -26,7 +26,7 @@ class FailFile:
 			extra += fixed
 
 	def __repr__(self):
-		return '<FailFile %s>' % self.filename
+		return '<FailFile %r>' % self.filename
 
 class Failure:
 	def __init__(self,fileline,expected_actual,start):
@@ -80,7 +80,7 @@ class Failure:
 fail_file_grammar = '''
 fail_file ::= (
 		<failure>*:i 
-		<fail_summary>:j
+		<fail_summary>?:j
 	) => make_fail_file(i,j)
 
 had_fails_line ::= (
@@ -90,10 +90,18 @@ had_fails_line ::= (
 		<line>
 	) => i
 
+count_of_count_line ::= (
+	<spaces> <integer>
+	<spaces> <token 'of'>
+	<spaces> <integer>
+	<spaces> <token 'in'>
+	<string> <line>
+)
+
 fail_summary ::= (
 		<line_of '*'> 
-		<integer> <line>
-		<space> <line>
+		<line>
+		<spaces> <line>
 		<token "***Test Failed*** "> <integer>:i <line>
 	) => i
 
@@ -148,6 +156,7 @@ def read_fail_file(path_to_file):
 	return fail_file(source).apply('fail_file')
 
 def make_fail_file(fails,summary_count):
+	if summary_count is None: summary_count = 0
 	assert summary_count == len(fails), '%s != len(%s)' % (summary_count,fails)
 	return FailFile(fails)
 	

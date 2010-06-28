@@ -94,7 +94,7 @@ Parse those files
 	>>> see( fail_file )
 	repr()    .failures    .filename    .fix()
 	>>> fail_file
-	<FailFile test_me.tests>
+	<FailFile 'test_me.tests'>
 
 The test text had 4 examples, all of which were failures
 	>>> 4 == len(tests.examples) == len(fail_file.failures)
