@@ -8,4 +8,7 @@
 STICKY_OTHER_WRITABLE 01;36 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
-.py 01;32
+.py 01;31
+.test 01;35
+.tests 01;35
+.fail 01;35
