@@ -95,6 +95,7 @@ alias si="svn_info "
 alias sl="svn_log "
 alias so="sort "
 alias sp="source $JAB/prompt"
+alias sr="svn resolved "
 alias st="stat "
 
 alias v.="v ."
@@ -135,6 +136,7 @@ alias rqa="/bin/rm -rf ./*"
 alias rff="r fred*"
 
 alias sib=". ~/.bashrc"
+alias sii="svn_issue "
 
 alias shd='svn_diff "vimdiff -o" '
 alias skd="svn_diff kdiff "
