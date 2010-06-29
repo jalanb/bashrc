@@ -19,6 +19,23 @@ else
 	export PROMPT_COLOUR=none
 fi
 
+show_svn_change ()
+{
+	stat_output=`svn stat 2>&1`
+	if [[ $stat_output == "svn: warning: '.' is not a working copy" ]]
+	then
+		return 1
+	else
+		lines=`svn stat -q`
+		if [[ -z $lines ]]
+		then
+			return 2
+		else
+			return 0
+		fi
+	fi
+}
+
 prompt_command ()
 {
 	if [ -z "$1" ]
@@ -32,11 +49,16 @@ prompt_command ()
 	fi
 	echo
 	echo -ne $STATUS
-	lines_changed=`svn stat -q | wc -l`
-	if [[ $lines_changed == "0" ]]
-	then Dir="\$PWD"
-	else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+	show_svn_change
+	if [[ $? == 0 ]]
+	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+	else Dir="\$PWD"
 	fi
+	# lines_changed=`svn stat 2>&1 | wc -l`
+	# if [[ $lines_changed == "0" ]]
+	# then Dir="\$PWD"
+	# else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+	# fi
 	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
 	j --add "$(pwd -P)"
 }
