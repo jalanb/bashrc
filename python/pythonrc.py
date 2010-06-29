@@ -9,4 +9,7 @@ from pprint import pprint as show
 import environ
 import paths
 
-from see import see
+try:
+	from see import see
+except ImportError:
+	see = show
