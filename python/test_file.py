@@ -1,10 +1,12 @@
+import os
 from mymeta.jab import jab
-
 
 test_file_grammar = file('test_file.g').read()
 test_file = jab.makeGrammar(test_file_grammar, globals(), name="test_file")
 
 def parse(path_to_file):
+	if not os.path.isfile(path_to_file):
+		return None
 	return TestFile(path_to_file)
 
 class TestFile:
@@ -19,7 +21,7 @@ class TestFile:
 				self.examples.extend(sub.examples)
 
 	def __repr__(self):
-		return '<test_file %s>' % self
+		return '<TestFile %r>' % self.path_to_file
 
 	def __str__(self):
 		return self.path_to_file

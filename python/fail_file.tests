@@ -75,18 +75,17 @@ Facilities to understand *.fail
 	... ***Test Failed*** 2 failures.
 	... '''
 
-	>>> to_tree('fail_file',fail_text)
-	<FailFile 'not_a_real_file.tests'>
+	>>> failure = fail_file(fail_text).apply('failure')
+	>>> failure
+	<Failure in not_a_real_file.tests:39>
 
-	>>> fixer = fail_file(fail_text).apply('failure')
-
-	>>> print fixer.filename
+	>>> print failure.path_to_test
 	not_a_real_file.tests
 
-	>>> fixer.exists()
+	>>> failure.test_file_exists()
 	False
 
-	>>> fixer.needed()
+	>>> failure.exists()
 	False
 
 	>>> fail_file('').apply('fail_file')

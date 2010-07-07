@@ -4,19 +4,56 @@ The doctests module
 This script handles collections of files used for doctests
 	>>> import doctests
 
-It imports modules which handle such files
-	>>> see(doctests)
-	.fail_file    .test_file
+	>>> import files
 
-	>>> this_test_file = doctests.test_file.parse(test.path)
+Here's one I made earlier
+	>>> earlier_name = 'made_earlier.test'
+	>>> files.write_failing_test(earlier_name)
 
-	>>> show( this_test_file.examples[0] )
-	<Example This script handles collections of files used for doctests
-		>.> import doctests>
+Which looks like this
+	>>> files.looks_like_this(earlier_name)
+	 0: Test Me
+	 1: =======
+	 2: 	>>> print 1
+	 3: 	>>> print 2
+	 4: 	3
+	 5: 	>>> print 1 / 0
+	 6: 	>>> print 0
 
-	>>> this_fail_file = doctests.fail_file.read_fail_file(test.path_to_fail)
-	>>> this_fail_file
-    <FailFile ''>
+Run that test through doctest to generate some failures
+	>>> files.test_file(earlier_name)
+	True
 
-	>>> for failure in this_fail_file.failures:
-	...     print repr(failure.expected)
+Parse the files
+	>>> test_file, tests_file, fail_file = doctests.parse_files('made_earlier')
+
+We call the fix method for the fail file
+	>>> doctests.fix_file(test_file, fail_file)
+
+And that should update the test file
+	so that it now has passing tests
+	>>> files.looks_like_this('made_earlier.test')
+	 0: Test Me
+	 1: =======
+	 2: 	>>> print 1
+	 3: 	1
+	 4: 	>>> print 2
+	 5: 	2
+	 6: 	>>> print 1 / 0
+	 7: 	Traceback (most recent call last):
+	 8: 	...
+	 9: 	ZeroDivisionError: integer division or modulo by zero
+	10: 	>>> print 0
+	11: 	0
+
+Re-test the file, should produce no failures
+	>>> files.test_file(earlier_name)
+	True
+
+	>>> files.looks_like_this('made_earlier.fail')
+
+Clean up
+--------
+
+The fix_file() method wrote out a backup file
+	>>> _ = bash('mv made_earlier.test~ made_earlier.test')
