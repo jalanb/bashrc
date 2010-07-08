@@ -26,6 +26,22 @@ Run that test through doctest to generate some failures
 
 Parse the files
 	>>> test_file, tests_file, fail_file = doctests.parse_files('made_earlier')
+	>>> spread(test_file)
+	<test_file.TestFile
+		path_to_file : 'made_earlier.test'
+		source : 'Test Me\n=======\n\t>>> print 1\n\t>>> print 2\n\t3\n\t>>> print 1 / 0\n\t>>> print 0\n'
+		sections : [<Section Test Me>]
+		examples : [<Example print 1>,
+		 <Example print 2>,
+		 <Example print 1 / 0>,
+		 <Example print 0>]
+	>
+	>>> spread(test_file.examples[0])
+	<test_file.Example
+		python : ['print 1']
+		text : ''
+		expected : []
+	>
 
 We call the fix method for the fail file
 	>>> doctests.fix_file(test_file, fail_file)
@@ -51,6 +67,15 @@ Re-test the file, should produce no failures
 	True
 
 	>>> files.looks_like_this('made_earlier.fail')
+
+And we can parse out the changes in the text file
+	>>> test_file, tests_file, fail_file = doctests.parse_files('made_earlier')
+	>>> spread(test_file.examples[0])
+	<test_file.Example
+		python : ['print 1']
+		text : ''
+		expected : ['1']
+	>
 
 Clean up
 --------

@@ -45,8 +45,7 @@ class Example:
 		self.expected = python_parts[1]
 
 	def __str__(self):
-		return '%s\n\t>.> %s' % ( self.text,'\n\t'.join(['\n\t... '.join(self.python)] + self.expected))
+		return '%s\n\t>>> %s' % ( self.text,'\n\t'.join(['\n\t... '.join(self.python)] + self.expected))
 
 	def __repr__(self):
-		result = '\n\t'.join( [ str(self) ] + self.expected )
-		return '<Example %s>' % self
+		return '<Example %s>' % self.python[0]

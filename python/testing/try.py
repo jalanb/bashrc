@@ -2,6 +2,7 @@ import os
 import imp
 import sys
 import doctest
+import inspect
 import fnmatch
 import commands
 import datetime
@@ -11,6 +12,7 @@ from path import makepath
 from see import see, see_methods, see_attributes
 import test_files
 
+
 	
 def run_command(command):
 	status, output = commands.getstatusoutput(command)
@@ -19,6 +21,41 @@ def run_command(command):
 		return False
 	print output
 	return True
+
+def frame_id(frame):
+	return '%s.%s' % (frame.f_code.co_filename,frame.f_code.co_firstlineno)
+
+def attributes_to_test(thing,separator):
+	result = []
+	for k,v in thing.__dict__.iteritems():
+		if not v:
+			value = repr(v)
+		else:
+			if id(v) in ids:
+				value = '*** cycle ***'
+			else:
+				value = testify_attributes(v,separator)
+		lines = separator.join(value.splitlines())
+		string = '%s : %s' % (k,lines)
+		result.append(string)
+	return separator.join( result )
+	
+ids = []
+def testify_attributes(thing,separator):
+	if not thing:
+		return pformat(thing)
+	if not hasattr(thing,'__dict__'):
+		return pformat(thing)
+	ids.append(id(thing))
+	attributes = attributes_to_test(thing,separator)
+	ids.pop()
+	classname = thing.__class__
+	return '''<%s%s%s\n%s>''' % ( classname, separator, attributes, separator[1:-2])
+
+def print_attributes(thing):
+	global ids
+	ids = []
+	print testify_attributes(thing,'\n\t')
 
 class Test_Being_Run:
 	def __init__(self,that):
@@ -137,6 +174,7 @@ def test():
 							'test' : Test_Being_Run(test_script),
 							'sys' : sys,
 							'see' : see,
+							'spread' : print_attributes,
 							'see_methods' : see_methods,
 							'see_attributes' : see_attributes,
 							'makepath' : makepath,
