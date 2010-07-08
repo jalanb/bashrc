@@ -22,39 +22,33 @@ def run_command(command):
 	print output
 	return True
 
-def frame_id(frame):
-	return '%s.%s' % (frame.f_code.co_filename,frame.f_code.co_firstlineno)
-
-def attributes_to_test(thing,separator):
-	result = []
-	for k,v in thing.__dict__.iteritems():
-		if not v:
-			value = repr(v)
-		else:
-			if id(v) in ids:
-				value = '*** cycle ***'
-			else:
-				value = testify_attributes(v,separator)
-		lines = separator.join(value.splitlines())
-		string = '%s : %s' % (k,lines)
-		result.append(string)
-	return separator.join( result )
-	
-ids = []
-def testify_attributes(thing,separator):
-	if not thing:
-		return pformat(thing)
-	if not hasattr(thing,'__dict__'):
-		return pformat(thing)
-	ids.append(id(thing))
-	attributes = attributes_to_test(thing,separator)
-	ids.pop()
-	classname = thing.__class__
-	return '''<%s%s%s\n%s>''' % ( classname, separator, attributes, separator[1:-2])
-
 def print_attributes(thing):
-	global ids
 	ids = []
+
+	def attributes_to_test(thing,separator):
+		def get_value(v):
+			if not v:
+				return repr(v)
+			if id(v) in ids:
+				return '*** cycle ***'
+			return testify_attributes(v,separator)
+
+		result = []
+		for k,v in thing.__dict__.iteritems():
+			value = get_value(v)
+			lines = separator.join(value.splitlines())
+			string = '%s : %s' % (k,lines)
+			result.append(string)
+		return separator.join( result )
+		
+	def testify_attributes(thing,separator):
+		if not thing or not hasattr(thing,'__dict__'):
+			return pformat(thing)
+		ids.append(id(thing))
+		attributes = attributes_to_test(thing,separator)
+		ids.pop()
+		return '''<%s%s%s\n%s>''' % ( thing.__class__, separator, attributes, separator[1:-2])
+
 	print testify_attributes(thing,'\n\t')
 
 class Test_Being_Run:
