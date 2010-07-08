@@ -25,31 +25,27 @@ def run_command(command):
 def print_attributes(thing):
 	ids = []
 
-	def attributes_to_test(thing,separator):
-		def get_value(v):
-			if not v:
-				return repr(v)
-			if id(v) in ids:
-				return '*** cycle ***'
-			return testify_attributes(v,separator)
+	def spread_out_an_attribute(v,separator):
+		if not v:
+			return repr(v)
+		if id(v) in ids:
+			return '*** cycle ***'
+		return spread_out_the_attributes(v,separator)
 
-		result = []
-		for k,v in thing.__dict__.iteritems():
-			value = get_value(v)
-			lines = separator.join(value.splitlines())
-			string = '%s : %s' % (k,lines)
-			result.append(string)
-		return separator.join( result )
-		
-	def testify_attributes(thing,separator):
+	def spread_out_the_attributes(thing,separator):
 		if not thing or not hasattr(thing,'__dict__'):
 			return pformat(thing)
 		ids.append(id(thing))
-		attributes = attributes_to_test(thing,separator)
+		attributes_list = []
+		for k,v in thing.__dict__.iteritems():
+			value = spread_out_an_attribute(v,separator)
+			lines = separator.join(value.splitlines())
+			attributes_list.append('%s : %s' % (k,lines))
+		attributes_string = separator.join( attributes_list )
 		ids.pop()
-		return '''<%s%s%s\n%s>''' % ( thing.__class__, separator, attributes, separator[1:-2])
+		return '''<%s%s%s\n%s>''' % ( thing.__class__, separator, attributes_string, separator[1:-2])
 
-	print testify_attributes(thing,'\n\t')
+	print spread_out_the_attributes(thing,'\n\t')
 
 class Test_Being_Run:
 	def __init__(self,that):
