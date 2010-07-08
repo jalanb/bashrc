@@ -15,6 +15,7 @@ import test_files
 
 	
 def run_command(command):
+	'''Run a command in the local shell (usually bash)'''
 	status, output = commands.getstatusoutput(command)
 	if status:
 		print 'FAIL: %s:%s' % (status,output)
@@ -22,7 +23,8 @@ def run_command(command):
 	print output
 	return True
 
-def print_attributes(thing):
+def spread_attributes(thing):
+	'''Spread out the attributes of thing onto stdout'''
 	ids = []
 
 	def spread_out_an_attribute(v,separator):
@@ -48,6 +50,7 @@ def print_attributes(thing):
 	print spread_out_the_attributes(thing,'\n\t')
 
 class Test_Being_Run:
+	'''Encapsulation of the current test'''
 	def __init__(self,that):
 		self.runner = makepath(sys.argv[0])
 		self.here = makepath('.')
@@ -164,7 +167,7 @@ def test():
 							'test' : Test_Being_Run(test_script),
 							'sys' : sys,
 							'see' : see,
-							'spread' : print_attributes,
+							'spread' : spread_attributes,
 							'see_methods' : see_methods,
 							'see_attributes' : see_attributes,
 							'makepath' : makepath,
