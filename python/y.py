@@ -3,7 +3,7 @@ import argv
 import paths
 
 argv.add_options([
-	('really', 'remove out python compiled files as well', False),
+	('delete', 'delete python compiled files as well', False),
 	('wipe', 'remove known garbage',False),
 	('stat', 'run svn stat', False),
 	('ptags', 'do not refresh the tags file', True),
