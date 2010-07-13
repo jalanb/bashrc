@@ -1,3 +1,4 @@
+import re
 import os
 import imp
 import sys
@@ -23,15 +24,19 @@ def run_command(command):
 	print output
 	return True
 
-def spread_attributes(thing):
+def spread_attributes(thing, exclude=None):
 	'''Spread out the attributes of thing onto stdout'''
 	ids = []
+	if not exclude:
+		exclusions = []
+	else:
+		exclusions = [ re.compile(e) for e in exclude ]
 
 	def spread_out_an_attribute(v,separator):
 		if not v:
 			return repr(v)
 		if id(v) in ids:
-			return '*** cycle ***'
+			return str(v)
 		return spread_out_the_attributes(v,separator)
 
 	def spread_out_the_attributes(thing,separator):
@@ -40,12 +45,24 @@ def spread_attributes(thing):
 		ids.append(id(thing))
 		attributes_list = []
 		for k,v in thing.__dict__.iteritems():
+			if type(v) in [ type(os) ]: continue
+			if callable(v): continue
+			excluded = False
+			for exclusion in exclusions:
+				if exclusion.search(k):
+					excluded = True
+					break
+			if excluded: continue
 			value = spread_out_an_attribute(v,separator)
 			lines = separator.join(value.splitlines())
 			attributes_list.append('%s : %s' % (k,lines))
 		attributes_string = separator.join( attributes_list )
 		ids.pop()
-		return '''<%s%s%s\n%s>''' % ( thing.__class__, separator, attributes_string, separator[1:-2])
+		if hasattr(thing,'__class__'):
+			klass = thing.__class__
+		else:
+			klass = dir(thing)
+		return '''<%s%s%s\n%s>''' % ( klass, separator, attributes_string, separator[1:-2])
 
 	print spread_out_the_attributes(thing,'\n\t')
 
