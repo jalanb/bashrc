@@ -12,7 +12,7 @@ from path import makepath
 from see import see, see_methods, see_attributes
 import test_files
 
-
+sys_argv = sys.argv
 	
 def run_command(command):
 	'''Run a command in the local shell (usually bash)'''
@@ -52,7 +52,7 @@ def spread_attributes(thing):
 class Test_Being_Run:
 	'''Encapsulation of the current test'''
 	def __init__(self,that):
-		self.runner = makepath(sys.argv[0])
+		self.runner = makepath(sys_argv[0])
 		self.here = makepath('.')
 		self.home = makepath('~')
 		self.username = os.environ['USER']
@@ -83,6 +83,7 @@ def command_line():
 	parser.add_option('-d','--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q','--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
 	result = parser.parse_args()
+	parser.destroy()
 	del parser
 	return result
 
@@ -151,6 +152,7 @@ def test():
 			if not test_script: continue
 			try:
 				sys_paths.add(test_script)
+				sys.argv = [ test_script ]
 				if options.verbose: print 'Test', test_script
 				if test_script.ext in [ '', '.py']:
 					message = 'py %s;' % test_script
