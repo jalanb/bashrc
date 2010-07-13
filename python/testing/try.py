@@ -100,7 +100,8 @@ def command_line():
 	parser.add_option('-d','--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q','--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
 	result = parser.parse_args()
-	parser.destroy()
+	try: parser.destroy()
+	except AttributeError: pass # older version of python
 	del parser
 	return result
 
