@@ -301,7 +301,7 @@ statvim ()
 		do 
 			do_stat $file | sed -e "s/^M/shd/" -e "s/^A/vim/"
 		done
-	fi
+	fi | sort
 }
 
 svn_log ()
@@ -333,7 +333,7 @@ svn_diff () {
 	pushd "$dir" > /dev/null
 	if [[ "$1" == "vimdiff -o" ]]
 	then 
-		exe="/usr/bin/vimdiff -o"
+		exe="$EDITOR -do"
 	elif [[ -f $1 ]]
 	then 
 		exe="$1"
