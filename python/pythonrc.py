@@ -12,4 +12,5 @@ import paths
 try:
 	from see import see
 except ImportError:
-	see = show
+	def see(x):
+		show(dir(x))
