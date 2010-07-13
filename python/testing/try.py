@@ -53,7 +53,10 @@ def spread_attributes(thing, exclude=None):
 					excluded = True
 					break
 			if excluded: continue
-			value = spread_out_an_attribute(v,separator)
+			if hasattr(v,'__repr__'):
+				value = v.__repr__()
+			else:
+				value = spread_out_an_attribute(v,separator)
 			lines = separator.join(value.splitlines())
 			attributes_list.append('%s : %s' % (k,lines))
 		attributes_string = separator.join( attributes_list )
