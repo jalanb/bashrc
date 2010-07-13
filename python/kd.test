@@ -47,10 +47,6 @@ But if the sub-dir matches too many directories then an exception is raised
 	Traceback (most recent call last):
 	...
 	NotImplementedError: Too many possiblities:
-	    /usr/local/viewvc-1.0-dev/bin
-	    /usr/local/viewvc-1.0-dev/lib/vclib/bincvs
-	    /usr/local/apr/bin
-	    /usr/local/sbin
 	...
 
 Change directory
@@ -74,18 +70,18 @@ Running from bash
 If run from the command line the python process cannot change dir for calling process (bash)
 Hence the script just prints out the result
 	bash can then capture that and do the actual cd
-main() will return 0 for success, 1 for fail
-(We'll redirect sys.stderr here only for cleanliness of output)
 
+Make it look like we are running the program from here, and looking for a sub-directory called site
 	>>> import sys
-	>>> sys.stderr = file('/dev/null','a')
-	>>> sys.argv = [ 'kd', '/usr/lib/python2.4/', 'altobridge' ]
+	>>> sys.argv = [ 'kd', str(test.here), 'site' ]
+
+And run the main method
+	which will return 0 for success, 1 for fail
+	and print the found directory, which is (last time I checked), under here
 	>>> kd.main()
-	/usr/lib/python2.4/site-packages/altobridge
+	/.../.jab/python/site
 	0
 
-When main() fails it prints out the current directory
-	>>> os.chdir('/etc')
-	>>> sys.argv = [ 'kd', '/usr/lib/python2.9/', 'rubbish' ]
-	>>> kd.main()
-	1
+Cleanup
+=======
+	>>> sys.argv = []

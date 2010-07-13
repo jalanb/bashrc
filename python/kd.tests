@@ -31,3 +31,13 @@ Same effect if sub-dir is not found
 	>>> kd.find_dir('/usr/local','this_is_not_real')
 	<path '/usr/local'>
 
+
+When main() fails it prints out nothing
+	>>> import sys
+	>>> sys.argv = [ 'kd', 'no_such_directory' ]
+	>>> kd.main()
+	1
+
+Cleanup
+=======
+	>>> sys.argv = []
