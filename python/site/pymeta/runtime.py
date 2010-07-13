@@ -187,7 +187,7 @@ class OMetaBase(object):
 					except TypeError: before = str(self.input.data[:i])
 					try: after = ''.join(self.input.data[i:])
 					except TypeError: after = str(self.input.data[i:])
-					message = '\n%s|%s\n\t%s\n\t\tParseError(%s)' % ( before,after,message, e )
+					message = '\n%s|%s\n\t%s\n\t\tParseError(%s)' % ( before, after, message, e )
 				raise ParseError(message)
 		else:
 			raise NameError("No rule named '%s'" %(ruleName,))
