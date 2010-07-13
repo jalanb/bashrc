@@ -122,8 +122,11 @@ def get_test_scripts(args=None,recursive=False):
 	add_to_result(lambda x: x.ext == '.test')
 	add_to_result(lambda x: x.ext == '.py')
 	for script in test_scripts:
-		if script.ext == '' and re.match('#!.*python.*',script.lines()[0]):
-			if script not in result and str('%s.py' % script) not in result:
-				result.append(script)
+		if script.ext == '':
+			lines = script.lines()
+			if not lines: continue
+			if re.match('#!.*python.*',lines[0]):
+				if script not in result and str('%s.py' % script) not in result:
+					result.append(script)
 	return result
 
