@@ -63,7 +63,7 @@ Because every example is a fail, and the fails are in the same sequence
 	>>> example = test_file.examples[i]
 	>>> failure = fail_file.failures[i]
 
-The line numbers of the example, should be equal to the line the failure was found at
+The line numbers of the example should be equal to the line the failure was found at
 	>>> example.line_number == failure.test_line_number
 	True
 
