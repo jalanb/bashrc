@@ -4,69 +4,131 @@ The doctests module
 This script handles collections of files used for doctests
 	>>> import doctests
 
-	>>> import files
+Run a test
+----------
 
 Here's one I made earlier
-	>>> earlier_name = 'made_earlier.test'
-	>>> files.write_failing_test(earlier_name)
+	>>> earlier_name = 'made_earlier'
+	>>> earlier_test = '%s.test' % earlier_name
+	>>> doctests.write_failing_test(earlier_test)
 
 Which looks like this
-	>>> files.looks_like_this(earlier_name)
-	 0: Test Me
-	 1: =======
-	 2: 	>>> print 1
-	 3: 	>>> print 2
-	 4: 	3
-	 5: 	>>> print 1 / 0
-	 6: 	>>> print 0
+	>>> import files
+	>>> files.looks_like_this(earlier_test)
+	 1: Test Me
+	 2: =======
+	 3: 	>>> print 1
+	 4: 	>>> print 2
+	 5: 	3
+	 6: 	>>> print 1 / 0
+	 7: 	>>> print 0
 
 Run that test through doctest to generate some failures
-	>>> files.test_file(earlier_name)
-	True
+	>>> doctests.try_to_pass_tests(earlier_test)
+	False
 
 Parse the files
-	>>> test_file, tests_file, fail_file = doctests.parse_files('made_earlier')
-	>>> spread(test_file)
-	<test_file.TestFile
-		path_to_file : 'made_earlier.test'
-		source : 'Test Me\n=======\n\t>>> print 1\n\t>>> print 2\n\t3\n\t>>> print 1 / 0\n\t>>> print 0\n'
-		sections : [<Section Test Me>]
-		examples : [<Example print 1>,
-		 <Example print 2>,
-		 <Example print 1 / 0>,
-		 <Example print 0>]
-	>
+---------------
+
+	>>> test_file, tests_file, fail_file = doctests.parse_files(earlier_name)
+
+Which gives some parsed files, and one missing
+	>>> test_file, tests_file, fail_file
+	(<TestFile 'made_earlier.test'>, None, <FailFile 'made_earlier.fail'>)
+
+The test file has some examples
 	>>> spread(test_file.examples[0])
 	<test_file.Example
 		python : ['print 1']
 		text : ''
+		line_number : 3
 		expected : []
 	>
 
-We call the fix method for the fail file
-	>>> doctests.fix_file(test_file, fail_file)
+And the fail file has some failures
+	>>> spread(fail_file.failures[0])
+	<fail_file.Failure
+		path_to_test : 'made_earlier.test'
+		actual : ['1']
+		expected : []
+    	test_line_number : 3
+		example : 'print 1'
+		fail_line_number : 1
+	>
 
-And that should update the test file
-	so that it now has passing tests
-	>>> files.looks_like_this('made_earlier.test')
-	 0: Test Me
-	 1: =======
-	 2: 	>>> print 1
-	 3: 	1
-	 4: 	>>> print 2
-	 5: 	2
-	 6: 	>>> print 1 / 0
-	 7: 	Traceback (most recent call last):
-	 8: 	...
-	 9: 	ZeroDivisionError: integer division or modulo by zero
-	10: 	>>> print 0
-	11: 	0
+Because every example is a fail, and the fails are in the same sequence
+	so it should not matter which one we pick for this test 
+	>>> import random
+	>>> i = random.randrange(0,len(test_file.examples))
+	>>> example = test_file.examples[i]
+	>>> failure = fail_file.failures[i]
 
-Re-test the file, should produce no failures
-	>>> files.test_file(earlier_name)
+The line numbers of the example, should be equal to the line the failure was found at
+	>>> example.line_number == failure.test_line_number
 	True
 
-	>>> files.looks_like_this('made_earlier.fail')
+Fix the test
+------------
+
+The example was parsed from the test file, so has an expected result
+	>>> hasattr(example,'expected')
+	True
+
+But does not know what the test actually produced
+	>>> hasattr(example,'actual')
+	False
+
+We can update a test file with the corresponding fail file
+	>>> test_file.update(fail_file)
+
+From which each example has gained an "actual" attribute
+	>>> hasattr(example,'actual')
+	True
+
+So, now it makes sense to check whether an individual test passed
+	A test passes if expected == actual
+	>>> example.passed()
+	False
+
+We can force the example to accept the result,
+	which makes the expected result equal to the actual result
+	>>> example.accept()
+
+And so that example is now passing
+	>>> example.passed()
+	True
+
+Similarly, the whole file is not passing, until we force it to accept the actual results
+	>>> test_file.passed()
+	False
+	>>> test_file.accept()
+	>>> test_file.passed()
+	True
+
+Re-run the test
+---------------
+
+Write out that test file, now that it has passing tests
+	>>> test_file.write()
+
+And it now looks like this
+	>>> files.looks_like_this('made_earlier.test')
+	 1: Test Me
+	 2: =======
+	 3: 	>>> print 1
+	 4: 	1
+	 5: 	>>> print 2
+	 6: 	2
+	 7: 	>>> print 1 / 0
+	 8: 	Traceback (most recent call last):
+	 9: 	...
+	10: 	ZeroDivisionError: integer division or modulo by zero
+	11: 	>>> print 0
+	12: 	0
+
+Re-test the file, which should now pass (have no failures)
+	>>> doctests.try_to_pass_tests(earlier_test)
+	True
 
 And we can parse out the changes in the text file
 	>>> test_file, tests_file, fail_file = doctests.parse_files('made_earlier')
@@ -74,11 +136,12 @@ And we can parse out the changes in the text file
 	<test_file.Example
 		python : ['print 1']
 		text : ''
+		line_number : 3
 		expected : ['1']
 	>
 
-Clean up
---------
-
-The fix_file() method wrote out a backup file
-	>>> _ = bash('mv made_earlier.test~ made_earlier.test')
+Cleanup
+=======
+	>>> import commands
+	>>> '' == commands.getoutput('rm -rf %s.*' % earlier_name)
+	True

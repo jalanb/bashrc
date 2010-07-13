@@ -1,5 +1,6 @@
 import os
 
+import path
 import files
 
 from mymeta.jab import jab
@@ -15,13 +16,15 @@ class FailFile:
 			return "<FailFile ''>"
 
 class Failure:
-	def __init__(self,fileline,expected_actual,start):
-		self.path_to_test, self.line = fileline
+	def __init__(self,fileline,expected_actual,start, example):
+		self.path_to_test, self.test_line_number = fileline
+		self.path_to_test = str(path.path(self.path_to_test).relpath())
 		self.expected, self.actual = expected_actual
-		self.start = start
+		self.fail_line_number = start
+		self.example = example
 
 	def __repr__(self):
-		return '<Failure in %s:%d>' % (self.path_to_test,self.line)
+		return '<Failure in %s:%d>' % (self.path_to_test,self.test_line_number)
 
 	def test_file_exists(self):
 		return os.path.isfile(self.path_to_test)
@@ -91,9 +94,9 @@ fail_summary ::= (
 failure ::= (
 		<line_of '*'>:h
 		<file_line>:i 
-		<example_section> 
+		<example_section>:k
 		<result_section>:j
-	) => Failure( i, j, h) 
+	) => Failure( i, j, h, k) 
 
 
 result_section ::= <exception_raised> | <result_difference>
@@ -135,7 +138,8 @@ fail_file = jab.makeGrammar(fail_file_grammar, globals(), name="fail_file")
 def read_fail_file(path_to_file):
 	source = file(path_to_file).read()
 	if not source:
-		return
+		return None
+		raise ValueError('No source in %r' % path_to_file)
 	result = fail_file(source).apply('fail_file')
 	result.path_to_fail = path_to_file
 	return result

@@ -6,14 +6,17 @@ Facilities to understand *.fail
 
 	>>> from fail_file import read_fail_file
 
+We need a test file
+	>>> import doctests
+	>>> doctests.write_failing_test('made_earlier.test')
+	>>> doctests.try_to_pass_tests('made_earlier.test')
+	False
+
 FailFile
 --------
 
-There is a method to parse a fail file
-	>>> import files
-	>>> files.write_failing_test('made_earlier.test')
-	>>> files.test_file('made_earlier.test')
-    True
+We should now have a fail file
+	There is a method to parse such a file
 	>>> fail_file = read_fail_file('made_earlier.fail')
 
 The return is an instance of FailFile
@@ -39,11 +42,20 @@ Taking the third one
 	>>> failure = fail_file.failures[2]
 
 It has attributes
-	>>> see_attributes(failure)
-	repr()    .actual    .expected    .line    .path_to_test    .start
+	>>> spread(failure)
+	<fail_file.Failure
+		path_to_test : 'made_earlier.test'
+		actual : ['Traceback (most recent call last):',
+		 '...',
+		 'ZeroDivisionError: integer division or modulo by zero']
+		expected : ''
+		test_line_number : 6
+		example : 'print 1 / 0'
+		fail_line_number : 16
+	>
 
 Including the file that failure occurred in, and the line number
-	>>> print '%s at %s' % ( failure.path_to_test, failure.line )
+	>>> print '%s at %s' % ( failure.path_to_test, failure.test_line_number )
 	made_earlier.test at 6
 
 As well as the expected and actual data (lists of lines for both)
@@ -56,4 +68,10 @@ As well as the expected and actual data (lists of lines for both)
 
 Is that failure still there ?
 	>>> failure.exists()
+	True
+
+Cleanup
+=======
+	>>> import commands
+	>>> '' == commands.getoutput('rm -rf made_earlier.*')
 	True

@@ -20,9 +20,9 @@ fail_summary ::= (
 failure ::= (
 		<line_of '*'>:h
 		<file_line>:i 
-		<example_section> 
+		<example_section>:k
 		<result_section>:j
-	) => Failure( i, j, h) 
+	) => Failure( i, j, h, k) 
 
 
 result_section ::= <exception_raised> | <result_difference>

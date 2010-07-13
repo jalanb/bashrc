@@ -7,7 +7,8 @@ The test_file module provides a method to parse files like these
 	>>> from test_file import parse
 	>>> test_file = parse('test_file.test')
 	>>> see( test_file )
-	repr()    str()    .examples    .path_to_file    .sections    .source
+	repr()    str()    .accept()    .examples    .passed()    .path_to_file
+	.sections    .source    .update()    .write()
 
 Having parsed it, we can see that this file has some sections
 	(Scroll down to verify these)

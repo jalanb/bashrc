@@ -19,8 +19,7 @@ main_section_head ::= <section_head '='>
 sub_section_head ::= <section_head '-'>
 
 section_head :p ::= (
-		<text_char>*:i 
-		<eol> 
+		<text_line>:i 
 		<line_of p>
 		<any_blank_lines>:k
 	) => ''.join(i)
@@ -34,7 +33,7 @@ examples ::= <example>+
 example ::= (
 		<example_text>:i 
 		<example_python>:j
-	) => Example(i,j)
+	) => Example(i,j[0],j[1])
 
 example_text ::= <example_paragraph>*
 
@@ -42,7 +41,7 @@ example_python ::= (
 		<example_python_lines>:i 
 		<example_data>:j 
 		<any_blank_lines> 
-	) => [i, j]
+	) => ([i[0], j], i[1])
 
 example_paragraph ::= (
 		<example_text_line>:i 
@@ -66,13 +65,13 @@ example_text_line ::= (
 example_python_lines ::= (
 		<example_python_line>:i 
 		<example_python_continuation>*:j
-	)  => [i] + j
+	)  => ([i[0]] + j, i[1])
 
 example_python_line ::= (
 		<some_indentation> 
 		'>' '>' '>' ' ' 
 		<line>:i 
-	) => i
+	) => (i,self.line_number)
 
 example_python_continuation ::= (
 		<some_indentation> 
