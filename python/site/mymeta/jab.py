@@ -1,11 +1,10 @@
-
 jab_grammar = r"""
 
 any_blank_lines ::= <blank_line>*:i => len(i)
 some_blank_lines ::= <blank_line>+:i => len(i)
 blank_line ::= <any_blanks>:i <eol> => i
 lines ::= <line>+
-line ::= <not_eol>*:i <eol> => ''.join(i).rstrip() 
+line ::= <not_eol>*:i <eol> => ''.join(i).rstrip()
 
 some_blanks ::= <blank>+:i	=> ''.join(i)
 any_blanks ::= <blank>*:i	=> ''.join(i)
@@ -32,30 +31,35 @@ some_tabbed_indent ::= <tab>+
 indent ::= <four_spaces> | <tab>
 four_spaces ::= ' ' ' ' ' ' ' ' => '    '
 
-
 text_line ::= <text_char>*:i <eol> => ''.join(i)
+counted_line ::= <not_eol>*:i <eol>:j => (j, i)
+counted_lines ::= <counted_line>+
 text_char ::= <blank> | <non_blank_text_char>
 non_blank_text_char ::= <letter> | <digit> | <punctuation>
 punctuation ::= <sentence_punctuation> | <geek_punctuation>
 sentence_punctuation ::= (
-		<dot> | 
-		<comma> | 
-		<semi_colon> | 
-		<colon> | 
-		<dash> |
-		<open_bracket> |
-		<close_bracket> |
-		<text_quote>
-	)
+	  <dot>
+	| <comma>
+	| <semi_colon>
+	| <colon>
+	| <dash>
+	| <open_bracket>
+	| <close_bracket>
+	| <text_quote>
+)
 geek_punctuation ::= (
-		<slash> | 
-		<underscore> |
-		<open_brace> |
-		<close_brace> |
-		<open_brick> |
-		<close_brick> |
-		<asterisk>
-	)
+	  <slash>
+	| <underscore>
+	| <open_brace>
+	| <close_brace>
+	| <open_brick>
+	| <close_brick>
+	| <asterisk>
+	| <plus>
+	| <minus>
+	| <less>
+	| <greater>
+)
 text_quote ::= <single_quote> | <double_quote>
 
 integer ::= <digit>+:i => int(''.join(i))
@@ -76,9 +80,13 @@ eol ::= ('\n' | '\r'):i => self.match_eol()
 equals ::= '='
 exclamation ::= '!'
 forward_slash ::= '/'
+greater ::= '>'
 hash ::= '#'
+less ::= '<'
+minus ::= '-'
 open_brace ::= '{'
 open_bracket ::= '('
+plus ::= '+'
 question ::= '?'
 semi_colon ::= ';'
 single_quote ::= '\''
@@ -104,7 +112,6 @@ class GrammarHelper(object):
 	def match_eol(self):
 		self.line_number += 1
 		return self.line_number
-
 
 class jab(ometa_jab,GrammarHelper):
 	def __init__(self,s):
