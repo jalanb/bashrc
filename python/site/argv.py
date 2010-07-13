@@ -112,7 +112,7 @@ _make_argv_options = _listize(_make_argv_option)
 def _options_to_parser(options):
 	'''Make an OptionParser from a list of options'''
 	from optparse import OptionParser
-	return OptionParser(option_list=options)
+	return OptionParser(option_list=options,conflict_handler="resolve")
 
 _added_tuples = []
 def add_options(options):
@@ -211,7 +211,7 @@ def test_args(command_line=None):
 		try: command_line = command_line.split()
 		except AttributeError: pass
 		try: options, args = option_parser.parse_args(command_line)
-		except SystemExit: pass
+		except SystemExit: return
 	else:
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
