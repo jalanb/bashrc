@@ -1,0 +1,15 @@
+The last_fm module
+============
+See allso http://github.com/MihaiDamian/Lib.fm
+	>>> import last_fm
+	>>> last_fm.get_recent_tracks('jalanb')
+	>>> response = last_fm.get_recent_tracks('jalanb')
+	>>> response.readline()
+	'<?xml version="1.0" encoding="utf-8"?>\n'
+	>>> response.readline()
+	'<lfm status="ok">\n'
+	>>> response.readline()
+	'<recenttracks user="jalanb" page="1" perPage="200" totalPages="197">\n'
+	>>> response.readline()
+	'<track> \n'
+
