@@ -21,4 +21,64 @@
 	indices
 	>>> print pluralize('Index')
 	Indices
+	>>> print pluralize('lunch')
+	lunches
 	
+	>>> print pluralize('bass')
+	basses
+	>>> print pluralize('fax')
+	faxes
+	>>> print pluralize('waltz')
+	waltzes
+	>>> print pluralize('coach')
+	coaches
+	>>> print pluralize('rash')
+	rashes
+	>>> print pluralize('cheetah')
+	cheetahs
+	>>> print pluralize('vacancy')
+	vacancies
+	>>> print pluralize('day')
+	days
+
+	>>> print pluralize('man')
+	men
+	>>> print pluralize('woman')
+	women
+	>>> print pluralize('human')
+	humans
+	>>> print pluralize('mouse')
+	mice
+	>>> print pluralize('louse')
+	lice
+	>>> print pluralize('house')
+	houses
+	>>> print pluralize('knife')
+	knives
+	>>> print pluralize('wife')
+	wives
+	>>> print pluralize('sheep')
+	sheep
+	>>> print pluralize('deer')
+	deer
+	>>> print pluralize('haiku')
+	haiku
+	>>> print pluralize('hero')
+	heroes
+	>>> print pluralize('piano')
+	pianos
+
+	>>> pluralize('lowlife') == 'lowlifes'
+	False
+
+
+	>>> from words import number_name
+	>>> print number_name('one')
+	one
+	>>> print number_name('1')
+	one
+	>>> print number_name(1)
+	one
+	>>> print number_name(11)
+	11
+

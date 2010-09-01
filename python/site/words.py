@@ -32,8 +32,26 @@ def any_true(function, iterable):
 
 consonants = 'bcdfghjklmnpqrstvwxz'
 ends_in_consonant_y = re.compile('[%s]y$' % consonants)
+uncountables = [
+	'fish',
+	'sheep',
+	'deer',
+	'species',
+	'series',
+	'equipment',
+	'information',
+	'rice',
+	'money',
+	'species',
+	'haiku',
+]
 exceptional_plurals = {
-	'fish' : 'fish'
+	'man' : 'men',
+	'woman' : 'women',
+	'fungus' : 'fungi',
+	'child': 'children',
+	'mouse': 'mice',
+	'louse': 'lice',
 }
 
 def pluralize(s):
@@ -46,12 +64,24 @@ def pluralize(s):
 	result = s + 's'
 	if lowered in exceptional_plurals:
 		result = exceptional_plurals[lowered]
+	elif lowered in uncountables:
+		result = s
 	elif lowered.endswith('ex'):
 		result = lowered[:-2] + 'ices'
-	elif any_true(lowered.endswith, ['x', 'ch', 'sh', 'ss']):
+	elif any_true(lowered.endswith, ['x', 'ch', 'sh', 'ss', 'z']):
 		result = s+'es'
+	elif lowered.endswith('o'):
+		eos = [ 'echo', 'hero', 'potato', 'veto', 'tomato' ]
+		if lowered in eos:
+			result = s + 'es'
+		else:
+			result = s + 's'
 	elif ends_in_consonant_y.search(lowered):
 		result = s[:-1] + 'ies'
+	else:
+		regexp, subs = re.compile(r'([^f])fe$',re.IGNORECASE), r'\1ves'
+		if regexp.search(s):
+			return regexp.sub(subs,s)
 	return matchCase(s, result)
 
 ends_in_consonant_ies = re.compile('[%s]ies' % consonants)
@@ -67,6 +97,8 @@ def depluralize(s):
 	lowered = s.lower()
 	if lowered in exceptional_plurals:
 		return matchCase(s, exceptional_plurals[lowered])
+	elif lowered in uncountables:
+		return s
 	elif any_true(lowered.endswith, ['ches', 'shes', 'sses']):
 		return s[:-2]
 	elif re.search(ends_in_consonant_ies, lowered):
@@ -77,4 +109,21 @@ def depluralize(s):
 		else:
 			return s # Don't know what to do.
 
-
+def number_name(i):
+	try:
+		i = int(i)
+	except ValueError:
+		return str(i)
+	number_names = {
+		0: 'zero',
+		1: 'one',
+		2: 'two',
+		3: 'three',
+		4: 'four',
+		5: 'five',
+		6: 'six',
+		7: 'seven',
+		8: 'eight',
+		9: 'nine'
+	}
+	return number_names.get(i,str(i))
