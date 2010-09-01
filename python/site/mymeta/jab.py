@@ -14,7 +14,9 @@ blank ::= <space> | <tab>
 
 same :p ::= <anything>:i ?(i == p) => i
 different :p ::= <anything>:i ?(i != p) => i
-not_x ::= <different 'x'>*:i => ''.join(i)
+not_x ::= <not 'x'>
+not :p ::= <different p>*:i => ''.join(i)
+up_to :p ::= <different p>*:i <anything> => ''.join(i)
 
 line_of :p ::= <same p>+ <eol>:i => i
 
@@ -37,6 +39,12 @@ counted_lines ::= <counted_line>+
 text_char ::= <blank> | <non_blank_text_char>
 non_blank_text_char ::= <letter> | <digit> | <punctuation>
 punctuation ::= <sentence_punctuation> | <geek_punctuation>
+
+identifier ::= (
+	<letter>:i
+	(<letter> | <digit> | <underscore>)*:j
+) => ''.join([i]+j)
+
 sentence_punctuation ::= (
 	  <dot>
 	| <comma>
@@ -69,6 +77,7 @@ slash ::= <back_slash> | <forward_slash>
 asterisk ::= '*'
 at ::= '@'
 back_slash ::= '\\'
+bar ::= '|'
 colon ::= ':'
 comma ::= ','
 close_brace ::= '}'
@@ -76,7 +85,8 @@ close_bracket ::= ')'
 close_brick ::= ']'
 dash ::= '-'
 dot ::= '.'
-eol ::= ('\n' | '\r'):i => self.match_eol()
+eol_char ::= '\n' | '\r'
+eol ::= <eol_char>:i => self.match_eol()
 equals ::= '='
 exclamation ::= '!'
 forward_slash ::= '/'
