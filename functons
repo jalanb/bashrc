@@ -29,6 +29,11 @@ cj ()
 	svn ci $JAB -m"$*"
 }
 
+gg ()
+{
+# show grep results as vim commands
+	grep $* | sed -e "s/^/vim /" -e "s|:.*| +/$1|" | uniq
+}
 
 kd ()
 { 
