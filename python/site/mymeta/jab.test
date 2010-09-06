@@ -17,3 +17,6 @@
 
 	>>> show(jab('isexsl').apply('not_x'))
 	'ise'
+
+	>>> show(jab('isexsl').apply('up_to_x'))
+    'ise'

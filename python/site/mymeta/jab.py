@@ -16,6 +16,7 @@ same :p ::= <anything>:i ?(i == p) => i
 different :p ::= <anything>:i ?(i != p) => i
 not_x ::= <not 'x'>
 not :p ::= <different p>*:i => ''.join(i)
+up_to_x ::= <up_to 'x'>
 up_to :p ::= <different p>*:i <anything> => ''.join(i)
 
 line_of :p ::= <same p>+ <eol>:i => i
