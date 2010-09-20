@@ -32,7 +32,9 @@ cj ()
 gg ()
 {
 # show grep results as vim commands
-	grep $* | sed -e "s/^/vim /" -e "s|:.*| +/$1|" | uniq
+	sought="$1"
+	shift
+	grep "$sought" $* | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
 kd ()
