@@ -5,7 +5,7 @@
 echo $* | grep -q quietly && options=-rf || options=-vrf
 first_dir $*
 echo $* | grep -q pycos && pycos="$dir/*.pyc $dir/*.pyo" || pycos=
-defaults="$dir/*~ $dir/.*~ $dir/*.orig $dir/fred* $dir/mary $dir/*.tmp $dir/*.bak $dir/one $dir/two"
+defaults="$dir/*~ $dir/.*~ $dir/*.orig $dir/fred* $dir/mary $dir/*.tmp $dir/*.bak $dir/one $dir/two a.out"
 /bin/rm $options $defaults $pycos
 for fail in $dir/*.fail
 do
