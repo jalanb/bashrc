@@ -335,7 +335,7 @@ svn_url ()
 svn_diff () {
 	dir=`dirname $2`
 	file=`basename $2`
-	pushd "$dir" > /dev/null
+	pushd "$dir" > /dev/null 2>&1
 	if [[ "$1" == "vimdiff -o" ]]
 	then 
 		exe="$EDITOR -do"
@@ -347,7 +347,7 @@ svn_diff () {
 		exe=/usr/bin/$1
 	fi
 	$exe "$file" .svn/text-base/"$file".svn-base
-	popd > /dev/null
+	popd > /dev/null 2>&1
 }
 
 svn_info ()
