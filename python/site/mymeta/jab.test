@@ -1,22 +1,29 @@
 
 	>>> from jab import jab
-	>>> show(jab('*').apply('asterisk'))
+
+	>>> def test(a,b):
+	...     result, error = jab(a).apply(b)
+	...     if result: show(result)
+	...     else: show(error)
+
+	>>> test('*','asterisk')
 	'*'
 
-	>>> show(jab('\talan\n').apply('indented_text_line'))
+	>>> test('\talan\n','indented_text_line')
 	[1, 'alan']
-	>>> show(jab('    >>> from test_file import TestFile\n').apply('indented_line'))
+
+	>>> test('    >>> from test_file import TestFile\n','indented_line')
 	[1, '>>> from test_file import TestFile']
 
-	>>> show(jab('\n').apply('eol'))
+	>>> test('\n','eol')
 	1
-	>>> show(jab('''line one
+	>>> test('''line one
 	... second line
-	... line three''').apply('lines'))
+	... line three''','lines')
 	['line one', 'second line']
 
-	>>> show(jab('isexsl').apply('not_x'))
+	>>> test('isexsl','not_x')
 	'ise'
 
-	>>> show(jab('isexsl').apply('up_to_x'))
-    'ise'
+	>>> test('isexsl','up_to_x')
+	'ise'
