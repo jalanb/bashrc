@@ -96,6 +96,7 @@ alias sl="svn_log "
 alias so="sort "
 alias sp="source $JAB/prompt"
 alias sr="svn resolved "
+alias sv="svn revert "
 alias st="stat "
 
 alias v.="v ."
