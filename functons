@@ -222,7 +222,7 @@ build ()
 {
 	if [[ $USER == "jab" ]]
 	then
-		if [[ -n "$1" && "$1" == "2" ]]
+		if [[ -n "$1" ]]
 		then
 			user=abrogan
 		else
