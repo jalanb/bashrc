@@ -78,8 +78,7 @@ nnoremap <C-F4> <C-W>c
 "
  noremap ] <C-]>
  noremap [ <C-T>
- noremap ; qa " record to register a
- noremap ;; q " stop recording
+ noremap ; :
  noremap ' @a " play register a
  noremap '' "ap
 "noremap \ - leader
@@ -199,7 +198,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>t
 "noremap <leader>u
 "noremap <leader>v
-"noremap <leader>w
+ noremap <leader>w :w !sudo tee % >/dev/null<cr>
 "noremap <leader>x
 "noremap <leader>y
 "noremap <leader>z
