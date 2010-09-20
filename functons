@@ -31,7 +31,7 @@ cj ()
 
 gg ()
 {
-# show grep results as vim commands
+	local readme="show grep results as vim commands"
 	sought="$1"
 	shift
 	grep "$sought" $* | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
