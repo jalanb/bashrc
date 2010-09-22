@@ -8,6 +8,7 @@
 :CVSWatchRemove	vcscommand.txt	/*:CVSWatchRemove*
 :CVSWatchers	vcscommand.txt	/*:CVSWatchers*
 :Snippet	snippets_emu.txt	/*:Snippet*
+:ToggleRaibowParenthesis	rainbow_parenthsis.txt	/*:ToggleRaibowParenthesis*
 :VCSAdd	vcscommand.txt	/*:VCSAdd*
 :VCSAnnotate	vcscommand.txt	/*:VCSAnnotate*
 :VCSBlame	vcscommand.txt	/*:VCSBlame*
@@ -54,6 +55,18 @@ basic-snippet	snippets_emu.txt	/*basic-snippet*
 creating-snippets	snippets_emu.txt	/*creating-snippets*
 cvscommand-changes	vcscommand.txt	/*cvscommand-changes*
 named-tags	snippets_emu.txt	/*named-tags*
+rainbow_parenthsis#Activate()	rainbow_parenthsis.txt	/*rainbow_parenthsis#Activate()*
+rainbow_parenthsis#Clear()	rainbow_parenthsis.txt	/*rainbow_parenthsis#Clear()*
+rainbow_parenthsis#LoadBraces()	rainbow_parenthsis.txt	/*rainbow_parenthsis#LoadBraces()*
+rainbow_parenthsis#LoadChevrons()	rainbow_parenthsis.txt	/*rainbow_parenthsis#LoadChevrons()*
+rainbow_parenthsis#LoadRound()	rainbow_parenthsis.txt	/*rainbow_parenthsis#LoadRound()*
+rainbow_parenthsis#LoadSquare()	rainbow_parenthsis.txt	/*rainbow_parenthsis#LoadSquare()*
+rainbow_parenthsis#Toggle()	rainbow_parenthsis.txt	/*rainbow_parenthsis#Toggle()*
+rainbow_parenthsis-about	rainbow_parenthsis.txt	/*rainbow_parenthsis-about*
+rainbow_parenthsis-commands	rainbow_parenthsis.txt	/*rainbow_parenthsis-commands*
+rainbow_parenthsis-configure	rainbow_parenthsis.txt	/*rainbow_parenthsis-configure*
+rainbow_parenthsis-functions	rainbow_parenthsis.txt	/*rainbow_parenthsis-functions*
+rainbow_parenthsis.txt	rainbow_parenthsis.txt	/*rainbow_parenthsis.txt*
 snip-advanced-tag-commands	snippets_emu.txt	/*snip-advanced-tag-commands*
 snip-buffer-specific	snippets_emu.txt	/*snip-buffer-specific*
 snip-bundles	snippets_emu.txt	/*snip-bundles*
