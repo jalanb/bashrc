@@ -15,3 +15,7 @@ hi doctest_value ctermfg=Cyan guifg=#0044AA
 hi link doctest_english Normal
 hi link doctest_note Comment
 hi link doctest_code Comment
+   call rainbow_parenthsis#LoadSquare ()
+   call rainbow_parenthsis#LoadRound ()           
+   call rainbow_parenthsis#LoadBraces ()           
+   call rainbow_parenthsis#Activate ()
