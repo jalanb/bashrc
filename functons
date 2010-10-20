@@ -255,8 +255,13 @@ track ()
 	then
 		cd ~/alans_tests
 		try
+	elif [[ -n "$1" && $1 == "-q" ]]
+	then
+		CRONERR=/usr/local/trackers/tracker/crontab.err
+		ssh abrogan@ie-track-1 "sed -i -e '/bypassing tests/d' $CRONERR && echo 'bypassing tests' >> $CRONERR"
+		ssh abrogan@ie-track-1 $*
 	else
-		ssh abrogan@ie-track-1
+		ssh abrogan@ie-track-1 $*
 	fi
 }
 
@@ -389,13 +394,4 @@ to_release ()
 # xxxxxxxxxxx
 
 # xxxxxxxxxxxx
-
-get_pinky_ip ()
-{
-	export pinky_ip=$PINKY_IP
-	if [ -r ~/pinky.txt ]
-	then
-		export pinky_ip=`cat ~/pinky.txt`
-	fi
-}
 
