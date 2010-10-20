@@ -26,7 +26,10 @@ POST_PROCESSING=
 args=
 for arg in $*
 do
-	if [[ ! -f ${arg} && ${arg%%.} != $arg ]]
+	if echo $arg | grep -q ^- 
+	then
+		args="$args $arg"
+	elif [[ ! -f ${arg} && ${arg%%.} != $arg ]]
 	then
 		if [[ -f ${arg}py ]]
 		then
