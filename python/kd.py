@@ -77,7 +77,6 @@ def main():
 			print str(whither)
 		return 0
 	except Exception, e:
-		print >> sys.stderr, "Error", str(e)
 		return 1
 
 if __name__ == '__main__':
