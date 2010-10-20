@@ -123,7 +123,6 @@ alias c--="cd -"
 alias clx="cl; lx "
 alias cly="cl; ly "
 
-alias jab="get_pinky_ip && test -n $pinky_ip && ssh jab@${pinky_ip}"
 alias jjy='ky $JAB/python'
 alias jlf="ssh jlfieblu@jlf.ie"
 
