@@ -156,11 +156,11 @@ llt ()
 lly ()
 {
 	first_dir $*
-	ls -lhtr "$dir"/*.tests
+	/bin/ls -lhtr "$dir"/*.tests
 	echo
-	ls -lhtr "$dir"/*.test
+	/bin/ls -lhtr "$dir"/*.test
 	echo
-	ls -lhtr "$dir"/*.py
+	/bin/ls -lhtr "$dir"/*.py
 }
 
 try ()
