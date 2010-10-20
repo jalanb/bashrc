@@ -198,6 +198,8 @@ alias ptags="p $JAB/python/ptags.py "
 
 alias sdiff="svn_diff diff "
 
+alias trcak=track
+
 # xxxxxx
 
 alias ......='kd ../../../../..'
