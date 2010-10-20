@@ -385,3 +385,6 @@ endfunction
 "au BufWrite *.py call SavePython()
 
 set paste
+
+" Restore my window title
+let &titleold="I choose to start one small step now"
