@@ -1,7 +1,7 @@
 The dates module
 ================
 
-now is hard to test, reprodicibly
+now is hard to test, reproducibly
 
 	>>> import dates
 	>>> p = makepath('test_me_now')
