@@ -5,6 +5,7 @@
 test -f local/environ && . local/environ
 test -n "$PS1" || return
 . prompt green
+test -f local/prompt && . local/prompt
 . aliases
 test -f local/aliases && . local/aliases
 . functons
