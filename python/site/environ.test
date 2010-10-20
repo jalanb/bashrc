@@ -2,17 +2,10 @@
 
 A method to read the keys set in ~/.jab/environ
 	>>> keys = environ.read_environ_keys()
-	>>> show( keys[ 5 : 15 ] )
-	['AMG_SOURCE',
-	 'AMG_TRUNK',
-	 'BUILDER_WORKING',
-	 'BUILDING',
-	 'BUILD_DEBUG',
-	 'EDITOR',
-	 'EXITSTATUS',
-	 'HISTSIZ',
-	 'JABS',
-	 'LCP']
+	>>> 'JABS' in keys
+	True
+	>>> 'EDITOR' in keys
+	True
 
 Turn those keys into a dictionary with values from bash's environment
 	>>> bash = environ.read_bash(keys)
