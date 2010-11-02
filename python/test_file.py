@@ -14,7 +14,7 @@ class TestFile:
 	def __init__(self,path_to_file):
 		self.path_to_file = path_to_file
 		self.source = file(path_to_file).read()
-		self.sections = test_file(self.source).apply('test_file')
+		self.sections, _ = test_file(self.source).apply('test_file')
 		self.examples = []
 		for section in self.sections:
 			self.examples.extend(section.examples)

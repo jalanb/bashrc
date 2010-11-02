@@ -6,10 +6,15 @@ Facilities to understand *.fail
 	>>> from fail_file import fail_file
 
 	>>> def to_tree(rule,source):
-	...     show(fail_file(source).apply(rule))
+	...     result, error = fail_file(source).apply(rule)
+	...     if result is not None:
+	...         show(result)
+	...     else:
+	...         print 'Error:', error
 
 	>>> def to_text(rule,source):
-	...     print fail_file([source]).apply(rule)
+	...     result, error = fail_file([source]).apply(rule)
+	...     print result and result or error
 
 	>>> def tree_text(tree,source,text=None):
 	...     if not text: text = '%s_text' % tree
@@ -35,7 +40,8 @@ Facilities to understand *.fail
 	>>> to_tree('line','Failed example:\n')
 	'Failed example:'
 
-	>>> to_tree('lines',"    to_tree('method_call', 'fred.murphy()')\n")
+	>>> s = "    to_tree('method_call', 'fred.murphy()')\n"
+	>>> to_tree('lines',s)
 	["    to_tree('method_call', 'fred.murphy()')"]
 
 	>>> to_tree('expected_header','Expected:\n')
@@ -75,7 +81,7 @@ Facilities to understand *.fail
 	... ***Test Failed*** 2 failures.
 	... '''
 
-	>>> failure = fail_file(fail_text).apply('failure')
+	>>> failure, _ = fail_file(fail_text).apply('failure')
 	>>> failure
 	<Failure in not_a_real_file.tests:39>
 
@@ -88,5 +94,6 @@ Facilities to understand *.fail
 	>>> failure.exists()
 	False
 
-	>>> fail_file('').apply('fail_file')
+	>>> ff, _ = fail_file('').apply('fail_file')
+	>>> ff
 	<FailFile ''>

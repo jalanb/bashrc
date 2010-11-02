@@ -7,7 +7,11 @@ Facilities to understand *.test
 	>>> from test_file import test_file
 
 	>>> def to_tree(rule,source):
-	...     show(test_file(source).apply(rule))
+	...     out, err = test_file(source).apply(rule)
+	...     if out is None:
+	...         print 'Error', err
+	...     else:
+	...         show(out)
 
 
 	>>> to_tree("main_section_head",'''Alan was here
@@ -30,14 +34,14 @@ Facilities to understand *.test
 	... ''')
 	['This test expects a 0']
 
-	>>> to_tree("example_python",'''	>>> 1 - 1
+	>>> to_tree("example_python",'''\t>>> 1 - 1
 	... 	0
 	... ''')
 	([['1 - 1'], ['0']], 1)
 
-	>>> to_tree("example",'''This test expects a 0
-	... 	>>> 1 - 1
-	... 	0
+	>>> to_tree("example",r'''This test expects a 0
+	... \t>>> 1 - 1
+	... \t0
 	... ''')
 	<Example '1 - 1'>
 

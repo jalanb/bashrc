@@ -68,13 +68,13 @@ example_python_lines ::= (
 	)  => ([i[0]] + j, i[1])
 
 example_python_line ::= (
-		<some_indentation> 
+		'	'
 		'>' '>' '>' ' ' 
 		<line>:i 
 	) => (i,self.line_number)
 
 example_python_continuation ::= (
-		<some_indentation> 
+		<tab> 
 		'.' '.' '.' ' ' 
 		<line>:i
 	) =>  i
