@@ -63,6 +63,20 @@ def fix(failure,suffix):
 	file(failure.path_to_test,'w').write(''.join(fixed))
 	return len(failure.actual) - len(failure.expected)
 
+def read_fail_file(path_to_file):
+	source = file(path_to_file).read()
+	if not source:
+		return None
+		raise ValueError('No source in %r' % path_to_file)
+	result, _ = fail_file(source).apply('fail_file')
+	result.path_to_fail = path_to_file
+	return result
+
+def make_fail_file(fails,summary_count):
+	if summary_count is None: summary_count = 0
+	assert summary_count == len(fails), '%s != len(%s)' % (summary_count,fails)
+	return FailFile(fails)
+	
 fail_file_grammar = '''
 fail_file ::= (
 		<failure>*:i 
@@ -135,17 +149,3 @@ string ::= <quote>:i <different i>*:j <same i> => ''.join(j)
 '''
 fail_file = jab.makeGrammar(fail_file_grammar, globals(), name="fail_file")
 
-def read_fail_file(path_to_file):
-	source = file(path_to_file).read()
-	if not source:
-		return None
-		raise ValueError('No source in %r' % path_to_file)
-	result = fail_file(source).apply('fail_file')
-	result.path_to_fail = path_to_file
-	return result
-
-def make_fail_file(fails,summary_count):
-	if summary_count is None: summary_count = 0
-	assert summary_count == len(fails), '%s != len(%s)' % (summary_count,fails)
-	return FailFile(fails)
-	
