@@ -322,3 +322,6 @@ set paste
 
 " Restore my window title
 let &titleold="I choose to start one small step now"
+
+" Honour those wee lines at eof
+set modeline
