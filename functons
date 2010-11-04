@@ -29,6 +29,12 @@ cj ()
 	svn ci $JAB -m"$*"
 }
 
+cv ()
+{
+	kd $1
+	fim `basename $1`
+}
+
 gg ()
 {
 	local readme="show grep results as vim commands"
