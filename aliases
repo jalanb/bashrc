@@ -56,8 +56,6 @@ alias ..='kd ..'
 alias ab="ssh abrogan@192.168.0.103"
 
 alias c-='kd - >/dev/null 2>&1'
-alias cb='kd ~/bin'
-alias cl='clear'
 alias cy="kd \$MAIN_PYTHON"
 
 alias eg="env | grep "
