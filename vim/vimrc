@@ -70,6 +70,7 @@ nnoremap <C-F4> <C-W>c
  noremap yb byw
 "noremap z - folds. centering, ...
  noremap zx zo
+ noremap zX zO
  noremap zs zR
 "noremap zc  
  noremap zd zM 
@@ -230,8 +231,8 @@ filetype indent on
 if &diff
 	noremap o :diffget<cr>
 	noremap p :diffput<cr>
-	noremap ] ]c
-	noremap [ [c
+	noremap ] ]czz
+	noremap [ [czz
 	syntax off
 	set diffopt=filler,iwhite
 else
