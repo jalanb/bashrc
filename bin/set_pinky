@@ -1,0 +1,3 @@
+#! /bin/sh
+
+sudo sed -i -e "s/.*pinky/$1  pinky/" /etc/hosts
