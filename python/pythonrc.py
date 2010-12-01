@@ -6,8 +6,10 @@ import sys
 from path import path
 from pprint import pprint as show
 
-import environ
-import paths
+try: import environ
+except ImportError: pass
+try: import paths
+except ImportError: pass
 
 try:
 	from see import see
