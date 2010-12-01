@@ -18,7 +18,6 @@ Add links where programs expect to find them
 
 	ln -s ~/.jab/vim ~/.vim
 	ln -s ~/.jab/vim/vimrc ~/.vimrc
-	ln -s ~/.jab/vim/vimperatorrc ~/.vimperatorrc
 	ln -s ~/.jab/python/pythonrc.py ~/.pythonrc.py
 	ln -s ~/.jab/etc/subversion/config ~/.subversion/config
 	ln -s ~/.jab/etc/dir_colors ~/.dir_colors
