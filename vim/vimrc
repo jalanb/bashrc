@@ -153,6 +153,7 @@ noremap t<left> :tabprev<cr>
 noremap t<right> :tabnext<cr>
 "noremap <down> <down>zz
 "noremap <up> <up>zz
+noremap <S-Tab> :SeeTab<cr>
 "
 " control keys
 "
