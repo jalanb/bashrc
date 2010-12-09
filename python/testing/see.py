@@ -46,13 +46,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }}}
 """
 
-import fnmatch
-import inspect
 import re
 import sys
 import textwrap
+import linecache
+import fnmatch
+import inspect
 
-__all__ = ['see']
+__all__ = ['see'] #,'see_attributes', 'see_methods', 'code']
 
 __author__ = 'Liam Cooke'
 __contributors__ = [
@@ -168,6 +169,36 @@ def see_methods(*args,**kwargs):
 def see_attributes(*args,**kwargs):
     kwargs['attributes'] = True
     return see(*args,**kwargs)
+
+def indent(filename,line_number):
+    line = linecache.getline(filename,line_number)
+    match = re.match('(\s*)',line)
+    if not match:
+        return None, None
+    return line.rstrip(), match.groups()[0]
+    
+def code(method):
+    if not callable(method):
+        print 'Not callable: %r' % method
+        return
+    result = [ ]
+    try: first_line_number = method.func_code.co_firstlineno
+    except AttributeError:
+        print 'No code available for', method
+        return
+    filename = method.func_code.co_filename
+    if filename.endswith('.pyc') or filename.endswith('.pyo'):
+        filename = filename[:-1]
+    line, first_indentation = indent(filename,first_line_number)
+    result = [ line ]
+    line_number = first_line_number + 1
+    line, indentation = indent(filename,line_number)
+    while indentation > first_indentation:
+        result.append( line )
+        line_number += 1
+        line, indentation = indent(filename,line_number)
+    print '\n'.join(result)
+
 
 PY_300 = sys.version_info >= (3, 0)
 PY_301 = sys.version_info >= (3, 0, 1)

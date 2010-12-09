@@ -1,7 +1,7 @@
 
 	>>> see()
 	bash()    makepath()    see()    see_attributes()    see_methods()
-	show()    sys    test
+	show()    spread()		sys    test
 
 	>>> see(sys)
 	help()    .api_version    .argv    .builtin_module_names    .byteorder
@@ -13,7 +13,7 @@
 	.modules    .path    .path_hooks    .path_importer_cache    .platform
 	.prefix    .setcheckinterval()    .setdlopenflags()    .setprofile()
 	.setrecursionlimit()    .settrace()    .stderr    .stdin    .stdout
-	.version    .version_info    .warnoptions
+	.subversion    .version    .version_info    .warnoptions
 
 	>>> see(sys,pattern="*a*")
 	.api_version    .argv    .builtin_module_names    .call_tracing()
@@ -50,3 +50,10 @@
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
 	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
 	.setcheckinterval()    .setdlopenflags()    .settrace()
+
+	>>> from see import code
+	>>> code(code)
+	def code(method):
+	    result = [ ]
+		...
+	    print '\n'.join(result)
