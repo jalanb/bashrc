@@ -13,7 +13,7 @@ export HISTSIZE=100000
 
 export XAUTHORITY=$HOME/.Xauthority
 
-if ls -@ >/dev/null 2>&1 
+if l -@ >/dev/null 2>&1 
 then
 	# the ls option for colour is "-@" on my macbook
 	export LS_COLOUR_OPTION='-@'
