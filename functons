@@ -91,6 +91,16 @@ uj ()
 	fi
 }
 
+ut ()
+{
+	if [[ -f $HOME/bin/upTrackers ]]
+	then
+		sh $HOME/bin/upTrackers
+	else
+		ssh builder@ie-build-1 "sh ~/bin/upTrackers"
+	fi
+}
+
 ky ()
 {
 	if [[ -z "$1" ]]
