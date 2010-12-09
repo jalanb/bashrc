@@ -1,8 +1,8 @@
 import os
-import path
 
 def read_environ_keys():
-	environ_file = path.path('~/.jab/environ').expanduser()
+	from path import path
+	environ_file = path('~/.jab/environ').expanduser()
 	lines = [ l.strip() for l in environ_file.lines() ]
 	lines = [ l for l in lines if l and l[0] != '#' ]
 	lines = [ l for l in lines if 'export' in l and '=' in l ]
@@ -28,3 +28,4 @@ def read_bash(keys):
 jab = {}
 jab.update(read_bash(read_environ_keys()))
 globals().update(os.environ)
+del os
