@@ -1,15 +1,17 @@
 The last_fm module
-============
-See allso http://github.com/MihaiDamian/Lib.fm
+==================
 	>>> import last_fm
-	>>> last_fm.get_recent_tracks('jalanb')
-	>>> response = last_fm.get_recent_tracks('jalanb')
-	>>> response.readline()
-	'<?xml version="1.0" encoding="utf-8"?>\n'
-	>>> response.readline()
-	'<lfm status="ok">\n'
-	>>> response.readline()
-	'<recenttracks user="jalanb" page="1" perPage="200" totalPages="197">\n'
-	>>> response.readline()
-	'<track> \n'
+
+The module provides a method to initialize a session
+	>>> session = last_fm.init()
+
+The session allows us to call various last.fm method
+	Such as "artist.getInfo"
+
+	>>> info = session.read('artist.getInfo', artist='Pink Floyd')
+	>>> print info.values()[0]['url']
+	http://www.last.fm/music/Pink+Floyd
+
+	>>> number_of_tracks, tracks = last_fm.my_recent_tracks(session)
+	>>> show(tracks)
 
