@@ -230,7 +230,8 @@ def main():
 		return test()
 	except test_files.UserMessage, e:
 		print >> sys.stderr, e
-	except KeyboardInterrupt:
+	except KeyboardInterrupt, e:
+		if str(e): print e
 		print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
 		print >> sys.stderr, 'Bye now'
 
