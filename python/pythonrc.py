@@ -12,7 +12,7 @@ try: import paths
 except ImportError: pass
 
 try:
-	from see import see
+	from see import see, code, see_methods, see_attributes
 except ImportError:
 	def see(x):
 		show(dir(x))
