@@ -71,7 +71,7 @@ endif
 if !exists("Try")
 	function NewTestFile(filename)
 		exec "tabnew! " . s:file_test
-		exec "normal IThe " . s:file_stem . " module\<cr>============\<cr>	>>> import ". s:file_stem . "\<cr>	>>> see(" . s:file_stem . ")\<Esc>"
+		exec "normal IThe " . s:file_stem . " module\<cr>============\<cr>	>>> import ". s:file_stem . "\<cr>	>>> print " . s:file_stem . ".__doc__\<Esc>"
 		set cmdheight+=1
 		write
 		set cmdheight-=1
