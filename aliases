@@ -191,8 +191,6 @@ alias .....='kd ../../../..'
 
 alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
 
-alias floka="get_pinky_ip && ssh floka@${pinky_ip}"
-
 alias ptags="p $JAB/python/ptags.py "
 
 alias sdiff="svn_diff diff "
