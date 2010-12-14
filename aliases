@@ -121,6 +121,7 @@ alias c--="cd -"
 alias clx="cl; lx "
 alias cly="cl; ly "
 
+alias jab='ssh jab@pinky'
 alias jjy='ky $JAB/python'
 alias jlf="ssh jlfieblu@jlf.ie"
 
