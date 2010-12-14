@@ -8,7 +8,7 @@ A Twine is ako string
 	>>> print fred
 	Fred
 
-With a better %r than string
+With a different representation than string
 	>>> fred
 	<Twine 'Fred'>
 

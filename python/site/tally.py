@@ -1,6 +1,7 @@
+from spine import Spine
 from words import pluralize
 
-class Tally(list):
+class Tally(Spine,list):
 	'''Tally is a kind of list.
 
 	This tally is intended to be sub-classed,
@@ -32,8 +33,8 @@ class Tally(list):
 		>>> Tally([1,2,3])
 		<Tally [1, 2, 3]>
 		'''
-		try: return "<%s '%s'>" % (self.class_name(),self.as_str())
-		except TypeError: return "<%s %s>" % (self.class_name(),self.to_str())
+		try: return '<%s %r>' % (self.class_name(),self.as_str())
+		except TypeError: return '<%s %s>' % (self.class_name(),self.to_str())
 
 	def as_str(self,separator=None):
 		'''Use the separator to join the chars into a string
@@ -64,32 +65,6 @@ class Tally(list):
 			items = self[i:j]
 		if separator is None: separator = ', '
 		return '[%s]' % separator.join([repr(s) for s in items])
-
-	def full_class_name(self):
-		'''The fully qualified class name
-
-		>>> print Tally([]).full_class_name()
-		tally.Tally
-		'''
-		class_repr = str(self.__class__)
-		prefix = "<class '"
-		suffix = "'>"
-		trimmed = class_repr.replace(prefix,'').replace(suffix,'')
-		return trimmed
-
-	def class_name(self):
-		'''The unqualified class name
-
-		>>> print Tally([]).class_name()
-		Tally
-		'''
-		result = self.full_class_name()
-		i = 0
-		try:
-			i = result.rindex('.') + 1
-		except ValueError:
-			i = 0
-		return result[i:]
 
 	def list_name(self):
 		'''The plural of the class name

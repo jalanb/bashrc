@@ -1,0 +1,6 @@
+The site/spine module
+============
+	>>> import spine
+	>>> print spine.__doc__
+	Show the spine of a class
+    

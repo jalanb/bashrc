@@ -1,6 +1,6 @@
-from words import pluralize
+from spine import Spine
 
-class Twine(str):
+class Twine(Spine,str):
 	'''Twine is a kind of string.
 
 	This twine is intended to be sub-classed,
@@ -14,49 +14,6 @@ class Twine(str):
 		popular?? :)"
 	at http://mail.python.org/pipermail/python-dev/2006-January/060115.html
 	'''
-	def __repr__(self):
-		'''Represent the Twine
-
-		>>> Twine('stuff')
-		<Twine 'stuff'>
-		'''
-		return "<%s '%s'>" % (self.class_name(),str(self))
-
-	def full_class_name(self):
-		'''The fully qualified class name for the Twine (or sub-class)
-
-		>>> Twine('stuff').full_class_name()
-		'twine.Twine'
-		'''
-		class_repr = str(self.__class__)
-		prefix = "<class '"
-		suffix = "'>"
-		trimmed = class_repr.replace(prefix,'').replace(suffix,'')
-		return trimmed
-
-	def class_name(self):
-		'''The class name for the Twine (or sub-class)
-
-		>>> Twine('stuff').class_name()
-		'Twine'
-		'''
-		result = self.full_class_name()
-		i = 0
-		try:
-			i = result.rindex('.') + 1
-		except ValueError:
-			i = 0
-		return result[i:]
-
-	def list_name(self):
-		'''The list name for the Twine (or sub-class)
-
-		What should a collection of these things be called ?
-
-		>>> Twine('stuff').list_name()
-		'Twines'
-		'''
-		return pluralize( self.class_name() )
 
 	def str_class_and_list(self):
 		'''A tuple with three strings for the value, class and list names
