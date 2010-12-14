@@ -31,11 +31,11 @@ add_to_path ()
 		fi
 	fi
 }
-export PATH=/bin:/usr/bin:/usr/local/bin:
+export PATH=/bin:/usr/local/bin:/usr/bin:
+add_to_path /usr/local/sbin
 add_to_path $JAB/bin
 add_to_path ~/bin
 add_to_path ~/git/bin
-add_to_path ~/python25/bin
 add_to_path /opt/local/bin
 add_to_path /sbin
 
