@@ -177,8 +177,8 @@ alias down="cd ~/Download"
 
 alias mine="sudo chown $USER:allstaff "
 
-alias jjya='kd $JAB/python/alanology'
-alias jjys='kd $JAB/python/site'
+alias jjya='ky $JAB/python/alanology'
+alias jjys='ky $JAB/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
 alias tags="p $JAB/python/ptags.py "
