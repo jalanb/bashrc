@@ -54,23 +54,17 @@ prompt_command ()
 	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	else Dir="\$PWD"
 	fi
-	# lines_changed=`svn stat 2>&1 | wc -l`
-	# if [[ $lines_changed == "0" ]]
-	# then Dir="\$PWD"
-	# else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
-	# fi
 	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
 	j --add "$(pwd -P)"
 }
 
 if [[ -n "$MYVIMRC" ]]
 then
-	PROMPT_COLOUR=none
-fi
-
-if [[ "$PROMPT_COLOUR" == "none" ]]
+	export PS1="\$? [\u@\h:\$PWD]\n$ "
+	export PROMPT_COMMAND='prompt_command $?'
+elif [[ "$PROMPT_COLOUR" == "none" ]]
 then
-	export PROMPT_COMMAND=
+	unset PROMPT_COMMAND
 	export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
 	export PROMPT_COMMAND='prompt_command $?'
