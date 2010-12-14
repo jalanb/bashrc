@@ -63,6 +63,11 @@ prompt_command ()
 	j --add "$(pwd -P)"
 }
 
+if [[ -n "$MYVIMRC" ]]
+then
+	PROMPT_COLOUR=none
+fi
+
 if [[ "$PROMPT_COLOUR" == "none" ]]
 then
 	export PROMPT_COMMAND=
