@@ -12,15 +12,15 @@ paths reads from environ
 
 And looks for paths therein
 	It tries anything with a "/"
-	>>> environ.EDITOR
-	'/usr/bin/vim'
-	>>> paths.environ.EDITOR
-	<Path '/usr/bin/vim'>
+	>>> environ.EDITOR.endswith('/vim')
+	True
+	>>> paths.environ.EDITOR.name == 'vim'
+	True
 
 Path lists are split up,
-	>>> environ.PYTHONPATH 
+	>>> environ.PATH 
 	'...:...'
-	>>> len(paths.environ.PYTHONPATH) > 1 
+	>>> len(paths.environ.PATH) > 1 
 	True
 
 PYTHONPATH is normally used to get local directories into sys.path
@@ -58,7 +58,7 @@ A path relative to the home directory
 	[<Path '/.../.jab'>, <Path '/usr'>]
 
 	>>> paths.split_files(strings)
-    ([<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>], [<Path '/.../.jab'>, <Path '/.../.jab/python/site/fred'>, <Path '/usr'>])
+	([<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>], [<Path '/.../.jab'>, <Path '/.../.jab/python/site/fred'>, <Path '/usr'>])
 	>>> paths.split_directories(strings)
-    ([<Path '/.../.jab'>, <Path '/usr'>], [<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>, <Path '/.../.jab/python/site/fred'>])
+	([<Path '/.../.jab'>, <Path '/usr'>], [<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>, <Path '/.../.jab/python/site/fred'>])
 

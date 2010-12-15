@@ -16,7 +16,7 @@ def environ_paths():
 		paths = [ makepath(v) for v in value.split(':') ]
 		paths = [ p for p in paths if p.exists() ]
 		if paths:
-			if paths[1:]:
+			if paths[1:] or key.endswith('PATH'):
 				result[key] = paths
 			else:
 				result[key] = paths[0]
@@ -24,8 +24,6 @@ def environ_paths():
 	paths = paths()
 	paths.__dict__.update(result)
 	return paths
-	raise str(result['MONTYLINGUA'])
-	if key == 'MONTYLINGUA': raise str(result[key])
 
 def strings_to_paths(strings):
 	if type(strings) == type(''):

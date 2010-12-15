@@ -42,7 +42,7 @@ Call the respective methods to convert list of tuples to list of options
 Send a list of premade options
 	>>> opt_parser = argv._options_to_parser(all)
 	>>> opt_parser.print_help()
-	Usage: try.py [options]
+	Usage: argv.tests [options]
 	<BLANKLINE>
 	Options:
 	  -o ONE, --one=ONE  just once

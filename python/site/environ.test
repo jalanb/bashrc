@@ -8,14 +8,16 @@ A method to read the keys set in ~/.jab/environ
 	True
 
 Turn those keys into a dictionary with values from bash's environment
-	>>> bash = environ.read_bash(keys)
-	>>> bash['JABS'].endswith('jab')
+	>>> environ.jab['JABS'].endswith('jab')
 	True
-	>>> bash['EDITOR'].endswith('/vim')
+	>>> environ.jab['EDITOR'].endswith('/vim')
 	True
 
 Bash's environment variables are attributes of the module
-	>>> print environ.JABS == bash['JABS']
+	>>> print environ.JABS == environ.jab['JABS']
 	True
-	>>> print environ.EDITOR == bash['EDITOR']
+	>>> print environ.EDITOR == environ.jab['EDITOR']
+	True
+
+	>>> 'PYTHONPATH' in environ.jab
 	True

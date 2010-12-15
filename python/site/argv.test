@@ -103,7 +103,7 @@ You could also get the parser and use it your way
 That is a normal OptionParser
 For example to show some help
 	>>> opt_parser.print_help()
-	Usage: try.py [options]
+	Usage: argv.test [options]
 	<BLANKLINE>
 	Options:
 	  -a ALAN, --alan=ALAN  Default is
