@@ -411,3 +411,21 @@ to_release ()
 
 # xxxxxxxxxxxx
 
+# xxxxxxxxxxxx
+
+svn_log_issue ()
+{
+	if [ -n "$1" ]
+	then
+		if [[ -f $1 || -d $1 ]]
+		then
+			path=$1
+			shift 
+		fi
+	else
+		path="."
+	fi
+	svn log $path | grep ^issue | head $*
+}
+
+
