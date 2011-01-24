@@ -211,7 +211,9 @@ def test_args(command_line=None):
 		try: command_line = command_line.split()
 		except AttributeError: pass
 		try: options, args = option_parser.parse_args(command_line)
-		except SystemExit: return
+		except SystemExit:
+			if _added_tuples: options, args = option_parser.parse_args()
+			return
 	else:
 		options, args = option_parser.parse_args()
 	for post_parse in post_parses:
