@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 '''Show the spine of a class'''
+
 from words import pluralize
 
 class Spine:
@@ -44,13 +47,13 @@ class Spine:
 		return pluralize( self.class_name() )
 
 	def __repr__(self):
-		'''Represent the Twine
+		'''Represent the Spine
 
 		>>> Spine()
 		<Spine>
 		'''
 		name = self.class_name()
 		if name != 'Spine':
-			return '<%s %r>' % (name,str(self))
-		return '<Spine>'
+			return u'<%s %r>' % (name,str(self))
+		return u'<Spine>'
 
