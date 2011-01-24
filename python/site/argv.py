@@ -220,7 +220,7 @@ def test_args(command_line=None):
 		options, args = post_parse(options,args)
 	_find_files_in_args(args)
 
-def main(Globals,ctrl_c=None,no_args=False):
+def main(main_method,ctrl_c = None,no_args = False):
 	'''Treat method as a typical main()
 
 	Calls the method, then sends its return value to sys.exit()
@@ -228,6 +228,10 @@ def main(Globals,ctrl_c=None,no_args=False):
 		ctrl_c might be a string, which is sent to stderr
 	Set no_args to True to stop parsing of command line args
 	'''
+	if type(main_method) == type(main):
+		Globals = main_method.func_globals
+	else:
+		raise RuntimeError('%s is not a method' % main_method)
 	if not no_args:
 		parse_args()
 	global methods
@@ -243,11 +247,11 @@ def main(Globals,ctrl_c=None,no_args=False):
 		if ctrl_c in [ True, '' ]:
 			ctrl_c = ' Exitting ^c'
 		try:
-			return_value = Globals['main']()
+			return_value = main_method()
 		except KeyboardInterrupt:
 			print >> sys.stderr, ctrl_c
 			return_value = 1
 	else:
-		return_value = Globals['main']()
+		return_value = main_method()
 	sys.exit(return_value)
 
