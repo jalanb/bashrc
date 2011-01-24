@@ -113,6 +113,9 @@ except TypeError, e:
 	if 'getlines' in str(e):
 		import platform
 		raise ImportError, 'PyMeta needs Python version >= 2.5, not %s' % platform.python_version()
+except ImportError:
+	import sys
+	raise ValueError('Could not import pymeta.grammar.Ometa from %r' % str(sys.path))
 
 ometa_jab = OMeta.makeGrammar(jab_grammar, globals(), name="jab")
 
@@ -145,5 +148,8 @@ def grammar_tester(grammar_file):
 	root = path(grammar_file).namebase
 	grammar = jab.makeGrammar(file_or_source(grammar_file),globals(), name=root)
 	def test_parse(rule,source):
-		return grammar(file_or_source(source)).apply(rule)
+		result, error = grammar(file_or_source(source)).apply(rule)
+		if result:
+			return result
+		raise error
 	return test_parse
