@@ -25,6 +25,10 @@ This method turns its arguments into a list of paths
 	>>> l.as_paths([ 'fred', '~', path('.') ])
 	[<path 'fred'>, <path '...'>, <path '.'>]
 
+It does not add the current directory
+	>>> l.as_paths([ 'fred', '~'])
+	[<path 'fred'>, <path '/Users/jab'>]
+
 get_dirs
 --------
 

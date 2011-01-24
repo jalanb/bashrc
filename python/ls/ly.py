@@ -84,10 +84,6 @@ def ly_rules(things):
 
 lout.lout_rules = ly_rules
 
-def main():
-	argv.parse_args()
-	show()
-
 def show():
 	try: dirs = l.get_dirs(argv.args)
 	except ValueError, e:
@@ -108,6 +104,10 @@ def show():
 		print
 	return 0
 
+def main():
+	argv.parse_args()
+	show()
+
 if __name__ == '__main__':
-	sys.exit(main())
+	argv.main(main)
 

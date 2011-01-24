@@ -119,19 +119,17 @@ def as_paths(thing=None):
 			return result
 	raise NotImplementedError('Forgot a case: %s' % thing)
 				
-def get_files(dirs=None):
-	if not dirs:
-		dirs = get_dirs()
-	else:
-		dirs = as_paths(dirs)
+def get_files(dirs):
+	dirs = as_paths(dirs)
 	files = []
 	here = path.path('.')
 	for d in dirs:
 		files.extend([ here.relpathto(f) for f in d.files()])
 	return files
 
-def get_names(files=None):
-	if not files: files = get_files()
+def get_names(files):
+	if not files:
+		return {}
 	names = {}
 	for f in files:
 		name = f.namebase
