@@ -127,7 +127,7 @@ class Sys_Path_Handler:
 		if directory not in self.paths:
 			self.paths.insert(0,directory)
 			if directory not in sys.path:
-				sys.path.insert(0,directory)
+				sys.path.insert(0,str(directory))
 			
 	def remove(self,item):
 		directory = makepath(item).directory()

@@ -50,4 +50,4 @@ def main():
 		svn_stat()
 
 if __name__ == '__main__':
-	argv.main(globals())
+	argv.main(main)

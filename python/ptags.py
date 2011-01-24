@@ -179,4 +179,4 @@ def main():
 		read_write_dir()
 
 if __name__ == '__main__':
-	argv.main(globals(),ctrl_c=True)
+	argv.main(main, ctrl_c=True)

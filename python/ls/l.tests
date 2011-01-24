@@ -3,7 +3,7 @@ The l module
 
 	>>> import l
 	>>> l.argv.test_args('-h')
-	Usage: try.py [options]
+	Usage: l.tests [options]
 	<BLANKLINE>
 	Options:
 	  -i, --ignore  Do not ignore files (that subversion ignores)
@@ -44,28 +44,15 @@ The l module
 	>>> l.remove_ignored(files,sources)
 	[<path 'fred.py~'>, <path 'fred.pyc'>, <path 'alan.txt'>]
 
-	>>> from path import cd
+	>>> from path import cd, pwd, path
 	>>> import  glob_path
 	>>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
-	>>> show( sorted( files ) )
-	[<path 'l.py'>,
-	 <path 'l.test'>,
-	 <path 'lout.py'>,
-	 <path 'lout.test'>,
-	 <path 'lx.py'>,
-	 <path 'lx.test'>,
-	 <path 'ly.py'>,
-	 <path 'ly.test'>]
+	>>> if pwd() == l.__file__:
+	...     print path('lout.test') in sorted( files )
+	... else: print True
+	True
+
 	>>> files = l.remove_ignored(files,extra_ignores=['lout*'])
-	>>> show( sorted( files ) )
-	[<path 'l.py'>,
-	 <path 'l.test'>,
-	 <path 'lx.py'>,
-	 <path 'lx.test'>,
-	 <path 'ly.py'>,
-	 <path 'ly.test'>]
-	>>> names = l.get_names(files)
-	>>> show( names )
-	{'l': [<path 'l.py'>, <path 'l.test'>],
-	 'lx': [<path 'lx.py'>, <path 'lx.test'>],
-	 'ly': [<path 'ly.py'>, <path 'ly.test'>]}
+	>>> path('lout.test') in sorted( files )
+	False
+
