@@ -119,6 +119,8 @@ alias yy="y $MAIN_PYTHON"
 alias ...='kd ../..'
 alias c--="cd -"
 
+alias doc="cd ~/Documents"
+
 alias clx="cl; lx "
 alias cly="cl; ly "
 
