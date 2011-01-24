@@ -9,7 +9,7 @@ Test whether I can use PyMeta to make a grammar for output of ls -l commands
 	...         self.name = f
 	...         self.size = z
 
-	>>> ls_grammar = file('ls.gy').read()
+	>>> ls_grammar = file('ls.g').read()
 
 	>>> ls = OMeta.makeGrammar(ls_grammar, globals(), name="my_ls")
 
@@ -35,13 +35,13 @@ Start with the last
 	>>> print ls_parser
 	 <pymeta_grammar__my_ls.my_ls object at 0x...>
 
-	>>> f = ls_parser.apply('ls_out')
+	>>> f, err = ls_parser.apply('ls_out')
 	>>> print f.name, f.size
 	ls.test 1033
 
 Let's try the other one
 	>>> test_string = " -rw-r--r--  1 jab  jabs   1.0K 20 Jan 04:10 ls.test"
 	>>> ls_parser = ls(test_string)
-	>>> f = ls_parser.apply('ls_out')
+	>>> f, err = ls_parser.apply('ls_out')
 	>>> print f.name, f.size
 	ls.test 1024
