@@ -24,13 +24,17 @@ def run_command(command):
 	print output
 	return True
 
-def spread_attributes(thing, exclude=None):
-	'''Spread out the attributes of thing onto stdout'''
+def spread_attributes(thing, exclude = None):
+	'''Spread out the attributes of thing onto stdout
+	
+	exclude is a list of regular expressions
+		attributes matching any if these will not be shown
+		if the default of None is used it is set to [ '__.*__' ]
+	'''
 	ids = []
 	if not exclude:
-		exclusions = []
-	else:
-		exclusions = [ re.compile(e) for e in exclude ]
+		exclude = [ '__.*__' ]
+	exclusions = [ re.compile(e) for e in exclude ]
 
 	def spread_out_an_attribute(v,separator):
 		if not v:
