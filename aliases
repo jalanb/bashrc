@@ -176,7 +176,6 @@ alias url="python ~/bin/show_url.py "
 alias ....='kd ../../..'
 
 alias cdsi="cd /usr/lib/python2.4/site-packages"
-alias cdev="cd ~/jab/alto/dev"
 
 alias down="cd ~/Download"
 
