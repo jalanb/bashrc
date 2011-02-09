@@ -78,8 +78,6 @@ alias pi="ipython "
 alias py="y $MAIN_PYTHON"
 
 alias r.="rm -rvf *"
-alias ra="sudo -i -u abrogan"
-alias rb="sudo -i -u builder"
 alias rq="/bin/rm -rf "
 alias rs="sudo -i -u svn"
 alias ry="rf pycos"

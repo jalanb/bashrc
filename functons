@@ -63,6 +63,27 @@ kd ()
 	# $show_more && st 
 }
 
+ky ()
+{
+	if [[ -z "$1" ]]
+	then
+		cd $MAIN_PYTHON
+	else
+		kd $* > /dev/null
+	fi
+	y
+}
+
+ra ()
+{
+	run_as abrogan $*
+}
+
+rb ()
+{
+	run_as builder $*
+}
+
 ru ()
 {
 # do da root root route, do da ru !
@@ -96,20 +117,12 @@ ut ()
 	if [[ -f $HOME/bin/upTrackers ]]
 	then
 		sh $HOME/bin/upTrackers
+	elif [[ `hostname` == "ie-build-1" ]]
+	then
+		sudo su - builder -c "sh ~/bin/upTrackers"
 	else
 		ssh builder@ie-build-1 "sh ~/bin/upTrackers"
 	fi
-}
-
-ky ()
-{
-	if [[ -z "$1" ]]
-	then
-		cd $MAIN_PYTHON
-	else
-		kd $* > /dev/null
-	fi
-	y
 }
 
 # xxx
@@ -308,6 +321,18 @@ revert ()
 		cp $1 $1.changed
 	fi
 	svn revert $1
+}
+
+run_as ()
+{
+	username=$1
+	shift
+	if [[ -n "$1" ]]
+	then 
+		sudo -u $username $*
+	else
+		sudo -i -u $username
+	fi
 }
 
 # xxxxxxx
