@@ -86,8 +86,8 @@ if !exists("Try")
 		else
 			let try_py = '~/.jab/python/testing/try.py'
 		endif
-		let command = "! python " . try_py . " -qa "
-		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
+		let command = "! TERM=linux && python " . try_py . " -qa "
+		let command_line = command . item_name . " | grep -qv DocTestRunner.merge "
 		if a:quietly
 			let tmpfile = tempname()
 			let quiet_line = command_line . " > " . tmpfile . " 2>&1 || true"
