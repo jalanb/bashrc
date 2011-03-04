@@ -450,7 +450,7 @@ svn_log_issue ()
 	else
 		path="."
 	fi
-	svn log $path | grep ^issue | head $*
+	svn log $path | grep ^issue | cut -d\  -f2 | cut -d\: -f1 | sort | uniq | /usr/local/trunk/trackers/issues/sh/issue -l | head $*
 }
 
 
