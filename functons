@@ -179,7 +179,7 @@ fpy ()
 llt ()
 {
 	first_dir $*
-	ls -lhtr "$dir" | tail
+	l --color=always -lhtr "$dir" | less -R -m -N +G
 }
 
 lly ()
