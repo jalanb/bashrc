@@ -10,6 +10,7 @@ export FIGNORE=.pyc:.swp:~:.o
 #export DISPLAY=:0
 
 export HISTSIZE=100000
+export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 
 export XAUTHORITY=$HOME/.Xauthority
 
