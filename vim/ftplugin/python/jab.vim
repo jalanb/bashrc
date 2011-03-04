@@ -166,6 +166,7 @@ if !exists("Try")
 		silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! " . s:file_actual
 		silent exec "tabnew " . s:file_expected
 		set buftype=nofile
+		set diffopt=filler,iwhite
 		silent exec "diffsplit " . s:file_actual
 		set buftype=nofile
 		call delete(s:file_expected)
