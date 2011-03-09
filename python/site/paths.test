@@ -1,11 +1,7 @@
 The paths module
 ================
 
-	>>> import sys
-	>>> from pprint import pprint
 	>>> import paths
-	>>> paths.path('.').mp3_files()
-	[]
 
 paths reads from environ
 	>>> import environ
@@ -18,14 +14,11 @@ And looks for paths therein
 	True
 
 Path lists are split up,
-	>>> environ.PATH 
-	'...:...'
-	>>> len(paths.environ.PATH) > 1 
+	>>> len(paths.environ.PATH) > 1 and all( [ p.isdir() for p in paths.environ.PATH ] )
 	True
 
 PYTHONPATH is normally used to get local directories into sys.path
-	>>> python_paths = [ str(p) for p in paths.environ.PYTHONPATH ]
-	>>> all( [ s in sys.path for s in python_paths ] )
+	>>> all( [ s in sys.path for s in paths.environ.PYTHONPATH ] )
 	True
 
 The paths module that we are testing got into sys.path through $PYTHONPATH
@@ -49,16 +42,56 @@ A path relative to the home directory
 	>>> paths.from_home(paths.__file__)
 	<path '.jab/python/site/paths.py...'>
 
+Divvying up strings
+-------------------
+
+Given a list of strings (such as might be found in sys.argv for example)
 	>>> strings = ['~/.jab', '~/.bashrc', '~/.jab/vim/vimrc', 'fred', '/usr']
+
+They can be turned to paths
+	>>> show( paths.strings_to_paths(strings) )
+	[<Path '/.../.jab'>,
+	 <Path '/.../.bashrc'>,
+	 <Path '/.../.jab/vim/vimrc'>,
+	 <Path '/.../.jab/python/site/fred'>,
+	 <Path '/usr'>]
+
+Another method can work with a colon separated list
+	>>> paths.strings_to_paths(strings) == paths.string_to_paths('~/.jab:~/.bashrc:~/.jab/vim/vimrc:fred:/usr')
+	True
+
+Or comma, space, semi-colon separated lists
+	>>> [makepath('a'), makepath('b')] == paths.string_to_paths('a,b') == paths.string_to_paths('a b') == paths.string_to_paths('a;b')
+	True
+
+We can get all of the ones which are existing files
 	>>> paths.files(strings)
 	[<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>]
-	>>> paths.files(strings) == paths.files('~/.jab ~/.bashrc ~/.jab/vim/vimrc fred /usr')
-	True
+
+Or the ones which are existing directories
 	>>> paths.directories(strings)
 	[<Path '/.../.jab'>, <Path '/usr'>]
 
-	>>> paths.split_files(strings)
-	([<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>], [<Path '/.../.jab'>, <Path '/.../.jab/python/site/fred'>, <Path '/usr'>])
-	>>> paths.split_directories(strings)
-	([<Path '/.../.jab'>, <Path '/usr'>], [<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>, <Path '/.../.jab/python/site/fred'>])
+Or 2 lists, of files and non-files
+	>>> show( paths.split_files(strings) )
+	([<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>],
+	 [<Path '/.../.jab'>,
+	  <Path '/.../.jab/python/site/fred'>,
+	  <Path '/usr'>])
 
+Direcories and non-directories
+	>>> show( paths.split_directories(strings) )
+	([<Path '/.../.jab'>, <Path '/usr'>],
+	 [<Path '/.../.bashrc'>,
+	  <Path '/.../.jab/vim/vimrc'>,
+	  <Path '/.../.jab/python/site/fred'>])
+
+Or 3 lists, of directories, files  and neither
+	>>> show( paths.split_directories_files(strings) )
+	([<Path '/.../.jab'>, <Path '/usr'>],
+	 [<Path '/.../.bashrc'>, <Path '/.../.jab/vim/vimrc'>],
+	 [<Path '/.../.jab/python/site/fred'>])
+
+Command line for this test should have no dirs, this file, and no other strings
+	>>> show( paths.split_directories_files(sys.argv) )
+	([], [<Path '/.../paths.test'>], [])

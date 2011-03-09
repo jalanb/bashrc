@@ -1,20 +1,11 @@
 from path import makepath,path
 
-home = path('~').expanduser()
-here = path('.')
-
-def mp3_files(self):
-	return self.files('*.mp3')
-
-path.mp3_files = mp3_files
-
 def environ_paths():
 	import environ
 	result = {}
 	for key,value in environ.jab.iteritems():
 		if key in result: raise KeyError('%s:%s -> %s' % (key,result[key],value))
-		paths = [ makepath(v) for v in value.split(':') ]
-		paths = [ p for p in paths if p.exists() ]
+		paths = [ p for p in string_to_paths(value) if p.exists() ]
 		if paths:
 			if paths[1:] or key.endswith('PATH'):
 				result[key] = paths
@@ -25,9 +16,13 @@ def environ_paths():
 	paths.__dict__.update(result)
 	return paths
 
+def string_to_paths(string):
+	for c in ':, ;':
+		if c in string:
+			return strings_to_paths( string.split(c) )
+	return [ makepath(string) ]
+
 def strings_to_paths(strings):
-	if type(strings) == type(''):
-		strings = strings.split(' ')
 	return [ makepath(s) for s in strings ]
 
 def split_directories(strings):
@@ -48,10 +43,10 @@ def files(strings):
 def directories(strings):
 	return split_directories(strings)[0]
 
+def from_home(p):
+	return home.relpathto(p)
+
 environ = environ_paths()
 
 here = path('.')
 home = path('~').expanduser()
-
-def from_home(p):
-	return home.relpathto(p)
