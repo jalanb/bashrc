@@ -65,6 +65,8 @@ alias in="to_source"
 
 alias jj="kd $JAB"
 
+alias kp="rsync -av"
+
 alias la="ls -a "
 alias lj="ls $JAB"
 alias ll="ls -lh "
