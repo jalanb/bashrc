@@ -183,6 +183,8 @@ alias jjya='ky $JAB/python/alanology'
 alias jjys='ky $JAB/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
+alias rias="ssh abrogan@172.20.1.172"
+
 alias tags="p $JAB/python/ptags.py "
 
 alias vvvv="v $JAB/vim/vimrc"
