@@ -65,14 +65,17 @@ def filter_names(names,wanted=None):
 
 def ly_rules(things):
 	oo = argv.options
-	try: exts = [ f.ext for f in things ]
+	try:
+		exts = [ f.ext for f in things ]
 	except AttributeError:
 		if ',' in things:
 			exts = things.split(',')
 			if exts[0].endswith('.py'):
 				exts[0] = '.py'
 		else:
-			exts = things
+			if type(things) == type(''):
+				things = [ things ]
+			exts = [ path.path(f).ext for f in things ]
 	python_present = '.py' in exts or 'py' in exts
 	python_missing = '.py' not in exts and 'py' not in exts
 	hide_python = oo.ython
