@@ -197,7 +197,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>q
 "noremap <leader>r
 "noremap <leader>s
-"noremap <leader>t
+ noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
 "noremap <leader>u
 "noremap <leader>v
  noremap <leader>w :w !sudo tee % >/dev/null<cr>
@@ -229,6 +229,9 @@ set nospell
 filetype on
 filetype plugin on
 filetype indent on
+"
+" diff options
+"
 if &diff
 	noremap o :diffget<cr>
 	noremap p :diffput<cr>
@@ -238,6 +241,12 @@ if &diff
 	set diffopt=filler,iwhite
 else
 	syntax on
+endif
+"
+" diff to when I started editting
+"
+if !exists(":DiffOrig")
+	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 "
 " Ok, ok, so I have some spelling blind-spots:
@@ -291,6 +300,10 @@ set nohlsearch
 "
 " and if we need a Tab in the middle of a line: use <S-Tab>
 "
+function! RetabAndStripTrailingWhitespace()
+	:retab!
+	:%s/\s\+$//e
+endfunction
 "
 " for history
 "
