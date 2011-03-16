@@ -21,6 +21,8 @@ Add links where programs expect to find them
 	ln -s ~/.jab/python/pythonrc.py ~/.pythonrc.py
 	ln -s ~/.jab/etc/subversion/config ~/.subversion/config
 	ln -s ~/.jab/etc/dir_colors ~/.dir_colors
+	ln -s ~/.jab/editrc ~/.editrc
+	ln -s ~/.jab/inputrc ~/.inputrc
  
 Start using it
 

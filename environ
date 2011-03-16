@@ -144,3 +144,5 @@ export         PROMPT_WHITE="\033[1;37m"
 export    PROMPT_LIGHT_GRAY="\033[0;37m"
 export           PROMPT_RED="\033[1;38m"
 export       PROMPT_RED_TOO="\033[0;38m"
+
+set -o vi
