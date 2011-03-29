@@ -22,6 +22,3 @@ Bash's environment variables are attributes of the module
 	>>> 'PYTHONPATH' in environ.jab
 	True
 
-	>>> environ.bash_is_xtracing()
-    False
-	
