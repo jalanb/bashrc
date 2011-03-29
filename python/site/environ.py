@@ -26,6 +26,18 @@ def read_bash(keys):
 		except KeyError: pass
 	return result
 
+def bash_is_xtracing():
+	import commands
+	options = commands.getoutput('set -o').splitlines()
+	try:
+		xtrace_option = [ o for o in options if 'xtrace' in o ][0]
+	except IndexError:
+		return False
+	name, value = xtrace_option.split()
+	return value == 'on'
+
+xtrace = bash_is_xtracing()
+
 jab = {}
 jab.update(read_bash(read_environ_keys()))
 globals().update(os.environ)
