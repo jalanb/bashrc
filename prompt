@@ -5,15 +5,15 @@
 export PROMPT_COLOUR=none
 if [ "$1" == "green" ]
 then
-	export PROMPT_COLOUR="$PROMPT_LIGHT_GREEN"
+	export PROMPT_COLOUR="$PROMPT_GREEN"
 	export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
 elif [ "$1" == "red" ]
 then
-	export PROMPT_COLOUR="$PROMPT_LIGHT_RED"
+	export PROMPT_COLOUR="$PROMPT_RED"
 	export PROMPT_OPPOSITE_COLOUR="$PROMPT_CYAN"
 elif [ "$1" == "blue" ]
 then
-	export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
+	export PROMPT_COLOUR="$PROMPT_BLUE"
 	export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
 else
 	export PROMPT_COLOUR=none
