@@ -18,7 +18,7 @@ highlight Comment	 	ctermfg=Grey					guifg=#808080
 highlight Constant	 	ctermfg=Cyan			cterm=none	guifg=#0066FF
 highlight CursorLine		cterm=underline					gui=underline guibg=#080808
 highlight string		ctermfg=Blue					guifg=Blue
-highlight pythonEscape		ctermfg=Blue					guifg=#000088
+highlight pythonEscape		ctermfg=DarkBlue					guifg=#000088
 highlight Identifier	 	ctermfg=Green					guifg=#44ff44
 highlight Keyword    		ctermfg=LightRed		cterm=bold	guifg=Red			gui=bold
 highlight Statement 		ctermfg=Red			cterm=bold	guifg=Red			gui=bold
