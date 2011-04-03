@@ -179,16 +179,18 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 " Leader keys
 "
 "noremap <leader>a
-"noremap <leader>b
+"noremap <leader>b EasyMotion
  noremap <leader>c :call PythonDec("class", -1)<CR>
  noremap <leader>C :call PythonDec("class", +1)<CR>
  noremap <leader>d :call PythonDec("function", -1)<CR>
  noremap <leader>D :call PythonDec("function", +1)<CR>
-"noremap <leader>e 
+"noremap <leader>e EasyMotion
+"noremap <leader>f EasyMotion
+"noremap <leader>g 
 "noremap <leader>h
 "noremap <leader>i
-"noremap <leader>j
-"noremap <leader>k
+"noremap <leader>j EasyMotion
+"noremap <leader>k EasyMotion
 "noremap <leader>l
 "noremap <leader>m
 "noremap <leader>n
@@ -196,11 +198,11 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>p
 "noremap <leader>q
 "noremap <leader>r
-"noremap <leader>s
+ noremap <leader>s :w !sudo tee % >/dev/null<cr>
  noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
 "noremap <leader>u
 "noremap <leader>v
- noremap <leader>w :w !sudo tee % >/dev/null<cr>
+"noremap <leader>w EasyMotion
 "noremap <leader>x
 "noremap <leader>y
 "noremap <leader>z
