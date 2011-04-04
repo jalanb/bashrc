@@ -45,8 +45,10 @@ syn keyword pythonStatement	pass print raise
 syn keyword pythonStatement	return try
 syn keyword pythonStatement	global assert
 syn keyword pythonStatement	lambda yield
-syn keyword pythonStatement	def class nextgroup=pythonFunction skipwhite
-syn match   pythonFunction	"[a-zA-Z_][a-zA-Z0-9_]*" contained
+syn keyword pythonStatement	class nextgroup=pythonClassname skipwhite
+syn keyword pythonStatement	def nextgroup=pythonFunction skipwhite
+syn match   pythonClassname	"\h\w*\((\h\w*)\)\?" contained
+syn match   pythonFunction	"\h\w*" contained
 syn keyword pythonRepeat	for while
 syn keyword pythonConditional	if elif else
 syn keyword pythonOperator	and in is not or
@@ -54,7 +56,8 @@ syn keyword pythonOperator	and in is not or
 syn keyword pythonPreCondit	import from as
 syn match   pythonComment	"#.*$" contains=pythonTodo,@Spell
 syn keyword pythonTodo		TODO FIXME XXX contained
-syn match   pythonCall		"\<\h\w*\ze("
+syn match   pythonCall		"\<[a-z_]\w*\ze("
+syn match   pythonInstance	"\<[A-Z]\w*\ze("
 syn match   pythonMember	"\.\h\w*\>"
 syn match   pythonMemberCall	"\.\h\w*\ze("
 syn match   pythonSelf		"\<self\>"
@@ -63,10 +66,10 @@ syn match   pythonSelf		"\<self\>"
 syn match   pythonDecorator	"@" display nextgroup=pythonFunction skipwhite
 
 " strings
-syn region pythonString		matchgroup=Normal start=+[uU]\='+ end=+'+ skip=+\\\\\|\\'+ contains=pythonEscape
-syn region pythonString		matchgroup=Normal start=+[uU]\="+ end=+"+ skip=+\\\\\|\\"+ contains=pythonEscape
-syn region pythonString		matchgroup=Normal start=+[uU]\="""+ end=+"""+ contains=pythonEscape,@Spell
-syn region pythonString		matchgroup=Normal start=+[uU]\='''+ end=+'''+ contains=pythonEscape,@Spell
+syn region pythonString		matchgroup=Normal start=+[uU]\='+ end=+'+ skip=+\\\\\|\\'+ contains=pythonEscape,pythonFormat
+syn region pythonString		matchgroup=Normal start=+[uU]\="+ end=+"+ skip=+\\\\\|\\"+ contains=pythonEscape,pythonFormat
+syn region pythonString		matchgroup=Normal start=+[uU]\="""+ end=+"""+ contains=pythonEscape,pythonFormat,@Spell
+syn region pythonString		matchgroup=Normal start=+[uU]\='''+ end=+'''+ contains=pythonEscape,pythonFormat,@Spell
 syn region pythonRawString	matchgroup=Normal start=+[uU]\=[rR]'+ end=+'+ skip=+\\\\\|\\'+
 syn region pythonRawString	matchgroup=Normal start=+[uU]\=[rR]"+ end=+"+ skip=+\\\\\|\\"+
 syn region pythonRawString	matchgroup=Normal start=+[uU]\=[rR]"""+ end=+"""+
@@ -76,6 +79,7 @@ syn match  pythonEscape		"\\\o\{1,3}" contained
 syn match  pythonEscape		"\\x\x\{2}" contained
 syn match  pythonEscape		"\(\\u\x\{4}\|\\U\x\{8}\)" contained
 syn match  pythonEscape		"\\$"
+syn match  pythonFormat		"%\((\h\w*)\)\?\([#0+ -]\)\?\(\d\+\|[*]\)\?\(\.\(\d\+\|[*]\)\)\?\([hlL]\)\?[diouxXeEfFgGcrs]" contained
 
 if exists("python_highlight_all")
   let python_highlight_numbers = 1
@@ -166,7 +170,7 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonOperator		Operator
   HiLink pythonPreCondit	PreCondit
   HiLink pythonComment		Comment
-  HiLink pythonTodo		Todo
+  HiLink pythonTodo			Todo
   HiLink pythonDecorator	Define
   if exists("python_highlight_numbers")
     HiLink pythonNumber	Number

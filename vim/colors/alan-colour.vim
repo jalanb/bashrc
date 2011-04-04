@@ -18,24 +18,28 @@ highlight Comment	 	ctermfg=Grey					guifg=#808080
 highlight Constant	 	ctermfg=Cyan			cterm=none	guifg=#0066FF
 highlight CursorLine		cterm=underline					gui=underline guibg=#080808
 highlight string		ctermfg=Blue					guifg=Blue
-highlight pythonEscape		ctermfg=DarkBlue					guifg=#000088
+highlight pythonEscape		ctermfg=DarkBlue				guifg=#000088
 highlight Identifier	 	ctermfg=Green					guifg=#44ff44
-highlight Keyword    		ctermfg=LightRed		cterm=bold	guifg=Red			gui=bold
-highlight Statement 		ctermfg=Red			cterm=bold	guifg=Red			gui=bold
-highlight PreProc	 	ctermfg=brown				guifg=#ff4444	gui=bold
+highlight Keyword    		ctermfg=Red			cterm=bold	guifg=Red			gui=bold
+highlight Statement 		ctermfg=196			cterm=bold	guifg=Red			gui=bold
+highlight Exception 		ctermfg=52			cterm=bold	guifg=#5f0000			gui=bold
+highlight PreProc	 	ctermfg=brown					guifg=#ff4444	gui=bold
 highlight Type		 	ctermfg=2					guifg=#ff4444	gui=bold
-highlight Special	 	ctermfg=red					guifg=#ff4444  gui=bold
+highlight Special	 	ctermfg=124					guifg=#ff4444  gui=bold
 highlight Error					ctermbg=Red					guibg=Red
 highlight Todo		 	ctermfg=Black	ctermbg=Green			guifg=#000080	guibg=#c0c000
 highlight Directory  		ctermfg=DarkGreen				guifg=DarkGreen
 highlight StatusLine 		ctermfg=Black	ctermbg=Blue	cterm=none	guifg=Black	guibg=Blue	gui=none
-highlight pythonClass		ctermfg=Green					guifg=Blue
-highlight pythonSelf		ctermfg=red					guifg=#ff88ff
+highlight pythonClassname	ctermfg=22					guifg=Blue
+highlight pythonFunction	ctermfg=34					guifg=Blue
+highlight pythonSelf		ctermfg=197					guifg=#ff88ff
 highlight pythonCall            ctermfg=green					guifg=#bbff88
-highlight pythonMemberCall      ctermfg=green					guifg=#bbff44
-highlight pythonMember		ctermfg=blue					guifg=#bb44ff
-highlight pythonObject		ctermfg=blue					guifg=#8800ff
+highlight pythonInstance        ctermfg=22					guifg=#bbff88
+highlight pythonMemberCall      ctermfg=40					guifg=#bbff44
+highlight pythonMember		ctermfg=57					guifg=#bb44ff
+highlight pythonObject		ctermfg=93					guifg=#8800ff
 highlight pythonVariable	ctermfg=blue					guifg=#8800ff
+highlight pythonFormat		ctermfg=21					guifg=#0000df
 "highlight pythonBoolean		ctermfg=red					guifg=red
 
 
