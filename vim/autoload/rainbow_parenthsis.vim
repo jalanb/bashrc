@@ -31,22 +31,22 @@
 " Section: highlight {{{1
 
 function rainbow_parenthsis#Activate()
-    highlight default level1c  ctermbg=Black ctermfg=brown        guibg=WhiteSmoke   guifg=RoyalBlue3
-    highlight default level2c  ctermbg=Black ctermfg=yellow       guibg=WhiteSmoke   guifg=SeaGreen3
-    highlight default level3c  ctermbg=Black ctermfg=darkgray     guibg=WhiteSmoke   guifg=DarkOrchid3
-    highlight default level4c  ctermbg=Black ctermfg=darkgreen    guibg=WhiteSmoke   guifg=firebrick3
-    highlight default level5c  ctermbg=Black ctermfg=darkblue     guibg=AntiqueWhite guifg=RoyalBlue3
-    highlight default level6c  ctermbg=Black ctermfg=darkred      guibg=AntiqueWhite guifg=SeaGreen3
-    highlight default level7c  ctermbg=Black ctermfg=darkmagenta  guibg=AntiqueWhite guifg=DarkOrchid3
-    highlight default level8c  ctermbg=Black ctermfg=darkcyan     guibg=AntiqueWhite guifg=firebrick3
-    highlight default level9c  ctermbg=Black ctermfg=lightred     guibg=LemonChiffon guifg=RoyalBlue3
-    highlight default level10c ctermbg=Black ctermfg=green        guibg=LemonChiffon guifg=SeaGreen3
-    highlight default level11c ctermbg=Black ctermfg=cyan         guibg=LemonChiffon guifg=DarkOrchid3
-    highlight default level12c ctermbg=Black ctermfg=white        guibg=LemonChiffon guifg=firebrick3
-    highlight default level13c ctermbg=Black ctermfg=grey         guibg=AliceBlue    guifg=RoyalBlue3
-    highlight default level14c ctermbg=Black ctermfg=magenta      guibg=AliceBlue    guifg=SeaGreen3
-    highlight default level15c ctermbg=Black ctermfg=brown        guibg=AliceBlue    guifg=DarkOrchid3
-    highlight default level16c ctermbg=Black ctermfg=yellow       guibg=AliceBlue    guifg=firebrick3
+    highlight default level1c  ctermbg=Black ctermfg=brown        guibg=Black    guifg=brown
+    highlight default level2c  ctermbg=Black ctermfg=yellow       guibg=Black    guifg=yellow
+    highlight default level3c  ctermbg=Black ctermfg=darkgray     guibg=Black    guifg=darkgray
+    highlight default level4c  ctermbg=Black ctermfg=darkgreen    guibg=Black    guifg=darkgreen
+    highlight default level5c  ctermbg=Black ctermfg=darkblue     guibg=Black    guifg=darkblue
+    highlight default level6c  ctermbg=Black ctermfg=darkred      guibg=Black    guifg=darkred
+    highlight default level7c  ctermbg=Black ctermfg=darkmagenta  guibg=Black    guifg=darkmagenta
+    highlight default level8c  ctermbg=Black ctermfg=darkcyan     guibg=Black    guifg=darkcyan
+    highlight default level9c  ctermbg=Black ctermfg=lightred     guibg=Black    guifg=lightred
+    highlight default level10c ctermbg=Black ctermfg=green        guibg=Black    guifg=green
+    highlight default level11c ctermbg=Black ctermfg=cyan         guibg=Black    guifg=cyan
+    highlight default level12c ctermbg=Black ctermfg=white        guibg=Black    guifg=white
+    highlight default level13c ctermbg=Black ctermfg=grey         guibg=Black    guifg=grey
+    highlight default level14c ctermbg=Black ctermfg=magenta      guibg=Black    guifg=magenta
+    highlight default level15c ctermbg=Black ctermfg=brown        guibg=Black    guifg=brown
+    highlight default level16c ctermbg=Black ctermfg=yellow       guibg=Black    guifg=yellow
     let rainbow_parenthesis#active = 1
 endfunction
 
