@@ -57,11 +57,16 @@ done
 
 # Recover any files which have corresponding swap files
 safe=1
+file_exists=0
 for file in $args
 do
 	if [[ ${file#+} != $file || ${file#-} != $file ]] 
 	then
 		continue
+	fi
+	if [[ -e $file ]]
+	then
+		file_exists=1
 	fi
 	cd `dirname $file`
 	base=`basename $file`
@@ -122,11 +127,17 @@ else
 	then
 		echo It is not safe to run \"$EDITOR $*\"
 	else
-		read -p"$EDITOR $args ? " reply
-		if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
-		then
+		if [[ $file_exists == "0" ]]
+		then 
 			$EDITOR $args
 			$POST_PROCESSING
+		else
+			read -p"$EDITOR $args ? " reply
+			if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
+			then
+				$EDITOR $args
+				$POST_PROCESSING
+			fi
 		fi
 	fi
 fi
