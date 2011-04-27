@@ -1072,6 +1072,9 @@ class Path(path):
 	def from_home(self):
 		return Path('~').expanduser().relpathto(self)
 
+	def listdir(self, pattern=None):
+		return [ Path(p) for p in path(self).listdir(pattern) ]
+
 def filter_svn(dirs,ignore_subversion):
 	if ignore_subversion:
 		return [ p for p in dirs if '.svn' not in p.splitall() ]
