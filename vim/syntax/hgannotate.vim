@@ -1,6 +1,7 @@
 " Vim syntax file
-" Language:	VCS commit file
-" Maintainer:	Bob Hiestand (bob.hiestand@gmail.com)
+" Language:	HG annotate output
+" Maintainer:	Bob Hiestand <bob.hiestand@gmail.com>
+" Remark:	Used by the vcscommand plugin.
 " License:
 " Copyright (c) Bob Hiestand
 "
@@ -26,6 +27,14 @@ if exists("b:current_syntax")
 	finish
 endif
 
-syntax region vcsComment start="^VCS: " end="$"
-highlight link vcsComment Comment
-let b:current_syntax = "vcscommit"
+syn match hgVer /\d\+/ contained
+syn match hgName /^\s*\S\+/ contained
+syn match hgHead /^\s*\S\+\s\+\d\+:/ contains=hgVer,hgName
+
+if !exists("did_hgannotate_syntax_inits")
+	let did_hgannotate_syntax_inits = 1
+	hi link hgName Type
+	hi link hgVer Statement
+endif
+
+let b:current_syntax="hgAnnotate"

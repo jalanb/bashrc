@@ -1,6 +1,6 @@
 " vim600: set foldmethod=marker:
 "
-" SVK extension for VCSCommand.
+" Mercurial extension for VCSCommand.
 "
 " Maintainer:    Bob Hiestand <bob.hiestand@gmail.com>
 " License:
@@ -28,9 +28,16 @@
 "
 " Options documentation: {{{2
 "
-" VCSCommandSVKExec
-"   This variable specifies the SVK executable.  If not set, it defaults to
-"   'svk' executed from the user's executable path.
+let VCSCommandHGExec="/opt/local/bin/hg"
+"   This variable specifies the mercurial executable.  If not set, it defaults
+"   to 'hg' executed from the user's executable path.
+"
+" VCSCommandHGDiffExt
+"   This variable, if set, sets the external diff program used by Subversion.
+"
+" VCSCommandHGDiffOpt
+"   This variable, if set, determines the options passed to the hg diff
+"   command (such as 'u', 'w', or 'b').
 
 " Section: Plugin header {{{1
 
@@ -45,8 +52,8 @@ endif
 
 runtime plugin/vcscommand.vim
 
-if !executable(VCSCommandGetOption('VCSCommandSVKExec', 'svk'))
-	" SVK is not installed
+if !executable(VCSCommandGetOption('VCSCommandHGExec', 'hg'))
+	" HG is not installed
 	finish
 endif
 
@@ -55,93 +62,89 @@ set cpo&vim
 
 " Section: Variable initialization {{{1
 
-let s:svkFunctions = {}
+let s:hgFunctions = {}
 
 " Section: Utility functions {{{1
 
 " Function: s:Executable() {{{2
-" Returns the executable used to invoke SVK suitable for use in a shell
+" Returns the executable used to invoke hg suitable for use in a shell
 " command.
 function! s:Executable()
-	return shellescape(VCSCommandGetOption('VCSCommandSVKExec', 'svk'))
+	return shellescape(VCSCommandGetOption('VCSCommandHGExec', 'hg'))
 endfunction
 
 " Function: s:DoCommand(cmd, cmdName, statusText, options) {{{2
-" Wrapper to VCSCommandDoCommand to add the name of the SVK executable to the
+" Wrapper to VCSCommandDoCommand to add the name of the HG executable to the
 " command argument.
 function! s:DoCommand(cmd, cmdName, statusText, options)
-	if VCSCommandGetVCSType(expand('%')) == 'SVK'
+	if VCSCommandGetVCSType(expand('%')) == 'HG'
 		let fullCmd = s:Executable() . ' ' . a:cmd
 		return VCSCommandDoCommand(fullCmd, a:cmdName, a:statusText, a:options)
 	else
-		throw 'SVK VCSCommand plugin called on non-SVK item.'
+		throw 'HG VCSCommand plugin called on non-HG item.'
 	endif
 endfunction
 
 " Section: VCS function implementations {{{1
 
-" Function: s:svkFunctions.Identify(buffer) {{{2
-function! s:svkFunctions.Identify(buffer)
-	let fileName = resolve(bufname(a:buffer))
-	if isdirectory(fileName)
-		let directoryName = fileName
-	else
-		let directoryName = fnamemodify(fileName, ':p:h')
-	endif
-	let statusText = s:VCSCommandUtility.system(s:Executable() . ' info -- "' . directoryName . '"', "no")
-	if(v:shell_error)
-		return 0
-	else
-		return 1
-	endif
+" Function: s:hgFunctions.Identify(buffer) {{{2
+function! s:hgFunctions.Identify(buffer)
+	let oldCwd = VCSCommandChangeToCurrentFileDir(resolve(bufname(a:buffer)))
+	try
+		call s:VCSCommandUtility.system(s:Executable() . ' root')
+		if(v:shell_error)
+			return 0
+		else
+			return g:VCSCOMMAND_IDENTIFY_INEXACT
+		endif
+	finally
+		call VCSCommandChdir(oldCwd)
+	endtry
 endfunction
 
-" Function: s:svkFunctions.Add() {{{2
-function! s:svkFunctions.Add(argList)
-	return s:DoCommand(join(['add'] + a:argList, ' '), 'add', join(a:argList, ' '), {})
+" Function: s:hgFunctions.Add() {{{2
+function! s:hgFunctions.Add(argList)
+	return s:DoCommand(join(['add -v'] + a:argList, ' '), 'add', join(a:argList, ' '), {})
 endfunction
 
-" Function: s:svkFunctions.Annotate(argList) {{{2
-function! s:svkFunctions.Annotate(argList)
+" Function: s:hgFunctions.Annotate(argList) {{{2
+function! s:hgFunctions.Annotate(argList)
 	if len(a:argList) == 0
-		if &filetype == 'SVKannotate'
+		if &filetype == 'HGannotate'
 			" Perform annotation of the version indicated by the current line.
 			let caption = matchstr(getline('.'),'\v^\s+\zs\d+')
 			let options = ' -r' . caption
 		else
 			let caption = ''
-			let options = ''
+			let options = ' -un'
 		endif
 	elseif len(a:argList) == 1 && a:argList[0] !~ '^-'
 		let caption = a:argList[0]
-		let options = ' -r' . caption
+		let options = ' -un -r' . caption
 	else
 		let caption = join(a:argList, ' ')
 		let options = ' ' . caption
 	endif
 
-	let resultBuffer = s:DoCommand('blame' . options, 'annotate', caption, {})
-	if resultBuffer > 0
-		normal 1G2dd
-	endif
-	return resultBuffer
+	return s:DoCommand('blame' . options, 'annotate', caption, {})
 endfunction
 
-" Function: s:svkFunctions.Commit(argList) {{{2
-function! s:svkFunctions.Commit(argList)
-	let resultBuffer = s:DoCommand('commit -F "' . a:argList[0] . '"', 'commit', '', {})
-	if resultBuffer == 0
+" Function: s:hgFunctions.Commit(argList) {{{2
+function! s:hgFunctions.Commit(argList)
+	try
+		return s:DoCommand('commit -v -l "' . a:argList[0] . '"', 'commit', '', {})
+	catch /Version control command failed.*nothing changed/
 		echomsg 'No commit needed.'
-	endif
+	endtry
 endfunction
 
-" Function: s:svkFunctions.Delete() {{{2
-function! s:svkFunctions.Delete(argList)
-	return s:DoCommand(join(['delete'] + a:argList, ' '), 'delete', join(a:argList, ' '), {})
+" Function: s:hgFunctions.Delete() {{{2
+function! s:hgFunctions.Delete(argList)
+	return s:DoCommand(join(['remove'] + a:argList, ' '), 'remove', join(a:argList, ' '), {})
 endfunction
 
-" Function: s:svkFunctions.Diff(argList) {{{2
-function! s:svkFunctions.Diff(argList)
+" Function: s:hgFunctions.Diff(argList) {{{2
+function! s:hgFunctions.Diff(argList)
 	if len(a:argList) == 0
 		let revOptions = []
 		let caption = ''
@@ -154,51 +157,65 @@ function! s:svkFunctions.Diff(argList)
 		let revOptions = a:argList
 	endif
 
-	return s:DoCommand(join(['diff'] + revOptions), 'diff', caption, {})
+	let hgDiffExt = VCSCommandGetOption('VCSCommandHGDiffExt', '')
+	if hgDiffExt == ''
+		let diffExt = []
+	else
+		let diffExt = ['--diff-cmd ' . hgDiffExt]
+	endif
+
+	let hgDiffOpt = VCSCommandGetOption('VCSCommandHGDiffOpt', '')
+	if hgDiffOpt == ''
+		let diffOptions = []
+	else
+		let diffOptions = ['-x -' . hgDiffOpt]
+	endif
+
+	return s:DoCommand(join(['diff'] + diffExt + diffOptions + revOptions), 'diff', caption, {})
 endfunction
 
-" Function: s:svkFunctions.GetBufferInfo() {{{2
+" Function: s:hgFunctions.Info(argList) {{{2
+function! s:hgFunctions.Info(argList)
+	return s:DoCommand(join(['log --limit 1'] + a:argList, ' '), 'log', join(a:argList, ' '), {})
+endfunction
+
+" Function: s:hgFunctions.GetBufferInfo() {{{2
 " Provides version control details for the current file.  Current version
 " number and current repository version number are required to be returned by
 " the vcscommand plugin.
-" Returns: List of results:  [revision, repository]
+" Returns: List of results:  [revision, repository, branch]
 
-function! s:svkFunctions.GetBufferInfo()
+function! s:hgFunctions.GetBufferInfo()
 	let originalBuffer = VCSCommandGetOriginalBuffer(bufnr('%'))
-	let fileName = resolve(bufname(originalBuffer))
-	let statusText = s:VCSCommandUtility.system(s:Executable() . ' status -v -- "' . fileName . '"')
+	let fileName = bufname(originalBuffer)
+	let statusText = s:VCSCommandUtility.system(s:Executable() . ' status -- "' . fileName . '"')
 	if(v:shell_error)
 		return []
 	endif
 
-	" File not under SVK control.
+	" File not under HG control.
 	if statusText =~ '^?'
 		return ['Unknown']
 	endif
 
-	let [flags, revision, repository] = matchlist(statusText, '^\(.\{3}\)\s\+\(\S\+\)\s\+\(\S\+\)\s\+\(\S\+\)\s')[1:3]
+	let parentsText = s:VCSCommandUtility.system(s:Executable() . ' parents -- "' . fileName . '"')
+	let revision = matchlist(parentsText, '^changeset:\s\+\(\S\+\)\n')[1]
+
+	let logText = s:VCSCommandUtility.system(s:Executable() . ' log -- "' . fileName . '"')
+	let repository = matchlist(logText, '^changeset:\s\+\(\S\+\)\n')[1]
+
 	if revision == ''
 		" Error
 		return ['Unknown']
-	elseif flags =~ '^A'
+	elseif statusText =~ '^A'
 		return ['New', 'New']
 	else
 		return [revision, repository]
 	endif
 endfunction
 
-" Function: s:svkFunctions.Info(argList) {{{2
-function! s:svkFunctions.Info(argList)
-	return s:DoCommand(join(['info'] + a:argList, ' '), 'info', join(a:argList, ' '), {})
-endfunction
-
-" Function: s:svkFunctions.Lock(argList) {{{2
-function! s:svkFunctions.Lock(argList)
-	return s:DoCommand(join(['lock'] + a:argList, ' '), 'lock', join(a:argList, ' '), {})
-endfunction
-
-" Function: s:svkFunctions.Log() {{{2
-function! s:svkFunctions.Log(argList)
+" Function: s:hgFunctions.Log(argList) {{{2
+function! s:hgFunctions.Log(argList)
 	if len(a:argList) == 0
 		let options = []
 		let caption = ''
@@ -215,13 +232,13 @@ function! s:svkFunctions.Log(argList)
 	return resultBuffer
 endfunction
 
-" Function: s:svkFunctions.Revert(argList) {{{2
-function! s:svkFunctions.Revert(argList)
+" Function: s:hgFunctions.Revert(argList) {{{2
+function! s:hgFunctions.Revert(argList)
 	return s:DoCommand('revert', 'revert', '', {})
 endfunction
 
-" Function: s:svkFunctions.Review(argList) {{{2
-function! s:svkFunctions.Review(argList)
+" Function: s:hgFunctions.Review(argList) {{{2
+function! s:hgFunctions.Review(argList)
 	if len(a:argList) == 0
 		let versiontag = '(current)'
 		let versionOption = ''
@@ -233,25 +250,24 @@ function! s:svkFunctions.Review(argList)
 	return s:DoCommand('cat' . versionOption, 'review', versiontag, {})
 endfunction
 
-" Function: s:svkFunctions.Status(argList) {{{2
-function! s:svkFunctions.Status(argList)
-	let options = ['-v']
+" Function: s:hgFunctions.Status(argList) {{{2
+function! s:hgFunctions.Status(argList)
+	let options = ['-A', '-v']
 	if len(a:argList) != 0
 		let options = a:argList
 	endif
 	return s:DoCommand(join(['status'] + options, ' '), 'status', join(options, ' '), {})
 endfunction
 
-" Function: s:svkFunctions.Unlock(argList) {{{2
-function! s:svkFunctions.Unlock(argList)
-	return s:DoCommand(join(['unlock'] + a:argList, ' '), 'unlock', join(a:argList, ' '), {})
-endfunction
-" Function: s:svkFunctions.Update(argList) {{{2
-function! s:svkFunctions.Update(argList)
+" Function: s:hgFunctions.Update(argList) {{{2
+function! s:hgFunctions.Update(argList)
 	return s:DoCommand('update', 'update', '', {})
 endfunction
 
+" Annotate setting {{{2
+let s:hgFunctions.AnnotateSplitRegex = '\d\+: '
+
 " Section: Plugin Registration {{{1
-let s:VCSCommandUtility = VCSCommandRegisterModule('SVK', expand('<sfile>'), s:svkFunctions, [])
+let s:VCSCommandUtility = VCSCommandRegisterModule('HG', expand('<sfile>'), s:hgFunctions, [])
 
 let &cpo = s:save_cpo
