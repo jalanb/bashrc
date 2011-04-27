@@ -27,8 +27,9 @@ def remove_globs(globs):
 
 def wipe():
 	remove_globs([ '*~', '.*~', '*.orig', 'fred*', 'mary', '*.tmp', '*.bak', 'one', 'two' ])
+	[ f.rm() for f in argv.first_directory.files('*.fail') if not f.size ]
 
-def really():
+def delete():
 	remove_globs([ '*.pyc', '*.pyo' ] )
 
 def svn_stat():
