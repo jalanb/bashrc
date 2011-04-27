@@ -48,7 +48,9 @@ nnoremap <C-F4> <C-W>c
 "noremap b - backword
 "noremap c - start cutting
 "noremap d - delete
-"noremap e 
+"noremap e - to end of word
+"noremap f - search rightward for char
+"noremap g - many actions
 "noremap h - go left
 "noremap i - insert
  noremap j jzz
@@ -119,10 +121,10 @@ nnoremap <C-F4> <C-W>c
 "
 "noremap A - Append
  noremap B :ConqueTerm bash<cr>
-"noremap C
-"noremap D
-"noremap E
-"noremap F
+"noremap C c$
+"noremap D d$
+"noremap E e
+"noremap F f leftwards
 "noremap G
  noremap H :set hlsearch<cr>
 "noremap I - Insert
