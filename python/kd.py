@@ -1,7 +1,33 @@
 import os
 import sys
+import inspect
 from path import path
+import argv
 
+debugging = False
+
+def debug(message):
+	if not debugging: return
+	print >> sys.stderr, '%s: %r' % (sys.argv[0], message)
+	
+def enter_method():
+	frame = inspect.currentframe().f_back
+	code = frame.f_code
+	args, varargs, varkw, lokals = inspect.getargvalues(frame)
+	values = [ lokals[a] for a in args ]
+	return 'def %s%s' % (code.co_name,tuple(values))
+	
+def exit_method():
+	frame = inspect.currentframe().f_back
+	code = frame.f_code
+	args, varargs, varkw, lokals = inspect.getargvalues(frame)
+	arg_values = [ lokals[a] for a in args ]
+	result = [ 'return %s%s:' % (code.co_name,tuple(arg_values)) ]
+	for name, value in lokals.iteritems():
+		if name in args: continue
+		result.append( '%r : %r' % ( name, value ) )
+	return '\n\t'.join(result)
+	
 def show_not_dir(p):
 	if not p:
 		raise ValueError('bad argument: %r' % p)
@@ -12,8 +38,10 @@ def show_not_dir(p):
 	raise ValueError('%s is not a directory' % prev)
 	
 def try_others(dirr,sub_dir):
+	debug(enter_method())
 	p = path(dirr)
 	if p.parent.isdir():
+		debug(exit_method())
 		return p.parent
 	p = path(os.getcwd())
 	if sub_dir:
@@ -26,29 +54,44 @@ def try_others(dirr,sub_dir):
 				raise ValueError('Could not find %r in %r' % ( sub_dir, p ))
 	return path(dirr)
 
-def find_dir(dirr,sub_dir=None):
-	if dirr == '':
+def try_sub_dirs(top, sub_dir):
+	debug(enter_method())
+	result = []
+	for d in top.dirs():
+		if sub_dir in d.name:
+			result.append(d)
+	if result:
+		debug(exit_method())
+		return result
+	for d in top.dirs():
+		if d.name == '.svn': continue
+		result.extend( try_sub_dirs(d, sub_dir) )
+	debug(exit_method())
+	return result
+
+def find_dir(start_dir,sub_dir=None):
+	debug(enter_method())
+	if start_dir == '':
 		return path('~').expanduser()
-	if dirr == '-':
-		try: dirr = os.environ['OLDPWD']
-		except KeyError: dirr = '~'
-	whither = path(dirr)
+	if start_dir == '-':
+		try: start_dir = os.environ['OLDPWD']
+		except KeyError: start_dir = '~'
+	whither = path(start_dir)
 	if whither.isfile():
 		whither = whither.parent
 	if not whither.isdir():
-		whither = try_others(dirr,sub_dir)
+		whither = try_others(start_dir,sub_dir)
 	if not whither.isdir():
 		show_not_dir(whither)
 		return None
-	if sub_dir:
-		possibles = [ x for x in whither.walkdirs() if sub_dir in x.name ]
-		if len(possibles) == 1:
-			whither = possibles[0]
-		elif not possibles:
-			pass
-		else:
-			raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles) )
-	return whither
+	if not sub_dir:
+		return whither
+	possibles = try_sub_dirs(whither,sub_dir)
+	if len(possibles) == 1:
+		return possibles[0]
+	if not possibles:
+		return whither
+	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles) )
 
 def parse_command_line(args):
 	if len(args) > 2:
@@ -57,6 +100,7 @@ def parse_command_line(args):
 		args = '', None
 	elif len(args) == 1:
 		args += [ None ]
+	debug('args: %s' % str(args) )
 	return args
 
 def chdir(whither):

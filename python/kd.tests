@@ -22,14 +22,17 @@ Directories found must be real
 	...
 	ValueError: rubbish is not a directory
 
+	>>> import paths
+	>>> a_known_directory = paths.environ.JAB
+
 Can send a blank as the sub-dir
 
-	>>> kd.find_dir('/usr/local','')
-	<path '/usr/local'>
+	>>> kd.find_dir(a_known_directory,'')
+	<path '/.../.jab'>
 
 Same effect if sub-dir is not found
-	>>> kd.find_dir('/usr/local','this_is_not_real')
-	<path '/usr/local'>
+	>>> kd.find_dir(a_known_directory,'this_is_not_real')
+	<path '/.../.jab'>
 
 
 When main() fails it prints out nothing
@@ -37,6 +40,13 @@ When main() fails it prints out nothing
 	>>> sys.argv = [ 'kd', 'no_such_directory' ]
 	>>> kd.main()
 	1
+
+	>>> kd.want_debugging = True
+	>>> kd.find_dir('/usr/local/trunk/trackers','repo')
+	kd: "def find_dir('/usr/local/trunk/trackers', 'repo')"
+	kd: "def try_sub_dirs(<path '/usr/local/trunk/trackers'>, 'repo')"
+	<path '/usr/local/trunk/trackers/repository'>
+	>>> kd.want_debugging = False
 
 Cleanup
 =======
