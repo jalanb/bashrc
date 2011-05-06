@@ -223,8 +223,8 @@ colorscheme alan-colour
 let g:SeeTabGuiFG="Cyan"
 set title
 set number
-set showmode
-set showcmd
+set showmode " If in Insert, Replace or Visual mode put a message on the last line.
+set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
 set ts=4
 set shiftwidth=4
@@ -264,24 +264,24 @@ autocmd FileType c,cpp,h,java set cindent
 "
 " From http://items.sjbach.com/319/configuring-vim-right
 "
-set hidden
-set scrolloff=3
+set hidden		" When on a buffer becomes hidden when it is abandoned.
+set scrolloff=3	" Minimal number of screen lines to keep above and below the cursor.
 set ruler
 set shortmess=atI
 set visualbell
 "
 " From http://www.pixelbeat.org/settings/.vimrc
 "
-set nojoinspaces
-set cursorline
-"Ignore these files when completing names and in Explorer
+set nojoinspaces	" Do not insert two spaces after a '.', '?' and '!' with a join command.
+set cursorline		" Highlight the screen line of the cursor with CursorLine
 set wildmenu
+set wildmode=list:longest,full
+"Ignore these files when completing names and in Explorer
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
-let g:is_posix = 1
 
 "
 " From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html
-"
+"	When one of the patterns matches with the name of the file which is written, no backup file is created.
 set backupskip=/tmp/*,/private/tmp/*
 
 "
@@ -316,8 +316,6 @@ set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
 "
 " for filename completion (with Tab)
 "
-set wildmode=list:longest,full
-
 let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
 let g:explVertical=1
 let g:explWinSize=1
@@ -337,6 +335,8 @@ let g:jabSplitRight=1
 let g:jabDetailedList=1
 let g:jabSortBy='date'
 
+let g:is_posix = 1
+
 set paste
 
 " Restore my window title
@@ -344,3 +344,10 @@ let &titleold="I choose to start one small step now"
 
 " Honour those wee lines at eof
 set modeline
+
+" Enable screen swapping, which seems missing in the linux terminfo entry
+" help xterm-screens for more info
+if &term == "linux"
+	set t_ti=[?1049h
+	set t_te=[?1049l
+endif
