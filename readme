@@ -23,6 +23,11 @@ Add links where programs expect to find them
 	ln -s ~/.jab/etc/dir_colors ~/.dir_colors
 	ln -s ~/.jab/editrc ~/.editrc
 	ln -s ~/.jab/inputrc ~/.inputrc
+	ln -s ~/.jab/ipython/config_helper_functions.py ~/.ipython
+	ln -s ~/.jab/ipython/ipy_user_conf.py ~/.ipython
+	ln -s ~/.jab/ipython/ipythonrc ~/.ipython
+	ln -s ~/.jab/ipython/options.conf ~/.ipython
+	
  
 Start using it
 
