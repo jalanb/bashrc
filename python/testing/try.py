@@ -24,6 +24,11 @@ def run_command(command):
 	print output
 	return True
 
+def show(thing):
+	if type(thing) == type(re):
+		return pprint(help(thing))
+	return pprint(thing)
+
 def spread_attributes(thing, exclude = None):
 	'''Spread out the attributes of thing onto stdout
 	
@@ -198,7 +203,7 @@ def test():
 							'see_methods' : see_methods,
 							'see_attributes' : see_attributes,
 							'makepath' : makepath,
-							'show' : pprint,
+							'show' : show,
 							'bash' : run_command,
 						}
 					)
