@@ -14,12 +14,27 @@ export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 
 export XAUTHORITY=$HOME/.Xauthority
 
-if l -@ >/dev/null 2>&1 
+if [[ -f /usr/local/bin/gls ]]
 then
-	# the ls option for colour is "-@" on my macbook
-	export LS_COLOUR_OPTION='-@'
+	LS_PROGRAM=/usr/local/bin/gls
 else
+	LS_PROGRAM=/bin/ls
+fi
+
+if $LS_PROGRAM -@ >/dev/null 2>&1 
+then
+	export LS_COLOUR_OPTION='-@'
+elif $LS_PROGRAM --color=auto >/dev/null 2>&1
+then
 	export LS_COLOUR_OPTION='--color=auto'
+else
+	export LS_COLOUR_OPTION=
+fi
+if $LS_PROGRAM --group-directories-first >/dev/null 2>&1
+then
+	export LS_DIRS_OPTION='--group-directories-first'
+else
+	export LS_DIRS_OPTION=
 fi
 
 add_to_path ()
