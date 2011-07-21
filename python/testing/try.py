@@ -10,7 +10,7 @@ import datetime
 from pprint import pprint, pformat
 
 from path import makepath
-from see import see, see_methods, see_attributes
+from see import see, see_methods, see_attributes, spread
 import test_files
 
 sys_argv = sys.argv
@@ -28,55 +28,6 @@ def show(thing):
 	if type(thing) == type(re):
 		return pprint(help(thing))
 	return pprint(thing)
-
-def spread_attributes(thing, exclude = None):
-	'''Spread out the attributes of thing onto stdout
-	
-	exclude is a list of regular expressions
-		attributes matching any if these will not be shown
-		if the default of None is used it is set to [ '__.*__' ]
-	'''
-	ids = []
-	if not exclude:
-		exclude = [ '__.*__' ]
-	exclusions = [ re.compile(e) for e in exclude ]
-
-	def spread_out_an_attribute(v,separator):
-		if not v:
-			return repr(v)
-		if id(v) in ids:
-			return str(v)
-		return spread_out_the_attributes(v,separator)
-
-	def spread_out_the_attributes(thing,separator):
-		if not thing or not hasattr(thing,'__dict__'):
-			return pformat(thing)
-		ids.append(id(thing))
-		attributes_list = []
-		for k,v in thing.__dict__.iteritems():
-			if type(v) in [ type(os) ]: continue
-			if callable(v): continue
-			excluded = False
-			for exclusion in exclusions:
-				if exclusion.search(k):
-					excluded = True
-					break
-			if excluded: continue
-			if hasattr(v,'__repr__'):
-				value = v.__repr__()
-			else:
-				value = spread_out_an_attribute(v,separator)
-			lines = separator.join(value.splitlines())
-			attributes_list.append('%s : %s' % (k,lines))
-		attributes_string = separator.join( attributes_list )
-		ids.pop()
-		if hasattr(thing,'__class__'):
-			klass = thing.__class__
-		else:
-			klass = dir(thing)
-		return '''<%s%s%s\n%s>''' % ( klass, separator, attributes_string, separator[1:-2])
-
-	print spread_out_the_attributes(thing,'\n\t')
 
 class Test_Being_Run:
 	'''Encapsulation of the current test'''
@@ -199,7 +150,7 @@ def test():
 							'test' : Test_Being_Run(test_script),
 							'sys' : sys,
 							'see' : see,
-							'spread' : spread_attributes,
+							'spread' : spread,
 							'see_methods' : see_methods,
 							'see_attributes' : see_attributes,
 							'makepath' : makepath,
