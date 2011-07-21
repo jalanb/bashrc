@@ -11,32 +11,19 @@ source $VIMRUNTIME/mswin.vim
 "
 " function keys 
 "
- noremap  <F1>		:help<cr>
-"noremap  <F2> 
- noremap  <F3> #
- noremap  <F4> W
+ noremap  <F1>      :help<cr>
+"noremap  <F2>
+"noremap  <F3>
+ noremap  <F4>       <c-w>W
 "noremap  <F5>
 "noremap  <F6>
 "noremap  <F7>
  noremap  <F8>      :SeeTab<CR>
  noremap  <F9>      :w!<CR>
- noremap <F10>      :qa!<CR>
- noremap <F11>      :x<CR>
- noremap <F12>      :map 
-"inoremap <F1>
-"inoremap <F2>
-inoremap  <F3>      #
-inoremap  <F4> <C-w>W
-"inoremap <F5>
-"inoremap <F6>
-"inoremap  <F7>
-inoremap  <F8> <Esc>:SeeTab<CR>a
-inoremap  <F9> <Esc>:w!<CR>a
-inoremap <F10> <Esc>:q<CR>
-inoremap <F11> <Esc>:x<CR>
-inoremap <F12> <Esc>:map 
+"noremap <F10>
+ noremap <F11>      :map <F11> 
+ noremap <F12>      :map <F12> 
 
- noremap <S-F3> *
  noremap <S-F4> <C-W>P
 nnoremap <C-F4> <C-W>c
 "
