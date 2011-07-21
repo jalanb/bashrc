@@ -23,6 +23,6 @@ add_to_pythonpath ()
 add_to_pythonpath $JAB/python/site
 add_to_pythonpath $HOME/python/site
 add_to_pythonpath $HOME/jab/python/site
-add_to_pythonpath $SITE/altobridge
+add_to_pythonpath $SITE
 
 [[ -f ~/.pythonrc.py ]] &&  export PYTHONSTARTUP=~/.pythonrc.py
