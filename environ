@@ -11,6 +11,14 @@ export FIGNORE=.pyc:.swp:~:.o
 
 export HISTSIZE=100000
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+#  remember multi-line commands
+shopt -s cmdhist
+# edit a failed history substitution (default just ignores them)
+shopt -s histreedit
+# edit history line before executing
+shopt -s histverify 
+# save multi-line commands to history with "\n", not ":"
+shopt -s lithist
 
 export XAUTHORITY=$HOME/.Xauthority
 
