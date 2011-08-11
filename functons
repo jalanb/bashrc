@@ -199,6 +199,13 @@ try ()
 	p $TRY $*
 }
 
+SSH ()
+{
+	user=$1
+	machine=$2
+	echo -e "]1;$user@$machine" && ssh $user@$machine && echo -e "]0;jab.ook"
+}
+
 vff ()
 {
 	FRED=
