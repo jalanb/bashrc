@@ -202,10 +202,11 @@ try ()
 
 SSH ()
 {
-	user=$1
-	machine=$2
+	you=$1
+	me=$USER
+	there=$2
 	here=`hostname -s`
-	echo -e "]1;$user@$machine" && ssh $user@$machine && echo -e "]0;${here}"
+	echo -e "]1;$you@$there" && ssh $you@$there && echo -e "]0;$me@${here}"
 }
 
 vff ()
