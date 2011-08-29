@@ -47,12 +47,19 @@ class Test_Being_Run:
 					self.host = 'jab.ook'
 		self.user = '%s@%s' % ( self.username, self.host )
 		self.path = self.here.relpathto(that)
-		self.path_to_fail = self.path.splitext()[0] + '.fail'
+		base, ext = self.path.splitext()
+		[ self.add_path(base, ext) for ext in [ 'py', 'test', 'tests', 'fail' ] ]
 		self.python_path = os.environ['PYTHONPATH']
 		self.bash_path = os.environ['PATH']
 
 	def __repr__(self):
 		return pformat(self.__dict__.keys())
+
+	def add_path(self, base, ext):
+		name = 'path_to_%s' % ext
+		path_to_ext = makepath('%s.%s' % (base, ext) )
+		if path_to_ext.isfile() or ext == 'fail':
+			self.__dict__[name] = path_to_ext
 
 def command_line():
 	from optparse import OptionParser
