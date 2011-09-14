@@ -28,13 +28,7 @@ class Spine:
 		>>> Spine().class_name()
 		'Spine'
 		'''
-		result = self.full_class_name()
-		i = 0
-		try:
-			i = result.rindex('.') + 1
-		except ValueError:
-			i = 0
-		return result[i:]
+		return self.__class__.__name__
 
 	def list_name(self):
 		'''The list name for the Spine (or sub-class)
