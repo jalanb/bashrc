@@ -33,10 +33,11 @@ and knows its class
 
 and parses its name
 	Note:
-		full class name has no module
-		it was created in this script
+		full class name has no module as it was created in this script
+	Note again:
+		This is now version dependent, 2.7 calls this script's module "__main__"
 	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
-	Freddy Freddy Freddies
+	Freddy ...Freddy Freddies
 
 I think this one is a meta-sub-class
 	but it might be a sub-meta-class.
