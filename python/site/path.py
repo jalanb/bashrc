@@ -34,7 +34,7 @@ from __future__ import generators
 import sys, os, fnmatch, glob, shutil, codecs, re
 
 __version__ = '2.0.4'
-__all__ = ['path','xpath']
+__all__ = ['path']
 
 # Pre-2.3 support.  Are unicode filenames supported?
 _base = str
