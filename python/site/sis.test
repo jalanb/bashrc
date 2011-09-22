@@ -49,7 +49,9 @@ Filtering sis.paths
 
 sis.sites() is a method to filter out any site-packages directory
 	(will include sub-directories)
-	>>> all( [ 'site-packages' in p.splitall()  for p in sis.sites() ] )
+	>>> import random
+	>>> site = random.choice(sis.sites())
+	>>> 'site-packages' in site.splitall()
 	True
 
 You could supply your own list of paths to filter
@@ -60,5 +62,6 @@ You could supply your own list of paths to filter
 And a method to filter out directories whose name is site_packages
 	(will not include sub-directories)
 	which also defaults to sis.paths
-	>>> all( [ p.name == 'site-packages' for p in sis.site_packages() ] )
+	>>> site_package = random.choice(sis.site_packages())
+	>>> site_package.name == 'site-packages'
 	True

@@ -6,6 +6,9 @@ The paths module
 paths reads from environ
 	>>> import environ
 
+Test single items from lists
+	>>> import random
+
 And looks for paths therein
 	It tries anything with a "/"
 	>>> environ.EDITOR.endswith('/vim')
@@ -15,11 +18,12 @@ And looks for paths therein
 
 Path lists are split up,
 	>>> pythonpath = paths.environ.PYTHONPATH
-	>>> len(pythonpath) > 1 and all( [ p.isdir() for p in pythonpath ] )
+	>>> len(pythonpath) > 1
 	True
 
 PYTHONPATH is normally used to get local directories into sys.path
-	>>> all( [ s in sys.path for s in pythonpath ] )
+	>>> pythonpath_item = random.choice(pythonpath)
+	>>> pythonpath_item.isdir() and pythonpath_item in sys.path
 	True
 
 The paths module that we are testing got into sys.path through $PYTHONPATH
