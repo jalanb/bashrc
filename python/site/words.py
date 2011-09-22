@@ -33,25 +33,26 @@ def any_true(function, iterable):
 consonants = 'bcdfghjklmnpqrstvwxz'
 ends_in_consonant_y = re.compile('[%s]y$' % consonants)
 uncountables = [
-	'fish',
-	'sheep',
+	'cowes',
 	'deer',
-	'species',
-	'series',
 	'equipment',
-	'information',
-	'rice',
-	'money',
-	'species',
+	'fish',
 	'haiku',
+	'information',
+	'money',
+	'rice',
+	'series',
+	'sheep',
+	'species',
+	'species',
 ]
 exceptional_plurals = {
-	'man' : 'men',
-	'woman' : 'women',
-	'fungus' : 'fungi',
 	'child': 'children',
-	'mouse': 'mice',
+	'fungus' : 'fungi',
 	'louse': 'lice',
+	'man' : 'men',
+	'mouse': 'mice',
+	'woman' : 'women',
 }
 
 def pluralize(s):
