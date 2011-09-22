@@ -14,15 +14,16 @@ And looks for paths therein
 	True
 
 Path lists are split up,
-	>>> len(paths.environ.PATH) > 1 and all( [ p.isdir() for p in paths.environ.PATH ] )
+	>>> pythonpath = paths.environ.PYTHONPATH
+	>>> len(pythonpath) > 1 and all( [ p.isdir() for p in pythonpath ] )
 	True
 
 PYTHONPATH is normally used to get local directories into sys.path
-	>>> all( [ s in sys.path for s in paths.environ.PYTHONPATH ] )
+	>>> all( [ s in sys.path for s in pythonpath ] )
 	True
 
 The paths module that we are testing got into sys.path through $PYTHONPATH
-	>>> test.path.Parent in paths.environ.PYTHONPATH
+	>>> test.path.Parent in pythonpath
 	True
 
 Handy paths.attributes
