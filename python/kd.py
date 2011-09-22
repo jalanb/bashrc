@@ -92,7 +92,7 @@ def find_dir(start_dir,sub_dir=None):
 		whither = try_others(start_dir,sub_dir)
 	if not whither.isdir():
 		whither = find_in_PATH(whither)
-	if not whither.isdir():
+	if not whither or not whither.isdir():
 		show_not_dir(whither)
 		return None
 	if not sub_dir:

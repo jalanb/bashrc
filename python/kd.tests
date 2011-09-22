@@ -1,5 +1,5 @@
 Edge cases for kd
-================
+=================
 
 	>>> import kd
 
@@ -20,7 +20,7 @@ Directories found must be real
 	>>> kd.find_dir('rubbish')
 	Traceback (most recent call last):
 	...
-	ValueError: rubbish is not a directory
+	ValueError: ...
 
 	>>> import paths
 	>>> a_known_directory = paths.environ.JAB
@@ -43,8 +43,6 @@ When main() fails it prints out nothing
 
 	>>> kd.want_debugging = True
 	>>> kd.find_dir('/usr/local/trunk/trackers','repo')
-	kd: "def find_dir('/usr/local/trunk/trackers', 'repo')"
-	kd: "def try_sub_dirs(<path '/usr/local/trunk/trackers'>, 'repo')"
 	<path '/usr/local/trunk/trackers/repository'>
 	>>> kd.want_debugging = False
 
