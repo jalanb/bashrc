@@ -17,94 +17,46 @@ then
 	echo "	sh $0"
 fi
 #
-# Once sourced there is only one useful command:
+# Once sourced there is one major command:
 #
 add_to_a_path ()
 {
-#
-# We expect at least two args
-# 1: The name of a variable to be set, which  is usually a word like PATH, or PYTHONPATH
-#	It should contain a set of paths, like "/bin:/usr/bin:/usr/local/bin"
-# 2: A directory to be added to that PATH
-#	The directory is added to the front of the path
-#
-# For example:
-# 	$ export PATH=/usr/local/bin
-# 	$ add_to_a_path PATH /usr/bin
-# 	$ add_to_a_path PATH /bin
-# 	$ add_to_a_path PATH /usr/bin
-#	$ echo $PATH
-#	/usr/bin:/bin:/usr/local/bin
-#
-# If a third arg is given then it adds debug messages and is included in them
-#
-# For example:
-# 	$ export LIBRARY_PATH=/usr/lib
-# 	$ add_to_a_path LIBRARY_PATH /usr/local/lib call_one
-#	call_one - $LIBRARY_PATH
-#		/usr/local/lib
-#		/usr/lib
-# 	$ add_to_a_path LIBRARY_PATH /lib call_two
-#	call_two - $LIBRARY_PATH
-#		/lib
-#		/usr/local/lib
-#		/usr/lib
-# 	$ add_to_a_path LIBRARY_PATH /usr/lib call_three
-#	call_three - $LIBRARY_PATH
-#		/usr/lib
-#		/lib
-#		/usr/local/lib
-#	$ echo $LIBRARY_PATH
-#	/usr/lib:/lib:/usr/local/lib
-#
-	local path=${1-PATH}
-	local new_directory=${2-~/bin}
-	local debugging_name=$3
-	if [[ -d "$new_directory" ]]
-	then
-# Older versions of readlink do not support "-f" (canonicalisation of path names)
-# So if that doesn't work we'll just use the path as is
-		if /usr/bin/readlink -f / > /dev/null 2>&1
-		then
-# Use canonical path names
-			use_readlink=true
-			new_directory=$( /usr/bin/readlink -f $new_directory )
-		else
-			use_readlink=false
-		fi
-		local new_directories=$new_directory
-		local old_directories=${!path}
-		OLD_IFS=$IFS
-		IFS=:
-		for directory in $old_directories
-		do
-# Ignore directory if it is empty (usually because of "::" anomalies in the PATH)
-			if [[ -n $directory ]]
-			then
-				if $use_readlink
-				then directory=$( /usr/bin/readlink -f  $directory )
-				fi
-# Ignore this directory if it is already in the PATH
-				found=false
-				for new_directory in $new_directories
-				do 
-					if [[ $directory == $new_directory ]]
-					then found=true; break
-					fi
-				done
-				if ! $found
-				then new_directories="${new_directories}:$directory"
-				fi
-			fi
-		done
-		IFS=$OLD_IFS
-# We need eval to set the PATH
-		eval $path=$new_directories
-		export $path
-		if [[ -n $debugging_name ]]
-		then printf "$debugging_name has set \$$path to\n\t${new_directories//:/\n\t}"
-		fi
-	elif [[ -n $debugging_name ]]
-	then echo "$debugging_name -	$new_directory is not a directory "
-	fi
+eval $1=$(/usr/bin/python << EOP
+import os
+import sys
+
+def add_path_to_paths(paths,path):
+	result = []
+	for p in paths + [ path ]:
+		if p and p not in result:
+			result.append(p)
+	return result
+
+def add_path_to_path_string(path_string, path, separator=':'):
+	if not os.path.isdir(path):
+		return path_string
+	paths = []
+	for p in path_string.split(separator):
+		paths = add_path_to_paths(paths,p)
+	paths = add_path_to_paths(paths,os.path.realpath(path))
+	return separator.join(paths)
+
+def main(name_of_paths,new_path):
+	path_string = os.environ.get(name_of_paths,'')
+	print add_path_to_path_string(path_string,new_path)
+
+if __name__ == '__main__':
+	sys.exit(main("$1","$2"))
+EOP)
 }
+
+show_a_path ()
+{
+	printf "$1 has set \$$2 to\n\t${3//:/\n\t}"
+	echo
+	echo
+}
+
+alias show_path="show_a_path bash PATH $PATH"
+alias show_ppath="show_a_path bash PYTHONPATH $PYTHONPATH"
+
