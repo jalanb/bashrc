@@ -4,7 +4,6 @@ export PYTHONDOCS=/home/builder/python25/share/doc/html
 export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages')][0]"`
 
 export PYTHONPATH=
-source ~/.jab/bin/add_to_a_path.sh
 
 add_to_a_path PYTHONPATH $JAB/python/site
 add_to_a_path PYTHONPATH $HOME/python/site

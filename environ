@@ -45,7 +45,6 @@ else
 	export LS_DIRS_OPTION=
 fi
 
-source ~/.jab/bin/add_to_a_path.sh
 add_to_a_path PATH /bin
 add_to_a_path PATH /usr/bin
 add_to_a_path PATH /usr/local/bin
