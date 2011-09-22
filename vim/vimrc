@@ -76,6 +76,8 @@ nnoremap <C-F4> <C-W>c
  noremap ,, ``
 "noremap . - repeat
 "noremap / - search
+ noremap // :nohlsearch<cr><c-l>
+ noremap /' :set hlsearch<cr><c-l>
 "noremap `
 "
 " Shifted punctuation
@@ -285,7 +287,7 @@ set backupskip=/tmp/*,/private/tmp/*
 set ignorecase
 set smartcase
 set incsearch
-set nohlsearch
+set hlsearch
 "
 " for Tab Completion
 "	from vim's help
