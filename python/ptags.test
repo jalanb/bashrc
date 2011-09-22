@@ -57,13 +57,7 @@ The read_dirs method gets tags for all python files in a directory
 	>>> tags = ptags.read_dirs(ptags_directory)
 	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
 	[<Path '.jab/python'>,
-	 <Path '.jab/python/alanology'>,
-	 <Path '.jab/python/ls'>,
-	 <Path '.jab/python/new'>,
-	 <Path '.jab/python/site'>,
-	 <Path '.jab/python/site/mymeta'>,
-	 <Path '.jab/python/site/pymeta'>,
-	 <Path '.jab/python/site/pymeta/generated'>,
+	...
 	 <Path '.jab/python/testing'>]
 
 The read_dir method does the same, but does not recurse

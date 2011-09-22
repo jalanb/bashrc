@@ -1,1 +1,4 @@
-	>>> from pythonrc import os, sys, path, show, environ, paths
+The pythonrc module
+===================
+
+	>>> from pythonrc import os, sys, makepath, show, environ, paths

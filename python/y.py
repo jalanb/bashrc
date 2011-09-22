@@ -19,7 +19,7 @@ def remove_globs(globs):
 			if p.islink():
 				p.unlink()
 			elif p.isfile():
-				p.rm()
+				p.remove()
 			elif p.isdir():
 				p.rmdir()
 			else:
