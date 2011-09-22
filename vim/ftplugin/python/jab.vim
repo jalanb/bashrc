@@ -168,6 +168,8 @@ if !exists("Try")
 		set buftype=nofile
 		set diffopt=filler,iwhite
 		silent exec "diffsplit " . s:file_actual
+		silent exec "tabprev"
+		silent exec "tabnext"
 		set buftype=nofile
 		call delete(s:file_expected)
 		call delete(s:file_actual)

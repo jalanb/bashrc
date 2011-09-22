@@ -66,8 +66,8 @@ nnoremap <C-F4> <C-W>c
 "
 " Punctuation
 "
- noremap ] <C-]>
- noremap [ <C-T>
+ noremap ] <C-]>   " do this on bufenter
+ noremap [ <C-T>   " do this on bufenter
  noremap ; :
  noremap ' @a " play register a
  noremap '' "ap
@@ -169,10 +169,10 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "
 "noremap <leader>a
 "noremap <leader>b used by plugin/EasyMotion.vim
- noremap <leader>c :call PythonDec("class", -1)<CR>
- noremap <leader>C :call PythonDec("class", +1)<CR>
- noremap <leader>d :call PythonDec("function", -1)<CR>
- noremap <leader>D :call PythonDec("function", +1)<CR>
+"noremap <leader>c 
+"noremap <leader>C 
+"noremap <leader>d 
+"noremap <leader>D 
 "noremap <leader>e used by plugin/EasyMotion.vim
 "noremap <leader>f used by plugin/EasyMotion.vim
 "noremap <leader>g 
@@ -220,19 +220,27 @@ set nospell
 filetype on
 filetype plugin on
 filetype indent on
-"
-" diff options
-"
-if &diff
-	noremap o :diffget<cr>
-	noremap p :diffput<cr>
-	noremap ] ]czz
-	noremap [ [czz
-	syntax off
-	set diffopt=filler,iwhite
-else
-	syntax on
-endif
+
+function ChangeBuffer ()
+	"
+	" diff options
+	"
+	if &diff
+		noremap <buffer> o :diffget<cr>
+		noremap <buffer> p :diffput<cr>
+		noremap <buffer> ] ]czz
+		noremap <buffer> [ [czz
+		syntax off
+		set diffopt=filler,iwhite
+	else
+		" noremap ] <C-]>
+		" noremap [ <C-T>
+		syntax on
+	endif
+endfunction
+
+autocmd BufEnter * call ChangeBuffer()
+
 "
 " diff to when I started editting
 "
