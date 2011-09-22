@@ -69,6 +69,15 @@ def try_sub_dirs(top, sub_dir):
 	debug(exit_method())
 	return result
 
+def find_in_PATH(whither):
+	if not whither.isdir():
+		for directory in os.environ['PATH'].split(':'):
+			path_in_PATH = path(directory)
+			possible_file = path_in_PATH / whither
+			if possible_file.isfile():
+				return path_in_PATH
+	return None
+
 def find_dir(start_dir,sub_dir=None):
 	debug(enter_method())
 	if start_dir == '':
@@ -81,6 +90,8 @@ def find_dir(start_dir,sub_dir=None):
 		whither = whither.parent
 	if not whither.isdir():
 		whither = try_others(start_dir,sub_dir)
+	if not whither.isdir():
+		whither = find_in_PATH(whither)
 	if not whither.isdir():
 		show_not_dir(whither)
 		return None
@@ -104,10 +115,7 @@ def parse_command_line(args):
 	return args
 
 def chdir(whither):
-	if whither.isfile():
-		whither = whither.parent
-	if not whither.isdir():
-		raise ValueError('%s is not a directory' % whither)
+	whither = find_dir(whither)
 	oldpwd = os.environ['PWD']
 	os.chdir(whither)
 	os.environ['OLDPWD'] = oldpwd
