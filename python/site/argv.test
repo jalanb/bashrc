@@ -102,10 +102,10 @@ You could also get the parser and use it your way
 
 That is a normal OptionParser
 For example to show some help
-	>>> opt_parser.print_help()
-	Usage: argv.test [options]
+	>>> print opt_parser.format_help().replace('Usage','usage').replace('Options','options')
+	usage: argv.test [options]
 	<BLANKLINE>
-	Options:
+	options:
 	  -a ALAN, --alan=ALAN  Default is
 	  -f FRED, --fred=FRED  Default is Fred
 	  -g, --good             Default is True

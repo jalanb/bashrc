@@ -45,10 +45,10 @@ Send a list of premade options
 This help string should be a simple test,
 	but the capitalisation of "Usage" is version dependent
 	so we need to reduce them all to lowest common denominator
-	>>> print opt_parser.format_help().replace('Usage','usage')
+	>>> print opt_parser.format_help().replace('Usage','usage').replace('Options','options')
 	usage: argv.tests [options]
 	<BLANKLINE>
-	Options:
+	options:
 	  -o ONE, --one=ONE  just once
 	  -t TWO, --two=TWO  twee
 	  -s SIX, --six=SIX  whee
