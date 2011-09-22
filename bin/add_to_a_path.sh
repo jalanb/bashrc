@@ -38,15 +38,17 @@ def add_path_to_path_string(path_string, path, separator=':'):
 	paths = []
 	for p in path_string.split(separator):
 		paths = add_path_to_paths(paths,p)
-	paths = add_path_to_paths(paths,os.path.realpath(path))
+	if path:
+		real_path = os.path.realpath(path)
+		if os.path.isdir(real_path):
+			paths = add_path_to_paths(paths,real_path)
 	return separator.join(paths)
 
 def main(name_of_paths,new_path):
 	path_string = os.environ.get(name_of_paths,'')
 	print add_path_to_path_string(path_string,new_path)
 
-if __name__ == '__main__':
-	sys.exit(main("$1","$2"))
+main("$1","$2")
 EOP)
 }
 
