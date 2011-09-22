@@ -195,7 +195,7 @@ def spread(thing, exclude = None):
 		ids.append(id(thing))
 		attributes_list = []
 		for k,v in thing.__dict__.iteritems():
-			if type(v) in [ type(os) ]: continue
+			if isinstance(v,type(sys)): continue
 			if callable(v): continue
 			excluded = False
 			for exclusion in exclusions:
