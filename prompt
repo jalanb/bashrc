@@ -1,7 +1,5 @@
 #! /bin/sh
 
-. ~/.jab/environ
-
 export PROMPT_COLOUR=none
 if [ "$1" == "green" ]
 then
