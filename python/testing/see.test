@@ -54,6 +54,6 @@
 	>>> from see import code
 	>>> code(code)
 	def code(method):
-	    result = [ ]
+        if not callable(method):
 		...
 	    print '\n'.join(result)

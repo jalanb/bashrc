@@ -248,7 +248,6 @@ def code(method):
         line, indentation = indent(filename,line_number)
     print '\n'.join(result)
 
-
 PY_300 = sys.version_info >= (3, 0)
 PY_301 = sys.version_info >= (3, 0, 1)
 
