@@ -110,16 +110,16 @@ path.popd() takes the top from the stack
 	then cd's to that directory
 	>>> path.cd('/usr') and path.pwd() or 'fail'
 	'/usr'
-	>>> path.pushd('/tmp') and path.pwd() or 'fail'
-	'/tmp'
+	>>> path.pushd('/opt') and path.pwd() or 'fail'
+	'/opt'
 	>>> path.pushd('/bin') and path.pwd() or 'fail'
 	'/bin'
 	>>> path.cd('/') and path.pwd() or 'fail'
 	'/'
 	>>> print path.dirStack
-	['/usr', '/tmp']
+	['/usr', '/opt']
 	>>> path.popd() and path.pwd() or 'fail'
-	'/tmp'
+	'/opt'
 	>>> path.popd() and path.pwd() or 'fail'
 	'/usr'
 
