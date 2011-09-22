@@ -15,21 +15,12 @@ which looks like this
 	ptags.py
 
 It is intended to be run as a script
-	>>> ptags.argv.test_args('-h')
-	Usage: ptags.test [options]
-	<BLANKLINE>
-	Options:
-	  -v, --verbose  Report disk changes
-	  -r, --recursive  Recurse into sub-directories
-	  -h, --help     show this help message and exit
-
 	>>> ptags.argv.test_args('-v')
 	>>> ptags.argv.options.verbose
 	True
 
-	>>> see(ptags.argv.options)
-	<    <=    ==    !=    >    >=    repr()    str()    .ensure_value()
-	.read_file()    .read_module()    .recursive    .verbose
+	>>> ptags.argv.options.recursive
+	False
 
 methods
 -------

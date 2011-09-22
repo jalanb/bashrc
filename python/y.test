@@ -1,24 +1,5 @@
 The y module
 ============
 	>>> import y
-	>>> y.argv.test_args('-h')
-	Usage: ... [options]
-	<BLANKLINE>
-	Options:
-	  -y, --ython     hide python scripts
-	  -t, --tests     show tests
-	  -c, --compiled  show compiled python
-	  -g, --grammar   show grammars
-	  -f, --fails     show fails
-	  -a, --all       show all python related files
-	  -o, --others    show non python related files as well
-	  -q, --quiet     hide directories, blank lines, etc
-	  -l, --lines     separate by returns (tabs is default)
-	  -i, --ignore    Do not ignore files (that subversion ignores)
-	  -d, --delete     delete python compiled files as well
-	  -w, --wipe      remove known garbage
-	  -s, --stat      run svn stat
-	  -p, --ptags     do not refresh the tags file
-	  -v, --verbose   Report disk changes
-	  -r, --recursive  Recurse into sub-directories
-	  -h, --help      show this help message and exit
+	>>> print y.__doc__
+	y not?
