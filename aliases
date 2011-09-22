@@ -134,7 +134,7 @@ alias lsh="ls *.sh"
 
 alias out="to_release"
 
-alias ps3="ps axjf | vim -"
+alias ps3="ps axjf | vim - +"
 
 alias rqa="/bin/rm -rf ./*"
 alias rff="r fred*"
