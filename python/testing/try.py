@@ -91,6 +91,7 @@ class Sys_Path_Handler:
 
 	def add(self,item):
 		directory = makepath(item).directory()
+		if directory.name == 'roundup': return
 		if directory not in self.paths:
 			self.paths.insert(0,directory)
 			if directory not in sys.path:
