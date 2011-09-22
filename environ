@@ -45,23 +45,16 @@ else
 	export LS_DIRS_OPTION=
 fi
 
-add_to_path ()
-{
-	if [[ -n "$1" && -d "$1" ]]
-	then
-		if ! echo $PATH | grep -q "$1"
-		then
-			export PATH=${PATH}:$1
-		fi
-	fi
-}
-export PATH=/bin:/usr/local/bin:/usr/bin:
-add_to_path /usr/local/sbin
-add_to_path $JAB/bin
-add_to_path ~/bin
-add_to_path ~/git/bin
-add_to_path /opt/local/bin
-add_to_path /sbin
+source ~/.jab/bin/add_to_a_path.sh
+add_to_a_path PATH /bin
+add_to_a_path PATH /usr/bin
+add_to_a_path PATH /usr/local/bin
+add_to_a_path PATH /usr/local/sbin
+add_to_a_path PATH $JAB/bin
+add_to_a_path PATH ~/bin
+add_to_a_path PATH ~/git/bin
+add_to_a_path PATH /opt/local/bin
+add_to_a_path PATH /sbin 
 
 export PS1
 
@@ -69,56 +62,12 @@ export PS1
 # Path dependencies
 #
 
-# Altobridge repositories
-if [ -d /amg ]
+if [ -d /usr/local/abrogan/jabs ]
 then
-	export AMG=file:///amg
-	export LCP=file:///usr/local/svn/lcp
 	export JABS=file:///usr/local/abrogan/jabs
 else
-	export AMG=svn+ssh://ie-track-1/amg
-	export LCP=http://intranet.altobridge.com/svn/lcp
 	export JABS=http://intranet.altobridge.com/jab
 fi
-#
-# Working directories
-#
-if [ -d /mnt/source ]
-then
-	export SOURCE=/mnt/source
-	export AMG_SOURCE=/mnt/source/amg
-elif [ -d $SITE/altobridge ]
-then
-	export SOURCE=$SITE/altobridge
-else
-	export SOURCE=$JAB
-fi
-if [ -d /usr/local/trunk ]
-then
-	export AMG_TRUNK=/usr/local/trunk
-elif [[ -n "$AMG_SOURCE" && -d "$AMG_SOURCE" ]]
-then
-	export AMG_TRUNK=$AMG_SOURCE/trunk
-else
-	export AMG_TRUNK=
-fi
-if [ -d $AMG_TRUNK ]
-then
-	export AMG_BUILDS=${AMG_SOURCE}/builds
-	export AMG_RELEASES=${AMG_SOURCE}/releases
-	export AMG_DISTRIBUTION=${AMG_SOURCE}/distribution
-	export AMG_IT=${AMG_SOURCE}/IT
-fi
-
-export LCP_SOURCE=$SOURCE/lcp
-export NSN_SOURCE=$LCP_SOURCE/nsn
-export NSN_BUILDS=${NSN_SOURCE}/builds
-export NSN_RELEASES=${NSN_SOURCE}/releases
-
-export RELEASES=/mnt/releases
-export BUILDING=${RELEASES}/building
-export BUILD_DEBUG=${RELEASES}/building/debug
-export NOTES=${RELEASES}/building/notes
 
 if [ -x /opt/local/bin/gwhich ]
 then
