@@ -74,10 +74,10 @@ Or by using the method makepath
 
 The difference is that makepath expands the string given
 
-	>>> print path.Path('~/..')
-	~/..
-	>>> print path.makepath('~/..')
-	/Users
+	>>> print path.Path('~/..').parent
+	~
+	>>> print path.makepath('~/..').parent
+	/
 
 Path is ako string, which shows the string in %s and %r
 
@@ -110,16 +110,16 @@ path.popd() takes the top from the stack
 	then cd's to that directory
 	>>> path.cd('/usr') and path.pwd() or 'fail'
 	'/usr'
-	>>> path.pushd('/var') and path.pwd() or 'fail'
-	'/private/var'
+	>>> path.pushd('/tmp') and path.pwd() or 'fail'
+	'/tmp'
 	>>> path.pushd('/bin') and path.pwd() or 'fail'
 	'/bin'
 	>>> path.cd('/') and path.pwd() or 'fail'
 	'/'
 	>>> print path.dirStack
-	['/usr', '/private/var']
+	['/usr', '/tmp']
 	>>> path.popd() and path.pwd() or 'fail'
-	'/private/var'
+	'/tmp'
 	>>> path.popd() and path.pwd() or 'fail'
 	'/usr'
 
@@ -172,10 +172,6 @@ It finds the lowest available match
 	>>> print path.ancestor(p,jabs).name
 	.jab
 
-An ancestor is not its own ancestor
-	>>> print path.ancestor(path.ancestor(p,jabs),jabs).name
-	jab
-
 It gives nothing if not found
 	>>> print path.ancestor(p,'Source')
 	None
@@ -189,41 +185,41 @@ This method extends dirs() to include all sub directories
 	>>> p = path.makepath('~/x')
 
 The standard method calls os.listdir
-	>>> print p.dirs()
-	[<Path '/Users/jab/x/one'>, <Path '/Users/jab/x/two'>]
+	>>> print sorted( p.dirs() )
+	[<Path '/.../x/one'>, <Path '/.../x/two'>]
 
 sub_dirs() uses walkdirs instead
-	>>> show( p.sub_dirs() )
-	[<Path '/Users/jab/x/one'>,
-	 <Path '/Users/jab/x/one/one'>,
-	 <Path '/Users/jab/x/one/two'>,
-	 <Path '/Users/jab/x/two'>,
-	 <Path '/Users/jab/x/two/two'>]
+	>>> show( sorted( p.sub_dirs() ) )
+	[<Path '/.../x/one'>,
+	 <Path '/.../x/one/one'>,
+	 <Path '/.../x/one/two'>,
+	 <Path '/.../x/two'>,
+	 <Path '/.../x/two/two'>]
 
 all_dirs() adds the directory itself
-	>>> show( p.all_dirs() )
-	[<Path '/Users/jab/x'>,
-	 <Path '/Users/jab/x/one'>,
-	 <Path '/Users/jab/x/one/one'>,
-	 <Path '/Users/jab/x/one/two'>,
-	 <Path '/Users/jab/x/two'>,
-	 <Path '/Users/jab/x/two/two'>]
+	>>> show( sorted( p.all_dirs() ) )
+	[<Path '/.../x'>,
+	 <Path '/.../x/one'>,
+	 <Path '/.../x/one/one'>,
+	 <Path '/.../x/one/two'>,
+	 <Path '/.../x/two'>,
+	 <Path '/.../x/two/two'>]
 
 
 If given a file these methods use its parent directory
 	>>> p = path.makepath('~/x/fred')
-	>>> show( p.all_dirs() )
-	[<Path '/Users/jab/x'>,
-	 <Path '/Users/jab/x/one'>,
-	 <Path '/Users/jab/x/one/one'>,
-	 <Path '/Users/jab/x/one/two'>,
-	 <Path '/Users/jab/x/two'>,
-	 <Path '/Users/jab/x/two/two'>]
+	>>> show( sorted( p.all_dirs() ) )
+	[<Path '/.../x'>,
+	 <Path '/.../x/one'>,
+	 <Path '/.../x/one/one'>,
+	 <Path '/.../x/one/two'>,
+	 <Path '/.../x/two'>,
+	 <Path '/.../x/two/two'>]
 
 The module-level dirs() method gives a recursive list
 	with list-in-list corresponging to dir-in-dir
 	>>> show( path.dirs(p) )
-	(<Path '/Users/jab/x'>, [['one', [['one'], ['two']]], ['two', [['two']]]])
+	(<Path '/.../x'>, [['one', [['one'], ['two']]], ['two', [['two']]]])
 
 	>>> def show(indent,x):
 	...     print '%s%s' % (indent,x[0])
@@ -231,7 +227,7 @@ The module-level dirs() method gives a recursive list
 	...         for y in x[1]:
 	...             show(indent+'\t',y)
 	>>> show( '',  path.dirs(p) )
-	/Users/jab/x
+	/.../x
 		one
 			one
 			two
@@ -244,6 +240,6 @@ Simplified path
 ---------------
 
 	>>> p
-	<Path '/Users/jab/x/fred'>
+	<Path '/.../x/fred'>
 	>>> p.from_home()
 	<Path 'x/fred'>

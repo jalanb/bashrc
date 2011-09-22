@@ -1089,7 +1089,7 @@ def dirs(p):
 				result += [ [ q, subs ] ]
 			else:
 				result += [ [q] ]
-		return p.name, result
+		return p.name, sorted( result )
 	q, result = my_dirs(p.directory())
 	assert p.directory().name == q, '"%s" != "%s"' % (p.directory(),q)
 	return p.directory(), result
