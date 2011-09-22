@@ -66,7 +66,7 @@ class path(_base):
 	# --- Special Python methods.
 
 	def __repr__(self):
-		return '<path %s>' % _base.__repr__(self)
+		return '<%s %s>' % (self.__class__.__name__, _base.__repr__(self))
 
 	# Adding a path and a string yields a path.
 	def __add__(self, more):
@@ -839,9 +839,6 @@ class Path(path):
 	'''Some extra methods for a path'''
 
 	pwd = os.getcwd
-
-	def __repr__(self):
-		return '<Path %s>' % _base.__repr__(self)
 
 	def assertExists(self):
 		if not self.exists():
