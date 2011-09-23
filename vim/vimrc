@@ -77,7 +77,7 @@ nnoremap <C-F4> <C-W>c
 "noremap . - repeat
 "noremap / - search
  noremap // :nohlsearch<cr><c-l>
- noremap /' :set hlsearch<cr><c-l>
+ noremap /\ :set hlsearch<cr><c-l>
 "noremap `
 "
 " Shifted punctuation
