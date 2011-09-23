@@ -1,10 +1,23 @@
 #! /bin/sh
 #
-# fim is a slight variation on vim
-# 	It manipulates the command line for vim
+# Copyright Alan Brogan, 2011
 #
+# See LICENSE file for your rights
+#
+# This script manipulates the command line for vim
+#	It checks for existence of a swap file for the file you want to edit
+# 		It offers to recover the file before editting
+#	 It expands file names
+#		anything ending with a "." will have "py" or "cpp" added if the file exists
+
 test -f debugging && set -x
 
+#
+# Default to using $EDITOR, if that is not available use "vim"
+#	This script will not work with any other editor except vim
+#	It prefers $EDITOR in case of multiple installations
+#
+local editor=${EDITOR-vim}
 
 JAB_TESTING=$JAB/python/testing
 edit_testers ()
@@ -17,12 +30,11 @@ edit_testers ()
 }
 
 # Finish file names "left short" by tab-completion
-# For example, if file name is "fred.", which does not exist, 
+# For example, if an argument is "fred.", and no file called "fred." exists
 #     but "fred.py" does exist, then we'll edit fred.py
 #
 # Files "left short" by tab-completion are those which would have same stem, but different extension
 # So we will complete for "*.py", "*.cpp"
-POST_PROCESSING=
 args=
 for arg in $*
 do
@@ -70,7 +82,7 @@ do
 	fi
 	cd `dirname $file`
 	base=`basename $file`
-	export swap_file=`$EDITOR -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep $base`
+	export swap_file=`$editor -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep $base`
 	cd - > /dev/null 2>&1
 	swap_file=`dirname $file`/$swap_file
 	if [[ -f "$swap_file" ]]
@@ -83,7 +95,7 @@ do
 			echo -n A process is running:\ 
 			ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.*$file" 
 			echo
-			echo It is not safe to run \"$EDITOR $*\"
+			echo It is not safe to run \"$editor $*\"
 			safe=
 		else
 			read -p"Recover $args ? " reply
@@ -92,13 +104,13 @@ do
 				echo Recovering $swap_file
 				recovered_file="${file}.recovered"
 				#
-				# I use the "g:recovering" variable to prevent opening of extra tabs, YMMV
+				# I use the "g:recovering" variable within vim to prevent opening of extra tabs, YMMV
 				#
-				$EDITOR -r ${file} --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
+				$editor -r ${file} --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
 				/bin/rm -f $swap_file 
 				if ! diff -q $file $recovered_file
 				then
-					$EDITOR -d $file $recovered_file
+					$editor -d $file $recovered_file
 				fi
 				/bin/rm -f $recovered_file
 			else
@@ -120,29 +132,41 @@ do
 	fi
 done
 
+post_vimming ()
+{
+#
+# This function is called after editting, arguments are same as vim got
+#
+	local arg
+	for arg in $*
+	do
+		[[ -e $arg ]] && ls -l $arg
+	done
+}
+
 if [[ -f debugging ]]
 then
 	if [[ -z $safe ]]
 	then
-		echo It was not safe to run \"$EDITOR $*\" anyway
+		echo It was not safe to run \"$editor $*\" anyway
 	else
-		echo "$EDITOR $args"
+		echo "$editor $args"
 	fi
 else
 	if [[ -z $safe ]]
 	then
-		echo It is not safe to run \"$EDITOR $*\"
+		echo It is not safe to run \"$editor $*\"
 	else
 		if [[ $file_exists == "0" ]]
 		then 
-			$EDITOR $args
-			$POST_PROCESSING
+			$editor $args
+			post_vimming $args
 		else
-			read -p"$EDITOR $args ? " reply
+			read -p"$editor $args ? " reply
 			if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
 			then
-				$EDITOR $args
-				$POST_PROCESSING
+				$editor $args
+				post_vimming $args
 			fi
 		fi
 	fi
