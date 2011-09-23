@@ -86,18 +86,24 @@ do
 			echo It is not safe to run \"$EDITOR $*\"
 			safe=
 		else
-			echo Recovering $swap_file
-			recovered_file="${file}.recovered"
-			#
-			# I use the "g:recovering" variable to prevent opening of extra tabs, YMMV
-			#
-			$EDITOR -r ${file} --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
-			/bin/rm -f $swap_file 
-			if ! diff -q $file $recovered_file
+			read -p"Recover $args ? " reply
+			if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
 			then
-				$EDITOR -d $file $recovered_file
+				echo Recovering $swap_file
+				recovered_file="${file}.recovered"
+				#
+				# I use the "g:recovering" variable to prevent opening of extra tabs, YMMV
+				#
+				$EDITOR -r ${file} --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
+				/bin/rm -f $swap_file 
+				if ! diff -q $file $recovered_file
+				then
+					$EDITOR -d $file $recovered_file
+				fi
+				/bin/rm -f $recovered_file
+			else
+				safe=
 			fi
-			/bin/rm -f $recovered_file
 			break
 		fi
 	else
