@@ -28,15 +28,6 @@ def exit_method():
 		result.append( '%r : %r' % ( name, value ) )
 	return '\n\t'.join(result)
 	
-def show_not_dir(p):
-	if not p:
-		raise ValueError('bad argument: %r' % p)
-	while not p.isdir():
-		prev = p
-		p = p.parent
-		if not p or p == '/': break
-	raise ValueError('%s is not a directory' % prev)
-	
 def try_others(dirr,sub_dir):
 	debug(enter_method())
 	p = path(dirr)
@@ -93,8 +84,7 @@ def find_dir(start_dir,sub_dir=None):
 	if not whither.isdir():
 		whither = find_in_PATH(whither)
 	if not whither or not whither.isdir():
-		show_not_dir(whither)
-		return None
+		raise ValueError('%s is not a directory' % start_dir)
 	if not sub_dir:
 		return whither
 	possibles = try_sub_dirs(whither,sub_dir)
@@ -129,6 +119,7 @@ def main():
 			print str(whither)
 		return 0
 	except Exception, e:
+		print 'Error', e
 		return 1
 
 if __name__ == '__main__':
