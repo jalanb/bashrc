@@ -57,7 +57,7 @@ alias ..='c ..'
 alias ab="ssh abrogan@192.168.0.103"
 
 alias c-='c - >/dev/null 2>&1'
-alias cy="c \$MAIN_PYTHON"
+alias cy="c \$PYTHON_HOME"
 
 alias eg="env | grep "
 
@@ -108,11 +108,11 @@ alias vj="v $JAB"
 alias vp="v $JAB/prompt; sp"
 alias vt="v -p *.txt"
 alias vv="v $JAB/bin/fim"
-alias vy="v $MAIN_PYTHON"
+alias vy="v $PYTHON_HOME"
 
 alias xk="exchange_keys"
 
-alias yy="y $MAIN_PYTHON"
+alias yy="y $PYTHON_HOME"
 
 # xxx
 

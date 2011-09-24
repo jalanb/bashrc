@@ -67,7 +67,7 @@ ky ()
 {
 	if [[ -z "$1" ]]
 	then
-		cd $MAIN_PYTHON
+		cd $PYTHON_HOME
 	else
 		kd $* > /dev/null
 	fi

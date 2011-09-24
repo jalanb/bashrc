@@ -1,7 +1,7 @@
 import os
 
 def save_source(source,modname):
-	main_python = os.environ['MAIN_PYTHON']
+	main_python = os.environ['PYTHON_HOME']
 	pymeta_directory = os.path.dirname(__file__)
 	generated_directory = os.path.join(pymeta_directory,'generated')
 	if not os.path.isdir(generated_directory):
