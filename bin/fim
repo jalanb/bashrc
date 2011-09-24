@@ -17,7 +17,7 @@ test -f debugging && set -x
 #	This script will not work with any other editor except vim
 #	It prefers $EDITOR in case of multiple installations
 #
-local editor=${EDITOR-vim}
+editor=${EDITOR-vim}
 
 JAB_TESTING=$JAB/python/testing
 edit_testers ()
