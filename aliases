@@ -52,19 +52,19 @@ alias z="du -sh"
 
 # xx
 
-alias ..='kd ..'
+alias ..='c ..'
 
 alias ab="ssh abrogan@192.168.0.103"
 
-alias c-='kd - >/dev/null 2>&1'
-alias cy="kd \$MAIN_PYTHON"
+alias c-='c - >/dev/null 2>&1'
+alias cy="c \$MAIN_PYTHON"
 
 alias eg="env | grep "
 
 alias gh="history | grep "
 alias in="to_source"
 
-alias jj="kd $JAB"
+alias jj="c $JAB"
 
 alias kp="rsync -av"
 
@@ -78,7 +78,6 @@ alias ly="p $JAB/python/ls/ly.py "
 
 alias p-="echo $OLDPWD"
 alias pi="ipython "
-alias py="y $MAIN_PYTHON"
 
 alias r.="rm -rvf *"
 alias rq="/bin/rm -rf "
@@ -117,7 +116,7 @@ alias yy="y $MAIN_PYTHON"
 
 # xxx
 
-alias ...='kd ../..'
+alias ...='c ../..'
 alias c--="cd -"
 
 alias 7up='svn up'
@@ -176,7 +175,7 @@ alias url="python ~/bin/show_url.py "
 
 # xxxx
 
-alias ....='kd ../../..'
+alias ....='c ../../..'
 
 alias cdsi="cd /usr/lib/python2.4/site-packages"
 
@@ -196,7 +195,7 @@ alias vvvv="v $JAB/vim/vimrc"
 
 # xxxxx
 
-alias .....='kd ../../../..'
+alias .....='c ../../../..'
 
 alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
 
@@ -208,7 +207,7 @@ alias trcak=track
 
 # xxxxxx
 
-alias ......='kd ../../../../..'
+alias ......='c ../../../../..'
 
 alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
@@ -218,7 +217,7 @@ alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
 
 # xxxxxxx
 
-alias .......='kd ../../../../../..'
+alias .......='c ../../../../../..'
 alias abrogan="ssh abrogan@192.168.0.103"
 alias service="sudo /sbin/service "
 alias cleaner="clean deep"
