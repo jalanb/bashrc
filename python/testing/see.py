@@ -53,6 +53,8 @@ import linecache
 import fnmatch
 import inspect
 
+from pprint import pformat
+
 __all__ = ['see'] #,'see_attributes', 'see_methods', 'code']
 
 __author__ = 'Liam Cooke'
