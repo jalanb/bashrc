@@ -98,6 +98,8 @@ alias sr="svn resolved "
 alias sv="svn revert "
 alias st="stat "
 
+alias tf="tail -f"
+
 alias v.="v ."
 alias va="v $JAB/aliases; sa"
 alias vb="v $JAB/bashrc; sb"
@@ -126,8 +128,8 @@ alias doc="cd ~/Documents"
 alias clx="cl; lx "
 alias cly="cl; ly "
 
-alias jab='ssh jab@pinky'
-alias jjy='ky $JAB/python'
+alias jab="ssh jab@pinky"
+alias jjy="ky $JAB/python"
 alias jlf="ssh jlfieblu@jlf.ie"
 
 alias lff="ls fred*"
@@ -137,7 +139,7 @@ alias out="to_release"
 
 alias ps3="ps axjf | vim - +"
 
-alias rqa="/bin/rm -rf ./*"
+alias rq.="/bin/rm -rf ./*"
 alias rff="r fred*"
 
 alias sib=". ~/.bashrc"
@@ -158,10 +160,8 @@ alias stv="statvim "
 alias svd="svn_diff vimdiff "
 alias sxd="svn_diff xdiff "
 
-
 alias tra="try ~/alans_tests"
 
-alias vbb="build_script=$(python -c "import paths_for_builds; print paths_for_builds.scripts");v ${build_script/%pyc/py}"
 alias vib="v ~/.bashrc; sib"
 alias vla="v $JAB/local/aliases; sla"
 alias vlb="v $JAB/local/bashrc; slb"
@@ -197,13 +197,9 @@ alias vvvv="v $JAB/vim/vimrc"
 
 alias .....='c ../../../..'
 
-alias cisco="ru /System/Library/StartupItems/CiscoVPN/CiscoVPN restart"
-
 alias ptags="p $JAB/python/ptags.py "
 
 alias sdiff="svn_diff diff "
-
-alias trcak=track
 
 # xxxxxx
 
@@ -211,7 +207,6 @@ alias ......='c ../../../../..'
 
 alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
-alias public="mount ie-file-1.altobridge.com:/export/public /Users/shared/alto/public"
 
 alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
 
@@ -221,7 +216,6 @@ alias .......='c ../../../../../..'
 alias abrogan="ssh abrogan@192.168.0.103"
 alias service="sudo /sbin/service "
 alias cleaner="clean deep"
-alias roundup="roundup-admin -i /usr/local/trackers/tracker -u $USER:alrb3002"
 
 # xxxxxxxx
 
