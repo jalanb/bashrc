@@ -395,12 +395,18 @@ svn_diff () {
 	if [[ "$1" == "vimdiff -o" ]]
 	then 
 		exe="$EDITOR -do"
+	elif [[ "$1" == vimdiff ]]
+	then 
+		exe="$EDITOR -d"
 	elif [[ -f $1 ]]
 	then 
 		exe="$1"
 	elif [[ -f /usr/bin/$1 ]]
 	then
 		exe=/usr/bin/$1
+	elif [[ -f ~/bin/$1 ]]
+	then
+		exe=~/bin/$1
 	fi
 	$exe "$file" .svn/text-base/"$file".svn-base
 	popd > /dev/null 2>&1
