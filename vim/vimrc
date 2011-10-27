@@ -66,6 +66,8 @@ nnoremap <C-F4> <C-W>c
 "
 " Punctuation
 "
+ noremap - $       " I do not like <S-4> meaning end, so I use the key to right of 0
+"noremap =
  noremap ] <C-]>   " do this on bufenter
  noremap [ <C-T>   " do this on bufenter
  noremap ; :
@@ -101,9 +103,7 @@ nnoremap <C-F4> <C-W>c
 "noremap * - 
 "noremap (
 "noremap )
-"noremap -
 "noremap _
-"noremap =
 "noremap +
 "
 " LETTERS
@@ -349,3 +349,6 @@ if &term == "linux"
 	set t_ti=[?1049h
 	set t_te=[?1049l
 endif
+
+" Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
+call pathogen#infect() 
