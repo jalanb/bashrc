@@ -52,7 +52,11 @@ prompt_command ()
 	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	else Dir="\$PWD"
 	fi
-	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
+	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info.major, sys.version_info.minor)")
+	if [[ -n "$VIRTUAL_ENV" ]]
+	then python_version=${python_version}.$(basename $VIRTUAL_NAME)
+	fi
+	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
 	j --add "$(pwd -P)"
 }
 
