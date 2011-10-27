@@ -50,7 +50,7 @@ nnoremap <C-F4> <C-W>c
  noremap q :q<CR>
 "noremap r - change one char
 "noremap s - start replacing
-"noremap t
+"noremap t - used by ftplugin/python/jab.vim
 "noremap u - undo
  noremap v :noh<cr>
 "noremap w - forword
@@ -258,6 +258,7 @@ abbreviate seperate separate
 " Miscellaneous
 "
 autocmd FileType c,cpp,h,java set cindent
+autocmd FileType python compiler pylint
 "
 " From http://items.sjbach.com/319/configuring-vim-right
 "

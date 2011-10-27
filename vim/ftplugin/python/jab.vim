@@ -3,8 +3,15 @@ if exists("g:loaded_jab_python")
 endif
 let g:loaded_jab_python = "v001"
 
+noremap } :cn<cr>
+noremap { :cp<cr>
 noremap <right> :tabnext<cr>
 noremap <left> :tabprev<cr>
+
+noremap tm :Mash<cr>
+noremap tt :Try<cr>
+noremap tl :Pylint<cr>
+
 set foldmethod=indent
 NoMatchParen
 
@@ -184,7 +191,6 @@ if !exists("Try")
 	endfunction
 	command -nargs=0 Try :call Try(1)
 	command -nargs=0 Fix :call TryFix(0)
-	noremap t :Try<cr>
 endif
 if !exists("Mash")
 	function Mash()
@@ -200,7 +206,6 @@ if !exists("Mash")
 		endtry
 	endfunction
 	command -nargs=0 Mash :call Mash()
-	noremap M :Mash<cr>
 endif
 "	From ie-build-1:/usr/share/vim/vim70/vimrc_example.vim
 
