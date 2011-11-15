@@ -2,33 +2,50 @@ The glob_path module
 ====================
 
 	>>> import glob_path
-	>>> import l
+	>>> print glob_path.__doc__
+	A class to encapsulate a glob pattern, which may match some files
+
+Let's just make sure we are startting in the same directory as the module
 	>>> from path import cd
 	>>> cd(glob_path.__file__)
 	True 
 
-The module provides a class,
-	which is like a path, except it allows wild cards
+Instantiate the class with a glob for the module itself
+	>>> gp = glob_path.glob_path('glob_path.')
 
-	>>> gp = glob_path.glob_path('glob_path.*[yt]')
-	>>> print gp
-	./glob_path.*[yt]
+Note that, if the given glob does not contain '*' or '?'
+	then '*' is added as a suffix
 	>>> gp
-	<glob_path ./glob_path.*[yt]>
+	<glob_path ./glob_path.*>
 
-The path exists if there are any matches
+We can test whether any existing file matches the glob
+	>>> gp.isfile()
+	True
+
+We can test whether any existing dir matches the glob
+	>>> gp.isdir()
+	False
+
+We take that the glob exists if either a file or a dir exists
 	>>> gp.exists()
 	True
+
+Or not
 	>>> glob_path.glob_path('you would never call a file this.*').exists()
 	False
 
-Acts like a directory path
-	>>> files = sorted( gp.files() )
+Let's use a slightly more specific glob
+	>>> gp = glob_path.glob_path('glob_path.*[yt]')
 
-Remove temporary files
-	>>> files = [ f for f in files if not f.endswith('~') ]
-	>>> files = [ f for f in files if not f.endswith('pyc') ]
-	>>> files = [ f for f in files if not f.endswith('fail') ]
-	>>> files = sorted( gp.files() )
-	>>> show( files )
-	[<path './glob_path.py'>, <path './glob_path.test'>]
+The string value is the glob (not any matches)
+	>>> print gp
+	./glob_path.*[yt]
+
+And the repr() just wraps that in the class name
+	>>> gp
+	<glob_path ./glob_path.*[yt]>
+
+Can also get a list of matching files
+	>>> show( gp.files() )
+	[<path u'./glob_path.py'>, <path u'./glob_path.test'>]
+

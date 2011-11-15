@@ -1,3 +1,5 @@
+'''A class to encapsulate a glob pattern, which may match some files'''
+
 import path
 
 class glob_path:
@@ -16,7 +18,7 @@ class glob_path:
 	def get_glob(self,name):
 		if not name:
 			name = '*'
-		elif '*' not in name:
+		elif '*' not in name and '?' not in name:
 			name = '%s*' % name
 		self.glob = name
 
@@ -29,14 +31,30 @@ class glob_path:
 	def files(self):
 		return self.parent.files(self.glob)
 
-	def exists(self):
+	def dirs(self):
+		return self.parent.dirs(self.glob)
+
+	def isfile(self):
 		for f in self.parent.files(self.glob):
 			return True
 		return False
 
-def any_fnmatch(f,globs):
+	def isdir(self):
+		for f in self.parent.dirs(self.glob):
+			return True
+		return False
+
+	def exists(self):
+		return self.isfile() or self.isdir()
+
+def any_fnmatch(path_to_something,globs):
+	'''Whether the path is matched by any of the globs
+
+	>>> any_fnmatch(path.path('fred.py'),[ 'other.*', 'f??d.*' ])
+	True
+	'''
 	for glob in globs:
-		if f.fnmatch(glob):
+		if path_to_something.fnmatch(glob):
 			return True
 	return False
 
