@@ -37,7 +37,7 @@ __version__ = '2.0.4'
 __all__ = ['path']
 
 # Pre-2.3 support.  Are unicode filenames supported?
-_base = str
+_base = unicode
 try:
 	if os.path.supports_unicode_filenames:
 		_base = unicode
