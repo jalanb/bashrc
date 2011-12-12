@@ -18,7 +18,7 @@ unalias -a
 
 # x
 
-alias -- -='kd - >/dev/null 2>&1'
+alias -- -="c -"
 alias 1="v $JAB/todo.txt"
 alias 2="cat $JAB/todo.txt"
 alias a="a"
@@ -34,7 +34,6 @@ alias j="j"
 alias k="k"
 alias l="$LS_PROGRAM "
 alias m="m"
-alias m="mount ie-build-1:/mnt/releases /Users/shared/alto/releases"
 alias n="n"
 alias o="o"
 # p is a function
@@ -80,7 +79,7 @@ alias p-="echo $OLDPWD"
 alias pi="ipython "
 
 alias r.="rm -rvf *"
-alias rq="/bin/rm -rf "
+alias rq="rm -rf "
 alias rs="sudo -i -u svn"
 alias ry="rf pycos"
 
