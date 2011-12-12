@@ -81,8 +81,10 @@ export EDITOR=`$WHICH vim`
 #
 # colours
 #
+# http://en.wikipedia.org/wiki/ANSI_escape_sequences#Colors
+#
 export          NO_COLOUR="\[\033[0m\]"
-export                FOO="\[\033[0;31m\]"
+export                RED="\[\033[0;31m\]"
 export          LIGHT_RED="\[\033[1;31m\]"
 export              GREEN="\[\033[0;32m\]"
 export        LIGHT_GREEN="\[\033[1;32m\]"
@@ -96,12 +98,12 @@ export               CYAN="\[\033[0;36m\]"
 export         LIGHT_CYAN="\[\033[1;36m\]"
 export              WHITE="\[\033[1;37m\]"
 export         LIGHT_GRAY="\[\033[0;37m\]"
-export                RED="\[\033[1;38m\]"
-export            RED_TOO="\[\033[0;38m\]"
+export                FOO="\[\033[1;38m\]"
+export            FOO_TOO="\[\033[0;38m\]"
 export                SED="\[\033[1;39m\]"
 export            SED_TOO="\[\033[0;39m\]"
 export     PROMPT_NO_COLOUR="\033[0m"
-export           PROMPT_FOO="\033[0;31m"
+export           PROMPT_RED="\033[0;31m"
 export     PROMPT_LIGHT_RED="\033[1;31m"
 export         PROMPT_GREEN="\033[0;32m"
 export   PROMPT_LIGHT_GREEN="\033[1;32m"
@@ -115,8 +117,8 @@ export          PROMPT_CYAN="\033[0;36m"
 export    PROMPT_LIGHT_CYAN="\033[1;36m"
 export         PROMPT_WHITE="\033[1;37m"
 export    PROMPT_LIGHT_GRAY="\033[0;37m"
-export           PROMPT_RED="\033[1;38m"
-export       PROMPT_RED_TOO="\033[0;38m"
+export           PROMPT_FOO="\033[1;38m"
+export       PROMPT_FOO_TOO="\033[0;38m"
 
 RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
 
