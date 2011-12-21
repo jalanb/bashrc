@@ -239,7 +239,7 @@ def main(main_method,ctrl_c = None,no_args = False):
 	for name in _ordered_options:
 		try:
 			Global = Globals[name]
-			if callable(Global):
+			if callable(Global) and getattr(options, name):
 				methods.append(Global)
 		except KeyError: pass
 	import sys
