@@ -185,11 +185,22 @@ llt ()
 lly ()
 {
 	first_dir $*
-	/bin/ls -lhtr "$dir"/*.tests
+	ls -lhtr "$dir"/*.tests
 	echo
-	/bin/ls -lhtr "$dir"/*.test
+	ls -lhtr "$dir"/*.test
 	echo
-	/bin/ls -lhtr "$dir"/*.py
+	ls -lhtr "$dir"/*.py
+}
+
+lyy ()
+{
+	ls -xd $(ls -F |grep \/$)
+	echo
+	ls -xhtr *.tests
+	echo
+	ls -xhtr *.test
+	echo
+	ls -xhtr *.py
 }
 
 unalias try > /dev/null 2>&1
