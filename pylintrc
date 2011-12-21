@@ -33,7 +33,13 @@ load-plugins=
 # can either give multiple identifier separated by comma (,) or put this option
 # multiple time (only on the command line, not in the configuration file where
 # it should appear only once).
-#disable=
+# W0201 is "Attribute '...' defined outside __init__". Ignore this to use the dynamic features of Python
+# C0321 is "More than one statement on a single line" which we allow, e.g. "if ...: return"
+# W0702 is "No exception type(s) specified" which we allow
+# W0703 is "Catching too general exception" which we also allow
+# W0603 is "Using the global statement" We have the statement, we use it
+# R0903 is "Too few public methods"
+disable=C0111,C0103,W0201,C0321,W0702,W0703,W0603,R0903
 
 
 [REPORTS]
@@ -43,7 +49,7 @@ load-plugins=
 output-format=text
 
 # Include message's id in output
-include-ids=no
+include-ids=yes
 
 # Put messages in a separate file for each module / package specified on the
 # command line instead of printing them on stdout. Reports (if any) will be
@@ -83,19 +89,19 @@ const-rgx=(([A-Z_][A-Z0-9_]*)|(__.*__))$
 class-rgx=[A-Z_][a-zA-Z0-9]+$
 
 # Regular expression which should only match correct function names
-function-rgx=[a-z_][a-z0-9_]{2,30}$
+function-rgx=[a-z_][a-z0-9_]{2,99}$
 
 # Regular expression which should only match correct method names
-method-rgx=[a-z_][a-z0-9_]{2,30}$
+method-rgx=[a-z_][a-z0-9_]{2,99}$
 
 # Regular expression which should only match correct instance attribute names
-attr-rgx=[a-z_][a-z0-9_]{2,30}$
+attr-rgx=[a-z_][a-z0-9_]{2,99}$
 
 # Regular expression which should only match correct argument names
-argument-rgx=[a-z_][a-z0-9_]{2,30}$
+argument-rgx=[a-z_][a-z0-9_]{1,99}$
 
 # Regular expression which should only match correct variable names
-variable-rgx=[a-z_][a-z0-9_]{2,30}$
+variable-rgx=[a-z_][a-z0-9_]{1,99}$
 
 # Regular expression which should only match correct list comprehension /
 # generator expression variable names
@@ -115,14 +121,14 @@ no-docstring-rgx=__.*__
 [FORMAT]
 
 # Maximum number of characters on a single line.
-max-line-length=80
+max-line-length=512
 
 # Maximum number of lines in a module
 max-module-lines=1000
 
 # String used as indentation unit. This is usually " " (4 spaces) or "\t" (1
 # tab).
-indent-string='    '
+indent-string='	'
 
 
 [MISCELLANEOUS]
