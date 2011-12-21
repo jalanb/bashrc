@@ -52,7 +52,7 @@ prompt_command ()
 	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	else Dir="\$PWD"
 	fi
-	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info.major, sys.version_info.minor)")
+	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
 	if [[ -n "$VIRTUAL_ENV" ]]
 	then python_version=${python_version}.$(basename $VIRTUAL_NAME)
 	fi
