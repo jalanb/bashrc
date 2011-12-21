@@ -43,9 +43,9 @@ def ptags():
 	ptags.read_write_dir(argv.first_directory)
 
 def main():
-	#print 'cd', argv.first_directory
-	argv.first_directory.cd()
-	print argv.first_directory
+	if argv.first_directory != os.getcwd():
+		print 'cd', argv.first_directory
+		argv.first_directory.cd()
 	for method in argv.methods:
 		method()
 	ly.show()
