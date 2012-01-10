@@ -1,5 +1,6 @@
+
+Test all the code
+	Move trackers to own repo
+	Run / test on local machine
+
 Set up Codecenter workflows
-
-Protex for scanning
-Codecenter for workflow
-
