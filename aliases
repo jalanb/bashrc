@@ -162,6 +162,7 @@ alias sxd="svn_diff xdiff "
 
 alias tra="try ~/alans_tests"
 
+alias vbb="v $(python -c "import paths_for_builds; print paths_for_builds.scripts")"
 alias vib="v ~/.bashrc; sib"
 alias vla="v $JAB/local/aliases; sla"
 alias vlb="v $JAB/local/bashrc; slb"
