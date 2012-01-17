@@ -55,7 +55,6 @@ alias ..='c ..'
 
 alias ab="ssh abrogan@192.168.0.103"
 
-alias c-='c - >/dev/null 2>&1'
 alias cy="c \$PYTHON_HOME"
 
 alias eg="env | grep "
@@ -106,6 +105,7 @@ alias vb="v $JAB/bashrc; sb"
 alias vd="vim -do "
 alias ve="v $JAB/environ; se"
 alias vf="v $JAB/functons; sf"
+alias vh="v ~/.bash_history +"
 alias vj="v $JAB"
 alias vp="v $JAB/prompt; sp"
 alias vt="v -p *.txt"
