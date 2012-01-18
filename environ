@@ -70,9 +70,9 @@ else
 	export JABS=http://intranet.altobridge.com/jab
 fi
 
-if [ -x /opt/local/bin/gwhich ]
+if [ -x /usr/local/bin/which ]
 then
-	export WHICH=/opt/local/bin/gwhich
+	export WHICH=/usr/local/bin/which
 else
 	export WHICH=/usr/bin/which
 fi
