@@ -221,6 +221,11 @@ SSH ()
 	echo -e "]1;$you@$there_small" && ssh $you@$there && echo -e "]0;$me@${here}"
 }
 
+vbb ()
+{
+	vim $(python -c "import paths_for_builds; print paths_for_builds.scripts")
+}
+
 vff ()
 {
 	FRED=
