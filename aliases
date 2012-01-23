@@ -116,6 +116,8 @@ alias xk="exchange_keys"
 
 alias yy="y $PYTHON_HOME"
 
+alias z.="zm \*"
+
 # xxx
 
 alias ...='c ../..'
