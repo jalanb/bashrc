@@ -5,4 +5,6 @@ Test all the code
 
 Set up Codecenter workflows
 
+Issue 12973: Separate Product and Project lists on tracker
+
 Show Anki in prompt
