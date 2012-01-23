@@ -228,7 +228,7 @@ SSH ()
 
 vbb ()
 {
-	vim $(python -c "import paths_for_builds; print paths_for_builds.scripts")
+	vim $(python -c "import paths_for_builds; print paths_for_builds.SCRIPTS")
 }
 
 vff ()
