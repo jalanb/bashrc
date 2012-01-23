@@ -140,7 +140,7 @@ alias out="to_release"
 alias ps3="ps axjf | vim - +"
 
 alias rq.="/bin/rm -rf ./*"
-alias rff="r fred*"
+alias rff="r fred* *.tmp"
 
 alias sib=". ~/.bashrc"
 alias sii="svn_issue "
