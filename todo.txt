@@ -4,3 +4,5 @@ Test all the code
 	Run / test on local machine
 
 Set up Codecenter workflows
+
+Show Anki in prompt
