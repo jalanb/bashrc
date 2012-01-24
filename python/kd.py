@@ -92,6 +92,8 @@ def find_dir(start_dir,sub_dir=None):
 		return possibles[0]
 	if not possibles:
 		return whither
+	if sub_dir in possibles:
+		return sub_dir
 	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles) )
 
 def parse_command_line(args):
