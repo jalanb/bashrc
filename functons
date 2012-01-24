@@ -46,13 +46,11 @@ gg ()
 kd ()
 { 
 # cd to filename as well as directory
-	echo $* | grep -q " st" && show_more=true || show_more=false 
-	args=`echo $* | sed -e"s/ st//"`
-	destination=`python $JAB/python/kd.py $args 2>&1`
-	first_word=`echo "$destination" | cut -d\   -f1`
+	destination=`python $JAB/python/kd.py $* 2>&1`
+	first_word=`echo "$destination" | head -n 1 | cut -d\   -f1`
 	if [[ "x$first_word" == "xError" ]]
 	then
-		echo $destination
+		python $JAB/python/kd.py $*
 	else
 		if [[ $destination != $1 && $1 != "-" ]]
 		then
@@ -60,7 +58,6 @@ kd ()
 		fi
 		cd "$destination"
 	fi
-	# $show_more && st 
 }
 
 ky ()
