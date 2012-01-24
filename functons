@@ -124,7 +124,7 @@ ut ()
 
 zm ()
 {
-	du -cms $1 | sort -n | sed -s "s/      / M     /g"
+	du -cms $1 | sort -n | sed -e "s/      / M     /g"
 }
 
 # xxx
