@@ -1,3 +1,5 @@
+"""Script to find a new directory to cd to"""
+
 import os
 import sys
 import inspect
@@ -7,10 +9,12 @@ import argv
 debugging = False
 
 def debug(message):
+	"""Show the message if (global) debugging is true"""
 	if not debugging: return
 	print >> sys.stderr, '%s: %r' % (sys.argv[0], message)
 	
 def enter_method():
+	"""Get a message appropriate when entering a method"""
 	frame = inspect.currentframe().f_back
 	code = frame.f_code
 	args, varargs, varkw, lokals = inspect.getargvalues(frame)
@@ -18,6 +22,7 @@ def enter_method():
 	return 'def %s%s' % (code.co_name,tuple(values))
 	
 def exit_method():
+	"""Get a message appropriate when leaving a method"""
 	frame = inspect.currentframe().f_back
 	code = frame.f_code
 	args, varargs, varkw, lokals = inspect.getargvalues(frame)
@@ -29,6 +34,12 @@ def exit_method():
 	return '\n\t'.join(result)
 	
 def try_others(dirr,sub_dir):
+	"""Look for some other directories around the given directory
+
+	Try the parent
+		then any sub-directories (prefixed with sub_dir),
+		then any files prefixed with sub_dir
+	"""
 	debug(enter_method())
 	p = path(dirr)
 	if p.parent.isdir():
@@ -46,6 +57,13 @@ def try_others(dirr,sub_dir):
 	return path(dirr)
 
 def try_sub_dirs(top, sub_dir):
+	"""Look in top for sub_dir
+
+	Return a list of names for 
+		each sub-directory containing sub_dir
+	Or
+		each sub-sub-directory containing sub_dir
+	"""
 	debug(enter_method())
 	result = []
 	for d in top.dirs():
@@ -61,6 +79,7 @@ def try_sub_dirs(top, sub_dir):
 	return result
 
 def find_in_PATH(whither):
+	"""Return the first directory in $PATH which contains a file called whither"""
 	if not whither.isdir():
 		for directory in os.environ['PATH'].split(':'):
 			path_in_PATH = path(directory)
@@ -70,6 +89,18 @@ def find_in_PATH(whither):
 	return None
 
 def find_dir(start_dir,sub_dir=None):
+	"""Find a relevant directory relative to the start_dir, and using a sub_dir (if given)
+	
+	start_dir can be
+		empty (use home directory)
+		"-" (use $OLDPWD)
+
+	Return start_dir if it is a directory,
+		or its parent if it is a file
+		or one of its sub-directories (if they match sub_dir)
+		or a directory in $PATH
+	Otherwise look for sub_dir as a partial match
+	"""
 	debug(enter_method())
 	if start_dir == '':
 		return path('~').expanduser()
@@ -97,6 +128,7 @@ def find_dir(start_dir,sub_dir=None):
 	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles) )
 
 def parse_command_line(args):
+	"""Get the arguments from the command line. Insist on 1, 2nd is optional"""
 	if len(args) > 2:
 		raise ValueError('Usage: kd directory [sub-dir]')
 	elif len(args) < 1:
@@ -107,6 +139,7 @@ def parse_command_line(args):
 	return args
 
 def chdir(whither):
+	"""Trying cd'ing to the given directory"""
 	whither = find_dir(whither)
 	oldpwd = os.environ['PWD']
 	os.chdir(whither)
@@ -114,6 +147,7 @@ def chdir(whither):
 	os.environ['PWD'] = whither
 
 def main():
+	"""Show a directory from the command line arguments (or some derivative"""
 	try:
 		args = parse_command_line(sys.argv[1:])
 		whither = find_dir(args[0], args[1])
