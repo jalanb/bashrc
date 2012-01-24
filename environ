@@ -1,6 +1,7 @@
 #! /bin/sh
 
 export JAB=$HOME/.jab
+export JAB_TODO=$JAB/todo.txt
 
 export COLUMNS
 

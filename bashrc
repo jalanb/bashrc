@@ -16,7 +16,8 @@ then
 	/bin/rm -rf tmp/*
 	if [[ $USER != "builder" ]]
 	then
-		test -f todo.txt && cat todo.txt
+		cd $JAB/python
+		test -f todo.py && python2.7 todo.py
 		echo
 		echo Welcome jab, to $HOSTNAME
 		echo

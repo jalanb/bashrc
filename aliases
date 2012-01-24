@@ -19,8 +19,8 @@ unalias -a
 # x
 
 alias -- -="c -"
-alias 1="v $JAB/todo.txt"
-alias 2="cat $JAB/todo.txt"
+alias 1="v $JAB_TODO"
+alias 2="python2.7 $JAB/python/todo.py"
 alias a="a"
 alias b="b"
 alias c="kd "
@@ -84,7 +84,7 @@ alias rs="sudo -i -u svn"
 alias ry="rf pycos"
 
 alias sa="source $JAB/aliases"
-alias sb="cd $JAB && source bashrc && c-"
+alias sb="cd $JAB && source bashrc && -"
 alias sc="svn ci -m"
 alias sd="sdiff "
 alias se="source $JAB/environ"
@@ -121,7 +121,6 @@ alias z.="zm \*"
 # xxx
 
 alias ...='c ../..'
-alias c--="cd -"
 
 alias 7up='svn up'
 

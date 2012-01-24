@@ -1,10 +1,9 @@
-
-Test all the code
-	Move trackers to own repo
-	Run / test on local machine
-
-Set up Codecenter workflows
-
-Issue 12973: Separate Product and Project lists on tracker
-
-Show Anki in prompt
+SCM
+	Trackers
+		Issue 12973: Separate Product and Project lists on tracker, 1
+		Test all the code, 2
+			Test on local machine, 2
+			Move trackers to own repo, 2
+	Set up Codecenter workflows, 1
+Self
+	Show Anki in prompt, 4
