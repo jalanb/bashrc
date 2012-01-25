@@ -198,11 +198,11 @@ lyy ()
 {
 	ls -xd $(ls -F |grep \/$)
 	echo
-	ls -xhtr *.tests
+	ls -xhtr *.tests 2>/dev/null
 	echo
-	ls -xhtr *.test
+	ls -xhtr *.test 2>/dev/null
 	echo
-	ls -xhtr *.py
+	ls -xhtr *.py 2>/dev/null
 }
 
 unalias try > /dev/null 2>&1
