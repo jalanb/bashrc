@@ -66,7 +66,7 @@ endif
 
 " We should echo filename because pylint truncates .py
 " If someone know better way - let me know :) 
-CompilerSet makeprg=(echo\ '[%]';\ pylint\ -r\ y\ --output-format=parseable\ %)
+CompilerSet makeprg=(echo\ '[%]';\ pylint\ -d\ I0011\ -r\ y\ --output-format=parseable\ %)
 
 " We could omit end of file-entry, there is only one file
 " %+I... - include code rating information
