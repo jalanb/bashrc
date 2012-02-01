@@ -219,6 +219,11 @@ set ts=4
 set shiftwidth=4
 set noexpandtab
 set nospell
+"
+" Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
+" And it must be set up before the plugin on command (next)
+"
+call pathogen#infect() 
 filetype on
 filetype plugin on
 filetype indent on
@@ -367,5 +372,3 @@ if &term == "linux"
 	set t_te=[?1049l
 endif
 
-" Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
-call pathogen#infect() 

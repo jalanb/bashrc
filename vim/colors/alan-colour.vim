@@ -45,4 +45,8 @@ highlight pythonFormat		ctermfg=21					guifg=#0000df
 
 highlight Folded		ctermfg=White	ctermbg=Black			guifg=White      guibg=Black
 highlight FoldColumn		ctermfg=White	ctermbg=Black			guifg=White      guibg=Black
-
+"
+" for the plugin EasyMotion.vim
+"
+highlight EasyMotionTarget ctermbg=none ctermfg=DarkRed
+highlight EasyMotionShade  ctermbg=none ctermfg=Gray
