@@ -33,15 +33,16 @@ load-plugins=
 # can either give multiple identifier separated by comma (,) or put this option
 # multiple time (only on the command line, not in the configuration file where
 # it should appear only once).
-# W0201 is "Attribute '...' defined outside __init__". Ignore this to use the dynamic features of Python
 # E1103 is "Instance of ... has no ... member (but some types could not be inferred)". Ignore this to use the dynamic features of Python
 # E1101 is "Module ... has no ... member" Ignore this to use the dynamic features of Python
 # C0321 is "More than one statement on a single line" which we allow, e.g. "if ...: return"
+# W0142 is "Used * or ** magic", and refers to calls which use that. It's not magic - we allow it.
+# W0201 is "Attribute '...' defined outside __init__". Ignore this to use the dynamic features of Python
 # W0702 is "No exception type(s) specified" which we allow
 # W0703 is "Catching too general exception" which we also allow
 # W0603 is "Using the global statement" We have the statement, we use it
 # R0903 is "Too few public methods"
-disable-msg=C0111, E1103, E1101, C0103, W0201, C0321, W0702, W0703, W0603, R0903
+disable-msg=C0111, E1103, E1101, C0103, C0321, W0142, W0201, W0702, W0703, W0603, R0903
 
 
 [REPORTS]
@@ -223,7 +224,7 @@ max-statements=50
 max-parents=7
 
 # Maximum number of attributes for a class (see R0902).
-max-attributes=7
+max-attributes=9
 
 # Minimum number of public methods for a class (see R0903).
 min-public-methods=2
