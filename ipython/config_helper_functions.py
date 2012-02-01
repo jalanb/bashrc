@@ -1,3 +1,5 @@
+import os
+
 import IPython.ipapi
 ip = IPython.ipapi.get()
 
