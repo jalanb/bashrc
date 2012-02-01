@@ -184,7 +184,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>k used by plugin/EasyMotion.vim
 "noremap <leader>l
 "noremap <leader>m
-"noremap <leader>n
+ noremap <leader>n :call NumberToggle()<cr>
 "noremap <leader>o
 "noremap <leader>p
 "noremap <leader>q
@@ -211,7 +211,7 @@ set background=dark
 colorscheme alan-colour
 let g:SeeTabGuiFG="Cyan"
 set title
-set number
+set relativenumber
 set showmode " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
@@ -259,6 +259,23 @@ abbreviate seperate separate
 "
 autocmd FileType c,cpp,h,java set cindent
 autocmd FileType python compiler pylint
+"
+" Change numbering automagically
+" 	See http://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
+"
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+autocmd FocusLost * :set number
+autocmd FocusGained * :set relativenumber
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
 "
 " From http://items.sjbach.com/319/configuring-vim-right
 "
