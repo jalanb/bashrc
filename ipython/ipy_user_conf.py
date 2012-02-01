@@ -18,7 +18,6 @@ description on what you could do here.
 
 # Most of your config files and extensions will probably start with this import
 
-import os
 import config_helper_functions
 
 def main():
@@ -81,5 +80,9 @@ def main():
 	# import readline
 	# readline.parse_and_bind('set completion-query-items 1000')
 	# readline.parse_and_bind('set page-completions no')
+
+	# Set up easier access to Altobridge data
+	config_helper_functions.execf('~/.ipython/alto.py')
+	# config_helper_functions.ip.ex('alto = AltobridgeVariables()')
 
 main()
