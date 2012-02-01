@@ -68,7 +68,7 @@ store-passwords=yes
 ### Set global-ignores to a set of whitespace-delimited globs
 ### which Subversion will ignore in its 'status' output, and
 ### while importing or adding files and directories.
-global-ignores = *.o *.lo *.la *# .*.rej *.rej .*~ *~ .#* .*swp .DS_Store *.pyc *.pyo build.sh tags logs lastBuild *.log-*.gz file msg wiki *.log *.err *.out fred fred.* files *-[owe]*.txt *.fail generated new .idea *.so
+global-ignores = *.o *.lo *.la *# .*.rej *.rej .*~ *~ .#* .*swp .DS_Store *.pyc *.pyo build.sh tags logs lastBuild *.log-*.gz file msg wiki *.log *.err *.out fred fred.* files *-[owe]*.txt *.fail generated new .idea *.so .git*
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
 ### Set use-commit-times to make checkout/update/switch/revert
