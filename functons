@@ -187,15 +187,20 @@ llt ()
 lly ()
 {
 	first_dir $*
+	reset=$(shopt -p dotglob)
+	shopt -s dotglob
 	ls -lhtr "$dir"/*.tests
 	echo
 	ls -lhtr "$dir"/*.test
 	echo
 	ls -lhtr "$dir"/*.py
+	$reset
 }
 
 lyy ()
 {
+	reset=$(shopt -p dotglob)
+	shopt -s dotglob
 	ls -xd $(ls -F |grep \/$)
 	echo
 	ls -xhtr *.tests 2>/dev/null
@@ -203,6 +208,7 @@ lyy ()
 	ls -xhtr *.test 2>/dev/null
 	echo
 	ls -xhtr *.py 2>/dev/null
+	$reset
 }
 
 unalias try > /dev/null 2>&1
