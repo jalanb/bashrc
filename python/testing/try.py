@@ -1,3 +1,5 @@
+"""Script to handle running of doctests"""
+
 import re
 import os
 import imp
@@ -9,7 +11,7 @@ import commands
 import datetime
 from pprint import pprint, pformat
 
-from path import makepath
+from paths import makepath
 from see import see, see_methods, see_attributes, spread
 import test_files
 
