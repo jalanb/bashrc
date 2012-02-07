@@ -1,7 +1,7 @@
 import re
 from pprint import pprint
 
-from path import makepath
+from paths import makepath
 
 class UserMessage(Exception):
 	pass
