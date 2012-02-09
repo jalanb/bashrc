@@ -1,1 +1,2 @@
 --type-set=test=.test,.tests
+--type-set=pyt=.py,.test,.tests
