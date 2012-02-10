@@ -3,7 +3,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if !exists('g:slime_send_key')
-  let g:slime_send_key = '<C-c><C-c>'
+  let g:slime_send_key = '<leader>s'
 endif
 
 if !exists('g:slime_config_key')
