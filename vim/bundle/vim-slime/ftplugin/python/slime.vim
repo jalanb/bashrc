@@ -1,3 +1,3 @@
 function! _EscapeText_python(text)
-  return substitute(a:text, "\n", "", "g")
+  return substitute(substitute(a:text, "\n", "", "g"),"\t","    ","g")
 endfunction
