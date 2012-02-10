@@ -17,20 +17,23 @@ else
 	export PROMPT_COLOUR=none
 fi
 
-show_svn_change ()
+changes=0
+
+get_svn_status ()
 {
-	stat_output=`svn stat 2>&1`
-	if [[ $stat_output == "svn: warning: '.' is not a working copy" ]]
+	if [[ -d ".svn" ]]
 	then
-		return 1
-	else
-		lines=`svn stat -q`
-		if [[ -z $lines ]]
-		then
-			return 2
-		else
-			return 0
-		fi
+		find . -type d -name .svn -prune -o -type d -print | while read dir 
+		do
+			if [ -d $dir/.svn ]
+			then
+				if svn stat -N $dir 2>/dev/null | grep -q ^[MAD]
+				then
+					export changes=1
+					return 2
+				fi  
+			fi  
+		done
 	fi
 }
 
@@ -47,8 +50,9 @@ prompt_command ()
 	fi
 	echo
 	echo -ne $STATUS
-	show_svn_change
-	if [[ $? == 0 ]]
+	changes=0
+	get_svn_status
+	if [[ $? == 2 ]]
 	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	else Dir="\$PWD"
 	fi
