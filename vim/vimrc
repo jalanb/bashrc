@@ -204,6 +204,7 @@ set backspace=eol,start,indent
 set autoindent smartindent
 set matchpairs+=<:>
 set listchars=tab:>-,trail:?,eol:$
+set tildeop
 "
 " Screen
 "
