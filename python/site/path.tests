@@ -1,7 +1,0 @@
-	>>> import path
-
-You cannot use path.popd() unless path.pushd() is called first
-	>>> path.popd()
-	Traceback (most recent call last):
-		...
-	PathError: pop from empty directory stack
