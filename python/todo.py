@@ -8,17 +8,17 @@ try:
 except ImportError:
 	from collections import namedtuple
 
-import path
+from paths import makepath
 import colours
 
 def todo_file():
 	"""Get the filename from the environment"""
-	# Tell pyline not to warn that this is a todo
+	# Tell pylint not to warn that this is a todo
 	# pylint: disable-msg=W0511
 	return os.environ['JAB_TODO']
 
 def read_todo(path_to_todo):
-	lines = [ l.rstrip() for l in path.makepath(path_to_todo).lines() ]
+	lines = [ l.rstrip() for l in makepath(path_to_todo).lines() ]
 	return [ l for l in lines if l ]
 
 def read_todo_items():
