@@ -1,20 +1,28 @@
-from path import makepath,path
+import os
+
+from paths import makepath, home
 
 def environ_paths():
 	import environ
 	result = {}
-	for key,value in environ.jab.iteritems():
-		if key in result: raise KeyError('%s:%s -> %s' % (key,result[key],value))
-		paths = [ p for p in string_to_paths(value) if p.exists() ]
-		if paths:
-			if paths[1:] or key.endswith('PATH'):
-				result[key] = paths
+	all_items = os.environ.items() + environ.jab.items()
+	for key,value in all_items:
+		if key in result:
+			if not value or value == result[key]:
+				continue
+			# print '%s:%s -> %s' % (key,result[key],value)
+			# raise KeyError('%s:%s -> %s' % (key,result[key],value))
+		existing_paths = [ p for p in string_to_paths(value) if p.exists() ]
+		if existing_paths:
+			if existing_paths[1:] or key.endswith('PATH'):
+				result[key] = existing_paths
 			else:
-				result[key] = paths[0]
-	class paths: pass
-	paths = paths()
-	paths.__dict__.update(result)
-	return paths
+				result[key] = existing_paths[0]
+	class environ_paths_class:
+		pass
+	environ_paths_instance = environ_paths_class()
+	environ_paths_instance.__dict__.update(result)
+	return environ_paths_instance
 
 def string_to_paths(string):
 	for c in ':, ;':
@@ -44,9 +52,6 @@ def directories(strings):
 	return split_directories(strings)[0]
 
 def from_home(p):
-	return home.relpathto(p)
+	return home().relpathto(p)
 
 environ = environ_paths()
-
-here = path('.')
-home = path('~').expanduser()
