@@ -29,6 +29,11 @@ cj ()
 	svn ci $JAB -m"$*"
 }
 
+cl ()
+{
+	c $LOGS
+}
+
 cv ()
 {
 	kd $1

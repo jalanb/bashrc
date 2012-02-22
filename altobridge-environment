@@ -2,10 +2,12 @@
 
 # Load an Altobridge environment
 
+#set -x
+
 if [[ -d /usr/local/trunk/trackers ]]
-then TRACKERS=/usr/local/trunk/trackers
+then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
 elif [[ -d /mnt/source/amg/trunk/trackers ]]
-then TRACKERS=/mnt/source/amg/trunk/trackers
+then TRACKERS=$(readlink -f /mnt/source/amg/trunk/trackers)
 fi
 
 if [[ -n $TRACKERS ]]
@@ -15,3 +17,4 @@ then
 	source $TRACKERS/ie-track-1/etc/tracker_functions
 	source $TRACKERS/ie-track-1/etc/tracker_aliases
 fi
+#set +x
