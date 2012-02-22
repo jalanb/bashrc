@@ -22,7 +22,10 @@ shopt -s histverify
 shopt -s lithist
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
-
+#
+# some interesting paths
+#
+export LOGS=/var/log
 export XAUTHORITY=$HOME/.Xauthority
 
 if [[ -f /usr/local/bin/gls ]]
