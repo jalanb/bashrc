@@ -17,10 +17,13 @@ then
 	if [[ $USER != "builder" ]]
 	then
 		cd $JAB/python
-		test -f todo.py && python2.7 todo.py
+		if which python2.7 -c"a=0" >/dev/null 2>&1
+		then test -f todo.py && python2.7 todo.py
+		fi
 		echo
 		echo Welcome jab, to $HOSTNAME
 		echo
+		cd
 	fi
 	test -f ~/.oldpwd && . ~/.oldpwd
 fi
