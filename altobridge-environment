@@ -1,0 +1,17 @@
+#! /bin/bash
+
+# Load an Altobridge environment
+
+if [[ -d /usr/local/trunk/trackers ]]
+then TRACKERS=/usr/local/trunk/trackers
+elif [[ -d /mnt/source/amg/trunk/trackers ]]
+then TRACKERS=/mnt/source/amg/trunk/trackers
+fi
+
+if [[ -n $TRACKERS ]]
+then
+	source $TRACKERS/python/source_python_path
+	source $TRACKERS/ie-track-1/etc/tracker_environ
+	source $TRACKERS/ie-track-1/etc/tracker_functions
+	source $TRACKERS/ie-track-1/etc/tracker_aliases
+fi
