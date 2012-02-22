@@ -218,7 +218,7 @@ let g:SeeTabGuiFG="Cyan"
 set title
 if exists('&relativenumber')
 	set relativenumber
-fi
+endif
 set showmode " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
