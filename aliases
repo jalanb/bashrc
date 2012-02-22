@@ -209,7 +209,7 @@ alias ......='c ../../../../..'
 alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
 
-alias zimbra='mutt -f imap://abrogan:alrb3002@ie-mail-1.altobridge.com/'
+alias zimbra='mutt -f imap://abrogan:AlrB3@@9@ie-mail-1.altobridge.com/'
 
 # xxxxxxx
 
