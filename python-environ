@@ -1,11 +1,8 @@
 #! /bin/sh
 
 export PYTHONDOCS=/home/builder/python25/share/doc/html
-export SITE=`python -c "import sys; print [ s for s in sys.path if s.endswith('site-packages') or s.endswith('dist-packages')][0]"`
 
 add_to_a_path PYTHONPATH $JAB/python/site
-add_to_a_path PYTHONPATH $HOME/jab/python/site
-add_to_a_path PYTHONPATH $SITE 
 
 test -d ~/python && export PYTHON_HOME=~/python
 test -f ~/.pythonrc.py &&  export PYTHONSTARTUP=~/.pythonrc.py
