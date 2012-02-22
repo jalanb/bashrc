@@ -178,6 +178,8 @@ alias url="python ~/bin/show_url.py "
 
 alias ....='c ../../..'
 
+alias alto="source $JAB/altobridge-environment"
+
 alias cdsi="cd /usr/lib/python2.4/site-packages"
 
 alias down="cd ~/Download"
