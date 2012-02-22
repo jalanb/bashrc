@@ -152,6 +152,10 @@ noremap <S-Tab> :SeeTab<cr>
  noremap     <C-n> :next<CR>
  noremap     <C-p> :prev<CR>
  noremap     <C-q> :qa!<CR>
+ noremap     <C-h> <c-w><c-h>
+ noremap     <C-j> <c-w><c-j>
+ noremap     <C-k> <c-w><c-k>
+ noremap     <C-l> <c-w><c-l>
  noremap <C-Right> w
  noremap <C-Left>  b
 inoremap     <C-q> <Esc>:qa!<CR>
@@ -212,7 +216,9 @@ set background=dark
 colorscheme alan-colour
 let g:SeeTabGuiFG="Cyan"
 set title
-set relativenumber
+if exists('&relativenumber')
+	set relativenumber
+fi
 set showmode " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
