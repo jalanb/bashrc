@@ -5,12 +5,10 @@ let g:loaded_jab_python = "v001"
 
 noremap } :cn<cr>
 noremap { :cp<cr>
-noremap <right> :tabnext<cr>
-noremap <left> :tabprev<cr>
 
 noremap tm :Mash<cr>
 noremap tt :Try<cr>
-noremap tl :Pylint<cr>
+noremap tp :Pylint<cr>
 
 set foldmethod=indent
 NoMatchParen
