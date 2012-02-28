@@ -35,7 +35,7 @@ j() {
     } else for( i in l ) print i "|" l[i]
    }
   ' $jfile 2>/dev/null > $jfile.tmp
-  mv -f $jfile.tmp $jfile
+  test -f $jfile.tmp && mv -f $jfile.tmp $jfile
  elif [ "$1" = "" -o "$1" = "--l" ];then
   shift
   awk -v q="$*" -F"|" '
