@@ -4,8 +4,6 @@ set t_Co=256
 
 " Behave like on Windows
 "
-behave mswin
-source $VIMRUNTIME/mswin.vim
 "
 " Keyboard
 "
@@ -138,13 +136,17 @@ nnoremap K <PageUp>zz
 " ordinary keys 
 "     for movement
 "
-noremap <Space> <PageDown>zz
-noremap <BS> <PageUp>zz
-noremap t<left> :tabprev<cr>
+noremap <Space>  <PageDown>zz
+noremap <BS>     <PageUp>zz
+noremap t<left>  :tabprev<cr>
 noremap t<right> :tabnext<cr>
-"noremap <down> <down>zz
-"noremap <up> <up>zz
-noremap <S-Tab> :SeeTab<cr>
+noremap th       :tabprev<cr>
+noremap tl       :tabnext<cr>
+noremap <S-Tab>  :SeeTab<cr>
+noremap <Up> 	 ddkP
+noremap <Down>	 ddp
+noremap <Left>	 <<
+noremap <Right>	 >>
 "
 " control keys
 "
