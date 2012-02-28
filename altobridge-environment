@@ -2,13 +2,15 @@
 
 # Load an Altobridge environment
 
-#set -x
-
-if [[ -d /usr/local/trunk/trackers ]]
+if [[ -d /Users/jab/jab/alto/dev/friday/tracking ]]
+then TRACKERS=/Users/jab/jab/alto/dev/friday/tracking
+elif [[ -d /usr/local/trunk/trackers ]]
 then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
 elif [[ -d /mnt/source/amg/trunk/trackers ]]
 then TRACKERS=$(readlink -f /mnt/source/amg/trunk/trackers)
 fi
+
+export PYTHONPATH=
 
 if [[ -n $TRACKERS ]]
 then
@@ -17,4 +19,9 @@ then
 	source $TRACKERS/ie-track-1/etc/tracker_functions
 	source $TRACKERS/ie-track-1/etc/tracker_aliases
 fi
-#set +x
+
+if [[ -d /Users/jab/jab/alto/ ]]
+then
+	cd /Users/jab/jab/alto/alto_python
+	source bin/activate
+fi
