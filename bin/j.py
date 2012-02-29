@@ -21,6 +21,24 @@ import sys
 import time
 from optparse import OptionParser
 
+def shortest(strings):
+	"""A list of all the strings in the list which are not longer than the shortest string in the list"""
+	lengths = [ (len(string), string) for string in strings ]
+	minimum = min( lengths )[0]
+	return [ string for length, string in lengths if length == minimum ]
+
+def first_shortest(strings):
+	"""The first string in the list of shortest strings in the list"""
+	return shortest(strings)[0]
+
+def first_shortest_to(strings, substring):
+	"""Chop the each string at the first occurrence of substring
+	Then find the shortest strings
+	Then return the first of those
+	"""
+	chopped_strings = [ string[:string.find(substring) + len(substring) ] for string in strings ]
+	return first_shortest(chopped_strings)
+
 def read_data_file(path_to_old_directories):
 	"""Read cache data from the given path
 
@@ -194,17 +212,45 @@ class DirectoryMemory(object):
 		else:
 			self.data = new_data
 
-	def complete_path(self, path_to_complete, ranking_algorithm):
-		"""Complete a path for the shell"""
+	def complete_path(self, string_to_complete, ranking_algorithm):
+		"""Complete a path for the shell
+		
+		Return the highest ranked path whose name starts with the given string
+		If there is none like that then
+			gather all the paths who have some directory starting with the string
+			find the shortest of those
+			return the highest ranked path of same length as shortest
+		"""
+		def completion_result(strings):
+			"""Format the strings as a result usable by the calling script"""
+			return '%s--%s' % ( ' '.join(strings), first_shortest_to(strings, string_to_complete) )
+			
 		if self.path_matches and ranking_algorithm in self.ranking_methods:
-			result = []
+			strings = []
 			method = self.ranking_methods[ranking_algorithm]
-			higher_ranked_first = reversed(method())
-			for _, path in higher_ranked_first:
-				if os.path.basename(path).startswith(path_to_complete):
-					result.append(path)
-			return ' '.join(result)
-		return path_to_complete
+			lower_ranked_first = method()
+			if string_to_complete[0] == '/':
+				for _, path in reversed(lower_ranked_first):
+					if path.startswith(string_to_complete):
+						strings.append(path)
+			else:
+				for _, path in reversed(lower_ranked_first):
+					if os.path.basename(path).startswith(string_to_complete):
+						strings.append(path)
+			if strings:
+				return completion_result(strings)
+			for _, path in reversed(lower_ranked_first):
+				for part in path.split(os.path.sep):
+					if part.startswith(string_to_complete):
+						strings.append((len(path), path))
+			if strings:
+				shortest_length = min([ length for length, path in strings ])
+				shortest_strings = []
+				for length, path in strings:
+					if length == shortest_length:
+						shortest_strings.append(path)
+				return completion_result(shortest_strings)
+		return string_to_complete
 
 def handle_command_line():
 	"""Read the command line and parse to options and arguments"""
@@ -256,7 +302,8 @@ def main():
 		if not directory_memory.matches(arguments):
 			directory_memory.matches(arguments, True)
 		output = directory_memory.find_destination(options.ranking_algorithm)
-	print output
+	if output:
+		print output
 	return 0
 
 if __name__ == '__main__':
