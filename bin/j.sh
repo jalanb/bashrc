@@ -6,7 +6,10 @@ then
 
 j ()
 {
-	if [[ ${1/\-/} != $1 ]]
+	if [[ -z $1 ]]
+	then
+		python $python_source
+	elif [[ ${1/\-/} != $1 ]]
 	then
 		python $python_source $*
 	else
