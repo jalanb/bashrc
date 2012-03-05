@@ -24,4 +24,5 @@ if [[ -d /Users/jab/jab/alto/ ]]
 then
 	cd /Users/jab/jab/alto/alto_python
 	source bin/activate
+	cd - > /dev/null 2>&1
 fi
