@@ -21,6 +21,7 @@ unalias -a
 alias -- -="c -"
 alias 1="v $JAB_TODO"
 alias 2="python2.7 $JAB/python/todo.py"
+alias 7="svn"
 alias a="a"
 alias b="b"
 alias c="kd "
