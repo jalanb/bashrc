@@ -8,7 +8,6 @@ try:
 except ImportError:
 	from collections import namedtuple
 
-from paths import makepath
 import colours
 
 def todo_file():
@@ -18,8 +17,13 @@ def todo_file():
 	return os.environ['JAB_TODO']
 
 def read_todo(path_to_todo):
-	lines = [ l.rstrip() for l in makepath(path_to_todo).lines() ]
-	return [ l for l in lines if l ]
+	result = []
+	for line in file(path_to_todo):
+		line = line.rstrip()
+		if not line:
+			continue
+		result.append(line)
+	return result
 
 def read_todo_items():
 	path_to_todo = todo_file()
