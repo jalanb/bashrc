@@ -10,7 +10,8 @@ elif [[ -d /mnt/source/amg/trunk/trackers ]]
 then TRACKERS=$(readlink -f /mnt/source/amg/trunk/trackers)
 fi
 
-export PYTHONPATH=
+unset SITE
+unset PYTHONPATH
 
 if [[ -n $TRACKERS ]]
 then
@@ -18,6 +19,8 @@ then
 	source $TRACKERS/ie-track-1/etc/tracker_environ
 	source $TRACKERS/ie-track-1/etc/tracker_functions
 	source $TRACKERS/ie-track-1/etc/tracker_aliases
+else
+	echo Could not find a trackers checkout
 fi
 
 if [[ -d /Users/jab/jab/alto/ ]]
