@@ -12,7 +12,7 @@ endif
 let g:colors_name = "alan-colour"
 
 highlight Normal		ctermfg=White	ctermbg=Black			guifg=White	guibg=Black
-highlight Search		ctermfg=Red	ctermbg=DarkRed			guifg=Red	guibg=#402020
+highlight Search		ctermfg=Black	ctermbg=Red		guifg=Red	guibg=#402020
 
 highlight Comment	 	ctermfg=Grey					guifg=#808080
 highlight Constant	 	ctermfg=Cyan			cterm=none	guifg=#0066FF
