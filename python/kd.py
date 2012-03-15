@@ -126,8 +126,9 @@ def find_dir(start_dir, sub_dir=None):
 		return possibles[0]
 	if not possibles:
 		return path_whither
-	if sub_dir in possibles:
-		return sub_dir
+	exact_names = [ p for p in possibles if p.name == sub_dir ]
+	if len(exact_names) == 1:
+		return exact_names[0]
 	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles) )
 
 def parse_command_line(args):
