@@ -15,8 +15,6 @@ from paths import makepath
 from see import see, see_methods, see_attributes, spread
 import test_files
 
-sys_argv = sys.argv
-	
 def run_command(command):
 	'''Run a command in the local shell (usually bash)'''
 	status, output = commands.getstatusoutput(command)
@@ -34,7 +32,6 @@ def show(thing):
 class Test_Being_Run:
 	'''Encapsulation of the current test'''
 	def __init__(self,that):
-		self.runner = makepath(sys_argv[0])
 		self.here = makepath('.')
 		self.home = makepath('~')
 		self.username = os.environ['USER']
@@ -51,8 +48,6 @@ class Test_Being_Run:
 		self.path = self.here.relpathto(that)
 		base, ext = self.path.splitext()
 		[ self.add_path(base, ext) for ext in [ 'py', 'test', 'tests', 'fail' ] ]
-		self.python_path = os.environ['PYTHONPATH']
-		self.bash_path = os.environ['PATH']
 
 	def __repr__(self):
 		return pformat(self.__dict__.keys())
