@@ -32,6 +32,7 @@ syn region pymetaVariable start=/:/ end=/[^A-Za-z0-9_]/
 syn match pymetaIdentifier /[A-Za-z0-9_]/
 syn match pymetaOp         /\(::=\||\|=>\|[|?*+~]\)/
 syn match pymetaOpNohl     /[()]/ " don't highlight parens - gets annoying
+syn match pymetaComment   "#.*$"
 
 syn region subExpression  start=/(/ end=/)/ contained
 syn region pymetaTerminal start=/</ end=/>/
@@ -44,8 +45,9 @@ hi link pymetaExec       Special
 hi link pymetaFilter     Special
 hi link subExpression    Special
 hi link pymetaTerminal   Constant
-" hi link pymetaIdentifier Identifier
+hi link pymetaIdentifier Identifier
 hi link pymetaOp         Operator
 hi link pymetaVariable   Identifier
 hi link cddComment       Comment
 hi link pymetaChrLiteral String
+hi link pymetaComment    Comment
