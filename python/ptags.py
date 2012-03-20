@@ -29,7 +29,7 @@ argv.add_options([
 	( 'recursive', 'Recurse into sub-directories', False )
 ])
 
-from path import makepath, here
+from paths import makepath, pwd
 
 class Tag:
 	def_or_class = re.compile('''
@@ -121,7 +121,7 @@ def read_file(path_to_python):
 	return tags
 
 def read_dir(path_to_directory=None):
-	if not path_to_directory: path_to_directory = here()
+	if not path_to_directory: path_to_directory = pwd()
 	tags = []
 	for py in path_to_directory.files('*.py'):
 		for tag in read_file(py):
@@ -129,7 +129,7 @@ def read_dir(path_to_directory=None):
 	return tags
 
 def read_dirs(path_to_directory=None):
-	if not path_to_directory: path_to_directory = here()
+	if not path_to_directory: path_to_directory = pwd()
 	tags = read_dir(path_to_directory)
 	for p in path_to_directory.all_dirs():
 		tags += read_dir(p)
@@ -152,12 +152,12 @@ def write_dir(path_to_directory,tags):
 		print message
 
 def read_write_dir(path_to_directory=None):
-	if not path_to_directory: path_to_directory = here()
+	if not path_to_directory: path_to_directory = pwd()
 	tags = read_dir(path_to_directory)
 	write_dir(path_to_directory,tags)
 
 def read_write_dirs(path_to_directory=None):
-	if not path_to_directory: path_to_directory = here()
+	if not path_to_directory: path_to_directory = pwd()
 	for p in path_to_directory.all_dirs():
 		tags = read_dirs(p)
 		write_dir(p,tags)
