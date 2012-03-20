@@ -150,7 +150,7 @@ noremap <Right>	 >>
 "
 " control keys
 "
- noremap     <C-d> :qa!<CR>
+ noremap     <C-d> :qa<CR>
  noremap     <C-n> :next<CR>
  noremap     <C-p> :prev<CR>
  noremap     <C-q> :qa!<CR>
