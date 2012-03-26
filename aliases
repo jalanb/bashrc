@@ -54,7 +54,10 @@ alias z="du -sh"
 
 alias ..='c ..'
 
+alias aa="ack --all"
 alias ab="ssh abrogan@192.168.0.103"
+alias ap="ack --python"
+alias at="ack --pyt"
 
 alias cy="c \$PYTHON_HOME"
 
