@@ -67,7 +67,8 @@ alias cy="c \$PYTHON_HOME"
 alias eg="env | grep "
 
 alias gh="history | grep "
-alias in="to_source"
+
+alias hh="history -n"
 
 alias jj="c $JAB"
 
