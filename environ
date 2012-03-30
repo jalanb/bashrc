@@ -12,6 +12,7 @@ export FIGNORE=.pyc:.swp:~:.o
 
 export HISTSIZE=100000
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+export HISTIGNORE="bg:fg:history:gh:hh"
 #  remember multi-line commands
 shopt -s cmdhist
 # edit a failed history substitution (default just ignores them)
