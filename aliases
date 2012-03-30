@@ -21,6 +21,7 @@ unalias -a
 alias -- -="c -"
 alias 1="v $JAB_TODO"
 alias 2="python2.7 $JAB/python/todo.py"
+alias 3="tree"
 alias 7="svn"
 alias a="a"
 alias b="b"
@@ -53,6 +54,8 @@ alias z="du -sh"
 # xx
 
 alias ..='c ..'
+
+alias 3l="tree | less"
 
 alias aa="ack --all"
 alias ab="ssh abrogan@192.168.0.103"
@@ -214,7 +217,7 @@ alias ......='c ../../../../..'
 alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
 
-alias zimbra='mutt -f imap://abrogan:AlrB3@@9@ie-mail-1.altobridge.com/'
+alias zimbra='mutt -f imap://abrogan:AlrB3@1@@ie-mail-1.altobridge.com/'
 
 # xxxxxxx
 
