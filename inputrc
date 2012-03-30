@@ -1,1 +1,18 @@
 set editing-mode vi
+
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+"\e[C":menu-complete
+"\e[D":menu-complete-backward
+
+#  http://www.reddit.com/r/commandline/comments/kbeoe/you_can_make_readline_and_bash_much_more_user/
+set completion-ignore-case on
+set completion-prefix-display-length 2
+"\C-j": menu-complete
+"\C-k": menu-complete-backward
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set completion-map-case on
+
+# http://unix.stackexchange.com/questions/3357/how-do-you-recall-the-last-n-th-passed-argument-of-the-previous-command-you-u
+Space:magic-space
