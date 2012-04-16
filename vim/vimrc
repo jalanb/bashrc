@@ -107,7 +107,7 @@ nnoremap <C-F4> <C-W>c
 " LETTERS
 "
 "noremap A - Append
- noremap B :ConqueTerm bash<cr>
+"noremap B - WORDS backwards
 "noremap C c$
 "noremap D d$
 "noremap E e
