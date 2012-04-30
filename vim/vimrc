@@ -111,26 +111,26 @@ nnoremap <C-F4> <C-W>c
 "noremap C c$
 "noremap D d$
 "noremap E e
-"noremap F f leftwards
-"noremap G
+"noremap F f backwards
+"noremap G goto line (default last)
  noremap H :set hlsearch<cr>
 "noremap I - Insert
 "noremap J - Join lines
 nnoremap K <PageUp>zz
-"noremap L
-"noremap M
+"noremap L - To Line <n> from bottom of window
+"noremap M - To Middle of window
  noremap N :noh<cr>
 "noremap O - Open line above
 "noremap P - paste forward
  noremap Q :qa!<CR>
-"noremap R
- noremap S :set nospell<CR>
+"noremap R - Replace
+"noremap S - aka cc
  noremap T :!tags
  noremap U :redo<cr>
 "noremap V
  noremap W :wa!<CR>
  noremap X :x!<CR>
-"noremap Y
+"noremap Y - aka yy
  noremap Z :q!<cr>
 "
 " ordinary keys 
