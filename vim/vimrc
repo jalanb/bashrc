@@ -126,7 +126,7 @@ nnoremap K <PageUp>zz
 "noremap R
  noremap S :set nospell<CR>
  noremap T :!tags
-"noremap U
+ noremap U :redo<cr>
 "noremap V
  noremap W :wa!<CR>
  noremap X :x!<CR>
