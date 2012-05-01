@@ -38,7 +38,8 @@ def try_others(directory, sub_dir):
 	"""Look for some other directories around the given directory
 
 	Try the parent
-		then any sub-directories (prefixed with sub_dir),
+	If that does not exist then switch to current dir (pwd)
+		try any sub-directories (prefixed with sub_dir),
 		then any files prefixed with sub_dir
 	"""
 	debug(enter_method())
@@ -66,6 +67,14 @@ def try_sub_dirs(path_to_directory, sub_dir):
 		each sub-sub-directory containing sub_dir
 	"""
 	debug(enter_method())
+	if '/' in sub_dir:
+		path_to_sub = path_to_directory / sub_dir
+		if path_to_sub.exists():
+			if path_to_sub.isdir():
+				return [ path_to_sub ]
+			if path_to_sub.parent.isdir():
+				return [ path_to_sub.parent ]
+		raise ValueError, '"%s" does not exist' % path_to_sub
 	result = []
 	for path_to_child in path_to_directory.dirs():
 		if sub_dir in path_to_child.name:
