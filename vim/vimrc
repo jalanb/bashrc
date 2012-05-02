@@ -381,3 +381,7 @@ if &term == "linux"
 	set t_te=[?1049l
 endif
 
+"
+"EasyMotion
+"
+let g:EasyMotion_leader_key = '<Space>'
