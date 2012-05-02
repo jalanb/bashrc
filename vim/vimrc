@@ -56,11 +56,13 @@ nnoremap <C-F4> <C-W>c
 "noremap y - yank
  noremap yb byw
 "noremap z - folds. centering, ...
- noremap zx zo
- noremap zX zO
- noremap zs zR
-"noremap zc  
- noremap zd zM 
+ noremap z<up> zR
+ noremap z<right> zr
+ noremap z<left> zm
+ noremap z<down> zM
+ noremap z+ zo
+ noremap z= zo
+ noremap z- zc
 "
 " Punctuation
 "
@@ -231,6 +233,7 @@ set nospell
 " And it must be set up before the plugin on command (next)
 "
 call pathogen#infect() 
+call pathogen#helptags()
 filetype on
 filetype plugin on
 filetype indent on
@@ -384,3 +387,7 @@ endif
 "
 let g:EasyMotion_keys = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 let g:EasyMotion_leader_key = '<Space>'
+"
+" Python Mode
+"
+let g:pymode_folding = 0
