@@ -64,16 +64,14 @@ nnoremap <C-F4> <C-W>c
 "
 " Punctuation
 "
- noremap - $       " I do not like <S-4> meaning end, so I use the key to right of 0
 "noremap =
  noremap ] <C-]>   " do this on bufenter
  noremap [ <C-T>   " do this on bufenter
- noremap ; :
+ noremap ; $
  noremap ' @a " play register a
  noremap '' "ap
 "noremap \ - leader
  noremap , `
- noremap ,, ``
 "noremap . - repeat
 "noremap / - search
  noremap // :nohlsearch<cr><c-l>
@@ -136,7 +134,7 @@ nnoremap K <PageUp>zz
 " ordinary keys 
 "     for movement
 "
-noremap <Space>  <PageDown>zz
+noremap <Space><Space>  <PageDown>zz
 noremap <BS>     <PageUp>zz
 noremap t<left>  :tabprev<cr>
 noremap t<right> :tabnext<cr>
@@ -384,4 +382,5 @@ endif
 "
 "EasyMotion
 "
+let g:EasyMotion_keys = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 let g:EasyMotion_leader_key = '<Space>'
