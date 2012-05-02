@@ -98,13 +98,17 @@ function-rgx=[a-z_][a-z0-9_]{2,99}$
 method-rgx=[a-z_][a-z0-9_]{2,99}$
 
 # Regular expression which should only match correct instance attribute names
-attr-rgx=[a-z_][a-z0-9_]{2,99}$
+# db is a database
+attr-rgx=([a-z_][a-z0-9_]{2,99}|db)$
 
 # Regular expression which should only match correct argument names
 argument-rgx=[a-z_][a-z0-9_]{1,99}$
 
 # Regular expression which should only match correct variable names
-variable-rgx=[a-z_][a-z0-9_]{1,99}$
+# i is an index
+# c is a character
+# db is a database
+variable-rgx=([a-z_][a-z0-9_]{2,99}|i|c|db)$
 
 # Regular expression which should only match correct list comprehension /
 # generator expression variable names
