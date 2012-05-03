@@ -1,8 +1,0 @@
-#! /bin/bash
-
-you=$1
-me=$USER
-there=$2
-there_small=${there/.altobridge.com/}
-here=`hostname -s`
-echo -e "]1;$you@$there_small" && ssh $you@$there && echo -e "]0;$me@${here}"
