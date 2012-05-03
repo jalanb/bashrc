@@ -56,10 +56,10 @@ nnoremap <C-F4> <C-W>c
 "noremap y - yank
  noremap yb byw
 "noremap z - folds. centering, ...
- noremap z<up> zR
+ noremap z<up> zM
  noremap z<right> zr
  noremap z<left> zm
- noremap z<down> zM
+ noremap z<down> zR
  noremap z+ zo
  noremap z= zo
  noremap z- zc
@@ -391,3 +391,6 @@ let g:EasyMotion_leader_key = '<Space>'
 " Python Mode
 "
 let g:pymode_folding = 0
+let g:pymode_syntax = 0
+let g:pymode_syntax_all = 0
+let g:pymode_options_indent = 0
