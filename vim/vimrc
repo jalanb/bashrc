@@ -60,9 +60,10 @@ nnoremap <C-F4> <C-W>c
  noremap z<right> zr
  noremap z<left> zm
  noremap z<down> zR
- noremap z+ zo
+ noremap z+ zO
  noremap z= zo
  noremap z- zc
+ noremap z_ zC
 "
 " Punctuation
 "
