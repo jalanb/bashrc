@@ -50,7 +50,7 @@ nnoremap <C-F4> <C-W>c
 "noremap s - start replacing
 "noremap t - used by ftplugin/python/jab.vim
 "noremap u - undo
- noremap v :noh<cr>
+"noremap v - start visual
 "noremap w - forword
 "noremap x - remove char
 "noremap y - yank
@@ -176,7 +176,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "
 " Leader keys
 "
-"noremap <leader>a
+ noremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
 "noremap <leader>c 
 "noremap <leader>C 
@@ -191,11 +191,11 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>k used by plugin/EasyMotion.vim
 "noremap <leader>l
 "noremap <leader>m
- noremap <leader>n :call NumberToggle()<cr>
+ noremap <leader>n :call ChangeNumber()<cr>
 "noremap <leader>o
 "noremap <leader>p
 "noremap <leader>q
-"noremap <leader>r
+ noremap <leader>r :call SetRelativeNumber()<cr>
  noremap <leader>s :w !sudo tee % >/dev/null<cr>
  noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
 "noremap <leader>u
@@ -204,6 +204,9 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>x
 "noremap <leader>y
 "noremap <leader>z
+
+ noremap <leader>] :cn<cr>
+ noremap <leader>[ :cp<cr>
 "
 " Kinda keys
 "
@@ -278,17 +281,39 @@ function! SetRelativeNumber()
 		set relativenumber
 	endif
 endfunction
-function! NumberToggle()
-	if exists('&relativenumber') && (&relativenumber == 1)
-		set number
-		return
+
+function! SetAbsoluteNumber()
+	set number
+endfunction
+
+function! ChangeNumber()
+	if exists('&relativenumber')
+		call CycleNumber()
+	else
+		call ToggleNumber()
 	endif
+endfunction
+
+function! ToggleNumber()
 	if &number == 1
 		set nonumber
 	else
 		set number
 	endif
 endfunc
+
+function CycleNumber()
+	if &number == 1
+		set relativenumber
+	else
+		if &relativenumber == 1
+			set nonumber
+			set norelativenumber
+		else
+			set number
+		endif
+	endif
+endfunction
 
 set number
 
