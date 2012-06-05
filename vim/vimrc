@@ -219,9 +219,6 @@ set background=dark
 colorscheme alan-colour
 let g:SeeTabGuiFG="Cyan"
 set title
-if exists('&relativenumber')
-	set relativenumber
-endif
 set showmode " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
@@ -275,22 +272,26 @@ abbreviate seperate separate
 "
 autocmd FileType c,cpp,h,java set cindent
 autocmd FileType python compiler pylint
-"
-" Change numbering automagically
-" 	See http://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
-"
+
+function! SetRelativeNumber()
+	if exists('&relativenumber') && (&relativenumber == 0)
+		set relativenumber
+	endif
+endfunction
 function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
+	if exists('&relativenumber') && (&relativenumber == 1)
+		set number
+		return
+	endif
+	if &number == 1
+		set nonumber
+	else
+		set number
+	endif
 endfunc
 
-autocmd FocusLost * :set number
-autocmd FocusGained * :set relativenumber
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
+set number
+
 
 "
 " From http://items.sjbach.com/319/configuring-vim-right
