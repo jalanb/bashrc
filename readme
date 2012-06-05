@@ -19,10 +19,12 @@ Add links where programs expect to find them
 	ln -s ~/.jab/vim ~/.vim
 	ln -s ~/.jab/vim/vimrc ~/.vimrc
 	ln -s ~/.jab/python/pythonrc.py ~/.pythonrc.py
+	test -f ~/.subversion/config && rm -rf ~/.subversion/config
 	ln -s ~/.jab/etc/subversion/config ~/.subversion/config
 	ln -s ~/.jab/etc/dir_colors ~/.dir_colors
 	ln -s ~/.jab/editrc ~/.editrc
 	ln -s ~/.jab/inputrc ~/.inputrc
+	test -d ~/.ipython && rm -rf ~/.ipython/* || mkdir -p ~/.ipython
 	ln -s ~/.jab/ipython/config_helper_functions.py ~/.ipython
 	ln -s ~/.jab/ipython/ipy_user_conf.py ~/.ipython
 	ln -s ~/.jab/ipython/ipythonrc ~/.ipython
