@@ -84,6 +84,7 @@ alias lx="p $JAB/python/ls/lx.py "
 alias ly="p $JAB/python/ls/ly.py "
 
 alias p-="echo $OLDPWD"
+alias pg="pgrep -fl"
 alias pi="ipython "
 
 alias r.="rm -rvf *"
@@ -140,6 +141,8 @@ alias cly="cl; ly "
 alias jab="ssh jab@pinky"
 alias jjy="ky $JAB/python"
 alias jlf="ssh jlfieblu@jlf.ie"
+
+alias kpp="kp --progress"
 
 alias lff="ls fred*"
 alias lsh="ls *.sh"
