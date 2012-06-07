@@ -127,6 +127,16 @@ ut ()
 	fi
 }
 
+vd ()
+{
+	if diff -q $1 $1 >/dev/null 2>&1
+	then
+		vim -do $1 $2
+	else
+		echo same
+	fi
+}
+
 zm ()
 {
 	du -cms $1 | sort -n | sed -e "s/      / M     /g"
