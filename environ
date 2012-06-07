@@ -23,6 +23,8 @@ shopt -s histverify
 shopt -s lithist
 # Make bash check its window size after a process completes
 shopt -s checkwinsize
+# append to the history file, don't overwrite it
+shopt -s histappend
 #
 # some interesting paths
 #
