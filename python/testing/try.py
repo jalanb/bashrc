@@ -5,7 +5,6 @@ import os
 import imp
 import sys
 import doctest
-import inspect
 import fnmatch
 import commands
 import datetime
@@ -93,14 +92,14 @@ class Sys_Path_Handler:
 			self.paths.insert(0,directory)
 			if directory not in sys.path:
 				sys.path.insert(0,str(directory))
-			
+
 	def remove(self,item):
 		directory = makepath(item).directory()
 		if directory in self.paths:
 			self.paths.remove(directory)
 			if directory in sys.path:
 				sys.path.remove(directory)
-	
+
 def make_module(path_to_python):
 	name = path_to_python.namebase
 	try: return sys.modules[name]
