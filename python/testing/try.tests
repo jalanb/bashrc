@@ -1,0 +1,52 @@
+Testing the try script
+===========================
+
+There is more text in here than I'd normally use in *.tests
+But doctest got verbose when I called it *.test, showing:
+	*** DocTestRunner.merge: 'try.test' in both testers; summing outcomes.
+
+So this file is called try.tests
+	>>> print test.path
+	try.tests
+
+If that went well we have a hidden variable called test
+	which is an object from the __main__ module
+	and has some attributes
+
+	>>> spread(test)
+	<__main__.Test_Being_Run
+		username : 'jab'
+		path_to_test : <FilePath u'/Users/jab/.jab/python/testing/try.test'>
+		path_to_py : <FilePath u'/Users/jab/.jab/python/testing/try.py'>
+		here : <DirectPath u'/Users/jab/.jab/python/testing'>
+		host : 'jab.ook'
+		path_to_tests : <FilePath u'/Users/jab/.jab/python/testing/try.tests'>
+		user : 'jab@jab.ook'
+		path : <DirectPath u'try.tests'>
+		home : <DirectPath u'/Users/jab'>
+		path_to_fail : <FilePath u'/Users/jab/.jab/python/testing/try.fail'>
+	>
+
+We also have access to some modules I often use
+	without a need for explicit import
+
+	>>> test.path.name == makepath(sys.argv[0]).name
+	True
+
+You should be reading this in a file called try.tests
+	>>> print test.path
+	try.tests
+
+Which originated on my Mac 
+	but now lives on the Dell
+	>>> print test.user, test.home, test.path.abspath()
+	jab@... /.../jab /.../.jab/python/testing/try.tests
+
+While we're here, where are we ?
+	>>> print test.here
+	/.../.jab/python/testing
+
+And we can run bash commands
+	>>> bash('ls try.tests')
+	try.tests
+	True
