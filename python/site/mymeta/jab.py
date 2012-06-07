@@ -134,7 +134,7 @@ class jab(ometa_jab,GrammarHelper):
 
 def file_grammar(grammar_file):
 	root = path(grammar_file).namebase
-	grammar = jab.makeGrammar(file(grammar_file).read(), globals(), name=root)
+	grammar = jab.makeGrammar(str(file(grammar_file).read()), globals(), name=root)
 	def file_parse(path_to_file):
 		source = file(path_to_file).read()
 		return grammar(source).apply(root)
