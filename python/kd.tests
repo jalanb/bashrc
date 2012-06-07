@@ -22,23 +22,25 @@ Directories found must be real
 	...
 	ValueError: ...
 
-	>>> import paths
-	>>> a_known_directory = paths.environ.JAB
+	>>> import path_strings
+	>>> a_known_directory = path_strings.environ.JAB
+	>>> a_known_name = '.jab'
 
 Can send a blank as the sub-dir
 
-	>>> kd.find_dir(a_known_directory,'')
-	<path '/.../.jab'>
+	>>> kd.find_dir(a_known_directory,'').name == a_known_name
+	True
 
 Same effect if sub-dir is not found
-	>>> kd.find_dir(a_known_directory,'this_is_not_real')
-	<path '/.../.jab'>
+	>>> kd.find_dir(a_known_directory,'this_is_not_real').name == a_known_name
+	True
 
 
 When main() fails it prints out nothing
 	>>> import sys
 	>>> sys.argv = [ 'kd', 'no_such_directory' ]
 	>>> kd.main()
+	Error no_such_directory is not a directory
 	1
 
 	>>> kd.want_debugging = True
