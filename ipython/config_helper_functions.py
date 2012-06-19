@@ -1,9 +1,9 @@
+"""Some config helper functions you can use"""
 import os
 
 import IPython.ipapi
 ip = IPython.ipapi.get()
 
-# some config helper functions you can use 
 def import_mod(modules):
 	""" Usage: import_mod("os sys") """ 
 	for m in modules.split():
@@ -15,7 +15,7 @@ def import_all(modules):
 		ip.ex("from %s import *" % m)
 		
 def import_some(module,things):
-	'''Usage: import_some('path','makepath path')'''
+	"""Usage: import_some('path','path')"""
 	for thing in things.split():
 		ip.ex('from %s import %s' % (module,thing))
 
