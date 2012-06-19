@@ -97,6 +97,13 @@ ru ()
 	fi
 }
 
+sk ()
+{
+	cp $1 ${1}.keep
+	svn revert $1
+	ls -l $1*
+}
+
 uj ()
 {
 # update $JAB from the repository
