@@ -19,6 +19,6 @@ Bash's environment variables are attributes of the module
 	>>> print environ.EDITOR == environ.jab['EDITOR']
 	True
 
-	>>> 'PYTHONPATH' in environ.jab
+	>>> paths = environ.environ_paths()
+	>>> paths.JAB.isdir() and paths.PYTHONSTARTUP.isfile()
 	True
-
