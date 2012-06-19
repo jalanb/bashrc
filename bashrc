@@ -5,6 +5,7 @@ then
 	. environ
 	. python-environ
 	test -f local/environ && . local/environ
+	test -f local/python-environ && . local/python-environ
 	test -n "$PS1" || return
 	. prompt green
 	test -f local/prompt && . local/prompt
