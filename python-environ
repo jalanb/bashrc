@@ -1,7 +1,5 @@
 #! /bin/sh
 
-export PYTHONDOCS=/home/builder/python25/share/doc/html
-
 add_to_a_path PYTHONPATH $JAB/python/site
 
 test -d ~/python && export PYTHON_HOME=~/python
