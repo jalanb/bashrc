@@ -6,7 +6,9 @@ let g:loaded_jab_python = "v001"
 noremap } :cn<cr>
 noremap { :cp<cr>
 
+noremap tf :Fix<cr>
 noremap tm :Mash<cr>
+noremap tn :MashTry<cr>
 noremap tt :Try<cr>
 noremap tp :Pylint<cr>
 
@@ -190,6 +192,12 @@ if !exists("Mash")
 		endtry
 	endfunction
 	command -nargs=0 Mash :call Mash()
+
+	function MashTry()
+		call Mash()
+		call Try(1)
+	endfunction
+	command -nargs=0 MashTry :call MashTry()
 endif
 "	From ie-build-1:/usr/share/vim/vim70/vimrc_example.vim
 
