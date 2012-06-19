@@ -41,7 +41,8 @@ def main():
 	o.confirm_exit = 0
 
 	config_helper_functions.import_mod('os sys re')
-	config_helper_functions.import_some('paths','makepath path')
+	config_helper_functions.import_some('path', 'path')
+	config_helper_functions.import_some('paths', 'makepath')
 	config_helper_functions.import_some('see','see code see_methods see_attributes')
 
 	# -- prompt
