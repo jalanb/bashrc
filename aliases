@@ -132,7 +132,7 @@ alias ...='c ../..'
 
 alias 7up='svn up'
 
-alias doc="cd ~/Documents"
+alias doc="c ~/Documents"
 
 alias clx="cl; lx "
 alias cly="cl; ly "
@@ -190,9 +190,9 @@ alias ....='c ../../..'
 
 alias alto="source $JAB/altobridge-environment"
 
-alias cdsi="cd /usr/lib/python2.4/site-packages"
+alias cdsi="c \$SITE"
 
-alias down="cd ~/Download"
+alias down="c ~/Download"
 
 alias mine="sudo chown $USER:allstaff "
 
