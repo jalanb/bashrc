@@ -1,8 +1,12 @@
 #! /bin/bash
 
+if [[ -x /usr/local/bin/ssh ]]
+then SSH=/usr/local/bin/ssh
+else SSH=ssh
+fi
 you=$1
 me=$USER
 there=$2
 there_small=${there/.altobridge.com/}
 here=`hostname -s`
-echo -e "]1;$you@$there_small" && ssh $you@$there && echo -e "]0;$me@${here}"
+echo -e "]1;$you@$there_small" && $SSH $you@$there && echo -e "]0;$me@${here}"
