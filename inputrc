@@ -14,7 +14,3 @@ set show-all-if-ambiguous on
 set show-all-if-unmodified on
 set completion-map-case on
 
-# http://unix.stackexchange.com/questions/3357/how-do-you-recall-the-last-n-th-passed-argument-of-the-previous-command-you-u
-$if bash
-Space:magic-space
-$endif
