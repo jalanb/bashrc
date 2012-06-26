@@ -1,16 +1,49 @@
+#
+# ~/.inputrc
+#
+# See also http://cnswww.cns.cwru.edu/php/chet/readline/readline.html#SEC9
+#
+
+# which default set of key bindings is used
 set editing-mode vi
 
+#  filename matching and completion in a case-insensitive fashion
+set completion-ignore-case on
+
+# treat hyphens (`-') and underscores (`_') as equivalent when performing case-insensitive filename matching
+set completion-map-case on
+
+# common prefixes longer than this value are replaced with an ellipsis when displaying possible completions. 
+set completion-prefix-display-length 2
+
+#  words which have more than one possible completion cause the matches to be listed immediately
+set show-all-if-ambiguous on
+
+# words which have more than one possible completion without any possible partial completion
+# cause the matches to be listed immediately instead of ringing the bell
+set show-all-if-unmodified on
+
+# a character denoting a file's type is appended to the filename when listing possible completions
+set visible-stats on
+
+# match files whose names begin with a `.' (hidden files) 
+set match-hidden-files on
+
+# Key bindings
+
+# Up arrow
 "\e[A":history-search-backward
+# Down arrow
 "\e[B":history-search-forward
+# Right arrow
 "\e[C":menu-complete
+# Left arrow
 "\e[D":menu-complete-backward
 
-#  http://www.reddit.com/r/commandline/comments/kbeoe/you_can_make_readline_and_bash_much_more_user/
-set completion-ignore-case on
-set completion-prefix-display-length 2
-"\C-j": menu-complete
-"\C-k": menu-complete-backward
-set show-all-if-ambiguous on
-set show-all-if-unmodified on
-set completion-map-case on
+# Bind some keys to useful macros
+# 	generally - pipe into the "expected command for that letter"
+
+Control-g: " | grep --color "
+Control-v: " | vim - "
+Control-s: " | sed -e "
 
