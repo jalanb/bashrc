@@ -10,8 +10,12 @@ export FIGNORE=.pyc:.swp:~:.o
 
 #export DISPLAY=:0
 
-export HISTSIZE=100000
+# infinite history
+unset HISTSIZE
+unset HISTFILESIZE
+# format history times
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+# ignore some simple commands in history
 export HISTIGNORE="bg:fg:history:gh:hh"
 #  remember multi-line commands
 shopt -s cmdhist
@@ -25,6 +29,8 @@ shopt -s lithist
 shopt -s checkwinsize
 # append to the history file, don't overwrite it
 shopt -s histappend
+# correct minor spelling errors for cd
+shopt -s cdspell
 #
 # some interesting paths
 #
