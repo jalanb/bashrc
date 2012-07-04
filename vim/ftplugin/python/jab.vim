@@ -11,6 +11,8 @@ noremap tm :Mash<cr>
 noremap tn :MashTry<cr>
 noremap tt :Try<cr>
 noremap tp :Pylint<cr>
+noremap <left>       :tabprev<cr>
+noremap <right>       :tabnext<cr>
 
 set foldmethod=indent
 set foldlevel=0
