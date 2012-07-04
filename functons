@@ -283,6 +283,12 @@ dark ()
 	svn revert -q $JAB/vim/vimrc
 }
 
+down ()
+{
+	c ~/Download* $*
+	ls -alhtr
+}
+
 stat ()
 {
 	if [[ -z "$1" ]]

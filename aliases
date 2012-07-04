@@ -192,8 +192,6 @@ alias alto="source $JAB/altobridge-environment"
 
 alias cdsi="c \$SITE"
 
-alias down="c ~/Download"
-
 alias mine="sudo chown $USER:allstaff "
 
 alias jjya='ky $JAB/python/alanology'
