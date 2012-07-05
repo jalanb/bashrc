@@ -136,12 +136,33 @@ ut ()
 
 vd ()
 {
-	if diff -q $1 $1 >/dev/null 2>&1
+	if ! diff -q one two >/dev/null
 	then
 		vim -do $1 $2
 	else
-		echo same
+		echo "same"
 	fi
+}
+
+vr ()
+{
+	if [[ -n $1 && -f $1 ]]
+	then
+		filename=$1
+	elif [[ -f errors.err ]]
+	then
+		echo "filename = ./errors.err"
+		filename=./errors.err
+	elif [[ -f ~/errors.err ]]
+	then
+		echo "filename = ${HOME}/errors.err"
+		filename=${HOME}/errors.err
+	elif [[ -f /tmp/errors.err ]]
+	then
+		echo "filename = /tmp/errors.err"
+		filename=/tmp/errors.err
+	fi
+	vim -c "call ReadTraceback(\"$filename\")"
 }
 
 zm ()

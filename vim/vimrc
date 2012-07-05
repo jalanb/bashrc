@@ -365,6 +365,14 @@ function! RetabAndStripTrailingWhitespace()
 	:retab!
 	:%s/\s\+$//e
 endfunction
+function! ReadTraceback(filename)
+	:set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
+	:map <F11> :cn<cr>zzzv
+	:map <F10> :cp<cr>zvzz
+	exec "cf " . a:filename
+	exec "clast"
+	normal zv
+endfunction
 "
 " for history
 "
