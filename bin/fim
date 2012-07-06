@@ -35,9 +35,13 @@ edit_testers ()
 #
 # Files "left short" by tab-completion are those which would have same stem, but different extension
 # So we will complete for "*.py", "*.cpp"
+#
+# Also replace any "fred.pyc" with "fred.py"
+#
 args=
 for arg in $*
 do
+	arg=${arg/%.pyc/.py}
 	if echo $arg | grep -q ^- 
 	then
 		args="$args $arg"
