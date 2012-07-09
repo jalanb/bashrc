@@ -91,7 +91,7 @@ ru ()
 # do da root root route, do da ru !
 	if [ -z "$*" ]
 	then 
-		sudo -i
+		SUDO
 	else
 		sudo $*
 	fi
@@ -265,11 +265,13 @@ try ()
 SSH ()
 {
 	you=$1
-	me=$USER
 	there=$2
 	there_small=${there/.altobridge.com/}
+	me=$USER
 	here=`hostname -s`
-	echo -e "]1;$you@$there_small" && ssh $you@$there && echo -e "]0;$me@${here}"
+	console_title_on "${you}@${there_small}" && \
+		ssh $you@$there && \
+		console_title_off "${me}@${here}"
 }
 
 vff ()
@@ -322,6 +324,23 @@ stat ()
 			do_stat $file
 		done
 	fi
+}
+
+SUDO ()
+{
+	if [[ -n $1 ]]
+	then
+		user="-u $1"
+		you_sir="$1"
+	else
+		user=
+		you_sir=root
+	fi
+	me=$USER
+	here=`hostname -s`
+	console_title_on "${you_sir}@${here}" && \
+		sudo -i $user && \
+		console_title_off "${me}@${here}"
 }
 
 # xxxxx
@@ -405,7 +424,7 @@ run_as ()
 	then 
 		sudo -u $username $*
 	else
-		sudo -i -u $username
+		SUDO $username
 	fi
 }
 
@@ -516,7 +535,7 @@ to_release ()
 
 # xxxxxxxxxxxx
 
-# xxxxxxxxxxxx
+# xxxxxxxxxxxxx
 
 svn_log_issue ()
 {
@@ -543,4 +562,38 @@ svn_log_issue ()
 	svn log $path | grep ^issue | cut -d\  -f2 | cut -d\: -f1 | sort | uniq | $TRACKERS/issues/sh/issue -l | head $*
 }
 
+# xxxxxxxxxxxxxx
+
+# xxxxxxxxxxxxxxx
+
+# xxxxxxxxxxxxxxxx
+
+console_title_on ()
+{
+	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
+	then
+		echo -e "]1;$1"
+	elif env | grep -iq konsole 2>/dev/null
+	then
+		dcop $KONSOLE_DCOP_SESSION renameSession $1
+	else
+		echo "Title: $1"
+	fi
+}
+
+# xxxxxxxxxxxxxxxxx
+
+console_title_off ()
+{
+	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
+	then
+		echo -e "]0;$1"
+	elif env | grep -iq konsole 2>/dev/null
+	then
+		dcop $KONSOLE_DCOP_SESSION renameSession $1
+	else
+		echo "Title: $1"
+	fi
+}
+		
 
