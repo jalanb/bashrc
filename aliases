@@ -89,7 +89,6 @@ alias pi="ipython "
 
 alias r.="rm -rvf *"
 alias rq="rm -rf "
-alias rs="sudo -i -u svn"
 alias ry="rf pycos"
 
 alias sa="source $JAB/aliases"
