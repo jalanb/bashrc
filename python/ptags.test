@@ -5,6 +5,7 @@ ptags is a module
 	>>> import ptags
 
 which resides in this directory
+	>>> from paths import makepath
 	>>> ptags_directory = makepath(ptags.__file__).parent
 
 and has this source file
@@ -25,36 +26,37 @@ It is intended to be run as a script
 methods
 -------
 
+	>>> from pprint import pprint as show
+
 The read_file() method creates a list of tags for a python file
 	>>> tags = ptags.read_file(ptags.__file__.replace('.pyc','.py'))
 	>>> tags = tags[0:5]
 	>>> show(tags)
 	[<FileTag "ptags">,
+	 <Tag "def_or_class_regexp">,
+	 <Tag "find_tag_in_line">,
 	 <Tag "Tag">,
-	 <Tag "FileTag">,
-	 <Tag "best_of">,
-	 <Tag "read_file">]
+	 <Tag "address_pattern">]
 
 The tags_to_text() method converts a list of tags to ctags format
 	>>> print ptags.tags_to_text(tags)
-	FileTag	.../.jab/python/ptags.py	/^class +FileTag(/
-	Tag	.../.jab/python/ptags.py	/^class +Tag:/
-	best_of	.../.jab/python/ptags.py	/^def +best_of(/
-	ptags	.../.jab/python/ptags.py	1
-	read_file	.../.jab/python/ptags.py	/^def +read_file(/
+	Tag	/.../ptags.py	/^class +Tag:/
+	address_pattern	/.../ptags.py	/^ +def +address_pattern(/
+	def_or_class_regexp	/.../ptags.py	/^def +def_or_class_regexp(/
+	find_tag_in_line	/.../ptags.py	/^def +find_tag_in_line(/
+	ptags	/.../ptags.py	1
 
-The read_dirs method gets tags for all python files in a directory
-	It defaults to the current directory, and recurses into sub-dirs
+The read_dirs method gets tags for all python files in a directory and recurses into sub-dirs
 	>>> tags = ptags.read_dirs(ptags_directory)
 	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
-	[<Path '.jab/python'>,
+	[<DirectPath u'.jab/python'>,
 	...
-	 <Path '.jab/python/testing'>]
+	 <DirectPath u'.jab/python/testing'>]
 
 The read_dir method does the same, but does not recurse
 	>>> tags = ptags.read_dir(ptags_directory)
 	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
-	[<Path '.jab/python'>]
+	[<DirectPath u'.jab/python'>]
 
 The tags are for all python files in the selected directory (ies)
 In .jab/python there should be three scripts which are programs (have a main)
@@ -68,8 +70,8 @@ In .jab/python there should be three scripts which are programs (have a main)
 read_sys_dirs() is used to read python's system direcories
 	Which would, for example, tag the pformat method in the pprint module
 	>>> sys_tags = ptags.read_sys_dirs()
-	>>> show( [ t.path.name for t in sys_tags if t.name == 'pformat'] )
-	['pprint.py']
+	>>> [ t.path.name for t in sys_tags if t.name == 'pformat']
+	[u'pprint.py']
 
 It actually tags all files found in sys.paths,
 	so should include path.py, so should include a tag for makedirs
