@@ -132,6 +132,8 @@ alias ...='c ../..'
 
 alias 7up='svn up'
 
+alias aaa="ack --nojunk"
+
 alias doc="c ~/Documents"
 
 alias clx="cl; lx "
