@@ -23,6 +23,14 @@ ag ()
 	alias | grep $*
 }
 
+
+ai ()
+{ 
+    local sought="$*";
+    ack --pyt "(import.*$sought|$sought import)"
+}
+
+
 cj ()
 {
 # commit jab
@@ -136,9 +144,9 @@ ut ()
 
 vd ()
 {
-	if ! diff -q one two >/dev/null
+	if ! diff -q "$1" "$2" >/dev/null
 	then
-		vim -do $1 $2
+		vim -do "$1" "$2"
 	else
 		echo "same"
 	fi
