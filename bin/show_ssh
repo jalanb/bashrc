@@ -1,5 +1,32 @@
 #! /bin/bash
 
+console_title_on ()
+{
+	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
+	then
+		echo -e "]1;$1"
+	elif env | grep -iq konsole 2>/dev/null
+	then
+		dcop $KONSOLE_DCOP_SESSION renameSession $1
+	else
+		echo "Title: $1"
+	fi
+}
+
+console_title_off ()
+{
+	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
+	then
+		echo -e "]0;$1"
+	elif env | grep -iq konsole 2>/dev/null
+	then
+		dcop $KONSOLE_DCOP_SESSION renameSession $1
+	else
+		echo "Title: $1"
+	fi
+}
+		
+
 if [[ -x /usr/local/bin/ssh ]]
 then SSH=/usr/local/bin/ssh
 else SSH=ssh
@@ -9,4 +36,6 @@ me=$USER
 there=$2
 there_small=${there/.altobridge.com/}
 here=`hostname -s`
-echo -e "]1;$you@$there_small" && $SSH $you@$there && echo -e "]0;$me@${here}"
+console_title_on "${you}@${there_small}" && \
+	ssh $you@$there && \
+	console_title_off "${me}@${here}"
