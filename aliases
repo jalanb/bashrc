@@ -59,6 +59,7 @@ alias 3l="tree | less"
 
 alias aa="ack --all"
 alias ab="ssh abrogan@192.168.0.103"
+alias ac="ack --code"
 alias ap="ack --python"
 alias at="ack --pyt"
 alias aw="ack -w"

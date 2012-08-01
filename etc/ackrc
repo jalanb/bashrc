@@ -1,3 +1,4 @@
 --type-set=test=.test,.tests
 --type-set=pyt=.py,.test,.tests
 --type-set=junk=.log,.swp,.pyc
+--type-set=code=.py,.test,.tests,.html,.js,.ini,.sh,.xml,.sql,.tmpl,.ezt,.wsgi,.cgi
