@@ -70,15 +70,13 @@ nnoremap <C-F4> <C-W>c
 "noremap =
  noremap ] <C-]>   " do this on bufenter
  noremap [ <C-T>   " do this on bufenter
- noremap ; $
+ noremap ; :
  noremap ' @a " play register a
  noremap '' "ap
 "noremap \ - leader
  noremap , `
 "noremap . - repeat
 "noremap / - search
- noremap // :nohlsearch<cr><c-l>
- noremap /\ :set hlsearch<cr><c-l>
 "noremap `
 "
 " Shifted punctuation
@@ -114,7 +112,7 @@ nnoremap <C-F4> <C-W>c
 "noremap E e
 "noremap F f backwards
 "noremap G goto line (default last)
- noremap H :set hlsearch<cr>
+"noremap H
 "noremap I - Insert
 "noremap J - Join lines
 nnoremap K <PageUp>zz
@@ -207,6 +205,8 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 
  noremap <leader>] :cn<cr>
  noremap <leader>[ :cp<cr>
+nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+ noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
 "
 " Kinda keys
 "
@@ -317,6 +317,14 @@ endfunction
 
 set number
 
+
+function ToggleHighlightSearch()
+	if &hlsearch
+		set nohlsearch
+	else
+		set hlsearch
+	endif
+endfunction
 
 "
 " From http://items.sjbach.com/319/configuring-vim-right
