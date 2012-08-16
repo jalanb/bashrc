@@ -384,6 +384,15 @@ kodos ()
 	popd >/dev/null
 }
 
+named ()
+{
+	dir=
+	if first_dir $1
+	then shift
+	fi
+	find $dir -name "$*"
+}
+
 track ()
 {
 	if [ -d ~/alans_tests ]
