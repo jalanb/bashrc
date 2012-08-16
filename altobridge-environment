@@ -8,6 +8,8 @@ elif [[ -d /usr/local/trunk/trackers ]]
 then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
 elif [[ -d /mnt/source/amg/trunk/trackers ]]
 then TRACKERS=$(readlink -f /mnt/source/amg/trunk/trackers)
+elif [[ -d /data/trackers ]]
+then TRACKERS=$(readlink -f /data/trackers)
 fi
 
 unset SITE
