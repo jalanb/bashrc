@@ -5,9 +5,10 @@ first_dir()
 	dir=`pwd`
 	for d in $*
 	do
-		test -d $d && dir=$d || continue
-		break
+		test -d $d && dir=$(python -c"import os; print os.path.realpath(\"$d\")") || continue
+		return 0
 	done
+	return 1
 }
 
 last_dir()
@@ -15,7 +16,7 @@ last_dir()
 	dir=`pwd`
 	for d in $*
 	do
-		test -d $d && dir=$d || continue
+		test -d $d && dir=$(python -c"import os; print os.path.realpath(\"$d\")") || continue
 	done
 }
 
