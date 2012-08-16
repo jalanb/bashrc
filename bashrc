@@ -40,7 +40,7 @@ welcome_home ()
 
 jab_bashrc()
 {
-	[[ -z $JAB ]] && $JAB=.jab
+	[[ -z $JAB ]] && JAB=.jab
 	if [[ ! -d $JAB ]]
 	then
 		echo i am lost because $JAB is not a directory >&2
