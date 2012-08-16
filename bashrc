@@ -4,6 +4,9 @@ source_file ()
 {
 	local path_to_file=$1
 	shift
+	local optional=
+	[[ $1 == "optional" || $path_to_file =~ /local/ ]] && optional=1
+	
 	if [[ -z $path_to_file ]]
 	then
 		echo No file specified
@@ -11,7 +14,7 @@ source_file ()
 	elif [[ -f $path_to_file ]]
 	then
 		source $path_to_file $*
-	elif [[ $1 != "optional" ]]
+	elif [[ -z $optional ]]
 	then
 		echo \"$path_to_file\" is not a file
 	fi
@@ -23,13 +26,13 @@ source_jab()
 	source_file environ
 	source_file $JAB/python-environ optional
 	source_file $LOCAL/environ
-	source_file $LOCAL/python-environ optional
+	source_file $LOCAL/python-environ
 	source_file $JAB/prompt green
-	source_file $LOCAL/prompt optional
+	source_file $LOCAL/prompt
 	source_file $JAB/aliases
-	source_file $LOCAL/aliases optional
+	source_file $LOCAL/aliases
 	source_file $JAB/functons
-	source_file $LOCAL/functons optional
+	source_file $LOCAL/functons
 	source_file $JAB/bin/j.sh
 }
 
