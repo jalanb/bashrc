@@ -1,19 +1,36 @@
 #! /bin/sh
 
+source_file ()
+{
+	local path_to_file=$1
+	shift
+	if [[ -z $path_to_file ]]
+	then
+		echo No file specified
+		set -x
+	elif [[ -f $path_to_file ]]
+	then
+		source $path_to_file $*
+	elif [[ $1 != "optional" ]]
+	then
+		echo \"$path_to_file\" is not a file
+	fi
+}
+
 source_jab()
 {
-	. environ
-	. $JAB/python-environ
 	local LOCAL=$JAB/local
-	test -f $LOCAL/environ && . $LOCAL/environ
-	test -f $LOCAL/python-environ && . $LOCAL/python-environ
-	. prompt green
-	test -f $LOCAL/prompt && . $LOCAL/prompt
-	. aliases
-	test -f $LOCAL/aliases && . $LOCAL/aliases
-	. functons
-	test -f $LOCAL/functons && . $LOCAL/functons
-	. bin/j.sh
+	source_file environ
+	source_file $JAB/python-environ optional
+	source_file $LOCAL/environ
+	source_file $LOCAL/python-environ optional
+	source_file $JAB/prompt green
+	source_file $LOCAL/prompt optional
+	source_file $JAB/aliases
+	source_file $LOCAL/aliases optional
+	source_file $JAB/functons
+	source_file $LOCAL/functons optional
+	source_file $JAB/bin/j.sh
 }
 
 clean_jab()
@@ -50,7 +67,7 @@ jab_bashrc()
 		clean_jab
 		[[ $USER == "builder" ]] || welcome_home
 	fi
-	test -f ~/.oldpwd && . ~/.oldpwd
+	source_file ~/.oldpwd optional
 }
 
 [[ $- == *i* ]] && jab_bashrc
