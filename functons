@@ -180,6 +180,13 @@ zm ()
 
 # xxx
 
+aiw ()
+{ 
+    local sought="$*";
+    ack --pyt "(import.*\b$sought\b|\b$sought\b import)"
+}
+
+
 cls ()
 {
 # clean, clear, ls
