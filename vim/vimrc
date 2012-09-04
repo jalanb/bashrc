@@ -275,6 +275,7 @@ abbreviate seperate separate
 "
 autocmd FileType c,cpp,h,java set cindent
 autocmd FileType python compiler pylint
+let g:pymode_lint_config = "$HOME/.pylintrc"
 
 function! SetRelativeNumber()
 	if exists('&relativenumber') && (&relativenumber == 0)
