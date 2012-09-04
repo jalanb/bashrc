@@ -410,7 +410,8 @@ let g:jabSortBy='date'
 
 let g:is_posix = 1
 
-set paste
+au InsertEnter * set paste
+au InsertLeave * set nopaste
 
 " Restore my window title
 let &titleold="I choose to start one small step now"
