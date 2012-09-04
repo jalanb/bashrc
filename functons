@@ -8,12 +8,12 @@
 
 p ()
 {
-	if [[ -n "$PYTHON" ]]
-	then
-		$PYTHON $*
-	else
-		python $*
-	fi
+	local me=$USER
+	local here=`hostname -s`
+	export PYTHON=${PYTHON-python}
+	console_title_on "python@${here}" && \
+		$PYTHON $* && \
+		console_title_off "${me}@${here}"
 }
 
 # xx
