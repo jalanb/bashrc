@@ -8,8 +8,8 @@ noremap { :cp<cr>
 
 noremap tf :Fix<cr>
 noremap tm :Mash<cr>
-noremap tn :MashTry<cr>
-noremap tt :Try<cr>
+noremap tt :MashTry<cr>
+noremap tn :Try<cr>
 noremap tp :Pylint<cr>
 noremap <left>       :tabprev<cr>
 noremap <right>       :tabnext<cr>
