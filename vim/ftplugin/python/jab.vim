@@ -210,3 +210,40 @@ endif
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
+
+if !exists("PPP")
+	function WritePEP()
+		normal zR
+		exec "%s/:\\([^ ]\\)/: \\1/gce"
+		exec "%s/\\([^ ]\\) #/\1  #/e"
+		exec "%s/\\([^\\s]\\)\\n^\\n\\([a-z]\\)/\\1\\2/ce"
+		exec "%s/\\[ \\(.*\\) ]/[\\1]/gce"
+		exec "%s/\\[ /[/gce"
+		exec "%s/ \\]/]/gce"
+		exec "%s/( \\(.*\\) )/(\\1)/gce"
+		exec "%s/( /[/gce"
+		exec "%s/{ \\(.*\\) }/{\\1}/gce"
+		exec "%s/{ /[/gce"
+		exec "%s/ , /, /gce"
+		exec "%s/\\(^\\(\\s\\+\\)\\(try\\|for\\|if\\|except\\)\\( [^:]*\\)\\?: \\)/\\1\\2	/ce"
+		" exec "%s/\\([^ ]\\)\\([=+-]\\)/\\1 \\2/gce"
+		" exec "%s/\\([=+,-]\\)\\([^ =]\\)/\\1 \\2/gce"
+		exec "%s/,\\([^ ]\\)/, \\1/gce"
+		exec "%s/ += \\[\\(.*\\)]/.append(\\1)/gce"
+		exec "%s/ += \\(.*\\)$/.append(\\1)/gce"
+		exec "%s/\\s\\+$//ge"
+	endfunction
+	function AddDocstrings()
+		exec '%s/\(^\s*def \)\([^(]\+\)\((.*):\n\)\(\s\+\)\([^"]\)/\1\2\3\4""""""\4\5/e'
+		let empty_docstring_line = search('""""""',"cn")
+		if empty_docstring_line != 0
+			exec '/"""\zs"""'
+			normal n
+			startinsert
+		else
+			normal i
+		endif
+	endfunction
+	command -nargs=0 PPP :call WritePEP()
+	command -nargs=0 PPA :call AddDocstrings()
+endif
