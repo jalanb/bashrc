@@ -6,7 +6,7 @@ echo $* | grep -q pycos && remove="rf pycos" || remove=rf
 $remove $*
 first_dir $*
 echo $* | grep -q deep && options= || options="-maxdepth 1"
-find \( -type d -a -name .svn -prune \) -o $dir $options -type d -exec $remove $* {} \;
+find $dir $options \( -type d -a -name .svn -prune \) -o -type d -exec $remove $* {} \;
 if [[ $0 != "./clean" ]]
 then
 	test -f ./clean && sh ./clean
