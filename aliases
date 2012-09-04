@@ -205,6 +205,7 @@ alias rias="ssh abrogan@172.20.1.172"
 
 alias tags="p $JAB/python/ptags.py "
 
+alias vvvp="v $JAB/vim/ftplugin/python"
 alias vvvv="v $JAB/vim/vimrc"
 
 # xxxxx
@@ -222,7 +223,7 @@ alias ......='c ../../../../..'
 alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
 
-alias zimbra='mutt -f imap://abrogan:AlrB3@1@@ie-mail-1.altobridge.com/'
+alias zimbra='mutt -f imap://abrogan:AlrB3@11@ie-mail-1.altobridge.com/'
 
 # xxxxxxx
 
