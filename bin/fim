@@ -23,6 +23,9 @@ JAB_TESTING=$JAB/python/testing
 edit_testers ()
 {
 	arg=$JAB_TESTING/$1
+	if [[ -z $TRACKER_TESTING && -n $TRACKERS ]]
+	then TRACKER_TESTING=$TRACKERS/testing
+	fi
 	if [[ -n $TRACKER_TESTING && -d $TRACKER_TESTING ]]
 	then
 		POST_PROCESSING="rsync -q --exclude=.svn $JAB_TESTING/* $TRACKER_TESTING/"
@@ -86,18 +89,18 @@ do
 	fi
 	cd `dirname $file`
 	base=`basename $file`
-	export swap_file=`$editor -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep $base`
+	export swap_file=`$editor -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep "\<$base\>"`
 	cd - > /dev/null 2>&1
 	swap_file=`dirname $file`/$swap_file
 	if [[ -f "$swap_file" ]]
 	then
 		echo
 		echo    A swap \ file \ exists: $swap_file
-		echo " ps a |  grep -v -e grep -e \"\<$$\>\"| grep -q \"\<vim.*$file\" "
-		if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.*$file"
+		echo " ps a |  grep -v -e grep -e \"\<$$\>\"| grep -q \"\<vim.* $file\>\" "
+		if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.* $file\>"
 		then
 			echo -n A process is running:\ 
-			ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.*$file" 
+			ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.* $file\>" 
 			echo
 			echo It is not safe to run \"$editor $*\"
 			safe=
@@ -125,11 +128,11 @@ do
 	else
 		if [[ ! -d $file ]]
 		then
-			if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.*$file"
+			if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.* $file\>"
 			then
 				echo    No swap \ file \ exists
 				echo -n A process is running:\ 
-				ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.*$file" 
+				ps a |  grep -v -e grep -e "\<$$\>"| grep "\<vim.* $file\>" 
 				safe=
 			fi
 		fi
@@ -146,6 +149,9 @@ post_vimming ()
 	do
 		[[ -e $arg ]] && ls -l $arg
 	done
+	if [[ -n $POST_PROCESSING ]]
+	then $( $POST_PROCESSING )
+	fi
 }
 
 if [[ -f debugging ]]
