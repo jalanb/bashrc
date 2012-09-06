@@ -1,39 +1,45 @@
 """Script to find a new directory to cd to"""
 
+
 import os
 import sys
 import inspect
 from path import path
 
+
 DEBUGGING = False
+
 
 def debug(message):
 	"""Show the message if (global) DEBUGGING is true"""
 	if not DEBUGGING:
 		return
-	print >> sys.stderr, '%s: %r' % (sys.argv[0], message)
-	
+	print >> sys.stderr, '%s: %s' % (sys.argv[0], message)
+
+
 def enter_method():
 	"""Get a message appropriate when entering a method"""
 	frame = inspect.currentframe().f_back
 	code = frame.f_code
 	args, _varargs, _varkw, lokals = inspect.getargvalues(frame)
-	values = [ lokals[a] for a in args ]
+	values = [lokals[a] for a in args]
 	return 'def %s%s' % (code.co_name, tuple(values))
-	
+
+
 def exit_method():
 	"""Get a message appropriate when leaving a method"""
 	frame = inspect.currentframe().f_back
 	code = frame.f_code
 	args, _varargs, _varkw, lokals = inspect.getargvalues(frame)
-	arg_values = [ lokals[a] for a in args ]
-	result = [ 'return %s%s:' % (code.co_name, tuple(arg_values)) ]
+	arg_values = [lokals[a] for a in args]
+	result = ['return %s%s:' % (code.co_name, tuple(arg_values))]
 	for name, value in lokals.iteritems():
 		if name in args:
 			continue
-		result.append( '%r : %r' % ( name, value ) )
+		result.append('%r : %r' % (name, value))
 	return '\n\t'.join(result)
-	
+
+
 def try_others(directory, sub_dir):
 	"""Look for some other directories around the given directory
 
@@ -50,44 +56,49 @@ def try_others(directory, sub_dir):
 	path_to_directory = path(os.getcwd())
 	if sub_dir:
 		try:
-			return [ d for d in path_to_directory.dirs() if d.startswith(sub_dir) ][0]
+			return [d for d in path_to_directory.dirs() if d.startswith(sub_dir)][0]
 		except IndexError:
 			try:
-				return [ path_to_directory for f in path_to_directory.files() if f.startswith(sub_dir) ][0]
+				return [path_to_directory for f in path_to_directory.files() if f.startswith(sub_dir)][0]
 			except IndexError:
-				raise ValueError('Could not find %r in %r' % ( sub_dir, path_to_directory ))
+				raise ValueError('Could not find %r in %r' % (sub_dir, path_to_directory))
 	return path(directory)
+
+
+def use_sub_directory(path_to_sub_directory):
+	"""If the given path, or its parent, exists, use that"""
+	if path_to_sub_directory.isdir():
+		return [path_to_sub_directory]
+	if path_to_sub_directory.parent.isdir():
+		return [path_to_sub_directory.parent]
+	return []
+
 
 def try_sub_dirs(path_to_directory, sub_dir):
 	"""Look in path_to_directory for sub_dir
 
-	Return a list of names for 
+	Return a list of names for
 		each sub-directory containing sub_dir
 	Or
 		each sub-sub-directory containing sub_dir
 	"""
 	debug(enter_method())
 	if '/' in sub_dir:
-		path_to_sub = path_to_directory / sub_dir
-		if path_to_sub.exists():
-			if path_to_sub.isdir():
-				return [ path_to_sub ]
-			if path_to_sub.parent.isdir():
-				return [ path_to_sub.parent ]
-		raise ValueError, '"%s" does not exist' % path_to_sub
-	result = []
-	for path_to_child in path_to_directory.dirs():
-		if sub_dir in path_to_child.name:
-			result.append(path_to_child)
+		path_to_sub_directory = path_to_directory / sub_dir
+		if path_to_sub_directory.exists():
+			return use_sub_directory(path_to_sub_directory)
+		raise ValueError('"%s" does not exist' % path_to_sub_directory)
+	result = [p for p in path_to_directory.dirs() if sub_dir in p.name]
 	if result:
 		debug(exit_method())
 		return result
 	for path_to_child in path_to_directory.dirs():
 		if path_to_child.name == '.svn':
 			continue
-		result.extend( try_sub_dirs(path_to_child, sub_dir) )
+		result.extend(try_sub_dirs(path_to_child, sub_dir))
 	debug(exit_method())
 	return result
+
 
 def find_in_environment_path(filename):
 	"""Return the first directory in $PATH which contains a file called filename"""
@@ -98,9 +109,33 @@ def find_in_environment_path(filename):
 			return path_to_directory
 	return None
 
+
+def find_path_whither(item, sub_dir):
+	"""Find the path starting from the given item"""
+	path_whither = path(item)
+	if path_whither.isfile():
+		return path_whither.parent
+	if not path_whither.isdir():
+		return try_others(item, sub_dir)
+	if not path_whither.isdir():
+		return find_in_environment_path(path_whither)
+	if not path_whither or not path_whither.isdir():
+		raise ValueError('%s is not a directory' % item)
+	return path_whither
+
+
+def previous_directory():
+	"""Where we were (in bash) before this directory"""
+	try:
+		return os.environ['OLDPWD']
+	except KeyError:
+		return '~'
+	return None
+
+
 def find_dir(start_dir, sub_dir=None):
 	"""Find a relevant directory relative to the start_dir, and using a sub_dir (if given)
-	
+
 	start_dir can be
 		empty (use home directory)
 		"-" (use $OLDPWD)
@@ -115,19 +150,8 @@ def find_dir(start_dir, sub_dir=None):
 	if start_dir == '':
 		return path('~').expanduser()
 	if start_dir == '-':
-		try:
-			start_dir = os.environ['OLDPWD']
-		except KeyError:
-			start_dir = '~'
-	path_whither = path(start_dir)
-	if path_whither.isfile():
-		path_whither = path_whither.parent
-	if not path_whither.isdir():
-		path_whither = try_others(start_dir, sub_dir)
-	if not path_whither.isdir():
-		path_whither = find_in_environment_path(path_whither)
-	if not path_whither or not path_whither.isdir():
-		raise ValueError('%s is not a directory' % start_dir)
+		start_dir = previous_directory()
+	path_whither = find_path_whither(start_dir, sub_dir)
 	if not sub_dir:
 		return path_whither
 	possibles = try_sub_dirs(path_whither, sub_dir)
@@ -135,10 +159,11 @@ def find_dir(start_dir, sub_dir=None):
 		return possibles[0]
 	if not possibles:
 		return path_whither
-	exact_names = [ p for p in possibles if p.name == sub_dir ]
+	exact_names = [p for p in possibles if p.name == sub_dir]
 	if len(exact_names) == 1:
 		return exact_names[0]
-	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles) )
+	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles))
+
 
 def parse_command_line(args):
 	"""Get the arguments from the command line. Insist on 1, 2nd is optional"""
@@ -147,9 +172,10 @@ def parse_command_line(args):
 	elif len(args) < 1:
 		args = '', None
 	elif len(args) == 1:
-		args += [ None ]
-	debug('args: %s' % str(args) )
+		args += [None]
+	debug('args: %s' % str(args))
 	return args
+
 
 def chdir(path_whither):
 	"""Trying cd'ing to the given directory"""
@@ -159,6 +185,7 @@ def chdir(path_whither):
 	os.environ['OLDPWD'] = oldpwd
 	os.environ['PWD'] = path_whither
 
+
 def main():
 	"""Show a directory from the command line arguments (or some derivative"""
 	try:
@@ -167,9 +194,10 @@ def main():
 		if path_whither:
 			print str(path_whither)
 		return 0
-	except Exception, e: # pylint: disable-msg=W0703
+	except Exception, e:  # pylint: disable-msg=W0703
 		print 'Error', e
 		return 1
+
 
 if __name__ == '__main__':
 	sys.exit(main())
