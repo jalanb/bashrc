@@ -1,43 +1,48 @@
-"""
-maintains a jump-list of the directories you actually use
+"""Maintains a jump-list of the directories you actually use
+
 
 INSTALL:
-  * put something like this in your .bashrc:
-	export JPY=/path/to/j.py # tells j.sh where the python script is
-	. /path/to/j.sh		  # provides the j() function
-  * make sure j.py is executable
-  * cd around for a while to build up the db
-  * PROFIT!!
+	* put something like this in your .bashrc:
+		export JPY=/path/to/j.py  # tells j.sh where the python script is
+		. /path/to/j.sh		  # provides the j() function
+	* make sure j.py is executable
+	* cd around for a while to build up the db
+
 
 USE:
-  * j foo	 # goes to most frecent dir matching foo
-  * j foo bar # goes to most frecent dir matching foo and bar
-  * j -t rank # goes to highest ranked dir matching foo
-  * j -l foo  # list all dirs matching foo
+	* j foo	  # goes to most frecent dir matching foo
+	* j foo bar  # goes to most frecent dir matching foo and bar
+	* j -t rank  # goes to highest ranked dir matching foo
+	* j -l foo  # list all dirs matching foo
 """
+
 
 import os
 import sys
 import time
 from optparse import OptionParser
 
+
 def shortest(strings):
 	"""A list of all the strings in the list which are not longer than the shortest string in the list"""
-	lengths = [ (len(string), string) for string in strings ]
-	minimum = min( lengths )[0]
-	return [ string for length, string in lengths if length == minimum ]
+	lengths = [(len(string), string) for string in strings]
+	minimum = min(lengths)[0]
+	return [string for length, string in lengths if length == minimum]
+
 
 def first_shortest(strings):
 	"""The first string in the list of shortest strings in the list"""
 	return shortest(strings)[0]
+
 
 def first_shortest_to(strings, substring):
 	"""Chop the each string at the first occurrence of substring
 	Then find the shortest strings
 	Then return the first of those
 	"""
-	chopped_strings = [ string[:string.find(substring) + len(substring) ] for string in strings ]
+	chopped_strings = [string[:string.find(substring) + len(substring)] for string in strings]
 	return first_shortest(chopped_strings)
+
 
 def read_data_file(path_to_old_directories):
 	"""Read cache data from the given path
@@ -46,7 +51,7 @@ def read_data_file(path_to_old_directories):
 	"""
 	if not os.path.isfile(path_to_old_directories):
 		return []
-	old_directories = [ line.strip().split('|') for line in file(path_to_old_directories, 'r') ]
+	old_directories = [line.strip().split('|') for line in file(path_to_old_directories, 'r')]
 	result = []
 	for old_directory in old_directories:
 		try:
@@ -55,6 +60,7 @@ def read_data_file(path_to_old_directories):
 			continue
 		result.append((path, float(rank), int(atime)))
 	return result
+
 
 def write_data_file(path_to_old_directories, data):
 	"""Write the given data to the given file
@@ -70,6 +76,7 @@ def write_data_file(path_to_old_directories, data):
 		if out:
 			out.close()
 
+
 def rewrite_data_file(path_to_old_directories):
 	"""Read data, the write it back out again
 
@@ -78,12 +85,14 @@ def rewrite_data_file(path_to_old_directories):
 	data = read_data_file(path_to_old_directories)
 	write_data_file(path_to_old_directories, data)
 	return data
-	
+
+
 def datum_to_match(datum):
 	"""Convert from data format (time since epoch) to match format (seconds since use)"""
 	path, rank, atime = datum
 	seconds_since_use = int(time.time()) - atime
 	return rank, seconds_since_use, path
+
 
 class DirectoryMemory(object):
 	"""Cache used directories to disk"""
@@ -91,7 +100,7 @@ class DirectoryMemory(object):
 	def __init__(self, data):
 		self.data = data
 		self.all_arguments_match_a_common_prefix = None
-		self.path_matches = [ datum_to_match(d) for d in data ]
+		self.path_matches = [datum_to_match(d) for d in data]
 		self.ranking_methods = {
 			'rank' : self.rank,
 			'recent' : self.recent,
@@ -128,12 +137,12 @@ class DirectoryMemory(object):
 		one_day = (86400, 2.0)
 		one_week = (604800, 0.5)
 		for rank, seconds_since_match, path in self.path_matches:
-			for seconds, factor in [ one_hour, one_day, one_week ]:
+			for seconds, factor in [one_hour, one_day, one_week]:
 				if seconds_since_match < seconds:
-					result.append( (rank * factor, path) )
+					result.append((rank * factor, path))
 					break
 			else:
-				result.append( ( rank * 0.25, path) )
+				result.append((rank * 0.25, path))
 		return sorted(result)
 
 	def matches(self, arguments, ignore_case=False):
@@ -191,7 +200,7 @@ class DirectoryMemory(object):
 		"""Add the given path to self.data
 
 		Do not add $HOME
-		
+
 		If there enough old paths then age them (reduce their rank by 10%)
 		"""
 		if os.path.realpath(new_path) == os.path.realpath(os.path.expanduser('~')):
@@ -205,16 +214,16 @@ class DirectoryMemory(object):
 				new_rank = rank + 1
 			else:
 				new_data.append((old_path, rank, atime))
-		new_data.append( (new_path, new_rank, int(time.time())) )
+		new_data.append((new_path, new_rank, int(time.time())))
 		max_sum = 1000.0
 		if sum_of_ranks > max_sum:
-			self.data = [ (path, rank * max_sum / sum_of_ranks, atime) for path, rank, atime in new_data ]
+			self.data = [(path, rank * max_sum / sum_of_ranks, atime) for path, rank, atime in new_data]
 		else:
 			self.data = new_data
 
 	def complete_path(self, string_to_complete, ranking_algorithm):
 		"""Complete a path for the shell
-		
+
 		Return the highest ranked path whose name starts with the given string
 		If there is none like that then
 			gather all the paths who have some directory starting with the string
@@ -223,8 +232,8 @@ class DirectoryMemory(object):
 		"""
 		def completion_result(strings):
 			"""Format the strings as a result usable by the calling script"""
-			return '%s--%s' % ( ' '.join(strings), first_shortest_to(strings, string_to_complete) )
-			
+			return '%s--%s' % (' '.join(strings), first_shortest_to(strings, string_to_complete))
+
 		if self.path_matches and ranking_algorithm in self.ranking_methods:
 			strings = []
 			method = self.ranking_methods[ranking_algorithm]
@@ -244,13 +253,14 @@ class DirectoryMemory(object):
 					if part.startswith(string_to_complete):
 						strings.append((len(path), path))
 			if strings:
-				shortest_length = min([ length for length, path in strings ])
+				shortest_length = min([length for length, path in strings])
 				shortest_strings = []
 				for length, path in strings:
 					if length == shortest_length:
 						shortest_strings.append(path)
 				return completion_result(shortest_strings)
 		return string_to_complete
+
 
 def handle_command_line():
 	"""Read the command line and parse to options and arguments"""
@@ -283,6 +293,7 @@ def final_argument_is_a_directory(arguments):
 		return True
 	return False
 
+
 def main():
 	""" make sure the only thing that gets to stdout is a place to cd """
 	options, arguments = handle_command_line()
@@ -305,6 +316,7 @@ def main():
 	if output:
 		print output
 	return 0
+
 
 if __name__ == '__main__':
 	sys.exit(main())
