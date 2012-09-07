@@ -40,88 +40,73 @@ def exit_method():
 	return '\n\t'.join(result)
 
 
-def try_others(directory, sub_dir):
-	"""Look for some other directories around the given directory
+def find_under_here(sub_directories):
+	"""Look for some other directories under current directory
 
-	Try the parent
-	If that does not exist then switch to current dir (pwd)
-		try any sub-directories (prefixed with sub_dir),
-		then any files prefixed with sub_dir
+	Try any sub-directories (prefixed with sub_directories),
+		then any files prefixed with sub_directories
 	"""
-	debug(enter_method())
-	path_to_directory = path(directory)
-	if path_to_directory.parent.isdir():
-		debug(exit_method())
-		return path_to_directory.parent
-	path_to_directory = path(os.getcwd())
-	if sub_dir:
-		try:
-			return [d for d in path_to_directory.dirs() if d.startswith(sub_dir)][0]
-		except IndexError:
-			try:
-				return [path_to_directory for f in path_to_directory.files() if f.startswith(sub_dir)][0]
-			except IndexError:
-				raise ValueError('Could not find %r in %r' % (sub_dir, path_to_directory))
-	return path(directory)
+	path_to_here = path(os.getcwd())
+	return find_under_directory(path_to_here, sub_directories)
 
 
-def use_sub_directory(path_to_sub_directory):
-	"""If the given path, or its parent, exists, use that"""
-	if path_to_sub_directory.isdir():
-		return [path_to_sub_directory]
-	if path_to_sub_directory.parent.isdir():
-		return [path_to_sub_directory.parent]
-	return []
+def look_under_directory(path_to_directory, prefixes):
+	"""Look under the given path_to_directory for matching sub-directories
 
-
-def try_sub_dirs(path_to_directory, sub_dir):
-	"""Look in path_to_directory for sub_dir
-
-	Return a list of names for
-		each sub-directory containing sub_dir
-	Or
-		each sub-sub-directory containing sub_dir
+	Sub-directories match if they are prefixed with given prefixes
+	If no sub-directories match, but a file matches
+		then use the directory
 	"""
-	debug(enter_method())
-	if '/' in sub_dir:
-		path_to_sub_directory = path_to_directory / sub_dir
-		if path_to_sub_directory.exists():
-			return use_sub_directory(path_to_sub_directory)
-		raise ValueError('"%s" does not exist' % path_to_sub_directory)
-	result = [p for p in path_to_directory.dirs() if sub_dir in p.name]
-	if result:
-		debug(exit_method())
-		return result
-	for path_to_child in path_to_directory.dirs():
-		if path_to_child.name == '.svn':
-			continue
-		result.extend(try_sub_dirs(path_to_child, sub_dir))
-	debug(exit_method())
+	if not prefixes:
+		return [path_to_directory]
+	prefix, prefixes = prefixes[0], prefixes[1:]
+	prefix_glob = '%s*' % prefix
+	result = []
+	for path_to_sub_directory in path_to_directory.dirs(prefix_glob):
+		paths = look_under_directory(path_to_sub_directory, prefixes)
+		result.extend(paths)
+	if not result and path_to_directory.files(prefix_glob):
+		result = [path_to_directory]
 	return result
 
 
+def find_under_directory(path_to_directory, sub_directories):
+	possibles = look_under_directory(path_to_directory, sub_directories)
+	if not possibles:
+		return None
+	if len(possibles) == 1:
+		return possibles[0]
+	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles))
+
+
 def find_in_environment_path(filename):
-	"""Return the first directory in $PATH which contains a file called filename"""
+	"""Return the first directory in $PATH which contains a file called filename
+
+	This is equivalent to "which" command for executable files
+	"""
+	if not filename:
+		return None
 	for directory in os.environ['PATH'].split(':'):
+		if not directory:
+			continue
 		path_to_directory = path(directory)
-		possible_file = path_to_directory / filename
-		if possible_file.isfile():
+		path_to_file = path_to_directory / filename
+		if path_to_file.isfile():
 			return path_to_directory
 	return None
 
 
-def find_path_whither(item, sub_dir):
-	"""Find the path starting from the given item"""
-	path_whither = path(item)
-	if path_whither.isfile():
-		return path_whither.parent
-	if not path_whither.isdir():
-		return try_others(item, sub_dir)
-	if not path_whither.isdir():
-		return find_in_environment_path(path_whither)
-	if not path_whither or not path_whither.isdir():
-		raise ValueError('%s is not a directory' % item)
-	return path_whither
+def find_path_to_item(item):
+	"""Find the path to the given item
+
+	Either the directory itself, or directory of the file itself, or nothing
+	"""
+	path_to_item = path(item)
+	if path_to_item.isdir():
+		return path_to_item
+	if path_to_item.isfile():
+		return path_to_item.parent
+	return None
 
 
 def previous_directory():
@@ -133,66 +118,62 @@ def previous_directory():
 	return None
 
 
-def find_dir(start_dir, sub_dir=None):
-	"""Find a relevant directory relative to the start_dir, and using a sub_dir (if given)
+def find_directory(item, prefixes):
+	"""Find a relevant directory relative to the item, and using prefixes (if given)
 
-	start_dir can be
+	item can be
 		empty (use home directory)
 		"-" (use $OLDPWD)
 
-	Return start_dir if it is a directory,
+	Return item if it is a directory,
 		or its parent if it is a file
-		or one of its sub-directories (if they match sub_dir)
+		or one of its sub-directories (if they match prefixes)
 		or a directory in $PATH
-	Otherwise look for sub_dir as a partial match
+	Otherwise look for prefixes as a partial match
 	"""
 	debug(enter_method())
-	if start_dir == '':
+	if item == '':
 		return path('~').expanduser()
-	if start_dir == '-':
-		start_dir = previous_directory()
-	path_whither = find_path_whither(start_dir, sub_dir)
-	if not sub_dir:
-		return path_whither
-	possibles = try_sub_dirs(path_whither, sub_dir)
-	if len(possibles) == 1:
-		return possibles[0]
-	if not possibles:
-		return path_whither
-	exact_names = [p for p in possibles if p.name == sub_dir]
-	if len(exact_names) == 1:
-		return exact_names[0]
-	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles))
+	if item == '-':
+		item = previous_directory()
+	path_to_item = find_path_to_item(item)
+	if path_to_item:
+		if not prefixes:
+			return path_to_item
+		path_to_item = find_under_directory(path_to_item, prefixes)
+	else:
+		if prefixes:
+			path_to_item = find_under_here(prefixes)
+		raise ValueError('%r is not a directory' % item)
+	if path_to_item:
+		return path_to_item
+	return find_in_environment_path(item)
 
 
-def parse_command_line(args):
-	"""Get the arguments from the command line. Insist on 1, 2nd is optional"""
-	if len(args) > 2:
-		raise ValueError('Usage: kd directory [sub-dir]')
-	elif len(args) < 1:
-		args = '', None
-	elif len(args) == 1:
-		args += [None]
-	debug('args: %s' % str(args))
-	return args
+def parse_command_line():
+	"""Get the arguments from the command line. Insist on at least one empty string"""
+	args = sys.argv[1:]
+	if not args:
+		return '', []
+	return args[0], args[1:]
 
 
-def chdir(path_whither):
+def chdir(path_to_item):
 	"""Trying cd'ing to the given directory"""
-	path_whither = find_dir(path_whither)
+	path_to_item = find_dir(path_to_item)
 	oldpwd = os.environ['PWD']
-	os.chdir(path_whither)
+	os.chdir(path_to_item)
 	os.environ['OLDPWD'] = oldpwd
-	os.environ['PWD'] = path_whither
+	os.environ['PWD'] = path_to_item
 
 
 def main():
 	"""Show a directory from the command line arguments (or some derivative"""
 	try:
-		args = parse_command_line(sys.argv[1:])
-		path_whither = find_dir(args[0], args[1])
-		if path_whither:
-			print str(path_whither)
+		item, prefixes = parse_command_line()
+		path_to_item = find_directory(item, prefixes)
+		if path_to_item:
+			print str(path_to_item)
 		return 0
 	except Exception, e:  # pylint: disable-msg=W0703
 		print 'Error', e

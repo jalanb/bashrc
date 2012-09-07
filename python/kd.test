@@ -3,66 +3,62 @@ kd is a cd replacer
 
 	>>> import kd
 
+More modules for testing
+------------------------
+
+	>>> import sys
+
 Command Line
 ------------
+
 kd is intended to be used from the command line
-	It parses its arguments with the kd.parse_command_line method
 
-On the command line we expect two arguments: dir and sub-dir
-	(Emulating sys.argv here - use a list, not a string)
+On the command line we expect two arguments:
+	The first is a possible directory
+	The rest are prefixes of possible sub-directories
 
-	>>> kd.parse_command_line(['alan','was'])
-	['alan', 'was']
+	>>> sys.argv = ['kd.py', 'start', 'here']	
+	>>> kd.parse_command_line()
+	('start', ['here'])
 
-One argument is fine - second will be set to None
+No prefixes is fine too
 
-	>>> kd.parse_command_line(['alan'])
-	['alan', None]
+	>>> sys.argv = ['kd.py', 'start']	
+	>>> kd.parse_command_line()
+	('start', [])
 
 
 Finding sub-directories
 -----------------------
-The parsed arguments are sent on to the kd.find_dir method
 
-kd.find_dir will find a directory
+The parsed arguments are sent on to the kd.find_directory method
 	Give it a directory to start on
 
-	>>> kd.find_dir('/usr/lib')
-	<path '/usr/lib'>
+	>>> print kd.find_directory('/usr/lib', [])
+	/usr/lib
 
 Give it the name of a (possible) sub directory
 	and it will combine them to one path
 
-	>>> kd.find_dir('/usr/local','sbin')
-	<path '/usr/local/sbin'>
+	>>> print kd.find_directory('/usr/local', ['sbin'])
+	/usr/local/sbin
 
-The sub-dir can be a partial match
+The sub-dir can be a prefix
 	
-	>>> kd.find_dir('/usr/local','sbi')
-	<path '/usr/local/sbin'>
+	>>> print kd.find_directory('/usr/local', ['sbi'])
+	/usr/local/sbin
+
+It can handle many prefixes (albeit more slowly)
+	>>> print kd.find_directory('/', ['us', 'loc', 'sbi'])
+	/usr/local/sbin
 
 But if the sub-dir matches too many directories then an exception is raised
 
-	>>> kd.find_dir('/usr/local','bin')
+	>>> kd.find_directory('/usr', ['li'])
 	Traceback (most recent call last):
 	...
 	NotImplementedError: Too many possiblities:
 	...
-
-Change directory
-----------------
-
-If kd.find_dir() gave a directory, then the chdir method is used to go there
-This method changes the working directory for the rest of the script
-	as well as changing env values
-
-	>>> x = kd.find_dir('/usr/local','sbin')
-	>>> kd.chdir(x)
-	>>> import os
-	>>> print os.getcwd()
-	/usr/local/sbin
-	>>> print os.environ['PWD']
-	/usr/local/sbin
 
 Running from bash
 -----------------
@@ -71,15 +67,13 @@ If run from the command line the python process cannot change dir for calling pr
 Hence the script just prints out the result
 	bash can then capture that and do the actual cd
 
-Make it look like we are running the program from here, and looking for a sub-directory called site
-	>>> import sys
-	>>> sys.argv = [ 'kd', str(test.here), 'site' ]
+	>>> sys.argv = ['kd', '/usr', 'local', 'lib']
 
 And run the main method
 	which will return 0 for success, 1 for fail
-	and print the found directory, which is (last time I checked), under here
+	and print the found directory
 	>>> kd.main()
-	/.../.jab/python/site
+	/usr/local/lib
 	0
 
 Cleanup

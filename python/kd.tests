@@ -3,21 +3,32 @@ Edge cases for kd
 
 	>>> import kd
 
-No more than two args on command line
+More modules for testing
+------------------------
 
-	>>> kd.parse_command_line(['alan','was','here'])
-	Traceback (most recent call last):
-	...
-	ValueError: Usage: kd directory [sub-dir]
+	>>> import sys
 
-And no less than 1
+Command lines
+-------------
 
-	>>> kd.parse_command_line([])
-	('', None)
+We allow more than two args on command line
 
-Directories found must be real
+	>>> sys.argv = ['kd.py', 'start', 'here', 'or', 'there']
+	>>> kd.parse_command_line()
+	('start', ['here', 'or', 'there'])
 
-	>>> kd.find_dir('rubbish')
+And no args at all
+
+	>>> sys.argv = ['kd.py']
+	>>> kd.parse_command_line()
+	('', [])
+
+find_directory()
+----------------
+
+Directories sought must be real
+
+	>>> kd.find_directory('rubbish', [])
 	Traceback (most recent call last):
 	...
 	ValueError: ...
@@ -28,25 +39,20 @@ Directories found must be real
 
 Can send a blank as the sub-dir
 
-	>>> kd.find_dir(a_known_directory,'').name == a_known_name
+	>>> kd.find_directory(a_known_directory, []).name == a_known_name
 	True
 
-Same effect if sub-dir is not found
-	>>> kd.find_dir(a_known_directory,'this_is_not_real').name == a_known_name
+If sub-dir is not found, get nothing
+	>>> kd.find_directory(a_known_directory, ['this_is_not_real']) is None
 	True
 
 
-When main() fails it prints out nothing
+When main() fails it prints out an error
 	>>> import sys
 	>>> sys.argv = [ 'kd', 'no_such_directory' ]
 	>>> kd.main()
-	Error no_such_directory is not a directory
+	Error 'no_such_directory' is not a directory
 	1
-
-	>>> kd.want_debugging = True
-	>>> kd.find_dir('/usr/local/trunk/trackers','repo')
-	<path '/usr/local/trunk/trackers/repository'>
-	>>> kd.want_debugging = False
 
 Cleanup
 =======
