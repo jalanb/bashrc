@@ -33,18 +33,19 @@ Finding sub-directories
 
 The parsed arguments are sent on to the kd.find_directory method
 	Give it a directory to start on
-
 	>>> print kd.find_directory('/usr/lib', [])
 	/usr/lib
 
+Or a file
+	>>> print kd.find_directory('/bin/ls', [])
+	/bin
+
 Give it the name of a (possible) sub directory
 	and it will combine them to one path
-
 	>>> print kd.find_directory('/usr/local', ['sbin'])
 	/usr/local/sbin
 
 The sub-dir can be a prefix
-	
 	>>> print kd.find_directory('/usr/local', ['sbi'])
 	/usr/local/sbin
 
@@ -53,7 +54,6 @@ It can handle many prefixes (albeit more slowly)
 	/usr/local/sbin
 
 But if the sub-dir matches too many directories then an exception is raised
-
 	>>> kd.find_directory('/usr', ['li'])
 	Traceback (most recent call last):
 	...
@@ -64,14 +64,12 @@ Running from bash
 -----------------
 
 If run from the command line the python process cannot change dir for calling process (bash)
-Hence the script just prints out the result
+	Hence the script just prints out the result
 	bash can then capture that and do the actual cd
 
+Hence the main method will print the found directory
+	and then return 0 for success, 1 for fail
 	>>> sys.argv = ['kd', '/usr', 'local', 'lib']
-
-And run the main method
-	which will return 0 for success, 1 for fail
-	and print the found directory
 	>>> kd.main()
 	/usr/local/lib
 	0
