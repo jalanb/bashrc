@@ -59,9 +59,9 @@ gg ()
 kd ()
 { 
 # cd to filename as well as directory
-	destination=`python $JAB/python/kd.py $* 2>&1`
-	first_word=`echo "$destination" | head -n 1 | cut -d\   -f1`
-	if [[ "x$first_word" == "xError" ]]
+	destination=$(python $JAB/python/kd.py $* 2>&1)
+	first_word=$(echo "$destination" | head -n 1 | cut -d\   -f1)
+	if [[ "$first_word" == "Error" ]]
 	then
 		python $JAB/python/kd.py $*
 	else
