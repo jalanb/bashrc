@@ -129,9 +129,12 @@ def find_directory(item, prefixes):
 			return path_to_item
 		path_to_item = find_under_directory(path_to_item, prefixes)
 	else:
+		if item:
+			prefixes.insert(0, item)
 		if prefixes:
 			path_to_item = find_under_here(prefixes)
-		raise ValueError('%r is not a directory' % item)
+			if not path_to_item:
+				raise ValueError('could not use %r as a directory' % item)
 	if path_to_item:
 		return path_to_item
 	return find_in_environment_path(item)
