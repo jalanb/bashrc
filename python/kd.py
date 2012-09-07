@@ -1,53 +1,33 @@
-"""Script to find a new directory to cd to"""
+"""Script to find a directory to cd to
+
+It gets a close match to a directory from command line arguments
+	Then prints that to stdout
+
+First argument is a directory
+	subsequent arguments are prefixes of sub-directories
+		For example:
+		$ python kd.py /usr/local bi
+		/usr/local/bin
+
+If nothing matches then give directories in $PATH which have matching executables
+	$ python kd.py ls
+	/bin
+"""
 
 
 import os
 import sys
-import inspect
 from path import path
 
 
-DEBUGGING = False
-
-
-def debug(message):
-	"""Show the message if (global) DEBUGGING is true"""
-	if not DEBUGGING:
-		return
-	print >> sys.stderr, '%s: %s' % (sys.argv[0], message)
-
-
-def enter_method():
-	"""Get a message appropriate when entering a method"""
-	frame = inspect.currentframe().f_back
-	code = frame.f_code
-	args, _varargs, _varkw, lokals = inspect.getargvalues(frame)
-	values = [lokals[a] for a in args]
-	return 'def %s%s' % (code.co_name, tuple(values))
-
-
-def exit_method():
-	"""Get a message appropriate when leaving a method"""
-	frame = inspect.currentframe().f_back
-	code = frame.f_code
-	args, _varargs, _varkw, lokals = inspect.getargvalues(frame)
-	arg_values = [lokals[a] for a in args]
-	result = ['return %s%s:' % (code.co_name, tuple(arg_values))]
-	for name, value in lokals.iteritems():
-		if name in args:
-			continue
-		result.append('%r : %r' % (name, value))
-	return '\n\t'.join(result)
-
-
-def find_under_here(sub_directories):
+def find_under_here(prefixes):
 	"""Look for some other directories under current directory
 
-	Try any sub-directories (prefixed with sub_directories),
-		then any files prefixed with sub_directories
+	Try any prefixed sub-directories
+		then any prefixed files
 	"""
 	path_to_here = path(os.getcwd())
-	return find_under_directory(path_to_here, sub_directories)
+	return find_under_directory(path_to_here, prefixes)
 
 
 def look_under_directory(path_to_directory, prefixes):
@@ -70,8 +50,12 @@ def look_under_directory(path_to_directory, prefixes):
 	return result
 
 
-def find_under_directory(path_to_directory, sub_directories):
-	possibles = look_under_directory(path_to_directory, sub_directories)
+def find_under_directory(path_to_directory, prefixes):
+	"""Find one directory under path_to_directory, matching prefixes
+
+	Can give None (no matches), or the match, or an Exception
+	"""
+	possibles = look_under_directory(path_to_directory, prefixes)
 	if not possibles:
 		return None
 	if len(possibles) == 1:
@@ -131,11 +115,6 @@ def find_directory(item, prefixes):
 		or a directory in $PATH
 	Otherwise look for prefixes as a partial match
 	"""
-	debug(enter_method())
-	if item == '':
-		return path('~').expanduser()
-	if item == '-':
-		item = previous_directory()
 	path_to_item = find_path_to_item(item)
 	if path_to_item:
 		if not prefixes:
@@ -154,17 +133,10 @@ def parse_command_line():
 	"""Get the arguments from the command line. Insist on at least one empty string"""
 	args = sys.argv[1:]
 	if not args:
-		return '', []
+		return path('~').expanduser(), []
+	if args[0] == '-':
+		args[0] = previous_directory()
 	return args[0], args[1:]
-
-
-def chdir(path_to_item):
-	"""Trying cd'ing to the given directory"""
-	path_to_item = find_dir(path_to_item)
-	oldpwd = os.environ['PWD']
-	os.chdir(path_to_item)
-	os.environ['OLDPWD'] = oldpwd
-	os.environ['PWD'] = path_to_item
 
 
 def main():
