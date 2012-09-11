@@ -139,6 +139,7 @@ alias doc="c ~/Documents"
 
 alias clx="cl; lx "
 alias cly="cl; ly "
+alias csi='c $(python -c "import sys; print [p for p in sys.path if p.endswith(\"site-packages\")][0]")'
 
 alias jab="ssh jab@pinky"
 alias jjy="ky $JAB/python"
@@ -192,8 +193,6 @@ alias url="python ~/bin/show_url.py "
 alias ....='c ../../..'
 
 alias alto="source $JAB/altobridge-environment"
-
-alias cdsi="c \$SITE"
 
 alias mine="sudo chown $USER:allstaff "
 
