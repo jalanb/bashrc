@@ -10,9 +10,12 @@ export FIGNORE=.pyc:.swp:~:.o
 
 #export DISPLAY=:0
 
-# infinite history
-unset HISTSIZE
-unset HISTFILESIZE
+# infinite history (was claimed - in practice it keeps very short histories)
+# unset HISTSIZE
+# unset HISTFILESIZE
+# So we explicitly keep very large histories
+export HISTFILESIZE=100000
+export HISTSIZE=$HISTFILESIZE
 # format history times
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 # ignore some simple commands in history
