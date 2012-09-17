@@ -580,7 +580,7 @@ svn_log_issue ()
 	then
 		TRACKERS=/mnt/source/amg/trunk/trackers
 	else
-		svn log $path | grep ^issue | cut -d\  -f2 | cut -d\: -f1 | sort | uniq
+		svn log $path | grep ^issue | cut -d\  -f2 | cut -d\: -f1 | sort | uniq | tr -s '\n' ' '
 		return
 	fi
 	svn log $path | grep ^issue | cut -d\  -f2 | cut -d\: -f1 | sort | uniq | $TRACKERS/issues/sh/issue -l | head $*
