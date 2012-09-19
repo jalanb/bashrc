@@ -1,0 +1,45 @@
+#!/usr/bin/env perl
+
+# Downloaded from https://github.com/jalanb/viack.git
+
+use strict;
+use warnings;
+
+my ($grabnext, @vimopts, @files);
+
+# Extract the ack pattern to use when spawning vim
+for (@ARGV) {
+    if ($grabnext or not /^-/) {
+        # Try to make vim's magic mode more like Perl's standard regexes
+        # Magic chars gleaned from :help magic, and the most common problem
+        # characters are < and >
+        my $vimpat = $_;
+           $vimpat =~ s{([<>=@!%/&])}{\\$1}g;
+           $vimpat =~ s{\\b}{\\W\\@=}g; # translate Perl's \b to \W\@= for vim
+        push @vimopts, '+1', '+/\v'.$vimpat;
+        last;
+    }
+    elsif (/^--$/) {
+        $grabnext = 1;
+    }
+}
+
+# Capture output without dealing with shell escaping
+my $pid = open my $kid, "-|";
+die "Can't fork: $!" unless defined $pid;
+
+if ($pid) {
+    @files = <$kid>;
+    chomp for @files;
+    close $kid;
+} else {
+    exec ack => '-l', @ARGV
+        or die "Can't exec ack: $!";
+}
+
+if (@files) {
+    exec vim => "-p", @vimopts, "--", @files
+        or die "Can't exec vim. $!";
+} else {
+    die "No matches to open.\n";
+}

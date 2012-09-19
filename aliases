@@ -62,6 +62,7 @@ alias ab="ssh abrogan@192.168.0.103"
 alias ac="ack --code"
 alias ap="ack --python"
 alias at="ack --pyt"
+alias av="vack"
 alias aw="ack -w"
 
 alias cy="c \$PYTHON_HOME"
@@ -134,6 +135,12 @@ alias ...='c ../..'
 alias 7up='svn up'
 
 alias aaa="ack --nojunk"
+alias aav="vack --all"
+alias acv="vack --code"
+alias apv="vack --python"
+alias atv="vack --pyt"
+alias awv="vack -w"
+
 
 alias doc="c ~/Documents"
 
@@ -193,6 +200,7 @@ alias url="python ~/bin/show_url.py "
 alias ....='c ../../..'
 
 alias alto="source $JAB/altobridge-environment"
+alias aaav="vack --nojunk"
 
 alias mine="sudo chown $USER:allstaff "
 
