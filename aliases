@@ -153,7 +153,7 @@ alias lsh="ls *.sh"
 
 alias out="to_release"
 
-alias ps3="ps axjf | vim - +"
+alias ps3="ps axf | vim - +"
 
 alias rq.="/bin/rm -rf ./*"
 alias rff="r fred* *.tmp"
