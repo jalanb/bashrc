@@ -31,7 +31,9 @@ if [[ -d /Users/jab ]]  # looks like a mac book
 then
 	USER=abrogan
 	/bin/bash ~/bin/mount_alto track
-	if [[ -f ~/jab/alto/alto_pythonrc.py ]]
-	then PYTHONSTARTUP=~/jab/alto/alto_pythonrc.py
+	if [[ -f $JAB/python/pythonrc.py ]]
+	then PYTHONSTARTUP=$JAB/python/pythonrc.py
+	elif [[ -f ~/.pythonrc.py ]]
+	then [[ PYTHONSTARTUP=~/.pythonrc.py ]]
 	fi
 fi
