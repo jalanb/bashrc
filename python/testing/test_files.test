@@ -8,7 +8,8 @@ The test_files module
 
 The module provides a method which gets all possible test files
 	which means *.tests, *.test, *.py, in that order
-	We expect to find such extensions for this file here
+
+We expect to find such extensions for this file here
 	>>> scripts_here = test_files.get_test_scripts()
 	>>> this_files_here = [ ts.basename() for ts in scripts_here if 'test_files' in ts]
 	>>> show( this_files_here )
