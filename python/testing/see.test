@@ -5,55 +5,39 @@
 
 	>>> see(sys)
 	help()    .api_version    .argv    .builtin_module_names    .byteorder
-	.call_tracing()    .callstats()    .copyright    .displayhook()
-	.exc_clear()    .exc_info()    .exc_type    .excepthook()    .exec_prefix
-	.executable    .exit()    .getcheckinterval()    .getdefaultencoding()
-	.getdlopenflags()    .getfilesystemencoding()    .getrecursionlimit()
-	.getrefcount()    .hexversion    .maxint    .maxunicode    .meta_path
-	.modules    .path    .path_hooks    .path_importer_cache    .platform
-	.prefix    .setcheckinterval()    .setdlopenflags()    .setprofile()
-	.setrecursionlimit()    .settrace()    .stderr    .stdin    .stdout
-	.subversion    .version    .version_info    .warnoptions
+	...
 
 	>>> see(sys,pattern="*a*")
 	.api_version    .argv    .builtin_module_names    .call_tracing()
-	.callstats()    .displayhook()    .exc_clear()    .executable
-	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
-	.maxint    .maxunicode    .meta_path    .path    .path_hooks
-	.path_importer_cache    .platform    .setcheckinterval()
-	.setdlopenflags()    .settrace()    .warnoptions
+	...
 
 	>>> see(sys,pattern=".all*")
 
 	>>> see(sys,r=".all*")
 	.call_tracing()    .callstats()    .getcheckinterval()
-	.setcheckinterval()
+	...
 
 	>>> see(sys,pattern="*a*",attributes=True)
-	.api_version    .argv    .builtin_module_names    .executable    .maxint
-	.maxunicode    .meta_path    .path    .path_hooks    .path_importer_cache
-	.platform    .warnoptions
+	.api_version    .argv    .builtin_module_names    .executable    .flags
+	...
 
 	>>> see(sys,pattern="*a*",methods=True)
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
-	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
-	.setcheckinterval()    .setdlopenflags()    .settrace()
+	...
 
 	>>> from see import see_attributes
 	>>> see_attributes(sys,pattern="*a*")
-	.api_version    .argv    .builtin_module_names    .executable    .maxint
-	.maxunicode    .meta_path    .path    .path_hooks    .path_importer_cache
-	.platform    .warnoptions
+	.api_version    .argv    .builtin_module_names    .executable    .flags
+	...
 
 	>>> from see import see_methods
 	>>> see_methods(sys,pattern="*a*")
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
-	.getcheckinterval()    .getdefaultencoding()    .getdlopenflags()
-	.setcheckinterval()    .setdlopenflags()    .settrace()
+	...
 
 	>>> from see import code
 	>>> code(code)
 	def code(method):
-        if not callable(method):
+	    if not callable(method):
 		...
 	    print '\n'.join(result)
