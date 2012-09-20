@@ -96,8 +96,12 @@ def find_path_to_item(item):
 	path_to_item = path(item)
 	if path_to_item.isdir():
 		return path_to_item
+	path_to_parent = path_to_item.parent
 	if path_to_item.isfile():
-		return path_to_item.parent
+		return path_to_parent
+	pattern = '%s*' % path_to_item.name
+	if path_to_parent.listdir(pattern):
+		return path_to_parent
 	return None
 
 
