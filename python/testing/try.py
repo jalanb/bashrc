@@ -15,6 +15,10 @@ from see import see, see_methods, see_attributes, spread
 import test_files
 
 
+class DoctestInterrupt(KeyboardInterrupt):
+	"""This exception is for better naming of the only thing to stop doctest"""
+	pass
+
 def run_command(command):
 	"""Run a command in the local shell (usually bash)"""
 	status, output = commands.getstatusoutput(command)
@@ -74,7 +78,7 @@ def command_line():
 	from optparse import OptionParser
 	parser = OptionParser()
 	parser.add_option('-v', '--verbose', dest='verbose', help='Hello World', action='store_true')
-	parser.add_option('-r', '--recusrive', dest='recursive', help='recurse into any sub-directories found', action='store_true', default=False)
+	parser.add_option('-r', '--recursive', dest='recursive', help='recurse into any sub-directories found', action='store_true', default=False)
 	parser.add_option('-a', '--all', dest='all', help='run all tests in each file (do not stop on first FAIL)', action='store_true', default=False)
 	parser.add_option('-d', '--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q', '--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
@@ -171,6 +175,7 @@ def test_file(test_script, doctest_options, verbose):
 			'makepath' : makepath,
 			'show' : show,
 			'bash' : run_command,
+			'DoctestInterrupt' : DoctestInterrupt,
 		},
 		verbose=verbose,
 	)
@@ -223,20 +228,21 @@ def test():
 			os.chdir(pwd)
 			start = datetime.datetime.now()
 			try:
-				try:
-					sys_paths.add(test_script)
-					sys.argv = [test_script]
-					if options.verbose:
-						print 'Test', test_script
-					if test_script.ext in ['', '.py']:
-						failures, testsRun, message = test_source(test_script, doctest_options)
-					else:
-						failures, testsRun, message = test_file(test_script, doctest_options, options.verbose)
-				except KeyboardInterrupt, e:
-					if options.directory_all:
-						print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
-						print >> sys.stderr, 'Bye from ', test_script
-						print >> sys.stderr, 'Because:', e
+				sys_paths.add(test_script)
+				sys.argv = [test_script]
+				if options.verbose:
+					print 'Test', test_script
+				if test_script.ext in ['', '.py']:
+					failures, testsRun, message = test_source(test_script, doctest_options)
+				else:
+					failures, testsRun, message = test_file(test_script, doctest_options, options.verbose)
+			except DoctestInterrupt, e:
+				if options.directory_all:
+					print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
+					print >> sys.stderr, 'Bye from ', test_script
+					print >> sys.stderr, 'Because:', e
+				else:
+					raise
 			finally:
 				sys_paths.remove(test_script)
 			if testsRun:
@@ -263,10 +269,10 @@ def main():
 	except test_files.UserMessage, e:
 		print >> sys.stderr, e
 	except KeyboardInterrupt, e:
-		if str(e):
-			print e
 		print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
-		print >> sys.stderr, 'Bye now', e
+		print >> sys.stderr, 'Bye now'
+		if str(e):
+			print >> sys.stderr, e
 
 
 if __name__ == '__main__':
