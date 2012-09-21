@@ -489,7 +489,8 @@ svn_log ()
 	else
 		path="."
 	fi
-	svn log $path | head $*
+	local limit=${1-10}
+	svn log -l $limit $path
 }
 
 svn_url ()
