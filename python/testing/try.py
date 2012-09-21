@@ -228,21 +228,22 @@ def test():
 			os.chdir(pwd)
 			start = datetime.datetime.now()
 			try:
-				sys_paths.add(test_script)
-				sys.argv = [test_script]
-				if options.verbose:
-					print 'Test', test_script
-				if test_script.ext in ['', '.py']:
-					failures, testsRun, message = test_source(test_script, doctest_options)
-				else:
-					failures, testsRun, message = test_file(test_script, doctest_options, options.verbose)
-			except DoctestInterrupt, e:
-				if options.directory_all:
-					print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
-					print >> sys.stderr, 'Bye from ', test_script
-					print >> sys.stderr, 'Because:', e
-				else:
-					raise
+				try:
+					sys_paths.add(test_script)
+					sys.argv = [test_script]
+					if options.verbose:
+						print 'Test', test_script
+					if test_script.ext in ['', '.py']:
+						failures, testsRun, message = test_source(test_script, doctest_options)
+					else:
+						failures, testsRun, message = test_file(test_script, doctest_options, options.verbose)
+				except DoctestInterrupt, e:
+					if options.directory_all:
+						print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
+						print >> sys.stderr, 'Bye from ', test_script
+						print >> sys.stderr, 'Because:', e
+					else:
+						raise
 			finally:
 				sys_paths.remove(test_script)
 			if testsRun:
