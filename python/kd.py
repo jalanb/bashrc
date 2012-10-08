@@ -93,6 +93,9 @@ def find_path_to_item(item):
 
 	Either the directory itself, or directory of the file itself, or nothing
 	"""
+	if item.endswith('/'):
+		path_to_item = path(item.rstrip('/'))
+		return path_to_item
 	path_to_item = path(item)
 	if path_to_item.isdir():
 		return path_to_item
@@ -131,7 +134,9 @@ def find_directory(item, prefixes):
 	if path_to_item:
 		if not prefixes:
 			return path_to_item
-		path_to_item = find_under_directory(path_to_item, prefixes)
+		path_to_prefix = find_under_directory(path_to_item, prefixes)
+		if path_to_prefix:
+			return path_to_prefix
 	else:
 		if item:
 			prefixes.insert(0, item)
