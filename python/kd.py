@@ -48,7 +48,10 @@ def look_under_directory(path_to_directory, prefixes):
 	if not prefixes:
 		return [path_to_directory]
 	prefix, prefixes = prefixes[0], prefixes[1:]
-	prefix_glob = '%s*' % prefix
+	if prefix.endswith('/'):
+		prefix_glob = prefix.rstrip('/')
+	else:
+		prefix_glob = '%s*' % prefix
 	result = []
 	for path_to_sub_directory in path_to_directory.dirs(prefix_glob):
 		paths = look_under_directory(path_to_sub_directory, prefixes)
