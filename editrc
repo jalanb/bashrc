@@ -1,2 +1,5 @@
+# This file format is explained at
 # http://www.freebsd.org/cgi/man.cgi?query=editrc&apropos=0&sektion=0&manpath=FreeBSD+7.2-RELEASE&format=html
+#
+# Bind all keys to the standard vi-like bindings
 bind -v
