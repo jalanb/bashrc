@@ -274,7 +274,7 @@ try ()
 {
 	TRY=$JAB/python/testing/try.py
 	test -f ./try.py && TRY=./try.py
-	p $TRY $*
+	python $TRY $*
 }
 
 SSH ()
