@@ -199,7 +199,7 @@ alias url="python ~/bin/show_url.py "
 
 alias ....='c ../../..'
 
-alias alto="source $JAB/altobridge-environment"
+alias alto="source $JAB/company-environment"
 alias aaav="vack --nojunk"
 
 alias mine="sudo chown $USER:allstaff "
