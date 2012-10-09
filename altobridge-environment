@@ -2,7 +2,9 @@
 
 # Load an Altobridge environment
 
-if [[ -d /Users/jab/jab/alto/dev/friday/tracking ]]
+if [[ -d /Users/jab/jab/alto/dev/friday/trackers ]]
+then TRACKERS=/Users/jab/jab/alto/dev/friday/trackers
+elif [[ -d /Users/jab/jab/alto/dev/friday/tracking ]]
 then TRACKERS=/Users/jab/jab/alto/dev/friday/tracking
 elif [[ -d /usr/local/trunk/trackers ]]
 then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
