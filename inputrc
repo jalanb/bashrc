@@ -35,10 +35,11 @@ set match-hidden-files on
 "\e[A":history-search-backward
 # Down arrow
 "\e[B":history-search-forward
+# Do not re-assign the left/right arrows, use them for line-editting
 # Right arrow
-"\e[C":menu-complete
+# "\e[C":menu-complete
 # Left arrow
-"\e[D":menu-complete-backward
+# "\e[D":menu-complete-backward
 
 # Bind some keys to useful macros
 # 	generally - pipe into the "expected command for that letter"
