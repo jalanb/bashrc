@@ -1,9 +1,6 @@
 The test_files module
 =====================
 
-	>>> print test.runner.name
-	try.py
-
 	>>> import os
 	>>> print test.here == os.getcwd()
 	True
@@ -13,12 +10,6 @@ The test_files module
 
 	>>> print test.path.name
 	test_files.tests
-
-	>>> print test.python_path == os.environ['PYTHONPATH']
-	True
-
-	>>> print test.bash_path == os.environ['PATH']
-	True 
 
 	>>> try: host = os.environ['HOSTNAME']
 	... except KeyError: host = 'jab.ook'
@@ -30,14 +21,20 @@ The test_files module
 	True
 
 	>>> import test_files
-	>>> print test_files.get_test_scripts(recursive=False,args=['no_such_file'])
+	>>> print test_files.get_test_scripts(args=['no_such_file'], recursive=False)
 	Traceback (most recent call last):
 	...
 	UserMessage: /.../no_such_file.test*, /.../no_such_file.py not found
 
 
-	>>> show( test_files.get_test_scripts(args=['test_files.']) )
-	[<Path '/.../test_files.tests'>,
-	 <Path '/.../test_files.test'>,
-	 <Path '/.../test_files.py'>]
+We'll need to find all possible extension of a stem
+	>>> stem = makepath('./test_files.')
+	>>> extended_files = [f.name for f in test_files.existing_test_extensions(stem)]
+	>>> 'test_files.py' in extended_files and 'test_files.tests' in extended_files
+	True
 
+
+	>>> test_files._get_path_to_test_directory(['./test_files.py'])
+
+	>>> p = makepaths('/test_files.txt')
+	>>> test_files._any_extension(p)

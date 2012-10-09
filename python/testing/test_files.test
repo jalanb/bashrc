@@ -1,22 +1,23 @@
 The test_files module
 =====================
 
-	>>> print test.path.name
-	test_files.test
-
 	>>> import test_files
+	>>> print test_files.__doc__
+	This module provides convenience methids to handle test files
+	...
 
 The module provides a method which gets all possible test files
 	which means *.tests, *.test, *.py, in that order
 
 We expect to find such extensions for this file here
-	>>> scripts_here = test_files.get_test_scripts()
-	>>> this_files_here = [ ts.basename() for ts in scripts_here if 'test_files' in ts]
-	>>> show( this_files_here )
-	['test_files.tests', 'test_files.test', 'test_files.py']
+	>>> scripts_here = test_files.get_test_scripts([], False)
+	>>> test_files_here = [ ts.basename() for ts in scripts_here if 'test_files' in ts]
+	>>> 'test_files.test' in test_files_here
+	True
 
 The method can also take arguments to search directories recursively
 	and args is a list of possible stems 
 	>>> stems = [ 'test_files', 'try' ]
-	>>> show( [ ts.basename() for ts in test_files.get_test_scripts(recursive=False,args=stems) ])
-	['test_files.tests', 'test_files.test', 'try.test', 'test_files.py', 'try.py']
+	>>> stemmed_scripts = [ ts.basename() for ts in test_files.get_test_scripts(args=stems, recursive=False) ]
+	>>> 'test_files.test' in stemmed_scripts and 'try.py' in stemmed_scripts
+	True
