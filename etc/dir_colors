@@ -8,7 +8,62 @@
 STICKY_OTHER_WRITABLE 01;36 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
-.py 00;31
-.test 00;35
-.tests 00;35
-.fail 01;35
+# Data         01;33
+# Other Data   00;33
+
+# Code I want to write
+.bash_logout  00;31
+.bashrc       00;31
+.js           00;31
+.py           00;31
+.sh           00;31
+.sql          00;31
+
+
+# Code that's lying around, but came from someone else
+.cgi          01;31
+.fcgi         01;31
+.pyc          01;31
+.wsgi         01;31
+
+
+# Support for code - configurations, outputs, tests, ...
+.conf         00;35
+.css          00;35
+.html         00;35
+.ini          00;35
+.test         00;35
+.tests        00;35
+.xml          00;35
+
+# Other files found near code
+.ezt          01;35
+.fail         01;35
+.htaccess     01;35
+.swf          01;35
+.tmpl         01;35
+.xsl          01;35
+
+# Data
+.bmp          00;33
+.csv          00;33
+.gif          00;33
+.ico          00;33
+.jpg          00;33
+.list         00;33
+.log          00;33
+.mbr          00;33
+.png          00;33
+.tab          00;33
+.tgz          00;33
+.txt          00;33
+.xls          00;33
+.zip          00;33
+
+# Data I rarely use directly
+.original     01;33
+.pem          01;33
+.sf           00;33
+
+# Other
+.dist         00;37
