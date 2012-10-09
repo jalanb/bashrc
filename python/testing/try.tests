@@ -16,12 +16,13 @@ If that went well we have a hidden variable called test
 	>>> test.path_to_py.name == 'try.py'
 	True
 
-	>>> print test.here.name == 'testing'
+	>>> import os
+	>>> print test.here == os.getcwd()
 	True
 
 We also have access to some modules I often use
 	without a need for explicit import
-	Which ignores the heiristic that 
+	Which ignores the heuristic that 
 		"Explicit is better than implicit"
 	>>> test.path.name == makepath(sys.argv[0]).name
 	True
@@ -30,3 +31,11 @@ And we can run bash commands
 	>>> bash('ls try.tests')
 	try.tests
 	True
+
+	>>> print test.home == makepath('~')
+	True
+
+We know the user who is running the tests
+	>>> print test.user == '%s@%s' % (os.environ['USER'], test.host)
+	True
+

@@ -1,5 +1,6 @@
 """Script to handle running of doctests"""
 
+
 import re
 import os
 import imp
@@ -9,6 +10,7 @@ import fnmatch
 import commands
 import datetime
 from pprint import pprint, pformat
+
 
 from paths import makepath
 from see import see, see_methods, see_attributes, spread
@@ -32,7 +34,8 @@ def run_command(command):
 def show(thing):
 	"""Pretty print the given thing
 
-	Except: show the help for modules
+	Unless the thing is a module
+		when we show the help for that module instead
 	"""
 	if type(thing) == type(re):
 		return pprint(help(thing))
@@ -57,7 +60,7 @@ class Test_Being_Run:
 		self.user = '%s@%s' % (self.username, self.host)
 		self.path = self.here.relpathto(that)
 		base, ext = self.path.splitext()
-		_ = [self.add_path(base, ext) for ext in ['py', 'test', 'tests', 'fail' ]]
+		_ = [self.add_path(base, ext) for ext in ['py', 'test', 'tests', 'fail']]
 
 	def __repr__(self):
 		return pformat(self.__dict__.keys())
@@ -65,9 +68,11 @@ class Test_Being_Run:
 	def add_path(self, base, ext):
 		"""Add a path for base.ext as an attribute to self"""
 		name = 'path_to_%s' % ext
-		path_to_ext = makepath('%s.%s' % (base, ext) )
+		if hasattr(self, name):
+			return
+		path_to_ext = makepath('%s.%s' % (base, ext))
 		if path_to_ext.isfile() or ext == 'fail':
-			self.__dict__[name] = path_to_ext
+			setattr(self, name, path_to_ext)
 
 
 def command_line():
@@ -82,13 +87,17 @@ def command_line():
 	parser.add_option('-a', '--all', dest='all', help='run all tests in each file (do not stop on first FAIL)', action='store_true', default=False)
 	parser.add_option('-d', '--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q', '--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
-	result = parser.parse_args()
+	options, args = parser.parse_args()
 	try:
 		parser.destroy()
 	except AttributeError:
-		pass # older version of python
+		pass  # older version of python
 	del parser
-	return result
+	if options.recursive:
+		for arg in args:
+			if os.path.isfile(arg):
+				raise ValueError('Do not use --recursive with files (%s)' % arg)
+	return options, args
 
 
 def files(path, glob):
@@ -149,21 +158,25 @@ def make_module(path_to_python):
 			fp.close()
 
 
-def test_source(source_script, doctest_options):
+def test_source(source_script, options):
 	"""Run tests in the given source"""
 	message = 'py %s;' % source_script
 	module = make_module(source_script)
-	failures, testsRun = doctest.testmod(module, optionflags=doctest_options)
+	failures, tests_run = doctest.testmod(
+		module,
+		optionflags=get_doctest_options(options),
+		verbose=options.verbose,
+	)
 	del module
-	return failures, testsRun, message
+	return failures, tests_run, message
 
 
-def test_file(test_script, doctest_options, verbose):
+def test_file(test_script, options):
 	"""Run tests in a doctest script"""
 	message = 'try %s;' % test_script
-	failures, testsRun = doctest.testfile(
+	failures, tests_run = doctest.testfile(
 		test_script,
-		optionflags=doctest_options,
+		optionflags=get_doctest_options(options),
 		module_relative=False,
 		globs = {
 			'test' : Test_Being_Run(test_script),
@@ -177,10 +190,34 @@ def test_file(test_script, doctest_options, verbose):
 			'bash' : run_command,
 			'DoctestInterrupt' : DoctestInterrupt,
 		},
-		verbose=verbose,
+		verbose=options.verbose,
 	)
-	return failures, testsRun, message
+	return failures, tests_run, message
 
+
+def run_doctest(test_script, options):
+	"""Call the relevant doctest method for the given script"""
+	if test_script.ext in ['', '.py']:
+		return test_source(test_script, options)
+	return test_file(test_script, options)
+
+
+def show_running_doctest(test_script, options):
+	"""Run a doctest for that script, showing progress on stdout/stderr"""
+	old_argv = sys.argv[:]
+	try:
+		sys.argv = [test_script]
+		try:
+			if options.verbose:
+				print 'Test', test_script
+			return run_doctest(test_script, options)
+		except DoctestInterrupt, e:
+			if options.directory_all:
+				show_interruption(test_script, e)
+			else:
+				raise
+	finally:
+		sys.argv[:] = old_argv
 
 def get_test_scripts(args, recursive):
 	"""Get all test scripts for the given arguments"""
@@ -196,7 +233,7 @@ def get_doctest_options(options):
 	return result
 
 
-def show_time_taken(start, messages, message, testsRun):
+def show_time_taken(start, messages, message, tests_run):
 	"""Add a message about the time taken dince start to the messages"""
 	end = datetime.datetime.now()
 	time_taken = end - start
@@ -207,15 +244,21 @@ def show_time_taken(start, messages, message, testsRun):
 			time_msg = 'quickly'
 	else:
 		time_msg = 'very quickly'
-	messages.append('%s %s tests passed %s' % (message, testsRun, time_msg))
+	messages.append('%s %s tests passed %s' % (message, tests_run, time_msg))
 	return end
+
+
+def show_interruption(test_script, interruption):
+	"""Show the reason for an interuption on stderr"""
+	print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
+	print >> sys.stderr, 'Bye from ', test_script
+	print >> sys.stderr, 'Because:', interruption
 
 
 def test():
 	"""Run all tests"""
 	sys_paths = Sys_Path_Handler()
 	options, args = command_line()
-	doctest_options = get_doctest_options(options)
 	messages = ['']
 	pwd = os.getcwd()
 	end = start_all = datetime.datetime.now()
@@ -224,31 +267,17 @@ def test():
 	sys_paths.add('.')
 	try:
 		for test_script in get_test_scripts(args, options.recursive):
-			failures, testsRun, message = 0, 0, ''
+			failures, tests_run, message = 0, 0, ''
 			os.chdir(pwd)
 			start = datetime.datetime.now()
 			try:
-				try:
-					sys_paths.add(test_script)
-					sys.argv = [test_script]
-					if options.verbose:
-						print 'Test', test_script
-					if test_script.ext in ['', '.py']:
-						failures, testsRun, message = test_source(test_script, doctest_options)
-					else:
-						failures, testsRun, message = test_file(test_script, doctest_options, options.verbose)
-				except DoctestInterrupt, e:
-					if options.directory_all:
-						print >> sys.stderr, '^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c '
-						print >> sys.stderr, 'Bye from ', test_script
-						print >> sys.stderr, 'Because:', e
-					else:
-						raise
+				sys_paths.add(test_script)
+				failures, tests_run, message = show_running_doctest(test_script, options)
 			finally:
 				sys_paths.remove(test_script)
-			if testsRun:
-				run_all += testsRun
-				end = show_time_taken(start, messages, message, testsRun)
+			if tests_run:
+				run_all += tests_run
+				end = show_time_taken(start, messages, message, tests_run)
 			if failures:
 				failures_all += failures
 				if not options.directory_all:
@@ -257,9 +286,8 @@ def test():
 		time_taken = end - start_all
 		messages.append('%s tests passed, %d failed, in %s seconds' % (run_all, failures_all, time_taken.seconds))
 		messages.append('')
-	if failures_all == 0 and options.quiet_on_success:
-		return 0
-	print '\n'.join(messages)
+	if failures_all or not options.quiet_on_success:
+		print '\n'.join(messages)
 	return failures_all
 
 
