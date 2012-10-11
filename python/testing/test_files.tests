@@ -1,25 +1,6 @@
 The test_files module
 =====================
 
-	>>> import os
-	>>> print test.here == os.getcwd()
-	True
-
-	>>> print test.home == makepath('~')
-	True
-
-	>>> print test.path.name
-	test_files.tests
-
-	>>> try: host = os.environ['HOSTNAME']
-	... except KeyError: host = 'jab.ook'
-
-	>>> print test.host == host
-	True
-
-	>>> print test.user == '%s@%s' % (os.environ['USER'], host)
-	True
-
 	>>> import test_files
 	>>> print test_files.get_test_scripts(args=['no_such_file'], recursive=False)
 	Traceback (most recent call last):
@@ -28,13 +9,14 @@ The test_files module
 
 
 We'll need to find all possible extension of a stem
-	>>> stem = makepath('./test_files.')
-	>>> extended_files = [f.name for f in test_files.existing_test_extensions(stem)]
+	>>> path_to_test_files = makepath(test_files.__file__)
+	>>> stem, ext = path_to_test_files.splitext()
+	>>> extended_files = [f.name for f in test_files._existing_test_extensions(stem)]
 	>>> 'test_files.py' in extended_files and 'test_files.tests' in extended_files
 	True
 
-
-	>>> test_files._get_path_to_test_directory(['./test_files.py'])
-
-	>>> p = makepaths('/test_files.txt')
-	>>> test_files._any_extension(p)
+Find test files related to a text file
+	>>> path_to_test_files = makepath(test_files.__file__)
+	>>> path_to_text_equivalent = path_to_test_files.splitext()[0] + '.txt'
+	>>> bool(test_files._existing_test_files(path_to_text_equivalent))
+	True

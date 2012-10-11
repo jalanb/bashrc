@@ -28,8 +28,8 @@ We also have access to some modules I often use
 	True
 
 And we can run bash commands
-	>>> bash('ls try.tests')
-	try.tests
+	>>> bash('ls ~/.bashrc')
+	/.../.bashrc
 	True
 
 	>>> print test.home == makepath('~')

@@ -1,7 +1,10 @@
+The see module
+==============
 
+The basic method is a better version of dir() 
 	>>> see()
-	bash()    makepath()    see()    see_attributes()    see_methods()
-	show()    spread()		sys    test
+	DoctestInterrupt()    bash()    makepath()    see()    see_attributes()
+	see_methods()    show()    spread()    sys    test
 
 	>>> see(sys)
 	help()    .api_version    .argv    .builtin_module_names    .byteorder
