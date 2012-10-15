@@ -1,40 +1,40 @@
 The see module
 ==============
 
+	>>> import  see
+
 The basic method is a better version of dir() 
-	>>> see()
-	DoctestInterrupt()    bash()    makepath()    see()    see_attributes()
+	>>> see.see()
+	DoctestInterrupt()    bash()    makepath()    see    see_attributes()
 	see_methods()    show()    spread()    sys    test
 
-	>>> see(sys)
+	>>> see.see(sys)
 	help()    .api_version    .argv    .builtin_module_names    .byteorder
 	...
 
-	>>> see(sys,pattern="*a*")
+	>>> see.see(sys,pattern="*a*")
 	.api_version    .argv    .builtin_module_names    .call_tracing()
 	...
 
-	>>> see(sys,pattern=".all*")
+	>>> see.see(sys,pattern=".all*")
 
-	>>> see(sys,r=".all*")
+	>>> see.see(sys,r=".all*")
 	.call_tracing()    .callstats()    .getcheckinterval()
 	...
 
-	>>> see(sys,pattern="*a*",attributes=True)
+	>>> see.see(sys,pattern="*a*",attributes=True)
 	.api_version    .argv    .builtin_module_names    .executable    .flags
 	...
 
-	>>> see(sys,pattern="*a*",methods=True)
+	>>> see.see(sys,pattern="*a*",methods=True)
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
 	...
 
-	>>> from see import see_attributes
-	>>> see_attributes(sys,pattern="*a*")
+	>>> see.see_attributes(sys,pattern="*a*")
 	.api_version    .argv    .builtin_module_names    .executable    .flags
 	...
 
-	>>> from see import see_methods
-	>>> see_methods(sys,pattern="*a*")
+	>>> see.see_methods(sys,pattern="*a*")
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
 	...
 
@@ -44,3 +44,10 @@ The basic method is a better version of dir()
 	    if not callable(method):
 		...
 	    print '\n'.join(result)
+
+	>>> see.spread(sys)
+	<module
+	...
+		path : [...]
+	...
+	>

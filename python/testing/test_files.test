@@ -27,32 +27,32 @@ In some scenarios we may not want to include she-bang scripts
 	['.tests', '.test', '.py']
 
 Can test if something is a test extension
-	>>> test_files.is_test_extension('.py') and not test_files.is_test_extension('.pyc')
+	>>> test_files.is_possible_test_extension('.py') and not test_files.is_possible_test_extension('.pyc')
 	True
 
 Or a file has one
-	>>> test_files.has_test_extension('/path/to/fred.test') and not test_files.has_test_extension('path/fred.text')
+	>>> test_files.has_possible_test_extension('/path/to/fred.test') and not test_files.has_possible_test_extension('path/fred.text')
 	True
 
 And the positive equivalents
-	>>> test_files.has_test_extension('fred') and not test_files.has_positive_test_extension('fred')
+	>>> test_files.has_possible_test_extension('fred') and not test_files.has_positive_test_extension('fred')
 	True
 
-get_test_scripts()
------------------
+paths_to_doctests()
+-------------------
 
 The module provides a method which gets all possible test files
 	which means *.tests, *.test, *.py, in that order
 
-	>>> paths_to_test_scripts = test_files.get_test_scripts([], False)
+	>>> paths_to_test_scripts = test_files.paths_to_doctests([], False)
 
 With default arguments we don't really know what we get back
 	but if there were any at all they are test files
-	>>> all([test_files.has_test_extension(p) for p in paths_to_test_scripts])
+	>>> all([test_files.has_possible_test_extension(p) for p in paths_to_test_scripts])
 	True
 
-get_test_scripts(args)
----------------------
+paths_to_doctests(args)
+-----------------------
 
 The method takes arguments of
 	1) a list of possible stems 
@@ -69,11 +69,16 @@ And we think there are also some files in same directory called "try.*"
 
 Test with those stems
 	>>> stems = [test_file_stem, try_stem]
-	>>> paths_to_test_scripts = test_files.get_test_scripts(stems, False)
+	>>> paths_to_test_scripts = test_files.paths_to_doctests(stems, False)
 
 Only testing the names of those scripts
 	>>> test_script_names = [ p.name for p in paths_to_test_scripts]
 
 We expect that the equivalent files with the standard test extensions have been found
 	>>> 'test_files.test' in test_script_names and 'try.py' in test_script_names
+	True
+
+And we expect them to appear only once
+	>>> test_script_paths = test_files.paths_to_doctests([], False)
+	>>> all([test_script_paths.count(path) == 1 for path in test_script_paths])
 	True

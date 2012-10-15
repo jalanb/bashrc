@@ -9,22 +9,22 @@ A human alternative to dir().
 	Help on function see in module see:
 	<BLANKLINE>
 	see(obj=anything, pattern=None, r=None, methods=None, attributes=None)
-	    Inspect an object. Like the dir() builtin, but easier on the eyes.
+		Inspect an object. Like the dir() builtin, but easier on the eyes.
 	<BLANKLINE>
-	    Keyword arguments (all optional):
-	    obj -- object to be inspected
-	    pattern -- shell-style search pattern (e.g. '*len*')
-	    r -- regular expression
+		Keyword arguments (all optional):
+		obj -- object to be inspected
+		pattern -- shell-style search pattern (e.g. '*len*')
+		r -- regular expression
 	<BLANKLINE>
-	    If obj is omitted, objects in the current scope are listed instead.
+		If obj is omitted, objects in the current scope are listed instead.
 	<BLANKLINE>
-	    Some unique symbols are used:
+		Some unique symbols are used:
 	<BLANKLINE>
-	        .*      implements obj.anything
-	        []      implements obj[key]
-	        in      implements membership tests (e.g. x in obj)
-	        +obj    unary positive operator (e.g. +2)
-	        -obj    unary negative operator (e.g. -2)
+			.*	  implements obj.anything
+			[]	  implements obj[key]
+			in	  implements membership tests (e.g. x in obj)
+			+obj	unary positive operator (e.g. +2)
+			-obj	unary negative operator (e.g. -2)
 	<BLANKLINE>
 
 Copyright (c) 2009 Liam Cooke
@@ -76,14 +76,14 @@ def regex_filter(names, pat):
 	pat = re.compile(pat)
 
 	def match(name, fn=pat.search):
-	    return fn(name) is not None
+		return fn(name) is not None
 	return tuple(filter(match, names))
 
 
 def fn_filter(names, pat):
 
 	def match(name, fn=fnmatch.fnmatch, pat=pat):
-	    return fn(name, pat)
+		return fn(name, pat)
 	return tuple(filter(match, names))
 
 
@@ -91,17 +91,17 @@ class _SeeOutput(tuple):
 	"""Tuple-like object with a pretty string representation."""
 
 	def __new__(self, actions=None):
-	    return tuple.__new__(self, actions or [])
+		return tuple.__new__(self, actions or [])
 
 	def __repr__(self):
-	    return textwrap.fill('    '.join(self), 78,
-	                         initial_indent='    ',
-	                         subsequent_indent='    ')
+		return textwrap.fill('	'.join(self), 78,
+							 initial_indent='	',
+							 subsequent_indent='	')
 
 
 class _SeeDefault(object):
 	def __repr__(self):
-	    return 'anything'
+		return 'anything'
 
 _LOCALS = _SeeDefault()
 
@@ -119,11 +119,11 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
 
 	Some unique symbols are used:
 
-	    .*      implements obj.anything
-	    []      implements obj[key]
-	    in      implements membership tests (e.g. x in obj)
-	    +obj    unary positive operator (e.g. +2)
-	    -obj    unary negative operator (e.g. -2)
+		.*	  implements obj.anything
+		[]	  implements obj[key]
+		in	  implements membership tests (e.g. x in obj)
+		+obj	unary positive operator (e.g. +2)
+		-obj	unary negative operator (e.g. -2)
 
 	"""
 	use_locals = obj is _LOCALS
@@ -132,35 +132,29 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
 	func = lambda f: hasattr(f, '__call__') and '()' or ''
 	name = lambda a, f: ''.join((dot, a, func(f)))
 	if methods is None and attributes is None:
-	    methods = attributes = True
+		methods = attributes = True
 	if use_locals:
-	    obj.__dict__ = inspect.currentframe().f_back.f_locals
+		obj.__dict__ = inspect.currentframe().f_back.f_locals
 	attrs = dir(obj)
 	if not use_locals:
-	    for var, symbol in SYMBOLS:
-	        if var not in attrs or symbol in actions:
-	            continue
-	        elif var == '__doc__':
-	            if not obj.__doc__ or not obj.__doc__.strip():
-	                continue
-	        actions.append(symbol)
-
-	def is_callable(p):
-	    return hasattr(p,"__call__")
+		for var, symbol in SYMBOLS:
+			if var not in attrs or symbol in actions:
+				continue
+			elif var == '__doc__':
+				if not obj.__doc__ or not obj.__doc__.strip():
+					continue
+			actions.append(symbol)
 
 	for attr in filter(lambda a: not a.startswith('_'), attrs):
-	    try:
-	        prop = getattr(obj, attr)
-	    except AttributeError:
-	        continue
-	    if not methods and is_callable(prop): continue
-	    if not attributes and not is_callable(prop): continue
-	    actions.append(name(attr, prop))
+		prop = getattr(obj, attr, None)
+		if not methods and callable(prop): continue
+		if not attributes and not callable(prop): continue
+		actions.append(name(attr, prop))
 
 	if pattern is not None:
-	    actions = fn_filter(actions, pattern)
+		actions = fn_filter(actions, pattern)
 	if r is not None:
-	    actions = regex_filter(actions, r)
+		actions = regex_filter(actions, r)
 
 	return _SeeOutput(actions)
 
@@ -213,10 +207,7 @@ def spread(thing, exclude = None):
 			attributes_list.append('%s : %s' % (k,lines))
 		attributes_string = separator.join( attributes_list )
 		ids.pop()
-		if hasattr(thing,'__class__'):
-			klass = thing.__class__
-		else:
-			klass = dir(thing)
+		klass = hasattr(thing,'__class__') and thing.__class__.__name__ or dir(thing)
 		return '''<%s%s%s\n%s>''' % ( klass, separator, attributes_string, separator[1:-2])
 
 	print spread_out_the_attributes(thing,'\n\t')
@@ -224,30 +215,26 @@ def spread(thing, exclude = None):
 def indent(filename,line_number):
 	line = linecache.getline(filename,line_number)
 	match = re.match('(\s*)',line)
-	if not match:
-	    return None, None
 	return line.rstrip(), match.groups()[0]
 
 def code(method):
 	if not callable(method):
-	    print 'Not callable: %r' % method
-	    return
+		print 'Not callable: %r' % method
+		return
 	result = [ ]
 	try: first_line_number = method.func_code.co_firstlineno
 	except AttributeError:
-	    print 'No code available for', method
-	    return
-	filename = method.func_code.co_filename
-	if filename.endswith('.pyc') or filename.endswith('.pyo'):
-	    filename = filename[:-1]
+		print 'No code available for', method
+		return
+	filename = re.sub('.py[co]$', '.py', method.func_code.co_filename)
 	line, first_indentation = indent(filename,first_line_number)
 	result = [ line ]
 	line_number = first_line_number + 1
 	line, indentation = indent(filename,line_number)
 	while indentation > first_indentation:
-	    result.append( line )
-	    line_number += 1
-	    line, indentation = indent(filename,line_number)
+		result.append( line )
+		line_number += 1
+		line, indentation = indent(filename,line_number)
 	print '\n'.join(result)
 
 PY_300 = sys.version_info >= (3, 0)

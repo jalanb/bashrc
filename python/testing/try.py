@@ -63,7 +63,7 @@ class Test_Being_Run:
 		_ = [self.add_path(base, ext) for ext in ['py', 'test', 'tests', 'fail']]
 
 	def __repr__(self):
-		return pformat(self.__dict__.keys())
+		return '<%s %r>' % (self.__class__.__name__, str(self.path.short_relative_path_from_here()))
 
 	def add_path(self, base, ext):
 		"""Add a path for base.ext as an attribute to self"""
@@ -88,30 +88,14 @@ def command_line():
 	parser.add_option('-d', '--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q', '--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
 	options, args = parser.parse_args()
-	try:
+	if hasattr(parser, 'destroy'):
 		parser.destroy()
-	except AttributeError:
-		pass  # older version of python
 	del parser
 	if options.recursive:
 		for arg in args:
 			if os.path.isfile(arg):
 				raise ValueError('Do not use --recursive with files (%s)' % arg)
 	return options, args
-
-
-def files(path, glob):
-	"""All the files which match that glob"""
-	names = fnmatch.filter(os.listdir(path), glob)
-	return [os.path.join(path, name) for name in names]
-
-
-def try_testing_sub_dir(p):
-	"""The testing sub-directory of p if it exists, otherwise just p"""
-	t = p / 'testing'
-	if t.isdir():
-		return t
-	return p
 
 
 class Sys_Path_Handler:
@@ -121,8 +105,6 @@ class Sys_Path_Handler:
 	def add(self, item):
 		"""Add the item to sys.path"""
 		directory = makepath(item).directory()
-		if directory.name == 'roundup':
-			return
 		if directory not in self.paths:
 			self.paths.insert(0, directory)
 			if directory not in sys.path:
@@ -149,7 +131,10 @@ def make_module(path_to_python):
 	try:
 		fp, pathname, description = imp.find_module(name, [path_to_python.parent])
 	except ImportError:
-		fp, pathname, description = file(name), path_to_python, ('', 'r', imp.PY_SOURCE)
+		try:
+			fp, pathname, description = file(name), path_to_python, ('', 'r', imp.PY_SOURCE)
+		except IOError:
+			raise ImportError('Could not find a module for %r' % str(path_to_python))
 	try:
 		x = imp.load_module(name, fp, pathname, description)
 		return x
@@ -214,15 +199,10 @@ def show_running_doctest(test_script, options):
 		except DoctestInterrupt, e:
 			if options.directory_all:
 				show_interruption(test_script, e)
-			else:
-				raise
+				return 0, 0, ''
+			raise
 	finally:
 		sys.argv[:] = old_argv
-
-def get_test_scripts(args, recursive):
-	"""Get all test scripts for the given arguments"""
-	test_scripts = test_files.get_test_scripts(args, recursive)
-	return [t for t in test_scripts if t]
 
 
 def get_doctest_options(options):
@@ -266,7 +246,7 @@ def test():
 	failures_all = 0
 	sys_paths.add('.')
 	try:
-		for test_script in get_test_scripts(args, options.recursive):
+		for test_script in test_files.paths_to_doctests(args, options.recursive):
 			failures, tests_run, message = 0, 0, ''
 			os.chdir(pwd)
 			start = datetime.datetime.now()

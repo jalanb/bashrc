@@ -10,6 +10,8 @@ We also allow for python scripts which have no extension
 
 import os
 import re
+import sys
+from optparse import OptionParser
 
 
 from paths import makepath
@@ -20,28 +22,27 @@ class UserMessage(Exception):
 	pass
 
 
-def _get_path_to_test_directory(args):
+def _get_path_to_test_directory(strings):
 	"""Get a path to the root directory that we'll be testing in
 
-	We will test in the first directory in args
-		or the directory of the first file in args
+	We will test in the first directory in strings
+		or the directory of the first file in strings
 	"""
-	result = makepath('.')
-	for arg in args:
-		arg_path = makepath(arg)
-		if arg_path.isdir():
-			result = arg_path
+	for string in strings:
+		path_to_string = makepath(string)
+		if path_to_string.isdir():
+			result = path_to_string
 			break
 	else:
-		for arg in args:
-			arg_path = makepath(arg)
-			if arg_path.parent and arg_path.isfile():
-				result = arg_path.parent
+		for string in strings:
+			path_to_string = makepath(string)
+			if path_to_string.parent and path_to_string.isfile():
+				result = path_to_string.parent
 				break
-	if not result.isdir():
-		raise UserMessage('%s is not a directory' % result)
+		else:
+			raise UserMessage('No doctests found in %r' % strings)
 	if not result.files('*.test*') and not result.files('*.py'):
-		raise UserMessage('%s/*.test*, *.py not found' % result)
+		raise UserMessage('No doctests found in %r' % strings)
 	return result
 
 
@@ -69,8 +70,6 @@ def _existing_test_files(path_to_stem):
 	else:
 		if path_to_stem.parent:
 			dirr = path_to_stem.parent
-		else:
-			dirr = makepath('.')
 		glob = '%s.*' % path_to_stem.namebase
 	if not dirr.isdir():
 		return []
@@ -82,24 +81,18 @@ def _existing_test_extensions(path_stem):
 	return [f for f in _existing_test_files(path_stem) if f.ext in possible_test_extensions()]
 
 
-def _get_path_stems(args, recursive):
-	"""A list of any paths in args
+def _get_path_stems(strings, recursive):
+	"""A list of any paths in strings
 
-	If there is a "/" in the args then it is used in the list
+	If there is a "/" in the strings then it is used in the list
 	Otherwise it is appended to the current working directory
 	"""
-	if not args:
-		args = []
+	if not strings:
+		strings = []
 	here = makepath('.')
-	paths = []
-	for arg in args:
-		if '/' in arg:
-			path_to_arg = makepath(arg)
-		else:
-			path_to_arg = here / arg
-		paths.append(path_to_arg)
+	paths = ['/' in string and makepath(string) or here / string for string in strings]
 	if recursive:
-		paths = add_sub_dirs(paths)
+		return add_sub_dirs(paths)
 	return paths
 
 
@@ -116,17 +109,37 @@ def add_sub_dirs(paths):
 	return result
 
 
-def positive_test_extensions():
-	"""Positive extensions for python files and test files"""
-	return ['.tests', '.test', '.py']
+def python_source_extensions():
+	"""The extensions of files that often contain python source"""
+	return ['.py', '']
+
+
+def python_doctest_extensions():
+	"""The extensions of files that often contain python doctests"""
+	return ['.tests', '.test']
 
 
 def possible_test_extensions():
 	"""All possible extensions for python files and test files"""
-	return positive_test_extensions() + ['']
+	return python_doctest_extensions() + python_source_extensions()
 
 
-def is_test_extension(string):
+def positive_test_extensions():
+	"""Positive extensions for python files and test files"""
+	return [ext for ext in possible_test_extensions() if ext]
+
+
+def is_python_source_extension(string):
+	"""Whether the string is an extension for a file with python source"""
+	return string in python_source_extensions()
+
+
+def is_python_doctest_extension(string):
+	"""Whether the string is an extension for a file with python doctests"""
+	return string in python_doctest_extensions()
+
+
+def is_possible_test_extension(string):
 	"""Whether the string is a possible test extension"""
 	return string in possible_test_extensions()
 
@@ -136,34 +149,77 @@ def is_positive_test_extension(string):
 	return string in positive_test_extensions()
 
 
-def has_test_extension(string):
-	"""Whether the string has a possible test extension"""
+def _has_checked_extension(string, checker):
+	"""Whether the string has an extension validated by checker"""
 	_, ext = os.path.splitext(string)
-	return is_test_extension(ext)
+	return checker(ext)
+
+
+def has_python_source_extension(string):
+	"""Whether the string has an extension for a file with python source"""
+	return _has_checked_extension(string, is_python_source_extension)
+
+
+def has_python_doctest_extension(string):
+	"""Whether the string has an extension for a file with python doctests"""
+	return _has_checked_extension(string, is_python_doctest_extension)
+
+
+def has_possible_test_extension(string):
+	"""Whether the string has a possible test extension"""
+	return _has_checked_extension(string, is_possible_test_extension)
 
 
 def has_positive_test_extension(string):
 	"""Whether the string has a possible test extension"""
-	_, ext = os.path.splitext(string)
-	return is_positive_test_extension(ext)
+	return _has_checked_extension(string, is_positive_test_extension)
 
 
-def possible_test_globs():
-	"""A glob for each of the possible test extensions"""
-	return [str('*%s' % ext) for ext in possible_test_extensions()]
+def _positive_test_globs():
+	"""A glob for each of the _positive test extensions"""
+	return [str('*%s' % ext) for ext in positive_test_extensions()]
+
+
+def has_doctests(string):
+	"""Whether the string contains doctests
+
+	This method actually checks for presence of the classic "    >>> " prefix
+
+	>>> has_doctests('    >>> print True')
+	True
+	>>> has_doctests('not space    >>> print True')
+	False
+	"""
+	doctest_regexp = re.compile('^\s*>>>\s', re.MULTILINE)
+	return bool(doctest_regexp.search(string))
+
+
+def all_possible_test_files_in(path_to_root, recursive):
+	"""A list of all possibel test files in the given root
+
+	If recursive is True then include sub-directories
+	"""
+	find_files = recursive and path_to_root.walkfiles or path_to_root.files
+	result = []
+	for glob in _positive_test_globs():
+		result.extend(find_files(glob))
+	for path_to_file in find_files():
+		if not path_to_file.ext and _first_line_is_python_shebang(path_to_file.lines()):
+			result.append(path_to_file)
+	return result
 
 
 def _get_scripts_here(recursive):
 	"""Find all test scripts in the current working directory"""
 	here = makepath('.')
-	if recursive:
-		method = here.walkfiles
-	else:
-		method = here.files
 	result = []
-	for glob in possible_test_globs():
-		for path_to_file in method(glob):
-			result.append(path_to_file)
+	for python_file in all_possible_test_files_in(here, recursive):
+		if has_python_source_extension(python_file):
+			text = python_file.text()
+			if has_doctests(text):
+				result.append(python_file)
+		else:
+			result.append(python_file)
 	return result
 
 
@@ -177,11 +233,12 @@ def _expand_stems(path_stems):
 			result.extend(_existing_test_extensions(path_stem))
 	if not result:
 		path_stem = path_stems[0]
-		raise UserMessage('%s.test*, %s.py not found' % (path_stem, path_stem))
+		display_stem = path_stem.short_relative_path_from_here()
+		raise UserMessage('%s.test*, %s.py not found' % (display_stem, display_stem))
 	return result
 
 
-def __get_path_stems_to_test_scripts(args, recursive):
+def _get_files_from_stems(args, recursive):
 	"""Get a list of test scripts from the given args
 
 	Only known extensions are included
@@ -189,26 +246,19 @@ def __get_path_stems_to_test_scripts(args, recursive):
 	"""
 	path_stems = _get_path_stems(args, recursive)
 	if path_stems:
-		paths_to_test_scripts = _expand_stems(path_stems)
-	else:
-		paths_to_test_scripts = _get_scripts_here(recursive)
-
-	if not paths_to_test_scripts:
-		path_to_test_directory = _get_path_to_test_directory(args)
-		paths_to_test_scripts = path_to_test_directory.files('*.test*')
-	return paths_to_test_scripts
+		return _expand_stems(path_stems)
+	return _get_scripts_here(recursive)
 
 
-def _text_has_python_shebang(path_to_script):
+def _first_line_is_python_shebang(lines):
 	"""Whether the first line of that script looks like
 
 	#! ...python...
 	"""
-	lines = path_to_script.lines()
 	if not lines:
 		return False
 	first_line = lines[0]
-	return re.match('#!.*python.*', first_line)
+	return bool(re.match('#!.*python.*', first_line))
 
 
 def _re_order_scripts(paths_to_scripts):
@@ -219,26 +269,48 @@ def _re_order_scripts(paths_to_scripts):
 	"""
 	result = []
 	for extension in possible_test_extensions():
-		result.extend([path_to_script for path_to_script in paths_to_scripts if path_to_script.ext == extension])
+		extension_paths = [path_to_script for path_to_script in paths_to_scripts if path_to_script.ext == extension]
+		result.extend(extension_paths)
 	return result
 
 
-def get_test_scripts(args, recursive):
-	"""Get all test files for the given args
+def paths_to_doctests(args, recursive):
+	"""Get paths to all doctest files for the given args
 
-	args should be a list of paths - possibly empty
+	args should be a list of stems - possibly empty
+		A "stem" is the start of a path, e.g. "test_files."
+
 	If recursive is True then include sub_directories
 	"""
-	paths_to_test_scripts = __get_path_stems_to_test_scripts(args, recursive)
-	paths_to_positive_scripts = [p for p in paths_to_test_scripts if p.ext in positive_test_extensions()]
-	for path_to_script in paths_to_test_scripts:
+	paths_to_files = _get_files_from_stems(args, recursive)
+	paths_to_positive_scripts = [p for p in paths_to_files if p.ext in positive_test_extensions()]
+	for path_to_script in paths_to_files:
 		if path_to_script.ext:
 			continue
-		if not _text_has_python_shebang(path_to_script):
-			continue
-		if path_to_script in paths_to_positive_scripts:
-			continue
-		if str('%s.py' % path_to_script) in paths_to_positive_scripts:
+		if not _first_line_is_python_shebang(path_to_script.lines()):
 			continue
 		paths_to_positive_scripts.append(path_to_script)
 	return _re_order_scripts(paths_to_positive_scripts)
+
+
+def handle_command_line():
+	"""Find options and arguments on the command line"""
+	parser = OptionParser()
+	parser.add_option('-r', '--recursive', action='store_true', dest='recursive', help='Look in sub-directories')
+	return parser.parse_args()
+
+
+def main():
+	"""Run the progam"""
+	options, args = handle_command_line()
+	try:
+		scripts = paths_to_doctests(args, options.recursive)
+	except UserMessage, e:
+		print >> sys.stderr, e
+		return 1
+	print '\n'.join(scripts)
+	return 0
+
+
+if __name__ == '__main__':
+	sys.exit(main())
