@@ -1,8 +1,10 @@
-SCM
-	Trackers
-		Issue 12973: Separate Product and Project lists on tracker, 1
-		Test all the code, 2
-			Test on local machine, 2
-			Move trackers to own repo, 2
+Work
+	issue 17512: naming conventions for documents, 1
+	issue 12648: Test all the code, 2
+		issue 17806: Test on local machine, 2
+		issue 12056: Move trackers to own repo, 2
+	issue 12973: Separate Product and Project lists on tracker, 4
 Self
-	Show Anki in prompt, 4
+	mial: answer in vim, 1
+	mial: run trough figleaf, 2
+	$JAB: move to github, 3
