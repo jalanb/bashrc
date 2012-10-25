@@ -89,6 +89,7 @@ alias ly="p $JAB/python/ls/ly.py "
 alias p-="echo $OLDPWD"
 alias pg="pgrep -fl"
 alias pi="ipython "
+alias pt="p $JAB/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
 alias rq="rm -rf "

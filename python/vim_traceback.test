@@ -1,0 +1,11 @@
+The vim_traceback module
+========================
+
+	>>> import vim_traceback
+	>>> print vim_traceback.__doc__
+	Script to parse a Python traceback
+	...
+
+	>>> vim_traceback.parse_line('File "/path/to/scripts/script.py", line 109, in run_cgi')
+	('/path/to/scripts/script.py', '109')
+
