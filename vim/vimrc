@@ -239,6 +239,26 @@ filetype on
 filetype plugin on
 filetype indent on
 
+"
+" Auto-completion plugins
+"
+" Currently using 
+" 	https://github.com/davidhalter/jedi-vim
+" and
+" 	https://github.com/Shougo/neocomplcache
+"
+"let g:neocomplcache_enable_auto_select = 0 " do not select first candidate automatically
+let g:neocomplcache_enable_at_startup = 1
+if !exists('g:neocomplcache_omni_functions')
+	let g:neocomplcache_omni_functions = {}
+endif
+let g:neocomplcache_omni_functions['python'] = 'jedi#complete' 
+let g:jedi#popup_on_dot = 0
+set completeopt=menuone,longest,preview
+
+"
+" vimdiff, aka vim -d
+"
 function ChangeBuffer ()
 	"
 	" diff options
@@ -281,8 +301,21 @@ abbreviate seperate separate
 "
 autocmd FileType c,cpp,h,java set cindent
 autocmd FileType python compiler pylint
-let g:pymode_lint_config = "$HOME/.pylintrc"
 
+"
+" PyMode (no longer using this one)
+"
+" let g:pymode_lint_config = "$HOME/.pylintrc"
+
+"
+" pylint
+"
+let g:pylint_show_rate = 0                                                                                                     
+"
+" Showing numbers in left-hand gutter
+"
+" <leader>n is bound (above) to ToggleNumber()
+"
 function! SetRelativeNumber()
 	if exists('&relativenumber') && (&relativenumber == 0)
 		set relativenumber
@@ -323,8 +356,10 @@ function CycleNumber()
 endfunction
 
 set number
-
-
+"
+" <leader>\ is bound to calling this
+" 	The leader key is also \, so really \\ calls this
+"
 function ToggleHighlightSearch()
 	if &hlsearch
 		set nohlsearch
@@ -332,7 +367,8 @@ function ToggleHighlightSearch()
 		set hlsearch
 	endif
 endfunction
-
+"
+" Some miscellaneous stuff from around the interwebs
 "
 " From http://items.sjbach.com/319/configuring-vim-right
 "
@@ -350,12 +386,11 @@ set wildmenu
 set wildmode=list:longest,full
 "Ignore these files when completing names and in Explorer
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
-
 "
 " From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html
 "	When one of the patterns matches with the name of the file which is written, no backup file is created.
-set backupskip=/tmp/*,/private/tmp/*
-
+"
+set backupskip=/tmp/*,/private/tmp/*,~/temp
 "
 " for searching
 "
@@ -380,6 +415,9 @@ function! RetabAndStripTrailingWhitespace()
 	:retab!
 	:%s/\s\+$//e
 endfunction
+"
+" This lloks like one of mine
+"
 function! ReadTraceback(filename)
 	:set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
 	:map <F11> :cn<cr>zzzv
@@ -417,8 +455,8 @@ let g:jabSortBy='date'
 
 let g:is_posix = 1
 
-au InsertEnter * set paste
-au InsertLeave * set nopaste
+" au InsertEnter * set paste
+" au InsertLeave * set nopaste
 
 " Restore my window title
 let &titleold="I choose to start one small step now"
