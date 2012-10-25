@@ -42,7 +42,8 @@ load-plugins=
 # W0703 is "Catching too general exception" which we also allow
 # W0603 is "Using the global statement" We have the statement, we use it
 # R0903 is "Too few public methods"
-disable-msg=C0111, E1103, E1101, C0103, C0321, W0142, W0201, W0702, W0703, W0603, R0903
+# I0011 is "Locally disabling ..."
+disable=C0111,E1103,E1101,C0103,C0321,W0142,W0201,W0702,W0703,W0603,R0903,I0011
 
 
 [REPORTS]
@@ -141,7 +142,7 @@ indent-string='	'
 [MISCELLANEOUS]
 
 # List of note tags to take in consideration, separated by a comma.
-notes=FIXME,XXX,TODO
+notes=FIXME,XXX
 
 
 [SIMILARITIES]
