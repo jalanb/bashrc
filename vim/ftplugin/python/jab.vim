@@ -12,8 +12,11 @@ noremap tm :Mash<cr>
 noremap tt :MashTry<cr>
 noremap tn :Try<cr>
 noremap tp :Pylint<cr>
-noremap <left>       :tabprev<cr>
-noremap <right>       :tabnext<cr>
+noremap <left>      :tabprev<cr>
+noremap <right>     :tabnext<cr>
+noremap <leader>;   :s/:$//<cr>
+noremap <leader>:   :s/$/:/<cr>
+
 
 set foldmethod=indent
 set foldlevel=0
@@ -215,7 +218,7 @@ endif
 if !exists("PPP")
 	function WritePEP()
 		normal zR
-		exec "%s/^\\([^'\"]\\+\\):\\([^ ]\\)/\\1: \\2/gce"
+		exec "%s/^\\([^'\"[]\\+\\):\\([^ ]\\)/\\1: \\2/gce"
 		exec "%s/\\([^ ]\\) #/\\1  #/e"
 		exec "%s/\\([^\\s]\\)\\n^\\n\\([a-z]\\)/\\1\\2/ce"
 		exec "%s/\\[ \\(.*\\) ]/[\\1]/gce"
