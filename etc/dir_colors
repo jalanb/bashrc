@@ -47,6 +47,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 # Data
 .bmp          00;33
 .csv          00;33
+.eml          00;33
 .gif          00;33
 .ico          00;33
 .jpg          00;33
@@ -57,6 +58,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .tab          00;33
 .tgz          00;33
 .txt          00;33
+.text         00;33
 .xls          00;33
 .zip          00;33
 
