@@ -1,4 +1,5 @@
 Work
+	Python 2.7 everywhere
 	issue 17512: naming conventions for documents, 1
 	issue 12648: Test all the code, 2
 		issue 17806: Test on local machine, 2
