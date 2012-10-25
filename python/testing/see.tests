@@ -1,0 +1,36 @@
+The see module
+==============
+
+	>>> import  see
+
+Edge cases
+----------
+
+	>>> see.code(0)
+	Not callable: 0
+	>>> see.code(cmp)
+	No code available for <built-in function cmp>
+
+	>>> see.spread(0)
+	0
+	>>> see.spread(1)
+	1
+
+	>>> class No:
+	...     def __nonzero__(self):
+	...         return False
+	>>> class Fred:
+	...     """"""
+	...     def __init__(self):
+	...          self.no = No()
+	...          self.none = None
+	>>> fred = Fred()
+	>>> fred.fred = fred
+	>>> see.spread(fred)
+	<Fred
+		none : None
+		fred : ...
+		no : ...
+	>
+	>>> see.see(fred)
+		.fred   .no     .none
