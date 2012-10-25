@@ -66,7 +66,7 @@ endif
 
 " We should echo filename because pylint truncates .py
 " If someone know better way - let me know :) 
-CompilerSet makeprg=(echo\ '[%]';\ pylint\ -d\ I0011\ -r\ y\ --output-format=parseable\ %)
+CompilerSet makeprg=(echo\ '[%]';\ pylint\ --rcfile=~/.pylintrc\ -r\ n\ --output-format=parseable\ %)
 
 " We could omit end of file-entry, there is only one file
 " %+I... - include code rating information
@@ -86,6 +86,9 @@ function! Pylint(writing)
         " Save before running
         write
     endif	
+    if g:pylint_cwindow
+		cclose
+	endif
 
     if has('win32') || has('win16') || has('win95') || has('win64')
         setlocal sp=>%s
@@ -104,11 +107,6 @@ function! Pylint(writing)
         cwindow
     endif
 
-    call PylintEvaluation()
-
-    if g:pylint_show_rate
-        echon 'code rate: ' b:pylint_rate ', prev: ' b:pylint_prev_rate
-    endif
 endfunction
 
 function! PylintEvaluation()
