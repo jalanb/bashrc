@@ -8,5 +8,4 @@ Work
 	issue 12973: Separate Product and Project lists on tracker, 4
 Self
 	mial: answer in vim, 1
-	mial: run trough figleaf, 2
 	$JAB: move to github, 3
