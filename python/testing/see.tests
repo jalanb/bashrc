@@ -6,11 +6,6 @@ The see module
 Edge cases
 ----------
 
-	>>> see.code(0)
-	Not callable: 0
-	>>> see.code(cmp)
-	No code available for <built-in function cmp>
-
 	>>> see.spread(0)
 	0
 	>>> see.spread(1)

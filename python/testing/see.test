@@ -38,13 +38,6 @@ The basic method is a better version of dir()
 	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
 	...
 
-	>>> from see import code
-	>>> code(code)
-	def code(method):
-	    if not callable(method):
-		...
-	    print '\n'.join(result)
-
 	>>> see.spread(sys)
 	<module
 	...
