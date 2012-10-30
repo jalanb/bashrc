@@ -35,7 +35,15 @@ fi
 if [[ -d /Users/jab ]]  # looks like a mac book
 then
 	USER=abrogan
-	/bin/bash ~/bin/mount_alto track
+	if [[ $1 != "local" ]]
+	then
+		if ! ping -c 1 ie-track-1.altobridge.com
+		then
+			echo Cannot contact ie-track-1.altobridge.com
+		else
+			/bin/bash ~/bin/mount_alto track
+		fi
+	fi
 	if [[ -f $JAB/python/pythonrc.py ]]
 	then PYTHONSTARTUP=$JAB/python/pythonrc.py
 	elif [[ -f ~/.pythonrc.py ]]
