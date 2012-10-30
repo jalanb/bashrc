@@ -17,6 +17,13 @@ Or first argument is a file
 	$ python kd.py /bin/ls
 	/bin
 
+Or first argument is a stem of a directory/file
+	kd.py will add * on to such a stem,
+	and will always find directories first,
+		looking ofr files only if there are no such directories
+	$ python kd.py /bin/l
+	/bin
+
 If nothing matches then give directories in $PATH which have matching executables
 	$ python kd.py ls
 	/bin
