@@ -77,7 +77,7 @@ def split_directories_files(strings):
 	strings = strings_to_paths(strings)
 	return [ p for p in strings if p.isdir() ], [ p for p in strings if p.isfile() ], [ p for p in strings if not (p.isfile() or p.isdir())]
 
-def files(strings):
+def _files(strings):
 	return split_files(strings)[0]
 
 def directories(strings):
