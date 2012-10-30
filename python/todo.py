@@ -34,11 +34,11 @@ def priorities():
 	"""The recognised priorities in this system"""
 	Priority = namedtuple('Priority', 'number, name, colour')
 	return [ 
-		Priority(1, 'yesterday', colours.RED),
-		Priority(2, 'today', colours.MAGENTA),
-		Priority(3, 'tomorrow', colours.GREEN),
-		Priority(4, 'feature', colours.BLUE),
-		Priority(5, 'wish', colours.CYAN),
+		Priority(1, 'yesterday', 'red'),
+		Priority(2, 'today',     'light red'),
+		Priority(3, 'tomorrow',  'light magenta'),
+		Priority(4, 'feature',   'magenta'),
+		Priority(5, 'wish',      'gray'),
 	]
 
 def priority_keys_string():
@@ -49,7 +49,7 @@ def priority_colour(priority_number):
 	for priority in priorities():
 		if priority_number == priority.number:
 			return priority.colour
-	return colours.WHITE
+	return 'white'
 	
 def parse_todo_line(line):
 	"""Extract a list of todo items from a list of lines

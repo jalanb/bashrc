@@ -1,0 +1,15 @@
+The colours module
+===================
+
+	>>> import colours
+	>>> print colours.__doc__
+	Provide methods to handle colour values
+	...
+
+Rather an obscure test this one, but such is the nature of the colour numbers
+	Anyway - it is a green hello
+		foreground is 38;5
+		green is 65280
+	The rest works
+	>>> colours.test() == '\x1b[38;5;65280mhello\x1b[2m\x1b[0m'
+	True

@@ -1,0 +1,62 @@
+The colour_numbers module
+=========================
+
+	>>> import colour_numbers
+	>>> print colour_numbers.__doc__
+	Convert between some numbers known to represent colours
+	...
+
+Convert html strings to integers
+--------------------------------
+
+A "web colour" is represented by a string with 3 hex values for R, G, B
+	For example
+	>>> html = '#00FF00'
+
+Converting that to an integer and back gives itself
+	>>> html == colour_numbers.integer_to_html(colour_numbers.html_to_integer(html))
+	True
+
+Same result if we start with slight variations on the string
+	>>> html == colour_numbers.integer_to_html(colour_numbers.html_to_integer(html.lower()))
+	True
+	>>> html == colour_numbers.integer_to_html(colour_numbers.html_to_integer(html.replace('#','0x')))
+	True
+
+We can also use 3 single chars
+	>>> html == colour_numbers.integer_to_html(colour_numbers.html_to_integer('0x0F0'))
+	True
+
+Any 3-char hex string is same as the 6-char version by just doubling the characters
+	(http://en.wikipedia.org/wiki/Web_colors#Shorthand_hexadecimal_form)
+	>>> colour_numbers.html_to_integer('0x09C') == colour_numbers.html_to_integer('#0099cc')
+	True
+
+Converting html colours to ANSI colours
+---------------------------------------
+
+Convert an HTML colour string to an ANSI code (which is a number)
+	(Test values here come from http://www.frexx.de/xterm-256-notes/data/xterm-colortest)
+
+	>>> html, ansi = '#875F5F', 95
+	>>> colour_numbers.html_to_ansi(html) == ansi
+	True
+
+And back again
+	>>> colour_numbers.ansi_to_html(ansi) == html
+	True
+
+VGA colours
+-----------
+
+"Pure" colours have ANSI values less than 16 and come in "dark" and "light" shades
+	These colours were used on very old terminals, back when I was a lad
+
+For example, darker blue
+Dark blue
+	>>> colour_numbers.ansi_to_html(4) == '#000080'
+	True
+
+Lighter blue:
+	>>> colour_numbers.ansi_to_html(12) == '#0000FF'
+	True

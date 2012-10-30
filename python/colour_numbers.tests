@@ -1,0 +1,118 @@
+The colour_numbers module
+=========================
+
+	>>> import colour_numbers
+
+
+More modules for testing
+------------------------
+	
+	>>> import random
+
+integer to ansi
+---------------
+
+	>>> colour_numbers.integer_to_ansi(0x00005f) == 17
+	True
+	>>> colour_numbers.integer_to_ansi(0x000087) == 18
+	True
+	>>> colour_numbers.integer_to_ansi(0x0000af) == 19
+	True
+	>>> colour_numbers.integer_to_ansi(0x0000d7) == 20
+	True
+	>>> colour_numbers.integer_to_ansi(0x0000ff) == 21
+	True
+
+	>>> colour_numbers.integer_to_ansi(0x005f00) == 22
+	True
+	>>> colour_numbers.integer_to_ansi(0x008700) == 28
+	True
+	>>> colour_numbers.integer_to_ansi(0x00af00) == 34
+	True
+	>>> colour_numbers.integer_to_ansi(0x00d700) == 40
+	True
+	>>> colour_numbers.integer_to_ansi(0x00ff00) == 46
+	True
+
+	>>> colour_numbers.integer_to_ansi(0x5f0000) == 52
+	True
+	>>> colour_numbers.integer_to_ansi(0x870000) == 88
+	True
+	>>> colour_numbers.integer_to_ansi(0xaf0000) == 124
+	True
+	>>> colour_numbers.integer_to_ansi(0xd70000) == 160
+	True
+	>>> colour_numbers.integer_to_ansi(0xff0000) == 196
+	True
+
+	>>> colour_numbers.integer_to_html(colour_numbers.ansi_to_integer(196)) == '#FF0000'
+	True
+
+	>>> colour_numbers.integer_to_ansi(0xfffffe) == 231
+	True
+	>>> colour_numbers.integer_to_ansi(0xffffff) == 231
+	True
+
+	>>> colour_numbers.integer_to_ansi(0xAFD7FF) == 153
+	True
+	>>> colour_numbers.integer_to_ansi(0x5FAF87) == 72
+	True
+
+
+	>>> colour_numbers.integer_to_ansi(0x1c1c1c) == 234
+	True
+	>>> colour_numbers.integer_to_ansi(0xB2B2B2) == 249
+	True
+
+	>>> colour_numbers.integer_to_html(colour_numbers.ansi_to_integer(249)) == '#B2B2B2'
+	True
+
+Convert to ansi to integer and back
+------------------------------------
+
+	>>> all([colour_numbers.integer_to_ansi(colour_numbers.ansi_to_integer(i)) == i for i in range(1,255)])
+	True
+
+Convert to html to integer and back
+-----------------------------------
+
+The next iteration might take a while, so we'll skip a few points
+	>>> step = random.randint(0xCC, 0xFF)
+
+Can convert from integer to hex string (html) and back again for any number
+	>>> all([colour_numbers.html_to_integer(colour_numbers.integer_to_html(i)) == i for i in range(0x000000,0xFFFFFF,step)])
+	True
+
+convert ansi to html and back
+-----------------------------
+
+In converting ANSI codes into html codes and back again some do not pass through unchanged
+	because
+		the "pure colours" have entries for numbers < 16 and for other numbers
+		e.g. '#0000FF' is both 21 and 12
+		(or - "both 12 and 21 give '#0000FF')
+
+Test method to recognise pure colours
+	>>> def pure_colour(string):
+	...    return string == '#808080' or all([bool(c in '0F') for c in string[1:]]) 
+
+By "pure colour" I mean anything with only 0 and F, and Silver ('#808080')
+	>>> silver = '#808080'
+	>>> pure_red = '#FF0000'
+	>>> pure_yellow = '#FFFF00'
+	>>> other = '#005f87'
+	>>> pure_colour(pure_red) and pure_colour(pure_yellow) and pure_colour(silver) and not pure_colour(other)
+	True
+
+So now we can test that (with the exception of such pure colours)
+	all colours pass through ANSI -> HTML -> ANSI
+	>>> for i in range(1,255):
+	...     html = colour_numbers.ansi_to_html(i)
+	...     if pure_colour(html): continue
+	...     if colour_numbers.html_to_ansi(html) != i:
+	...         break
+	... else:
+	...      print True
+	True
+
+
