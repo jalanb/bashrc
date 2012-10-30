@@ -45,7 +45,6 @@ import re
 import os
 import sys
 import textwrap
-import linecache
 import fnmatch
 import inspect
 
@@ -114,7 +113,7 @@ class _SeeOutput(tuple):
 			indent = ' ' * len(sys.ps1)
 		else:
 			indent = '	'
-		columns = os.environ.get('COLUMNS', 78)
+		columns = int(os.environ.get('COLUMNS', 78))
 		return textwrap.fill(''.join(padded), columns, initial_indent=indent, subsequent_indent=indent)
 
 
@@ -252,34 +251,6 @@ def spread(thing, exclude = None):
 		return '''<%s%s%s\n%s>''' % (klass, separator, attributes_string, separator[1:-2])
 
 	print spread_out_the_attributes(thing, '\n\t')
-
-
-def indent_line(filename, line_number):
-	line = linecache.getline(filename, line_number)
-	match = re.match('(\s*)', line)
-	return line.rstrip(), match.groups()[0]
-
-
-def code(method):
-	if not callable(method):
-		print 'Not callable: %r' % method
-		return
-	result = []
-	try:
-		first_line_number = method.func_code.co_firstlineno
-	except AttributeError:
-		print 'No code available for', method
-		return
-	filename = re.sub('.py[co]$', '.py', method.func_code.co_filename)
-	line, first_indentation = indent_line(filename, first_line_number)
-	result = [line]
-	line_number = first_line_number + 1
-	line, indentation = indent_line(filename, line_number)
-	while indentation > first_indentation:
-		result.append(line)
-		line_number += 1
-		line, indentation = indent_line(filename, line_number)
-	print '\n'.join(result)
 
 
 PY_300 = sys.version_info >= (3, 0)
