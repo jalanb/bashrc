@@ -87,8 +87,10 @@ alias lx="p $JAB/python/ls/lx.py "
 alias ly="p $JAB/python/ls/ly.py "
 
 alias p-="echo $OLDPWD"
+alias pc="python -c"
 alias pg="pgrep -fl"
 alias pi="ipython "
+alias pp="p $JAB/python/mython.py"
 alias pt="p $JAB/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
