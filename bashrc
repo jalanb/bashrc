@@ -67,6 +67,7 @@ jab_bashrc()
 		echo i am lost because $JAB is not a directory >&2
 	else
 		cd $JAB
+		find python -name "*.pyc" -exec rm -rf {} \;
 		source_jab
 		clean_jab
 		[[ $USER == "builder" ]] || welcome_home
