@@ -32,11 +32,51 @@ If nothing matches then give directories in $PATH which have matching executable
 
 import os
 import sys
-from path import path
+import fnmatch
+
+
+def contains_glob(path_to_directory, pattern, wanted=None):
+	"""Whether the given directory contains an item which matches the given (glob) pattern"""
+	if not path_to_directory:
+		return False
+	if wanted is None:
+		wanted = lambda name: True
+	for name in os.listdir(path_to_directory):
+		if fnmatch.fnmatch(name, pattern):
+			return wanted(os.path.join(path_to_directory, name))
+	return False
+
+
+def contains_directory(path_to_directory, pattern):
+	"""Whether the given directory contains a directory which matches the given (glob) pattern"""
+	return contains_glob(path_to_directory, pattern, os.path.isdir)
+
+
+def contains_file(path_to_directory, pattern):
+	"""Whether the given directory contains a file which matches the given (glob) pattern"""
+	return contains_glob(path_to_directory, pattern, os.path.isfile)
+
+
+def list_sub_directories(path_to_directory, pattern):
+	"""A list of all sub-directories of the given directory which match the given (glob) pattern"""
+	return list_items(path_to_directory, pattern, os.path.isdir)
+
+
+def list_files(path_to_directory, pattern):
+	"""A list of all files in the given directory which match the given (glob) pattern"""
+	return list_items(path_to_directory, pattern, os.path.isfile)
+
+
+def list_items(path_to_directory, pattern, wanted):
+	"""A list of all items in the given directory which match the given (glob) pattern and are wanted"""
+	if not path_to_directory:
+		return []
+	paths_to_matches = [os.path.join(path_to_directory, name) for name in os.listdir(path_to_directory) if fnmatch.fnmatch(name, pattern)]
+	return [path for path in paths_to_matches if wanted(path)]
 
 
 def look_under_directory(path_to_directory, prefixes):
-	"""Look under the given path_to_directory for matching sub-directories
+	"""Look under the given directory for matching sub-directories
 
 	Sub-directories match if they are prefixed with given prefixes
 	If no sub-directories match, but a file matches
@@ -50,10 +90,10 @@ def look_under_directory(path_to_directory, prefixes):
 	else:
 		prefix_glob = '%s*' % prefix
 	result = []
-	for path_to_sub_directory in path_to_directory.dirs(prefix_glob):
+	for path_to_sub_directory in list_sub_directories(path_to_directory, prefix_glob):
 		paths = look_under_directory(path_to_sub_directory, prefixes)
 		result.extend(paths)
-	if not result and path_to_directory.files(prefix_glob):
+	if not result and contains_file(path_to_directory, prefix_glob):
 		result = [path_to_directory]
 	return result
 
@@ -77,8 +117,8 @@ def find_under_here(prefixes):
 	Try any prefixed sub-directories
 		then any prefixed files
 	"""
-	path_to_here = path(os.getcwd())
-	return find_under_directory(path_to_here, prefixes)
+	here = os.getcwd()
+	return find_under_directory(here, prefixes)
 
 
 def find_in_environment_path(filename):
@@ -88,12 +128,11 @@ def find_in_environment_path(filename):
 	"""
 	if not filename:
 		return None
-	for directory in os.environ['PATH'].split(':'):
-		if not directory:
+	for path_to_directory in os.environ['PATH'].split(':'):
+		if not path_to_directory:
 			continue
-		path_to_directory = path(directory)
-		path_to_file = path_to_directory / filename
-		if path_to_file.isfile():
+		path_to_file = os.path.join(path_to_directory, filename)
+		if os.path.isfile(path_to_file):
 			return path_to_directory
 	return None
 
@@ -106,16 +145,15 @@ def find_path_to_item(item):
 	if item.endswith('/'):
 		if len(item) > 1:
 			item = item.rstrip('/')
-		return path(item)
-	path_to_item = path(item)
-	if path_to_item.isdir():
-		return path_to_item
-	path_to_parent = path_to_item.parent
-	if path_to_item.isfile():
-		return path_to_parent
-	pattern = '%s*' % path_to_item.name
-	if path_to_parent.listdir(pattern):
-		return path_to_parent
+		return item
+	if os.path.isdir(item):
+		return item
+	parent = os.path.dirname(item)
+	if os.path.isfile(item):
+		return parent
+	pattern = '%s*' % os.path.basename(item)
+	if contains_glob(parent, pattern):
+		return parent
 	return None
 
 
@@ -164,7 +202,7 @@ def parse_command_line():
 	"""Get the arguments from the command line. Insist on at least one empty string"""
 	args = sys.argv[1:]
 	if not args:
-		return path('~').expanduser(), []
+		return os.path.expanduser('~'), []
 	if args[0] == '-':
 		args[0] = previous_directory()
 	return args[0], args[1:]

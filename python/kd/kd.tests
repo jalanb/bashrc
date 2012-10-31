@@ -25,6 +25,30 @@ And no args at all (use home directory)
 	>>> path_to_dir == os.path.expanduser('~') and not prefixes
 	True
 
+List directories
+----------------
+
+	>>> kd.contains_glob('/usr','*oca*')
+	True
+	>>> kd.contains_glob('/usr','*oca')
+	False
+	>>> kd.contains_file('/usr','*oca*')
+	False
+	>>> kd.contains_file('/usr','*oca')
+	False
+	>>> kd.contains_directory('/usr','*oca*')
+	True
+	>>> kd.contains_directory('/usr','*oca')
+	False
+	>>> '/usr/lib' in kd.list_sub_directories('/usr','l*')
+	True
+	>>> '/usr/lib' in kd.list_sub_directories('/usr','a*')
+	False
+	>>> '/bin/ls' in kd.list_files('/bin','l*')
+	True
+	>>> '/bin/ls' in kd.list_files('/bin','a*')
+	False
+
 find_directory()
 ----------------
 
@@ -39,7 +63,7 @@ Directories sought must be real
 
 Can use empty prefixes - gives path to the directory
 
-	>>> kd.find_directory(a_known_directory, []).name == os.path.basename(a_known_directory)
+	>>> kd.find_directory(a_known_directory, []) == a_known_directory
 	True
 
 If sub-dir is not found, get only the directory
