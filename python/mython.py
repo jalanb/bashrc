@@ -2,11 +2,12 @@
 
 
 
-def _set_up():
-	# Too many dynamic items here to take E0602 (undefined variable) seriously
-	# and pylint is no good at recognising methods in methods when counting branches - R0912
-	# pylint: disable-msg=E0602,R0912
-	global _set_up
+# Too many dynamic items here to take E0602 (undefined variable) seriously
+# and pylint is no good at recognising methods in methods when counting branches - R0912
+# pylint: disable-msg=E0602, R0912
+
+
+def _make_console():
 
 	def show_import(name, fromlist=None):
 		try:
@@ -61,7 +62,6 @@ def _set_up():
 		show_import('paths')
 		show_import('see', ['see', 'see_methods', 'see_attributes', 'spread'])
 		show_import('see_code', ['highlight_method'])
-		show_import('tempfile', ['mkstemp'])
 		print
 
 	def prettify():
@@ -71,51 +71,51 @@ def _set_up():
 		sys.ps2 = colours.colour_text('... ', 'light green')
 		sys.displayhook = show
 
-	show_imports()
-	complete_python()
-	prettify()
 
-	del _set_up
-
-
-def _make_console():
 	from code import InteractiveConsole
+
+	def editor():
+		return os.environ.get('EDITOR', 'vim')
+
+	def edit_temporary_text(text):
+		from tempfile import NamedTemporaryFile
+		with NamedTemporaryFile(suffix='.py') as temporary_file:
+			temporary_file.write(text)
+			temporary_file.flush()
+			command = '%s %s' % (editor(), temporary_file.name)
+			os.system(command)
+			with file(temporary_file.name) as text_file:
+				return text_file.read()
+
 	class Mython(InteractiveConsole):
-		def __init__(self, *args, **kwargs):
-			self.last_buffer = [] # This holds the last executed statement
-			self.editor = os.environ.get('EDITOR', 'vim')
-			self.edit_command = 'vim'
-			self.quit_command = 'q'
-			InteractiveConsole.__init__(self, *args, **kwargs)
 
 		def runsource(self, source, *args):
-			self.last_buffer = [ source.encode('latin-1') ]
+			self.old_source = source.encode('latin-1')
 			return InteractiveConsole.runsource(self, source, *args)
 
 		def raw_input(self, *args):
 			line = InteractiveConsole.raw_input(self, *args)
-			if line == self.edit_command:
-				fd, tmpfl = mkstemp('.py')
-				os.write(fd, b'\n'.join(self.last_buffer))
-				os.close(fd)
-				os.system('%s %s' % (self.editor, tmpfl))
-				line = open(tmpfl).read()
-				os.unlink(tmpfl)
-				tmpfl = ''
-				lines = line.split( '\n' )
-				for i in range(len(lines) - 1): self.push( lines[i] )
-				line = lines[-1]
-			elif line == self.quit_command:
+			if line == 'q':
 				sys.exit(0)
+			if line == 'e':
+				text = edit_temporary_text(self.old_source)
+				readline.replace_history_item(readline.get_current_history_length() - 1, text)
+				return text
 			return line
-	print
-	while True:
-		console = Mython(locals=globals())
-		try:
-			if console.interact() is None:
-				return
-		except (SystemExit, KeyboardInterrupt):
-			raise
 
-_set_up()
+	def main():
+		print
+		while True:
+			console = Mython(locals=globals())
+			try:
+				if console.interact() is None:
+					return
+			except (SystemExit, KeyboardInterrupt):
+				raise
+
+	show_imports()
+	complete_python()
+	prettify()
+	main()
+
 _make_console()
