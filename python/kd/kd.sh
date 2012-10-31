@@ -12,9 +12,7 @@ fi
 kd ()
 { 
 	local python_script=$(dirname $BASH_SOURCE)/kd.py
-	local destination=$(python $python_script $* 2>&1)
-	local first_word=$(echo "$destination" | head -n 1 | cut -d\   -f1)
-	if [[ "$first_word" == "Error" ]]
+	if ! destination=$(python $python_script $* 2>&1)
 	then
 		echo $destination
 	else
@@ -24,5 +22,6 @@ kd ()
 		fi
 		cd "$destination"
 	fi
+	unset destination
 }
 
