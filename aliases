@@ -69,6 +69,7 @@ alias cy="c \$PYTHON_HOME"
 
 alias eg="env | grep "
 
+alias gc="git commit -m"
 alias gh="history | grep "
 
 alias hh="history -n"
