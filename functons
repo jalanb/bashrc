@@ -56,23 +56,6 @@ gg ()
 	grep "$sought" $* | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
-kd ()
-{ 
-# cd to filename as well as directory
-	destination=$(python $JAB/python/kd/kd.py $* 2>&1)
-	first_word=$(echo "$destination" | head -n 1 | cut -d\   -f1)
-	if [[ "$first_word" == "Error" ]]
-	then
-		python $JAB/python/kd/kd.py $*
-	else
-		if [[ $destination != $1 && $1 != "-" ]]
-		then
-			echo "cd $destination"
-		fi
-		cd "$destination"
-	fi
-}
-
 ky ()
 {
 	if [[ -z "$1" ]]
