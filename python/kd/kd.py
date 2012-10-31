@@ -40,7 +40,11 @@ class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
 	pass
 
-def make_needed(wanted, pattern, path_to_directory):
+def make_needed(pattern, path_to_directory, wanted):
+	"""Make a method to check if an item matches the pattern, and is wanted
+
+	If wanted is None just check the pattern
+	"""
 	if wanted:
 		return lambda name: fnmatch(name, pattern) and wanted(os.path.join(path_to_directory, name))
 	else:
@@ -51,7 +55,7 @@ def contains_glob(path_to_directory, pattern, wanted=None):
 	"""Whether the given directory contains an item which matches the given (glob) pattern"""
 	if not path_to_directory:
 		return False
-	needed = make_needed(wanted, pattern, path_to_directory)
+	needed = make_needed(pattern, path_to_directory, wanted)
 	for name in os.listdir(path_to_directory):
 		if needed(name):
 			return True
@@ -62,7 +66,7 @@ def list_items(path_to_directory, pattern, wanted):
 	"""A list of all items in the given directory which match the given (glob) pattern and are wanted"""
 	if not path_to_directory:
 		return []
-	needed = make_needed(wanted, pattern, path_to_directory)
+	needed = make_needed(pattern, path_to_directory, wanted)
 	return [os.path.join(path_to_directory, name) for name in os.listdir(path_to_directory) if needed(name)]
 
 
@@ -112,6 +116,9 @@ def look_under_directory(path_to_directory, prefixes):
 def find_under_directory(path_to_directory, prefixes):
 	"""Find one directory under path_to_directory, matching prefixes
 
+	Try any prefixed sub-directories
+		then any prefixed files
+
 	Can give None (no matches), or the match, or an Exception
 	"""
 	possibles = look_under_directory(path_to_directory, prefixes)
@@ -123,11 +130,7 @@ def find_under_directory(path_to_directory, prefixes):
 
 
 def find_under_here(prefixes):
-	"""Look for some other directories under current directory
-
-	Try any prefixed sub-directories
-		then any prefixed files
-	"""
+	"""Look for some other directories under current directory """
 	here = os.getcwd()
 	return find_under_directory(here, prefixes)
 
