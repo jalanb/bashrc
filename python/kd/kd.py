@@ -20,7 +20,7 @@ Or first argument is a file
 Or first argument is a stem of a directory/file
 	kd.py will add * on to such a stem,
 	and will always find directories first,
-		looking ofr files only if there are no such directories
+		looking for files only if there are no such directories
 	$ python kd.py /bin/l
 	/bin
 
@@ -32,19 +32,38 @@ If nothing matches then give directories in $PATH which have matching executable
 
 import os
 import sys
-import fnmatch
+from fnmatch import fnmatch
+from optparse import OptionParser
+
+
+class ToDo(NotImplementedError):
+	"""Errors raised by this script"""
+	pass
+
+def make_needed(wanted, pattern, path_to_directory):
+	if wanted:
+		return lambda name: fnmatch(name, pattern) and wanted(os.path.join(path_to_directory, name))
+	else:
+		return lambda name: fnmatch(name, pattern)
 
 
 def contains_glob(path_to_directory, pattern, wanted=None):
 	"""Whether the given directory contains an item which matches the given (glob) pattern"""
 	if not path_to_directory:
 		return False
-	if wanted is None:
-		wanted = lambda name: True
+	needed = make_needed(wanted, pattern, path_to_directory)
 	for name in os.listdir(path_to_directory):
-		if fnmatch.fnmatch(name, pattern):
-			return wanted(os.path.join(path_to_directory, name))
+		if needed(name):
+			return True
 	return False
+
+
+def list_items(path_to_directory, pattern, wanted):
+	"""A list of all items in the given directory which match the given (glob) pattern and are wanted"""
+	if not path_to_directory:
+		return []
+	needed = make_needed(wanted, pattern, path_to_directory)
+	return [os.path.join(path_to_directory, name) for name in os.listdir(path_to_directory) if needed(name)]
 
 
 def contains_directory(path_to_directory, pattern):
@@ -65,14 +84,6 @@ def list_sub_directories(path_to_directory, pattern):
 def list_files(path_to_directory, pattern):
 	"""A list of all files in the given directory which match the given (glob) pattern"""
 	return list_items(path_to_directory, pattern, os.path.isfile)
-
-
-def list_items(path_to_directory, pattern, wanted):
-	"""A list of all items in the given directory which match the given (glob) pattern and are wanted"""
-	if not path_to_directory:
-		return []
-	paths_to_matches = [os.path.join(path_to_directory, name) for name in os.listdir(path_to_directory) if fnmatch.fnmatch(name, pattern)]
-	return [path for path in paths_to_matches if wanted(path)]
 
 
 def look_under_directory(path_to_directory, prefixes):
@@ -108,7 +119,7 @@ def find_under_directory(path_to_directory, prefixes):
 		return None
 	if len(possibles) == 1:
 		return possibles[0]
-	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles))
+	raise ToDo('Too many possiblities\n\t%s' % '\n\t'.join(possibles))
 
 
 def find_under_here(prefixes):
@@ -192,7 +203,7 @@ def find_directory(item, prefixes):
 		if prefixes:
 			path_to_item = find_under_here(prefixes)
 			if not path_to_item:
-				raise ValueError('could not use %r as a directory' % item)
+				raise ToDo('could not use %r as a directory' % item)
 	if path_to_item:
 		return path_to_item
 	return find_in_environment_path(item)
@@ -200,24 +211,72 @@ def find_directory(item, prefixes):
 
 def parse_command_line():
 	"""Get the arguments from the command line. Insist on at least one empty string"""
-	args = sys.argv[1:]
+	usage = '''usage: %%prog directory prefix ...
+
+	%s''' % __doc__
+	parser = OptionParser(usage)
+	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
+	options, args = parser.parse_args()
 	if not args:
-		return os.path.expanduser('~'), []
-	if args[0] == '-':
+		item, prefixes = os.path.expanduser('~'), []
+	else:
+		item, prefixes = args[0], args[1:]
+		if args[0] == '-':
+			item = previous_directory()
 		args[0] = previous_directory()
-	return args[0], args[1:]
+	return options, item, prefixes
+
+
+def test():
+	"""Run all doctests based on this file
+	
+	Tell any bash-runners that not to use any output by saying "Error" first
+
+	>>> 'kd' in __file__
+	True
+	"""
+	stem, _ext = os.path.splitext(__file__)
+	stem = os.path.basename(stem)
+	from doctest import testfile, testmod, ELLIPSIS
+	result = testfile('%s.tests' % stem, optionflags=ELLIPSIS)
+	if result.failed:
+		return
+	result = testfile('%s.test' % stem, optionflags=ELLIPSIS)
+	if result.failed:
+		return
+	result = testmod()
+	if result.failed:
+		return
+	print 'All tests passed'
+
+
+
+def show_path_to_item(item, prefixes):
+	"""Get a path for the given item and show it
+	
+	>>> show_path_to_item('/', ['us', 'lo'])
+	/usr/local
+	"""
+	path_to_item = find_directory(item, prefixes)
+	if path_to_item:
+		print str(path_to_item)
 
 
 def main():
 	"""Show a directory from the command line arguments (or some derivative"""
 	try:
-		item, prefixes = parse_command_line()
-		path_to_item = find_directory(item, prefixes)
-		if path_to_item:
-			print str(path_to_item)
+		options, item, prefixes = parse_command_line()
+		if not options:
+			return 1
+		if options.test:
+			test()
+			return 1
+		show_path_to_item(item, prefixes)
 		return 0
-	except Exception, e:  # pylint: disable-msg=W0703
-		print 'Error', e
+	except ToDo, e:
+		print 'Error:', e
+		return 1
+	except SystemExit:
 		return 1
 
 

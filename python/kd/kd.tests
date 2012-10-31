@@ -15,13 +15,14 @@ Command lines
 We allow more than two args on command line
 
 	>>> sys.argv = ['kd.py', 'start', 'here', 'or', 'there']
-	>>> kd.parse_command_line()
-	('start', ['here', 'or', 'there'])
+	>>> options, item, prefixes = kd.parse_command_line()
+	>>> item == 'start' and prefixes == ['here', 'or', 'there']
+	True
 
 And no args at all (use home directory)
 
 	>>> sys.argv = ['kd.py']
-	>>> path_to_dir, prefixes = kd.parse_command_line()
+	>>> options, path_to_dir, prefixes = kd.parse_command_line()
 	>>> path_to_dir == os.path.expanduser('~') and not prefixes
 	True
 
@@ -57,7 +58,7 @@ Directories sought must be real
 	>>> kd.find_directory('rubbish', [])
 	Traceback (most recent call last):
 	...
-	ValueError: ...
+	ToDo: ...
 
 	>>> a_known_directory = os.environ['HOME']
 
@@ -70,13 +71,20 @@ If sub-dir is not found, get only the directory
 	>>> kd.find_directory(a_known_directory, ['this_is_not_real']) == a_known_directory
 	True
 
+If the sub-dir matches too many directories then an exception is raised
+	>>> kd.find_directory('/usr', ['li'])
+	Traceback (most recent call last):
+	...
+	ToDo: Too many possiblities
+	...
+
 main()
 ------
 
 When main() fails it prints out an error
 	>>> sys.argv = [ 'kd', 'no_such_directory' ]
 	>>> kd.main()
-	Error could not use 'no_such_directory' as a directory
+	Error: could not use 'no_such_directory' as a directory
 	1
 
 Cleanup
