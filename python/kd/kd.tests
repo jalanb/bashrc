@@ -36,15 +36,14 @@ Directories sought must be real
 	ValueError: ...
 
 	>>> a_known_directory = os.environ['HOME']
-	>>> a_known_name = os.environ['USER']
 
 Can use empty prefixes - gives path to the directory
 
-	>>> kd.find_directory(a_known_directory, []).name == a_known_name
+	>>> kd.find_directory(a_known_directory, []).name == os.path.basename(a_known_directory)
 	True
 
-If sub-dir is not found, get nothing
-	>>> kd.find_directory(a_known_directory, ['this_is_not_real']) is None
+If sub-dir is not found, get only the directory
+	>>> kd.find_directory(a_known_directory, ['this_is_not_real']) == a_known_directory
 	True
 
 main()
@@ -53,7 +52,7 @@ main()
 When main() fails it prints out an error
 	>>> sys.argv = [ 'kd', 'no_such_directory' ]
 	>>> kd.main()
-	Error 'no_such_directory' is not a directory
+	Error could not use 'no_such_directory' as a directory
 	1
 
 Cleanup

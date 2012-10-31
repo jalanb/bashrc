@@ -104,8 +104,9 @@ def find_path_to_item(item):
 	Either the directory itself, or directory of the file itself, or nothing
 	"""
 	if item.endswith('/'):
-		path_to_item = path(item.rstrip('/'))
-		return path_to_item
+		if len(item) > 1:
+			item = item.rstrip('/')
+		return path(item)
 	path_to_item = path(item)
 	if path_to_item.isdir():
 		return path_to_item
