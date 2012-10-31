@@ -35,16 +35,6 @@ import sys
 from path import path
 
 
-def find_under_here(prefixes):
-	"""Look for some other directories under current directory
-
-	Try any prefixed sub-directories
-		then any prefixed files
-	"""
-	path_to_here = path(os.getcwd())
-	return find_under_directory(path_to_here, prefixes)
-
-
 def look_under_directory(path_to_directory, prefixes):
 	"""Look under the given path_to_directory for matching sub-directories
 
@@ -79,6 +69,16 @@ def find_under_directory(path_to_directory, prefixes):
 	if len(possibles) == 1:
 		return possibles[0]
 	raise NotImplementedError('Too many possiblities:\n\t%s' % '\n\t'.join(possibles))
+
+
+def find_under_here(prefixes):
+	"""Look for some other directories under current directory
+
+	Try any prefixed sub-directories
+		then any prefixed files
+	"""
+	path_to_here = path(os.getcwd())
+	return find_under_directory(path_to_here, prefixes)
 
 
 def find_in_environment_path(filename):
