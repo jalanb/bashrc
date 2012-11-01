@@ -18,6 +18,9 @@ def colour_text(string, name):
 	number = colour_numbers.name_to_number(name)
 	return ansi_escapes.foreground_string(string, number)
 
+def prompt_text(string, name):
+	number = colour_numbers.name_to_number(name)
+	return ansi_escapes.prompt_string(string, number)
 
 def test():
 	return ansi_escapes.foreground_string('hello', colour_numbers.html_to_integer('0x00FF00'))

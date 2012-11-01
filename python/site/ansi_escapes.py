@@ -17,6 +17,10 @@ def no_colour():
 	return '\033[2m\033[0m'
 
 
+def no_prompt():
+	return '\001\033[2m\033[0m\002'
+
+
 def _colour_16(ground, i):
 	if i > 7:
 		return '\033[1m\033[%d%dm' % (ground, i - 8)
@@ -55,6 +59,10 @@ def background(i):
 	return _small_colour_number(i) and _background_16(i) or _background_256(i)
 
 
+def prompt(i):
+	return '\001%s\002' % foreground(i)
+
+
 def foreground_string(text, i):
 	return '%s%s%s' % (foreground(i), text, no_colour())
 
@@ -67,3 +75,5 @@ def grounds_string(text, background_colour, foreground_colour):
 	return '%s%s%s%s' % (background(background_colour), foreground(foreground_colour), text, no_colour())
 
 
+def prompt_string(text, i):
+	return '%s%s%s' % (prompt(i), text, no_prompt())
