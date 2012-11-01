@@ -504,7 +504,12 @@ svn_diff () {
 	then
 		exe=~/bin/$1
 	fi
-	$exe "$file" .svn/text-base/"$file".svn-base
+	if diff -q "$file" .svn/text-base/"$file".svn-base
+	then
+		echo unchanged
+	else
+		$exe "$file" .svn/text-base/"$file".svn-base
+	fi
 	popd > /dev/null 2>&1
 }
 
