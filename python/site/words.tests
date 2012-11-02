@@ -28,7 +28,7 @@ This module handles some english words
 	Indices
 	>>> print pluralize('lunch')
 	lunches
-	
+
 	>>> print pluralize('bass')
 	basses
 	>>> print pluralize('fax')
@@ -98,3 +98,9 @@ Less milk from only one of these
 But plenty of sailing at the only one of these
 	>>> print depluralize('Cowes')
 	Cowes
+
+	>>> print depluralize('cats')
+	cat
+
+	>>> print depluralize('fish')
+	fish
