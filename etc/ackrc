@@ -2,5 +2,6 @@
 --type-set=pyt=.py,.test,.tests
 --type-set=junk=.log,.swp,.pyc
 --type-set=code=.py,.test,.tests,.html,.js,.ini,.sh,.xml,.sql,.tmpl,.ezt,.wsgi,.cgi
+--type-set=nonsql=.py,.test,.tests,.html,.js,.ini,.sh,.xml,.tmpl,.ezt,.wsgi,.cgi
 --type-set=html=.html,.js
 --ignore-dir=.idea
