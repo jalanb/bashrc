@@ -40,6 +40,18 @@ class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
 	pass
 
+
+def names_in_directory(path_to_directory):
+	"""Get all items in the given directory
+
+	Swallow errors to give an empty list
+	"""
+	try:
+		return os.listdir(path_to_directory)
+	except OSError:
+		return []
+
+
 def make_needed(pattern, path_to_directory, wanted):
 	"""Make a method to check if an item matches the pattern, and is wanted
 
@@ -56,7 +68,7 @@ def contains_glob(path_to_directory, pattern, wanted=None):
 	if not path_to_directory:
 		return False
 	needed = make_needed(pattern, path_to_directory, wanted)
-	for name in os.listdir(path_to_directory):
+	for name in names_in_directory(path_to_directory):
 		if needed(name):
 			return True
 	return False
@@ -67,7 +79,7 @@ def list_items(path_to_directory, pattern, wanted):
 	if not path_to_directory:
 		return []
 	needed = make_needed(pattern, path_to_directory, wanted)
-	return [os.path.join(path_to_directory, name) for name in os.listdir(path_to_directory) if needed(name)]
+	return [os.path.join(path_to_directory, name) for name in names_in_directory(path_to_directory) if needed(name)]
 
 
 def contains_directory(path_to_directory, pattern):
