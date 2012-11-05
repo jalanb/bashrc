@@ -30,12 +30,12 @@ highlight Repeat            ctermfg=88                                     guifg
 highlight Conditional       ctermfg=124                                    guifg=#ff0000                  gui=bold
 highlight Exception         ctermfg=160                                    guifg=#5f0000                  gui=bold
 highlight Structure         ctermfg=196                                    guifg=#5f0000                  gui=bold
-highlight PreProc           ctermfg=94                                     guifg=#ff4444                  gui=bold
+highlight PreProc           ctermfg=130                                    guifg=#ff4444                  gui=bold
 highlight Type              ctermfg=52                                     guifg=#ff4444                  gui=bold
 highlight pythonClassname   ctermfg=56                                     guifg=#0000ff
-highlight pythonFunction    ctermfg=62                                     guifg=#0000ff
+highlight pythonFunction    ctermfg=68                                     guifg=#0000ff
 highlight pythonBuiltinFunc ctermfg=58                                     guifg=#0000ff
-highlight pythonSelf        ctermfg=93                                     guifg=#ff88ff
+highlight pythonSelf        ctermfg=97                                     guifg=#ff88ff
 highlight pythonCall        ctermfg=46                                     guifg=#bbff88
 highlight pythonInstance    ctermfg=48                                     guifg=#bbff88
 highlight pythonMemberCall  ctermfg=28                                     guifg=#bbff44
