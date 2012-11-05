@@ -252,8 +252,10 @@ let g:neocomplcache_enable_at_startup = 1
 if !exists('g:neocomplcache_omni_functions')
 	let g:neocomplcache_omni_functions = {}
 endif
-let g:neocomplcache_omni_functions['python'] = 'jedi#complete' 
-let g:jedi#popup_on_dot = 0
+if exists('jedi#complete')
+	let g:jedi#popup_on_dot = 0
+	let g:neocomplcache_omni_functions['python'] = 'jedi#complete' 
+endif
 set completeopt=menuone,longest,preview
 
 "
