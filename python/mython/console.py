@@ -95,13 +95,22 @@ class Mython(InteractiveConsole):
 
 	def raw_input(self, *args):
 		line = InteractiveConsole.raw_input(self, *args)
+		if not line:
+			return line
 		if line == 'q':
 			sys.exit(0)
 		if line == 'e':
 			text = edit_temporary_text(self.old_source)
 			readline.replace_history_item(readline.get_current_history_length() - 1, text)
 			return text
-		return line
+		if '(' not in line:
+			words = line.split()
+			method, args = words[0], words[1:]
+			line = '%s%s' % (method, tuple(args))
+			return line
+		else:
+			print 'OK'
+			return line
 
 
 def run(symbols):
