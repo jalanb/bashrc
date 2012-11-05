@@ -23,7 +23,7 @@ highlight Number            ctermfg=39
 highlight String            ctermfg=159                                    guifg=#87ffff
 highlight pythonDocTest     ctermfg=27                  
 highlight pythonEscape      ctermfg=21                                     guifg=#0000ff
-highlight Identifier        ctermfg=56                                     guifg=#44ff44
+highlight Identifier        ctermfg=32                                     guifg=#44ff44
 highlight Keyword           ctermfg=196                                    guifg=#ff0000                  gui=bold
 highlight Statement         ctermfg=160                                    guifg=#ff0000                  gui=bold
 highlight Repeat            ctermfg=88                                     guifg=#ff0000                  gui=bold
