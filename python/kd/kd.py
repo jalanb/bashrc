@@ -102,6 +102,22 @@ def list_files(path_to_directory, pattern):
 	return list_items(path_to_directory, pattern, os.path.isfile)
 
 
+def matching_sub_directories(path_to_directory, prefix):
+	"""A list of all sub-directories named with the given prefix
+
+	If the prefix ends with "/" then look for an exact match only
+	Otherwise look for "prefix*"
+		If that gives one exact match, prefer that
+	"""
+	prefix_glob = prefix.endswith('/') and prefix.rstrip('/') or '%s*' % prefix
+	sub_directories = list_sub_directories(path_to_directory, prefix_glob)
+	if len(sub_directories) < 2:
+		return sub_directories
+	exacts = [directory for directory in sub_directories if os.path.basename(directory) == prefix]
+	if exacts:
+		return exacts
+	return sub_directories
+
 def look_under_directory(path_to_directory, prefixes):
 	"""Look under the given directory for matching sub-directories
 
@@ -112,15 +128,11 @@ def look_under_directory(path_to_directory, prefixes):
 	if not prefixes:
 		return [path_to_directory]
 	prefix, prefixes = prefixes[0], prefixes[1:]
-	if prefix.endswith('/'):
-		prefix_glob = prefix.rstrip('/')
-	else:
-		prefix_glob = '%s*' % prefix
 	result = []
-	for path_to_sub_directory in list_sub_directories(path_to_directory, prefix_glob):
+	for path_to_sub_directory in matching_sub_directories(path_to_directory, prefix):
 		paths = look_under_directory(path_to_sub_directory, prefixes)
 		result.extend(paths)
-	if not result and contains_file(path_to_directory, prefix_glob):
+	if not result and contains_file(path_to_directory, '%s*' % prefix):
 		result = [path_to_directory]
 	return result
 
@@ -244,7 +256,7 @@ def parse_command_line():
 
 def test():
 	"""Run all doctests based on this file
-	
+
 	Tell any bash-runners that not to use any output by saying "Error" first
 
 	>>> 'kd' in __file__
@@ -268,7 +280,7 @@ def test():
 
 def show_path_to_item(item, prefixes):
 	"""Get a path for the given item and show it
-	
+
 	>>> show_path_to_item('/', ['us', 'lo'])
 	/usr/local
 	"""
