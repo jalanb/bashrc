@@ -37,7 +37,7 @@ then
 	USER=abrogan
 	if [[ $1 != "local" ]]
 	then
-		if ! ping -c 1 ie-track-1.altobridge.com >/dev/null 2>&1 
+		if ! ping -c 1 -t 1 ie-track-1.altobridge.com >/dev/null 2>&1 
 		then
 			echo Cannot contact ie-track-1.altobridge.com
 		else
