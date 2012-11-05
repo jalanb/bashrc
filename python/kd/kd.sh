@@ -14,7 +14,7 @@ kd ()
 	local python_script=$(dirname $BASH_SOURCE)/kd.py
 	if ! destination=$(python $python_script $* 2>&1)
 	then
-		echo $destination
+		echo "$destination"
 	else
 		if [[ $destination != $1 && $1 != "-" ]]
 		then
