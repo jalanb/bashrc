@@ -28,7 +28,7 @@ def import_some(module, things):
 def do_import(import_line):
 	try:
 		ipython_api_execute(import_line)
-		print >> sys.stdout, 'Pass:', import_line
+		print >> sys.stdout, import_line
 	except ImportError:
 		print >> sys.stderr, 'Fail:', import_line
 
