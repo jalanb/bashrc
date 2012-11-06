@@ -60,7 +60,7 @@ def show_imports(symbols):
 	show_import(symbols, 'environ')
 	show_import(symbols, 'paths')
 	show_import(symbols, 'see', ['see', 'see_methods', 'see_attributes', 'spread'])
-	show_import(symbols, 'see_code', ['highlight_method'])
+	show_import(symbols, 'see_code', ['code', 'highlight'])
 	print
 
 
