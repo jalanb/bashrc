@@ -77,3 +77,9 @@ def highlight(instance):
 	if hasattr(instance, '__file__'):
 		return highlight_module(instance)
 	return highlight_method(instance)
+
+
+def code(instance):
+	if hasattr(instance, '__file__'):
+		return code_of_module(instance)
+	return code_of_method(instance)
