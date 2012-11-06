@@ -43,7 +43,8 @@ def main():
 	config_helper_functions.import_modules('os sys re')
 	config_helper_functions.import_some('path', 'path')
 	config_helper_functions.import_some('paths', 'makepath')
-	config_helper_functions.import_some('see','see code see_methods see_attributes')
+	config_helper_functions.import_some('see','see spread see_methods see_attributes')
+	config_helper_functions.import_some('see_code','code highlight')
 
 	# -- prompt
 	# A different, more compact set of prompts from the default ones, that
