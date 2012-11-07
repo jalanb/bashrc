@@ -3,20 +3,40 @@
 
 import os
 import sys
+import pprint
 import atexit
-import rlcompleter
+import keyword
+import optparse
+import commands
 import readline
+import rlcompleter
 from code import InteractiveConsole
-from pprint import pprint
 
 
 import colours
 
 
-def show_import(symbols, name, fromlist=None):
+def from_string_as_list(from_string):
+	"""Convert as list of from names to a list"""
+	if not from_string:
+		return []
+	assert '_AS_' not in from_string
+	string = from_string.replace(' as ','_AS_')
+	words = string.split()
+	result = []
+	for word in words:
+		if '_AS_' in word:
+			result.append(tuple(word.split('_AS_')))
+		else:
+			result.append(word)
+	return result
+
+
+def show_import(symbols, name, from_string=None):
 	"""import the named module into the given symbols dictionary"""
 	try:
-		module = __import__(name, fromlist=fromlist or [])
+		fromlist = from_string_as_list(from_string)
+		module = __import__(name, fromlist=fromlist)
 		if fromlist:
 			loaded_items = []
 			for name in fromlist:
@@ -28,16 +48,21 @@ def show_import(symbols, name, fromlist=None):
 					loaded_items.append(name)
 				item = getattr(module, name)
 				symbols[alias] = item
-			print 'from', module.__file__, 'import', ', '.join(loaded_items)
+			prefix = 'from %s import ' % module.__file__
+			indent = len(prefix)
+			width = commands.getoutput('tput cols')
+			print indent, width
+			suffix = pprint.pformat(loaded_items, indent=indent, width=width)
+			tell_user('%s\n%s' % (prefix, suffix))
 		else:
 			symbols[name] = module
 			try:
 				out = module.__file__
 			except AttributeError:
 				out = name
-			print 'import', out
+			tell_user('import', out)
 	except ImportError:
-		print 'Failed to import', name
+		tell_user('Failed to import', name)
 
 
 def complete_python():
@@ -55,21 +80,21 @@ def complete_python():
 def show_imports(symbols):
 	print
 	show_import(symbols, 'sys')
-	print 'sys.path:', [p for p in sys.path if not p.startswith('%s/lib' % sys.prefix)]
+	tell_user('sys.path:', [p for p in sys.path if not p.startswith('%s/lib' % sys.prefix)])
 	show_import(symbols, 'os')
 	show_import(symbols, 'environ')
 	show_import(symbols, 'paths')
-	show_import(symbols, 'see', ['see', 'see_methods', 'see_attributes', 'spread'])
-	show_import(symbols, 'see_code', ['code', 'highlight'])
+	show_import(symbols, 'see', 'see see_methods see_attributes spread')
+	show_import(symbols, 'see_code', 'code highlight')
 	print
 
 
 def prettify(symbols):
-	show_import(symbols, 'pprint', [('pprint', 'show')])
+	show_import(symbols, 'pprint', 'pprint as show')
 	show_import(symbols, 'colours')
 	sys.ps1 = colours.prompt_text('>>> ', 'green')
 	sys.ps2 = colours.prompt_text('... ', 'light green')
-	sys.displayhook = pprint
+	sys.displayhook = pprint.pprint
 
 
 def editor():
@@ -85,6 +110,17 @@ def edit_temporary_text(text):
 		os.system(command)
 		with file(temporary_file.name) as text_file:
 			return text_file.read()
+
+
+def verbose():
+	return False
+
+
+def tell_user(*args):
+	if not verbose():
+		return
+	message = ' '.join([str(arg) for arg in args])
+	print colours.colour_text(message, 'gray')
 
 
 class Mython(InteractiveConsole):
@@ -103,14 +139,35 @@ class Mython(InteractiveConsole):
 			text = edit_temporary_text(self.old_source)
 			readline.replace_history_item(readline.get_current_history_length() - 1, text)
 			return text
-		if '(' not in line:
-			words = line.split()
-			method, args = words[0], words[1:]
-			line = '%s%s' % (method, tuple(args))
+		words = line.split()
+		first_word, more_words = words[0], words[1:]
+		if keyword.iskeyword(first_word):
+			tell_user('%r is a keyword' % first_word)
 			return line
+		if first_word in self.locals:
+			if '(' in line:
+				tell_user('Looks like a method call')
+			else:
+				first_thing = self.locals[first_word]
+				if callable(first_thing):
+					line = '%s(%s)' % (first_word, ', '.join(more_words))
+					tell_user('Looks like a method call without brackets')
+					tell_user('change to %r' % line)
+				else:
+					tell_user('%r is not callable' % first_word)
 		else:
-			print 'OK'
-			return line
+			tell_user('%r is unknown' % first_word)
+		tell_user('Run: %r' % line)
+		return line
+
+
+def handle_command_line():
+	parser = optparse.OptionParser()
+	parser.add_option('-v', '--verbose', action='store_true')
+	options, args = parser.parse_args()
+	if options.verbose:
+		global verbose
+		verbose = lambda: True
 
 
 def run(symbols):
@@ -125,6 +182,7 @@ def run(symbols):
 
 
 def main(symbols):
+	handle_command_line()
 	show_imports(symbols)
 	complete_python()
 	prettify(symbols)
