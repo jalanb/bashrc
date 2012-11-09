@@ -249,6 +249,7 @@ filetype indent on
 "
 "let g:neocomplcache_enable_auto_select = 0 " do not select first candidate automatically
 let g:neocomplcache_enable_at_startup = 1
+inoremap <silent> <CR> <CR><c-o>:pclose<CR>
 if !exists('g:neocomplcache_omni_functions')
 	let g:neocomplcache_omni_functions = {}
 endif
