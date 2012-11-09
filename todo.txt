@@ -1,11 +1,14 @@
 Python 2.7 everywhere, 1
 
 Work
-	issue 17290: Shenzen repository, 1
+	issue 17525: remove uninstall files, 1
+		debug down - what happens to a project with no install files, 1
+	issue 17290: Shenzen repository, 2
 	issue 12648: Test all the code, 2
 		issue 17806: Test on local machine, 3
 		issue 12056: Move trackers to own repo, 4
-	issue 12973: Separate Product and Project lists on tracker, 5
+	issue 12973: Separate Product and Project lists on tracker, 3
+		test on ie-build-2, 5
 Self
 	mial: answer in vim, 1
 	$JAB: move to github, 3
