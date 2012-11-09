@@ -297,7 +297,10 @@ def handle_command_line():
 	"""Find options and arguments on the command line"""
 	parser = OptionParser()
 	parser.add_option('-r', '--recursive', action='store_true', dest='recursive', help='Look in sub-directories')
-	return parser.parse_args()
+	options, args = parser.parse_args()
+	if not args:
+		args = [os.path.dirname(__file__)]
+	return options, args
 
 
 def main():
