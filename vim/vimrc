@@ -144,8 +144,8 @@ noremap tl       :tabnext<cr>
 noremap <S-Tab>  :SeeTab<cr>
 noremap <Up> 	 ddkP
 noremap <Down>	 ddp
-noremap <Left>	 <<
-noremap <Right>	 >>
+noremap <left>      :tabprev<cr>
+noremap <right>     :tabnext<cr>
 "
 " control keys
 "
@@ -207,6 +207,8 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>[ :cp<cr>
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
  noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
+ noremap <leader><Left>		<<
+ noremap <leader><Right>	>>
 "
 " Kinda keys
 "
@@ -272,7 +274,7 @@ function ChangeBuffer ()
 		noremap <buffer> ] ]czz
 		noremap <buffer> [ [czz
 		syntax off
-		set diffopt=filler,iwhite
+		set diffopt=filler  ",iwhite
 		function! DiffNoSpace()
 			set diffopt=filler,iwhite
 		endfunction

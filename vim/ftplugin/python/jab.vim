@@ -12,8 +12,6 @@ noremap tm :Mash<cr>
 noremap tt :MashTry<cr>
 noremap tn :Try<cr>
 noremap tp :Pylint<cr>
-noremap <left>      :tabprev<cr>
-noremap <right>     :tabnext<cr>
 noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
 
