@@ -1,0 +1,8 @@
+#! /bin/bash
+
+test -f /usr/local/trunk/trackers/ie-track-1/bin/add_to_a_path.sh && source /usr/local/trunk/trackers/ie-track-1/bin/add_to_a_path.sh
+add_to_a_path PYTHONPATH $JAB/python/site
+ranger=$(which ranger)
+echo -n "[?47h"
+python2.7 $ranger $*
+echo -n "[?47l"

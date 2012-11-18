@@ -95,6 +95,7 @@ alias pp="p $JAB/python/mython/pp.py"
 alias pt="p $JAB/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
+alias rr="$JAB/bin/range"
 alias rq="rm -rf "
 alias ry="rf pycos"
 
