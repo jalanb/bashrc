@@ -50,7 +50,7 @@ case "$extension" in
 		transmission-show "$path" | head -n $maxln && exit 3
 		success && exit 5 || exit 1;;
 	# Code
-	py|sh|c|cpp|js|java|sh|html)
+	py|sh|c|cpp|js|java|sh|html|xml)
 		if have pygmentize
 		then
 			if [[ -f $(dirname $BASH_SOURCE)/chop.py ]]

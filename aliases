@@ -95,7 +95,7 @@ alias pp="p $JAB/python/mython/pp.py"
 alias pt="p $JAB/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
-alias rr="$JAB/bin/range"
+alias rr="$JAB/python/ranger/bin/range"
 alias rq="rm -rf "
 alias ry="rf pycos"
 
@@ -168,6 +168,7 @@ alias out="to_release"
 alias ps3="ps axf | vim - +"
 
 alias rq.="/bin/rm -rf ./*"
+alias rrs="sudo $JAB/python/ranger/bin/range"
 alias rff="r fred* *.tmp"
 
 alias sib=". ~/.bashrc"
