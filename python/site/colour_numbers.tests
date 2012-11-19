@@ -118,4 +118,7 @@ So now we can test that (with the exception of such pure colours)
 	...      print True
 	True
 
-
+	>>> colour_numbers.small_ansi_to_html(0x0A) == '#00FF00'
+	True
+	>>> colour_numbers.small_ansi_to_html(0x10) is None
+	True

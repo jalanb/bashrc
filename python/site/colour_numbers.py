@@ -137,7 +137,7 @@ def ansi_to_html(ansi):
 		return small_ansi_to_html(ansi)
 	i = ansi_to_integer(ansi)
 	return integer_to_html(i)
-	
+
 
 def name_to_number(name):
 	cga_names = dict([(string, i) for i, string in enumerate(colour_names.cga())])
