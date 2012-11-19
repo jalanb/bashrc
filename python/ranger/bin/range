@@ -1,13 +1,17 @@
 #! /bin/bash
 
-set -x
+# set -x
 
 test -f /usr/local/trunk/trackers/ie-track-1/bin/add_to_a_path.sh && source /usr/local/trunk/trackers/ie-track-1/bin/add_to_a_path.sh
 add_to_a_path PYTHONPATH $JAB/python/site
 if [[ -f /usr/local/bin/ranger ]]
 then ranger=/usr/local/bin/ranger
-else ranger=$(which ranger)
+else ranger=$(which ranger 2> /dev/null)
 fi
-#echo -n "[?47h"
-/usr/local/bin/python2.7 $ranger $*
-#echo -n "[?47l"
+if [[ -z $ranger ]]
+then echo Cannot find ranger
+else
+	echo -n "[?47h"
+	/usr/local/bin/python2.7 $ranger $*
+	echo -n "[?47l"
+fi
