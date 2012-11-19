@@ -83,6 +83,9 @@ Can convert from integer to hex string (html) and back again for any number
 	>>> all([colour_numbers.html_to_integer(colour_numbers.integer_to_html(i)) == i for i in range(0x000000,0xFFFFFF,step)])
 	True
 
+	>>> colour_numbers.html_to_integer('not a colour code') == ''
+	True
+
 convert ansi to html and back
 -----------------------------
 
