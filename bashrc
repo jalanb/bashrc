@@ -44,11 +44,11 @@ clean_jab()
 
 show_todo ()
 {
-	cd $JAB/python
+	builtin cd $JAB/python
 	if which python2.7 -c"a=0" >/dev/null 2>&1
 	then test -f todo.py && python2.7 todo.py
 	fi
-	cd - >/dev/null 2>&1
+	builtin cd - >/dev/null 2>&1
 }
 
 welcome_home ()
@@ -66,7 +66,7 @@ jab_bashrc()
 	then
 		echo i am lost because $JAB is not a directory >&2
 	else
-		cd $JAB
+		builtin cd $JAB
 		source_jab
 		clean_jab
 		[[ $USER == "builder" ]] || welcome_home
@@ -75,4 +75,4 @@ jab_bashrc()
 }
 
 [[ $- == *i* ]] && jab_bashrc
-cd
+builtin cd

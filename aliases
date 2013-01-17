@@ -100,7 +100,7 @@ alias rq="rm -rf "
 alias ry="rf pycos"
 
 alias sa="source $JAB/aliases"
-alias sb="cd $JAB && source bashrc && -"
+alias sb="c $JAB && source bashrc && -"
 alias sc="svn ci -m"
 alias sd="sdiff "
 alias se="source $JAB/environ"
