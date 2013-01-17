@@ -485,7 +485,7 @@ svn_url ()
 # xxxxxxxx
 
 svn_diff () {
-	dir=`dirname $2`
+	dir=`/usr/bin/dirname $2`
 	file=`basename $2`
 	pushd "$dir" > /dev/null 2>&1
 	if [[ "$1" == "vimdiff -o" ]]

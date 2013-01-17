@@ -86,12 +86,17 @@ do
 	if [[ -e $file ]]
 	then
 		file_exists=1
+	else
+		path_file=$(which $file 2> /dev/null)
+		if [[ -f $path_file ]]
+		then file_exists=2
+		fi
 	fi
-	cd `dirname $file`
+	cd `/usr/bin/dirname $file`
 	base=`basename $file`
 	export swap_file=`$editor -r 2>&1 | grep ^[0-9] | sed -e s/[0-9]\.\ *// -e s/.\$// | grep "\<$base\>"`
 	cd - > /dev/null 2>&1
-	swap_file=`dirname $file`/$swap_file
+	swap_file=`/usr/bin/dirname $file`/$swap_file
 	if [[ -f "$swap_file" ]]
 	then
 		echo
@@ -170,15 +175,24 @@ else
 		if [[ $file_exists == "0" ]]
 		then 
 			$editor $args
-			post_vimming $args
+		elif [[ $file_exists == "2" ]]
+		then
+			prompt_path="$path_file"
 		else
-			read -p"$editor $args ? " reply
+			prompt_path="$args"
+		fi
+		if [[ $file_exists != 0 ]]
+		then
+			read -p"$editor $prompt_path ? " reply
 			if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
 			then
+				$editor $prompt_path
+			elif [[ $file_exists == "2" ]]
+			then
 				$editor $args
-				post_vimming $args
 			fi
 		fi
+		post_vimming $args
 	fi
 fi
 exit 0
