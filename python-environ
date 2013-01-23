@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 add_to_a_path PYTHONPATH $JAB/python/site
 

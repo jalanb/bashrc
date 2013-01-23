@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 export PROMPT_COLOUR=none
 if [ "$1" == "green" ]
