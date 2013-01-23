@@ -1,6 +1,9 @@
 Python 2.7 everywhere, 1
 
 Replify
+	get data from aborgan-dev to abrogan-run, 1
+		get data from abrogan-dev to test-ggw, 2
+	run through Kevin's other changes, 2
 	check why AM Charts removed, 3
 
 SCM
