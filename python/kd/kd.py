@@ -257,7 +257,7 @@ def parse_command_line():
 def test():
 	"""Run all doctests based on this file
 
-	Tell any bash-runners that not to use any output by saying "Error" first
+	Tell any bash-runners not to use any output by saying "Error" first
 
 	>>> 'kd' in __file__
 	True
