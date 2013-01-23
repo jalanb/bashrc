@@ -17,7 +17,7 @@ highlight Normal            ctermfg=White    ctermbg=Black                 guifg
 highlight Error                             ctermbg=Red                                  guibg=#ff0000
 highlight Todo              ctermfg=Black    ctermbg=Green                 guifg=#000080  guibg=#c0c000
 highlight Search            ctermfg=196      ctermbg=52                    guifg=#ff0000  guibg=#402020
-highlight Comment           ctermfg=241      ctermbg=233                   guifg=#808080
+highlight Comment           ctermfg=241      ctermbg=232                   guifg=#808080
 highlight pythonBoolean     ctermfg=33                                     guifg=#0087ff
 highlight Number            ctermfg=39
 highlight String            ctermfg=159                                    guifg=#87ffff
@@ -43,8 +43,8 @@ highlight pythonMember      ctermfg=171                                    guifg
 highlight pythonObject      ctermfg=91                                     guifg=#8800ff
 highlight pythonVariable    ctermfg=90                                     guifg=#8800ff
 highlight Special           ctermfg=226                                    guifg=#ff4444                  gui=bold
-highlight Constant          ctermfg=Cyan     ctermbg=121                   guifg=#0066FF
-highlight Directory         ctermfg=DarkGreen ctermbg=240                  guifg=#008800
+highlight Constant          ctermfg=Cyan     ctermbg=234                   guifg=#0066FF
+highlight Directory         ctermfg=DarkGreen ctermbg=233                  guifg=#008800
 
 
 highlight Folded         ctermfg=White    ctermbg=Black                    guifg=#ffffff  guibg=Black
