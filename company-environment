@@ -22,6 +22,11 @@ unset PYTHONPATH
 
 if [[ -n $TRACKERS ]]
 then
+	if [[ -d $TRACKERS ]]
+	then echo Found a trackers checkout at $TRACKERS
+	else echo \$TRACKERS is not a directory: $TRACKERS
+	fi
+	export TRACKERS
 	source $TRACKERS/python/source_python_path
 	source $TRACKERS/ie-track-1/etc/tracker_environ
 	source $TRACKERS/ie-track-1/etc/tracker_functions
@@ -37,7 +42,7 @@ then
 	USER=abrogan
 	if [[ $1 != "local" ]]
 	then
-		if ! ping -c 1 -t 1 ie-track-1.altobridge.com >/dev/null 2>&1 
+		if ! ping -c 1 -t 3 ie-track-1.altobridge.com >/dev/null 2>&1 
 		then
 			echo Cannot contact ie-track-1.altobridge.com
 		else
