@@ -1,15 +1,17 @@
 Python 2.7 everywhere, 1
 
-Work
-	issue 17525: remove uninstall files, 1
-		debug down - what happens to a project with no install files, 1
-	issue 17290: Shenzen repository, 2
-	issue 12648: Test all the code, 2
-		issue 17806: Test on local machine, 3
-		issue 12056: Move trackers to own repo, 4
-	issue 12973: Separate Product and Project lists on tracker, 3
+Replify
+	check why AM Charts removed, 3
+
+SCM
+	issue 12648: Test all the code, 4
+		issue 17806: Test on local machine, 4
+		issue 12056: Move trackers to own repo, 5
+	issue 12973: Separate Product and Project lists on tracker, 4
 		test on ie-build-2, 5
+
 Self
-	mial: answer in vim, 1
+	pym: try more unparsers, 1
+	mial: answer in vim, 2
 	$JAB: move to github, 3
 	Python 3.3 somewhere, 4
