@@ -1,5 +1,7 @@
 #! /bin/bash
 
+echo Welcome to $HOME/.jab/bashrc
+
 source_file ()
 {
 	local path_to_file=$1
