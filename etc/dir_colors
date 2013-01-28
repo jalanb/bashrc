@@ -10,7 +10,11 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 # Code I want to write - RED
 .bash_logout  00;31
 .bashrc       00;31
+.c            00;31
+.cpp          00;31
 .erl          00;31
+.h            00;31
+.hrl          00;31
 .js           00;31
 .py           00;31
 .sh           00;31
@@ -31,9 +35,12 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .css          00;35
 .html         00;35
 .ini          00;35
+.in           00;35
+.spec         00;35
 .test         00;35
 .tests        00;35
 .xml          00;35
+*Makefile     00;35
 
 
 # Other files found near code - LIGHT MAGENTA
@@ -62,6 +69,8 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .eml          00;33
 .log          00;33
 .txt          00;33
+*README*      00;33
+*readme*      00;33
 .text         00;33
 
 # Data - CYAN
