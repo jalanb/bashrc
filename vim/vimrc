@@ -118,7 +118,7 @@ nnoremap <C-F4> <C-W>c
 nnoremap K <PageUp>zz
 "noremap L - To Line <n> from bottom of window
 "noremap M - To Middle of window
- noremap N :noh<cr>
+ noremap N :cn<cr>zzzv
 "noremap O - Open line above
 "noremap P - paste forward
  noremap Q :qa!<CR>
@@ -203,8 +203,8 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>y
 "noremap <leader>z
 
- noremap <leader>] :cn<cr>
- noremap <leader>[ :cp<cr>
+ noremap <leader>] :cn<cr>zzzv
+ noremap <leader>[ :cp<cr>zzzv
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
  noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
  noremap <leader><Left>		<<
