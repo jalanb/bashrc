@@ -1,4 +1,3 @@
-
 # Text color codes:
 # 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
 # Background color codes:
@@ -8,10 +7,7 @@
 STICKY_OTHER_WRITABLE 01;36 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
-# Data         01;33
-# Other Data   00;33
-
-# Code I want to write
+# Code I want to write - RED
 .bash_logout  00;31
 .bashrc       00;31
 .erl          00;31
@@ -21,17 +17,17 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .sql          00;31
 
 
-# Code that's lying around, but came from someone else
-.beam         01;31
+# Code that's lying around, but came from someone else - LIGHT RED
 .cgi          01;31
 .fcgi         01;31
-.pyc          01;31
 .wsgi         01;31
 
 
-# Support for code - configurations, outputs, tests, ...
+# Support for code - configurations, outputs, tests, ... - MAGENTA
 .app          00;35
+.cfg          00;35
 .conf         00;35
+.config       00;35
 .css          00;35
 .html         00;35
 .ini          00;35
@@ -40,36 +36,63 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .xml          00;35
 
 
-# Other files found near code
+# Other files found near code - LIGHT MAGENTA
+.beam         01;35
 .ezt          01;35
 .fail         01;35
 .htaccess     01;35
+.o            01;35
+.pyc          01;35
 .swf          01;35
 .tmpl         01;35
 .xsl          01;35
+.so           01;35
 
-# Data
-.bmp          00;33
+
+# Containers - BLUE (directories are LIGHT BLUE)
+.deb          00;34
+.rpm          00;34
+.tar          00;34
+.tgz          00;34
+.zip          00;34
+
+
+# Text - Yellow
 .csv          00;33
 .eml          00;33
-.gif          00;33
-.ico          00;33
-.jpg          00;33
-.list         00;33
 .log          00;33
-.mbr          00;33
-.png          00;33
-.tar          00;33
-.tgz          00;33
 .txt          00;33
 .text         00;33
-.xls          00;33
-.zip          00;33
+
+# Data - CYAN
+.bmp          00;36
+.dat          00;36
+.data         00;36
+.gif          00;36
+.ico          00;36
+.jpg          00;36
+.list         00;36
+.mbr          00;36
+.png          00;36
+.xls          00;36
+
+
+# Something else - YELLOW
+.else         00;33
+
 
 # Data I rarely use directly
-.original     01;33
-.pem          01;33
-.sf           00;33
+.original     01;36
+.pem          01;36
+.sf           01;36
 
-# Other
-.dist         00;37
+
+# Fred - GRAY
+.fred         00;37
+.one          00;37
+.two          00;37
+.tmp          00;37
+
+
+# Other - WHITE
+.dist         01;37
