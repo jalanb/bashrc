@@ -43,8 +43,12 @@ export XAUTHORITY=$HOME/.Xauthority
 if [[ -f /usr/local/bin/gls ]]
 then
 	LS_PROGRAM=/usr/local/bin/gls
+	DIRCOLORS=/usr/local/bin/gdircolors
 else
 	LS_PROGRAM=/bin/ls
+	if [[ -f /usr/bin/dircolors ]]
+	then DIRCOLORS=/usr/bin/dircolors
+	fi
 fi
 
 if $LS_PROGRAM -@ >/dev/null 2>&1 
@@ -62,7 +66,7 @@ then
 else
 	export LS_DIRS_OPTION=
 fi
-eval $(dircolors ~/.dir_colors)
+[[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors)
 
 add_to_a_path PATH /bin
 add_to_a_path PATH /usr/bin
