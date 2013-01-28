@@ -62,6 +62,7 @@ then
 else
 	export LS_DIRS_OPTION=
 fi
+eval $(dircolors ~/.dir_colors)
 
 add_to_a_path PATH /bin
 add_to_a_path PATH /usr/bin
