@@ -14,6 +14,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 # Code I want to write
 .bash_logout  00;31
 .bashrc       00;31
+.erl          00;31
 .js           00;31
 .py           00;31
 .sh           00;31
@@ -21,6 +22,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
 
 # Code that's lying around, but came from someone else
+.beam         01;31
 .cgi          01;31
 .fcgi         01;31
 .pyc          01;31
@@ -28,6 +30,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
 
 # Support for code - configurations, outputs, tests, ...
+.app          00;35
 .conf         00;35
 .css          00;35
 .html         00;35
@@ -35,6 +38,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .test         00;35
 .tests        00;35
 .xml          00;35
+
 
 # Other files found near code
 .ezt          01;35
@@ -55,7 +59,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .log          00;33
 .mbr          00;33
 .png          00;33
-.tab          00;33
+.tar          00;33
 .tgz          00;33
 .txt          00;33
 .text         00;33
