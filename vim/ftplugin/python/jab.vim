@@ -212,6 +212,10 @@ endif
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
+ 
+" From http://www.vex.net/~x/python_and_vim.html
+  " Remove trailing space when writing the file
+  autocmd BufWritePre * normal m`:%s/\s\+$//e ``
 
 if !exists("PPP")
 	function WritePEP()
