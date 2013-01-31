@@ -68,10 +68,10 @@ alias aw="ack -w"
 
 alias cy="c \$PYTHON_HOME"
 
-alias eg="env | grep "
+alias eg="env | g "
 
 alias gc="git commit -m"
-alias gh="history | grep "
+alias gh="history | g "
 
 alias hh="history -n"
 
