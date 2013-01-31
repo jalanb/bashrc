@@ -8,7 +8,7 @@
 #	It checks for existence of a swap file for the file you want to edit
 # 		It offers to recover the file before editting
 #	 It expands file names
-#		anything ending with a "." will have "py" or "cpp" added if the file exists
+#		anything ending with a "." will have "py", "cpp" or "erl" added if the file exists
 
 test -f debugging && set -x
 
@@ -50,15 +50,16 @@ do
 		args="$args $arg"
 	elif [[ ! -f ${arg} && ${arg%%.} != $arg ]]
 	then
-		if [[ -f ${arg}py ]]
-		then
-			args="$args ${arg}py"
-		elif [[ -f ${arg}cpp ]]
-		then
-			args="$args ${arg}cpp"
-		else
-			args="$args $arg"
-		fi
+		for ext in py cpp erl
+		do 
+			extended=${arg}${ext}
+			if [[ -f $extended ]]
+			then
+				arg=$extended
+				break
+			fi
+		done
+		args="$args $arg"
 	else
 		if [[ `basename $arg` == "try.py" ]]
 		then
