@@ -75,6 +75,8 @@ alias gh="history | g "
 
 alias hh="history -n"
 
+alias IP="ifconfig -a | pyp \"rekeep('[0-9]{1,3}\.') | p.replace(p.re('[^0-9]+'),'') | p.replace(p.re(' .*'),'')\""
+
 alias jj="c $JAB"
 
 alias kp="rsync -av"
