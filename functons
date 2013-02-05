@@ -170,6 +170,19 @@ aiw ()
 }
 
 
+cff ()
+{
+	if [[ ! -d fred ]]
+	then
+		if [[ -e fred ]]
+		then rm -f fred
+		fi
+		mkdir fred
+	fi
+	cd fred
+}
+
+
 cls ()
 {
 # clean, clear, ls
