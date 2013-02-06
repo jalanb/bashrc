@@ -196,6 +196,29 @@ cls ()
 	ls $*
 }
 
+dev ()
+{
+	if [[ -d ~/dev ]]
+	then
+		echo ~/dev exists
+		echo 
+		here=$PWD
+		cd ~/dev
+		ls
+		cd $here
+		echo You may wish to try
+		if [[ -d ~/src ]]
+		then
+			echo mv ~/dev/* ~/src
+		else
+			echo mv ~/dev ~/src
+		fi
+	fi
+	[[ ! -d ~/src ]] && mkdir ~/src
+	c ~/src
+	ls
+}
+
 fsh ()
 {
 # run fred by his extension
