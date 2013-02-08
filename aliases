@@ -75,7 +75,7 @@ alias gh="history | g "
 
 alias hh="history -n"
 
-alias IP="ifconfig -a | pyp \"rekeep('([0-9]{1,3}\\.){3}([0-9]{1,3})') | p.replace(p.re('[^0-9]+'),'') | p.replace(p.re(' .*'),'')\""
+alias IP="python -c 'import socket; print socket.gethostbyname(socket.getfqdn())'"
 
 alias jj="c $JAB"
 
