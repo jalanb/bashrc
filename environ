@@ -84,6 +84,7 @@ export PS1
 # Path dependencies
 #
 
+export JAB_HOME=$HOME
 if [ -d /usr/local/abrogan/jabs ]
 then
 	export JABS=file:///usr/local/abrogan/jabs
