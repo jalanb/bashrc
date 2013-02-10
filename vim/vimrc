@@ -244,22 +244,6 @@ filetype indent on
 "
 " Auto-completion plugins
 "
-" Currently using 
-" 	https://github.com/davidhalter/jedi-vim
-" and
-" 	https://github.com/Shougo/neocomplcache
-"
-"let g:neocomplcache_enable_auto_select = 0 " do not select first candidate automatically
-let g:neocomplcache_enable_at_startup = 0
-inoremap <silent> <CR> <CR><c-o>:pclose<CR>
-if !exists('g:neocomplcache_omni_functions')
-	let g:neocomplcache_omni_functions = {}
-endif
-if exists('jedi#complete')
-	let g:jedi#popup_on_dot = 0
-	let g:neocomplcache_omni_functions['python'] = 'jedi#complete' 
-endif
-set completeopt=menuone,longest,preview
 
 "
 " vimdiff, aka vim -d
