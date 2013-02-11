@@ -46,7 +46,6 @@ set match-hidden-files on
 
 Control-g: " | grep --color "
 Control-v: " | vim - "
-Control-s: " | sed -e "
 
 #
 # Function keys
