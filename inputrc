@@ -45,7 +45,6 @@ set match-hidden-files on
 # 	generally - pipe into the "expected command for that letter"
 
 Control-g: " | grep --color "
-Control-v: " | vim - "
 
 #
 # Function keys
