@@ -321,14 +321,28 @@ SSH ()
 {
 	local you=$1
 	shift
-	local there=$1
+	local there_name=$1
+	local here_name=$(python -c "import socket; print socket.getfqdn()")
+	local here_ip=$(python -c "import socket; print socket.gethostbyname('$here_name')")
+	local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
+	if [[ $here_ip == $there_ip ]]
+	then
+		if [[ $you == $(whoami) ]]
+		then
+			echo "Here I am: $you@$there_name ($there_ip)" 2>&1
+		else
+			echo "Here is: $there_name ($there_ip)" >&2
+			echo "	Perhaps you meant to use su?" >&2
+		fi
+		return
+	fi
 	shift
 	local options=$*
-	local there_small=${there/.altobridge.com/}
+	local there_small=${there_name/.altobridge.com/}
 	local me=$USER
 	local here=`hostname -s`
 	console_title_on "${you}@${there_small}" && \
-		ssh $options $you@$there && \
+		ssh $options $you@$there_name && \
 		console_title_off "${me}@${here}"
 }
 
