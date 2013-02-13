@@ -215,7 +215,7 @@ dev ()
 		fi
 	fi
 	[[ ! -d ~/src ]] && mkdir ~/src
-	c ~/src
+	c ~/src $*
 	ls
 }
 
