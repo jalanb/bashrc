@@ -207,12 +207,7 @@ dev ()
 		ls
 		cd $here
 		echo You may wish to try
-		if [[ -d ~/src ]]
-		then
-			echo mv ~/dev/* ~/src
-		else
-			echo mv ~/dev ~/src
-		fi
+		echo "	mv ~/dev/* ~/src"
 	fi
 	[[ ! -d ~/src ]] && mkdir ~/src
 	c ~/src $*
