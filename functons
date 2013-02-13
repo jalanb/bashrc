@@ -322,6 +322,9 @@ SSH ()
 	local you=$1
 	shift
 	local there_name=$1
+	shift
+	local options=$*
+
 	local here_name=$(python -c "import socket; print socket.getfqdn()")
 	local here_ip=$(python -c "import socket; print socket.gethostbyname('$here_name')")
 	local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
@@ -336,8 +339,6 @@ SSH ()
 		fi
 		return
 	fi
-	shift
-	local options=$*
 	local there_small=${there_name/.altobridge.com/}
 	local me=$USER
 	local here=`hostname -s`
