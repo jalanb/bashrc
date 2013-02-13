@@ -255,6 +255,22 @@ fpy ()
 
 . $JAB/bin/first_dir
 
+jjj ()
+{
+# ssh back to the jab.ook (which is my laptop
+# it goes by different hostnames, try in order of probablity
+	local jjj_host=
+	if ping -c 1 -t 1 jab.ook >/dev/null 2>&1
+	then
+		jjj_host=jab.ook
+	elif ping -c 1 -t 1 dhcp92 >/dev/null 2>&1
+	then
+		jjj_host=dhcp92
+	fi
+	SSJ jab $jjj_host
+}
+
+
 llt ()
 {
 	first_dir $*
@@ -296,15 +312,23 @@ try ()
 	python $TRY $*
 }
 
+SSJ ()
+{
+	SSH $* -i $JAB_KEY
+}
+
 SSH ()
 {
-	you=$1
-	there=$2
-	there_small=${there/.altobridge.com/}
-	me=$USER
-	here=`hostname -s`
+	local you=$1
+	shift
+	local there=$1
+	shift
+	local options=$*
+	local there_small=${there/.altobridge.com/}
+	local me=$USER
+	local here=`hostname -s`
 	console_title_on "${you}@${there_small}" && \
-		ssh $you@$there && \
+		ssh $options $you@$there && \
 		console_title_off "${me}@${here}"
 }
 

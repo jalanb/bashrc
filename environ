@@ -2,6 +2,7 @@
 
 export JAB=$HOME/.jab
 export JAB_TODO=$JAB/todo.txt
+export JAB_KEY=$JAB/ssh/id_jab
 
 export COLUMNS
 
