@@ -81,7 +81,7 @@ alias jj="c $JAB"
 
 alias kp="rsync -av"
 
-alias l1="ls -1 "
+alias l1="ls -1tr "
 alias la="ls -a "
 alias lj="ls $JAB"
 alias ll="ls -lh "
