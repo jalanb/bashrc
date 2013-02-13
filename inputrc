@@ -41,6 +41,7 @@ set match-hidden-files on
 # Left arrow
 # "\e[D":menu-complete-backward
 
+$if Bash
 # Bind some keys to useful macros
 # 	generally - pipe into the "expected command for that letter"
 
@@ -50,3 +51,5 @@ Control-g: " | grep --color "
 # Function keys
 #
 "\e[24~": "!$"
+
+$endif
