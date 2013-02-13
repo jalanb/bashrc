@@ -290,7 +290,7 @@ def show_path_to_item(item, prefixes):
 
 
 def main():
-	"""Show a directory from the command line arguments (or some derivative"""
+	"""Show a directory from the command line arguments (or some derivative)"""
 	try:
 		options, item, prefixes = parse_command_line()
 		if not options:
