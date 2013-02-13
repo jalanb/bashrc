@@ -1,24 +1,29 @@
+"""Basic functionality for the various ls scripts"""
+
 import os
-import sys
 import path
+
 
 import argv
 from glob_path import glob_path, any_fnmatch
 
+
 argv.add_options([
-	('ignore','Do not ignore files (that subversion ignores)', True),
+	('ignore', 'Do not ignore files (that subversion ignores)', True),
 ])
 
-def common_start(a,b):
-	for i, j in enumerate(zip(a,b)):
+
+def common_start(a, b):
+	for i, j in enumerate(zip(a, b)):
 		c, d = j
 		if c != d:
 			return i
-	return min(len(a),len(b))
+	return min(len(a), len(b))
 
-def common_start_dirs(a,b):
+
+def common_start_dirs(a, b):
 	last_slash = 0
-	for i, j in enumerate(zip(a,b)):
+	for i, j in enumerate(zip(a, b)):
 		c, d = j
 		if c == '/':
 			last_slash = i
@@ -28,57 +33,64 @@ def common_start_dirs(a,b):
 			return 0
 	return None
 
+
 def get_subversion_ignores():
 	home = path.path(os.path.expanduser('~'))
 	svn_config = home / '.subversion/config'
 	if not svn_config.isfile():
 		raise ValueError('%s is not a file' % svn_config)
+	try:
+		return  [l for l in svn_config.lines() if l.startswith('global-ignores')][0].split()
+	except IndexError:
 		return []
-	try: return  [ l for l in svn_config.lines() if l.startswith('global-ignores') ][0].split()
-	except IndexError: return []
+
 
 def default_ignores():
 	ignores = set(get_subversion_ignores())
-	ignores.update( [ '*~', '.*.sw[lmnop]' ] )
-	return list( ignores )
+	ignores.update(['*~', '.*.sw[lmnop]'])
+	return list(ignores)
 
-def all_ignores(ignores=None,extra_ignores=None):
+
+def all_ignores(ignores=None, extra_ignores=None):
 	if not ignores:
 		ignores = default_ignores()
 	if extra_ignores:
 		ignores.extend(extra_ignores)
 	return ignores
-	
-def remove_ignored(files,ignores=None,extra_ignores=None):
-	result = []
+
+def remove_ignored(files, ignores=None, extra_ignores=None):
 	if not argv.options.ignore:
 		return files
-	globs = all_ignores(ignores,extra_ignores)
-	return [ f for f in files if not any_fnmatch(f,globs) ]
+	globs = all_ignores(ignores, extra_ignores)
+	return [f for f in files if not any_fnmatch(f, globs)]
 
-def add_dir(dirs,d):
-	if d in dirs: return
-	if d == '': d = path.path('.')
+
+def add_dir(dirs, d):
+	if d in dirs:
+		return
+	if d == '':
+		d = path.path('.')
 	if d not in dirs:
 		dirs.append(d)
 
+
 def get_dirs(args=None):
 	if not args:
-		dirs = [ path.path('.') ]
+		dirs = [path.path('.')]
 	else:
-		arg_paths = [ path.path(a) for a in as_paths(args) ]
+		arg_paths = [path.path(a) for a in as_paths(args)]
 		dirs = []
 		for p in arg_paths:
 			if p.isdir():
-				add_dir(dirs,p)
+				add_dir(dirs, p)
 			elif p.isfile():
 				add_dir(dirs, p.parent)
 			else:
 				gp = glob_path(p)
 				if gp.exists():
-					add_dir(dirs,gp)
+					add_dir(dirs, gp)
 		if not dirs:
-			if hasattr(args,'startswith') or len(args) == 1:
+			if hasattr(args, 'startswith') or len(args) == 1:
 				raise ValueError('No such directory: %s' % args[0])
 			else:
 				raise ValueError('No such directories: %s' % ', '.join(args))
@@ -89,23 +101,25 @@ def as_paths(thing=None):
 
 	Will always return a list, which might be empty
 	'''
-	if thing is None: return []
+	if thing is None:
+		return []
 	try:
 		thing.relpathto('.')
-		return [ thing ]
+		return [thing]
 	except AttributeError:
 		try:
-			try:
-				thing.parent
+			if hasattr(thing, 'parent'):
 				p = thing
-			except AttributeError:
-				thing.startswith('')
-				p = path.path(thing)
+			else:
+				if hasattr(thing, 'startswith'):
+					p = path.path(thing)
+				else:
+					raise AttributeError('thing has bad attributes')
 			for c in '~$':
 				if c in str(thing):
 					p = p.expand()
 					break
-			return [ p ]
+			return [p]
 		except AttributeError:
 			things = thing
 			result = []
@@ -118,13 +132,14 @@ def as_paths(thing=None):
 				raise NotImplementedError('Cannot convert %r to a path' % thing)
 			return result
 	raise NotImplementedError('Forgot a case: %s' % thing)
-				
+
+
 def get_files(dirs):
 	dirs = as_paths(dirs)
 	files = []
 	here = path.path('.')
 	for d in dirs:
-		files.extend([ here.relpathto(f) for f in d.files()])
+		files.extend([here.relpathto(f) for f in d.files()])
 	return files
 
 def get_names(files):
@@ -133,8 +148,10 @@ def get_names(files):
 	names = {}
 	for f in files:
 		name = f.namebase
-		got = names.get(name,[])
+		got = names.get(name, [])
 		got.append(f)
-		try: names[name] = sorted( got )
-		except Exception, e: raise ', '.join([ str(got), str(names), name, f ])
+		try:
+			names[name] = sorted(got)
+		except Exception:
+			raise ', '.join([str(got), str(names), name, f])
 	return names

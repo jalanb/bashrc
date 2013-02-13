@@ -1,10 +1,17 @@
-l
-=
+The l module
+============
 
 	>>> import l
-	>>> from path import cd, pwd, path
-	>>> cd(l.__file__)
-	True
+
+More modules for testing
+========================
+	>>> import os
+	>>> from path import path
+
+Start here
+==========
+
+	>>> os.chdir(path(l.__file__).parent)
 
 If that worked, then we can test for these files:
 
@@ -23,11 +30,11 @@ as_paths
 This method turns its arguments into a list of paths
 
 	>>> l.as_paths([ 'fred', '~', path('.') ])
-	[<path 'fred'>, <path '...'>, <path '.'>]
+	[<path u'fred'>, <path u'...'>, <path u'.'>]
 
 It does not add the current directory
 	>>> l.as_paths([ 'fred', '~'])
-	[<path 'fred'>, <path '/Users/jab'>]
+	[<path u'fred'>, <path u'/Users/jab'>]
 
 get_dirs
 --------
@@ -36,19 +43,19 @@ get_dirs converts a list of strings to a list of paths
 	if they exist
 
 	>>> print l.get_dirs([this_test_file, '..', 'No such path'])
-	[<path '.'>, <path '..'>]
+	[<path u'.'>, <path u'..'>]
 
 It expands paths if possible
 	>>> import os
-	>>> expected = [ path(os.environ['HOME']), path( os.environ['MAIN_PYTHON']), path('/') ]
-	>>> l.get_dirs([ '~', '$MAIN_PYTHON', '/' ]) == expected
+	>>> expected = [ path(os.environ['HOME']), path( os.environ['PYTHON_HOME']), path('/') ]
+	>>> l.get_dirs([ '~', '$PYTHON_HOME', '/' ]) == expected
 	True
- 
+
 It defaults to only the current directory
 	but always returns a list
 	>>> here = l.get_dirs()[0]
 	>>> here
-	<path '.'>
+	<path u'.'>
 
 get_files
 ---------
@@ -62,23 +69,12 @@ The list of files is flat
 	>>> all([ f.isfile() for f in files ])
 	True
 
-It also defaults to here
-	>>> files = l.get_files()
-	>>> len(files) > 3
-	True
-	>>> all([ f.parent.abspath() == here.abspath() for f in files ])
-	True
-
-So we can expect to find all of these files
-	>>> [ f in l.get_files() for f in these_files ]
-	[True, True, True]
-
 get_names
 ---------
 
 This method converts a list of files to a dictionary of names
-	The name of this file is 'l' (filename without extension) 
-	>>> names = l.get_names()
+	The name of this file is 'l' (filename without extension)
+	>>> names = l.get_names(l.get_files(['.']))
 
 In the current directory, there should be a few files named l
 	>>> 'l' in names
@@ -86,7 +82,7 @@ In the current directory, there should be a few files named l
 
 All the permanent paths to l:
 	>>> [p for p in names['l'] if p.ext not in [ '.fail', '.pyc'] and not p.endswith('~') ]
-	[<path 'l.py'>, <path 'l.test'>, <path 'l.tests'>]
+	[<path u'l.py'>, <path u'l.test'>, <path u'l.tests'>]
 
 remove_ignored
 --------------
@@ -107,22 +103,22 @@ The default list of globs comes from ~/.subversion/config
 	It also includes fred* (on the advice of Dr Mike Smith),
 		so I'd normally only see alan and mary
 	>>> l.remove_ignored(files)
-	[<path 'mary.py'>, <path 'alan.txt'>]
+	[<path u'mary.py'>, <path u'alan.txt'>]
 
-But sometimes we need to ignore program managers too 
+But sometimes we need to ignore program managers too
 	Fred and Mary are taking program manager roles today
 	>>> l.remove_ignored(files,project_managers)
-	[<path 'alan.txt'>]
+	[<path u'alan.txt'>]
 
 The globs can be used instead of the default
 	What do we have apart from source code?
 	>>> l.remove_ignored(files,sources)
-	[<path 'fred.py~'>, <path 'fred.pyc'>, <path 'alan.txt'>]
+	[<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
 
 Or the globs can be added to the default
 	What do we have that's neither Fred's, nor source ?
 	>>> l.remove_ignored(files,extra_ignores=sources)
-	[<path 'alan.txt'>]
+	[<path u'alan.txt'>]
 
 finding common starts paths
 ---------------------------
