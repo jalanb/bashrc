@@ -16,7 +16,12 @@ kd ()
 	then
 		echo "$destination"
 	else
-		if [[ $destination != $1 && $1 != "-" ]]
+		real_destination=$(python -c "import os; print os.path.realpath('$destination')")
+		if [[ $destination != $real_destination ]]
+		then
+			echo "cd ($destination ->) $real_destination"
+			destination=$real_destination
+		elif [[ $destination != $1 && $1 != "-" ]]
 		then
 			echo "cd $destination"
 		fi
