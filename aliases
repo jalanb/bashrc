@@ -193,6 +193,7 @@ alias svd="svn_diff vimdiff "
 alias sxd="svn_diff xdiff "
 
 alias tra="try ~/alans_tests"
+alias ttt='SSJ abrogan ie-track-1.altobridge.com'
 
 alias vib="v ~/.bashrc; sib"
 alias vla="v $JAB/local/aliases; sla"
