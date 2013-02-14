@@ -83,6 +83,7 @@ alias kp="rsync -av"
 
 alias l1="ls -1tr "
 alias la="ls -a "
+alias ld="ls -1d"
 alias lj="ls $JAB"
 alias ll="ls -lh "
 alias lr="ls -lhtr"
@@ -163,8 +164,10 @@ alias jlf="ssh jlfieblu@jlf.ie"
 
 alias kpp="kp --progress"
 
+alias lda="ls -1da"
 alias lff="ls fred*"
 alias lra="lr -a"
+alias lrd="lr -d"
 alias lsh="ls *.sh"
 
 alias out="to_release"
