@@ -21,5 +21,5 @@ main ()
 
 # set -x
 trap atexit EXIT
-main
+main $*
 # set +x
