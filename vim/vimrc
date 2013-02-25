@@ -191,7 +191,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>m
  noremap <leader>n :call ChangeNumber()<cr>
 "noremap <leader>o
-"noremap <leader>p
+ noremap <leader>p :set paste<cr>
 "noremap <leader>q
  noremap <leader>r :call SetRelativeNumber()<cr>
  noremap <leader>s :w !sudo tee % >/dev/null<cr>
@@ -400,6 +400,10 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 "	When one of the patterns matches with the name of the file which is written, no backup file is created.
 "
 set backupskip=/tmp/*,/private/tmp/*,~/temp
+"
+" https://github.com/dougireton/vimfiles/blob/master/vimrc
+"
+set clipboard=unnamed " Yank to the system clipboard by default
 "
 " for searching
 "
