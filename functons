@@ -564,18 +564,7 @@ svn_url ()
 
 svn_diff ()
 {
-	dir=`/usr/bin/dirname $2`
-	file=`basename $2`
-	pushd "$dir" > /dev/null 2>&1
-	svn diff "$file" > "$file.patch"
-	if [[ "$1" == "horizontal" ]]
-	then 
-		vim "$file" +"call Diff2PatchHorizontal(\"$file\")"
-	else
-		vim "$file" +"call Diff2PatchVertical(\"$file\")"
-	fi
-	rm -f "$file.patch"
-	popd > /dev/null 2>&1
+	bash $JAB/bin/svn_diff.bash $*
 }
 
 svn_info ()
