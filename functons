@@ -329,7 +329,7 @@ SSH ()
 	local options=$*
 
 	local here_name=$(python -c "import socket; print socket.getfqdn()")
-	local here_ip=$(python -c "import socket; print socket.gethostbyname('$here_name')")
+	local here_ip=$(python /home/jab/.jab/python/ifconfig.py 172)
 	local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
 	if [[ $here_ip == $there_ip ]]
 	then
