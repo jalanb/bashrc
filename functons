@@ -562,11 +562,6 @@ svn_url ()
 
 # xxxxxxxx
 
-svn_diff ()
-{
-	bash $JAB/bin/svn_diff.bash $*
-}
-
 svn_info ()
 {
 	test -n "$1" && dir=$1 || dir="."
