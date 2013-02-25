@@ -22,9 +22,12 @@ source_file ()
 	fi
 }
 
-source_jab()
+source_jab ()
 {
 	local LOCAL=$JAB/local
+	[[ -e /usr/bin/svn ]] && SVN=/usr/bin/svn 
+	[[ -e /usr/local/bin/svn ]] && SVN=/usr/local/bin/svn 
+	$SVN up $JAB
 	source_file environ
 	source_file $JAB/python-environ optional
 	source_file $LOCAL/environ
@@ -72,7 +75,6 @@ jab_bashrc()
 		echo i am lost because $JAB is not a directory >&2
 	else
 		builtin cd $JAB
-		svn up
 		source_jab
 		clean_jab
 		[[ $USER == "builder" ]] || welcome_home
