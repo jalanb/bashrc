@@ -255,14 +255,22 @@ jjj ()
 # ssh back to the jab.ook (which is my laptop
 # it goes by different hostnames, try in order of probablity
 	local jjj_host=
-	if ping -c 1 -t 1 jab.ook >/dev/null 2>&1
+	if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
 	then
 		jjj_host=jab.ook
-	elif ping -c 1 -t 1 dhcp92 >/dev/null 2>&1
+	elif ping -c 1 -w 1 dhcp92 >/dev/null 2>&1
 	then
 		jjj_host=dhcp92
+	elif ping -c 1 -w 1 172.16.1.92 >/dev/null 2>&1
+	then
+		jjj_host=172.16.1.92
 	fi
-	SSJ jab $jjj_host
+	if [[ -z $jjj_host ]]
+	then
+		echo Could not ping jab.ook, dhcp92, 172.16.1.92
+	else
+		SSJ jab $jjj_host
+	fi
 }
 
 
