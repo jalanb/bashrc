@@ -642,6 +642,9 @@ console_title_on ()
 	elif env | grep -iq konsole 2>/dev/null
 	then
 		dcop $KONSOLE_DCOP_SESSION renameSession $1
+	elif env | grep -iq gnome.terminal
+	then
+		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
 	else
 		echo "Title: $1"
 	fi
