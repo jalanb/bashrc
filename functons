@@ -258,16 +258,16 @@ jjj ()
 	if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
 	then
 		jjj_host=jab.ook
-	elif ping -c 1 -w 1 dhcp92 >/dev/null 2>&1
+	elif ping -c 1 -w 1 dhcp92.altobridge.com >/dev/null 2>&1
 	then
-		jjj_host=dhcp92
+		jjj_host=dhcp92.altobridge.com
 	elif ping -c 1 -w 1 172.16.1.92 >/dev/null 2>&1
 	then
 		jjj_host=172.16.1.92
 	fi
 	if [[ -z $jjj_host ]]
 	then
-		echo Could not ping jab.ook, dhcp92, 172.16.1.92
+		echo Could not ping jab.ook, dhcp92.altobridge.com, 172.16.1.92
 	else
 		SSJ jab $jjj_host
 	fi
