@@ -72,6 +72,7 @@ jab_bashrc()
 		echo i am lost because $JAB is not a directory >&2
 	else
 		builtin cd $JAB
+		svn up
 		source_jab
 		clean_jab
 		[[ $USER == "builder" ]] || welcome_home
