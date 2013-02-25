@@ -562,32 +562,19 @@ svn_url ()
 
 # xxxxxxxx
 
-svn_diff () {
+svn_diff ()
+{
 	dir=`/usr/bin/dirname $2`
 	file=`basename $2`
 	pushd "$dir" > /dev/null 2>&1
-	if [[ "$1" == "vimdiff -o" ]]
+	svn diff "$file" > "$file.patch"
+	if [[ "$1" == "horizontal" ]]
 	then 
-		exe="$EDITOR -do"
-	elif [[ "$1" == vimdiff ]]
-	then 
-		exe="$EDITOR -d"
-	elif [[ -f $1 ]]
-	then 
-		exe="$1"
-	elif [[ -f /usr/bin/$1 ]]
-	then
-		exe=/usr/bin/$1
-	elif [[ -f ~/bin/$1 ]]
-	then
-		exe=~/bin/$1
-	fi
-	if diff -q "$file" .svn/text-base/"$file".svn-base
-	then
-		echo unchanged
+		vim "$file" +"call Diff2PatchHorizontal(\"$file\")"
 	else
-		$exe "$file" .svn/text-base/"$file".svn-base
+		vim "$file" +"call Diff2PatchVertical(\"$file\")"
 	fi
+	rm -f "$file.patch"
 	popd > /dev/null 2>&1
 }
 

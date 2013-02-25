@@ -107,7 +107,7 @@ alias ry="rf pycos"
 alias sa="source $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
 alias sc="svn ci -m"
-alias sd="sdiff "
+alias sd="svn diff "
 alias se="source $JAB/environ"
 alias sf="source $JAB/functons"
 alias si="svn_info "
@@ -181,8 +181,8 @@ alias rff="r fred* *.tmp"
 alias sib=". ~/.bashrc"
 alias sii="svn_issue "
 
-alias shd='svn_diff "vimdiff -o" '
-alias skd="svn_diff kdiff "
+alias scd='svn diff --diff-cmd colordiff '
+alias shd='svn_diff horizontal '
 alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
 alias slf="source $JAB/local/functons"
@@ -192,8 +192,7 @@ alias spe="source $JAB/python-environ"
 alias stj="statvim $JAB"
 alias stm="statvim | grep -v ^r"
 alias stv="statvim "
-alias svd="svn_diff vimdiff "
-alias sxd="svn_diff xdiff "
+alias svd="svn_diff vertical "
 
 alias tra="try ~/alans_tests"
 alias ttt='SSJ abrogan ie-track-1.altobridge.com'
@@ -235,8 +234,6 @@ alias vvvy="v $JAB/vim/ftplugin/python/jab.vim"
 alias .....='c ../../../..'
 
 alias ptags="p $JAB/python/ptags.py "
-
-alias sdiff="svn_diff diff "
 
 # xxxxxx
 

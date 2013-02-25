@@ -281,6 +281,26 @@ if !exists(":DiffOrig")
 	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 "
+" Svn diff
+"
+function! SvnPatchExpr()
+   :call system("patch -R -o " . v:fname_out . " " . v:fname_in . " < " . v:fname_diff )
+endfunction
+
+function! Diff2PatchHorizontal(filename)
+	let l:orig_patchexpr = &patchexpr
+	set patchexpr=SvnPatchExpr() 
+	silent exec ":diffpatch " . a:filename . '.patch'
+	let &patchexpr = l:orig_patchexpr
+endfunction
+
+function! Diff2PatchVertical(filename)
+	let l:orig_patchexpr = &patchexpr
+	set patchexpr=SvnPatchExpr() 
+	silent exec ":vertical diffpatch " . a:filename . '.patch'
+	let &patchexpr = l:orig_patchexpr
+endfunction
+"
 " Ok, ok, so I have some spelling blind-spots:
 "
 abbreviate becuase because
