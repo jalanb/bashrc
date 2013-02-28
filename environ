@@ -1,8 +1,6 @@
 #! /bin/bash
 
-export JAB=$HOME/.jab
-export JAB_TODO=$JAB/todo.txt
-export JAB_KEY=$JAB/ssh/id_jab
+source ~/.jab/jab_environ
 
 export COLUMNS
 
@@ -84,14 +82,6 @@ export PS1
 #
 # Path dependencies
 #
-
-export JAB_HOME=$HOME
-if [ -d /usr/local/abrogan/jabs ]
-then
-	export JABS=file:///usr/local/abrogan/jabs
-else
-	export JABS=http://intranet.altobridge.com/jab
-fi
 
 if [ -x /usr/local/bin/which ]
 then

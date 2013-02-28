@@ -1,0 +1,23 @@
+#! /bin/bash
+
+PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
+PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
+
+source ~/.jab/jab_environ
+
+usage ()
+{
+	if [[ $# != 2 ]]
+	then
+		echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
+		exit 1
+	fi
+}
+
+main ()
+{
+	$PATH_TO_SCRIPTS/ssh.sh $* -i $JAB_KEY
+}
+
+usage $*
+main $*

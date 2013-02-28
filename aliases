@@ -58,7 +58,6 @@ alias ..='c ..'
 alias 3l="tree | less"
 
 alias aa="ack --all"
-alias ab="ssh abrogan@192.168.0.103"
 alias ac="ack --code"
 alias ae="ack --erl"
 alias ap="ack --python"
@@ -160,7 +159,7 @@ alias cly="cl; ly "
 alias csi='c $(python -c "import sys; print [p for p in sys.path if p.endswith(\"site-packages\")][0]")'
 
 alias jjy="ky $JAB/python"
-alias jlf="ssh jlfieblu@jlf.ie"
+alias jlf="sst jlfieblu jlf.ie"
 
 alias kpp="kp --progress"
 
@@ -195,7 +194,7 @@ alias stv="statvim "
 alias svd="svn_diff vertical "
 
 alias tra="try ~/alans_tests"
-alias ttt='SSJ abrogan ie-track-1.altobridge.com'
+alias ttt='ssj abrogan ie-track-1.altobridge.com'
 
 alias vib="v ~/.bashrc; sib"
 alias vla="v $JAB/local/aliases; sla"
@@ -221,7 +220,7 @@ alias jjya='ky $JAB/python/alanology'
 alias jjys='ky $JAB/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
-alias rias="ssh abrogan@172.20.1.172"
+alias rias="sst abrogan 172.20.1.172"
 
 alias tags="p $JAB/python/ptags.py "
 
@@ -239,14 +238,12 @@ alias ptags="p $JAB/python/ptags.py "
 
 alias ......='c ../../../../..'
 
-alias build2="ssh abrogan@ie-build-2"
 alias lessen="less -N"
 
 
 # xxxxxxx
 
 alias .......='c ../../../../../..'
-alias abrogan="ssh abrogan@192.168.0.103"
 alias service="sudo /sbin/service "
 alias cleaner="clean deep"
 

@@ -269,7 +269,7 @@ jjj ()
 	then
 		echo Could not ping jab.ook, dhcp92.altobridge.com, 172.16.1.92
 	else
-		SSJ jab $jjj_host
+		ssj jab $jjj_host
 	fi
 }
 
@@ -313,41 +313,6 @@ try ()
 	TRY=$JAB/python/testing/try.py
 	test -f ./try.py && TRY=./try.py
 	python $TRY $*
-}
-
-SSJ ()
-{
-	SSH $* -i $JAB_KEY
-}
-
-SSH ()
-{
-	local you=$1
-	shift
-	local there_name=$1
-	shift
-	local options=$*
-
-	local here_name=$(python -c "import socket; print socket.getfqdn()")
-	local here_ip=$(python $JAB/python/ifconfig.py 172)
-	local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
-	if [[ $here_ip == $there_ip ]]
-	then
-		if [[ $you == $(whoami) ]]
-		then
-			echo "Here I am: $you@$there_name ($there_ip)" 2>&1
-		else
-			echo "Here is: $there_name ($there_ip)" >&2
-			echo "	Perhaps you meant to use su?" >&2
-		fi
-		return
-	fi
-	local there_small=${there_name/.altobridge.com/}
-	local me=$USER
-	local here=`hostname -s`
-	console_title_on "${you}@${there_small}" && \
-		ssh $options $you@$there_name && \
-		console_title_off "${me}@${here}"
 }
 
 vff ()
@@ -631,6 +596,9 @@ console_title_off ()
 	elif env | grep -iq konsole 2>/dev/null
 	then
 		dcop $KONSOLE_DCOP_SESSION renameSession $1
+	elif env | grep -iq gnome.terminal
+	then
+		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
 	else
 		echo "Title: $1"
 	fi
