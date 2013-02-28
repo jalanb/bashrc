@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# sst - run ssh from a terminal, and set titles to and fro
+
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
