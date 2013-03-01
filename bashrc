@@ -80,7 +80,7 @@ jab_bashrc()
 		[[ $USER == "builder" ]] || welcome_home
 	fi
 	source_file ~/.oldpwd optional
-	console_title_on $USER@$(hostname)
+	console_title_on $USER@$(hostname -s)
 }
 
 [[ $- == *i* ]] && jab_bashrc
