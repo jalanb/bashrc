@@ -248,7 +248,7 @@ filetype indent on
 "
 " vimdiff, aka vim -d
 "
-function ChangeBuffer ()
+function EnterBuffer ()
 	"
 	" diff options
 	"
@@ -270,9 +270,15 @@ function ChangeBuffer ()
 		" noremap [ <C-T>
 		syntax on
 	endif
+	let &titlestring = $HOSTNAME . ":vim " . expand("%:p:~")
 endfunction
 
-autocmd BufEnter * call ChangeBuffer()
+function! LeaveBuffer ()
+	let &titlestring = $HOSTNAME . ":not " . expand("%:p:~")
+endfunction
+
+autocmd BufEnter * call EnterBuffer()
+autocmd BufLeave * call LeaveBuffer()
 
 "
 " diff to when I started editting
@@ -470,9 +476,6 @@ let g:is_posix = 1
 
 " au InsertEnter * set paste
 " au InsertLeave * set nopaste
-
-" Restore my window title
-let &titleold="I choose to start one small step now"
 
 " Honour those wee lines at eof
 set modeline

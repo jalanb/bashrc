@@ -207,7 +207,7 @@ dev ()
 		ls
 		cd $here
 		echo You may wish to try
-		echo "	mv ~/dev/* ~/src"
+		echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
 	fi
 	[[ ! -d ~/src ]] && mkdir ~/src
 	c ~/src $*
@@ -566,6 +566,12 @@ to_release ()
 
 # xxxxxxxxxxxxxx
 
+console_whoami ()
+{
+	console_title_on $USER@$(hostname -s)  
+}
+
+
 # xxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxxx
@@ -579,6 +585,9 @@ console_title_on ()
 	then
 		dcop $KONSOLE_DCOP_SESSION renameSession $1
 	elif env | grep -iq gnome.terminal
+	then
+		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+	elif [[ $TERM == "xterm" ]]
 	then
 		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
 	else
@@ -597,6 +606,9 @@ console_title_off ()
 	then
 		dcop $KONSOLE_DCOP_SESSION renameSession $1
 	elif env | grep -iq gnome.terminal
+	then
+		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+	elif [[ $TERM == "xterm" ]]
 	then
 		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
 	else
