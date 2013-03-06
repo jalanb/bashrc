@@ -28,6 +28,7 @@ source_jab ()
 	[[ -e /usr/bin/svn ]] && SVN=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN=/usr/local/bin/svn 
 	$SVN up $JAB
+	$SVN stat $JAB
 	source_file environ
 	source_file $JAB/python-environ optional
 	source_file $LOCAL/environ
