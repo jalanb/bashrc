@@ -159,6 +159,7 @@ noremap <right>     :tabnext<cr>
  noremap     <C-l> <c-w><c-l>
  noremap <C-Right> w
  noremap <C-Left>  b
+inoremap     <C-d> <esc>:qa<CR>
 inoremap     <C-q> <Esc>:qa!<CR>
 inoremap <C-Right> <Esc>lwi
 inoremap <C-Left>  <Esc>bi
