@@ -163,6 +163,13 @@ zm ()
 
 # xxx
 
+aiv ()
+{ 
+    local sought="$*";
+    vack --pyt "(import.*$sought|$sought import)"
+}
+
+
 aiw ()
 { 
     local sought="$*";
