@@ -2,7 +2,7 @@
 * Ip address of the machine: 174.133.50.196
 * Url of your site: http://jlf.webfactional.com
 * OS of the machine: Linux CentOS5
-* Access via SSH and sftp (sftp is recommended over FTP since it is more secure)
+* Access via ssh and sftp (sftp is recommended over FTP since it is more secure)
 * Login/Password: jlf/po98qw34
 
 extra user: jab/po98qw34
