@@ -44,10 +44,12 @@ make_software ()
 		wget http://www.python.org/ftp/python/2.7.3/Python-2.7.3.tgz
 		tar zxf Python-2.7.3.tgz 
 		cd Python-2.7.3
-		./configure --prefix=/usr/local
+		./configure --prefix=$HOME
 		make
 		sudo make install
-		ln -s /usr/local/bin/python2.7 /home/jab/bin/python
+		cd ..
+		wget https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
+		sh setuptools-0.6c11-py2.7.egg --prefix=$HOME
 	fi
 	sudo rm -rf /tmp/Downloads
 }
