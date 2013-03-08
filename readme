@@ -1,6 +1,6 @@
 #! /bin/cat
 
-If you have any of these back them up now
+If I have any of these back them up now
 
 	rm -rf ~/.jab
 	rm -rf ~/.vim
@@ -12,26 +12,18 @@ Go $HOME
 
 Check out from the main branch of the repository
 
-	svn co http://intranet.altobridge.com/jab .jab
+	svn co https://repository.altobridge.com/jab .jab
 
-Add links where programs expect to find them
+Run the install script
 
-	ln -s ~/.jab/vim ~/.vim
-	ln -s ~/.jab/vim/vimrc ~/.vimrc
-	ln -s ~/.jab/python/pythonrc.py ~/.pythonrc.py
-	test -f ~/.subversion/config && rm -rf ~/.subversion/config
-	ln -s ~/.jab/etc/subversion/config ~/.subversion/config
-	ln -s ~/.jab/etc/dir_colors ~/.dir_colors
-	ln -s ~/.jab/editrc ~/.editrc
-	ln -s ~/.jab/inputrc ~/.inputrc
-	test -d ~/.ipython && rm -rf ~/.ipython/* || mkdir -p ~/.ipython
-	ln -s ~/.jab/ipython/config_helper_functions.py ~/.ipython
-	ln -s ~/.jab/ipython/ipy_user_conf.py ~/.ipython
-	ln -s ~/.jab/ipython/ipythonrc ~/.ipython
-	ln -s ~/.jab/ipython/options.conf ~/.ipython
-	
- 
-Start using it
+	cd .jab/install
+	bash setup.sh
 
-	echo "test -f ~/.jab/bashrc && cd ~/.jab && . bashrc && cd >/dev/null 2>&1" >> ~/.bashrc
+Or, as it is always "a work in progress" I might be better off with
+	cat setup.sh
 
+Whichever way gets it done, complete it by:
+	Logout and in
+
+
+Smile :-)
