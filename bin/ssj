@@ -11,8 +11,15 @@ usage ()
 {
 	if [[ $# != 2 ]]
 	then
-		echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
-		exit 1
+		if [[ $# == 1 ]]
+		then
+			parts=$(echo $1 | tr '@' '\n' | wc -l)
+			if [[ $parts -ne 2 ]]
+			then
+				echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
+				exit 1
+			fi
+		fi
 	fi
 }
 

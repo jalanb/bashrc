@@ -12,17 +12,32 @@ usage ()
 {
 	if [[ $# < 2 ]]
 	then
-		echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
-		exit 1
+		if [[ $# == 1 ]]
+		then
+			parts=$(echo $1 | tr '@' '\n' | wc -l)
+			if [[ $parts -ne 2 ]]
+			then
+				echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
+				exit 1
+			fi
+		fi
 	fi
 }
 
 main ()
 {
-	local you=$1
-	shift
-	local there_name=$1
-	shift
+	parts=$(echo $1 | tr '@' '\n' | wc -l)
+	if [[ $parts -eq 2 ]]
+	then
+		you=$(echo $1 | cut -d\@ -f 1)
+		there_name=$(echo $1 | cut -d\@ -f 2)
+		shift
+	else
+		local you=$1
+		shift
+		local there_name=$1
+		shift
+	fi
 	local options=$*
 
 	local here_name=$(python -c "import socket; print socket.getfqdn()")
