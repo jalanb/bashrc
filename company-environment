@@ -8,6 +8,8 @@ then
 	then TRACKERS=/Users/jab/jab/alto/dev/friday/trackers
 	elif [[ -d /Users/jab/jab/alto/dev/friday/tracking ]]
 	then TRACKERS=/Users/jab/jab/alto/dev/friday/tracking
+	elif [[ -d $HOME/src/svn/amg/trunk/trackers ]]
+	then TRACKERS=$HOME/src/svn/amg/trunk/trackers
 	elif [[ -d /usr/local/trunk/trackers ]]
 	then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
 	elif [[ -d /mnt/source/amg/trunk/trackers ]]
