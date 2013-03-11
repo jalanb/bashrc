@@ -9,16 +9,17 @@ main ()
 {
 	local direction=$1
 	local path_to_file=$2
-	local revision=${3:-HEAD}
+	local revision=
+	if [[ -n $3 ]]
+	then revision="-r $3"
+	fi
 
 	local options="-O"
 	[[ "$direction" == "horizontal" ]] && options="-o"
 
 	COPY_OF_CHECKOUT=${path_to_file}.svn_checkout.r$revision
 
-	set -x
-	svn cat -r $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
-	set +x
+	svn cat $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
 	vim -d $options "$path_to_file" "$COPY_OF_CHECKOUT"
 }
 
