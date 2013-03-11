@@ -34,7 +34,7 @@ nnoremap <C-F4> <C-W>c
 "noremap c - start cutting
 "noremap d - delete
 "noremap e - to end of word
-"noremap f - search rightward for char
+"noremap f - seek key
 "noremap g - many actions
 "noremap h - go left
 "noremap i - insert
@@ -418,6 +418,11 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+"
+" seek.vim is a plugin for 'in current line' searching
+"
+let g:SeekKey = 'f' 
+let g:SeekBackKey = 'F'
 "
 " for Tab Completion
 "	from vim's help
