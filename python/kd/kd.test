@@ -6,6 +6,7 @@ kd is a cd replacer
 More modules for testing
 ------------------------
 
+	>>> import os
 	>>> import sys
 
 Command Line
@@ -17,14 +18,14 @@ On the command line we expect two arguments:
 	The first is a possible directory
 	The rest are prefixes of possible sub-directories
 
-	>>> sys.argv = ['kd.py', 'start', 'here']	
+	>>> sys.argv = ['kd.py', 'start', 'here']
 	>>> options, item, prefixes = kd.parse_command_line()
 	>>> item == 'start' and prefixes == ['here']
 	True
 
 No prefixes is fine too
 
-	>>> sys.argv = ['kd.py', 'start']	
+	>>> sys.argv = ['kd.py', 'start']
 	>>> options, item, prefixes = kd.parse_command_line()
 	>>> item == 'start' and prefixes == []
 	True
@@ -54,6 +55,17 @@ The sub-dir can be a prefix
 It can handle many prefixes (albeit more slowly)
 	>>> print kd.find_directory('/', ['us', 'loc', 'sbi'])
 	/usr/local/sbin
+
+Fallbacks
+---------
+
+If directory is not found directly then try in PATH
+	>>> kd.find_directory('ls', []) == '/bin'
+	True
+
+If that fails, then try in home directory
+	>>> kd.find_directory('.bashrc', []) == os.path.expanduser('~')
+	True
 
 Running from bash
 -----------------

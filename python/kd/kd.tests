@@ -78,6 +78,17 @@ If the sub-dir matches too many directories then an exception is raised
 	ToDo: Too many possiblities
 	...
 
+Find in home directory
+----------------------
+
+	>>> my_bin = kd.find_at_home('bi', [])
+	>>> os.path.dirname(my_bin) == os.path.expanduser('~') and os.path.basename(my_bin) == 'bin'
+	True
+	>>> kd.find_at_home('.bashrc', []) == os.path.expanduser('~')
+	True
+	>>> kd.find_at_home('rubbush', []) is None
+	True
+
 main()
 ------
 

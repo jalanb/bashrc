@@ -175,6 +175,19 @@ def find_in_environment_path(filename):
 	return None
 
 
+def find_at_home(item, prefixes):
+	"""Return the first directory under the home directory which matches the item
+
+	Match on sub-directories first, then files
+		Might return home directory itself
+
+	>>> print find_at_home('bin', [])
+	/.../bin
+	"""
+	home = os.path.expanduser('~')
+	item_and_prefixes = [item] + prefixes
+	return find_under_directory(home, item_and_prefixes)
+
 def find_path_to_item(item):
 	"""Find the path to the given item
 
@@ -231,7 +244,13 @@ def find_directory(item, prefixes):
 			path_to_item = find_under_here(prefixes)
 	if path_to_item:
 		return path_to_item
-	return find_in_environment_path(item)
+	path_to_item = find_in_environment_path(item)
+	if path_to_item:
+		return path_to_item
+	path_to_item = find_at_home(item, prefixes)
+	if path_to_item:
+		return path_to_item
+	raise ToDo('could not use %r as a directory' % item)
 
 
 def parse_command_line():
