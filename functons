@@ -490,9 +490,12 @@ run_as ()
 do_stat ()
 {
 	test -n "$1" && path=$1 || path="."
-	if [[ -f $path || -d $path/.svn ]]
+	if [[ -f $path || -d $path ]]
 	then
-		svn stat $path
+		if svn info $path > /dev/null
+		then svn stat $path
+		fi
+	else echo \"$path\" is not a file, nor dir
 	fi
 }
 
