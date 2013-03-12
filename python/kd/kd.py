@@ -188,6 +188,7 @@ def find_at_home(item, prefixes):
 	item_and_prefixes = [item] + prefixes
 	return find_under_directory(home, item_and_prefixes)
 
+
 def find_path_to_item(item):
 	"""Find the path to the given item
 
