@@ -185,8 +185,9 @@ def find_at_home(item, prefixes):
 	/.../bin
 	"""
 	home = os.path.expanduser('~')
-	item_and_prefixes = [item] + prefixes
-	return find_under_directory(home, item_and_prefixes)
+	if item in prefixes:
+		return find_under_directory(home, prefixes)
+	return find_under_directory(home, [item] + prefixes)
 
 
 def find_path_to_item(item):
