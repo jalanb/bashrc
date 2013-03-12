@@ -485,6 +485,7 @@ let g:is_posix = 1
 
 " Honour those wee lines at eof
 set modeline
+set modelines=1
 
 " Enable screen swapping, which seems missing in the linux terminfo entry
 " help xterm-screens for more info
