@@ -32,7 +32,7 @@ fi
 
 
 if [ -x /usr/bin/id ]; then
-        USER="`id -un`"
+        USER=\$(id -un)
         LOGNAME=\$USER
         MAIL="/var/spool/mail/\$USER"
 fi
