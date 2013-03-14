@@ -28,30 +28,30 @@ let s:file_expected = s:file_stem . '.expected'
 let s:file_actual = s:file_stem . '.actual'
 if ! &diff && ! exists("g:recovering")
 	let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
-	if filereadable(s:file_jabber) && s:file_py != s:file_jabber
+	if filereadable(s:file_jabber) && s:file_py != s:file_jabber && &loadplugin
 		exec "tabnew " s:file_jabber
 	endif
 	let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
-	if filereadable(s:file_grammar) && s:file_py != s:file_grammar
+	if filereadable(s:file_grammar) && s:file_py != s:file_grammar && &loadplugin
 		exec "tabnew " s:file_grammar
 		set filetype=doctest
 	endif
 	let s:file_test = substitute(s:file_py,'\.py$','.test',"")
-	if filereadable(s:file_test) && s:file_py != s:file_test
+	if filereadable(s:file_test) && s:file_py != s:file_test && &loadplugin
 		setl autoread
 		exec "tabnew " s:file_test
 		set filetype=doctest
 		set foldlevel=1
 	endif
 	let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
-	if filereadable(s:file_tests) && s:file_py != s:file_tests
+	if filereadable(s:file_tests) && s:file_py != s:file_tests && &loadplugin
 		setl autoread
 		exec "tabnew " s:file_tests
 		set filetype=doctest
 		set foldlevel=1
 	endif
 	let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
-	if filereadable(s:file_fail) && s:file_py != s:file_fail
+	if filereadable(s:file_fail) && s:file_py != s:file_fail && &loadplugin
 		setl autoread
 		exec "tabnew " s:file_fail
 		set filetype=doctest_fail
