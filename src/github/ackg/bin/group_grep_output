@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+
+'small python script to modify the output of ackg'
+
+import sys
+from argparse import ArgumentParser
+
+# COLOUR_CODES = {
+# 	'black':	'0;30',		'bright gray':	'0;37',
+# 	'blue':		'0;34',		'white':	'1;37',
+# 	'green':	'0;32',		'bright blue':	'1;34',
+# 	'cyan':		'0;36',		'bright green':	'1;32',
+# 	'red':		'0;31',		'bright cyan':	'1;36',
+# 	'purple':	'0;35',		'bright red':	'1;31',
+# 	'yellow':	'0;33',		'bright purple':'1;35',
+# 	'dark gray':'1;30',		'bright yellow':'1;33',
+# 	'normal':	'0'
+# }
+
+
+def wrap(text, color, bgcolor=None):
+    """Warp test in color."""
+    if not bgcolor:
+        return "\033[%s;1m%s\033[0m" % (color, text)
+    else:
+        return "\033[%s;%sm%s\033[0m" % (color, bgcolor, text)
+
+
+def main():
+    'script entry point'
+    argparser = ArgumentParser(
+        description=("Takes output from grep and groups by file."
+                     "Use like this: grep ... | group_grep_output [OPTIONS]"))
+    argparser.add_argument('-c', '--nocolor',
+                           action='store_true')
+    argparser.add_argument('-b', '--nobreak',
+                           action='store_true')
+    argparser.add_argument('-H', '--noheading',
+                           action='store_true')
+    argparser.add_argument('-k', '--key',
+                           action='store')
+    argparser.add_argument('-i', '--ignore-case',
+                           action='store_true')
+    args = argparser.parse_args()
+    write = sys.stdout.write
+
+    lastfile = None
+
+    #for line in sys.stdin.readlines():
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            break
+        tokens = line.split(':', 1)
+        if len(tokens) == 2:
+            newfile, result = tokens
+        else:
+            newfile = None
+            result = line
+        if newfile != lastfile:
+            if not args.nobreak and lastfile is not None:
+                write('\n')
+            lastfile = newfile
+            if not args.noheading:
+                if not args.nocolor:
+                    write(wrap("%s" % newfile, '0;32'))
+                    write('\n')
+                else:
+                    write("%s\n" % newfile)
+        if args.key and not args.nocolor:
+            if args.ignore_case:
+                import re
+                pat = re.compile(args.key, re.I)
+                pit = pat.finditer(result)
+                newline = []
+                last = 0
+                for match in pit:
+                    newline.append(result[last:match.start()])
+                    newline.append(wrap(result[match.start():match.end()],
+                                        '0', '43'))
+                    last = match.end()
+                newline.append(result[last:len(result)])
+                result = ''.join(newline)
+            else:
+                line_tokens = result.split(args.key)
+                result = wrap(args.key, '0', '43').join(line_tokens)
+        write(result)
+
+
+if __name__ == '__main__':
+    main()
