@@ -32,6 +32,7 @@ then
 	cd ..
 	wget https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
 	sh setuptools-0.6c11-py2.7.egg --prefix=$HOME
+	easy_install-2.7 pudb
 fi
 
 rm -rf /tmp/Downloads

@@ -12,6 +12,7 @@ install_software ()
 	fi
 	sudo apt-get -y -q remove ack
 	sudo apt-get -y -qq install apt-file ipython subversion ctags tree gcc libc-dev rlwrap ack-grep tofrodos sshfs libdb4.8-dev guake openssh-server
+	sudo apt-get -y -q install zlib1g-dev libreadline6-dev libdb4.8-dev libncurses5-dev
 
 	cd /usr/bin
 	sudo ln -s ack-grep ack
@@ -37,9 +38,9 @@ make_software ()
 	./configure
 	make
 	sudo make install
+	if python -c "import sys; sys.exit(int(sys.version.split()[0] >= '2.7.4'))"
 
 	cd /tmp/Downloads
-	if python -c "import sys; sys.exit(int(sys.version.split()[0] >= '2.7.4'))"
 	then
 		wget http://www.python.org/ftp/python/2.7.3/Python-2.7.3.tgz
 		tar zxf Python-2.7.3.tgz 
@@ -50,6 +51,7 @@ make_software ()
 		cd ..
 		wget https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
 		sh setuptools-0.6c11-py2.7.egg --prefix=$HOME
+		easy_install-2.7 pudb
 	fi
 	sudo rm -rf /tmp/Downloads
 }
