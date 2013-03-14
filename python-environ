@@ -2,5 +2,6 @@
 
 add_to_a_path PYTHONPATH $JAB/python/site
 
+test -d $JAB/python && export PYTHON_HOME=$JAB/python
 test -d ~/src/python && export PYTHON_HOME=~/src/python
 test -f ~/.pythonrc.py &&  export PYTHONSTARTUP=~/.pythonrc.py
