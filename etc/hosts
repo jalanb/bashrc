@@ -1,0 +1,34 @@
+# The Mac laptop
+172.16.1.92		jab.ook jabook
+
+# The Windows desktop
+172.16.1.51		abrogan
+
+# The main Ubuntu vm on the desktop
+172.16.1.94		abrogan1004
+
+# More vms on the desktop
+172.16.1.9		jab-track-1
+
+# development machines in the cloud
+172.16.5.24		abrogan-dev abrogan-dev.altobridge.com
+172.16.5.26		abrogan-run abrogan-run.altobridge.com
+
+# I think these are obsolete
+# 172.16.61.100	jab-dev-1 jab-dev-1.altobridge.com
+# 172.16.61.106	jab-dev-2 jab-dev-2.altobridge.com
+#
+
+# Date developers' machines in altobridge
+
+172.20.1.249	test-ggw
+172.20.1.110	rgw10.altobridge.com
+
+172.20.3.254	ie-bench-1.altobridge.com
+
+# Trackers developers' machines in altobridge
+
+172.16.1.9		ie-track-1 ie-track-1.altobridge.com
+172.16.1.45		ie-build-1 ie-build-1.altobridge.com
+172.16.1.47		ie-build-2 ie-build-2.altobridge.com
+172.16.1.32		ie-build-3 ie-build-3.altobridge.com
