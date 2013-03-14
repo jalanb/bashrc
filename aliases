@@ -256,3 +256,5 @@ alias cleanest="clean deep pycos"
 # xxxxxxxx
 
 alias stopwatch="killall -9 watch"
+
+alias update_hosts="sudo python $JAB/python/update_hosts.py"
