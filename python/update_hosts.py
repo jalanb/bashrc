@@ -12,7 +12,7 @@ def format_line(ip, names):
 	if names is None:
 		return str(ip)
 	names = sorted(list(names))
-	return '%s\t%s' % (ip, ' '.join(names))
+	return '%-16s\t%s' % (ip, ' '.join(names))
 
 def read_host_lines(path_to_hosts):
 	lines = []
