@@ -1,3 +1,5 @@
+"""A program to update /etc/hosts from our defintions"""
+
 import sys
 
 from pprint import pprint
@@ -56,18 +58,28 @@ def ip_dict(lines):
 def merge_hosts(main, extra):
 	extras = ip_dict(extra)
 	result = []
+	added_line = '# Added by %s' % sys.argv[0]
+	has_added_line = False
 	for line in main:
 		ip, names = line
 		new_line = format_line(ip, names)
+		if new_line == added_line:
+			has_added_line = True
+		else:
+			if has_added_line and not new_line:
+				has_added_line = False
 		if _has_names(line) and ip in extras:
 			extra_names = extras[ip]
 			if names.difference(extra_names):
 				new_line = format_line(ip, names.union(extra_names))
 			del extras[ip]
 		result.append(new_line)
-	result.append('# Added by %s' % sys.argv[0])
+	extra_lines = []
 	for ip, names in extras.items():
-		result.append(format_line(ip, names))
+		extra_lines.append(format_line(ip, names))
+	if extra_lines and not has_added_line:
+		extra_lines.insert(0, '# Added by %s' % sys.argv[0])
+	result.extend(extra_lines)
 	return result
 
 

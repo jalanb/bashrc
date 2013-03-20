@@ -1,0 +1,37 @@
+The update_hosts module
+=======================
+
+	>>> import update_hosts
+	>>> print update_hosts.__doc__
+	A program to update /etc/hosts from our defintions
+
+Read/write hosts lines
+----------------------
+
+Lines in hosts files have IP addresses and names
+	>>> ip = '127.0.0.1'
+	>>> names = ['here', 'localhost']
+
+Can write out a line with thos
+	>>> line = update_hosts.format_line(ip, names)
+
+IP at start, names at end
+	>>> line.startswith(ip) and line.endswith(names[-1])
+	True
+
+And we can parse them back in again
+	>>> (ip, names) == update_hosts.parse_line(line)
+	True
+
+Read a hosts file
+-----------------
+	
+Reading a full file gives some lines
+	>>> lines = update_hosts.read_host_lines('/etc/hosts')
+
+Very often the first line defines localhost
+	>>> ip, names = lines[0]
+	>>> 'localhost' in names
+	True
+
+
