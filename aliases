@@ -78,7 +78,7 @@ alias IP="python $JAB/python/ifconfig.py 172"
 
 alias jj="c $JAB"
 
-alias kp="rsync -av"
+alias kp="rsync -a"
 
 alias l1="ls -1tr "
 alias la="ls -a "
