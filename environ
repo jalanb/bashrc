@@ -90,7 +90,6 @@ else
 	export WHICH=/usr/bin/which
 fi
 export EDITOR=`$WHICH vim`
-export PAGER=$JAB/src/github/vimpager/vimpager
 export EMAIL="al@al-got-rhythm.net"
 
 source $JAB/colour-environ
