@@ -408,10 +408,6 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 "
 set backupskip=/tmp/*,/private/tmp/*,~/temp
 "
-" https://github.com/dougireton/vimfiles/blob/master/vimrc
-"
-set clipboard=unnamed " Yank to the system clipboard by default
-"
 " for searching
 "
 set ignorecase
