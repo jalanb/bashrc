@@ -494,11 +494,11 @@ run_as ()
 
 do_stat ()
 {
-	test -n "$1" && path=$1 || path="."
-	if [[ -f $path || -d $path ]]
+	test -n "$1" && path="$1" || path="."
+	if [[ -f "$path" || -d "$path" ]]
 	then
-		if svn info $path > /dev/null
-		then svn stat $path
+		if svn info "$path" > /dev/null
+		then svn stat "$path"
 		fi
 	else echo \"$path\" is not a file, nor dir
 	fi
@@ -506,7 +506,7 @@ do_stat ()
 
 statvim ()
 {
-	local replacement=$1
+	local replacement="$1"
 	shift
 	if [[ -z "$1" ]]
 	then
