@@ -216,6 +216,8 @@ alias ....='c ../../..'
 alias alto="source $JAB/company-environment"
 alias aaav="vack --nojunk"
 
+alias home="cd; cls"
+
 alias mine="sudo chown $(id -un):$(id -gn)"
 
 alias jjya='ky $JAB/python/alanology'
