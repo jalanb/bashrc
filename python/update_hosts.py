@@ -78,7 +78,8 @@ def merge_hosts(main, extra):
 	for ip, names in extras.items():
 		extra_lines.append(format_line(ip, names))
 	if extra_lines and not has_added_line:
-		extra_lines.insert(0, '# Added by %s' % sys.argv[0])
+		extra_lines.insert(0, '#')
+		extra_lines.insert(1, '# Added by %s' % sys.argv[0])
 	result.extend(extra_lines)
 	return result
 
