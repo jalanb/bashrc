@@ -199,6 +199,7 @@ alias tra="try ~/alans_tests"
 alias ttt='ssj abrogan ie-track-1.altobridge.com'
 
 alias vib="v ~/.bashrc; sib"
+alias vin="vim -"
 alias vla="v $JAB/local/aliases; sla"
 alias vlb="v $JAB/local/bashrc; slb"
 alias vle="v $JAB/local/environ; sle"
