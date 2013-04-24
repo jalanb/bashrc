@@ -28,7 +28,7 @@ CGA colour names
 CGA has all the basic names
 	>>> all([name in colour_names.cga() for name in colour_names.basic()])
 	True
-	
+
 And some extra ones
 	>>> 'gray' in colour_names.cga() and 'gray' not in colour_names.basic()
 	True
