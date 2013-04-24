@@ -1,3 +1,3 @@
 #! /bin/bash
 
-/usr/bin/man $* | col -b | /usr/bin/view -c 'set ft=man nomod nolist' -
+man $* | col -b | view -c 'set ft=man nomod nolist' -
