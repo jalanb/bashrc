@@ -102,3 +102,22 @@ Edge cases
 	True
 	>>> test_files.has_doctests('not space\n>>> print True')
 	True
+
+
+Adding sub_directories
+----------------------
+
+Derive some paths for testing from the module under test
+	>>> test_files_script = makepath(test_files.__file__)
+	>>> test_files_parent = test_files_script.parent
+	>>> test_files_grandparent = test_files_parent.parent
+
+The add_sub_dirs() method takes a lis of paths
+	and gives a set of all sub_directories under them
+	So if we give ir the grandparent directory it should give back the parent
+	>>> test_files_parent in test_files.add_sub_dirs([test_files_grandparent])
+	True
+
+It also returns the grandparent
+	>>> test_files_grandparent in test_files.add_sub_dirs([test_files_grandparent])
+	True

@@ -99,13 +99,12 @@ def _get_path_stems(strings, recursive):
 def add_sub_dirs(paths):
 	"""Add all sub-directories for the directories of the paths"""
 	dirs = set([p.directory() for p in paths])
-	result = list(dirs)
+	result = dirs.copy()
 	for path_to_dir in dirs:
 		for sub_dir in path_to_dir.walkdirs():
 			if '.svn' in sub_dir:
 				continue
-			if sub_dir not in result:
-				result.append(sub_dir)
+			result.add(sub_dir)
 	return result
 
 

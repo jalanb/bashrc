@@ -59,7 +59,7 @@ Edge cases
 ----------
 
 	>>> bash('ls ~/no_such_file')
-	FAIL: 256:ls: /Users/jab/no_such_file: No such file or directory
+	FAIL: .../no_such_file: No such file or directory
 	False
 
 	>>> show(os)
