@@ -68,6 +68,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .csv          00;33
 .eml          00;33
 .log          00;33
+.md           00;33
 .txt          00;33
 *README*      00;33
 *readme*      00;33

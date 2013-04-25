@@ -454,12 +454,6 @@ vfile ()
 	`echo "$*" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/"`
 }
 
-which ()
-{ 
-	( alias; declare -f ) | \
-		$WHICH --tty-only --read-alias --read-functions --show-tilde --show-dot $@
-}
-
 # xxxxx
 
 # xxxxxx

@@ -42,6 +42,7 @@ source_jab ()
 	source_file $LOCAL/functons
 	source_file $JAB/bin/j.sh
 	source_file $JAB/python/kd/kd.sh
+	source_file $JAB/python/what/what.sh
 }
 
 clean_jab()
