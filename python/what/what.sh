@@ -22,5 +22,5 @@ what ()
 
 whap ()
 {
-	python $JAB/python/what/what_python.py $*
+	python $JAB/python/what/whap.py $*
 }
