@@ -3,6 +3,10 @@
 For every argument on the command line it displays
 	all python files and all directories with that name
 	in each of the directories in sys.path
+
+(c) J Alan Brogan 2013
+	The source is released under the MIT license
+	See http://jalanb.mit-license.org/ for more information
 """
 
 
