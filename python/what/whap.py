@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 """This small script offers a python equivalent to "which"
 
 For every argument on the command line it displays
