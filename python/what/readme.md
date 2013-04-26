@@ -75,8 +75,13 @@ If you add the verbose flag, -v, then the source of that file is shown too
 	#! /bin/bash
 	cd ..
 
+If you add the quiet flag, -q, then no output is shown, which can be useful when using what in scripts
+
+	$ if what -q ls; then echo yes; else echo no; fi
+	yes
+
 If you add the errors flag ('-e') then the script will hide some errors shown in bash commands.
-	Some commands can show errors, but give a successful return code.
+	Some bash commands can show errors, but give a successful return code.
 	With '-e' the script runs, and hides these error messages.
 	Without '-e' the script fails and shows the error (this is default)
 
@@ -88,9 +93,9 @@ The `whap` command tries to find where python will import files from, for exampl
 	$ whap os
 	-rw-r--r-- 1 root root 24258 Sep 19  2006 /usr/lib/python2.4/os.py
 
-Note that the whap command uses whatever the default installation of python is, hence in the example above it found the module used for the python2.4 installation. The python file can also be used directly to find where imports are from for other python installations
+Note that the whap command uses whatever the default installation of python is, hence in the example above it found the module used for the python2.4 installation. The python version can also be used specified as an argument to find imports for other python installations. Such a version argument must be the first argument.
 
-	$ python2.7 whap.py os
+	$ whap 2.7 os
 	-rw-r--r-- 1 root root 26300 Aug 12  2012 /usr/local/lib/python2.7/os.py
 
 Testing
