@@ -14,6 +14,7 @@ noremap tn :Try<cr>
 noremap tp :Pylint<cr>
 noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
+noremap <leader>8	b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
 
 
 set foldmethod=indent
