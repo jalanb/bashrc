@@ -229,6 +229,7 @@ alias rias="sst abrogan 172.20.1.172"
 
 alias tags="p $JAB/python/ptags.py "
 
+alias vvvb="v $JAB/vim/ftplugin/sh.vim"
 alias vvvp="v $JAB/vim/ftplugin/python"
 alias vvvv="v $JAB/vim/vimrc"
 alias vvvy="v $JAB/vim/ftplugin/python/jab.vim"
