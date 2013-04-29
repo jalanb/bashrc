@@ -1,10 +1,6 @@
 set t_Co=256
 " My stuff
 "
-
-" Behave like on Windows
-"
-"
 " Keyboard
 "
 " function keys 
@@ -198,7 +194,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>s :w !sudo tee % >/dev/null<cr>
  noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
 "noremap <leader>u
-"noremap <leader>v
+ noremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
 "noremap <leader>w used by plugin/EasyMotion.vim
 "noremap <leader>x
 "noremap <leader>y
@@ -243,8 +239,9 @@ filetype plugin on
 filetype indent on
 
 "
-" Auto-completion plugins
+" Tagging plugins
 "
+let g:easytags_auto_highlight = 0
 
 "
 " vimdiff, aka vim -d
