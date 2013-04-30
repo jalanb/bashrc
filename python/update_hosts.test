@@ -29,8 +29,11 @@ Read a hosts file
 Reading a full file gives some lines
 	>>> lines = update_hosts.read_host_lines('/etc/hosts')
 
-Very often the first line defines localhost
-	>>> ip, names = lines[0]
+Comment lines are preserved, but have no names
+	>>> non_comment_lines = [(ip, names) for ip, names in lines if names]
+
+Very often the first non-comment line defines localhost
+	>>> ip, names = non_comment_lines[0]
 	>>> 'localhost' in names
 	True
 

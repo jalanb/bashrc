@@ -1,8 +1,7 @@
 """A program to update /etc/hosts from our defintions"""
 
+import os
 import sys
-
-from pprint import pprint
 
 def parse_line(line):
 	parts = line.split()
@@ -34,7 +33,8 @@ def path_to_etc_hosts():
 
 
 def path_to_jab_hosts():
-	return '/home/jab/.jab/etc/hosts'
+	jab = os.environ['JAB']
+	return os.path.join(jab, 'etc/hosts')
 
 
 def read_etc_hosts():
@@ -46,21 +46,20 @@ def read_my_hosts():
 
 
 def _has_names(line):
-	ip, names = line
+	_ip, names = line
 	return names is not None
 
 
 def ip_dict(lines):
-	result = []
 	return dict([l for l in lines if _has_names(l)])
 
 
-def merge_hosts(main, extra):
-	extras = ip_dict(extra)
+def merge_hosts(etc_hosts, my_hosts):
+	extras = ip_dict(my_hosts)
 	result = []
 	added_line = '# Added by %s' % sys.argv[0]
 	has_added_line = False
-	for line in main:
+	for line in etc_hosts:
 		ip, names = line
 		new_line = format_line(ip, names)
 		if new_line == added_line:
