@@ -27,6 +27,11 @@ what ()
 	return $return_value
 }
 
+wv ()
+{
+	what -v "$*"
+}
+
 whap ()
 {
 	local __doc__="find what python will import for a string"
