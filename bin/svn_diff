@@ -11,7 +11,8 @@ main ()
 	local path_to_file=$2
 	local revision=
 	if [[ -n $3 ]]
-	then revision="-r $3"
+	then revision="$3"
+	else revision=$(svn info $path_to_file | pyp "'Last Changed Rev' in p | colon[1].strip()")
 	fi
 
 	local options="-O"
@@ -19,7 +20,7 @@ main ()
 
 	COPY_OF_CHECKOUT=${path_to_file}.svn_checkout.r$revision
 
-	svn cat $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
+	svn cat -r $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
 	vim -d $options "$path_to_file" "$COPY_OF_CHECKOUT"
 }
 
