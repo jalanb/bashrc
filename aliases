@@ -196,6 +196,8 @@ alias stv="statvim svd "
 alias svd="svn_diff vertical "
 
 alias tra="try ~/alans_tests"
+alias ttj='ssj jab jab-track-1.altobridge.com'
+alias tta='ssj abrogan jab-track-1.altobridge.com'
 alias ttt='ssj abrogan ie-track-1.altobridge.com'
 
 alias vib="v ~/.bashrc; sib"
