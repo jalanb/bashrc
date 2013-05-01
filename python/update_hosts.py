@@ -83,15 +83,29 @@ def merge_hosts(etc_hosts, my_hosts):
 	return result
 
 
+def write_hosts(lines, path_to_hosts):
+	"""Write the given lines to the given hosts file
+
+	If that is not possible (usually permission denied for /etc/hosts)
+		then just write to stdout
+	"""
+	try:
+		output = file(path_to_hosts, 'w')
+		for line in lines:
+			print >> output, line
+		output.close()
+		return os.EX_OK
+	except IOError:
+		print '\n'.join(lines)
+		return os.EX_NOPERM
+
+
 def main():
 	etc_hosts = read_etc_hosts()
 	my_hosts = read_my_hosts()
 	lines = merge_hosts(etc_hosts, my_hosts)
-	output = file(path_to_etc_hosts(), 'w')
-	for line in lines:
-		print >> output, line
-	output.close()
+	return write_hosts(lines, path_to_etc_hosts())
 
 
 if __name__ == '__main__':
-	main()
+	sys.exit(main())
