@@ -46,7 +46,7 @@ alias s="s"
 alias t="t"
 alias u="u"
 alias v="$JAB/bin/fim "
-alias w="what "
+alias w=what
 alias x="x"
 alias y='clear; p $JAB/python/y.py '
 alias z="du -sh"
@@ -69,6 +69,7 @@ alias cy="c \$PYTHON_HOME"
 
 alias eg="env | g "
 
+alias ga="alias | g"
 alias gc="git commit -m"
 alias gh="history | g "
 
