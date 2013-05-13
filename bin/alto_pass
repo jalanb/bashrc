@@ -1,0 +1,17 @@
+#! /bin/bash
+
+set_symbols ()
+{
+	SVN_SIMPLE=~/.subversion/auth/svn.simple/
+}
+
+main ()
+{
+
+	chmod u+w -R $SVN_SIMPLE
+	svn log -l 1 https://repository.altobridge.com/svn/amg/trunk/trackers
+	chmod u-w -R $SVN_SIMPLE
+}
+
+set_symbols
+main $*
