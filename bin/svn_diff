@@ -2,7 +2,9 @@
 
 atexit ()
 {
-	rm -f "$COPY_OF_CHECKOUT"
+	if [[ -n "$COPY_OF_CHECKOUT" && -f "$COPY_OF_CHECKOUT" ]]
+	then rm -f "$COPY_OF_CHECKOUT"
+	fi
 }
 
 main ()
@@ -12,7 +14,13 @@ main ()
 	local revision=
 	if [[ -n $3 ]]
 	then revision="$3"
-	else revision=$(svn info $path_to_file | pyp "'Last Changed Rev' in p | colon[1].strip()")
+	else
+		if svn stat /home/abrogan/.jab/bin/svn_diff | grep -q "[AM]"
+		then revision=$(svn info $path_to_file | pyp "'Last Changed Rev' in p | colon[1].strip()")
+		else
+			echo no change in $path_to_file
+			exit
+		fi
 	fi
 
 	local options="-O"
