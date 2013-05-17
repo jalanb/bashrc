@@ -15,7 +15,7 @@ main ()
 	if [[ -n $3 ]]
 	then revision="$3"
 	else
-		if svn stat /home/abrogan/.jab/bin/svn_diff | grep -q "[AM]"
+		if svn stat $path_to_file | grep -q "[AM]"
 		then revision=$(svn info $path_to_file | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
 		else
 			echo no change in $path_to_file
