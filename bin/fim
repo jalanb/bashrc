@@ -88,7 +88,7 @@ do
 	then
 		file_exists=1
 	else
-		path_file=$(which $file 2> /dev/null)
+		path_file=$(what -f $file 2> /dev/null)
 		if [[ -f $path_file ]]
 		then file_exists=2
 		fi
