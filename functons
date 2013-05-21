@@ -365,6 +365,12 @@ down ()
 	ls -alhtr
 }
 
+mkcd () 
+{ 
+    local __doc__='make a directory and start using it';
+    mkdir $1 && cd $1
+}
+
 stat ()
 {
 	if [[ -z "$1" ]]
@@ -632,5 +638,3 @@ console_title_off ()
 		echo "Title: $1"
 	fi
 }
-		
-
