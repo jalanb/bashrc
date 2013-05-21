@@ -67,12 +67,12 @@ else
 fi
 [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors)
 
+add_to_a_path PATH $JAB/bin
+add_to_a_path PATH ~/bin
 add_to_a_path PATH /bin
 add_to_a_path PATH /usr/bin
 add_to_a_path PATH /usr/local/bin
 add_to_a_path PATH /usr/local/sbin
-add_to_a_path PATH $JAB/bin
-add_to_a_path PATH ~/bin
 add_to_a_path PATH ~/git/bin
 add_to_a_path PATH /opt/local/bin
 add_to_a_path PATH /sbin 
