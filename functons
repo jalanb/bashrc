@@ -125,14 +125,14 @@ ut ()
 	fi
 }
 
+hd ()
+{
+	vim_diff "$1" "$2" -o
+}
+
 vd ()
 {
-	if ! diff -q "$1" "$2" >/dev/null
-	then
-		vim -do "$1" "$2"
-	else
-		echo "same"
-	fi
+	vim_diff "$1" "$2" -O
 }
 
 vr ()
@@ -564,6 +564,21 @@ to_source ()
 	cd $SOURCE/$*
 	clear
 	ls
+}
+
+vim_diff ()
+{
+	one="$1"
+	shift
+	two="$1"
+	shift
+	options=$*
+	if ! diff -q "$one" "$two" >/dev/null
+	then
+		vim -d $options "$one" "$two"
+	else
+		echo same
+	fi
 }
 
 # xxxxxxxxxx
