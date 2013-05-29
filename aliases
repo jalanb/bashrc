@@ -57,15 +57,6 @@ alias ..='c ..'
 
 alias 3l="tree | less"
 
-alias aa="ack --all"
-alias ac="ack --code"
-alias ae="ack --erl"
-alias al="ack --html"
-alias ap="ack --python"
-alias at="ack --pyt"
-alias av="vack"
-alias aw="ack -w"
-
 alias cy="c \$PYTHON_HOME"
 
 alias eg="env | g "
@@ -145,16 +136,6 @@ alias ...='c ../..'
 
 alias 7up='svn up'
 
-alias aaa="ack --nojunk"
-alias aav="vack --all"
-alias acv="vack --code"
-alias aev="vack --erl"
-alias alv="vack --html"
-alias apv="vack --python"
-alias atv="vack --pyt"
-alias awv="vack -w"
-
-
 alias doc="c ~/Documents"
 
 alias clx="cl; lx "
@@ -220,7 +201,6 @@ alias url="python ~/bin/show_url.py "
 alias ....='c ../../..'
 
 alias alto="source $JAB/company-environment"
-alias aaav="vack --nojunk"
 
 alias home="cd; cls"
 

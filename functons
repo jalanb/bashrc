@@ -18,11 +18,26 @@ p ()
 
 # xx
 
+
+aa ()
+{
+	Ack --all $*
+}
+
+ac ()
+{
+	Ack --code $*
+}
+
+ae ()
+{
+	Ack --erl $*
+}
+
 ag ()
 {
 	alias | grep $*
 }
-
 
 ai ()
 { 
@@ -30,6 +45,25 @@ ai ()
     ack --pyt "(import.*$sought|$sought import)"
 }
 
+al ()
+{
+	Ack --html $*
+}
+
+ap ()
+{
+	Ack --python $*
+}
+
+at ()
+{
+	Ack --pyt $*
+}
+
+av ()
+{
+	vack $*
+}
 
 cj ()
 {
@@ -162,6 +196,56 @@ zm ()
 }
 
 # xxx
+
+Ack ()
+{
+	ARGS="$*"
+	VLESS=$(echo $* | sed -e "s/ -v\($\| \)/\1/")
+	if [[ "$ARGS" == "$VLESS" ]]
+	then ack $*
+	else vack $VLESS
+	fi
+}
+
+aaa ()
+{
+	Ack --nojunk $*
+}
+
+aav ()
+{
+	vack --all $*
+}
+
+acv ()
+{
+	vack --code $*
+}
+
+aev ()
+{
+	vack --erl $*
+}
+
+alv ()
+{
+	vack --html $*
+}
+
+apv ()
+{
+	vack --python $*
+}
+
+atv ()
+{
+	vack --pyt $*
+}
+
+awv ()
+{
+	vack -w $*
+}
 
 aiv ()
 { 
@@ -353,6 +437,11 @@ wat ()
 }
 
 # xxxx
+
+aaav ()
+{
+	vack --nojunk $*
+}
 
 dark ()
 {
