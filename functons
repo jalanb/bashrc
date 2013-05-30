@@ -491,6 +491,20 @@ SUDO ()
 		console_title_off "${me}@${here}"
 }
 
+divv ()
+{
+	source_dir="$1"
+	destination="$2"
+	echo "# Files 1 and 2 differ"
+	_divv_get_difference | grep Files | sed -e "s/Files/vim -d/" -e "s/ and / /" -e "s/differ//"
+	echo
+	echo "Only in $source_dir"
+	_divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+	echo
+	echo "Only in $destination"
+	_divv_get_difference | grep "Only in $destination" | sed -e "s/Only in/vim /" -e "s|: |/|"
+}
+
 # xxxxx
 
 build ()
@@ -742,3 +756,18 @@ console_title_off ()
 		echo "Title: $1"
 	fi
 }
+
+# xxxxxxxxxxxxxxxxxxxx
+
+_divv_get_difference ()
+{
+	diff -q -r \
+		--exclude=.svn \
+		--exclude="*.py[co]" \
+		--exclude=tags \
+		--exclude=".*sw[po]" \
+		--exclude=tmp \
+		--exclude="*~" \
+	"$source_dir" "$destination" 2>/dev/null
+}
+
