@@ -496,13 +496,21 @@ divv ()
 	source_dir="$1"
 	destination="$2"
 	echo "# Files 1 and 2 differ"
-	_divv_get_difference | grep Files | sed -e "s/Files/vim -d/" -e "s/ and / /" -e "s/differ//"
-	echo
-	echo "Only in $source_dir"
-	_divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
-	echo
-	echo "Only in $destination"
-	_divv_get_difference | grep "Only in $destination" | sed -e "s/Only in/vim /" -e "s|: |/|"
+	_divv_get_difference | grep Files | sed -e "s/Files/vd/" -e "s/ and / /" -e "s/differ//"
+	local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
+	if [[ $number_in_source -gt 0 ]]
+	then
+		echo
+		echo "Only in $source_dir"
+		_divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+	fi
+	local number_in_destination=$(_divv_get_difference | grep "Only in $destination" | wc -l)
+	if [[ $number_in_destination -gt 0 ]]
+	then
+		echo
+		echo "Only in $destination"
+		_divv_get_difference | grep "Only in $destination" | sed -e "s/Only in/vim /" -e "s|: |/|"
+	fi
 }
 
 # xxxxx
