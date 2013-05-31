@@ -16,6 +16,11 @@ p ()
 		console_title_off "${me}@${here}"
 }
 
+w ()
+{
+	what -v $*
+}
+
 # xx
 
 
@@ -310,7 +315,7 @@ fsh ()
 # run fred by his extension
 	if [ -f fred.sh ]
 	then
-		sh fred.sh $*
+		bash fred.sh $*
 	elif [ -f fred.py ]
 	then
 		p fred.py $*
@@ -326,7 +331,7 @@ fsh ()
 			./a.out
 		fi
 	else
-		sh fred $*
+		bash fred $*
 	fi
 }
 
