@@ -14,8 +14,8 @@ then
 	then TRACKERS=$(readlink -f /usr/local/scm/trunk/trackers)
 	elif [[ -d /usr/local/trunk/trackers ]]
 	then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
-	elif [[ -d /mnt/source/svn/svm/trunk/trackers ]]
-	then TRACKERS=$(readlink -f /mnt/source/svn/svm/trunk/trackers)
+	elif [[ -d /mnt/source/svn/scm/trunk/trackers ]]
+	then TRACKERS=$(readlink -f /mnt/source/svn/scm/trunk/trackers)
 	elif [[ -d /mnt/source/svn/amg/trunk/trackers ]]
 	then TRACKERS=$(readlink -f /mnt/source/svn/amg/trunk/trackers)
 	elif [[ -d /data/trackers ]]
