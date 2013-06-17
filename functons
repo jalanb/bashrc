@@ -266,6 +266,11 @@ aiw ()
 }
 
 
+ash ()
+{
+	Ack --shell $*
+}
+
 cff ()
 {
 	if [[ ! -d fred ]]
