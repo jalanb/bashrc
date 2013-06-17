@@ -101,7 +101,7 @@ do
 	if [[ -f "$swap_file" ]]
 	then
 		echo
-		echo    A swap \ file \ exists: $swap_file
+		echo    A swap \ file \ exists: $(ls -l $swap_file)
 		echo " ps a |  grep -v -e grep -e \"\<$$\>\"| grep -q \"\<vim.* $file\>\" "
 		if ps a |  grep -v -e grep -e "\<$$\>"| grep -q "\<vim.* $file\>"
 		then
