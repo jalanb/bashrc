@@ -27,7 +27,7 @@ what ()
 	return $return_value
 }
 
-ww ()
+we ()
 {
 	local __doc__='Edit the first argument if it is a text file, or function'
 	if [[ $(type -t $1) == "file" ]]
