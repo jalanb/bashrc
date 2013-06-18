@@ -40,7 +40,7 @@ we ()
 	fi
 }
 
-wv ()
+ww ()
 {
 	local __doc__='run what verbosely on all the arguments'
 	what -v "$*"
