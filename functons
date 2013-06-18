@@ -467,7 +467,7 @@ down ()
 mkcd () 
 { 
     local __doc__='make a directory and start using it';
-    mkdir $1 && cd $1
+    mkdir "$*" && cd "$*"
 }
 
 stat ()
