@@ -59,6 +59,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 # Containers - BLUE (directories are LIGHT BLUE)
 .bz2          00;34
 .deb          00;34
+.egg          00;34
 .rpm          00;34
 .tar          00;34
 .tbz          00;34
@@ -85,6 +86,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .jpg          00;36
 .list         00;36
 .mbr          00;36
+.m3u          00;36
 .png          00;36
 .xls          00;36
 
