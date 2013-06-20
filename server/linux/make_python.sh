@@ -14,12 +14,12 @@ then
 	then
 		sed -i -e "s|#SSL=/usr/local/ssl|SSL=/usr|" -e "s|^#_ssl|_ssl|" -e "/lssl/s/#//" -e "/USE_SSL/s/#//" Modules/Setup
 	fi
-	make
-	make install
+	make || exit
+	make install || exit
 	cd ..
-	wget https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg
-	sh setuptools-0.6c11-py2.7.egg --prefix=$HOME
-	easy_install-2.7 pudb
+	wget  --no-check-certificate https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg || exit
+	sh setuptools-0.6c11-py2.7.egg --prefix=$HOME || exit
+	easy_install-2.7 pudb 
 fi
 
 rm -rf /tmp/Downloads
