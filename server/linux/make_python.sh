@@ -5,9 +5,9 @@ cd /tmp/Downloads
 
 if python -c "import sys; sys.exit(int(sys.version.split()[0] >= '2.7.4'))"
 then
-	wget http://www.python.org/ftp/python/2.7.3/Python-2.7.3.tgz
-	tar zxf Python-2.7.3.tgz 
-	cd Python-2.7.3
+	wget http://www.python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+	tar zxf Python-2.7.5.tgz 
+	cd Python-2.7.5
 	./configure --prefix=$HOME
 	DISTRO=$(lsb_release -a 2>/dev/null | grep "Distributor ID" | cut -d\: -f 2 | tr -d ' \t')
 	if [[ $DISTRO == "Ubuntu" ]]
