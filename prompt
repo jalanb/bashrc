@@ -64,7 +64,6 @@ prompt_command ()
 	console_whoami 2>/dev/null
 	# local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
 	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
-	python $(dirname $BASH_SOURCE)/bin/j.py --add "$(pwd -P)"
 	history -a
 }
 

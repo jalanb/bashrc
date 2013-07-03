@@ -40,7 +40,6 @@ source_jab ()
 	source_file $LOCAL/aliases
 	source_file $JAB/functons
 	source_file $LOCAL/functons
-	source_file $JAB/bin/j.sh
 	source_file $JAB/python/kd/kd.sh
 	source_file $JAB/python/what/what.sh
 }
