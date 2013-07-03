@@ -95,6 +95,12 @@ gg ()
 	grep "$sought" $* | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
+gh ()
+{
+	local __doc__="show stuff from history"
+	history | grep -v "\<\(history\|gh\)\>" | grep --color $*
+}
+
 ky ()
 {
 	if [[ -z "$1" ]]
@@ -416,6 +422,49 @@ try ()
 	python $TRY $*
 }
 
+vla ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/aliases
+	sla
+}
+
+vlb ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/bashrc
+	slb
+}
+
+vle ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/environ
+	sle
+}
+
+vlf ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/functons
+	slf
+}
+
+vlp ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/prompt
+	slp
+}
+
+vpe ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/python-environ
+	spe
+}
+
+
 vff ()
 {
 	FRED=
@@ -439,6 +488,41 @@ vff ()
 	else
 		v fred
 	fi
+}
+
+vla ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/aliases
+	sla
+}
+
+vlb ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/bashrc
+	slb
+}
+
+vle ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/environ
+	sle
+}
+
+vlf ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/functons
+	slf
+}
+
+vlp ()
+{
+	test -d $JAB/local || mkdir $JAB/local
+	v $JAB/local/prompt
+	slp
 }
 
 wat ()

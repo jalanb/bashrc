@@ -63,7 +63,6 @@ alias eg="env | g "
 
 alias ga="alias | g"
 alias gc="git commit -m"
-alias gh="history | g "
 
 alias hh="history -n"
 
@@ -186,12 +185,6 @@ alias ttt='ssj abrogan ie-track-1.altobridge.com'
 
 alias vib="v ~/.bashrc; sib"
 alias vin="vim -"
-alias vla="v $JAB/local/aliases; sla"
-alias vlb="v $JAB/local/bashrc; slb"
-alias vle="v $JAB/local/environ; sle"
-alias vlf="v $JAB/local/functons; slf"
-alias vlp="v $JAB/local/prompt; slp"
-alias vpe="v $JAB/python-environ; spe"
 alias vvv="v $JAB/vim"
 
 alias url="python ~/bin/show_url.py "
