@@ -23,7 +23,6 @@ w ()
 
 # xx
 
-
 aa ()
 {
 	Ack --all $*
@@ -175,13 +174,39 @@ hd ()
 	vim_diff "$1" "$2" -o
 }
 
+va ()
+{
+	_edit_jab aliases
+}
+
+vb ()
+{
+	_edit_jab bashrc
+}
+
 vd ()
 {
 	vim_diff "$1" "$2" -O
 }
 
+ve ()
+{
+	_edit_jab environ
+}
+
+vf ()
+{
+	_edit_jab functons
+}
+
+vp ()
+{
+	_edit_jab prompt
+}
+
 vr ()
 {
+	set -x
 	if [[ -n $1 && -f $1 ]]
 	then
 		filename=$1
@@ -199,6 +224,12 @@ vr ()
 		filename=/tmp/errors.err
 	fi
 	vim -c "call ReadTraceback(\"$filename\")"
+	set +x
+}
+
+vv ()
+{
+	v $JAB/bin/fim
 }
 
 zm ()
@@ -479,41 +510,6 @@ vff ()
 	fi
 }
 
-vla ()
-{
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/aliases
-	sla
-}
-
-vlb ()
-{
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/bashrc
-	slb
-}
-
-vle ()
-{
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/environ
-	sle
-}
-
-vlf ()
-{
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/functons
-	slf
-}
-
-vlp ()
-{
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/prompt
-	slp
-}
-
 wat ()
 {
 	vat $(which $1)
@@ -788,6 +784,13 @@ to_release ()
 
 # xxxxxxxxxxxx
 
+blank_script ()
+{
+	test -f $1 && return
+	echo "#! /bin/bash" > $1
+	echo "" >> $1
+}
+
 # xxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxx
@@ -851,18 +854,31 @@ console_title_off ()
 # _xxxxxxxxxxxxxxxxxxx
 # functions starting with an underscore are intended for use within this file only
 
+_edit_source ()
+{
+	set -x
+	blank_script $1
+	v $1
+	source $1
+	set +x
+}
+	
+_edit_jab ()
+{
+	if [[ -z $JAB ]]
+	then
+		echo \$JAB is empty >&2
+	else
+		test -d $JAB || mkdir -p $JAB
+		_edit_source $JAB/$1
+	fi
+}
+
 _edit_locals ()
 {
 	local local_dir=$JAB/local
 	test -d $local_dir || mkdir -p $local_dir
-	local local_file=$local_dir/$1
-	if [[ ! -f $local_file ]]
-	then
-		echo "#! /bin/bash" > $local_file
-		echo "" >> $local_file
-	fi
-	v $local_file
-	source $local_file
+	_edit_source $local_dir/$1
 }
 	
 _divv_get_difference ()
