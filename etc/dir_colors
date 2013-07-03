@@ -33,6 +33,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .conf         00;35
 .config       00;35
 .css          00;35
+.g            00;35
 .html         00;35
 .ini          00;35
 .in           00;35
