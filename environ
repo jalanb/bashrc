@@ -36,7 +36,8 @@ shopt -s cdspell
 #
 # some interesting paths
 #
-export LOGS=/var/log
+test -d $HOME/log && LOGS=$HOME/log || LOGS=/var/log
+export LOGS
 export XAUTHORITY=$HOME/.Xauthority
 
 if [[ -f /usr/local/bin/gls ]]
