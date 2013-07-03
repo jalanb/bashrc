@@ -424,42 +424,31 @@ try ()
 
 vla ()
 {
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/aliases
-	sla
+	_edit_locals aliases
 }
 
 vlb ()
 {
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/bashrc
-	slb
+	_edit_locals bashrc
 }
 
 vle ()
 {
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/environ
-	sle
+	_edit_locals environ
 }
 
 vlf ()
 {
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/functons
-	slf
+	_edit_locals functons
 }
 
 vlp ()
 {
-	test -d $JAB/local || mkdir $JAB/local
-	v $JAB/local/prompt
-	slp
+	_edit_locals prompt
 }
 
 vpe ()
 {
-	test -d $JAB/local || mkdir $JAB/local
 	v $JAB/python-environ
 	spe
 }
@@ -859,8 +848,23 @@ console_title_off ()
 	fi
 }
 
-# xxxxxxxxxxxxxxxxxxxx
+# _xxxxxxxxxxxxxxxxxxx
+# functions starting with an underscore are intended for use within this file only
 
+_edit_locals ()
+{
+	local local_dir=$JAB/local
+	test -d $local_dir || mkdir -p $local_dir
+	local local_file=$local_dir/$1
+	if [[ ! -f $local_file ]]
+	then
+		echo "#! /bin/bash" > $local_file
+		echo "" >> $local_file
+	fi
+	v $local_file
+	source $local_file
+}
+	
 _divv_get_difference ()
 {
 	diff -q -r \
