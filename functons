@@ -111,6 +111,11 @@ ky ()
 	y
 }
 
+pi ()
+{
+	ipython --no-confirm-exit $*
+}
+
 ra ()
 {
 	run_as abrogan $*
