@@ -49,8 +49,6 @@ prompt_command ()
 	else
 		export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
 	fi
-	echo
-	echo -ne $STATUS
 	changes=0
 	[[ -n $IGNORE_CHANGES ]] || get_svn_status
 	if [[ $? == 2 ]]
@@ -63,7 +61,7 @@ prompt_command ()
 	fi
 	console_whoami 2>/dev/null
 	# local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
-	export PS1=" ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
+	export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
 	history -a
 }
 
