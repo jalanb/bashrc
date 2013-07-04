@@ -94,6 +94,14 @@ gg ()
 	grep "$sought" $* | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
+gp ()
+{
+	local __doc__="grep in python files under here, show results as vim commands"
+	sought=$1
+	shift
+	find . -name "*.py" -exec grep -nH "$sought" {} \; | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+}
+
 gh ()
 {
 	local __doc__="show stuff from history"
