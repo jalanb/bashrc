@@ -36,12 +36,12 @@ source_jab ()
 	source_file $LOCAL/python-environ
 	source_file $JAB/prompt green
 	source_file $LOCAL/prompt
-	source_file $JAB/aliases
-	source_file $LOCAL/aliases
 	source_file $JAB/functons
 	source_file $LOCAL/functons
 	source_file $JAB/python/kd/kd.sh
 	source_file $JAB/python/what/what.sh
+	what_source $JAB/aliases
+	what_source $LOCAL/aliases
 }
 
 clean_jab()
