@@ -805,6 +805,12 @@ console_whoami ()
 	console_title_on $USER@$(hostname -s)  
 }
 
+source_aliases ()
+{
+	local __doc__='source files which have aliases and remember the filenames'
+	ALIASES="$ALIASES:$1"
+	source $1
+}
 
 # xxxxxxxxxxxxxxx
 
@@ -861,11 +867,14 @@ console_title_off ()
 
 _edit_source ()
 {
-	set -x
 	blank_script $1
-	v $1
-	source $1
-	set +x
+	$EDITOR $1
+	if echo $1 | grep -q alias
+	then
+		source_aliases $1
+	else
+		source_file $1
+	fi
 }
 	
 _edit_jab ()

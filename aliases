@@ -94,7 +94,7 @@ alias rr="$JAB/python/ranger/bin/range"
 alias rq="rm -rf "
 alias ry="rf pycos"
 
-alias sa="source $JAB/aliases"
+alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
 alias sc="svn ci -m"
 alias sd="svn diff "
