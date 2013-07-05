@@ -1,0 +1,72 @@
+#! /bin/bash
+
+# This script should find files under a directory and then edit them with vim
+
+# Default - find . -name "*.py"
+# 	Specify another directory, or other globs as args to this script
+
+extract_dir()
+{
+	dir=
+	names=
+	for arg in $*
+	do
+		if [[ ${arg:0:1} == "*" ]]
+		then
+			if [[ -z "$names" ]]
+			then
+				names="-name $arg"
+			else
+				names="$names -o -name $arg"
+			fi
+		elif [[ -d $arg && -z "$dir" ]]
+		then
+			dir=$(python -c"import os; print os.path.realpath(\"$arg\")")
+		else
+			if [[ -z "$sought" ]]
+			then
+				sought=$arg
+			else
+				sought="$sought $arg"
+			fi
+		fi
+	done
+	if [[ -z "$names" ]]
+	then
+		names="-name *.py"
+	fi
+	if [ -z "$dir" ]
+	then
+		dir=.
+	fi
+}
+
+find_files ()
+{
+	find $dir '(' -name .svn -o -name tags ')' -prune -o '(' $names ')' -exec grep -l "$sought" {} \;
+}
+
+find_paths_arg ()
+{
+	find_files | sort | uniq | tr '\n' ' '
+}
+
+edit ()
+{
+	vim -p $* +/"$sought"
+}
+
+main ()
+{
+	local __doc__="grep in python files under here, show results as vim commands"
+	extract_dir $*
+	found_files=$(find_paths_arg)
+	if [[ -n "$found_files" ]] 
+	then
+		edit $found_files
+	else
+		echo \"$sought\" not found in \"../*.py\"
+	fi
+}
+
+main $*
