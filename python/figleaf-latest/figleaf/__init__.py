@@ -80,7 +80,7 @@ def get_lines(fp):
     # rstrip is a workaround for http://bugs.python.org/issue4262
     src = fp.read().rstrip() + "\n"
     code = compile(src, "", "exec")
-    
+
     return internals.get_interesting_lines(code)
 
 def combine_coverage(d1, d2):
@@ -197,7 +197,7 @@ _t = None
 
 def init(exclude_path=None, include_only=None):
     from internals import CodeTracer
-    
+
     global _t
     if _t is None:
         _t = CodeTracer(exclude_path, include_only)
@@ -215,13 +215,13 @@ def start(ignore_python_lib=True):
             exclude_path = os.path.realpath(os.path.dirname(os.__file__))
 
         init(exclude_path, None)
-    
+
     _t.start()
 
 def start_section(name):
     global _t
     _t.start_section(name)
-    
+
 def stop_section():
     global _t
     _t.stop_section()
@@ -291,7 +291,7 @@ def main():
 
     ## Reset system args so that the subsequently exec'd file can read
     ## from sys.argv
-    
+
     sys.argv = remaining_args
 
     sys.path[0] = os.path.dirname(sys.argv[0])

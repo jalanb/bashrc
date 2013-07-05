@@ -2,7 +2,7 @@ import os
 import sys
 import path
 import argv
-import l 
+import l
 import lout
 
 
@@ -39,7 +39,7 @@ argv.add_options([
 		( 'all', 'show all python related files', False),
 		( 'others', 'show non python related files as well', False),
 ])
-		
+
 
 def python_wanted(path_to_file):
 	ext = path_to_file.ext

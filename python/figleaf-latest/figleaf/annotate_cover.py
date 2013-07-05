@@ -9,7 +9,7 @@ def report_as_cover(coverage, exclude_patterns=[], ):
 
     keys = coverage.keys()
     info_dict = {}
-    
+
     for k in filter_files(keys):
         try:
             pyfile = open(k, 'rU')
@@ -66,7 +66,7 @@ def report_as_cover(coverage, exclude_patterns=[], ):
 def make_cover_lines(line_info, coverage_info, fp):
     n_covered = n_lines = 0
     output = []
-    
+
     for i, line in enumerate(fp):
         is_covered = False
         is_line = False
@@ -89,7 +89,7 @@ def make_cover_lines(line_info, coverage_info, fp):
 
         line = line.rstrip()
         output.append(prefix + ' ' + line)
-    
+
     return (n_covered, n_lines, output)
 
 def make_cover_filename(orig):
@@ -99,7 +99,7 @@ def main():
     import sys
     import logging
     from optparse import OptionParser
-    
+
     ###
 
     option_parser = OptionParser()
@@ -111,7 +111,7 @@ def main():
     option_parser.add_option('-q', '--quiet', action='store_true',
                              dest='quiet',
          help="file containig regexp patterns of files to exclude from report")
-    
+
     option_parser.add_option('-D', '--debug', action='store_true',
                              dest='debug',
                              help='Show all debugging messages')

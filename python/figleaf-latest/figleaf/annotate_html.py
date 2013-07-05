@@ -70,7 +70,7 @@ def write_html_summary(info_dict, directory):
 
     percents = [ float(v[1]) * 100. / float(v[0])
                  for (k, v) in info_dict_items if v[0] ]
-    
+
     percent_90 = [ x for x in percents if x >= 90 ]
     percent_75 = [ x for x in percents if x >= 75 ]
     percent_50 = [ x for x in percents if x >= 50 ]
@@ -115,7 +115,7 @@ def write_html_summary(info_dict, directory):
 
     index_fp.write('</table>\n')
     index_fp.close()
-    
+
 
 def report_as_html(coverage, directory, exclude_patterns, files_list):
     """
@@ -160,7 +160,7 @@ def report_as_html(coverage, directory, exclude_patterns, files_list):
         html_outfile = make_html_filename(pyfile)
         html_outfile = os.path.join(directory, html_outfile)
         html_outfp = open(html_outfile, 'w')
-        
+
         html_outfp.write('source file: <b>%s</b><br>\n' % (pyfile,))
         html_outfp.write('''
 
@@ -170,7 +170,7 @@ file stats: <b>%d lines, %d executed: %.1f%% covered</b>
 </pre>
 
 ''' % (n_lines, n_covered, percent, "\n".join(output)))
-            
+
         html_outfp.close()
 
         logger.info('reported on %s' % (pyfile,))
@@ -230,7 +230,7 @@ def main():
     option_parser.add_option('-q', '--quiet', action='store_true',
                              dest='quiet',
                              help='Suppress all but error messages')
-    
+
     option_parser.add_option('-D', '--debug', action='store_true',
                              dest='debug',
                              help='Show all debugging messages')
@@ -239,7 +239,7 @@ def main():
 
     if options.quiet:
         logging.disable(logging.DEBUG)
-        
+
     if options.debug:
         logger.setLevel(logging.DEBUG)
 

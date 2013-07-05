@@ -36,11 +36,11 @@ def configure(parser):
     loaded from a configuration file.
     """
     CONFIG_FILE = os.environ.get('FIGLEAFRC', DEFAULT_CONFIGURE_FILE)
-    
+
     parser.add_option("-c", "--coverage-file", action="store",
                        type="string", dest="coverage_file",
                        help="File containing figleaf coverage information.")
-    
+
     parser.add_option("-s", "--sections-file", action="store",
                        type="string", dest="sections_file",
                        help="File containing figleaf sections coverage info.")
@@ -72,12 +72,12 @@ def filter_coverage(coverage, re_match):
         return coverage
 
     regexp = re.compile(re_match)
-    
+
     d = {}
     for filename, lines in coverage.items():
         if regexp.match(filename):
             d[filename] = lines
-            
+
     return d
 
 ### commands
@@ -92,7 +92,7 @@ def list(options, match=""):
                            (options.coverage_file,)
         if match:
             print>>sys.stderr, '** Filtering against regexp "%s"' % (match,)
-        
+
     coverage = figleaf.read_coverage(options.coverage_file)
     coverage = filter_coverage(coverage, match)
 
@@ -165,14 +165,14 @@ def filter_files(filenames, exclude_patterns = [], files_list = {}):
                 del files_list[filename]
             except KeyError:
                 logger.info('SKIPPING %s -- not in files list' % (filename,))
-            
+
         return
 
     ### no files list given -- handle differently
 
     for filename in filenames:
         abspath = os.path.abspath(filename)
-        
+
         # check to see if we match anything in the exclude_patterns list
         skip = False
         for pattern in exclude_patterns:
@@ -206,7 +206,7 @@ def filter_files(filenames, exclude_patterns = [], files_list = {}):
 def main():
     parser = OptionParser()
     configure(parser)
-    
+
     options, args = parser.parse_args()
 
     if not len(args):
@@ -214,7 +214,7 @@ def main():
         print "\n    %s -h\n" % (sys.argv[0],)
         print "for help on commands and options."
         sys.exit(-1)
-        
+
     cmd = args.pop(0)
 
     if cmd == 'list':
