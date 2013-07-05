@@ -104,7 +104,8 @@ gp ()
 	local __doc__="grep in python files under here, show results as vim commands"
 	sought=$1
 	shift
-	find . -name "*.py" -exec grep -nH "$sought" {} \; | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+	seek=${sought//\\/\\\\}
+	find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):vim \1 +/\"$seek\":" | sort | uniq
 }
 
 gh ()
