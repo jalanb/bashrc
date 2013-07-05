@@ -23,6 +23,11 @@ w ()
 
 # xx
 
+3d ()
+{
+	tree -d $* | less
+}
+
 aa ()
 {
 	Ack --all $*
