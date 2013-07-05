@@ -327,7 +327,7 @@ let g:pylint_show_rate = 0
 "
 " Showing numbers in left-hand gutter
 "
-" <leader>n is bound (above) to ToggleNumber()
+" <leader>n is bound (above) to ChangeNumber()
 "
 function! SetRelativeNumber()
 	if exists('&relativenumber') && (&relativenumber == 0)
@@ -356,15 +356,23 @@ function! ToggleNumber()
 endfunc
 
 function CycleNumber()
-	if &number == 1
+	" There are 4 states to cycle between
+	" both off: set number on, relative off
+	" number on, relative off: set number off, relative on
+	" number off, relative on: set number on, relative on
+	" both on: set both off
+	if &number == 0 && &relativenumber == 0
+		set number
+		set norelativenumber
+	elseif &number == 1 && &relativenumber == 0
+		set nonumber
+		set relativenumber
+	elseif &number == 0 && &relativenumber == 1
+		set number
 		set relativenumber
 	else
-		if &relativenumber == 1
-			set nonumber
-			set norelativenumber
-		else
-			set number
-		endif
+		set nonumber
+		set norelativenumber
 	endif
 endfunction
 
