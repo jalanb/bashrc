@@ -51,8 +51,14 @@ find_paths_arg ()
 	find_files | sort | uniq | tr '\n' ' '
 }
 
+list ()
+{
+	ls -lhtr $*
+}
+
 edit ()
 {
+	echo vim -p $* +/"$sought"
 	vim -p $* +/"$sought"
 }
 
@@ -63,6 +69,7 @@ main ()
 	found_files=$(find_paths_arg)
 	if [[ -n "$found_files" ]] 
 	then
+		list $found_files
 		edit $found_files
 	else
 		echo \"$sought\" not found in \"../*.py\"
