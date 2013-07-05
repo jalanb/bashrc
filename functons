@@ -371,6 +371,16 @@ dev ()
 	ls
 }
 
+fgp ()
+{
+	fgv *.py $*
+}
+
+fgt ()
+{
+	fgv *.test *.tests $*
+}
+
 fsh ()
 {
 # run fred by his extension
@@ -550,6 +560,11 @@ down ()
 {
 	c ~/Download* $*
 	ls -alhtr
+}
+
+fgpp ()
+{
+	fgv *.py *.test *.tests $*
 }
 
 mkcd () 
