@@ -130,6 +130,18 @@ pi ()
 	ipython --no-confirm-exit $*
 }
 
+py ()
+{
+	if [[ -z "$*" ]]
+	then
+		python2.7
+	else
+		script=${1/%./.py}
+		shift
+		python $script $*
+	fi
+}
+
 ra ()
 {
 	run_as abrogan $*
