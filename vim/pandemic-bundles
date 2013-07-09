@@ -1,20 +1,16 @@
-[vim-easymotion]
-source = https://github.com/Lokaltog/vim-easymotion.git
-type = git
-
 [vim-abolish]
 source = https://github.com/tpope/vim-abolish.git
-type = git
-
-[syntastic]
-source = https://github.com/scrooloose/syntastic.git
 type = git
 
 [clam]
 source = https://github.com/sjl/clam.vim.git
 type = git
 
-[nerdtree]
-source = https://github.com/scrooloose/nerdtree.git
+[vim-easymotion]
+source = https://github.com/Lokaltog/vim-easymotion.git
+type = git
+
+[syntastic]
+source = https://github.com/scrooloose/syntastic.git
 type = git
 
