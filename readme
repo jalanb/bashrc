@@ -14,9 +14,9 @@ Check out from the main branch of the repository
 
 	svn co https://repository.altobridge.com/jab .jab
 
-Run the install script
+Run the setup script
 
-	cd .jab/install
+	cd .jab/server
 	bash setup.sh
 
 Or, as it is always "a work in progress" I might be better off with
