@@ -1,20 +1,14 @@
-
-Replify
-	get data from abrogan-dev to abrogan-run, 1
-		get data from abrogan-dev to test-ggw, 2
-	run through Kevin's other changes, 2
-	check why AM Charts removed, 3
-
 SCM
-	Python 2.7 everywhere, 3
-	issue 12648: Test all the code, 4
+	Python 2.7 everywhere, 2
+	issue 12648: Test all the code, 1
 		issue 17806: Test on local machine, 4
-		issue 12056: Move trackers to own repo, 5
-	issue 12973: Separate Product and Project lists on tracker, 4
-		test on ie-build-2, 5
 
 Self
 	pym: try more unparsers, 1
 	mial: answer in vim, 2
 	$JAB: move to github, 3
 	Python 3.3 somewhere, 4
+
+Optimisation
+	get data from abrogan-dev to abrogan-run, 4
+		get data from abrogan-dev to test-ggw, 5
