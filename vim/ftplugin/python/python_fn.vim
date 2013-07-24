@@ -69,19 +69,19 @@ let b:loaded_py_ftplugin = 1
 " You may prefer use <s-up> and <s-down>... :-)
 
 " jump to previous class
-  map  [c   :call PythonDec("class", -1)<CR>w
+  map  [c   :call PythonDec("class", -1)<CR>
 " vmap ]J   :call PythonDec("class", -1)<CR>
 
 " jump to next class
-  map  ]c   :call PythonDec("class", 1)<CR>w
+  map  ]c   :call PythonDec("class", 1)<CR>
 " vmap ]j   :call PythonDec("class", 1)<CR>
 
 " jump to previous function
-  map  [d   :call PythonDec("function", -1)<CR>2w
+  map  [d   :call PythonDec("function", -1)<CR>
 " vmap ]F   :call PythonDec("function", -1)<CR>
 
 " jump to next function
-  map  ]d   :call PythonDec("function", 1)<CR>2w
+  map  ]d   :call PythonDec("function", 1)<CR>
 " vmap ]f   :call PythonDec("function", 1)<CR>
 
 
@@ -180,10 +180,10 @@ endfunction
 " Go to previous (-1) or next (1) class/function definition
 function! PythonDec(obj, direction)
   if (a:obj == "class")
-    let objregexp = "^\\s*class\\s\\+[a-zA-Z0-9_]\\+"
+    let objregexp = "^\\s*class\\s\\+\\zs[a-zA-Z0-9_]\\+"
         \ . "\\s*\\((\\([a-zA-Z0-9_,. \\t\\n]\\)*)\\)\\=\\s*:"
   else
-    let objregexp = "^\\s*def\\s\\+[a-zA-Z0-9_]\\+\\s*(\\_[^:#]*)\\s*:"
+    let objregexp = "^\\s*def\\s\\+\\zs[a-zA-Z0-9_]\\+\\s*(\\_[^:#]*)\\s*:"
   endif
   let flag = "W"
   if (a:direction == -1)

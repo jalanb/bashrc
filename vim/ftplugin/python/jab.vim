@@ -15,7 +15,7 @@ noremap tp :Pylint<cr>
 noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
 noremap <leader>8	b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
-noremap <leader>d	?^\s*def <cr>2w*
+noremap <leader>d	?^\s*def \zs\i<cr>*
 
 
 set foldmethod=indent
