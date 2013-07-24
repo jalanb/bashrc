@@ -28,7 +28,7 @@ let s:file_stem = fnamemodify(s:file_name,":r")
 let s:file_py = s:file_stem . '.py'
 let s:file_expected = s:file_stem . '.expected'
 let s:file_actual = s:file_stem . '.actual'
-if ! &diff && ! exists("g:recovering")
+if ! &diff && ! exists("g:recovering") && argc() == 1
 	let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
 	if filereadable(s:file_jabber) && s:file_py != s:file_jabber && &loadplugins
 		exec "tabnew " s:file_jabber
