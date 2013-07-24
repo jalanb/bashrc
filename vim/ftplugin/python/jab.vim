@@ -222,7 +222,7 @@ endif
 if !exists("PPP")
 	function WritePEP()
 		normal zR
-		exec "%s/\\s\\+$//"
+		exec "%s/\\s\\+$//ce"
 		exec "%s/^\\([^<'\"[]\\+\\):\\([^ ]\\)/\\1: \\2/gce"
 		exec "%s/\\([^ ]\\) #/\\1  #/e"
 		exec "%s/\\([^\\s]\\)\\n^\\n\\([a-z]\\)/\\1\\2/ce"
