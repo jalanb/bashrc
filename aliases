@@ -105,7 +105,6 @@ alias sl="svn_log "
 alias so="sort "
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
-alias sv="svn revert "
 alias st="stat "
 
 alias tf="tail -f"
@@ -150,7 +149,6 @@ alias out="to_release"
 
 alias ps3="ps axf | vim - +"
 
-alias rq.="/bin/rm -rf ./*"
 alias rrs="sudo $JAB/python/ranger/bin/range"
 alias rff="r fred* *.tmp"
 

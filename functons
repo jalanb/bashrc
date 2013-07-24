@@ -170,6 +170,16 @@ sk ()
 	ls -l $1*
 }
 
+sv ()
+{
+	if [[ -n "$*" ]]
+	then
+		svn revert $*
+	else
+		svn revert *
+	fi
+}
+
 uj ()
 {
 # update $JAB from the repository
@@ -486,6 +496,11 @@ lyy ()
 	$reset
 }
 
+rq. ()
+{
+	/bin/rm -rf ./*
+}
+
 unalias try > /dev/null 2>&1
 try ()
 {
@@ -583,6 +598,13 @@ mkcd ()
 { 
     local __doc__='make a directory and start using it';
     mkdir "$*" && cd "$*"
+}
+
+rq.. ()
+{
+	local directory_here=$(basename $PWD)
+	cd ..
+	/bin/rm -rf $directory_here
 }
 
 stat ()
