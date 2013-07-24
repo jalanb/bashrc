@@ -187,7 +187,14 @@ else
 			read -p"$editor $prompt_path ? " reply
 			if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
 			then
-				$editor $prompt_path
+				if [ -d $prompt_path ]
+				then
+					cd $prompt_path
+					$editor .
+					cd - > /dev/null
+				else
+					$editor $prompt_path
+				fi
 			elif [[ $file_exists == "2" ]]
 			then
 				$editor $args
