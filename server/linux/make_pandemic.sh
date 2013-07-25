@@ -12,15 +12,19 @@ make_pandemic ()
 	cd vim-pandemic-master
 	sed -i -e "s|vim/bundle.remote|vim/bundle|" bin/pandemic
 	python2.7 setup.py install --prefix=$HOME
-	if [[ ! -f ~/bin/pamdemic ]]
+	PANDEMIC=$PANDEMIC
+	if [[ ! -f $PANDEMIC ]]
 	then
-		echo Installation of pandemic failed >&2
+		echo Installation of $PANDEMIC failed >&2
+		exit 1
+	else
+		sed -i -e "s|vim/bundle.remote|vim/bundle|" $PANDEMIC
 	fi
 }
 
 update_pandemic ()
 {
-	pandemic list | sed -e "s/:.*//" | xargs env GIT_SSL_NO_VERIFY=true pandemic update
+	$PANDEMIC list | sed -e "s/:.*//" | xargs env GIT_SSL_NO_VERIFY=true pandemic update
 }
 
 clean_up ()
