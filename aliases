@@ -64,8 +64,6 @@ alias eg="env | g "
 alias ga="alias | g"
 alias gc="git commit -m"
 
-alias hh="history -n"
-
 alias IP="python $JAB/python/ifconfig.py 172"
 
 alias jj="c $JAB"
@@ -110,7 +108,6 @@ alias st="stat "
 alias tf="tail -f"
 
 alias v.="v ."
-alias vh="v ~/.bash_history +"
 alias vj="v $JAB"
 alias vt="v -p *.txt"
 alias vy="v $PYTHON_HOME"

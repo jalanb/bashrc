@@ -114,6 +114,16 @@ gh ()
 	history | grep -v "\<\(history\|gh\)\>" | grep --color $*
 }
 
+hh ()
+{
+	history -n
+}
+
+hv ()
+{
+	history | vim - +
+}
+
 ky ()
 {
 	if [[ -z "$1" ]]
@@ -271,6 +281,11 @@ vr ()
 vv ()
 {
 	v $JAB/bin/fim
+}
+
+vh ()
+{
+	v ~/.bash_history +
 }
 
 zm ()
