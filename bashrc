@@ -25,10 +25,10 @@ source_file ()
 source_jab ()
 {
 	local LOCAL=$JAB/local
-	[[ -e /usr/bin/svn ]] && SVN=/usr/bin/svn 
-	[[ -e /usr/local/bin/svn ]] && SVN=/usr/local/bin/svn 
-	$SVN up $JAB
-	$SVN stat $JAB
+	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
+	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
+	$SVN_CLIENT up $JAB
+	$SVN_CLIENT stat $JAB
 	source_file $JAB/bin/add_to_a_path.sh
 	source_file environ
 	source_file $JAB/python-environ optional
