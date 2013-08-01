@@ -227,7 +227,14 @@ set nowrap
 set ts=4
 set shiftwidth=4
 set noexpandtab
+set tabpagemax=1000
 set nospell
+"
+" Cusror shapes differing in different modes
+" from http://www.reddit.com/user/Eyckelboom
+" " set a nicer cursor in insert mode (from terryma on github)
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 "
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)
