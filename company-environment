@@ -4,8 +4,8 @@
 
 if [[ -z $TRACKERS ]]
 then 
-	if [[ -d /Users/jab/jab/alto/dev/friday/trackers ]]
-	then TRACKERS=/Users/jab/jab/alto/dev/friday/trackers
+	if [[ -d $HOME/src/alto/scm/trunk/trackers ]]
+	then TRACKERS=$HOME/src/alto/scm/trunk/trackers
 	elif [[ -d /Users/jab/jab/alto/dev/friday/tracking ]]
 	then TRACKERS=/Users/jab/jab/alto/dev/friday/tracking
 	elif [[ -d $HOME/src/svn/amg/trunk/trackers ]]
