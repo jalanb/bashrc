@@ -27,7 +27,10 @@ source_jab ()
 	local LOCAL=$JAB/local
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
-	$SVN_CLIENT up $JAB
+	if ping -c 1 -t 1 -W 100 repository.altobridge.com > /dev/null
+	then $SVN_CLIENT up $JAB
+	else echo Cannot ping repository.altobridge.com
+	fi
 	$SVN_CLIENT stat $JAB
 	source_file $JAB/bin/add_to_a_path.sh
 	source_file environ
