@@ -22,19 +22,10 @@ changes=0
 
 get_svn_status ()
 {
-	if [[ -d ".svn" ]]
+	if python ~/.jab/python/significant_svn_status.py .
 	then
-		find . -type d -name .svn -prune -o -type d -print 2>/dev/null | while read dir 
-		do
-			if [ -d "$dir/.svn" ]
-			then
-				if svn stat -N "$dir" 2>/dev/null | grep -q ^[MAD]
-				then
 					export changes=1
 					return 2
-				fi  
-			fi  
-		done
 	fi
 }
 

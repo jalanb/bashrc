@@ -1,0 +1,7 @@
+The significant_svn_status script
+=================================
+
+	>>> import significant_svn_status
+	>>> print significant_svn_status.__doc__
+	Get the svn status of a directory recursively
+	...
