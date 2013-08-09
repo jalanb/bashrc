@@ -137,7 +137,7 @@ ky ()
 
 pi ()
 {
-	ipython --no-confirm-exit $*
+	ipython -noconfirm_exit $*
 }
 
 py ()
