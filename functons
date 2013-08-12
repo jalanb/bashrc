@@ -252,7 +252,7 @@ vf ()
 
 vp ()
 {
-	_edit_jab prompt
+	_edit_jab prompt $*
 }
 
 vr ()
@@ -951,13 +951,15 @@ console_title_off ()
 
 _edit_source ()
 {
-	blank_script $1
-	$EDITOR $1
-	if echo $1 | grep -q alias
+	local filepath=$1
+	shift
+	blank_script $filepath
+	$EDITOR $filepath
+	if echo $filepath | grep -q alias
 	then
-		source_aliases $1
+		source_aliases $filepath
 	else
-		source_file $1
+		source_file $filepath $*
 	fi
 }
 	
@@ -968,7 +970,9 @@ _edit_jab ()
 		echo \$JAB is empty >&2
 	else
 		test -d $JAB || mkdir -p $JAB
-		_edit_source $JAB/$1
+		local filepath=$JAB/$1
+		shift
+		_edit_source $filepath $*
 	fi
 }
 
