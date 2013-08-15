@@ -14,5 +14,5 @@ Self
 	Python 3.3 somewhere, 4
 
 Optimisation
-	get data from abrogan-dev to abrogan-run, 4
-		get data from abrogan-dev to test-ggw, 5
+	get data from abrogan-dev to test-ggw, 5
+	write a movie protocol handler, 5
