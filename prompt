@@ -22,10 +22,12 @@ changes=0
 
 get_svn_status ()
 {
-	if python ~/.jab/python/significant_svn_status.py .
+	local significant_svn_status=$(dirname $BASH_SOURCE)/python/significant_svn_status.py
+	test -f $significant_svn_status || return 1
+	if python $significant_svn_status .
 	then
-					export changes=1
-					return 2
+		export changes=1
+		return 2
 	fi
 }
 
