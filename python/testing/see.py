@@ -96,24 +96,20 @@ class _SeeOutput(tuple):
 
 	def __repr__(self):
 		lens = sorted(map(len, self)) or [0]
-		most = lens[int(len(lens)*0.9)]
-		if lens[-1] + 6 > most:
-			max_len = most
-		else:
-			max_len = lens[-1]
+		max_len = lens[-1]
 
-		def justify(i):
-			if len(i) <= max_len + 2:
-				return i.ljust(max_len + 4)
+		def justify(item):
+			if len(item) <= max_len + 2:
+				return item.ljust(max_len + 4)
 			else:
-				return i.ljust(max_len * 2 + 8)
+				return item.ljust(max_len * 2 + 8)
 
 		padded = [justify(i) for i in self]
 		if 'ps1' in dir(sys):
 			indent = ' ' * len(sys.ps1)
 		else:
 			indent = '	'
-		columns = int(os.environ.get('COLUMNS', 78))
+		columns = int(os.environ.get('COLUMNS', 80)) - 5
 		return textwrap.fill(''.join(padded), columns, initial_indent=indent, subsequent_indent=indent)
 
 
