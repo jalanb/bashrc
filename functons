@@ -250,6 +250,11 @@ vf ()
 	_edit_jab functons
 }
 
+vh ()
+{
+	v ~/.bash_history +
+}
+
 vp ()
 {
 	_edit_jab prompt $*
@@ -278,14 +283,15 @@ vr ()
 	set +x
 }
 
+vt ()
+{
+	first_dir $*
+	v -p "$dir"/*.txt
+}
+
 vv ()
 {
 	v $JAB/bin/fim
-}
-
-vh ()
-{
-	v ~/.bash_history +
 }
 
 zm ()

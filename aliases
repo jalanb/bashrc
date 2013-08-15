@@ -109,7 +109,6 @@ alias tf="tail -f"
 
 alias v.="v ."
 alias vj="v $JAB"
-alias vt="v -p *.txt"
 alias vy="v $PYTHON_HOME"
 
 alias xk="exchange_keys"
