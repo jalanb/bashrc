@@ -187,7 +187,7 @@ else
 			read -p"$editor $prompt_path ? " reply
 			if [[ -z $reply || $reply == "y" || $reply == "Y" ]]
 			then
-				if [ -d $prompt_path ]
+				if [[ -d "$prompt_path" ]]
 				then
 					cd $prompt_path
 					$editor .
