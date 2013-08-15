@@ -8,12 +8,8 @@ import sys
 import commands
 
 
-from paths import makepath
-
-
-
-def _get_immediately_significant_status(path_to_file):
-	command = 'svn stat --depth=immediates %s' % path_to_file
+def _get_immediately_significant_status(path_to_dir):
+	command = 'svn stat --depth=immediates %s' % path_to_dir
 	status, output = commands.getstatusoutput(command)
 	if status:
 		raise ValueError(output)
@@ -32,16 +28,19 @@ def _get_significant_status(path_to_directory):
 	Stop if any immediates have a significant status
 		otherwise recurse into sub-directories
 	"""
-	if not path_to_directory.isdir():
+	isdir = os.path.isdir
+	if not isdir(path_to_directory):
 		return None
-	svn_dir = path_to_directory / '.svn'
-	if not svn_dir.isdir():
+	path_to_svn = '%s/.svn' % path_to_directory
+	if not isdir(path_to_svn):
 		return None
 	status = _get_immediately_significant_status(path_to_directory)
 	if status:
 		return status
-	for path_to_dir in path_to_directory.dirs():
-		if path_to_dir.ishidden():
+	for path_to_dir in os.listdir(path_to_directory):
+		if not isdir(path_to_dir):
+			continue
+		if path_to_dir[0] == '.':
 			continue
 		status = _get_significant_status(path_to_dir)
 		if status:
@@ -51,7 +50,7 @@ def _get_significant_status(path_to_directory):
 
 def main(args):
 	for arg in args:
-		if _get_significant_status(makepath(arg)):
+		if _get_significant_status(arg):
 			return os.EX_OK
 	return not os.EX_OK
 
