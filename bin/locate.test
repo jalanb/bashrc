@@ -10,6 +10,16 @@ More modules for testing
 	
 	>>> import os
 
+Mock options
+------------
+
+Some methods need options which look like they came from an OptionParser
+	>>> class Values:
+	...     pass
+	>>> options = Values()
+	>>> options.directories = False
+	>>> options.files = False
+
 locate
 ------
 
@@ -23,10 +33,20 @@ The standard locate command gives many files for its own name
 	True
 
 But the module cuts that down to just the files named locate
-	>>> lines = locate.locate('locate')
+	>>> lines = locate.locate('locate', options)
 	>>> len(lines) < 10
 	True
 
 And everything found has just the filename as "locate"
 	>>> not [l for l in lines if os.path.basename(l) != 'locate']
+	True
+
+Using options
+-------------
+
+We can insist on finding only directories
+	>>> options.directories = True
+
+Bt, it turns out there are no directories called 'locate'
+	>>> not locate.locate('locate', options)
 	True
