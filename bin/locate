@@ -1,33 +1,7 @@
 #! /usr/bin/env python2.7
 
-
-import os
 import sys
-import commands
-
-
-def locate(string):
-	command = '/usr/bin/locate %s' % string
-	status, output = commands.getstatusoutput(command)
-	if status:
-		raise ValueError('command: %s\n output: %s' % (command, output))
-	lines = [l for l in output.split('\n') if '/.svn' not in l]
-	result = [l for l in lines if os.path.basename(l) == string]
-	if result:
-		return result
-	result = [l for l in lines if string in l.split(os.path.sep)]
-	if result:
-		return result
-	return lines
-
-
-def main(args):
-	for arg in args:
-		paths = locate(arg)
-		if paths:
-			print '\n'.join(paths)
-	return os.EX_OK
-
+from locate import main
 
 if __name__ == '__main__':
 	sys.exit(main(sys.argv[1:]))

@@ -1,0 +1,32 @@
+The locate module
+=================
+
+	>>> import locate
+	>>> print locate.__doc__
+	Methods to run the locate script more exactly
+
+More modules for testing
+------------------------
+	
+	>>> import os
+
+locate
+------
+
+The script will need to run locate commands
+	>>> print locate.make_locate_command('fred')
+	/.../locate fred
+
+The standard locate command gives many files for its own name
+	>>> lines = locate.run_locate('locate')
+	>>> len(lines) > 10
+	True
+
+But the module cuts that down to just the files named locate
+	>>> lines = locate.locate('locate')
+	>>> len(lines) < 10
+	True
+
+And everything found has just the filename as "locate"
+	>>> not [l for l in lines if os.path.basename(l) != 'locate']
+	True
