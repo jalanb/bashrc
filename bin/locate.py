@@ -38,26 +38,19 @@ def make_check(method, options):
 	return method
 
 
-def filter_lines(lines, check):
-	result = []
-	for line in lines:
-		if check(line):
-			result.append(line)
-	return result
-
-
 def locate(string, options):
+	"""Locate some files called string, restricted by the given options"""
 	lines = run_locate(string)
 	def has_basename(path):
 		return os.path.basename(path) == string
 	check = make_check(has_basename, options)
-	result = filter_lines(lines, check)
+	result = [l for l in lines if check(l)]
 	if result:
 		return result
 	def directory_in_path(path):
 		return string in path.split(os.path.sep)
 	check = make_check(directory_in_path, options)
-	result = filter_lines(lines, check)
+	result = [l for l in lines if check(l)]
 	if result:
 		return result
 	if options.directories or options.files:
@@ -66,6 +59,7 @@ def locate(string, options):
 
 
 def handle_command_line():
+	"""Handle options and arguments from the command line"""
 	parser = optparse.OptionParser()
 	parser.add_option('-d', '--directories', action='store_true', help='only locate directories')
 	parser.add_option('-f', '--files', action='store_true', help='only locate files')
@@ -75,6 +69,7 @@ def handle_command_line():
 		import pudb
 		pudb.set_trace()
 	return options, args
+
 
 def main(args):
 	options, args = handle_command_line()
