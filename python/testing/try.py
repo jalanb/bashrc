@@ -15,6 +15,7 @@ from pprint import pprint, pformat
 from paths import makepath
 from see import see, see_methods, see_attributes, spread
 import test_files
+import try_plugins
 
 
 class DoctestInterrupt(KeyboardInterrupt):
@@ -82,6 +83,7 @@ def command_line():
 	"""
 	from optparse import OptionParser
 	parser = OptionParser()
+	parser.add_option('-s', '--show', dest='show', help='show files being tested', action='store_true')
 	parser.add_option('-v', '--verbose', dest='verbose', help='Hello World', action='store_true')
 	parser.add_option('-r', '--recursive', dest='recursive', help='recurse into any sub-directories found', action='store_true', default=False)
 	parser.add_option('-a', '--all', dest='all', help='run all tests in each file (do not stop on first FAIL)', action='store_true', default=False)
@@ -193,7 +195,7 @@ def show_running_doctest(test_script, options):
 	try:
 		sys.argv = [test_script]
 		try:
-			if options.verbose:
+			if options.verbose or options.show:
 				print 'Test', test_script
 			return run_doctest(test_script, options)
 		except DoctestInterrupt, e:
@@ -252,7 +254,9 @@ def test():
 			start = datetime.datetime.now()
 			try:
 				sys_paths.add(test_script)
-				failures, tests_run, message = show_running_doctest(test_script, options)
+				if try_plugins.pre_test(test_script):
+					failures, tests_run, message = show_running_doctest(test_script, options)
+					try_plugins.post_test(test_script, failures, tests_run)
 			finally:
 				sys_paths.remove(test_script)
 			if tests_run:
