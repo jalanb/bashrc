@@ -14,6 +14,27 @@ For convenience bash functions are provided, which can be set up like
 
 Then one can use `what` as a replacement for which, or `whap` to find whence python imports
 
+Daily use
+---------
+
+Simplified versions of the commands outlined below are provided for quick use
+ These versions are designed to be simple to use, so are short and clustered near the w key.
+    
+```shell
+	$ w cd
+```
+  will show what the cd command is (alias, function or file?)
+ 
+```shell
+	$ ww cd
+```
+  will show more about the command (definition of the alias or conents of the function/file)
+
+```shell
+	$ we cd
+```
+  will edit the command
+
 what
 ----
 
