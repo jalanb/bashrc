@@ -4,6 +4,8 @@ SCM
 	suppliers for Eoin, 1
 	regularise all command line options, 3
 
+	replace getIdFromUsername with issues.userids.get_id, 3
+
 Self
 	pym:
 		try more unparsers, 1
