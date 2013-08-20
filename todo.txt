@@ -1,5 +1,5 @@
 SCM
-	remove altobridge.repository.server.make_repository_server, 1
+	remove altobridge.repository.server.make_repository_server(), 1
 	Python 2.7 everywhere, 2
 	issue lists for Keith, 1
 	suppliers for Eoin, 1
