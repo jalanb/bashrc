@@ -89,6 +89,7 @@ def command_line():
 	parser.add_option('-a', '--all', dest='all', help='run all tests in each file (do not stop on first FAIL)', action='store_true', default=False)
 	parser.add_option('-d', '--directory_all', dest='directory_all', help='run all test scripts in a directory (do not stop on first FAILing script)', action='store_true', default=False)
 	parser.add_option('-q', '--quiet_on_success', dest='quiet_on_success', help='no output if all tests pass', action='store_true', default=False)
+	parser.add_option('-p', '--persist', dest='persist', help='do not stop on DoctestInterrupts', action='store_true', default=False)
 	options, args = parser.parse_args()
 	if hasattr(parser, 'destroy'):
 		parser.destroy()
@@ -199,7 +200,7 @@ def show_running_doctest(test_script, options):
 				print 'Test', test_script
 			return run_doctest(test_script, options)
 		except DoctestInterrupt, e:
-			if options.directory_all:
+			if options.directory_all or options.persist:
 				show_interruption(test_script, e)
 				return 0, 0, ''
 			raise
