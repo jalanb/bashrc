@@ -20,8 +20,7 @@ def check_bash():
 		from altobridge.shell import bash
 	except ImportError:
 		return
-	shows = ['commands', 'outputs', 'errors']
-	shown = [show for show in shows if bash.BashOptions.verbose.showing(show)]
+	shown = bash.BashOptions.verbosity.shown()
 	if shown:
 		print 'bash', ','.join(shown)
 	del bash
