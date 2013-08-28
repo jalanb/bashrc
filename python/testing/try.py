@@ -204,6 +204,11 @@ def show_running_doctest(test_script, options):
 				show_interruption(test_script, e)
 				return 0, 0, ''
 			raise
+		except SyntaxError, e:
+			if options.directory_all or options.persist:
+				show_syntax(test_script, e)
+				return 0, 0, ''
+			raise
 	finally:
 		sys.argv[:] = old_argv
 
@@ -229,6 +234,12 @@ def show_time_taken(start, messages, message, tests_run):
 		time_msg = 'very quickly'
 	messages.append('%s %s tests passed %s' % (message, tests_run, time_msg))
 	return end
+
+
+def show_syntax(test_script, interruption):
+	"""Show the reason for an interuption on stderr"""
+	print >> sys.stderr, 'Bye from ', test_script
+	print >> sys.stderr, 'Because:', interruption
 
 
 def show_interruption(test_script, interruption):
@@ -263,6 +274,8 @@ def test():
 			if tests_run:
 				run_all += tests_run
 				end = show_time_taken(start, messages, message, tests_run)
+			else:
+				show_time_taken(start, messages, message, tests_run)
 			if failures:
 				failures_all += failures
 				if not options.directory_all:
