@@ -6,6 +6,15 @@
 
 # x
 
+c ()
+{
+	kd $*
+	if [[ -f todo.txt ]]
+	then
+		todo_show
+	fi
+}
+
 p ()
 {
 	local me=$USER
@@ -842,6 +851,24 @@ svn_issue ()
 	svn log $* | grep -i "^issue" | head
 }
 
+todo_edit ()
+{
+	local todo_txt="$JAB_TODO"
+	if [[ -f todo.txt ]]
+	then todo_txt=todo.txt
+	fi
+	v $todo_txt
+}
+
+todo_show ()
+{
+	local todo_txt="$JAB_TODO"
+	if [[ -f todo.txt ]]
+	then todo_txt=todo.txt
+	fi
+	python2.7 $JAB/python/todo.py $todo_txt
+}
+
 # xxxxxxxxxx
 
 to_source ()
@@ -993,6 +1020,8 @@ _divv_get_difference ()
 {
 	diff -q -r \
 		--exclude=.svn \
+		--exclude=.git \
+		--exclude=.DS_Store \
 		--exclude="*.py[co]" \
 		--exclude=tags \
 		--exclude=".*sw[po]" \

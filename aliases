@@ -19,13 +19,13 @@ unalias -a
 # x
 
 alias -- -="c -"
-alias 1="v $JAB_TODO"
-alias 2="python2.7 $JAB/python/todo.py"
+alias 1=todo_edit
+alias 2=todo_show
 alias 3="tree"
 alias 7="svn"
 alias a="ack"
 alias b="b"
-alias c="kd "
+# c is a function
 alias d="d"
 alias e="ex --noplugin -u ~/.vim/exrc"
 alias f="find "
