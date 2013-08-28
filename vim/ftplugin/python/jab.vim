@@ -84,6 +84,8 @@ if !exists("Try")
 		endif
 		if filereadable('./try.py')
 			let try_py = './try.py'
+		elseif filereadable($TRY)
+			let try_py = $TRY
 		else
 			let try_py = '~/.jab/python/testing/try.py'
 		endif
@@ -167,7 +169,7 @@ if !exists("Try")
 		silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! " . s:file_actual
 		silent exec "tabnew " . s:file_expected
 		set buftype=nofile
-		set diffopt=filler,iwhite
+		set diffopt=filler,iwhite,vertical
 		silent exec "diffsplit " . s:file_actual
 		silent exec "tabprev"
 		silent exec "tabnext"
