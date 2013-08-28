@@ -738,17 +738,6 @@ named ()
 	find $dir -name "$*"
 }
 
-track ()
-{
-	if [ -d ~/alans_tests ]
-	then
-		cd ~/alans_tests
-		try
-	else
-		ssh abrogan@ie-track-1 $*
-	fi
-}
-
 vfile ()
 {
 	`echo "$*" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/"`
