@@ -66,11 +66,11 @@ clean_jab()
 show_todo ()
 {
 	builtin cd $JAB/python
-	if which python2.7 -c"a=0" >/dev/null 2>&1
+	if python2.7 -c"a=0" >/dev/null 2>&1
 	then test -f todo.py && python2.7 todo.py
 	else
 		local version=$(python --version 2>&1)
-		echo "Python version is old ($ver)"
+		echo "Python version is old ($version)"
 	fi
 	builtin cd - >/dev/null 2>&1
 }
