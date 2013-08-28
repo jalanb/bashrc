@@ -858,6 +858,7 @@ todo_edit ()
 	then todo_txt=todo.txt
 	fi
 	v $todo_txt
+	svn ci -m'more stuff to be done' "$JAB_TODO"
 }
 
 todo_show ()
