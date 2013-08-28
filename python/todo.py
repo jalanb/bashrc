@@ -14,6 +14,10 @@ def todo_file():
 	"""Get the filename from the environment"""
 	# Tell pylint not to warn that this is a todo
 	# pylint: disable-msg=W0511
+	if sys.argv[1:]:
+		arg = sys.argv[1]
+		if os.path.isfile(arg):
+			return arg
 	return os.environ['JAB_TODO']
 
 def read_todo(path_to_todo):
@@ -33,7 +37,7 @@ def read_todo_items():
 def priorities():
 	"""The recognised priorities in this system"""
 	Priority = namedtuple('Priority', 'number, name, colour')
-	return [ 
+	return [
 		Priority(1, 'yesterday', 'red'),
 		Priority(2, 'today',     'light red'),
 		Priority(3, 'tomorrow',  'light magenta'),
@@ -50,7 +54,7 @@ def priority_colour(priority_number):
 		if priority_number == priority.number:
 			return priority.colour
 	return 'white'
-	
+
 def parse_todo_line(line):
 	"""Extract a list of todo items from a list of lines
 
