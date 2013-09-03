@@ -34,7 +34,8 @@ import os
 import sys
 from fnmatch import fnmatch
 from optparse import OptionParser
-
+import csv
+import time
 
 class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
@@ -262,6 +263,7 @@ def parse_command_line():
 	%s''' % __doc__
 	parser = OptionParser(usage)
 	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
+	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
 	options, args = parser.parse_args()
 	if not args:
 		item, prefixes = os.path.expanduser('~'), []
@@ -297,6 +299,39 @@ def test():
 
 
 
+def _path_to_history():
+	"""Path to where history of paths is stored"""
+	stem, _ext = os.path.splitext(__file__)
+	return '%s.history' % stem
+
+
+def read_path():
+	"""Recall a remembered path"""
+	csvfile = None
+	try:
+		csvfile = open(_path_to_history(), 'rb')
+		reader = csv.reader(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+		for row in reader:
+			_rank, path, _time = row
+			return path
+	finally:
+		if csvfile:
+			csvfile.close()
+
+
+def write_path(item):
+	"""Remember the given path for later use"""
+	csvfile = None
+	remembered_path = find_path_to_item(item)
+	try:
+		csvfile = open(_path_to_history(), 'wb')
+		writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+		writer.writerow((0, remembered_path, time.time()))
+	finally:
+		if csvfile:
+			csvfile.close()
+
+
 def show_path_to_item(item, prefixes):
 	"""Get a path for the given item and show it
 
@@ -317,7 +352,10 @@ def main():
 		if options.test:
 			test()
 			return 1
-		show_path_to_item(item, prefixes)
+		elif options.add:
+			write_path(item)
+		else:
+			show_path_to_item(item, prefixes)
 		return 0
 	except ToDo, e:
 		print 'Error:', e

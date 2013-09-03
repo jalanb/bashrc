@@ -81,6 +81,19 @@ Hence the main method will print the found directory
 	/usr/local/lib
 	0
 
+Remembering history
+-------------------
+
+kd can also remeber a list of paths
+
+	>>> kd._path_to_history().endswith('kd.history')
+	True
+	>>> kd.write_path(kd.__file__)
+	>>> kd.read_path()== os.path.dirname(kd.__file__)
+	True
+	>>> os.path.isfile(kd._path_to_history())
+	True
+
 Cleanup
 =======
 	>>> sys.argv = []
