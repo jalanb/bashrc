@@ -231,7 +231,10 @@ ut ()
 
 hd ()
 {
-	vim_diff "$1" "$2" -o
+	if [[ -n "$3" ]]
+	then vim_diff "$1" "$2" "$3" -o
+	else vim_diff "$1" "$2" -o
+	fi
 }
 
 va ()
@@ -246,7 +249,10 @@ vb ()
 
 vd ()
 {
-	vim_diff "$1" "$2" -O
+	if [[ -n "$3" ]]
+	then vim_diff "$1" "$2" "$3" -O
+	else vim_diff "$1" "$2" -O
+	fi
 }
 
 ve ()
