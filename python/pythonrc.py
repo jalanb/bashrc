@@ -1,8 +1,6 @@
 """Dirty up the main namespace with some extra imports"""
 
 
-
-
 def see(thing, regexp=None):
 	"""layout a dir listing filtered by the given regexp"""
 	from pprint import pprint as show
