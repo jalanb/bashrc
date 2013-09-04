@@ -323,7 +323,7 @@ c.TerminalInteractiveShell.confirm_exit = False
 # c.PromptManager.justify = True
 
 # Input prompt.  '\#' will be transformed to the prompt number
-c.PromptManager.in_template = '{my_prompt} \n>>> '
+c.PromptManager.in_template = '{my_prompt}'
 
 # Continuation prompt.
 c.PromptManager.in2_template = '... '

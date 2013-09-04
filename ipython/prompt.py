@@ -9,14 +9,14 @@ from IPython.core.prompts import LazyEvaluate as promptify
 @promptify
 def prompt():
 	color = coloransi.TermColors()
-	return '%s0 %s[%s%s %s@%s:%s%s]%s%s' % (
+	return '%s0 %s[%s%s %s@%s:%s%s]%s%s\n>>> ' % (
 		color.White,
 		color.LightRed,
 		color.LightCyan,
 		time.strftime("%A %Y-%m-%d.%H:%M:%S"),
 		os.environ.get('USER','nobody'),
 		os.uname()[1],
-		os.path.basename(os.getcwd()),
+		os.getcwd(),
 		color.LightRed,
 		color.Normal,
 		color.Green,
