@@ -319,14 +319,15 @@ c.TerminalInteractiveShell.confirm_exit = False
 # Output prompt. '\#' will be transformed to the prompt number
 # c.PromptManager.out_template = 'Out[\\#]: '
 
-# Continuation prompt.
-# c.PromptManager.in2_template = '   .\\D.: '
-
 # If True (default), each prompt will be right-aligned with the preceding one.
 # c.PromptManager.justify = True
 
 # Input prompt.  '\#' will be transformed to the prompt number
-# c.PromptManager.in_template = 'In [\\#]: '
+c.PromptManager.in_template = '{my_prompt} \n>>> '
+
+# Continuation prompt.
+c.PromptManager.in2_template = '... '
+
 
 # 
 # c.PromptManager.color_scheme = 'Linux'
