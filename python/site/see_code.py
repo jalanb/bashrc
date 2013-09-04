@@ -83,3 +83,11 @@ def code(instance):
 	if hasattr(instance, '__file__'):
 		return code_of_module(instance)
 	return code_of_method(instance)
+
+
+def see_code(instance):
+	print code(instance)
+
+
+def see_highlight(instance):
+	print highlight(instance)
