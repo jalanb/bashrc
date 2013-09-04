@@ -1,5 +1,7 @@
 # Configuration file for ipython.
 
+# pylint: disable-msg=E0602
+
 c = get_config()
 
 #------------------------------------------------------------------------------
@@ -127,7 +129,7 @@ c = get_config()
 # c.TerminalIPythonApp.ipython_dir = u'/Users/jab/.ipython'
 
 # Whether to display a banner upon starting IPython.
-# c.TerminalIPythonApp.display_banner = True
+c.TerminalIPythonApp.display_banner = False
 
 # Whether to install the default config files into the profile dir. If a new
 # profile is being created, and IPython contains config files for that profile,
@@ -158,7 +160,7 @@ c = get_config()
 # TerminalInteractiveShell will inherit config from: InteractiveShell
 
 # auto editing of files with syntax errors.
-# c.TerminalInteractiveShell.autoedit_syntax = False
+c.TerminalInteractiveShell.autoedit_syntax = True
 
 # Use colors for displaying information about objects. Because this information
 # is passed through a pager (like 'less'), and some pagers get confused with
@@ -202,7 +204,7 @@ c = get_config()
 # it is not applied if there are no more arguments on the line, and '2' for
 # 'full' autocall, where all callable objects are automatically called (even if
 # no arguments are present).
-# c.TerminalInteractiveShell.autocall = 0
+c.TerminalInteractiveShell.autocall = 2
 
 # Number of lines of your screen, used to control printing of very long strings.
 # Strings longer than this number of lines will be sent through a pager instead
@@ -241,7 +243,7 @@ c = get_config()
 # Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 # Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 # direct exit without any confirmation.
-# c.TerminalInteractiveShell.confirm_exit = True
+c.TerminalInteractiveShell.confirm_exit = False
 
 # 
 # c.TerminalInteractiveShell.ipython_dir = ''
