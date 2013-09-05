@@ -314,7 +314,7 @@ def read_paths():
 		try:
 			csvfile = open(_path_to_history(), 'rb')
 		except IOError:
-			raise StopIteration
+			return []
 		reader = csv.reader(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 		return [row for row in reader]
 	finally:
