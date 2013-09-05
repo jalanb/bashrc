@@ -1,0 +1,15 @@
+The timings module
+==================
+
+	>>> import timings
+	>>> print timings.__doc__
+	Methods to handle times
+
+Find the time since it happened
+-------------------------------
+
+The time_since() method converts a number of seconds to English
+	It gives only the two most significant numbers
+	>>> print timings.time_since(timings.now() - (5*365*24*60*60 + 77*24*60*60 + 13*60*60 + 2*60 + 5))
+	5 years, 77 days
+

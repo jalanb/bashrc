@@ -11,12 +11,13 @@ fi
 
 kd ()
 { 
-	local python_script=$(dirname $BASH_SOURCE)/kd.py
-	if ! destination=$(python $python_script $* 2>&1)
+	local python_directory=$(dirname $BASH_SOURCE)
+	local python_script=$python_directory/kd.py
+	if ! destination=$(PYTHONPATH=$python_directory python $python_script $* 2>&1)
 	then
 		echo "$destination"
 	else
-		real_destination=$(python -c "import os; print os.path.realpath('$destination')")
+		real_destination=$(PYTHONPATH=$python_directory python -c "import os; print os.path.realpath('$destination')")
 		if [[ $destination != $real_destination ]]
 		then
 			echo "cd ($destination ->) $real_destination"

@@ -9,6 +9,7 @@ More modules for testing
 	>>> import os
 	>>> import sys
 
+
 Command Line
 ------------
 
@@ -89,8 +90,11 @@ kd can also remeber a list of paths
 	>>> kd._path_to_history().endswith('kd.history')
 	True
 	>>> kd.write_path(kd.__file__)
-	>>> kd.read_path()== os.path.dirname(kd.__file__)
-	True
+	>>> for _rank, path, _time in kd.read_paths():
+	...     if path == os.path.dirname(kd.__file__):
+	...          print 'parent was stored'
+	...          break
+	parent was stored
 	>>> os.path.isfile(kd._path_to_history())
 	True
 

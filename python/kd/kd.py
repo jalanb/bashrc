@@ -35,7 +35,9 @@ import sys
 from fnmatch import fnmatch
 from optparse import OptionParser
 import csv
-import time
+
+
+import timings
 
 class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
@@ -264,6 +266,7 @@ def parse_command_line():
 	parser = OptionParser(usage)
 	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
 	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
+	parser.add_option('-l', '--list', dest='list', action="store_true", help='list paths in history')
 	options, args = parser.parse_args()
 	if not args:
 		item, prefixes = os.path.expanduser('~'), []
@@ -298,38 +301,73 @@ def test():
 	print 'All tests passed'
 
 
-
 def _path_to_history():
 	"""Path to where history of paths is stored"""
 	stem, _ext = os.path.splitext(__file__)
 	return '%s.history' % stem
 
 
-def read_path():
+def read_paths():
 	"""Recall a remembered path"""
 	csvfile = None
 	try:
 		csvfile = open(_path_to_history(), 'rb')
 		reader = csv.reader(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 		for row in reader:
-			_rank, path, _time = row
-			return path
+			yield row
 	finally:
 		if csvfile:
 			csvfile.close()
+
+
+def increment(string):
+	"""Add 1 to the int in that string
+
+	>>> increment('1') == '2'
+	True
+	"""
+	return str(int(string) + 1)
+
+
+def add_path(old_paths, new_path):
+	"""Add the given path to the existing history
+
+	Or update it if already present"""
+	is_new_path = True
+	result = []
+	new_time = timings.now()
+	for old_rank, old_path, old_time in old_paths:
+		if new_path == old_path:
+			result.append((increment(old_rank), new_path, new_time))
+			is_new_path = False
+		else:
+			result.append((old_rank, old_path, old_time))
+	if is_new_path:
+		new_rank = 1
+		result.append((new_rank, new_path, new_time))
+	return sorted(result)
 
 
 def write_path(item):
 	"""Remember the given path for later use"""
 	csvfile = None
-	remembered_path = find_path_to_item(item)
+	new_path = os.path.realpath(os.path.expanduser(os.path.expandvars(item)))
+	new_path = find_path_to_item(new_path)
+	old_paths = read_paths()
+	new_paths = add_path(old_paths, new_path)
 	try:
 		csvfile = open(_path_to_history(), 'wb')
 		writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		writer.writerow((0, remembered_path, time.time()))
+		writer.writerows(new_paths)
 	finally:
 		if csvfile:
 			csvfile.close()
+
+
+def list_paths():
+	paths = [p for p in read_paths()]
+	for order, (_rank, path, atime) in enumerate(reversed(paths)):
+		print '%3d: %r last used %s ago' % (order, path, timings.time_since(atime))
 
 
 def show_path_to_item(item, prefixes):
@@ -354,6 +392,10 @@ def main():
 			return 1
 		elif options.add:
 			write_path(item)
+			return 1
+		elif options.list:
+			list_paths()
+			return 1
 		else:
 			show_path_to_item(item, prefixes)
 		return 0

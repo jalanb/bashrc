@@ -1,0 +1,14 @@
+The timings module
+==================
+
+	>>> import timings
+
+timings
+-------
+
+	>>> print timings.time_since(timings.now() - 5)
+	5 seconds
+	>>> print timings.time_since(timings.now() - (2*60 + 5))
+	2 minutes, 5 seconds
+	>>> print timings.time_since(timings.now() - (77*24*60*60 + 13*60*60 + 2*60 + 5))
+	77 days, 13 hours
