@@ -186,7 +186,12 @@ def test_file(test_script, options):
 def run_doctest(test_script, options):
 	"""Call the relevant doctest method for the given script"""
 	if test_script.ext in ['', '.py']:
-		return test_source(test_script, options)
+		try:
+			return test_source(test_script, options)
+		except ImportError:
+			if test_script.ext:
+				raise
+			return 0, 0, ''
 	return test_file(test_script, options)
 
 
