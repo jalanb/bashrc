@@ -316,8 +316,7 @@ def read_paths():
 		except IOError:
 			raise StopIteration
 		reader = csv.reader(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		for row in reader:
-			yield row
+		return [row for row in reader]
 	finally:
 		if csvfile:
 			csvfile.close()
