@@ -380,6 +380,7 @@ def show_path_to_item(item, prefixes):
 	"""
 	path_to_item = find_directory(item, prefixes)
 	if path_to_item:
+		write_path(path_to_item)
 		print str(path_to_item)
 
 
