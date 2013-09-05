@@ -311,12 +311,13 @@ def read_paths():
 	"""Recall a remembered path"""
 	csvfile = None
 	try:
-		csvfile = open(_path_to_history(), 'rb')
+		try:
+			csvfile = open(_path_to_history(), 'rb')
+		except IOError:
+			raise StopIteration
 		reader = csv.reader(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 		for row in reader:
 			yield row
-	except IOError:
-		raise StopIteration
 	finally:
 		if csvfile:
 			csvfile.close()
