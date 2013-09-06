@@ -231,7 +231,7 @@ def _expand_stems(path_stems):
 		else:
 			result.extend(_existing_test_extensions(path_stem))
 	if not result:
-		path_stem = path_stems[0]
+		path_stem = path_stems.pop()
 		display_stem = path_stem.short_relative_path_from_here()
 		raise UserMessage('%s.test*, %s.py not found' % (display_stem, display_stem))
 	return result
