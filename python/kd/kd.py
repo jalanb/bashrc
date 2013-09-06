@@ -233,6 +233,7 @@ def find_directory(item, prefixes):
 		or its parent if it is a file
 		or one of its sub-directories (if they match prefixes)
 		or a directory in $PATH
+		or a directory under $HOME
 	Otherwise look for prefixes as a partial match
 	"""
 	path_to_item = find_path_to_item(item)
