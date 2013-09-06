@@ -233,6 +233,7 @@ def find_directory(item, prefixes):
 		or its parent if it is a file
 		or one of its sub-directories (if they match prefixes)
 		or a directory in $PATH
+		or an item in history (if any)
 		or a directory under $HOME
 	Otherwise look for prefixes as a partial match
 	"""
@@ -253,6 +254,9 @@ def find_directory(item, prefixes):
 	path_to_item = find_in_environment_path(item)
 	if path_to_item:
 		return path_to_item
+	path_to_item = find_in_history(item, prefixes)
+	if path_to_item:
+		return path_to_item
 	path_to_item = find_at_home(item, prefixes)
 	if path_to_item:
 		return path_to_item
@@ -268,6 +272,7 @@ def parse_command_line():
 	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
 	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
 	parser.add_option('-l', '--list', dest='list', action="store_true", help='list paths in history')
+	parser.add_option('-o', '--old', dest='old', action="store_true", help='look for paths in history only')
 	options, args = parser.parse_args()
 	if not args:
 		item, prefixes = os.path.expanduser('~'), []
@@ -308,7 +313,7 @@ def _path_to_history():
 	return '%s.history' % stem
 
 
-def read_paths():
+def read_history():
 	"""Recall a remembered path"""
 	csvfile = None
 	try:
@@ -321,6 +326,34 @@ def read_paths():
 	finally:
 		if csvfile:
 			csvfile.close()
+
+
+def sort_history(history):
+	def compare(one, two):
+		rank1, path1, time1 = one
+		rank2, path2, time2 = two
+		diff = cmp(int(rank1), int(rank2))
+		if diff:
+			return diff
+		diff = cmp(float(time2), float(time1))
+		if diff:
+			return diff
+		return cmp(path1, path2)
+	return sorted(history, cmp=compare)
+
+
+def sorted_history():
+	"""A list of paths from history
+
+	Sorted by ascending rank, descending time
+	"""
+	history = read_history()
+	return sort_history(history)
+
+
+def sorted_history_paths():
+	"""A list of paths, sorted from history"""
+	return [path for _rank, path, _time in sorted_history()]
 
 
 def increment(string):
@@ -356,7 +389,7 @@ def write_path(item):
 	csvfile = None
 	new_path = os.path.realpath(os.path.expanduser(os.path.expandvars(item)))
 	new_path = find_path_to_item(new_path)
-	old_paths = read_paths()
+	old_paths = read_history()
 	new_paths = add_path(old_paths, new_path)
 	try:
 		csvfile = open(_path_to_history(), 'wb')
@@ -368,9 +401,38 @@ def write_path(item):
 
 
 def list_paths():
-	paths = [p for p in read_paths()]
-	for order, (_rank, path, atime) in enumerate(reversed(paths)):
+	for order, (_rank, path, atime) in enumerate(reversed(read_history())):
 		print '%3d: %r last used %s ago' % (order, path, timings.time_since(atime))
+
+
+def find_in_history(item, _prefixes):
+	"""If the given item and prefixes are in the history return that path
+
+	Otherwise None
+	"""
+	paths = sorted_history_paths()
+	if item in paths:
+		return item
+	for path in paths:
+		if item == os.path.basename(path):
+			return path
+	pattern = '%s*' % item
+	possibles = []
+	for path in paths:
+		name = os.path.basename(path)
+		if fnmatch(name, pattern):
+			possibles.append(path)
+	if not possibles:
+		return []
+	if len(possibles) < 2:
+		return possibles.pop()
+	return []
+
+
+def show_path_to_historical_item(item, prefixes):
+	"""Get a path for the given item from history and show it"""
+	path_to_item = find_in_history(item, prefixes)
+	show_found_item(path_to_item)
 
 
 def show_path_to_item(item, prefixes):
@@ -380,6 +442,11 @@ def show_path_to_item(item, prefixes):
 	/usr/local
 	"""
 	path_to_item = find_directory(item, prefixes)
+	show_found_item(path_to_item)
+
+
+def show_found_item(path_to_item):
+	"""Show the path to the user, and the history"""
 	if path_to_item:
 		write_path(path_to_item)
 		print str(path_to_item)
@@ -400,6 +467,8 @@ def main():
 		elif options.list:
 			list_paths()
 			return 1
+		elif options.old:
+			show_path_to_historical_item(item, prefixes)
 		else:
 			show_path_to_item(item, prefixes)
 		return 0
