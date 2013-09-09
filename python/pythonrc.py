@@ -17,7 +17,7 @@ except NameError:
 def read_history(readline):
 	import os
 	import atexit
-	history_file = os.path.expanduser('.pythonhistory')
+	history_file = os.path.expanduser('~/.pythonhistory')
 	if os.path.isfile(history_file):
 		readline.read_history_file(history_file)
 	atexit.register(readline.write_history_file, history_file)
