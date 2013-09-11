@@ -417,8 +417,8 @@ def write_path(item):
 
 def list_paths():
 	"""Show all paths in history in user-terminology"""
-	for order, (_rank, path, atime) in enumerate(reversed(read_history())):
-		print '%3d: %r last used %s ago' % (order, path, timings.time_since(atime))
+	for order, (rank, path, atime) in enumerate(reversed(sorted_history())):
+		print '%3d: %r used %s times, most recently %s ago' % (order + 1, path, rank, timings.time_since(atime))
 
 
 def find_in_history(item):
@@ -427,7 +427,10 @@ def find_in_history(item):
 	Otherwise None
 	"""
 	paths = sorted_history_paths()
-	return _find_in_paths(item, paths)
+	try:
+		return paths[-int(item)]
+	except ValueError:
+		return _find_in_paths(item, paths)
 
 
 def _find_in_paths(item, paths):
