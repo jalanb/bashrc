@@ -415,11 +415,8 @@ def write_path(item):
 			csvfile.close()
 
 
-def _list_paths():
-	"""This method is deprecated, probably redundant
-
-	Show all paths in history in user-terminology
-	"""
+def list_paths():
+	"""Show all paths in history in user-terminology"""
 	for order, (_rank, path, atime) in enumerate(reversed(read_history())):
 		print '%3d: %r last used %s ago' % (order, path, timings.time_since(atime))
 
@@ -502,7 +499,7 @@ def main():
 			write_path(item)
 			return 1
 		elif options.list:
-			show_path_to_historical_item(item)
+			list_paths()
 			return 1
 		elif options.old:
 			show_path_to_historical_item(item)
