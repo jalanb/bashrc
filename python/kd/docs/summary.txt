@@ -1,0 +1,1 @@
+kd is a smarter version of the cd command which knows more about the directories you're going to and the ones you've been to. It is written in Python for use at the bash shell.

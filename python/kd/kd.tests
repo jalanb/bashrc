@@ -98,6 +98,34 @@ When main() fails it prints out an error
 	Error: could not use 'no_such_directory' as a directory
 	1
 
+Finding in history
+------------------
+
+Assuming we have remembered some paths
+	>>> history = [
+	...     '/usr/bin',
+	...     '/usr/local/bin',
+	...     '/usr/tin/local',
+	...     '/usr/bin/vocal',
+	...     '/usr/local/bib',
+	... ]
+
+	>>> '/usr/bin' == kd._find_in_paths('bin', history)
+	True
+	>>> '/usr/tin/local' == kd._find_in_paths('tin', history)
+	True
+	>>> '/usr/bin' == kd._find_in_paths('bi', history)
+	True
+	>>> '/usr/tin/local' == kd._find_in_paths('ti', history)
+	True
+	>>> not kd._find_in_paths('in', history)
+	True
+	>>> '/usr/tin/local' == kd._find_in_paths('in/', history)
+	True
+	>>> '/usr/bin/vocal' == kd._find_in_paths('in/v', history)
+	True
+
+
 Cleanup
 =======
 	>>> sys.argv = []

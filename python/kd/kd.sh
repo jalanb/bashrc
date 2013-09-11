@@ -31,3 +31,9 @@ kd ()
 	unset destination
 }
 
+kg ()
+{
+	local python_directory=$(dirname $BASH_SOURCE)
+	local python_script=$python_directory/kd.py
+	PYTHONPATH=$python_directory python $python_script -U $*
+}

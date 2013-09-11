@@ -24,6 +24,13 @@ Or first argument is a stem of a directory/file
 	$ python kd.py /bin/l
 	/bin
 
+Or first argument is part of a directory that kd has seen before
+	"part of" means the name or
+	the start of the name or
+	the name of a parent or
+	the start of a name of a parent
+	(or any part of the full path if you include a "/")
+
 If nothing matches then give directories in $PATH which have matching executables
 	$ python kd.py ls
 	/bin
@@ -38,6 +45,7 @@ import csv
 
 
 import timings
+
 
 class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
@@ -254,7 +262,7 @@ def find_directory(item, prefixes):
 	path_to_item = find_in_environment_path(item)
 	if path_to_item:
 		return path_to_item
-	path_to_item = find_in_history(item, prefixes)
+	path_to_item = find_in_history(item)
 	if path_to_item:
 		return path_to_item
 	path_to_item = find_at_home(item, prefixes)
@@ -273,7 +281,14 @@ def parse_command_line():
 	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
 	parser.add_option('-l', '--list', dest='list', action="store_true", help='list paths in history')
 	parser.add_option('-o', '--old', dest='old', action="store_true", help='look for paths in history only')
+	parser.add_option('-U', '--pdb', dest='pdb', action="store_true", help='For developers: debugging with pdb (or pudb if available)')
 	options, args = parser.parse_args()
+	if options.pdb:
+		try:
+			import pudb as pdb
+		except ImportError:
+			import pdb
+		pdb.set_trace()
 	if not args:
 		item, prefixes = os.path.expanduser('~'), []
 	else:
@@ -400,38 +415,60 @@ def write_path(item):
 			csvfile.close()
 
 
-def list_paths():
+def _list_paths():
+	"""This method is deprecated, probably redundant
+
+	Show all paths in history in user-terminology
+	"""
 	for order, (_rank, path, atime) in enumerate(reversed(read_history())):
 		print '%3d: %r last used %s ago' % (order, path, timings.time_since(atime))
 
 
-def find_in_history(item, _prefixes):
+def find_in_history(item):
 	"""If the given item and prefixes are in the history return that path
 
 	Otherwise None
 	"""
 	paths = sorted_history_paths()
-	if item in paths:
-		return item
-	for path in paths:
-		if item == os.path.basename(path):
-			return path
-	pattern = '%s*' % item
-	possibles = []
-	for path in paths:
-		name = os.path.basename(path)
-		if fnmatch(name, pattern):
-			possibles.append(path)
-	if not possibles:
-		return []
-	if len(possibles) < 2:
-		return possibles.pop()
-	return []
+	return _find_in_paths(item, paths)
 
 
-def show_path_to_historical_item(item, prefixes):
+def _find_in_paths(item, paths):
+	"""Get the first of those paths which meets on of the criteria:
+
+	1. has any substring that macthes (as long as the item contains a "/")
+	2. is same as item
+	3. has same basename as item
+	4. has same basename as "item*"
+	5. has a parent with same basename as item
+	6. has a parent with same basename as "item*"
+
+	paths are assumed to be ordered, so first path which matches wins
+	"""
+	def globbed(p):
+		return fnmatch(p, '%s*' % item)
+
+	matchers = [
+		lambda path: item == path,
+		lambda path: item == os.path.basename(path),
+		lambda path: globbed(os.path.basename(path)),
+		lambda path: item in path.split(os.path.sep),
+		lambda path: any([p for p in path.split(os.path.sep) if globbed(p)]),
+	]
+	if os.path.sep in item:
+		matchers.insert(0, lambda path: item in path)
+	# Use a generator in favour of a comprehension to stop on first match
+	# See http://www.goodmami.org/2013/01/python-one-liner-getting-only-the-first-match-in-a-list-comprehension/
+	for match in matchers:
+		try:
+			return (path for path in paths if match(path)).next()
+		except StopIteration:
+			continue
+
+
+def show_path_to_historical_item(item):
 	"""Get a path for the given item from history and show it"""
-	path_to_item = find_in_history(item, prefixes)
+	path_to_item = find_in_history(item)
 	show_found_item(path_to_item)
 
 
@@ -465,10 +502,10 @@ def main():
 			write_path(item)
 			return 1
 		elif options.list:
-			list_paths()
+			show_path_to_historical_item(item)
 			return 1
 		elif options.old:
-			show_path_to_historical_item(item, prefixes)
+			show_path_to_historical_item(item)
 		else:
 			show_path_to_item(item, prefixes)
 		return 0
