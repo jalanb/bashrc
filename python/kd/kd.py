@@ -352,13 +352,13 @@ def sort_history(history):
 			return diff
 		diff = cmp(float(time2), float(time1))
 		if diff:
-			return diff
+			return -diff
 		return cmp(path1, path2)
 	return sorted(history, cmp=compare)
 
 
 def sorted_history():
-	"""A list of paths from history
+	"""A list of history items
 
 	Sorted by ascending rank, descending time
 	"""
@@ -366,9 +366,17 @@ def sorted_history():
 	return sort_history(history)
 
 
-def sorted_history_paths():
+def frecent_history():
+	"""A list of paths from history
+
+	Sorted by descending rank, ascending time
+	"""
+	return reversed(sorted_history())
+
+
+def frecent_history_paths():
 	"""A list of paths, sorted from history"""
-	return [path for _rank, path, _time in sorted_history()]
+	return [path for _rank, path, _time in frecent_history()]
 
 
 def increment(string):
@@ -417,7 +425,7 @@ def write_path(item):
 
 def list_paths():
 	"""Show all paths in history in user-terminology"""
-	for order, (rank, path, atime) in enumerate(reversed(sorted_history())):
+	for order, (rank, path, atime) in enumerate(frecent_history()):
 		print '%3d: %r used %s times, most recently %s ago' % (order + 1, path, rank, timings.time_since(atime))
 
 
@@ -426,9 +434,9 @@ def find_in_history(item):
 
 	Otherwise None
 	"""
-	paths = sorted_history_paths()
+	paths = frecent_history_paths()
 	try:
-		return paths[-int(item)]
+		return paths[int(item) - 1]
 	except ValueError:
 		return _find_in_paths(item, paths)
 
