@@ -52,6 +52,11 @@ class ToDo(NotImplementedError):
 	pass
 
 
+class TryAgain(NotImplementedError):
+	"""Warnings raised by this script"""
+	pass
+
+
 def names_in_directory(path_to_directory):
 	"""Get all items in the given directory
 
@@ -129,6 +134,15 @@ def matching_sub_directories(path_to_directory, prefix):
 		return exacts
 	return sub_directories
 
+
+def as_menu_items(strings):
+	return [str('%2d: %s' % (i, p)) for i, p in enumerate(strings)]
+
+
+def as_menu_string(strings):
+	return '\n\t'.join(as_menu_items(strings))
+
+
 def look_under_directory(path_to_directory, prefixes):
 	"""Look under the given directory for matching sub-directories
 
@@ -140,11 +154,22 @@ def look_under_directory(path_to_directory, prefixes):
 		return [path_to_directory]
 	prefix, prefixes = prefixes[0], prefixes[1:]
 	result = []
-	for path_to_sub_directory in matching_sub_directories(path_to_directory, prefix):
+	matched_sub_directories = matching_sub_directories(path_to_directory, prefix)
+	try:
+		i = int(prefixes[0])
+	except (ValueError, IndexError):
+		i = None
+	for path_to_sub_directory in matched_sub_directories:
 		paths = look_under_directory(path_to_sub_directory, prefixes)
 		result.extend(paths)
-	if not result and contains_file(path_to_directory, '%s*' % prefix):
-		result = [path_to_directory]
+	if not result:
+		if i is not None:
+			try:
+				return [matched_sub_directories[i]]
+			except IndexError:
+				raise ToDo('Your choice of "%s" is out of range:\n\t%s' % (i, as_menu_string(matched_sub_directories)))
+		if contains_file(path_to_directory, '%s*' % prefix):
+			result = [path_to_directory]
 	return result
 
 
@@ -161,7 +186,7 @@ def find_under_directory(path_to_directory, prefixes):
 		return None
 	if len(possibles) == 1:
 		return possibles[0]
-	raise ToDo('Too many possiblities\n\t%s' % '\n\t'.join(possibles))
+	raise TryAgain('Too many possiblities\n\t%s' % as_menu_string(possibles))
 
 
 def find_under_here(prefixes):
@@ -290,7 +315,8 @@ def parse_command_line():
 			import pdb
 		pdb.set_trace()
 	if not args:
-		item, prefixes = os.path.expanduser('~'), []
+		item = not options.old and os.path.expanduser('~') or None
+		prefixes = []
 	else:
 		item, prefixes = args[0], args[1:]
 		if args[0] == '-':
@@ -513,10 +539,17 @@ def main():
 			list_paths()
 			return 1
 		elif options.old:
+			if not item:
+				list_paths()
+				print
+				raise ToDo('Please specify a string to look for among the old paths (above)')
 			show_path_to_historical_item(item)
 		else:
 			show_path_to_item(item, prefixes)
 		return 0
+	except TryAgain, e:
+		print 'Try again:', e
+		return 1
 	except ToDo, e:
 		print 'Error:', e
 		return 1

@@ -57,6 +57,10 @@ It can handle many prefixes (albeit more slowly)
 	>>> print kd.find_directory('/', ['us', 'loc', 'sbi'])
 	/usr/local/sbin
 
+In case of ambiguous sub-directories a number can choose one
+	>>> kd.find_directory('/usr', ['li', '0']) == '/usr/lib'
+	True
+
 Fallbacks
 ---------
 
