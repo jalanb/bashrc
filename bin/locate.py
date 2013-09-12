@@ -20,8 +20,10 @@ def run_locate(string):
 	"""Run the locate command on the given string"""
 	command = make_locate_command(string)
 	status, output = commands.getstatusoutput(command)
-	if status:
+	if status and output:
 		raise ValueError('command: %s\n output: %s' % (command, output))
+	elif not output:
+		return []
 	return [l for l in output.split('\n') if '/.svn' not in l]
 
 
