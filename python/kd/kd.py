@@ -450,8 +450,12 @@ def write_path(item):
 
 def list_paths():
 	"""Show all paths in history in user-terminology"""
+	old_rank = None
 	for order, (rank, path, atime) in enumerate(frecent_history()):
-		print '%3d: %r used %s times, most recently %s ago' % (order + 1, path, rank, timings.time_since(atime))
+		if old_rank != rank:
+			print '      %s time%s:' % (rank, int(rank) > 1 and 's' or '')
+			old_rank = rank
+		print '%3d: %s, %s ago' % (order + 1, path, timings.time_since(atime))
 
 
 def find_in_history(item):
