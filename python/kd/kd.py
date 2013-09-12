@@ -304,8 +304,7 @@ def parse_command_line():
 	parser = OptionParser(usage)
 	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
 	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
-	parser.add_option('-l', '--list', dest='list', action="store_true", help='list paths in history')
-	parser.add_option('-o', '--old', dest='old', action="store_true", help='look for paths in history only')
+	parser.add_option('-o', '--old', dest='old', action="store_true", help='look for paths in history')
 	parser.add_option('-U', '--pdb', dest='pdb', action="store_true", help='For developers: debugging with pdb (or pudb if available)')
 	options, args = parser.parse_args()
 	if options.pdb:
@@ -535,15 +534,11 @@ def main():
 		elif options.add:
 			write_path(item)
 			return 1
-		elif options.list:
-			list_paths()
-			return 1
 		elif options.old:
-			if not item:
+			if item:
+				show_path_to_historical_item(item)
+			else:
 				list_paths()
-				print
-				raise ToDo('Please specify a string to look for among the old paths (above)')
-			show_path_to_historical_item(item)
 		else:
 			show_path_to_item(item, prefixes)
 		return 0
