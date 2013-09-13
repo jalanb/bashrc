@@ -1,13 +1,13 @@
 #! /bin/bash
 
-atexit ()
+remove_checkout ()
 {
 	if [[ -n "$COPY_OF_CHECKOUT" && -f "$COPY_OF_CHECKOUT" ]]
 	then rm -f "$COPY_OF_CHECKOUT"
 	fi
 }
 
-main ()
+svn_diff_file ()
 {
 	local direction=$1
 	local path_to_file=$2
@@ -30,9 +30,39 @@ main ()
 
 	svn cat -r $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
 	vim -d $options "$path_to_file" "$COPY_OF_CHECKOUT"
+	remove_checkout
+}
+
+svn_diff_dir ()
+{
+	local direction=$1
+	local path_to_directory=$2
+	local revision=
+	[[ -n $3 ]] && revision="$3"
+	for modified in $(svn stat $path_to_directory | grep "^\s*M" | sed -e "s/M\s\+//")
+	do
+		svn_diff_file $direction $modified $revision
+		if [[ -f svn.stop ]]
+		then
+			rm -f svn.stop
+			break
+		fi
+	done
+}
+
+main ()
+{
+	local direction=$1
+	local path=$2
+	if [[ -f $path ]]
+	then
+		svn_diff_file $*
+	else
+		svn_diff_dir $*
+	fi
 }
 
 # set -x
-trap atexit EXIT
+trap remove_checkout EXIT
 main $*
 # set +x
