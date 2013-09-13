@@ -174,9 +174,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
 "noremap <leader>c 
-"noremap <leader>C 
 "noremap <leader>d 
-"noremap <leader>D 
 "noremap <leader>e used by plugin/EasyMotion.vim
 "noremap <leader>f used by plugin/EasyMotion.vim
 "noremap <leader>g 
@@ -189,7 +187,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>n :call ChangeNumber()<cr>
 "noremap <leader>o
  noremap <leader>p :set paste<cr>
-"noremap <leader>q
+ noremap <leader>q :qa!<cr>
  noremap <leader>r :call SetRelativeNumber()<cr>
 "noremap <leader>s
  noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
