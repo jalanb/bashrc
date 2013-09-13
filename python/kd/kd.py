@@ -1,5 +1,22 @@
 """Script to find a directory to cd to
 
+Usage: kd [options] [items]
+
+Arguments:
+	items are strings which indicate a path to a directory or file
+	The first item might be a full path
+	Second and other items are used to choose under that path
+
+Options:
+	-h	--help	show this help and exit
+	-a	--add	add a path to history
+	-o	--old	look for paths in history
+	-t	--test	run all tests and exit
+	-v	--version	show the version and exit
+	-U	--pdb	For developers: debugging with pdb (or pudb if available)
+
+Explanation:
+
 It gets a close match to a directory from command line arguments
 	Then prints that to stdout
 	which allows a usage in bash like
@@ -303,9 +320,10 @@ def parse_command_line():
 
 	%s''' % __doc__
 	parser = OptionParser(usage)
-	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
 	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
 	parser.add_option('-o', '--old', dest='old', action="store_true", help='look for paths in history')
+	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
+	parser.add_option('-v', '--version', dest='version', action="store_true", help='show version of the script')
 	parser.add_option('-U', '--pdb', dest='pdb', action="store_true", help='For developers: debugging with pdb (or pudb if available)')
 	options, args = parser.parse_args()
 	if options.pdb:
@@ -537,6 +555,11 @@ def show_found_item(path_to_item):
 		print str(path_to_item)
 
 
+def version():
+	"""Show version of the script"""
+	print 'kd %s' % __version__
+
+
 def main():
 	"""Show a directory from the command line arguments (or some derivative)"""
 	try:
@@ -545,6 +568,9 @@ def main():
 			return 1
 		if options.test:
 			test()
+			return 1
+		elif options.version:
+			version()
 			return 1
 		elif options.add:
 			write_path(item)

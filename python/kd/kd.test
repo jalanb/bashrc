@@ -118,17 +118,17 @@ Assuming we have remembered some paths
 Then we should be able to search that history for a remembered item
 	which should be found first is exact same as a history item
 	>>> expected = sought = history[2]
-	>>> expected == kd._find_in_paths(sought, history)
+	>>> expected == kd._find_in_paths(sought, [], history)
 	True
 
 Or even if it is just the name of one
 	>>> sought = os.path.basename(sought)
-	>>> expected == kd._find_in_paths(sought, history)
+	>>> expected == kd._find_in_paths(sought, [], history)
 	True
 
 Or even just the stem of the name
 	>>> sought = sought[:3]
-	>>> expected == kd._find_in_paths(sought, history)
+	>>> expected == kd._find_in_paths(sought, [], history)
 	True
 
 

@@ -125,19 +125,55 @@ Assuming we have remembered some paths
 	...     '/usr/local/bib',
 	... ]
 
-	>>> '/usr/bin' == kd._find_in_paths('bin', history)
+	>>> kd._find_in_paths('bin', [], history)
+	Traceback (most recent call last):
+	...
+	TryAgain: Too many possiblities
+		 0: /usr/bin
+		 1: /usr/local/bin
+	>>> kd._find_in_paths('bin', ['0'], history) == '/usr/bin'
 	True
-	>>> '/usr/tin/local' == kd._find_in_paths('tin', history)
+	>>> kd._find_in_paths('bin', ['1'], history) == '/usr/local/bin'
 	True
-	>>> '/usr/bin' == kd._find_in_paths('bi', history)
+	>>> kd._find_in_paths('bi', [], history)
+	Traceback (most recent call last):
+	...
+	TryAgain: Too many possiblities
+		 0: /usr/bin
+		 1: /usr/local/bin
+		 2: /usr/local/bib
+	>>> kd._find_in_paths('bi', ['0'], history) == '/usr/bin'
 	True
-	>>> '/usr/tin/local' == kd._find_in_paths('ti', history)
+	>>> kd._find_in_paths('bi', ['1'], history) == '/usr/local/bin'
 	True
-	>>> not kd._find_in_paths('in', history)
+	>>> kd._find_in_paths('bi', ['2'], history) == '/usr/local/bib'
 	True
-	>>> '/usr/tin/local' == kd._find_in_paths('in/', history)
+	>>> kd._find_in_paths('tin', [], history) == '/usr/tin/local'
 	True
-	>>> '/usr/bin/vocal' == kd._find_in_paths('in/v', history)
+	>>> kd._find_in_paths('ti', [], history) == '/usr/tin/local'
+	True
+	>>> not kd._find_in_paths('in', [], history)
+	True
+	>>> kd._find_in_paths('in/', [], history)
+	Traceback (most recent call last):
+	...
+	TryAgain: Too many possiblities
+		 0: /usr/tin/local
+		 1: /usr/bin/vocal
+	>>> kd._find_in_paths('in/', ['0'], history) == '/usr/tin/local'
+	True
+	>>> kd._find_in_paths('in/v', [], history) == '/usr/bin/vocal'
+	True
+	>>> kd._find_in_paths('usr', [], history)
+	Traceback (most recent call last):
+	...
+	TryAgain: Too many possiblities
+		 0: /usr/bin
+		 1: /usr/local/bin
+		 2: /usr/tin/local
+		 3: /usr/bin/vocal
+		 4: /usr/local/bib
+	>>> kd._find_in_paths('usr', ['3'], history) == '/usr/bin/vocal'
 	True
 
 
