@@ -288,7 +288,7 @@ def find_directory(item, prefixes):
 	path_to_item = find_in_environment_path(item)
 	if path_to_item:
 		return path_to_item
-	path_to_item = find_in_history(item)
+	path_to_item = find_in_history(item, prefixes)
 	if path_to_item:
 		return path_to_item
 	path_to_item = find_at_home(item, prefixes)
@@ -460,7 +460,7 @@ def list_paths():
 		print '%3d: %s, %s ago' % (order + 1, path, timings.time_since(atime))
 
 
-def find_in_history(item):
+def find_in_history(item, prefixes):
 	"""If the given item and prefixes are in the history return that path
 
 	Otherwise None
@@ -469,11 +469,11 @@ def find_in_history(item):
 	try:
 		return paths[int(item) - 1]
 	except ValueError:
-		return _find_in_paths(item, paths)
+		return _find_in_paths(item, prefixes, paths)
 
 
-def _find_in_paths(item, paths):
-	"""Get the first of those paths which meets on of the criteria:
+def _find_in_paths(item, prefixes, paths):
+	"""Get the first of those paths which meets one of the criteria:
 
 	1. has any substring that macthes (as long as the item contains a "/")
 	2. is same as item
@@ -496,18 +496,27 @@ def _find_in_paths(item, paths):
 	]
 	if os.path.sep in item:
 		matchers.insert(0, lambda path: item in path)
-	# Use a generator in favour of a comprehension to stop on first match
-	# See http://www.goodmami.org/2013/01/python-one-liner-getting-only-the-first-match-in-a-list-comprehension/
+	try:
+		i = int(prefixes[0])
+	except (ValueError, IndexError):
+		i = None
 	for match in matchers:
-		try:
-			return (path for path in paths if match(path)).next()
-		except StopIteration:
+		matched = [path for path in paths if match(path)]
+		if not matched:
 			continue
+		elif len(matched) == 1:
+			return matched[0]
+		if i is not None:
+			try:
+				return matched[i]
+			except IndexError:
+				raise ToDo('Your choice of "%s" is out of range:\n\t%s' % (i, as_menu_string(matched)))
+		raise TryAgain('Too many possiblities\n\t%s' % as_menu_string(matched))
 
 
-def show_path_to_historical_item(item):
+def show_path_to_historical_item(item, prefixes):
 	"""Get a path for the given item from history and show it"""
-	path_to_item = find_in_history(item)
+	path_to_item = find_in_history(item, prefixes)
 	show_found_item(path_to_item)
 
 
@@ -542,9 +551,10 @@ def main():
 			return 1
 		elif options.old:
 			if item:
-				show_path_to_historical_item(item)
+				show_path_to_historical_item(item, prefixes)
 			else:
 				list_paths()
+				return 1
 		else:
 			show_path_to_item(item, prefixes)
 		return 0
