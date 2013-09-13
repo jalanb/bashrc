@@ -63,7 +63,7 @@ import csv
 
 import timings
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
@@ -173,6 +173,8 @@ def look_under_directory(path_to_directory, prefixes):
 	prefix, prefixes = prefixes[0], prefixes[1:]
 	result = []
 	matched_sub_directories = matching_sub_directories(path_to_directory, prefix)
+	if not matched_sub_directories:
+		return []
 	try:
 		i = int(prefixes[0])
 	except (ValueError, IndexError):
@@ -185,7 +187,7 @@ def look_under_directory(path_to_directory, prefixes):
 			try:
 				return [matched_sub_directories[i]]
 			except IndexError:
-				raise ToDo('Your choice of "%s" is out of range:\n\t%s' % (i, as_menu_string(matched_sub_directories)))
+				raise ToDo('Your choice of "%s" is not in range:\n\t%s' % (i, as_menu_string(matched_sub_directories)))
 		if contains_file(path_to_directory, '%s*' % prefix):
 			result = [path_to_directory]
 	return result
@@ -297,9 +299,11 @@ def find_directory(item, prefixes):
 			return path_to_prefix
 	else:
 		if item:
-			prefixes.insert(0, item)
-		if prefixes:
-			path_to_item = find_under_here(prefixes)
+			args = [item] + prefixes
+		else:
+			args = prefixes
+		if args:
+			path_to_item = find_under_here(args)
 	if path_to_item:
 		return path_to_item
 	path_to_item = find_in_environment_path(item)
