@@ -704,7 +704,7 @@ divv ()
 dixx ()
 {
 	source_dir="$1"
-	destination="$2"
+	destination_dir="$2"
 	local number_in_both=$(_divv_get_difference | grep Files | wc -l)
 	if [[ $number_in_both -gt 0 ]]
 	then
@@ -719,12 +719,12 @@ dixx ()
 		echo "Only in $source_dir"
 		_divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
 	fi
-	local number_in_destination=$(_divv_get_difference | grep "Only in $destination" | wc -l)
+	local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
 	if [[ $number_in_destination -gt 0 ]]
 	then
 		echo
-		echo "Only in $destination"
-		_divv_get_difference | grep "Only in $destination" | sed -e "s/Only in/vim /" -e "s|: |/|"
+		echo "Only in $destination_dir"
+		_divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
 	fi
 }
 
@@ -1040,6 +1040,10 @@ _edit_locals ()
 	
 _divv_get_difference ()
 {
+	local source_gitignore=
+	test -f "$source_dir/.gitignore" && source_gitignore="--exclude-from=$source_dir/.gitignore"
+	local destination_gitignore=
+	test -f "$destination_dir/.gitignore" && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
 	diff -q -r \
 		--exclude=.svn \
 		--exclude=.git \
@@ -1051,8 +1055,8 @@ _divv_get_difference ()
 		--exclude=tmp \
 		--exclude="*~" \
 		--exclude=.gitignore \
-		--exclude-from="$source_dir/.gitignore" \
-		--exclude-from="$destination/.gitignore" \
-	"$source_dir" "$destination" 2>/dev/null
+		$source_gitignore \
+		$destination_gitignore \
+	"$source_dir" "$destination_dir" 2>/dev/null
 }
 
