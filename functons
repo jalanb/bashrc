@@ -683,15 +683,21 @@ SUDO ()
 		console_title_off "${me}@${here}"
 }
 
+dicp ()
+{
+	COMMAND_FOR_SAME_FILES=cp
+	dixx $*
+}
+
 dihh ()
 {
-	DIFF_EDIT=hd
+	COMMAND_FOR_SAME_FILES=hd
 	dixx $*
 }
 
 divv ()
 {
-	DIFF_EDIT=vd
+	COMMAND_FOR_SAME_FILES=vd
 	dixx $*
 }
 
@@ -699,8 +705,13 @@ dixx ()
 {
 	source_dir="$1"
 	destination="$2"
-	echo "# Files 1 and 2 differ"
-	_divv_get_difference | grep Files | sed -e "s/Files/$DIFF_EDIT/" -e "s/ and / /" -e "s/differ//"
+	local number_in_both=$(_divv_get_difference | grep Files | wc -l)
+	if [[ $number_in_both -gt 0 ]]
+	then
+		echo
+		echo "# Files 1 and 2 differ"
+		_divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
+	fi
 	local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
 	if [[ $number_in_source -gt 0 ]]
 	then
@@ -1033,11 +1044,15 @@ _divv_get_difference ()
 		--exclude=.svn \
 		--exclude=.git \
 		--exclude=.DS_Store \
+		--exclude="*.fail" \
 		--exclude="*.py[co]" \
 		--exclude=tags \
 		--exclude=".*sw[po]" \
 		--exclude=tmp \
 		--exclude="*~" \
+		--exclude=.gitignore \
+		--exclude-from="$source_dir/.gitignore" \
+		--exclude-from="$destination/.gitignore" \
 	"$source_dir" "$destination" 2>/dev/null
 }
 
