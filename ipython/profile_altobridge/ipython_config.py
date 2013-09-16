@@ -1,0 +1,1 @@
+../profile_default/ipython_config.py
