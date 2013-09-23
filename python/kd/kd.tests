@@ -85,13 +85,23 @@ Which can be suppressed by a numeric arg
 	>>> kd.find_directory('/usr', ['li', '2']) == '/usr/libexec'
 	Traceback (most recent call last):
 	...
-	ToDo: Your choice of "2" is out of range:
+	ToDo: Your choice of "2" is not in range:
 		 0: /usr/lib
 		 1: /usr/libexec
 
 A number out of context is ignored
 	>>> kd.find_directory('/usr', ['1']) == '/usr'
 	True
+
+find a file
+-----------
+
+	>>> directory, filename = os.path.split(kd.__file__)
+	>>> kd.find_directory(kd.__file__, []) == directory
+	True
+	>>> kd.find_directory(directory, [filename]) == directory
+	True
+
 
 Find in home directory
 ----------------------
@@ -174,6 +184,19 @@ Assuming we have remembered some paths
 		 3: /usr/bin/vocal
 		 4: /usr/local/bib
 	>>> kd._find_in_paths('usr', ['3'], history) == '/usr/bin/vocal'
+	True
+
+
+	>>> path_to_item = '/i/was/here'
+	>>> history_items = [
+	...  (0, path_to_item, 0),
+	...  (0, '/so/were/you', 0),
+	... ]
+	>>> new_items, changed = kd.exclude_path_from_items(history_items, path_to_item)
+	>>> changed is True and len(new_items) + 1 == len(history_items)
+	True
+	>>> newer_items, changed = kd.exclude_path_from_items(new_items, path_to_item)
+	>>> changed is False and len(new_items) == len(newer_items)
 	True
 
 

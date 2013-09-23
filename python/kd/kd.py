@@ -63,7 +63,7 @@ import csv
 
 import timings
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 class ToDo(NotImplementedError):
 	"""Errors raised by this script"""
@@ -174,6 +174,8 @@ def look_under_directory(path_to_directory, prefixes):
 	result = []
 	matched_sub_directories = matching_sub_directories(path_to_directory, prefix)
 	if not matched_sub_directories:
+		if contains_file(path_to_directory, '%s*' % prefix):
+			return [path_to_directory]
 		return []
 	try:
 		i = int(prefixes[0])
@@ -325,6 +327,7 @@ def parse_command_line():
 	%s''' % __doc__
 	parser = OptionParser(usage)
 	parser.add_option('-a', '--add', dest='add', action="store_true", help='add a path to history')
+	parser.add_option('-d', '--delete', dest='delete', action="store_true", help='delete paths from history')
 	parser.add_option('-o', '--old', dest='old', action="store_true", help='look for paths in history')
 	parser.add_option('-t', '--test', dest='test', action="store_true", help='test the script')
 	parser.add_option('-v', '--version', dest='version', action="store_true", help='show version of the script')
@@ -437,14 +440,14 @@ def increment(string):
 	return str(int(string) + 1)
 
 
-def add_path(old_paths, new_path):
+def include_new_path_in_items(history_items, new_path):
 	"""Add the given path to the existing history
 
 	Or update it if already present"""
 	is_new_path = True
 	result = []
 	new_time = timings.now()
-	for old_rank, old_path, old_time in old_paths:
+	for old_rank, old_path, old_time in history_items:
 		if new_path == old_path:
 			result.append((increment(old_rank), new_path, new_time))
 			is_new_path = False
@@ -456,20 +459,43 @@ def add_path(old_paths, new_path):
 	return sorted(result)
 
 
-def write_path(item):
+def rewrite_history_with_path(item):
 	"""Remember the given path for later use"""
-	csvfile = None
 	new_path = os.path.realpath(os.path.expanduser(os.path.expandvars(item)))
 	new_path = find_path_to_item(new_path)
-	old_paths = read_history()
-	new_paths = add_path(old_paths, new_path)
+	history_items = read_history()
+	items = include_new_path_in_items(history_items, new_path)
+	write_paths(items)
+
+
+def write_paths(paths):
+	"""Write the given paths to the history file"""
+	csvfile = None
 	try:
 		csvfile = open(_path_to_history(), 'wb')
 		writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-		writer.writerows(new_paths)
+		writer.writerows(paths)
 	finally:
 		if csvfile:
 			csvfile.close()
+
+
+def rewrite_history_without_path(path_to_item):
+	"""Delete the given path from the history"""
+	history_items = read_history()
+	new_items, changed = exclude_path_from_items(history_items, path_to_item)
+	if changed:
+		write_paths(new_items)
+
+def exclude_path_from_items(history_items, path_to_item):
+	new_items = []
+	changed = False
+	for rank, path, time in history_items:
+		if path == path_to_item:
+			changed = True
+		else:
+			new_items.append((rank, path, time))
+	return new_items, changed
 
 
 def list_paths():
@@ -542,6 +568,12 @@ def show_path_to_historical_item(item, prefixes):
 	show_found_item(path_to_item)
 
 
+def delete_path_to_historical_item(item, prefixes):
+	"""Get a path for the given item from history and remove it from history"""
+	path_to_item = find_in_history(item, prefixes)
+	delete_found_item(path_to_item)
+
+
 def show_path_to_item(item, prefixes):
 	"""Get a path for the given item and show it
 
@@ -555,8 +587,14 @@ def show_path_to_item(item, prefixes):
 def show_found_item(path_to_item):
 	"""Show the path to the user, and the history"""
 	if path_to_item:
-		write_path(path_to_item)
+		rewrite_history_with_path(path_to_item)
 		print str(path_to_item)
+
+
+def delete_found_item(path_to_item):
+	"""Delete the path from the history"""
+	if path_to_item:
+		rewrite_history_without_path(path_to_item)
 
 
 def version():
@@ -566,6 +604,8 @@ def version():
 
 def main():
 	"""Show a directory from the command line arguments (or some derivative)"""
+	# pylint: disable-msg=R0912
+	# Of course there are too many branches - it's an event dispatcher
 	try:
 		options, item, prefixes = parse_command_line()
 		if not options:
@@ -577,11 +617,17 @@ def main():
 			version()
 			return 1
 		elif options.add:
-			write_path(item)
+			rewrite_history_with_path(item)
 			return 1
 		elif options.old:
 			if item:
 				show_path_to_historical_item(item, prefixes)
+			else:
+				list_paths()
+				return 1
+		elif options.delete:
+			if item:
+				delete_path_to_historical_item(item, prefixes)
 			else:
 				list_paths()
 				return 1

@@ -93,7 +93,7 @@ kd can also remeber a list of paths
 
 	>>> kd._path_to_history().endswith('kd.history')
 	True
-	>>> kd.write_path(kd.__file__)
+	>>> kd.rewrite_history_with_path(kd.__file__)
 	>>> for _rank, path, _time in kd.read_history():
 	...     if path == os.path.dirname(kd.__file__):
 	...          print 'parent was stored'
