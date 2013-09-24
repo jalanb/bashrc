@@ -8,9 +8,9 @@ set_symbols ()
 main ()
 {
 
-	chmod u+w -R $SVN_SIMPLE
+	chmod -R u+w $SVN_SIMPLE
 	svn log -l 1 https://repository.altobridge.com/svn/amg/trunk/trackers
-	chmod u-w -R $SVN_SIMPLE
+	chmod -R u-w $SVN_SIMPLE
 }
 
 set_symbols
