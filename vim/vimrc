@@ -214,6 +214,7 @@ set autoindent smartindent
 set matchpairs+=<:>
 set listchars=tab:>-,trail:?,eol:$
 set tildeop
+set whichwrap+=<,>,h,l,[,] " http://vim.wikia.com/wiki/Automatically_wrap_left_and_right
 "
 " Screen
 "
