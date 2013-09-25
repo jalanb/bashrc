@@ -642,7 +642,7 @@ fgpp ()
 mkcd () 
 { 
     local __doc__='make a directory and start using it';
-    mkdir "$*" && cd "$*"
+    mkdir -p "$*" && cd "$*"
 }
 
 rq.. ()
