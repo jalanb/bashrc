@@ -1,4 +1,11 @@
 The pythonrc module
 ===================
 
-	>>> from pythonrc import os, sys, makepath, show, environ, paths
+	>>> import pythonrc
+	>>> print pythonrc.__doc__
+	Dirty up the main namespace with some extra imports
+
+	>>> pythonrc.see(pythonrc, '_[a-z].*')
+	_path_to_history
+	_read_history
+	_write_time_stamp
