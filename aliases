@@ -146,7 +146,6 @@ alias out="to_release"
 alias ps3="ps axf | vim - +"
 
 alias rrs="sudo $JAB/python/ranger/bin/range"
-alias rff="r fred* *.tmp"
 
 alias sib=". ~/.bashrc"
 alias sii="svn_issue "
@@ -216,11 +215,8 @@ alias lessen="less -N"
 
 alias .......='c ../../../../../..'
 alias service="sudo /sbin/service "
-alias cleaner="clean deep"
 
 # xxxxxxxx
-
-alias cleanest="clean deep pycos"
 
 # xxxxxxxx
 

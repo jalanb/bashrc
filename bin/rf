@@ -1,19 +1,48 @@
 #! /bin/bash
 
-. ~/.jab/bin/first_dir
 
-echo $* | grep -q quietly && options=-rf || options=-vrf
-first_dir $*
-echo $* | grep -q pycos && pycos="$dir/*.pyc $dir/*.pyo" || pycos=
-defaults="$dir/*~ $dir/.*~ $dir/*.orig $dir/fred* $dir/mary $dir/*.tmp $dir/*.bak $dir/one $dir/two a.out"
-/bin/rm $options $defaults $pycos
-for fail in $dir/*.fail
-do
-	if [[ ! -d $fail ]]
+
+set_symbols ()
+{
+	. ~/.jab/bin/first_dir
+	first_dir $*
+	FIND_OPTIONS="-maxdepth 1"
+	RM_OPTIONS=-vrf
+	GLOBS="*~ .*~ *.orig fred* mary *.tmp *.bak one two a.out"
+	while getopts "pqr" option
+	do
+		case $option in 
+		p) GLOBS="$GLOBS *.py[co] *.fail"
+			;;
+		q) RM_OPTIONS=-rf
+			;;
+		r) FIND_OPTIONS=
+			;;
+		esac
+	done
+}
+
+clean_temporary_files ()
+{
+	back=$(pwd)
+	if [[ -f $dir/clean ]]
 	then
-		if [ ! -s $fail ]
-		then
-			/bin/rm $options $fail
-		fi
+		builtin cd $dir
+		bash clean
 	fi
-done
+	for GLOB in $GLOBS
+	do
+		find $dir $FIND_OPTIONS \( -type d -a -name .svn -prune \) -o -name "$GLOB" -exec rm $RM_OPTIONS {} \;
+	done
+	builtin cd $back
+}
+
+main ()
+{
+	set_symbols $*
+	clean_temporary_files
+}
+
+# set -x
+main $*
+set +x

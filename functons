@@ -754,6 +754,11 @@ build ()
 	fi
 }
 
+clean ()
+{
+	rf -q $*
+}
+
 kodos ()
 {
 	pushd ~/bin/kodos-2.4.9/ >/dev/null
@@ -807,6 +812,11 @@ run_as ()
 
 # xxxxxxx
 
+cleaner ()
+{
+	rf -qr $*
+}
+
 do_stat ()
 {
 	test -n "$1" && path="$1" || path="."
@@ -858,6 +868,11 @@ svn_url ()
 }
 
 # xxxxxxxx
+
+cleanest ()
+{
+	clean -pqr $*
+}
 
 svn_info ()
 {
