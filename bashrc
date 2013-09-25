@@ -24,15 +24,9 @@ source_file ()
 
 update_jab ()
 {
-	if [ -x /bin/ping ]
-	then PING=/bin/ping
-	elif [ -x /sbin/ping ]
-	then PING=/sbin/ping
-	else echo Where is ping?
-	fi
-	if $PING -c 1 -t 1 -W 100 repository.altobridge.com > /dev/null
+	if svn ls --non-interactive --trust-server-cert https://repository.altobridge.com/svn/amg | grep -q trunk
 	then $SVN_CLIENT up $JAB
-	else echo Cannot ping repository.altobridge.com
+	else echo Cannot contact repository.altobridge.com
 	fi
 	$SVN_CLIENT stat $JAB
 }
