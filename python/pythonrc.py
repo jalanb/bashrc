@@ -17,10 +17,18 @@ except NameError:
 def read_history(readline):
 	import os
 	import atexit
-	history_file = os.path.expanduser('~/.pythonhistory')
-	if os.path.isfile(history_file):
-		readline.read_history_file(history_file)
-	atexit.register(readline.write_history_file, history_file)
+	import datetime
+	history_path = os.path.expanduser('~/.pythonhistory')
+	if os.path.isfile(history_path):
+		try:
+			history_file = file(history_path, 'a')
+			print >> history_file, '#'
+			print >> history_file, '#', datetime.datetime.now().isoformat()
+			print >> history_file, '#'
+		finally:
+			history_file.close()
+		readline.read_history_file(history_path)
+	atexit.register(readline.write_history_file, history_path)
 
 
 def complete():
