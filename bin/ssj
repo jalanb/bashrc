@@ -9,12 +9,16 @@ source ~/.jab/jab_environ
 
 usage ()
 {
+	ARGS="$*"
 	if [[ $# != 2 ]]
 	then
 		if [[ $# == 1 ]]
 		then
 			parts=$(echo $1 | tr '@' '\n' | wc -l)
-			if [[ $parts -ne 2 ]]
+			if [[ $parts -eq 1 ]]
+			then
+				ARGS=$USER@$1
+			elif [[ $parts -ne 2 ]]
 			then
 				echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
 				exit 1
@@ -25,7 +29,7 @@ usage ()
 
 main ()
 {
-	$PATH_TO_SCRIPTS/sst $* -i $JAB_KEY
+	$PATH_TO_SCRIPTS/sst $ARGS -i $JAB_KEY
 }
 
 usage $*
