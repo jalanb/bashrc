@@ -24,9 +24,11 @@ source_file ()
 
 update_jab ()
 {
-	if svn ls --non-interactive --trust-server-cert https://repository.altobridge.com/svn/amg | grep -q trunk
+	local amg_url=https://repository.altobridge.com/svn/amg
+	local amg_dirs=$($SVN_CLIENT ls --non-interactive --trust-server-cert $amg_url)
+	if [[ $amg_dirs =~ trunk ]]
 	then $SVN_CLIENT up $JAB
-	else echo Cannot contact repository.altobridge.com
+	else echo Cannot contact $amg_url
 	fi
 	$SVN_CLIENT stat $JAB
 }
