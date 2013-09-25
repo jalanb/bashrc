@@ -10,6 +10,7 @@ main ()
 
 	chmod -R u+w $SVN_SIMPLE
 	svn log -l 1 https://repository.altobridge.com/svn/amg/trunk/trackers
+	svn log -l 1 https://repository.altobridge.com/szn/amg/builds/5.0
 	chmod -R u-w $SVN_SIMPLE
 }
 
