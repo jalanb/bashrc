@@ -404,7 +404,7 @@ cff ()
 cls ()
 {
 # clean, clear, ls
-	rf quietly
+	rf -q
 	clear
 	if [ -z "$*" ]
 	then
@@ -656,7 +656,7 @@ stat ()
 {
 	if [[ -z "$1" ]]
 	then
-		clean quietly
+		rf -q
 		do_stat
 	else
 		for file in $*
@@ -835,7 +835,7 @@ statvim ()
 	shift
 	if [[ -z "$1" ]]
 	then
-		clean quietly
+		rf -q
 		do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
 	else
 		for file in $*
