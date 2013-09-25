@@ -25,7 +25,10 @@ source_file ()
 update_jab ()
 {
 	local amg_url=https://repository.altobridge.com/svn/amg
-	local amg_dirs=$($SVN_CLIENT ls --non-interactive --trust-server-cert $amg_url)
+	local amg_dirs=$($SVN_CLIENT ls --non-interactive --trust-server-cert $amg_url 2>&1)
+	if [[ $amg_dirs =~ "invalid option: --trust-server-cert" ]]
+	then amg_dirs=$($SVN_CLIENT ls --non-interactive  $amg_url)
+	fi
 	if [[ $amg_dirs =~ trunk ]]
 	then $SVN_CLIENT up $JAB
 	else echo Cannot contact $amg_url
