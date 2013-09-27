@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo Welcome to $HOME/.jab/bashrc
+# echo Welcome to $HOME/.jab/bashrc
 
 source_file ()
 {
@@ -30,7 +30,7 @@ update_jab ()
 	then amg_dirs=$($SVN_CLIENT ls --non-interactive  $amg_url)
 	fi
 	if [[ $amg_dirs =~ trunk ]]
-	then $SVN_CLIENT up $JAB
+	then $SVN_CLIENT up -q $JAB
 	else echo Cannot contact $amg_url
 	fi
 	$SVN_CLIENT stat $JAB
