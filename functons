@@ -973,7 +973,7 @@ console_title_on ()
 {
 	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
 	then
-		echo -e "]1;$1"
+		echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
 	elif env | grep -iq konsole 2>/dev/null
 	then
 		dcop $KONSOLE_DCOP_SESSION renameSession $1
