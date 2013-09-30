@@ -2,7 +2,7 @@
 
 # Script for using ViM as a PAGER.
 # Based on Bram's less.sh.
-# Version 1.7.9
+# Version 1.8.2
 # git://github.com/rkitover/vimpager.git
 
 # Just pass through if not on a tty
@@ -18,8 +18,20 @@ case $(uname -s) in
 	MINGW*) msys=1 ;;
 	OpenBSD) openbsd=1; bsd=1 ;;
 	FreeBSD) freebsd=1; bsd=1 ;;
+	NetBSD) netbsd=1; bsd=1 ;;
 	*) bsd=1 ;;
 esac
+
+# grep -q is often not available
+grep_q() {
+	_pat=$1
+	shift
+	awk '
+		BEGIN { exit_val = 1 }
+		$0 ~ /'"$_pat"'/ { exit_val = 0; exit(exit_val) }
+		END { exit(exit_val) }
+	' "$@"
+}
 
 # Use the real TEMP directory on windows in case we are using a native vim/gvim
 tmp=/tmp
@@ -70,7 +82,7 @@ find_rc() {
 	[ -e "${HOME}/.${_rc_file}" ] && _rc="${HOME}/.${_rc_file}"
 
 	if [ -n "${msys}" -o -n "${cygwin}" ]; then
-		if command -v ${_cmd} 2>/dev/null | awk '$1 ~ /^\/(cygdrive\/)?[a-z]\// {t=1} END {exit 1-t}'; then
+		if command -v ${_cmd} 2>/dev/null | grep_q '^\/(cygdrive\/)?[a-z]\/'; then
 			eval "win32_native_${cmd}=1"
 
 			if [ -e "${HOME}/_${_rc_file}" ]; then
@@ -164,7 +176,7 @@ if [ -n "${msys}" -o -n "${cygwin}" ]; then
 	# console the native vim will not work, so we have to use gvim.
 
 	if [ "x${TERM}" != "xdumb" -a "x${TERM}" != "xcygwin" -a "x${TERM}" != "x" ]; then
-		if command -v vim 2>/dev/null | awk '$1 ~ /^\/(cygdrive\/)?[a-z]\// {t=1} END {exit 1-t}'; then
+		if command -v vim 2>/dev/null | grep_q '^\/(cygdrive\/)?[a-z]\/'; then
 			use_gvim=1
 		fi
 	fi
@@ -301,6 +313,8 @@ _do_ptree() {
 		ps awo pid=,ppid=,command= | awk_pstree ${$}
 	elif [ -n "${freebsd}" ]; then
 		ps aw -o pid= -o ppid= -o command= | awk_pstree_freebsd ${$}
+	elif [ -n "${netbsd}" ]; then
+		ps aw -o pid= -o ppid= -o command= | awk_pstree ${$}
 	else
 		# Tested on Linux and OS X
 		ps awo pid=,ppid=,comm= | awk_pstree ${$}
@@ -313,8 +327,8 @@ do_ptree() {
 }
 
 # Check if called from man, perldoc or pydoc
-if do_ptree | awk '$2 ~ /(^|\/)(man|perl(doc)?([0-9.]*)?|py(thon|doc|doc2))/ {t=1} END { exit 1-t }'; then
-	extra_c="set ft=man"
+if do_ptree | grep_q '(^|\/)(man|perl(doc)?([0-9.]*)?|py(thon|doc|doc2))'; then
+	extra_c='set ft=man'
 fi
 
 extra_cmd="let vimpager_ptree=[$(do_ptree | awk '{ print "\"" $2 "\"" }' | tr '\n' ',')] | call remove(vimpager_ptree, -1)"
@@ -422,6 +436,11 @@ case $(echo "${@}" | tr 'A-Z' 'a-z') in
 		;;
 esac
 
+# dumb man detection when the pstree heuristic fails
+if head -6 "${filename}" | grep_q '^NAME$'; then
+	extra_c='set ft=man'
+fi
+
 # if file is zero length, or one blank line (cygwin) exit immediately
 if [ \( ! -s "${filename}" \) \
 	-o \( \( "$(cat "${filename}")" = "" \) \
@@ -444,12 +463,33 @@ less_vim -c "${extra_c:-echo}" --cmd "${extra_cmd:-echo}" "${filename}" </dev/tt
 # be deleted.
 (
 	while [ -d "${tmp}/vimpager_${$}" ]; do
-		sleep 10
+		sleep 10 
 		rm -rf "${tmp}/vimpager_${$}" 2>/dev/null
 		rm -f gvim.exe.stackdump 2>/dev/null
 	done
 ) &
 
+# Copyright (c) 2013, Rafael Kitover
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+# * Redistributions in binary form must reproduce the above copyright
+# notice, this list of conditions and the following disclaimer in the
+# documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER ``AS IS'' AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
 # CONTRIBUTORS:
 #
 # Rafael Kitover
@@ -472,5 +512,6 @@ less_vim -c "${extra_c:-echo}" --cmd "${extra_cmd:-echo}" "${filename}" </dev/tt
 # krijesta: Chris Chambers <krijesta@google.com>
 # vincer: vince rosso <vince@locationlabs.com>
 # justinkb: Paul Mulders <justinkb@gmail.com>
+# nonakap: NONAKA Kimihiro <nonakap@gmail.com>
 
 # vim:noet ts=8 sts=8 sw=8 tw=0:
