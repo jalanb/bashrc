@@ -31,7 +31,10 @@ update_jab ()
 	fi
 	if [[ $amg_dirs =~ trunk ]]
 	then $SVN_CLIENT up -q $JAB
-	else echo Cannot contact $amg_url
+	else
+		echo Cannot contact $amg_url
+		echo Expected \"...trunk...\"
+		echo Actual $amg_dirs
 	fi
 	$SVN_CLIENT stat $JAB
 }
