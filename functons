@@ -647,9 +647,9 @@ mkcd ()
 
 rq.. ()
 {
-	local directory_here=$(basename $PWD)
+	local directory_here=$(basename "$(pwd)")
 	cd ..
-	/bin/rm -rf $directory_here
+	/bin/rm -rf "$directory_here"
 }
 
 stat ()
@@ -686,7 +686,7 @@ SUDO ()
 dicp ()
 {
 	COMMAND_FOR_SAME_FILES=cp
-	dixx $*
+	dixx "$1" "$2"
 }
 
 dihh ()
