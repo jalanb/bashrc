@@ -80,6 +80,11 @@ show_todo ()
 welcome_home ()
 {
 	show_todo
+	if pgrep -fl vim > /dev/null
+	then
+		echo You left these behind
+		pgrep -fl vim
+	fi
 	echo
 	echo Welcome jab, to $HOSTNAME
 	echo
