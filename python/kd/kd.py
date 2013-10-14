@@ -535,12 +535,18 @@ def _find_in_paths(item, prefixes, paths):
 	def globbed(p):
 		return fnmatch(p, '%s*' % item)
 
+	def glob_match(path):
+		for p in path.split(os.path.sep):
+			if globbed(p):
+				return True
+		return False
+
 	matchers = [
 		lambda path: item == path,
 		lambda path: item == os.path.basename(path),
 		lambda path: globbed(os.path.basename(path)),
 		lambda path: item in path.split(os.path.sep),
-		lambda path: any([p for p in path.split(os.path.sep) if globbed(p)]),
+		lambda path: glob_match(path),
 	]
 	if os.path.sep in item:
 		matchers.insert(0, lambda path: item in path)
