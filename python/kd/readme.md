@@ -1,7 +1,7 @@
 kd
 ==
 
-kd is a smarter version of the cd command.
+kd is a smarter cd.
 
 It knows more about the directories you are going to because it knows which ones you have gone to. It is written in Python for use at the bash shell.
 
