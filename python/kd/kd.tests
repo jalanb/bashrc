@@ -76,18 +76,18 @@ If the sub-dir matches too many directories then an exception is raised
 	Traceback (most recent call last):
 	...
 	TryAgain: Too many possiblities
-		 0: /usr/lib
-		 1: /usr/libexec
+		 0: /usr/li...
+		 1: /usr/li...
 
 Which can be suppressed by a numeric arg
-	>>> kd.find_directory('/usr', ['li', '1']) == '/usr/libexec'
+	>>> kd.find_directory('/usr', ['li', '1']).startswith('/usr/li')
 	True
 	>>> kd.find_directory('/usr', ['li', '2']) == '/usr/libexec'
 	Traceback (most recent call last):
 	...
 	ToDo: Your choice of "2" is not in range:
-		 0: /usr/lib
-		 1: /usr/libexec
+		 0: /usr/li...
+		 1: /usr/li...
 
 A number out of context is ignored
 	>>> kd.find_directory('/usr', ['1']) == '/usr'
