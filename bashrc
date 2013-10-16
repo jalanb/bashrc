@@ -71,7 +71,7 @@ show_todo ()
 	if python2.7 -c"a=0" >/dev/null 2>&1
 	then test -f todo.py && python2.7 todo.py
 	else
-		local version=$(python --version 2>&1)
+		local version=$(python -V 2>&1)
 		echo "Python version is old ($version)"
 	fi
 	builtin cd - >/dev/null 2>&1
