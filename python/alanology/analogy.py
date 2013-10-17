@@ -3,60 +3,67 @@ import tally
 import lists
 
 def module_grammar(module):
-	return file(module.__file__.replace('.pyc','.j').replace('.py','.j')).read()
+	return file(module.__file__.replace('.pyc', '.j').replace('.py', '.j')).read()
+
 
 def string_to_list(string_of_characters):
 	'''Convert a Python string to a Tally of twisted characters'''
-	lyst = tally.tlist('string')([ twisted(c) for c in string_of_characters ])
+	lyst = tally.tlist('string')([twisted(c) for c in string_of_characters])
 	return lyst
+
 
 def lysted(lyst):
 	return pluralled(classed(lyst))
+
 
 def pluralled(lyst):
 	result = []
 	for items in lyst:
 		item = items[0]
 		name = item.list_name()
-		result += [ tally.tlist(name)(items) ]
+		result.append(tally.tlist(name)(items))
 	return result
 
-def classed(lyst):
-	def same_class(a,b): return a.class_name() == b.class_name()
-	return lists.groups(same_class,[l for l in lyst])
 
-def pairer(name,before,after):
-	def take_every_two(lyst,take_two):
+def classed(lyst):
+	def same_class(a, b): return a.class_name() == b.class_name()
+	return lists.groups(same_class, [l for l in lyst])
+
+
+def pairer(name, before, after):
+	def take_every_two(lyst, take_two):
 		i = iter(lyst)
 		prev = i.next()
 		try:
 			while i:
 				curr = i.next()
-				prev, curr = take_two(prev,curr)
+				prev, curr = take_two(prev, curr)
 				yield prev
 				if not curr:
 					prev = curr
 					curr = i.next()
 				prev = curr
 		finally:
-			if prev: yield prev
+			if prev:
+				yield prev
 
-	def named_pair(name,*outer_args):
+	def named_pair(name, *outer_args):
 		def take_two(*inner_args):
-			if all(i.class_name() == o for i,o in zip(inner_args,outer_args)):
+			if all(i.class_name() == o for i, o in zip(inner_args, outer_args)):
 				return tally.tlist(name)(inner_args[0]), None
 			return inner_args
 		return take_two
 
-	method = named_pair(name,before,after)
+	method = named_pair(name, before, after)
 	def reduce_by_pairs(lyst):
-		new_list = take_every_two(lyst,method)
+		new_list = take_every_two(lyst, method)
 		return [l for l in new_list]
 
 	return reduce_by_pairs
 
-worded = pairer('word','lowers','spaces')
-sentenced = pairer('sentence','words','eols')
+worded = pairer('word', 'lowers', 'spaces')
+sentenced = pairer('sentence', 'words', 'eols')
+
 
 def twisted(c):
 	if c.isupper():

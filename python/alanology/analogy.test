@@ -1,7 +1,7 @@
 The analogy module
 ==================
 
-	>>> import analogy 
+	>>> import analogy
 
 Dog food time
 	>>> analogy_grammar = analogy.module_grammar(analogy)
