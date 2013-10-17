@@ -557,7 +557,7 @@ jjt ()
 
 jjy ()
 {
-	ky $JAB/python
+	ky $JAB/python $*
 }
 
 jjz ()
