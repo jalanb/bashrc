@@ -3,11 +3,15 @@ import tally
 import lists
 
 def module_grammar(module):
+	"""Find a file named same as this module, except with extension j
+
+	Such files should contain analogy-grammars
+	"""
 	return file(module.__file__.replace('.pyc', '.j').replace('.py', '.j')).read()
 
 
 def string_to_list(string_of_characters):
-	'''Convert a Python string to a Tally of twisted characters'''
+	"""Convert a Python string to a Tally of twisted characters"""
 	lyst = tally.tlist('string')([twisted(c) for c in string_of_characters])
 	return lyst
 
@@ -26,7 +30,8 @@ def pluralled(lyst):
 
 
 def classed(lyst):
-	def same_class(a, b): return a.class_name() == b.class_name()
+	def same_class(a, b):
+		return a.class_name() == b.class_name()
 	return lists.groups(same_class, [l for l in lyst])
 
 
