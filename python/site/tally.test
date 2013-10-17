@@ -1,27 +1,28 @@
 The tally module
 ================
 
-	>>> import tally
+	>>> from tally import Tally
+	>>> from tally import tlist
 
 A Tally is ako list
-	>>> l = [0, 1, 'hello', 2, 3]
-	>>> fred = tally.Tally(l)
-	>>> print fred
+	>>> a_list = [0, 1, 'hello', 2, 3]
+	>>> tally = Tally(a_list)
+	>>> print tally
 	[0, 1, 'hello', 2, 3]
 
-With a different %r than list
-	>>> l
+With a different represenation than a list
+	>>> a_list
 	[0, 1, 'hello', 2, 3]
-	>>> fred
+	>>> tally
 	<Tally [0, 1, 'hello', 2, 3]>
 
 And can parse out its class name
-	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	>>> print tally.class_name(), tally.full_class_name(), tally.list_name()
 	Tally tally.Tally Tallies
 
 A subclass of Tally
-	>>> class Freddy(tally.Tally): pass
-	>>> fred = Freddy(l)
+	>>> class Freddy(Tally): pass
+	>>> fred = Freddy(a_list)
 
 is also ako list
 	>>> print fred
@@ -42,7 +43,6 @@ and parses its name
 I think this one is a meta-sub-class
 	but it might be a sub-meta-class.
 	Anyway, the class name you provide is sent into a method
-	>>> from tally import tlist
 	>>> Teddy = tlist('Teddy')
 
 And that gives you a new class
@@ -56,9 +56,10 @@ When it starts from a string it still looks like a string
 	<Teddy 'ted'>
 
 But it is really ako list
-	>>> try: print ted.upper()
-	... except AttributeError: print ted.pop()
-	d
+	>>> print ted.upper()
+	Traceback (most recent call last):
+	...
+	AttributeError: 'Teddy' object has no attribute 'upper'
 
 It still parses its name the same way
 	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()

@@ -4,28 +4,28 @@ The twine module
 	>>> from twine import Twine
 
 A Twine is ako string
-	>>> fred = Twine('Fred')
-	>>> print fred
+	>>> twine = Twine('Fred')
+	>>> print twine
 	Fred
 
 With a different representation than string
-	>>> fred
+	>>> twine
 	<Twine 'Fred'>
 
 And can parse out its class name
-	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	>>> print twine.class_name(), twine.full_class_name(), twine.list_name()
 	Twine twine.Twine Twines
 
 A subclass of Twine
 	>>> class Freddy(Twine): pass
-	>>> fred = Freddy('Fred')
+	>>> twine = Freddy('Fred')
 
 is also ako string
-	>>> print fred
+	>>> print twine
 	Fred
 
 and knows its class
-	>>> fred
+	>>> twine
 	<Freddy 'Fred'>
 
 and parses its name
@@ -33,7 +33,7 @@ and parses its name
 		full class name has no module as it was created in this script
 	Note again:
 		This is now version dependent, 2.7 calls this script's module "__main__"
-	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+	>>> print twine.class_name(), twine.full_class_name(), twine.list_name()
 	Freddy ...Freddy Freddies
 
 I think this one is a meta-sub-class

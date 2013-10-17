@@ -1,4 +1,8 @@
+The twine module
+================
+
 	>>> from twine import Twine
-	>>> fred = Twine('Fred')
-	>>> print fred.str_class_and_list()
+
+	>>> twine = Twine('Fred')
+	>>> print twine.str_class_and_list()
 	('Fred', 'Twine', 'Twines')
