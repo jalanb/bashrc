@@ -14,9 +14,7 @@ Our grammar starts off looking like this
 
 Which is stored in a string
 	>>> string
-	<string 'is is a verb
-	verb is a noun
-	'>
+	<string 'is is a verb \nverb is a noun \n'>
 
 Which is made up of letters and stuff
 	>>> print string.to_str(0,3)
@@ -34,8 +32,7 @@ Group them by their class
 	 <spaces ' '>,
 	 <lowers 'verb'>,
 	 <spaces ' '>,
-	 <eols '
-	'>,
+	 <eols '\n'>,
 	 <lowers 'verb'>,
 	 <spaces ' '>,
 	 <lowers 'is'>,
@@ -44,9 +41,7 @@ Group them by their class
 	 <spaces ' '>,
 	 <lowers 'noun'>,
 	 <spaces ' '>,
-	 <eols '
-	<BLANKLINE>
-	'>]
+	 <eols '\n'>]
 
 	>>> lyst = analogy.worded( lyst )
 	>>> show( lyst )
@@ -54,23 +49,19 @@ Group them by their class
 	 <word 'is'>,
 	 <word 'a'>,
 	 <word 'verb'>,
-	 <eols '
-	'>,
+	 <eols '\n'>,
 	 <word 'verb'>,
 	 <word 'is'>,
 	 <word 'a'>,
 	 <word 'noun'>,
-	 <eols '
-	'>]
+	 <eols '\n'>]
 
 	>>> lyst = analogy.lysted( lyst )
 	>>> show( lyst )
 	[<words [<word 'is'>, <word 'is'>, <word 'a'>, <word 'verb'>]>,
-	 <eols [<eols '
-	'>]>,
+	 <eols [<eols '\n'>]>,
 	 <words [<word 'verb'>, <word 'is'>, <word 'a'>, <word 'noun'>]>,
-	 <eols [<eols '
-	'>]>]
+	 <eols [<eols '\n'>]>]
 
 	>>> lyst = analogy.sentenced( lyst )
 	>>> show( lyst )
