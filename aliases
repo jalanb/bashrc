@@ -129,7 +129,6 @@ alias clx="cl; lx "
 alias cly="cl; ly "
 alias csi='c $(python -c "import sys; print [p for p in sys.path if p.endswith(\"site-packages\")][0]")'
 
-alias jjy="ky $JAB/python"
 alias jlf="sst jlfieblu jlf.ie"
 
 alias kpj="kp -e \"ssh -i $JAB_KEY\"" 
@@ -165,9 +164,6 @@ alias stv="statvim svd "
 alias svd="svn_diff vertical "
 
 alias tra="try ~/alans_tests"
-alias ttj='ssj jab jab-track-1.altobridge.com'
-alias tta='ssj abrogan jab-track-1.altobridge.com'
-alias ttt='ssj abrogan ie-track-1.altobridge.com'
 
 alias vib="v ~/.bashrc; sib"
 alias vin="vim -"
@@ -185,11 +181,7 @@ alias home="cd; cls"
 
 alias mine="sudo chown $(id -un):$(id -gn)"
 
-alias jjya='ky $JAB/python/alanology'
-alias jjys='ky $JAB/python/site'
 alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
-
-alias rias="sst abrogan 172.20.1.172"
 
 alias tags="p $JAB/python/ptags.py "
 

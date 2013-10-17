@@ -476,7 +476,35 @@ fpy ()
 	fi
 }
 
-. $JAB/bin/first_dir
+jj1 ()
+{
+	ssj abrogan ie-build-1.altobridge.com
+} 
+
+jj2 ()
+{
+	ssj abrogan ie-build-2.altobridge.com
+} 
+
+jj3 ()
+{
+	ssj abrogan ie-build-3.altobridge.com
+} 
+
+jja ()
+{
+	ssj abrogan jab-track-1.altobridge.com
+} 
+
+jjb ()
+{
+	sst builder ie-build-1.altobridge.com
+} 
+
+jjd ()
+{
+	ssj jab abrogan-dev.altobridge.com
+} 
 
 jjj ()
 {
@@ -501,6 +529,48 @@ jjj ()
 	fi
 }
 
+
+jjk ()
+{
+	ssj jab jab-track-1.altobridge.com
+} 
+
+jjl ()
+{
+	ssj albrogan abrogan.altobridge.com
+} 
+
+jjp ()
+{
+	ssj root ie-protex-1.altobridge.com
+} 
+
+jjr ()
+{
+	ssj jab abrogan-run.altobridge.com
+} 
+
+jjt ()
+{
+	ssj abrogan ie-track-1.altobridge.com
+} 
+
+jjy ()
+{
+	ky $JAB/python
+}
+
+jjz ()
+{
+	sst abrogan r9dev1.altobridge.com
+} 
+
+jjZ ()
+{
+	sst abrogan sz-build-1.altobridge.com
+}
+
+. $JAB/bin/first_dir
 
 llt ()
 {
@@ -637,6 +707,16 @@ down ()
 fgpp ()
 {
 	fgv *.py *.test *.tests $*
+}
+
+jjya ()
+{
+	jjy alanology
+}
+
+jjys ()
+{
+	jjy site
 }
 
 mkcd () 
