@@ -60,7 +60,7 @@ def replace_alias(command):
 
 def bash_executable():
 	"""The first executable called 'bash' in the $PATH"""
-	return files_in_environment_path()['bash']
+	return file_in_environment_path('bash')
 
 
 def show_output_of_shell_command(command):
@@ -237,6 +237,18 @@ def files_in_environment_path():
 	return dict(result)
 
 
+def file_in_environment_path(string):
+	"""Gives the path to string, or string.exe
+
+	>>> file_in_environment_path('python') == sys.executable
+	True
+	"""
+	try:
+		return file_in_environment_path(string)
+	except KeyError:
+		return file_in_environment_path('%s.exe' % string)
+
+
 def shown_languages():
 	"""A list of languages whose source files we are interested in viewing"""
 	return ['python', 'bash', 'sh']
@@ -300,7 +312,7 @@ def script_language(path_to_file):
 
 def show_command_in_path(command):
 	"""Show a command which is a file in $PATH"""
-	path_to_command = files_in_environment_path()[command]
+	path_to_command = file_in_environment_path(command)
 	show_path_to_command(path_to_command)
 
 
