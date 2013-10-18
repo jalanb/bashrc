@@ -1,106 +1,81 @@
 The words module
 ================
 
+	>>> import words
+
 This module handles some english words
 
-	>>> from words import matchCase
-	>>> print matchCase('ALAN','alanies')
+	>>> print words.match_case('ALAN', 'alanies')
 	ALANIES
-	>>> print matchCase('Alan','alanies')
+	>>> print words.match_case('Alan', 'alanies')
 	Alanies
-	>>> print matchCase('alaN','alanies')
+	>>> print words.match_case('alaN', 'alanies')
 	alaNies
-	>>> print matchCase('alan','alanies')
+	>>> print words.match_case('alan', 'alanies')
 	alanies
+	>>> print words.match_case('alan', 'AA')
+	aa
+	>>> print words.match_case('alan DID that!', 'alan was here?')
+	alan WAS here?
 
-	>>> from words import pluralize
-	>>> print pluralize('fred')
-	freds
-	>>> print pluralize('freddy')
-	freddies
-	>>> print pluralize('punch')
-	punches
-	>>> print pluralize('fish')
-	fish
-	>>> print pluralize('index')
-	indices
-	>>> print pluralize('Index')
-	Indices
-	>>> print pluralize('lunch')
-	lunches
+	>>> expected = [
+	...     ('punch', 'punches'),
+	...     ('fish', 'fish'),
+	...     ('index', 'indices'),
+	...     ('Index', 'Indices'),
+	...     ('lunch', 'lunches'),
+	...     ('bass', 'basses'),
+	...     ('fax', 'faxes'),
+	...     ('waltz', 'waltzes'),
+	...     ('coach', 'coaches'),
+	...     ('rash', 'rashes'),
+	...     ('cheetah', 'cheetahs'),
+	...     ('vacancy', 'vacancies'),
+	...     ('day', 'days'),
+	...     ('man', 'men'),
+	...     ('woman', 'women'),
+	...     ('human', 'humans'),
+	...     ('mouse', 'mice'),
+	...     ('louse', 'lice'),
+	...     ('house', 'houses'),
+	...     ('knife', 'knives'),
+	...     ('wife', 'wives'),
+	...     ('sheep', 'sheep'),
+	...     ('deer', 'deer'),
+	...     ('haiku', 'haiku'),
+	...     ('hero', 'heroes'),
+	...     ('piano', 'pianos'),
+	... ]
+	>>> for singular, plural in expected:
+	...     assert words.pluralize(singular) == plural, singular
 
-	>>> print pluralize('bass')
-	basses
-	>>> print pluralize('fax')
-	faxes
-	>>> print pluralize('waltz')
-	waltzes
-	>>> print pluralize('coach')
-	coaches
-	>>> print pluralize('rash')
-	rashes
-	>>> print pluralize('cheetah')
-	cheetahs
-	>>> print pluralize('vacancy')
-	vacancies
-	>>> print pluralize('day')
-	days
-
-	>>> print pluralize('man')
-	men
-	>>> print pluralize('woman')
-	women
-	>>> print pluralize('human')
-	humans
-	>>> print pluralize('mouse')
-	mice
-	>>> print pluralize('louse')
-	lice
-	>>> print pluralize('house')
-	houses
-	>>> print pluralize('knife')
-	knives
-	>>> print pluralize('wife')
-	wives
-	>>> print pluralize('sheep')
-	sheep
-	>>> print pluralize('deer')
-	deer
-	>>> print pluralize('haiku')
-	haiku
-	>>> print pluralize('hero')
-	heroes
-	>>> print pluralize('piano')
-	pianos
-
-	>>> pluralize('lowlife') == 'lowlifes'
+	>>> words.pluralize('lowlife') == 'lowlifes'
 	False
 
 
-	>>> from words import number_name
-	>>> print number_name('one')
-	one
-	>>> print number_name('1')
-	one
-	>>> print number_name(1)
-	one
-	>>> print number_name(11)
-	11
+	>>> words.number_name('one') == words.number_name('1') == words.number_name(1) == 'one'
+	True
+	>>> words.number_name(11) == '11'
+	True
 
 We can also get singular forms,
-	but the method is called depluralize to emphasize that it just does the opposite of pluralize
-	>>> from words import depluralize
+	but the method is called words.depluralize to emphasize that it just does the opposite of words.pluralize
 
 Less milk from only one of these
-	>>> print depluralize('cows')
+	>>> print words.depluralize('cows')
 	cow
 
 But plenty of sailing at the only one of these
-	>>> print depluralize('Cowes')
+	>>> print words.depluralize('Cowes')
 	Cowes
 
-	>>> print depluralize('cats')
+	>>> print words.depluralize('cats')
 	cat
 
-	>>> print depluralize('fish')
+	>>> print words.depluralize('fish')
 	fish
+
+	>>> words._ends_in_consonant_y('prey')
+	False
+	>>> words._ends_in_consonant_y('pret')
+	False

@@ -10,4 +10,7 @@ if [[ -d $TRACKERS ]]
 then
 	python $TRACKERS/testing/try.py path.
 	python $TRACKERS/testing/try.py paths.
+else
+	try path.
+	try paths.
 fi
