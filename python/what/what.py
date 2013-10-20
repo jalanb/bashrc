@@ -244,7 +244,7 @@ def file_in_environment_path(string):
 	True
 	"""
 	try:
-		return file_in_environment_path(string)
+		return files_in_environment_path()[string]
 	except KeyError:
 		return file_in_environment_path('%s.exe' % string)
 
