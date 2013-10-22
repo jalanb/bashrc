@@ -78,7 +78,7 @@ if !exists("Try")
 	endfunction
 	function TryTest(quietly)
 		let item_name = s:file_stem . "."
-		if ! filereadable(s:file_test)
+		if ! filereadable(s:file_test) && ! filereadable(s:file_tests)
 			call NewTestFile(s:file_test)
 		endif
 		if filereadable('./try.py')

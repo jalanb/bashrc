@@ -1,0 +1,38 @@
+The rf script
+=============
+
+	>>> import rf
+	>>> print rf.__doc__
+	Script to remove temporary files
+	...
+
+	>>> options, args = rf.parse_options(['-r', '/path'])
+	>>> options.recursive is True and '/path' in args
+	True
+
+	>>> 'fred*' in rf.get_globs(options)
+	True
+
+	>>> '*.fail' in rf.get_globs(options)
+	False
+	>>> options.python = True
+	>>> '*.fail' in rf.get_globs(options)
+	True
+
+	>>> '/etc' in rf.get_paths_in('/', 'etc')
+	True
+	>>> '/etc/bashrc' in rf.get_paths_in('/etc', 'bash*')
+	True
+	>>> '/etc' not in rf.get_files_in('/', 'etc')  and '/etc/bashrc' in rf.get_files_in('/etc', 'bash*')
+	True
+	>>> '/etc/csh.cshrc' in rf.get_files_in('/etc', 'c*') and '/etc/cups/cupsd.conf' not in rf.get_files_in('/etc', 'c*')
+	True
+	>>> '/etc/csh.cshrc' in rf.get_files_under('/etc', 'c*') and '/etc/cups/cupsd.conf' in rf.get_files_under('/etc', 'c*')
+	True
+
+	>>> '/etc/find.codes' in rf.get_files('/etc', 'fi*', recursive=False)
+	True
+	>>> '/etc/newsyslog.d/files.conf' in rf.get_files('/etc', 'fi*', recursive=False)
+	False
+	>>> '/etc/newsyslog.d/files.conf' in rf.get_files('/etc', 'fi*', recursive=True)
+	True

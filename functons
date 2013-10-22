@@ -189,6 +189,12 @@ rb ()
 	run_as builder $*
 }
 
+rf ()
+{
+	PYTHON_SCRIPT=$JAB/python/rf.py
+	python $PYTHON_SCRIPT "$@"
+}
+
 ru ()
 {
 # do da root root route, do da ru !
