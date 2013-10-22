@@ -29,7 +29,8 @@ svn_diff_file ()
 	COPY_OF_CHECKOUT=${path_to_file}.svn_checkout.r$revision
 
 	svn cat -r $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
-	vim -d $options "$path_to_file" "$COPY_OF_CHECKOUT"
+	ls  -l "$path_to_file" "$COPY_OF_CHECKOUT"
+	$VIM -d $options "$path_to_file" "$COPY_OF_CHECKOUT"
 	remove_checkout
 }
 
@@ -52,13 +53,18 @@ svn_diff_dir ()
 
 main ()
 {
-	local direction=$1
-	local path=$2
+	VIM=vim
+	ARGS=$*
+	if [[ $ARGS =~ -g ]]
+	then 
+		VIM="gvim -f"
+		ARGS=${ARGS/-g}
+	fi
 	if [[ -f $path ]]
 	then
-		svn_diff_file $*
+		svn_diff_file $ARGS
 	else
-		svn_diff_dir $*
+		svn_diff_dir $ARGS
 	fi
 }
 
