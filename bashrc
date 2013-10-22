@@ -82,7 +82,10 @@ welcome_home ()
 	show_todo
 	if pgrep -fl vim > /dev/null
 	then
-		echo You left these behind
+		echo
+		echo --------------------
+		echo vim sessions running
+		echo --------------------
 		pgrep -fl vim
 	fi
 	echo
