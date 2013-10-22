@@ -64,8 +64,6 @@ alias eg="env | g "
 alias ga="alias | g"
 alias gc="git commit -m"
 
-alias IP="python $JAB/python/ifconfig.py 172"
-
 alias jj="c $JAB"
 
 alias kp="rsync -a"

@@ -37,6 +37,16 @@ w ()
 	tree -d $* | less
 }
 
+IP ()
+{
+	for number in 172 192 100
+	do
+		if python $JAB/python/ifconfig.py $number
+		then break
+		fi
+	done
+}
+
 aa ()
 {
 	Ack --all $*
