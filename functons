@@ -133,6 +133,11 @@ gh ()
 	history | grep -v "\<\(history\|gh\)\>" | grep --color $*
 }
 
+gv ()
+{
+	gvim $*
+}
+
 hh ()
 {
 	history -n
@@ -620,11 +625,27 @@ rq. ()
 	/bin/rm -rf ./*
 }
 
+scd ()
+{
+	svn diff --diff-cmd colordiff $*
+}
+
+shd ()
+{
+	svn_diff horizontal $*
+}
+
+svd ()
+{
+	svn_diff vertical $*
+}
+
 
 sap ()
 {
 	/Volumes/HD/Users/jab/jab/github/sack/sack --python $*
 }
+
 
 unalias try > /dev/null 2>&1
 try ()
@@ -822,6 +843,31 @@ dixx ()
 		echo "Only in $destination_dir"
 		_divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
 	fi
+}
+
+vvvb ()
+{
+	v $JAB/vim/ftplugin/sh.vim
+}
+
+vvvg ()
+{
+	gv $JAB/vim/gvimrc
+}
+
+vvvp ()
+{
+	v $JAB/vim/ftplugin/python
+}
+
+vvvv ()
+{
+	v $JAB/vim/vimrc
+}
+
+vvvy ()
+{
+	v $JAB/vim/ftplugin/python/jab.vim
 }
 
 # xxxxx

@@ -93,7 +93,6 @@ alias ry="rf pycos"
 alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
 alias sc="svn ci -m"
-alias sd="svn diff "
 alias se="source $JAB/environ"
 alias sf="source $JAB/functons"
 alias si="svn_info "
@@ -147,8 +146,6 @@ alias rrs="sudo $JAB/python/ranger/bin/range"
 alias sib=". ~/.bashrc"
 alias sii="svn_issue "
 
-alias scd='svn diff --diff-cmd colordiff '
-alias shd='svn_diff horizontal '
 alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
 alias slf="source $JAB/local/functons"
@@ -159,7 +156,6 @@ alias sth="statvim shd"
 alias stj="statvim svd $JAB"
 alias stm="statvim shd | grep -v ^r"
 alias stv="statvim svd "
-alias svd="svn_diff vertical "
 
 alias tra="try ~/alans_tests"
 
@@ -183,10 +179,6 @@ alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
 
 alias tags="p $JAB/python/ptags.py "
 
-alias vvvb="v $JAB/vim/ftplugin/sh.vim"
-alias vvvp="v $JAB/vim/ftplugin/python"
-alias vvvv="v $JAB/vim/vimrc"
-alias vvvy="v $JAB/vim/ftplugin/python/jab.vim"
 
 # xxxxx
 
