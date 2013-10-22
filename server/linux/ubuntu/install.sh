@@ -201,6 +201,7 @@ checkout_jab ()
 	svn co -q --username abrogan https://repository.altobridge.com/jab .jab
 	ln -s ~/.jab/vim ~/.vim
 	ln -s ~/.jab/vim/vimrc ~/.vimrc
+	ln -s ~/.jab/vim/gvimrc ~/.gvimrc
 	ln -s ~/.jab/python/pythonrc.py ~/.pythonrc.py
 	ln -s ~/.jab/etc/subversion/config ~/.subversion/config
 	ln -s ~/.jab/etc/dir_colors ~/.dir_colors

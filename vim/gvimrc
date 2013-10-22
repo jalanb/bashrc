@@ -1,12 +1,12 @@
 "gui
 syntax on
-set guifont=Monospace\ 13
+set guifont=Monospace\ 12
 winpos 100 30
-winsize 90 24
+winsize 100 48
 "
 " Some keys that only work in gui
 inoremap <C-Space> <C-X><C-U>
 noremap <C-[> <C-t>
 
 set tabpagemax=20
-set guioptions=abegimrLtT
+set guioptions=abcegimrLtT

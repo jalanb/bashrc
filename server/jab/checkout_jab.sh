@@ -42,6 +42,7 @@ main ()
 	[ -d $JAB ] || svn co -q --username abrogan https://repository.altobridge.com/jab $JAB
 	link_to_home vim
 	link_to_home vim/vimrc
+	link_to_home vim/gvimrc
 	link_to_home editrc
 	link_to_home inputrc
 	link_to_home python/pythonrc.py
