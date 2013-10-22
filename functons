@@ -620,6 +620,12 @@ rq. ()
 	/bin/rm -rf ./*
 }
 
+
+sap ()
+{
+	/Volumes/HD/Users/jab/jab/github/sack/sack --python $*
+}
+
 unalias try > /dev/null 2>&1
 try ()
 {
