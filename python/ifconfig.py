@@ -1,5 +1,7 @@
 """A script to run ifconfig, extract IP addresses"""
 
+
+import os
 import re
 import sys
 import commands
@@ -31,12 +33,14 @@ def make_chooser(args):
 
 def main(args):
 	"""Run the program"""
+	result = os.EX_UNAVAILABLE
 	choose = make_chooser(args)
 	lines = run_ifconfig()
 	for ip_address in get_ip_addresses(lines):
 		if choose(ip_address):
 			print ip_address
-	return 0
+			result = os.EX_OK
+	return result
 
 if __name__ == '__main__':
 	sys.exit(main(sys.argv[1:]))
