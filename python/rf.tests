@@ -30,9 +30,13 @@ The rf script
 	>>> '/etc/csh.cshrc' in rf.get_files_under('/etc', 'c*') and '/etc/cups/cupsd.conf' in rf.get_files_under('/etc', 'c*')
 	True
 
-	>>> '/etc/find.codes' in rf.get_files('/etc', 'fi*', recursive=False)
+	>>> path_to_test = test.path.realpath()
+	>>> path_to_parent = path_to_test.parent
+	>>> path_to_grandparent = path_to_test.parent.parent
+	>>> globs = ['%s.*' % test.path.namebase]
+	>>> path_to_test in rf.get_files(path_to_parent, globs, recursive=False)
 	True
-	>>> '/etc/newsyslog.d/files.conf' in rf.get_files('/etc', 'fi*', recursive=False)
+	>>> path_to_test in rf.get_files(path_to_grandparent, globs, recursive=False)
 	False
-	>>> '/etc/newsyslog.d/files.conf' in rf.get_files('/etc', 'fi*', recursive=True)
+	>>> path_to_test in rf.get_files(path_to_grandparent, globs, recursive=True)
 	True
