@@ -576,6 +576,11 @@ jjt ()
 	ssj abrogan ie-track-1.altobridge.com
 } 
 
+jju ()
+{
+	ssj abrogan abrogan1304.altobridge.com
+}
+
 jjy ()
 {
 	ky $JAB/python $*
