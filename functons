@@ -8,7 +8,7 @@
 
 c ()
 {
-	kd $*
+	kd "$@"
 	if [[ -f todo.txt ]]
 	then
 		todo_show
@@ -21,20 +21,20 @@ p ()
 	local here=`hostname -s`
 	export PYTHON=${PYTHON-python}
 	console_title_on "python@${here}" && \
-		$PYTHON $* && \
+		$PYTHON "$@" && \
 		console_title_off "${me}@${here}"
 }
 
 w ()
 {
-	what $*
+	what "$@"
 }
 
 # xx
 
 3d ()
 {
-	tree -d $* | less
+	tree -d "$@" | less
 }
 
 IP ()
@@ -49,54 +49,48 @@ IP ()
 
 aa ()
 {
-	Ack --all $*
+	Ack --all "$@"
 }
 
 ac ()
 {
-	Ack --code $*
+	Ack --code "$@"
 }
 
 ae ()
 {
-	Ack --erl $*
+	Ack --erl "$@"
 }
 
 ag ()
 {
-	alias | grep $*
+	alias | grep "$@"
 }
 
 ai ()
 { 
-    local sought="$*";
+    local sought="$@";
     ack --pyt "(import.*$sought|$sought import)"
 }
 
 al ()
 {
-	Ack --html $*
+	Ack --html "$@"
 }
 
 ap ()
 {
-	Ack --python $*
+	Ack --python "$@"
 }
 
 at ()
 {
-	Ack --pyt $*
+	Ack --pyt "$@"
 }
 
 av ()
 {
-	vack $*
-}
-
-cj ()
-{
-# commit jab
-	svn ci $JAB -m"$*"
+	vack "$@"
 }
 
 cl ()
@@ -115,7 +109,7 @@ gg ()
 	local readme="show grep results as vim commands"
 	sought="$1"
 	shift
-	grep "$sought" $* | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+	grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
 gp ()
@@ -130,12 +124,12 @@ gp ()
 gh ()
 {
 	local __doc__="show stuff from history"
-	history | grep -v "\<\(history\|gh\)\>" | grep --color $*
+	history | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
 }
 
 gv ()
 {
-	gvim $*
+	gvim "$@"
 }
 
 hh ()
@@ -154,7 +148,7 @@ ky ()
 	then
 		cd $PYTHON_HOME
 	else
-		kd $* > /dev/null
+		kd "$@" > /dev/null
 	fi
 	y
 }
@@ -162,31 +156,31 @@ ky ()
 pi ()
 {
 	if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]
-	then ipython --no-confirm-exit $*
-	else ipython -noconfirm_exit $*
+	then ipython --no-confirm-exit "$@"
+	else ipython -noconfirm_exit "$@"
 	fi
 }
 
 py ()
 {
-	if [[ -z "$*" ]]
+	if [[ -z "$@" ]]
 	then
 		python2.7
 	else
 		script=${1/%./.py}
 		shift
-		python $script $*
+		python $script "$@"
 	fi
 }
 
 ra ()
 {
-	run_as abrogan $*
+	run_as abrogan "$@"
 }
 
 rb ()
 {
-	run_as builder $*
+	run_as builder "$@"
 }
 
 rf ()
@@ -198,11 +192,11 @@ rf ()
 ru ()
 {
 # do da root root route, do da ru !
-	if [ -z "$*" ]
+	if [ -z "$@" ]
 	then 
 		SUDO
 	else
-		sudo $*
+		sudo "$@"
 	fi
 }
 
@@ -215,9 +209,9 @@ sk ()
 
 sv ()
 {
-	if [[ -n "$*" ]]
+	if [[ -n "$@" ]]
 	then
-		svn revert $*
+		svn revert "$@"
 	else
 		svn revert *
 	fi
@@ -296,7 +290,7 @@ vh ()
 
 vp ()
 {
-	_edit_jab prompt $*
+	_edit_jab prompt "$@"
 }
 
 vr ()
@@ -324,7 +318,7 @@ vr ()
 
 vt ()
 {
-	first_dir $*
+	first_dir "$@"
 	v -p "$dir"/*.txt
 }
 
@@ -342,71 +336,71 @@ zm ()
 
 Ack ()
 {
-	ARGS="$*"
-	VLESS=$(echo $* | sed -e "s/ -v\($\| \)/\1/")
+	ARGS="$@"
+	VLESS=$(echo "$@" | sed -e "s/ -v\($\| \)/\1/")
 	if [[ "$ARGS" == "$VLESS" ]]
-	then ack $*
+	then ack "$@"
 	else vack $VLESS
 	fi
 }
 
 aaa ()
 {
-	Ack --nojunk $*
+	Ack --nojunk "$@"
 }
 
 aav ()
 {
-	vack --all $*
+	vack --all "$@"
 }
 
 acv ()
 {
-	vack --code $*
+	vack --code "$@"
 }
 
 aev ()
 {
-	vack --erl $*
+	vack --erl "$@"
 }
 
 alv ()
 {
-	vack --html $*
+	vack --html "$@"
 }
 
 apv ()
 {
-	vack --python $*
+	vack --python "$@"
 }
 
 atv ()
 {
-	vack --pyt $*
+	vack --pyt "$@"
 }
 
 awv ()
 {
-	vack -w $*
+	vack -w "$@"
 }
 
 aiv ()
 { 
-    local sought="$*";
+    local sought="$@";
     vack --pyt "(import.*$sought|$sought import)"
 }
 
 
 aiw ()
 { 
-    local sought="$*";
+    local sought="$@";
     ack --pyt "(import.*\b$sought\b|\b$sought\b import)"
 }
 
 
 ash ()
 {
-	Ack --shell $*
+	Ack --shell "$@"
 }
 
 cff ()
@@ -427,12 +421,12 @@ cls ()
 # clean, clear, ls
 	rf -q
 	clear
-	if [ -z "$*" ]
+	if [ -z "$@" ]
 	then
 	    ls -d `pwd`
 	    echo
 	fi
-	ls $*
+	ls "$@"
 }
 
 dev ()
@@ -449,18 +443,18 @@ dev ()
 		echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
 	fi
 	[[ ! -d ~/src ]] && mkdir ~/src
-	c ~/src $*
+	c ~/src "$@"
 	ls
 }
 
 fgp ()
 {
-	fgv *.py $*
+	fgv *.py "$@"
 }
 
 fgt ()
 {
-	fgv *.test *.tests $*
+	fgv *.test *.tests "$@"
 }
 
 fsh ()
@@ -468,13 +462,13 @@ fsh ()
 # run fred by his extension
 	if [ -f fred.sh ]
 	then
-		bash fred.sh $*
+		bash fred.sh "$@"
 	elif [ -f fred.py ]
 	then
-		p fred.py $*
+		p fred.py "$@"
 	elif [ -f "fred.test" ]
 	then
-		try "fred.test" $*
+		try "fred.test" "$@"
 	elif [ -f fred.c ]
 	then
 		/bin/rm -vf a.out
@@ -484,7 +478,7 @@ fsh ()
 			./a.out
 		fi
 	else
-		bash fred $*
+		bash fred "$@"
 	fi
 }
 
@@ -493,7 +487,7 @@ fpy ()
 # run fred.py if fred.sh exists
 	if [ -f fred.py ]
 	then
-		p fred.py $*
+		p fred.py "$@"
 	fi
 }
 
@@ -583,7 +577,7 @@ jju ()
 
 jjy ()
 {
-	ky $JAB/python $*
+	ky $JAB/python "$@"
 }
 
 jjz ()
@@ -600,13 +594,13 @@ jjZ ()
 
 llt ()
 {
-	first_dir $*
+	first_dir "$@"
 	l --color=always -lhtr "$dir" | less -R -m -N +G
 }
 
 lly ()
 {
-	first_dir $*
+	first_dir "$@"
 	reset=$(shopt -p dotglob)
 	shopt -s dotglob
 	ls -lhtr "$dir"/*.tests
@@ -638,23 +632,23 @@ rq. ()
 
 scd ()
 {
-	svn diff --diff-cmd colordiff $*
+	svn diff --diff-cmd colordiff "$@"
 }
 
 shd ()
 {
-	svn_diff horizontal $*
+	svn_diff horizontal "$@"
 }
 
 svd ()
 {
-	svn_diff vertical $*
+	svn_diff vertical "$@"
 }
 
 
 sap ()
 {
-	/Volumes/HD/Users/jab/jab/github/sack/sack --python $*
+	/Volumes/HD/Users/jab/jab/github/sack/sack --python "$@"
 }
 
 
@@ -663,12 +657,12 @@ try ()
 {
 	TRY=$JAB/python/testing/try.py
 	test -f ./try.py && TRY=./try.py
-	python $TRY $*
+	python $TRY "$@"
 }
 
 vai ()
 { 
-    aiv $*
+    aiv "$@"
 }
 
 
@@ -738,7 +732,7 @@ wat ()
 
 aaav ()
 {
-	vack --nojunk $*
+	vack --nojunk "$@"
 }
 
 cocd ()
@@ -754,13 +748,13 @@ dark ()
 
 down ()
 {
-	c ~/Download* $*
+	c ~/Download* "$@"
 	ls -alhtr
 }
 
 fgpp ()
 {
-	fgv *.py *.test *.tests $*
+	fgv *.py *.test *.tests "$@"
 }
 
 jjya ()
@@ -776,7 +770,7 @@ jjys ()
 mkcd () 
 { 
     local __doc__='make a directory and start using it';
-    mkdir -p "$*" && cd "$*"
+    mkdir -p "$@" && cd "$@"
 }
 
 rq.. ()
@@ -793,7 +787,7 @@ stat ()
 		rf -q
 		do_stat
 	else
-		for file in $*
+		for file in "$@"
 		do 
 			do_stat $file
 		done
@@ -826,13 +820,13 @@ dicp ()
 dihh ()
 {
 	COMMAND_FOR_SAME_FILES=hd
-	dixx $*
+	dixx "$@"
 }
 
 divv ()
 {
 	COMMAND_FOR_SAME_FILES=vd
-	dixx $*
+	dixx "$@"
 }
 
 dixx ()
@@ -915,7 +909,7 @@ build ()
 
 clean ()
 {
-	rf -q $*
+	rf -q "$@"
 }
 
 kodos ()
@@ -931,12 +925,12 @@ named ()
 	if first_dir $1
 	then shift
 	fi
-	find $dir -name "$*"
+	find $dir -name "$@"
 }
 
 vfile ()
 {
-	`echo "$*" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/"`
+	`echo "$@" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/"`
 }
 
 # xxxxx
@@ -963,7 +957,7 @@ run_as ()
 	shift
 	if [[ -n "$1" ]]
 	then 
-		sudo -u $username $*
+		sudo -u $username "$@"
 	else
 		SUDO $username
 	fi
@@ -973,7 +967,7 @@ run_as ()
 
 cleaner ()
 {
-	rf -qr $*
+	rf -qr "$@"
 }
 
 do_stat ()
@@ -996,7 +990,7 @@ statvim ()
 	then
 		do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
 	else
-		for file in $*
+		for file in "$@"
 		do 
 			do_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
 		done
@@ -1029,7 +1023,7 @@ svn_url ()
 
 cleanest ()
 {
-	clean -pqr $*
+	clean -pqr "$@"
 }
 
 svn_info ()
@@ -1042,7 +1036,7 @@ svn_info ()
 
 svn_issue ()
 {
-	svn log $* | grep -i "^issue" | head
+	svn log "$@" | grep -i "^issue" | head
 }
 
 todo_edit ()
@@ -1068,7 +1062,7 @@ todo_show ()
 
 to_source ()
 {
-	cd $SOURCE/$*
+	cd $SOURCE/"$@"
 	clear
 	ls
 }
@@ -1079,7 +1073,7 @@ vim_diff ()
 	shift
 	two="$1"
 	shift
-	options=$*
+	options="$@"
 	if ! diff -q "$one" "$two" >/dev/null
 	then
 		vim -d $options "$one" "$two"
@@ -1092,7 +1086,7 @@ vim_diff ()
 
 to_release ()
 {
-	cd $RELEASES/$*
+	cd $RELEASES/"$@"
 	clear
 	ls
 }
@@ -1187,7 +1181,7 @@ _edit_source ()
 	then
 		source_aliases $filepath
 	else
-		source_file $filepath $*
+		source_file $filepath "$@"
 	fi
 }
 	
@@ -1200,7 +1194,7 @@ _edit_jab ()
 		test -d $JAB || mkdir -p $JAB
 		local filepath=$JAB/$1
 		shift
-		_edit_source $filepath $*
+		_edit_source $filepath "$@"
 	fi
 }
 
