@@ -741,6 +741,12 @@ aaav ()
 	vack --nojunk $*
 }
 
+cocd ()
+{
+	svn co -N $1
+	cd ${1##*/}
+}
+
 dark ()
 {
 	svn revert -q $JAB/vim/vimrc
