@@ -336,12 +336,7 @@ zm ()
 
 Ack ()
 {
-	ARGS="$@"
-	VLESS=$(echo "$@" | sed -e "s/ -v\($\| \)/\1/")
-	if [[ "$ARGS" == "$VLESS" ]]
-	then ack "$@"
-	else vack $VLESS
-	fi
+	$(python $JAB/python/ack_vack.py "$@")
 }
 
 aaa ()
