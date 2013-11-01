@@ -30,7 +30,7 @@ alias d="d"
 alias e="ex --noplugin -u ~/.vim/exrc"
 alias f="find "
 alias g="grep --color"
-alias h="history | tail -n 25"
+# h is a function
 alias i="i"
 alias j="j"
 alias k="k"

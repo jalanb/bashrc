@@ -15,6 +15,12 @@ c ()
 	fi
 }
 
+h()
+{
+	local lines=${1:-25}
+	history | tail -n $lines
+}
+
 p ()
 {
 	local me=$USER
