@@ -17,6 +17,7 @@ noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
 noremap <leader>8	b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
 noremap <leader>d	?^\s*def \zs\i<cr>*
+noremap <leader>-	bh/\l\u<cr>cr_
 
 
 set foldmethod=indent
