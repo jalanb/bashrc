@@ -421,6 +421,10 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 "
 set backupskip=/tmp/*,/private/tmp/*,~/temp
 "
+" Stronger encryption
+"
+set cm=blowfish
+"
 " for searching
 "
 set ignorecase
@@ -450,7 +454,7 @@ function! RetabAndStripTrailingWhitespace()
 	:%s/\s\+$//e
 endfunction
 "
-" This lloks like one of mine
+" This looks like one of mine
 "
 function! ReadTraceback(filename)
 	:set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
