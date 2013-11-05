@@ -40,7 +40,7 @@ def _get_significant_status(path_to_directory):
 	for path_to_dir in os.listdir(path_to_directory):
 		if not isdir(path_to_dir):
 			continue
-		if path_to_dir[0] == '.':
+		if path_to_dir[0] == '.' or path_to_dir == path_to_directory:
 			continue
 		status = _get_significant_status(path_to_dir)
 		if status:
