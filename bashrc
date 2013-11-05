@@ -58,6 +58,7 @@ source_jab ()
 	source_file $JAB/functons
 	source_file $LOCAL/functons
 	source_file $JAB/python/kd/kd.sh
+	source_file $JAB/src/github/viack/viack
 }
 
 clean_jab()
