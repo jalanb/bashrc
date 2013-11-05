@@ -626,6 +626,18 @@ lyy ()
 	$reset
 }
 
+rff ()
+{
+	r fred
+	r fred.*
+}
+
+rfq ()
+{
+	rq fred
+	rq fred.*
+}
+
 rq. ()
 {
 	/bin/rm -rf ./*
