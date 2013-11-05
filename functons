@@ -646,13 +646,6 @@ svd ()
 	svn_diff vertical "$@"
 }
 
-
-sap ()
-{
-	/Volumes/HD/Users/jab/jab/github/sack/sack --python "$@"
-}
-
-
 unalias try > /dev/null 2>&1
 try ()
 {
