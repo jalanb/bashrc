@@ -741,9 +741,15 @@ aaav ()
 	vack --nojunk "$@"
 }
 
-cocd ()
+cocn ()
 {
 	svn co -N $1
+	cd ${1##*/}
+}
+
+cocq ()
+{
+	svn co -q $1
 	cd ${1##*/}
 }
 
@@ -1022,7 +1028,9 @@ svn_log ()
 svn_url ()
 {
 	test -n "$1" && dir=$1 || dir="."
-	svn info $dir | grep URL
+	local URL=$(svn info $dir | grep URL)
+	echo $URL
+	SVN_URL=$(echo $URL| sed -e s/[^:]*://)
 }
 
 # xxxxxxxx
