@@ -6,11 +6,9 @@ import sys
 def main(args):
 	words = ['ack']
 	for word in args:
-		if re.match('-[a-uw-z]*v[a-uw-z]*', word):
+		if re.match('-[a-uw-z]*[vV][a-uw-z]*', word):
 			words[0] = 'vack'
-			word = re.sub('v', '', word)
-			if word != '-':
-				words.append(word)
+			words.append(word)
 		else:
 			if ' ' in word:
 				if ' $' in word:
