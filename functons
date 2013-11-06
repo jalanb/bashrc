@@ -1235,6 +1235,9 @@ _divv_get_difference ()
 		--exclude=".*sw[po]" \
 		--exclude=tmp \
 		--exclude="*~" \
+		--exclude="*.beam" \
+		--exclude="*.a" \
+		--exclude="*.o" \
 		--exclude=.gitignore \
 		$source_gitignore \
 		$destination_gitignore \
