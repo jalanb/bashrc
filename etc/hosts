@@ -12,7 +12,6 @@
 172.16.1.226	abrogan1304
 
 # development machines in the cloud
-172.20.1.172	ie-rias-1 ie-rias-1.altobridge.com
 172.16.5.24		abrogan-dev abrogan-dev.altobridge.com
 172.16.5.26		abrogan-run abrogan-run.altobridge.com
 
