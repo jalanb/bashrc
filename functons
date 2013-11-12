@@ -24,7 +24,7 @@ h()
 p ()
 {
 	local me=$USER
-	local here=`hostname -s`
+	local here=$(hostname -s)
 	export PYTHON=${PYTHON-python}
 	console_title_on "python@${here}" && \
 		$PYTHON "$@" && \
@@ -107,7 +107,7 @@ cl ()
 cv ()
 {
 	kd $1
-	fim `basename $1`
+	fim $(basename $1)
 }
 
 gg ()
@@ -226,9 +226,9 @@ sv ()
 uj ()
 {
 # update $JAB from the repository
-	if [[ `svn up $JAB | grep -v "At revision" | wc -l` != "0" ]]
+	if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]
 	then
-		BACK=`pwd`
+		BACK=$(pwd)
 		if [[ $BACK != "$HOME/.jab" ]]
 		then
 			cd $JAB
@@ -245,7 +245,7 @@ ut ()
 	if [[ -f $HOME/bin/upTrackers ]]
 	then
 		sh $HOME/bin/upTrackers
-	elif [[ `hostname` == "ie-build-1" ]]
+	elif [[ $(hostname) == "ie-build-1" ]]
 	then
 		sudo su - builder -c "sh ~/bin/upTrackers"
 	else
@@ -424,7 +424,7 @@ cls ()
 	clear
 	if [ -z "$@" ]
 	then
-	    ls -d `pwd`
+	    ls -d $(pwd)
 	    echo
 	fi
 	ls "$@"
@@ -817,7 +817,7 @@ SUDO ()
 		you_sir=root
 	fi
 	me=$USER
-	here=`hostname -s`
+	here=$(hostname -s)
 	console_title_on "${you_sir}@${here}" && \
 		sudo -i $user && \
 		console_title_off "${me}@${here}"
@@ -942,7 +942,7 @@ named ()
 
 vfile ()
 {
-	`echo "$@" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/"`
+	$(echo "$@" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
 }
 
 # xxxxx
