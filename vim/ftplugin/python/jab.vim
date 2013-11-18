@@ -36,6 +36,11 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
 	if filereadable(s:file_jabber) && s:file_py != s:file_jabber && &loadplugins
 		exec "tabnew " s:file_jabber
 	endif
+	let s:file_parsley = substitute(s:file_py,'\.py$','.parsley',"")
+	if filereadable(s:file_parsley) && s:file_py != s:file_parsley && &loadplugins
+		exec "tabnew " s:file_parsley
+		set filetype=doctest
+	endif
 	let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
 	if filereadable(s:file_grammar) && s:file_py != s:file_grammar && &loadplugins
 		exec "tabnew " s:file_grammar
