@@ -19,3 +19,5 @@ hi link doctest_code Comment
    call rainbow_parenthsis#LoadRound ()           
    call rainbow_parenthsis#LoadBraces ()           
    call rainbow_parenthsis#Activate ()
+
+call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
