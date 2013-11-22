@@ -57,7 +57,7 @@ def ip_dict(lines):
 def merge_hosts(etc_hosts, my_hosts):
 	extras = ip_dict(my_hosts)
 	result = []
-	added_line = '# Added by %s' % sys.argv[0]
+	added_line = '# Added by %s' % os.path.basename(sys.argv[0])
 	has_added_line = False
 	for line in etc_hosts:
 		ip, names = line
