@@ -1,36 +1,76 @@
 #! /bin/bash
 
+set_symbols ()
+{
+	source ~/.jab/jab_environ
+	PYDIFF=$JAB/src/github/pydiff
+	VIM=vim
+	ARGS="$@"
+}
+
 remove_checkout ()
 {
-	if [[ -n "$COPY_OF_CHECKOUT" && -f "$COPY_OF_CHECKOUT" ]]
+	if [[ -z $DO_NOT_REMOVE && -n "$COPY_OF_CHECKOUT" && -f "$COPY_OF_CHECKOUT" ]]
 	then rm -f "$COPY_OF_CHECKOUT"
+	fi
+}
+
+IP ()
+{
+	for number in 172 192 100
+	do
+		if python $JAB/python/ifconfig.py $number
+		then break
+		fi
+	done
+}
+
+show_python_diff ()
+{
+	if [[ -d $PYDIFF ]]
+	then
+		python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT" > /dev/null 2>&1
+		local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
+		if [[ -d  $WWW_ROOT/pydiff ]]
+		then
+			cp $pydiff_output $WWW_ROOT/pydiff/index.html
+			echo "http://$(IP)/pydiff"
+		else
+			cp $pydiff_output /tmp/pydiff.html
+			ls -l /tmp/pydiff.html
+		fi
+	else
+		echo "$PYDIFF is not a directory" >&2
+		exit 1
 	fi
 }
 
 svn_diff_file ()
 {
 	local direction=$1
-	local path_to_file=$2
+	PATH_TO_FILE=$2
 	local revision=
 	if [[ -n $3 ]]
 	then revision="$3"
 	else
-		if svn stat $path_to_file | grep -q "[AM]"
-		then revision=$(svn info $path_to_file | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
+		if svn stat $PATH_TO_FILE | grep -q "[AM]"
+		then revision=$(svn info $PATH_TO_FILE | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
 		else
-			echo no change in $path_to_file
+			echo no change in $PATH_TO_FILE
 			exit
 		fi
 	fi
-
-	local options="-O"
-	[[ "$direction" == "horizontal" ]] && options="-o"
-
-	COPY_OF_CHECKOUT=${path_to_file}.svn_checkout.r$revision
-
-	svn cat -r $revision "$path_to_file" > "$COPY_OF_CHECKOUT"
-	ls  -l "$path_to_file" "$COPY_OF_CHECKOUT"
-	$VIM -d $options "$path_to_file" "$COPY_OF_CHECKOUT"
+	COPY_OF_CHECKOUT=${PATH_TO_FILE}.svn_checkout.r$revision
+	svn cat -r $revision "$PATH_TO_FILE" > "$COPY_OF_CHECKOUT"
+	ls  -l "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
+	if [[ "$direction" == "python" ]]
+	then
+		show_python_diff
+	else
+		local vim_options="-O"
+		[[ "$direction" == "horizontal" ]] && vim_options="-o"
+		$VIM -d $vim_options "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
+	fi
 	remove_checkout
 }
 
@@ -53,8 +93,7 @@ svn_diff_dir ()
 
 main ()
 {
-	VIM=vim
-	ARGS=$*
+	set_symbols "$@"
 	if [[ $ARGS =~ -g ]]
 	then 
 		VIM="gvim -f"
