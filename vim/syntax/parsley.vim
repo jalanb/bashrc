@@ -1,8 +1,8 @@
 " Vim syntax file
-" Language:         PyMeta
-" Maintainer:       Cory Dodt
-" Last Change:      $Date: 2009/10/04 14:42:09 $
-" Version:          $Id: pymeta.vim,v 1.1 2009/10/04 14:42:09 cdodt Exp $    
+" Language:         Parsley
+" Maintainer:       Alan Brogan (vim@al-got-rhythm.net)
+" Last Change:      $Date: 2013-11-23
+" Version:          0.1
 
 " Quit when a syntax file was already loaded
 if version < 600
@@ -11,43 +11,43 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-hi link pymetaExec NONE
-hi link pymetaFilter NONE
-hi link subExpression NONE
-hi link pymetaTerminal NONE
-hi link pymetaIdentifier NONE
-hi link pymetaSeparator NONE
-hi link pymetaReturns NONE
-hi link pymetaOptional NONE
-hi link pymetaMultiple NONE
-hi link pymetaNot NONE
-hi link pymetaVariable NONE
-hi link pymetaChoice NONE
-hi link pymetaOp NONE
-hi link cddComment NONE
-hi link pymetaChrLiteral NONE
+syn include @python syntax/python.vim
 
-syn region pymetaVariable start=/:/ end=/[^A-Za-z0-9_]/
+" Spaces
+"
+syn match parsley_comment                "#.*$"
+syn match parsley_hspace                 "\(\s\|#.*$\)"
+syn match parsley_vspace                 "\(\r\n\|\r\|\n\)"
+syn match parsley_ws                     "\(\s\r\n\|\r\|\n\|#.*$\)"
 
-syn match pymetaIdentifier /[A-Za-z0-9_]/
-syn match pymetaOp         /\(=\||\|->\|[|?*+~]\)/
-syn match pymetaOpNohl     /[()]/ " don't highlight parens - gets annoying
-syn match pymetaComment   "#.*$"
+" expressions
+syn match parsley_name                   "\<\a\w*"
+syn match parsley_assign                 "="
 
-syn region subExpression  start=/(/ end=/)/ contained
-syn region pymetaTerminal start=/</ end=/>/
-syn region pymetaExec     start=/!(/ end=/)/ contains=subExpression
-syn region pymetaFilter   start=/?(/ end=/)/ contains=subExpression
-syn region cddComment     start=/COMMENT=!("""/ end=/""")/
-syn region pymetaChrLiteral start=/'/ end=/'/
+syn match parsley_terminal               "<[^>]\+>"
 
-hi link pymetaExec       Special
-hi link pymetaFilter     Special
-hi link subExpression    Special
-hi link pymetaTerminal   Constant
-hi link pymetaIdentifier Identifier
-hi link pymetaOp         Operator
-hi link pymetaVariable   Identifier
-hi link cddComment       Comment
-hi link pymetaChrLiteral String
-hi link pymetaComment    Comment
+syn region parsley_semantic_expression   start="(" end=")" contained
+syn region parsley_semantic_predicate    start="?(" end=")" contains=parsley_semantic_expression
+syn region parsley_semantic_action       start="!(" end=")" contains=parsley_semantic_expression
+syn region parsley_python                matchgroup=Comment excludenl start="->" end="$"
+
+"
+" literals
+"
+syn match parsley_number                 "\<\d\>"
+syn match parsley_number                 "\<[1-9]\d\+\>"
+syn match parsley_number                 "\<0\o\+\>"
+syn match parsley_number                 "\<0[xX]\x\+\>"
+
+syn match parsley_string                 |"[^"]*"|
+syn match parsley_character              "'\(\\.\|[^']\)\+'"
+
+hi link parsley_comment                  Comment
+hi link parsley_name                     Identifier
+hi link parsley_terminal                 String
+hi link parsley_assign                   Operator
+hi link parsley_number                   Number
+hi link parsley_string                   String
+hi link parsley_character                String
+hi link parsley_semantic_predicate       Special
+hi link parsley_semantic_action          Special
