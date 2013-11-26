@@ -14,7 +14,7 @@ let g:colors_name = "alan-colour"
 highlight CursorLine                                      cterm=underline                guibg=#080808   gui=underline 
 highlight StatusLine        ctermfg=Black    ctermbg=Blue cterm=None       guifg=#000000  guibg=#0000ff   gui=none
 highlight Normal            ctermfg=White    ctermbg=Black                 guifg=#ffffff  guibg=#000000
-highlight Error                             ctermbg=Red                                  guibg=#ff0000
+highlight Error                              ctermbg=Red                                  guibg=#ff0000
 highlight Todo              ctermfg=Black    ctermbg=Green                 guifg=#000080  guibg=#c0c000
 highlight Search            ctermfg=196      ctermbg=52                    guifg=#ff0000  guibg=#402020
 highlight Comment           ctermfg=241      ctermbg=232                   guifg=#808080
@@ -47,13 +47,13 @@ highlight Constant          ctermfg=Cyan     ctermbg=234                   guifg
 highlight Directory         ctermfg=DarkGreen ctermbg=233                  guifg=#008800
 
 
-highlight Folded         ctermfg=White    ctermbg=Black                    guifg=#ffffff  guibg=Black
-highlight FoldColumn         ctermfg=White    ctermbg=Black                guifg=#ffffff  guibg=Black
+highlight Folded            ctermfg=White    ctermbg=Black                    guifg=#ffffff  guibg=Black
+highlight FoldColumn        ctermfg=White    ctermbg=Black                guifg=#ffffff  guibg=Black
 
 highlight MatchParen gui=bold guibg=NONE                                  guifg=lightblue  cterm=bold ctermbg=NONE
 
 "
 " for the plugin EasyMotion.vim
 "
-highlight EasyMotionTarget ctermbg=none  ctermfg=DarkRed
-highlight EasyMotionShade  ctermbg=none  ctermfg=Gray
+highlight EasyMotionTarget  ctermfg=DarkRed  ctermbg=none
+highlight EasyMotionShade   ctermfg=Gray     ctermbg=none
