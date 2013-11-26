@@ -10,8 +10,17 @@ set_symbols ()
 
 remove_checkout ()
 {
-	if [[ -z $DO_NOT_REMOVE && -n "$COPY_OF_CHECKOUT" && -f "$COPY_OF_CHECKOUT" ]]
-	then rm -f "$COPY_OF_CHECKOUT"
+	if [[ -n "$COPY_OF_CHECKOUT" ]]
+	then
+		if [[ -f "$COPY_OF_CHECKOUT" ]]
+		then
+			if [[ -n $DO_NOT_REMOVE ]]
+			then
+				ls "$COPY_OF_CHECKOUT"
+			else
+				rm -f "$COPY_OF_CHECKOUT"
+			fi
+		fi
 	fi
 }
 
@@ -68,7 +77,6 @@ svn_diff_file ()
 	fi
 	COPY_OF_CHECKOUT=${PATH_TO_FILE}.svn_checkout.r$revision
 	svn cat -r $revision "$PATH_TO_FILE" > "$COPY_OF_CHECKOUT"
-	ls  -l "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
 	if [[ "$direction" == "python" ]]
 	then
 		show_python_diff
@@ -77,7 +85,6 @@ svn_diff_file ()
 		[[ "$direction" == "horizontal" ]] && vim_options="-o"
 		$VIM -d $vim_options "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
 	fi
-	remove_checkout
 }
 
 svn_diff_dir ()
