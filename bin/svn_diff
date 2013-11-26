@@ -16,6 +16,7 @@ remove_checkout ()
 		then
 			if [[ -n $DO_NOT_REMOVE ]]
 			then
+				echo
 				ls "$COPY_OF_CHECKOUT"
 			else
 				rm -f "$COPY_OF_CHECKOUT"
