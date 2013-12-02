@@ -1,10 +1,4 @@
-SCM
-	Python 2.7 everywhere, 2
-	issue lists for Keith, 1
-	suppliers for Eoin, 1
-	regularise all command line options, 3
-	replace issuesDb.getIdFromUsername() with issues.userids.get_id(), 3
-	http://www.docker.io/, 4
+Work:
 
 Self
 	pym:
