@@ -7,6 +7,37 @@ link_to ()
 	[ -h $2 ] || ln -s $1 $2
 }
 
+link_to_config ()
+{
+	for source_dir in $(find ~/.jab/etc/config -type d)
+	do
+		dest_dir=$(echo $source_dir | sed -e "s:$JAB/etc/config:$HOME/.config:")
+		if [[ ! -e $dest_dir ]]
+		then mkdir -p $dest_dir
+		# else echo "$dest_dir already exists" >&1
+		fi
+	done
+	for source_file in $(find ~/.jab/etc/config -type f)
+	do
+		dest_link=$(echo $source_file | sed -e "s:$JAB/etc/config:$HOME/.config:")
+		if [[ -L $dest_link ]]
+		then
+			source_link=$(readlink -f $dest_link)
+			if [[ $source_link != $source_file ]]
+			then "$dest_link is linked to $source_link (not $source_file)" >&2
+			# else echo "$dest_link is already linked to $source_link"
+			fi
+		elif [[ -e $dest_link ]]
+		then echo "$dest_link exists and is not a link" >&2
+		else
+			dest_dir=$(dirname $dest_link)
+			if [[ -d $dest_dir ]]
+			then ln -s $source_file $dest_link
+			else echo "$dest_dir is not a directory (for $dest_link)" >&2
+			fi
+		fi
+	done
+}
 link_to_home ()
 {
 
@@ -53,6 +84,7 @@ main ()
 	link_to_ipython ipythonrc
 	link_to_ipython options.conf
 	link_to_ipython ipy_profile_altobridge.py
+	link_to_config
 	link_subversion_config
 }
 
