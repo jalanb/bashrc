@@ -1,0 +1,79 @@
+The decorators module
+=====================
+
+	>>> import decorators
+	>>> print decorators.__doc__
+	A module to provide decorators which change methods
+
+Memoizing methods
+-----------------
+
+We want to create methods which memoize their return values
+	See Wikipedia for more info on the technique:
+		http://en.wikipedia.org/wiki/Memoization
+
+The module provides a method to help with this
+	>>> from decorators import memoize
+
+Here is a method to memoize
+	>>> @memoize
+	... def initials(forename, surname):
+	...     print 'Finding initials for', forename, surname
+	...     return '%s%s' % (forename[0], surname[0])
+
+Once memoized the method still works the same way the first time it is called
+	>>> print initials('Fred','Murphy')
+	Finding initials for Fred Murphy
+	FM
+
+But the value it computed is remembered
+So the second time it is called the remembered value is used
+	and the method is not actually called again
+		(note that this test does not show "Finding initials")
+	but still gives the same result
+	>>> print initials('Fred','Murphy')
+	FM
+
+Once arguments differ the original method is re-called
+	>>> initials('Fred','Murphy') == initials('Fred','Murphy') == initials('Frank','Moon')
+	Finding initials for Frank Moon
+	True
+
+Invalidation
+------------
+
+The cached values can be invalidated
+	so that the method is now called as if for the first time
+	>>> print initials('Fred','Murphy')
+	FM
+	>>> initials.invalidate()
+	>>> print initials('Fred','Murphy')
+	Finding initials for Fred Murphy
+	FM
+
+Make sure cache is re-filled before next test
+	>>> print initials('Frank','Moon')
+	Finding initials for Frank Moon
+	FM
+	>>> print initials('Fred','Murphy')
+	FM
+	>>> print initials('Frank','Moon')
+	FM
+
+Can also invalidate for some specific arguments
+	>>> initials.invalidate('Fred','Murphy')
+	>>> print initials('Fred','Murphy')
+	Finding initials for Fred Murphy
+	FM
+
+Which did not affect the cache for other arguments
+	>>> print initials('Frank','Moon')
+	FM
+
+Disadvantages
+-------------
+
+Note that the method only looks like the original
+	it is actually a different method entirely
+	>>> initials.func_name == 'initials'
+	False
