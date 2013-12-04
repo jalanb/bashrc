@@ -197,8 +197,7 @@ clean_directories ()
 
 checkout_jab ()
 {
-	svn --username  abrogan --password AlrB3@13 cat https://repository.altobridge.com/svn/amg/trunk/trackers/ie-track-1/bin/add_to_a_path.sh > bin/add_to_a_path.sh
-	svn co -q --username abrogan https://repository.altobridge.com/jab .jab
+	svn co -q --username abrogan $JABS .jab
 	ln -s ~/.jab/vim ~/.vim
 	ln -s ~/.jab/vim/vimrc ~/.vimrc
 	ln -s ~/.jab/vim/gvimrc ~/.gvimrc

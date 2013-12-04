@@ -1,6 +1,6 @@
-"""Set up access to important Altobridge data for IPython"""
+"""Set up access to important employer data for IPython"""
 
-class AltobridgeVariables:
+class EmployersVariables:
 	"""Holder of interesting attributes"""
 	def __init__(self):
 		self.open_db()
@@ -23,5 +23,5 @@ class AltobridgeVariables:
 		from altobridge.dbwrapper import wrap
 		self.dbw = wrap(self.db)
 
-alto = AltobridgeVariables()
-print 'dir(alto):', alto.__dict__.keys()
+work = EmployersVariables()
+print 'dir(alto):', work.__dict__.keys()

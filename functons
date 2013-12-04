@@ -505,32 +505,32 @@ fpy ()
 
 jj1 ()
 {
-	ssj abrogan ie-build-1.altobridge.com
+	ssj abrogan ie-build-1.$EMPLOYER_DOMAIN
 } 
 
 jj2 ()
 {
-	ssj abrogan ie-build-2.altobridge.com
+	ssj abrogan ie-build-2.$EMPLOYER_DOMAIN
 } 
 
 jj3 ()
 {
-	ssj abrogan ie-build-3.altobridge.com
+	ssj abrogan ie-build-3.$EMPLOYER_DOMAIN
 } 
 
 jja ()
 {
-	ssj abrogan jab-track-1.altobridge.com
+	ssj abrogan jab-track-1.$EMPLOYER_DOMAIN
 } 
 
 jjb ()
 {
-	sst builder ie-build-1.altobridge.com
+	sst builder ie-build-1.$EMPLOYER_DOMAIN
 } 
 
 jjd ()
 {
-	ssj jab abrogan-dev.altobridge.com
+	ssj jab abrogan-dev.$EMPLOYER_DOMAIN
 } 
 
 jjj ()
@@ -541,16 +541,16 @@ jjj ()
 	if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
 	then
 		jjj_host=jab.ook
-	elif ping -c 1 -w 1 dhcp92.altobridge.com >/dev/null 2>&1
+	elif ping -c 1 -w 1 dhcp92.$EMPLOYER_DOMAIN >/dev/null 2>&1
 	then
-		jjj_host=dhcp92.altobridge.com
+		jjj_host=dhcp92.$EMPLOYER_DOMAIN
 	elif ping -c 1 -w 1 172.16.1.92 >/dev/null 2>&1
 	then
 		jjj_host=172.16.1.92
 	fi
 	if [[ -z $jjj_host ]]
 	then
-		echo Could not ping jab.ook, dhcp92.altobridge.com, 172.16.1.92
+		echo Could not ping jab.ook, dhcp92.$EMPLOYER_DOMAIN, 172.16.1.92
 	else
 		ssj jab $jjj_host
 	fi
@@ -559,32 +559,32 @@ jjj ()
 
 jjk ()
 {
-	ssj jab jab-track-1.altobridge.com
+	ssj jab jab-track-1.$EMPLOYER_DOMAIN
 } 
 
 jjl ()
 {
-	ssj albrogan abrogan.altobridge.com
+	ssj albrogan abrogan.$EMPLOYER_DOMAIN
 } 
 
 jjp ()
 {
-	ssj root ie-protex-1.altobridge.com
+	ssj root ie-protex-1.$EMPLOYER_DOMAIN
 } 
 
 jjr ()
 {
-	ssj jab abrogan-run.altobridge.com
+	ssj jab abrogan-run.$EMPLOYER_DOMAIN
 } 
 
 jjt ()
 {
-	ssj abrogan ie-track-1.altobridge.com
+	ssj abrogan $EMPLOYER_SERVER
 } 
 
 jju ()
 {
-	ssj abrogan abrogan1304.altobridge.com
+	ssj abrogan abrogan1304.$EMPLOYER_DOMAIN
 }
 
 jjy ()
@@ -594,12 +594,12 @@ jjy ()
 
 jjz ()
 {
-	sst abrogan r9dev1.altobridge.com
+	sst abrogan r9dev1.$EMPLOYER_DOMAIN
 } 
 
 jjZ ()
 {
-	sst abrogan sz-build-1.altobridge.com
+	sst abrogan sz-build-1.$EMPLOYER_DOMAIN
 }
 
 . $JAB/bin/first_dir

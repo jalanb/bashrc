@@ -1,7 +1,7 @@
 #! /bin/bash
 
 set -x
-REPO="https://repository.altobridge.com/svn/amg/trunk/trackers/python/site-packages"
+REPO="$SVN/amg/trunk/trackers/python/site-packages"
 svn cat $REPO/path.py > path.py
 svn cat $REPO/paths.py > paths.py
 svn cat $REPO/path.test > path.test

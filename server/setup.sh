@@ -19,7 +19,7 @@ as_root ()
 	sudo bash write_root_startups.sh
 	sudo bash gnome/make_vim_default_editor.sh
 	cd ..
-	sudo bash network/altobridge.sh
+	sudo bash network/company.sh
 }
 
 as_jab ()

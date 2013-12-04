@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Load an Altobridge environment
+# Load employer's environment
 
 if [[ -z $TRACKERS ]]
 then 
@@ -33,10 +33,11 @@ then
 	else echo \$TRACKERS is not a directory: $TRACKERS
 	fi
 	export TRACKERS
+	export TRACKERS_SERVER=$TRACKERS/ie-track-1
 	source $TRACKERS/python/source_python_path
-	source $TRACKERS/ie-track-1/etc/tracker_environ
-	source $TRACKERS/ie-track-1/etc/tracker_functions
-	source $TRACKERS/ie-track-1/etc/tracker_aliases
+	source $TRACKERS_SERVER/etc/tracker_environ
+	source $TRACKERS_SERVER/etc/tracker_functions
+	source $TRACKERS_SERVER/etc/tracker_aliases
 	cd $TRACKERS
 	export IGNORE_CHANGES=1
 else
@@ -48,9 +49,9 @@ then
 	USER=abrogan
 	if [[ $1 != "local" ]]
 	then
-		if ! ping -c 1 -t 3 ie-track-1.altobridge.com >/dev/null 2>&1 
+		if ! ping -c 1 -t 3 $EMPLOYER_SERVER >/dev/null 2>&1 
 		then
-			echo Cannot contact ie-track-1.altobridge.com
+			echo Cannot contact $EMPLOYER_SERVER
 		else
 			/bin/bash ~/bin/mount_alto track
 		fi

@@ -54,7 +54,7 @@ main ()
 		fi
 		return
 	fi
-	local there_small=${there_name/.altobridge.com/}
+	local there_small=${there_name/.$EMPLOYER_DOMAIN/}
 	local me=$USER
 	local here=`hostname -s`
 	console_title_on ${you}@${there_small} && \

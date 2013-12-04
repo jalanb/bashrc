@@ -24,23 +24,24 @@ source_file ()
 
 update_jab ()
 {
-	local amg_url=https://repository.altobridge.com/svn/amg
-	local amg_dirs=$($SVN_CLIENT ls --non-interactive --trust-server-cert $amg_url 2>&1)
-	if [[ $amg_dirs =~ "invalid option: --trust-server-cert" ]]
-	then amg_dirs=$($SVN_CLIENT ls --non-interactive  $amg_url)
+	local svn_ls="$SVN_CLIENT ls --non-interactive"
+	local jab_dirs=$($svn_ls --trust-server-cert $JABS 2>&1)
+	if [[ $jab_dirs =~ "invalid option: --trust-server-cert" ]]
+	then jab_dirs=$($svn_ls  $JABS)
 	fi
-	if [[ $amg_dirs =~ trunk ]]
+	if [[ $jab_dirs =~ bin ]]
 	then $SVN_CLIENT up -q $JAB
 	else
-		echo Cannot contact $amg_url
-		echo Expected \"...trunk...\"
-		echo Actual $amg_dirs
+		echo Cannot contact $JABS
+		echo Expected \"...bin...\"
+		echo Actual $jab_dirs
 	fi
 	$SVN_CLIENT stat $JAB
 }
 
 source_jab ()
 {
+	[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ
 	local LOCAL=$JAB/local
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 

@@ -2,7 +2,7 @@
 
 # set -x
 
-test -f /usr/local/trunk/trackers/ie-track-1/bin/add_to_a_path.sh && source /usr/local/trunk/trackers/ie-track-1/bin/add_to_a_path.sh
+test -f $TRACKERS_SERVER/bin/add_to_a_path.sh && source $TRACKERS_SERVER/bin/add_to_a_path.sh
 add_to_a_path PYTHONPATH $JAB/python/site
 if [[ -f /usr/local/bin/ranger ]]
 then ranger=/usr/local/bin/ranger

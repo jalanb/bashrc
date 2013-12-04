@@ -70,7 +70,7 @@ link_subversion_config ()
 
 main ()
 {
-	[ -d $JAB ] || svn co -q --username abrogan https://repository.altobridge.com/jab $JAB
+	[ -d $JAB ] || svn co -q $JABS $JAB
 	link_to_home vim
 	link_to_home vim/vimrc
 	link_to_home vim/gvimrc
@@ -83,7 +83,7 @@ main ()
 	link_to_ipython ipy_user_conf.py
 	link_to_ipython ipythonrc
 	link_to_ipython options.conf
-	link_to_ipython ipy_profile_altobridge.py
+	link_to_ipython ipy_profile_company.py
 	link_to_config
 	link_subversion_config
 }

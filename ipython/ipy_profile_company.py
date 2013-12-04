@@ -1,4 +1,4 @@
-"""Set up access to important Altobridge data for IPython"""
+"""Set up access to important Employer data for IPython"""
 
 
 import config_helper_functions
@@ -8,7 +8,7 @@ def wrap(db):
 	from altobridge.dbwrapper import DBWrapper
 	return DBWrapper(db)
 
-class AltobridgeVariables:
+class EmployerVariables:
 	"""Holder of interesting attributes"""
 	def __init__(self):
 		self.open_db()
@@ -35,5 +35,5 @@ def read_pythonrc():
 	os.path.isfile(pythonrc) and execfile(pythonrc, globals())
 	del pythonrc
 
-config_helper_functions.set_user_namespace('alto', AltobridgeVariables())
-print 'dir(alto):', AltobridgeVariables().__dict__.keys()
+config_helper_functions.set_user_namespace('work', EmployerVariables())
+print 'dir(work):', EmployerVariables().__dict__.keys()

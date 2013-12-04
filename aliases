@@ -175,8 +175,6 @@ alias home="cd; cls"
 
 alias mine="sudo chown $(id -un):$(id -gn)"
 
-alias junk="mount ie-serv-2.altobridge.com:/export/junk /Users/shared/alto/junk"
-
 alias tags="p $JAB/python/ptags.py "
 
 
