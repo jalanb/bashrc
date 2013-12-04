@@ -13,7 +13,7 @@ kd ()
 { 
 	local python_directory=$(dirname $BASH_SOURCE)
 	local python_script=$python_directory/kd.py
-	if ! destination=$(PYTHONPATH=$python_directory python $python_script $* 2>&1)
+	if ! destination=$(PYTHONPATH=$python_directory python $python_script "$@" 2>&1)
 	then
 		echo "$destination"
 	else
@@ -35,5 +35,5 @@ kg ()
 {
 	local python_directory=$(dirname $BASH_SOURCE)
 	local python_script=$python_directory/kd.py
-	PYTHONPATH=$python_directory python $python_script -U $*
+	PYTHONPATH=$python_directory python $python_script -U "$@"
 }
