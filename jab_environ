@@ -8,6 +8,6 @@ if [ -d /usr/local/abrogan/jabs ]
 then
 	export JABS=file:///usr/local/abrogan/jabs
 else
-	export JABS=http://intranet.altobridge.com/jab
+	export JABS=https://repository.altobridge.com/jab
 fi
 
