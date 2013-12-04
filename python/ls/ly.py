@@ -100,7 +100,7 @@ def show():
 	names = l.get_names(files)
 	if not names: return 0
 	filter_names(names)
-	outs = lout.format(names)
+	outs = lout.format_names(names)
 	lout.show(outs)
 	if not argv.options.quiet:
 		print

@@ -5,30 +5,40 @@ All numbers used in this file refer to values usable directly in an ANSI escape 
 """
 
 
+def escape(string):
+	return '\033%s' % string
+
+
+def escape_sequence(string):
+	return escape('[%sm' % string)
+
 def bold():
-	return '\033[1m'
+	return escape_sequence('1')
 
 
 def no_bold():
-	return '\033[22m'
+	return escape_sequence('22')
 
 
 def no_colour():
-	return '\033[2m\033[0m'
+	return escape_sequence('2') + escape_sequence('0')
 
 
 def no_prompt():
-	return '\001\033[2m\033[0m\002'
+	return prompt(no_colour())
 
 
 def _colour_16(ground, i):
 	if i > 7:
-		return '\033[1m\033[%d%dm' % (ground, i - 8)
-	return '\033[%d%dm' % (ground, i)
+		prefix = bold()
+		i = i = 8
+	else:
+		prefix = ''
+	return '%s%s' % (prefix, escape('[%d%dm' % (ground, i)))
 
 
 def _colour_256(ground, i):
-	return '\033[%s;5;%dm' % (ground, i)
+	return escape_sequence('%s;5;%d') % (ground, i)
 
 
 def _background_16(i):
@@ -59,8 +69,8 @@ def background(i):
 	return _small_colour_number(i) and _background_16(i) or _background_256(i)
 
 
-def prompt(i):
-	return '\001%s\002' % foreground(i)
+def prompt(string):
+	return '\001%s\002' % string
 
 
 def foreground_string(text, i):
@@ -76,4 +86,5 @@ def grounds_string(text, background_colour, foreground_colour):
 
 
 def prompt_string(text, i):
-	return '%s%s%s' % (prompt(i), text, no_prompt())
+	string = foreground(i)
+	return '%s%s%s' % (prompt(string), text, no_prompt())

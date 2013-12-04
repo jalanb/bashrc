@@ -5,7 +5,7 @@ This module handles output for other scripts in this directory
 
 	>>> import l, lout
 	>>> lout.argv.test_args('-h ')
-	Usage: try.py [options]
+	Usage: ... [options]
 	<BLANKLINE>
 	Options:
 	  -q, --quiet   hide directories, blank lines, ...

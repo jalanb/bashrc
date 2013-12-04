@@ -7,6 +7,7 @@ def bw():
 	"""The simplest of all - no colour and full colour"""
 	return 'black white'.split()
 
+
 def rgb():
 	"""The basic cone sensitivities of your eyes"""
 	return 'red green blue'.split()
@@ -31,6 +32,7 @@ def basic():
 def _cga_colour_names():
 	"""The basic CGA colours are in a slightly different order"""
 	return 'red green yellow blue magenta cyan'.split()
+
 
 def dark_cga():
 	return ['black'] + _cga_colour_names() + ['silver']
