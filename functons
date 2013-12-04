@@ -36,6 +36,12 @@ w ()
 	what "$@"
 }
 
+y ()
+{
+	clear
+	python $JAB/python/y.py "$@"
+}
+
 # xx
 
 3d ()
@@ -156,7 +162,7 @@ ky ()
 	else
 		kd "$@" > /dev/null
 	fi
-	y
+	ya
 }
 
 pi ()
@@ -331,6 +337,11 @@ vt ()
 vv ()
 {
 	v $JAB/bin/fim
+}
+
+ya ()
+{
+	y -a
 }
 
 zm ()
