@@ -4,26 +4,48 @@
 #
 # Extensions
 #
-*.bak
 *.cache
+# 
+# Compiled files by extension
 *.class
+*.com
 *.dll
-*.egg
-*.egg-info
 *.exe
+*.lib
+*.o
+*.obj
+*.py[cod]
+*.so
+# 
+# Archives by extension
+*.7z
+*.dmg
+*.egg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+#
+# Developers temporary files
+#
+*.egg-info
 *.fail
-*.flv
 *.history
 *.ilk
 *.kate-swp
-*.lib
-*.log
-*.o
-*.obj
 *.part
-*.py[cod]
 *.pyproj
-*.so
+#
+# Developers' data
+*.log
+*.sql
+*.sqlite
+#
+# Backups by extension
+#
+*.bak
 *~
 #
 # Dot files (and directories)
@@ -44,10 +66,6 @@
 #
 # Names
 #
-/dist
-/doc/tags
-/htmlcov
-/logs
 MANIFEST
 Thumbs.db
 __pycache__
@@ -55,19 +73,17 @@ _build
 build
 build.*.log
 cache
-cover/
+cover
 coverage.xml
 develop-eggs
 dist
-doc/tags
-docs/build
 eggs
 github_tmp/
 helpers
-html
 htmlcov
 lib
 lib64
+logs
 logs
 obj
 pip-log.txt
