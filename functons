@@ -101,7 +101,7 @@ av ()
 
 cl ()
 {
-	c $LOGS
+	c $(locate "$@")
 }
 
 cv ()
