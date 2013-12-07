@@ -47,7 +47,7 @@ alias t="t"
 alias u="u"
 alias v="$JAB/bin/fim "
 # w is a function
-alias x="x"
+# x is a function
 # y is a function
 alias z="du -sh"
 
