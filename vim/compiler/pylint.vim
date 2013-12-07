@@ -66,7 +66,12 @@ endif
 
 " We should echo filename because pylint truncates .py
 " If someone know better way - let me know :) 
-CompilerSet makeprg=(echo\ '[%]';\ pylint\ --rcfile=~/.pylintrc\ -r\ n\ --output-format=parseable\ %)
+"
+if filereadable("./pylintrc")
+	CompilerSet makeprg=(echo\ '[%]';\ pylint\ --rcfile=./pylintrc\ -r\ n\ --output-format=parseable\ %)
+else
+	CompilerSet makeprg=(echo\ '[%]';\ pylint\ --rcfile=~/.pylintrc\ -r\ n\ --output-format=parseable\ %)
+endif
 
 " We could omit end of file-entry, there is only one file
 " %+I... - include code rating information
