@@ -13,13 +13,13 @@ import fnmatch
 def parse_options(arg_list = None):
 	"""Find out what user wants at command line"""
 	parser = optparse.OptionParser()
-	parser.add_option('-d', '--dry-run', action='store_true', help='show which files would be removed, but do nothing')
 	parser.add_option('-p', '--python', action='store_true', help='remove python temporary files too')
 	parser.add_option('-r', '--recursive', action='store_true', help='remove from subdirectories too')
 	parser.add_option('-q', '--quiet', action='store_true', help='do not show files being removed')
+	parser.add_option('-T', '--Trial-Run', action='store_true', help='show which files would be removed, but do nothing')
 	options, args = parser.parse_args(arg_list)
-	if options.quiet and options.dry_run:
-		print 'Using --quiet and --dry-run: Do nothing'
+	if options.quiet and options.Trial_Run:
+		print 'Using --quiet and --Trial-Run: Do nothing'
 		raise NotImplementedError
 	if not args:
 		args = ['.']
@@ -82,16 +82,16 @@ def get_files(directory, globs, recursive):
 	return result
 
 
-def remove_files(files, quiet, dry_run):
+def remove_files(files, quiet, trial_run):
 	"""Remove all those files
 
 	Print out each file removed, unless quiet is True
-	Do not actually delete if dry_run is True
+	Do not actually delete if trial_run is True
 	"""
 	result = os.EX_OK
 	for a_file in files:
 		try:
-			if not dry_run:
+			if not trial_run:
 				os.remove(a_file)
 			if not quiet:
 				print a_file
@@ -111,7 +111,7 @@ def main():
 	result = os.EX_OK
 	for arg in args:
 		files = get_files(arg, globs, options.recursive)
-		file_result = remove_files(files, options.quiet, options.dry_run)
+		file_result = remove_files(files, options.quiet, options.Trial_Run)
 		if file_result != os.EX_OK:
 			result = file_result
 	return result
