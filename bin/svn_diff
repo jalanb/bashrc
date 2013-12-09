@@ -4,7 +4,7 @@ set_symbols ()
 {
 	source ~/.jab/jab_environ
 	PYDIFF=$JAB/src/github/pydiff
-	VIM=vim
+	VIM_EDITOR=vim
 	ARGS="$@"
 }
 
@@ -84,7 +84,7 @@ svn_diff_file ()
 	else
 		local vim_options="-O"
 		[[ "$direction" == "horizontal" ]] && vim_options="-o"
-		$VIM -d $vim_options "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
+		$VIM_EDITOR -d $vim_options "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
 	fi
 }
 
@@ -110,7 +110,7 @@ main ()
 	set_symbols "$@"
 	if [[ $ARGS =~ -g ]]
 	then 
-		VIM="gvim -f"
+		VIM_EDITOR="gvim -f"
 		ARGS=${ARGS/-g}
 	fi
 	if [[ -f $path ]]
