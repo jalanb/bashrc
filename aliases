@@ -45,7 +45,7 @@ alias r="rm -vrf"
 alias s="s"
 alias t="t"
 alias u="u"
-alias v="$JAB/bin/fim "
+# v is a function
 # w is a function
 # x is a function
 # y is a function
@@ -104,9 +104,6 @@ alias st="stat "
 
 alias tf="tail -f"
 
-alias v.="v ."
-alias vj="v $JAB"
-alias vy="v $PYTHON_HOME"
 
 alias xk="exchange_keys"
 
@@ -159,9 +156,7 @@ alias stv="statvim svd "
 
 alias tra="try ~/alans_tests"
 
-alias vib="v ~/.bashrc; sib"
 alias vin="vim -"
-alias vvv="v $JAB/vim"
 
 alias url="python ~/bin/show_url.py "
 

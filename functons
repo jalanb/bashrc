@@ -31,6 +31,12 @@ p ()
 		console_title_off "${me}@${here}"
 }
 
+v ()
+{
+	python2.7 $JAB/python/fim.py "$@"
+	bash $JAB/python/fim.sh
+}
+
 w ()
 {
 	what "$@"
@@ -272,6 +278,11 @@ hd ()
 	fi
 }
 
+v. ()
+{
+	v .
+}
+
 va ()
 {
 	_edit_jab aliases
@@ -303,6 +314,11 @@ vf ()
 vh ()
 {
 	v ~/.bash_history +
+}
+
+vj ()
+{
+	v $JAB
 }
 
 vp ()
@@ -341,7 +357,12 @@ vt ()
 
 vv ()
 {
-	v $JAB/bin/fim
+	v $JAB/python/fim.py
+}
+
+vy ()
+{
+	v $PYTHON_HOME
 }
 
 ya ()
@@ -692,6 +713,11 @@ vai ()
     aiv "$@"
 }
 
+vib ()
+{
+	$EDITOR ~/.bashrc
+	source_file ~/.bashrc
+}
 
 vla ()
 {
@@ -748,6 +774,11 @@ vff ()
 	else
 		v fred
 	fi
+}
+
+vvv ()
+{
+	v $JAB/vim
 }
 
 wat ()
