@@ -92,8 +92,9 @@ ag ()
 
 ai ()
 { 
-    local sought="$@";
-    ack --pyt "(import.*$sought|$sought import)"
+    local sought=$1
+	shift
+    Ack --pyt '(import.*'"$sought|$sought"'.import)' "$@"
 }
 
 al ()
@@ -699,13 +700,6 @@ try ()
 	TRY=$JAB/python/testing/try.py
 	test -f ./try.py && TRY=./try.py
 	python $TRY "$@"
-}
-
-vai ()
-{ 
-    local sought=$1
-	shift
-    vack --pyt '(import.*'"$sought|$sought"' import)' "$@"
 }
 
 vib ()
