@@ -70,53 +70,6 @@ IP ()
 	done
 }
 
-aa ()
-{
-	Ack --all "$@"
-}
-
-ac ()
-{
-	Ack --code "$@"
-}
-
-ae ()
-{
-	Ack --erl "$@"
-}
-
-ag ()
-{
-	alias | grep "$@"
-}
-
-ai ()
-{ 
-    local sought=$1
-	shift
-    Ack --pyt '(import.*'"$sought|$sought"'.import)' "$@"
-}
-
-al ()
-{
-	Ack --html "$@"
-}
-
-ap ()
-{
-	Ack --python "$@"
-}
-
-at ()
-{
-	Ack --pyt "$@"
-}
-
-av ()
-{
-	vack "$@"
-}
-
 cl ()
 {
 	c $(locate "$@")
@@ -377,63 +330,6 @@ zm ()
 }
 
 # xxx
-
-Ack ()
-{
-	$(python $JAB/python/ack_vack.py "$@")
-}
-
-aaa ()
-{
-	Ack --nojunk "$@"
-}
-
-aav ()
-{
-	vack --all "$@"
-}
-
-acv ()
-{
-	vack --code "$@"
-}
-
-aev ()
-{
-	vack --erl "$@"
-}
-
-alv ()
-{
-	vack --html "$@"
-}
-
-apv ()
-{
-	vack --python "$@"
-}
-
-atv ()
-{
-	vack --pyt "$@"
-}
-
-awv ()
-{
-	vack -w "$@"
-}
-
-aiw ()
-{ 
-    local sought="$@";
-    ack --pyt "(import.*\b$sought\b|\b$sought\b import)"
-}
-
-
-ash ()
-{
-	Ack --shell "$@"
-}
 
 cff ()
 {
@@ -776,11 +672,6 @@ wat ()
 }
 
 # xxxx
-
-aaav ()
-{
-	vack --nojunk "$@"
-}
 
 cocn ()
 {
