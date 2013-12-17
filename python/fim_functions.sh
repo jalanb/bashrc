@@ -38,8 +38,5 @@ post_vimming ()
 	do
 		[[ -e $arg ]] && ls -l $arg
 	done
-	if [[ -n $POST_PROCESSING ]]
-	then $( $POST_PROCESSING )
-	fi
 }
 
