@@ -383,8 +383,10 @@ function CycleNumber()
 		set nonumber norelativenumber
 	endif
 endfunction
-
-set number
+"
+" Start without 'em, as they are now so easy to turn on
+"
+set nonumber
 "
 " <leader>\ is bound to calling this
 " 	The leader key is also \, so really \\ calls this
