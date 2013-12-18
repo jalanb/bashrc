@@ -36,7 +36,7 @@ def new_script():
 	with open(path_to_script(), 'w') as output:
 		print >> output, '''#! /bin/bash
 
-VIM="%s"
+VIM_EDITOR="%s"
 source ${BASH_SOURCE/.sh/_functions.sh}
 ''' % path_to_editor()
 
@@ -306,7 +306,7 @@ def main(args):
 	text_files, options = interpret(args)
 	vim_files = vimmable_files(text_files)
 	if vim_files:
-		command = main_command('$VIM', vim_files, options)
+		command = main_command('$VIM_EDITOR', vim_files, options)
 		add_to_script(command)
 		command = main_command('post_vimming', vim_files, options)
 		add_to_script(command)
