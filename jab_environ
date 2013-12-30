@@ -6,10 +6,9 @@ export JAB_KEY=$JAB/ssh/id_jab
 export JAB_HOME=$HOME
 export EMPLOYER_DOMAIN=altobridge.com
 export EMPLOYER_SERVER=ie-track-1.$EMPLOYER_DOMAIN
-if [ -d /usr/local/abrogan/jabs ]
-then
-	export JABS=file:///usr/local/abrogan/jabs
-else
-	export JABS=https://repository.$EMPLOYER_DOMAIN/jab
+if [ -d /usr/local/svn/jabs ]
+then export JABS=file:///usr/local/svn/jabs
+elif [ -d /usr/local/abrogan/jabs ]
+then export JABS=file:///usr/local/abrogan/jabs
+else export JABS=https://repository.$EMPLOYER_DOMAIN/jab
 fi
-
