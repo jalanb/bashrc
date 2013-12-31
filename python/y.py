@@ -13,6 +13,7 @@ argv.add_options([
 ])
 
 from ls import ly
+from repositories import svn
 
 def remove_globs(globs):
 	for glob in globs:
@@ -34,9 +35,6 @@ def wipe():
 def delete():
 	remove_globs([ '*.pyc', '*.pyo' ] )
 
-def svn_stat():
-	if paths.path('.svn').isdir():
-		os.system('svn stat ')
 
 def ptags():
 	import ptags
@@ -50,7 +48,7 @@ def main():
 		method()
 	ly.show()
 	if argv.options.stat:
-		svn_stat()
+		svn.show_stat()
 
 if __name__ == '__main__':
 	argv.main(main)

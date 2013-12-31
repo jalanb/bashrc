@@ -1,11 +1,9 @@
 """Basic functionality for the various ls scripts"""
 
-import os
-import path
-
-
 import argv
+import path
 from glob_path import glob_path, any_fnmatch
+from repositories import svn
 
 
 argv.add_options([
@@ -34,19 +32,9 @@ def common_start_dirs(a, b):
 	return None
 
 
-def get_subversion_ignores():
-	home = path.path(os.path.expanduser('~'))
-	svn_config = home / '.subversion/config'
-	if not svn_config.isfile():
-		raise ValueError('%s is not a file' % svn_config)
-	try:
-		return  [l for l in svn_config.lines() if l.startswith('global-ignores')][0].split()
-	except IndexError:
-		return []
-
 
 def default_ignores():
-	ignores = set(get_subversion_ignores())
+	ignores = set(svn.global_ignores())
 	ignores.update(['*~', '.*.sw[lmnop]'])
 	return list(ignores)
 

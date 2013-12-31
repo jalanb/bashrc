@@ -28,6 +28,7 @@ argv.add_options([
 ])
 
 from paths import makepath, pwd, home
+from repositories import svn
 
 
 def def_or_class_regexp():
@@ -164,7 +165,7 @@ def read_dirs(path_to_directory=None):
 		path_to_directory = pwd()
 	tags = read_dir(path_to_directory)
 	for path_to_sub_directory in path_to_directory.walkdirs():
-		if '.svn' in path_to_sub_directory.splitall():
+		if svn.is_svn_path(path_to_sub_directory):
 			continue
 		tags += read_dir(path_to_sub_directory)
 	return tags
@@ -211,7 +212,7 @@ def read_write_dirs(path_to_directory=None):
 	tags = read_dirs(path_to_directory)
 	write_dir(path_to_directory, tags)
 	for path_to_sub_directory in path_to_directory.walkdirs():
-		if '.svn' in path_to_sub_directory.splitall():
+		if svn.is_svn_path(path_to_sub_directory):
 			continue
 		tags = read_dirs(path_to_sub_directory)
 		write_dir(path_to_sub_directory, tags)

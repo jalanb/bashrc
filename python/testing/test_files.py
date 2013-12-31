@@ -15,6 +15,7 @@ from optparse import OptionParser
 
 
 from paths import makepath
+from repositories import svn
 
 
 class UserMessage(Exception):
@@ -102,7 +103,7 @@ def add_sub_dirs(paths):
 	result = dirs.copy()
 	for path_to_dir in dirs:
 		for sub_dir in path_to_dir.walkdirs():
-			if '.svn' in sub_dir:
+			if svn.is_svn_path(sub_dir):
 				continue
 			result.add(sub_dir)
 	return result

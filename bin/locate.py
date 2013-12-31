@@ -5,6 +5,7 @@ import os
 import commands
 import optparse
 
+from repositories import repository
 
 def path_to_locate():
 	"""Location of the locate command on most unixen"""
@@ -20,6 +21,15 @@ def make_locate_command(string, options):
 	return '%s %s "%s"' % (path_to_locate(), option, string)
 
 
+def locatable(path):
+	"""Whether that path is wanted in location results
+
+	>>> not locatable('/path/to/.svn/file')
+	True
+	"""
+	return not repository.is_repository_path(path)
+
+
 def run_locate(string, options):
 	"""Run the locate command on the given string"""
 	command = make_locate_command(string, options)
@@ -28,7 +38,7 @@ def run_locate(string, options):
 		raise ValueError('command: %s\n output: %s' % (command, output))
 	elif not output:
 		return []
-	return [l for l in output.split('\n') if '/.svn' not in l]
+	return [l for l in output.split('\n') if locatable(l)]
 
 
 def make_check(method, options):
