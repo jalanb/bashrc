@@ -1,0 +1,11 @@
+# Editor files
+.*.sw[po]
+
+# Backups
+*~
+*.bak
+
+# Temporary files
+fred
+fred.*
+*.tmp
