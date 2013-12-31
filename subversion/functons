@@ -1,0 +1,152 @@
+#! /bin/bash
+
+# functons for subversion
+
+# sorted by strcmp of function name
+
+# x
+
+# xx
+
+sk ()
+{
+	cp $1 ${1}.keep
+	svn revert $1
+	ls -l $1*
+}
+
+sv ()
+{
+	if [[ -n "$@" ]]
+	then
+		svn revert "$@"
+	else
+		svn revert *
+	fi
+}
+
+# xxx
+
+scd ()
+{
+	svn diff --diff-cmd colordiff "$@"
+}
+
+shd ()
+{
+	svn_diff horizontal "$@"
+}
+
+svd ()
+{
+	svn_diff vertical "$@"
+}
+
+spd ()
+{
+	svn_diff python "$@"
+}
+
+# xxxx
+
+cocn ()
+{
+	svn co -N $1
+	cd ${1##*/}
+}
+
+cocq ()
+{
+	svn co -q $1
+	cd ${1##*/}
+}
+
+dark ()
+{
+	svn revert -q $JAB/vim/vimrc
+}
+
+stat ()
+{
+	if [[ -z "$1" ]]
+	then
+		rf -q
+		do_stat
+	else
+		for file in "$@"
+		do 
+			do_stat $file
+		done
+	fi
+}
+
+# xxxxx
+# xxxxxx
+# xxxxxxx
+
+do_stat ()
+{
+	test -n "$1" && path="$1" || path="."
+	if [[ -f "$path" || -d "$path" ]]
+	then
+		if svn info "$path" > /dev/null
+		then svn stat "$path"
+		fi
+	else echo \"$path\" is not a file, nor dir
+	fi
+}
+
+statvim ()
+{
+	local replacement="$1"
+	shift
+	if [[ -z "$1" ]]
+	then
+		do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
+	else
+		for file in "$@"
+		do 
+			do_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
+		done
+	fi | sort
+}
+
+svn_log ()
+{
+	if [ -n "$1" ]
+	then
+		if [[ -f $1 || -d $1 ]]
+		then
+			path=$1
+			shift 
+		fi
+	else
+		path="."
+	fi
+	local limit=${1-10}
+	svn log -l $limit $path
+}
+
+svn_url ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	local URL=$(svn info $dir | grep URL)
+	echo $URL
+	SVN_URL=$(echo $URL| sed -e s/[^:]*://)
+}
+
+# xxxxxxxx
+
+svn_info ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	svn info $dir 
+}
+
+# xxxxxxxxx
+
+svn_issue ()
+{
+	svn log "$@" | grep -i "^issue" | head
+}
+

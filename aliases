@@ -22,7 +22,6 @@ alias -- -="c -"
 alias 1=todo_edit
 alias 2=todo_show
 alias 3="tree"
-alias 7="svn"
 alias a="ack"
 alias b="b"
 # c is a function
@@ -92,15 +91,11 @@ alias ry="rf pycos"
 
 alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
-alias sc="svn ci -m"
 alias se="source $JAB/environ"
 alias sf="source $JAB/functons"
-alias si="svn_info "
-alias sl="svn_log "
 alias so="sort "
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
-alias st="stat "
 
 alias tf="tail -f"
 
@@ -114,8 +109,6 @@ alias z.="zm \*"
 # xxx
 
 alias ...='c ../..'
-
-alias 7up='svn up'
 
 alias doc="c ~/Documents"
 
@@ -141,18 +134,12 @@ alias ps3="ps axf | vim - +"
 alias rrs="sudo $JAB/python/ranger/bin/range"
 
 alias sib=". ~/.bashrc"
-alias sii="svn_issue "
 
 alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
 alias slf="source $JAB/local/functons"
-alias sli="svn_log_issue"
 alias slp="source $JAB/local/prompt"
 alias spe="source $JAB/python-environ"
-alias sth="statvim shd"
-alias stj="statvim svd $JAB"
-alias stm="statvim shd | grep -v ^r"
-alias stv="statvim svd "
 
 alias tra="try ~/alans_tests"
 

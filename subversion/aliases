@@ -1,0 +1,28 @@
+#! /bin/bash
+
+# all subversion aliases
+# 	as ordered by strcmp()
+
+
+# x
+
+alias 7="svn"
+
+# xx
+
+alias sc="svn ci -m"
+alias si="svn_info "
+alias sl="svn_log "
+alias st="stat "
+
+# xxx
+
+alias sii="svn_issue "
+alias sli="svn_log_issue"
+
+# xxxx
+
+alias sth="statvim shd"
+alias stj="statvim svd $JAB"
+alias stm="statvim shd | grep -v ^r"
+alias stv="statvim svd "
