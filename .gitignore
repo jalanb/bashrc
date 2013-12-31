@@ -9,3 +9,8 @@
 fred
 fred.*
 *.tmp
+
+# Derived development files
+*.fail
+*.pyc
+
