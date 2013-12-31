@@ -12,7 +12,7 @@ Go $HOME
 
 Check out from the main branch of the repository
 
-	svn co https://repository.altobridge.com/jab .jab
+	svn co file:///usr/local/svn/jab .jab
 
 Run the setup script
 

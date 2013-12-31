@@ -151,7 +151,7 @@ alias url="python ~/bin/show_url.py "
 
 alias ....='c ../../..'
 
-alias alto="source $JAB/company-environment"
+alias comp="source $JAB/company-environment"
 
 alias home="cd; cls"
 

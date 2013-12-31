@@ -2,49 +2,10 @@
 
 # Load employer's environment
 
-if [[ -z $TRACKERS ]]
-then 
-	if [[ -d $HOME/src/alto/scm/trunk/trackers ]]
-	then TRACKERS=$HOME/src/alto/scm/trunk/trackers
-	elif [[ -d /Users/jab/jab/alto/dev/friday/tracking ]]
-	then TRACKERS=/Users/jab/jab/alto/dev/friday/tracking
-	elif [[ -d $HOME/src/svn/amg/trunk/trackers ]]
-	then TRACKERS=$HOME/src/svn/amg/trunk/trackers
-	elif [[ -d /usr/local/scm/trunk/trackers ]]
-	then TRACKERS=$(readlink -f /usr/local/scm/trunk/trackers)
-	elif [[ -d /usr/local/trunk/trackers ]]
-	then TRACKERS=$(readlink -f /usr/local/trunk/trackers)
-	elif [[ -d /mnt/source/svn/scm/trunk/trackers ]]
-	then TRACKERS=$(readlink -f /mnt/source/svn/scm/trunk/trackers)
-	elif [[ -d /mnt/source/svn/amg/trunk/trackers ]]
-	then TRACKERS=$(readlink -f /mnt/source/svn/amg/trunk/trackers)
-	elif [[ -d /data/trackers ]]
-	then TRACKERS=$(readlink -f /data/trackers)
-	fi
-fi
-
 unset SITE
 unset PYTHONPATH
 
-if [[ -n $TRACKERS ]]
-then
-	if [[ -d $TRACKERS ]]
-	then echo Found a trackers checkout at $TRACKERS
-	else echo \$TRACKERS is not a directory: $TRACKERS
-	fi
-	export TRACKERS
-	export TRACKERS_SERVER=$TRACKERS/ie-track-1
-	source $TRACKERS/python/source_python_path
-	source $TRACKERS_SERVER/etc/tracker_environ
-	source $TRACKERS_SERVER/etc/tracker_functions
-	source $TRACKERS_SERVER/etc/tracker_aliases
-	cd $TRACKERS
-	export IGNORE_CHANGES=1
-else
-	echo Could not find a trackers checkout
-fi
-
-if [[ -d /Users/jab ]]  # looks like a mac book
+if [[ -d /Users/jab ]]  # looks like OS X
 then
 	USER=abrogan
 	if [[ $1 != "local" ]]
@@ -52,13 +13,6 @@ then
 		if ! ping -c 1 -t 3 $EMPLOYER_SERVER >/dev/null 2>&1 
 		then
 			echo Cannot contact $EMPLOYER_SERVER
-		else
-			/bin/bash ~/bin/mount_alto track
 		fi
-	fi
-	if [[ -f $JAB/python/pythonrc.py ]]
-	then PYTHONSTARTUP=$JAB/python/pythonrc.py
-	elif [[ -f ~/.pythonrc.py ]]
-	then [[ PYTHONSTARTUP=~/.pythonrc.py ]]
 	fi
 fi

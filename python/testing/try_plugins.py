@@ -17,7 +17,7 @@ def post_test(_path_to_test_file, _failures, _tests_run):
 
 def check_bash():
 	try:
-		from altobridge.shell import bash
+		import bash
 	except ImportError:
 		return
 	shown = bash.BashOptions.verbosity.shown()
