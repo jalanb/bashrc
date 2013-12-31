@@ -57,7 +57,7 @@ link_to_ipython ()
 
 link_subversion_config ()
 {
-	local sub_sversion=$(svn --version | head -n 1 | cut -d\   -f3 | cut -d. -f2)
+	local sub_version=$(svn --version | head -n 1 | cut -d\   -f3 | cut -d. -f2)
 	if [[ $sub_version > 6 ]]
 	then echo svn version is too high >&2
 	else

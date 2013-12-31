@@ -20,7 +20,7 @@ fi
 
 changes=0
 
-get_svn_status ()
+get_repo_status ()
 {
 	local significant_svn_status=$(dirname $BASH_SOURCE)/python/significant_svn_status.py
 	test -f $significant_svn_status || return 1
@@ -43,7 +43,7 @@ prompt_command ()
 		export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
 	fi
 	changes=0
-	[[ -n $IGNORE_CHANGES ]] || get_svn_status
+	[[ -n $IGNORE_CHANGES ]] || get_repo_status
 	if [[ $? == 2 ]]
 	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	else Dir="\$PWD"
