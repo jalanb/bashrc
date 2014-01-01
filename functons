@@ -15,6 +15,14 @@ c ()
 	fi
 }
 
+f ()
+{
+	first_dir
+	name=$1
+	shift
+	find $dir -name "$name" -print
+}
+
 h()
 {
 	local lines=${1:-25}
@@ -79,6 +87,29 @@ cv ()
 {
 	kd $1
 	fim $(basename $1)
+}
+
+ff ()
+{
+	first_dir
+	name=$1
+	shift
+	for path in $(find $dir -name $name -print)
+	do
+		echo cd $path
+		if [[ -f $path ]]
+		then builtin cd $(dirname $path)
+		else builtin cd $path
+		fi
+	done
+}
+
+fv ()
+{
+	first_dir
+	name=$1
+	shift
+	find $dir -name $name -exec vim {} \;
 }
 
 gg ()
