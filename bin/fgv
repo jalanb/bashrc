@@ -9,7 +9,7 @@ extract_dir()
 {
 	dir=
 	names=
-	for arg in $*
+	for arg in "$@"
 	do
 		if [[ ${arg:0:1} == "*" ]]
 		then
@@ -53,19 +53,19 @@ find_paths_arg ()
 
 list ()
 {
-	ls -lhtr $*
+	ls -lhtr "$@"
 }
 
 edit ()
 {
-	echo vim -p $* +/"$sought"
-	vim -p $* +/"$sought"
+	echo vim -p "$@" +/"$sought"
+	vim -p "$@" +/"$sought"
 }
 
 main ()
 {
 	local __doc__="grep in python files under here, show results as vim commands"
-	extract_dir $*
+	extract_dir "$@"
 	found_files=$(find_paths_arg)
 	if [[ -n "$found_files" ]] 
 	then
@@ -76,4 +76,4 @@ main ()
 	fi
 }
 
-main $*
+main "$@"
