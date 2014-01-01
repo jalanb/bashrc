@@ -36,7 +36,11 @@ update_jab ()
 		echo Expected \"...bin...\"
 		echo Actual $jab_dirs
 	fi
-	$SVN_CLIENT stat $JAB
+	if [[ -d $JAB/.svn ]]
+	then $SVN_CLIENT stat $JAB
+	elif [[ -d $JAB/.git ]]
+	then git status $JAB
+	fi
 }
 
 source_jab ()

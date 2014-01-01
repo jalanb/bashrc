@@ -1,0 +1,15 @@
+[submodule "src/github/viack"]
+	path = src/github/viack
+	url = https://github.com/jalanb/viack.git
+[submodule "src/github/ackg"]
+	path = src/github/ackg
+	url = https://github.com/tkruse/ackg.git
+[submodule "src/github/vimpager"]
+	path = src/github/vimpager
+	url = git://github.com/rkitover/vimpager.git
+[submodule "src/github/kd"]
+	path = src/github/kd
+	url = https://github.com/jalanb/kd.git
+[submodule "src/github/what"]
+	path = src/github/what
+	url = https://github.com/jalanb/what.git
