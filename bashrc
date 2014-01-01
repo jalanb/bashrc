@@ -36,11 +36,15 @@ update_jab ()
 		echo Expected \"...bin...\"
 		echo Actual $jab_dirs
 	fi
+}
+
+show_changes ()
+{
 	if [[ -d $JAB/.svn ]]
-	then $SVN_CLIENT stat $JAB
-	elif [[ -d $JAB/.git ]]
-	then git status $JAB
+	then source $JAB/subversion/source
+	else source $JAB/git/source
 	fi
+	stat
 }
 
 source_jab ()
@@ -65,6 +69,7 @@ source_jab ()
 	source_file $LOCAL/functons
 	source_file $GITHUB/kd/kd.sh
 	source_file $GITHUB/viack/viack optional
+	show_changes
 }
 
 clean_jab()

@@ -1,13 +1,33 @@
 #! /bin/bash
 
+first_path()
+{
+	path=$(pwd)
+	if [[ -z "$*" ]]
+	then return 0
+	fi
+	for p in "$@"
+	do
+		if [[ -f $p || -d $p ]]
+		then
+			path=$(python -c"import os; print os.path.realpath('$p')")
+			return 0
+		fi
+	done
+	return 1
+}
+
 first_dir()
 {
 	dir=$(pwd)
+	if [[ -z "$*" ]]
+	then return 0
+	fi
 	for d in "$@"
 	do
 		if [[ -d $d ]]
 		then
-			dir=$(python -c"import os; print os.path.realpath(\"$d\")")
+			dir=$(python -c"import os; print os.path.realpath('$d')")
 			return 0
 		fi
 	done
@@ -21,7 +41,7 @@ last_dir()
 	do
 		if [[ -d $d ]]
 		then
-			dir=$(python -c"import os; print os.path.realpath(\"$d\")")
+			dir=$(python -c"import os; print os.path.realpath('$d')")
 		fi
 	done
 }

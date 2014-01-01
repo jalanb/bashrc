@@ -1,0 +1,126 @@
+#! /bin/bash
+
+# functons for subversion
+
+# sorted by strcmp of function name
+
+# x
+
+# xx
+
+sv ()
+{
+	git checkout "$@"
+}
+
+# xxx
+
+scd ()
+{
+	git difftool --extcmd=colordiff "$@"
+}
+
+shd ()
+{
+	git difftool --extcmd="vim -d -o"  "$@"
+}
+
+spd ()
+{
+	git difftool --extcmd="$PYDIFF" "$@"
+}
+
+stv ()
+{
+	first_dir
+	git status -s $dir | sed -e "s/^ M/svd/" -e "s/^?? /vim /"
+}
+
+svd ()
+{
+	git difftool --extcmd="vim -d -O"  "$@"
+}
+
+# xxxx
+
+cocn ()
+{
+	git co -N $1
+	cd ${1##*/}
+}
+
+cocq ()
+{
+	git co -q $1
+	cd ${1##*/}
+}
+
+dark ()
+{
+	git revert -q $JAB/vim/vimrc
+}
+
+stat ()
+{
+	if [[ -z "$1" ]]
+	then
+		rf -q
+		do_stat
+	else
+		for file in "$@"
+		do 
+			do_stat $file
+		done
+	fi
+}
+
+# xxxxx
+# xxxxxx
+# xxxxxxx
+
+do_stat ()
+{
+	if first_path "$@"
+	then git status -s "$path"
+	else echo \"$path\" is not a file, nor dir
+	fi
+}
+
+statvim ()
+{
+	local replacement="$1"
+	shift
+	if [[ -z "$1" ]]
+	then
+		do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
+	else
+		for file in "$@"
+		do 
+			do_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
+		done
+	fi | sort
+}
+
+svn_url ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	local URL=$(git info $dir | grep URL)
+	echo $URL
+	SVN_URL=$(echo $URL| sed -e s/[^:]*://)
+}
+
+# xxxxxxxx
+
+svn_info ()
+{
+	test -n "$1" && dir=$1 || dir="."
+	git info $dir 
+}
+
+# xxxxxxxxx
+
+svn_issue ()
+{
+	git log "$@" | grep -i "^issue" | head
+}
+

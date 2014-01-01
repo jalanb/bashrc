@@ -1,0 +1,11 @@
+#! /bin/bash
+
+BASH_DIR=$(dirname $BASH_SOURCE)
+
+source_here ()
+{
+	what_source $BASH_DIR/$1 optional
+}
+
+source_here aliases
+source_here functons
