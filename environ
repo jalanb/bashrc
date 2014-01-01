@@ -1,6 +1,7 @@
 #! /bin/bash
 
-source ~/.jab/jab_environ
+export JAB=${JAB:-$HOME/.jab}
+[[ -z $JAB_HOME ]] && source $JAB/jab_environ
 
 export COLUMNS
 
