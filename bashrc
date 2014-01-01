@@ -15,7 +15,7 @@ source_file ()
 		set -x
 	elif [[ -f $path_to_file ]]
 	then
-		source $path_to_file $*
+		source $path_to_file
 	elif [[ -z $optional ]]
 	then
 		echo \"$path_to_file\" is not a file
