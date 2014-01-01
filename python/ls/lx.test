@@ -1,45 +1,53 @@
-lx
-==
+The lx script
+=============
 
-	>>> import l, lx
-	>>> from path import cd,path
-	>>> cd(lx.__file__)
+	>>> import lx
+
+
+More modules for testing
+------------------------
+
+	>>> import paths
+	>>> import l
+
+Test the module's file
+----------------------
+
+We shall base tests of the lx module's file
+	>>> path_to_lx = paths.makepath(lx.__file__)
+	>>> path_to_lx_dir = path_to_lx.parent
+	>>> path_to_lx_dir.cd()
 	True
 
 lx is a script
 	>>> lx.argv.test_args('-h ')
-	Usage: try.py [options]
-	<BLANKLINE>
-	Options:
-	  -q, --quiet   hide directories, blank lines, etc
-	  -l, --lines   separate by returns (tabs is default)
-	  -i, --ignore  Do not ignore files (that subversion ignores)
+	Usage: lx.test [options]
+	...
 	  -h, --help    show this help message and exit
 
 We know these files exist
-	>>> this_python_file = path('lx.py')
-	>>> this_test_file = path('lx.test')
-	>>> this_tests_file = path('lx.tests')
-	>>> these_files = this_python_file, this_test_file, this_tests_file
+	>>> this_python_file = path_to_lx
+	>>> this_test_file = path_to_lx_dir / 'lx.test'
+	>>> this_tests_file = path_to_lx_dir / 'lx.tests'
 
 get_exts
 --------
 
-	>>> files_here = l.get_files()
+	>>> files_here = path_to_lx_dir.files()
 
 The get_exts() method turns the list of files into a dictionary 
 	>>> files_by_extension = lx.get_exts(files_here)
 
 Keyed by the extensions of the files
 	So the extension of this file should show up
-	>>> '.test' in files_by_extension
+	>>> '.test' in files_by_extension.keys()
 	True
 
 And values are a list of file paths,
 	so these files should be separated by extension
 	>>> this_test_file in files_by_extension['.test']
 	True
-	>>> this_python_file in files_by_extension['.py']
+	>>> this_python_file in files_by_extension['.py'] + files_by_extension['.pyc']
 	True
 	>>> this_tests_file in files_by_extension['.tests']
 	True
