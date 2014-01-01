@@ -51,9 +51,9 @@ def show_import(symbols, name, from_string=None):
 			prefix = 'from %s import ' % module.__file__
 			indent = len(prefix)
 			width = commands.getoutput('tput cols')
-			print indent, width
-			suffix = pprint.pformat(loaded_items, indent=indent, width=width)
-			tell_user('%s\n%s' % (prefix, suffix))
+			string_items = ', '.join(loaded_items)
+			suffix = pprint.pformat(string_items, indent=indent, width=width)
+			tell_user('%s %s' % (prefix, suffix))
 		else:
 			symbols[name] = module
 			try:
