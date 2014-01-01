@@ -68,7 +68,7 @@ def filter_by_word(lines, word_index, expected_word):
 	>>> filter_by_word(lines, 1, 'five') == [['four', 'five']]
 	True
 	"""
-	return [l for l in lines if l[word_index] == expected_word]
+	return [l for l in lines if l and l[word_index] == expected_word]
 
 
 def parse_traceback_lines(lines):

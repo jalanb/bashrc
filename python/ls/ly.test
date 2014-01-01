@@ -1,50 +1,56 @@
-ly
-==
+The ly module
+=============
 
 	>>> import ly
-	>>> from path import cd
-	>>> cd(ly.__file__)
+
+More modules for testing
+------------------------
+
+	>>> from paths import makepath
+	>>> import l
+
+Test files in the module's directory
+------------------------------------
+
+	>>> directory_under_test = makepath(ly.__file__).parent
+	>>> directory_under_test.cd()
 	True
 
-
 ly is a script
+--------------
+
+Hence has some options
 	>>> ly.argv.test_args('-h ')
-	Usage: try.py [options]
+	Usage: ly.test [options]
 	<BLANKLINE>
 	Options:
-	  -y, --ython     hide python scripts
-	  -t, --tests     show tests
-	  -c, --compiled  show compiled python
-	  -g, --grammar   show grammars
-	  -f, --fails     show fails
-	  -a, --all       show all python related files
-	  -o, --others    show non python related files as well
-	  -q, --quiet     hide directories, blank lines, etc
-	  -l, --lines     separate by returns (tabs is default)
-	  -i, --ignore    Do not ignore files (that subversion ignores)
+	...
 	  -h, --help      show this help message and exit
 
 The command line tells it which files to get
-	>>> ly.argv.test_args('-a ')
+	Test with all python related files
+	>>> ly.argv.test_args('--all ')
 
-	>>> import l
 
-filter_names
-------------
+_filter_names()
+---------------
 
 Set up
 	>>> makepath('trace.log').write_text('hello')
-	>>> names = l.get_names()
+	>>> files_in_directory_under_test = l.get_files([directory_under_test])
+	>>> show(files_in_directory_under_test)
+	>>> names_of_files_in_directory_under_test = l.get_names(files_in_directory_under_test)
+	>>> show(names_of_files_in_directory_under_test)
 
-This method removes all names
+The _filter_names() method removes all names
 	which do not have at least one wanted file
 	A file's extension decides whether it is wanted
 	For example, the ly module does not want log files
 
-	>>> 'ly' in names, 'trace' in names
+	>>> 'ly' in names_of_files_in_directory_under_test, 'trace' in names_of_files_in_directory_under_test
 	(True, True)
-	>>> ly.filter_names(names)
-	>>> 'ly' in names, 'trace' in names
+	>>> ly._filter_names(names_of_files_in_directory_under_test)
+	>>> 'ly' in names_of_files_in_directory_under_test, 'trace' in names_of_files_in_directory_under_test
 	(True, False)
 
 Tear down
