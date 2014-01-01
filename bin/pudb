@@ -1,4 +1,6 @@
 #! /bin/bash
 
+# Script exists to specify a TERM setting for PUDB
+
 export TERM=xterm-256color
 /usr/local/bin/python2.7 /usr/local/bin/pudb "$@"
