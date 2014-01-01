@@ -9,6 +9,7 @@
 fred
 fred.*
 *.tmp
+python/fim.sh
 
 # Derived development files
 *.fail
