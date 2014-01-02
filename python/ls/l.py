@@ -7,7 +7,8 @@ from repositories import svn
 
 
 argv.add_options([
-	('ignore', 'Do not ignore files (that subversion ignores)', True),
+	('notice', 'Notice files (that subversion ignores)', False),
+	('recursive', 'Recurse into sub-directories', False),
 ])
 
 
@@ -47,7 +48,7 @@ def all_ignores(ignores=None, extra_ignores=None):
 	return ignores
 
 def remove_ignored(files, ignores=None, extra_ignores=None):
-	if not argv.options.ignore:
+	if argv.options.notice:
 		return files
 	globs = all_ignores(ignores, extra_ignores)
 	return [f for f in files if not any_fnmatch(f, globs)]
@@ -58,8 +59,16 @@ def add_dir(dirs, d):
 		return
 	if d == '':
 		d = path.path('.')
-	if d not in dirs:
-		dirs.append(d)
+	result = set(dirs)
+	result.add(d)
+	try:
+		recursive = argv.options.recursive
+	except AttributeError:
+		recursive = False
+	if recursive:
+		for child in d.walkdirs():
+			result.add(child)
+	return list(result)
 
 
 def get_dirs(args=None):
@@ -70,18 +79,17 @@ def get_dirs(args=None):
 		dirs = []
 		for p in arg_paths:
 			if p.isdir():
-				add_dir(dirs, p)
+				dirs = add_dir(dirs, p)
 			elif p.isfile():
-				add_dir(dirs, p.parent)
+				dirs = add_dir(dirs, p.parent)
 			else:
 				gp = glob_path(p)
 				if gp.exists():
-					add_dir(dirs, gp)
+					dirs = add_dir(dirs, gp)
 		if not dirs:
-			if hasattr(args, 'startswith') or len(args) == 1:
-				raise ValueError('No such directory: %s' % args[0])
-			else:
-				raise ValueError('No such directories: %s' % ', '.join(args))
+			singular = hasattr(args, 'startswith') or len(args) == 1
+			suffix = singular and 'y' or 'ies'
+			raise ValueError('No such director%s: %s' % (suffix, ', '.join(arg_paths)))
 	return dirs
 
 def as_paths(thing=None):

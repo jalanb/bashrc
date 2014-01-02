@@ -4,9 +4,7 @@ The l module
 	>>> import l
 	>>> l.argv.test_args('-h')
 	Usage: l.tests [options]
-	<BLANKLINE>
-	Options:
-	  -i, --ignore  Do not ignore files (that subversion ignores)
+	...
 	  -h, --help    show this help message and exit
 
 	>>> print l.get_dirs(['No such directory'])

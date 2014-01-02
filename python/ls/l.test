@@ -42,12 +42,13 @@ get_dirs
 get_dirs converts a list of strings to a list of paths
 	if they exist
 
-	>>> print l.get_dirs([this_test_file, '..', 'No such path'])
-	[<path u'.'>, <path u'..'>]
+	>>> dirs = l.get_dirs([this_test_file, '..', 'No such path'])
+	>>> '.' in dirs and '..' in dirs
+	True
 
 It expands paths if possible
 	>>> import os
-	>>> expected = [ path(os.environ['HOME']), path( os.environ['PYTHON_HOME']), path('/') ]
+	>>> expected = [ path(os.environ['PYTHON_HOME']), path( os.environ['HOME']), path('/') ]
 	>>> l.get_dirs([ '~', '$PYTHON_HOME', '/' ]) == expected
 	True
 
