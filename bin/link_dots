@@ -1,0 +1,46 @@
+#! /bin/bash
+
+check_jab ()
+{
+	if [[ -z $JAB ]]
+	then
+		JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
+	fi
+	if [[ ! -f $JAB/etc/ackrc ]]
+	then
+		echo $JAB/etc/ackrc is not a file >&2
+		exit 1
+	fi
+}
+
+link ()
+{
+	source="$1"
+	destination="$2"
+	if [[ -e "$destination" ]]
+	then rm -rf "$destination"
+	fi
+	ln -s "$source" "$destination"
+}
+
+main ()
+{
+	cd $HOME
+
+	link  $JAB/etc/ackrc            $HOME/.ackrc
+	link  $JAB/etc/dir_colors       $HOME/.dir_colors
+	link  $JAB/etc/editrc           $HOME/.editrc
+	link  $JAB/etc/gitignore_global $HOME/.gitignore_global
+	link  $JAB/etc/inputrc          $HOME/.inputrc
+	link  $JAB/etc/pylintrc         $HOME/.pylintrc
+	link  $JAB/etc/sackrc           $HOME/.sackrc
+
+	link  $JAB/python/pythonrc.py   $HOME/.pythonrc.py
+
+	link  $JAB/vim                  $HOME/.vim
+	link  $JAB/vim/vimrc            $HOME/.vimrc
+	link  $JAB/vim/vimpagerrc       $HOME/.vimpagerrc
+}
+
+check_jab
+main
