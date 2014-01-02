@@ -3,8 +3,7 @@
 check_jab ()
 {
 	if [[ -z $JAB ]]
-	then
-		JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
+	then JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
 	fi
 	if [[ ! -f $JAB/etc/ackrc ]]
 	then
@@ -20,26 +19,26 @@ link ()
 	if [[ -e "$destination" ]]
 	then rm -rf "$destination"
 	fi
-	ln -s "$source" "$destination"
+	ln -s $JAB/"$source" $HOME/"$destination"
 }
 
 main ()
 {
 	cd $HOME
 
-	link  $JAB/etc/ackrc            $HOME/.ackrc
-	link  $JAB/etc/dir_colors       $HOME/.dir_colors
-	link  $JAB/etc/editrc           $HOME/.editrc
-	link  $JAB/etc/gitignore_global $HOME/.gitignore_global
-	link  $JAB/etc/inputrc          $HOME/.inputrc
-	link  $JAB/etc/pylintrc         $HOME/.pylintrc
-	link  $JAB/etc/sackrc           $HOME/.sackrc
+	link  etc/ackrc            .ackrc
+	link  etc/dir_colors       .dir_colors
+	link  etc/editrc           .editrc
+	link  etc/gitignore_global .gitignore_global
+	link  etc/inputrc          .inputrc
+	link  etc/pylintrc         .pylintrc
+	link  etc/sackrc           .sackrc
 
-	link  $JAB/python/pythonrc.py   $HOME/.pythonrc.py
+	link  python/pythonrc.py   .pythonrc.py
 
-	link  $JAB/vim                  $HOME/.vim
-	link  $JAB/vim/vimrc            $HOME/.vimrc
-	link  $JAB/vim/vimpagerrc       $HOME/.vimpagerrc
+	link  vim                  .vim
+	link  vim/vimrc            .vimrc
+	link  vim/vimpagerrc       .vimpagerrc
 }
 
 check_jab
