@@ -40,9 +40,10 @@ update_jab ()
 
 show_changes ()
 {
+	JAB_BASH=$JAB/src/bash
 	if [[ -d $JAB/.svn ]]
-	then source $JAB/subversion/source
-	else source $JAB/git/source
+	then source $JAB_BASH/subversion/source
+	else source $JAB_BASH/git/source
 	fi
 	stat
 }
