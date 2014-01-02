@@ -51,7 +51,9 @@ source_jab ()
 {
 	[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ
 	local LOCAL=$JAB/local
-	local GITHUB=$JAB/src/github
+	local JAB_GITHUB=$JAB/src/github
+	/bin/chmod -R a-w $JAB_GITHUB
+	find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
 	update_jab
@@ -62,13 +64,13 @@ source_jab ()
 	source_file $LOCAL/python-environ
 	source_file $JAB/prompt green
 	source_file $LOCAL/prompt
-	source_file $GITHUB/what/what.sh
+	source_file $JAB_GITHUB/what/what.sh
 	what_source $JAB/aliases
 	what_source $LOCAL/aliases optional
 	source_file $JAB/functons
 	source_file $LOCAL/functons
-	source_file $GITHUB/kd/kd.sh
-	source_file $GITHUB/viack/viack optional
+	source_file $JAB_GITHUB/kd/kd.sh
+	source_file $JAB_GITHUB/viack/viack optional
 	show_changes
 }
 
