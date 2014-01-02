@@ -185,8 +185,7 @@ def get_globs(directory, glob):
 	"""A list of any files matching that glob in that directory"""
 	if directory == '':
 		directory = '.'
-	return [f for f in os.listdir(directory) if fnmatch(f, glob)]
-
+	return [os.path.join(directory, f) for f in os.listdir(directory) if fnmatch(f, glob)]
 
 
 def process_cwd(pid):
@@ -252,6 +251,8 @@ def has_swap_file(path_to_file):
 
 def get_swap_files(path_to_file):
 	"""A list of all (potential) swap files based on that file"""
+	if os.path.islink(path_to_file):
+		path_to_file = os.readlink(path_to_file)
 	directory = os.path.dirname(path_to_file)
 	glob = '.%s.sw*' % os.path.basename(path_to_file)
 	return get_globs(directory, glob)
@@ -265,7 +266,7 @@ def interpret(args):
 	return text_files, options
 
 
-def main_command(executable, text_files, options):
+def _main_command(executable, text_files, options):
 	"""Make a vim command for those files and options"""
 	command_words = [executable]
 	command_words.extend(quotes(text_files))
@@ -306,9 +307,9 @@ def main(args):
 	text_files, options = interpret(args)
 	vim_files = vimmable_files(text_files)
 	if vim_files:
-		command = main_command('$VIM_EDITOR', vim_files, options)
+		command = _main_command('$VIM_EDITOR', vim_files, options)
 		add_to_script(command)
-		command = main_command('post_vimming', vim_files, options)
+		command = _main_command('post_vimming', vim_files, options)
 		add_to_script(command)
 	return os.EX_OK
 

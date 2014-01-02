@@ -81,7 +81,7 @@ Then to quote a list of them
 And the program can print that out
 	>>> files, options = fim.interpret([
 	...     'a file.pyc', 'quote".txt', '+/sought'])
-	>>> print fim.main_command(files, options)
+	>>> print fim._main_command(files, options)
 	/.../vim "a file.py" 'quote".txt' -p +/"sought"
 
 
