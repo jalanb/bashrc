@@ -32,13 +32,13 @@ def _post_parse(options, args):
 def _prepare_argv():
 	argv.post_parses.append(_post_parse)
 	argv.add_options([
-		('ython', 'hide python scripts', False),
-		('tests', 'show tests', False),
-		('compiled', 'show compiled python', False),
-		('grammar', 'show grammars', False),
-		('fails', 'show fails', False),
 		('all', 'show all python related files', False),
+		('compiled', 'show compiled python', False),
+		('fails', 'show fails', False),
+		('grammar', 'show grammars', False),
 		('others', 'show non python related files as well', False),
+		('tests', 'show tests', False),
+		('ython', 'hide python scripts', False),
 	])
 
 
