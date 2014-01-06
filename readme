@@ -12,7 +12,7 @@ Go $HOME
 
 Check out from the main branch of the repository
 
-	svn co file:///usr/local/svn/jab .jab
+	git pull https://github.com/jalanb/dotjab.git .jab
 
 Run the setup script
 
