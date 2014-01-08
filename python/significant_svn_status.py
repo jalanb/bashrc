@@ -7,7 +7,11 @@ import os
 import sys
 
 
-from repositories.svn import get_significant_status
+try:
+	from repositories.svn import get_significant_status
+except ImportError:
+	def get_significant_status(_):
+		return False
 
 
 def main(args):
