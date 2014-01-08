@@ -3,6 +3,7 @@
 get_pandemic ()
 {
 	wget --no-check-certificate https://github.com/jwcxz/vim-pandemic/archive/master.zip
+	mv master.zip vim-pandemic-master.zip
 	unzip vim-pandemic-master.zip
 	rm -rf vim-pandemic-master.zip
 }
@@ -12,7 +13,7 @@ make_pandemic ()
 	cd vim-pandemic-master
 	sed -i -e "s|vim/bundle.remote|vim/bundle|" bin/pandemic
 	python2.7 setup.py install --prefix=$HOME
-	PANDEMIC=$PANDEMIC
+	PANDEMIC=bin/pandemic
 	if [[ ! -f $PANDEMIC ]]
 	then
 		echo Installation of $PANDEMIC failed >&2
