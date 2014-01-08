@@ -67,7 +67,7 @@ then
 else
 	export LS_DIRS_OPTION=
 fi
-[[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors)
+[[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e s/setenv/export/)
 
 add_to_a_path PATH $JAB/bin
 add_to_a_path PATH ~/bin
