@@ -17,17 +17,17 @@ sv ()
 
 scd ()
 {
-	git difftool --extcmd=colordiff "$@"
+	git difftool -y --extcmd=colordiff "$@"
 }
 
 shd ()
 {
-	git difftool --extcmd="vim -d -o"  "$@"
+	git difftool -y --extcmd="vim -d -o"  "$@"
 }
 
 spd ()
 {
-	git difftool --extcmd="$PYDIFF" "$@"
+	git difftool -y --extcmd="$PYDIFF" "$@"
 }
 
 stv ()
@@ -38,7 +38,7 @@ stv ()
 
 svd ()
 {
-	git difftool --extcmd="vim -d -O"  "$@"
+	git difftool -y --extcmd="vim -d -O"  "$@"
 }
 
 # xxxx
