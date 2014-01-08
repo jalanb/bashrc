@@ -24,6 +24,7 @@ source_file ()
 
 update_jab ()
 {
+	[[ -z $JABS ]] && return
 	local svn_ls="$SVN_CLIENT ls --non-interactive"
 	local jab_dirs=$($svn_ls --trust-server-cert $JABS 2>&1)
 	if [[ $jab_dirs =~ "invalid option: --trust-server-cert" ]]
@@ -57,7 +58,7 @@ source_jab ()
 	find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
-	update_jab
+	# update_jab
 	source_file $JAB/bin/add_to_a_path.sh
 	source_file environ
 	source_file $JAB/python-environ optional
