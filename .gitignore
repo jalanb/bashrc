@@ -15,3 +15,9 @@ python/fim.sh
 *.fail
 *.pyc
 
+# root-level directories
+/bin
+/include
+/lib
+/share
+/vim/bundle
