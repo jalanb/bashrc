@@ -13,14 +13,14 @@ If I have any of these back them up now
 	rm -rf .vim
 	rm -rf .vimrc
 	rm -rf .vimpagerrc
-																				   }
+
 Go $HOME
 	
 	cd
 
 Check out from the main branch of the repository
 
-	git pull https://github.com/jalanb/dotjab.git .jab
+	git clone https://github.com/jalanb/dotjab.git .jab
 
 Run the setup script
 
