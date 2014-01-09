@@ -66,7 +66,7 @@ def memoize(method):
 		return method.cache[key]
 	new_method.invalidate = invalidate
 	new_method.__doc__ = method.__doc__
-	new_method.__name__ = 'memoized_%s' % method.__name__
+	new_method.__name__ = 'memoize(%s)' % method.__name__
 	return new_method
 
 
@@ -83,7 +83,7 @@ def debug(method):
 		except bdb.BdbQuit:
 			print 'Normal quit from debugger'
 	new_method.__doc__ = method.__doc__
-	new_method.__name__ = 'debug_%s' % method.__name__
+	new_method.__name__ = 'debug(%s)' % method.__name__
 	return new_method
 
 
@@ -105,5 +105,5 @@ def debug_exception(method):
 			except bdb.BdbQuit:
 				print 'Normal quit from debugger'
 	new_method.__doc__ = method.__doc__
-	new_method.__name__ = 'debug_exception_%s' % method.__name__
+	new_method.__name__ = 'debug_exception(%s)' % method.__name__
 	return new_method

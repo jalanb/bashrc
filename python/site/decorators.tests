@@ -8,6 +8,7 @@ Decorating methods
 
 Instead of using the decorator one can call it directly
 	>>> def average(first, second):
+	...     """Get an average"""
 	...     print 'calculating average of', first, 'and', second
 	...     return (first + second) / 2
 	>>> average = memoize(average)
@@ -15,6 +16,15 @@ Instead of using the decorator one can call it directly
 	calculating average of 5 and 3
 	calculating average of 2 and 6
 	True
+
+Introspection
+-------------
+
+	>>> help(average)
+	Help on function memoize(average) in module decorators:
+	...
+	Get an average
+
 
 Unusual arguments
 -----------------
