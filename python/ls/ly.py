@@ -98,7 +98,7 @@ def show():
 		return
 	lout.show_dirs(dirs)
 	files = l.get_files(dirs)
-	if argv.options.ignore:
+	if not argv.options.notice:
 		files = l.remove_ignored(files)
 	names = l.get_names(files)
 	if not names:
