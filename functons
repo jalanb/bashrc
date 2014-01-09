@@ -158,7 +158,7 @@ ky ()
 	else
 		kd "$@" > /dev/null
 	fi
-	ya
+	y
 }
 
 pi ()
@@ -331,11 +331,6 @@ vv ()
 vy ()
 {
 	v $PYTHON_HOME
-}
-
-ya ()
-{
-	y -a
 }
 
 zm ()
