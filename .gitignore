@@ -12,6 +12,7 @@ fred.*
 python/fim.sh
 
 # Derived development files
+tags
 *.fail
 *.pyc
 
