@@ -32,36 +32,7 @@ find_python ()
 add_to_a_path ()
 {
 	find_python
-	eval $1=$( $PYTHON << EOP
-import os
-import sys
-
-def add_path_to_paths(paths,path):
-	result = []
-	for p in paths + [ path ]:
-		if p and p not in result:
-			result.append(p)
-	return result
-
-def add_path_to_path_string(path_string, path, separator=":"):
-	if not os.path.isdir(path):
-		return path_string
-	paths = []
-	for p in path_string.split(separator):
-		paths = add_path_to_paths(paths,p)
-	if path:
-		real_path = os.path.realpath(path)
-		if os.path.isdir(real_path):
-			paths = add_path_to_paths(paths,real_path)
-	return separator.join(paths)
-
-def main(name_of_paths,new_path):
-	path_string = os.environ.get(name_of_paths,"")
-	print add_path_to_path_string(path_string,new_path)
-
-main("$1","$2")
-EOP
-)
+	eval $1=$(PYTHONPATH=$JAB/python/site $PYTHON $JAB/python/add_to_a_path.py "$@")
 	export $1
 }
 
