@@ -7,7 +7,6 @@ LOCAL_SSH=~/.ssh
 LOCAL_STEM=$LOCAL_SSH/id_rsa
 KNOWN_KEYS=$LOCAL_SSH/authorized_keys
 
-set -x
 test -f $LOCAL_STEM || ssh-keygen -q -t rsa -N "" -f $LOCAL_STEM
 chmod 600 $KNOWN_KEYS
 if [ -f $KNOWN_KEYS ]

@@ -38,6 +38,7 @@ link_to_config ()
 		fi
 	done
 }
+
 link_to_home ()
 {
 
@@ -68,9 +69,24 @@ link_subversion_config ()
 	fi
 }
 
-main ()
+checkout ()
 {
-	[ -d $JAB ] || svn co -q $JABS $JAB
+	if [ -z $JAB ]
+	then
+		echo please set \$JAB
+		return 1
+	fi
+	[ -d $JAB ] && return 0
+	if [ -z $JABS ]
+	then
+		echo please set \$JABS
+		return 1
+	fi
+	git clone $JABS $JAB
+}
+
+link_dots ()
+{
 	link_to_home vim
 	link_to_home vim/vimrc
 	link_to_home vim/gvimrc
@@ -86,6 +102,25 @@ main ()
 	link_to_ipython ipy_profile_company.py
 	link_to_config
 	link_subversion_config
+}
+
+checkout_submodules ()
+{
+	git submodule sync
+	chmod +w $JAB/src/github/kd
+	touch $JAB/src/github/kd/kd.history
+	chmod +w $JAB/src/github/kd/kd.history
+	chmod -w $JAB/src/github/kd
+	chmod +w $JAB/src/github/viack
+}
+
+main ()
+{
+	if checkout
+	then
+		checkout_submodules
+		link_dots
+	fi
 }
 
 cd 
