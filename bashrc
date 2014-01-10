@@ -12,7 +12,6 @@ source_file ()
 	if [[ -z $path_to_file ]]
 	then
 		echo No file specified
-		set -x
 	elif [[ -f $path_to_file ]]
 	then
 		source $path_to_file
@@ -56,6 +55,7 @@ source_jab ()
 	local JAB_GITHUB=$JAB/src/github
 	/bin/chmod -R a-w $JAB_GITHUB
 	find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
+	find $JAB_GITHUB -name "viack" -exec /bin/chmod +w {} \;
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
 	# update_jab
