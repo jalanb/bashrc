@@ -1,0 +1,44 @@
+The add_to_a_path module
+========================
+
+	>>> import add_to_a_path
+	>>> print add_to_a_path.__doc__
+	Script to display a collection of paths after inserting one new path
+	...
+
+	>>> add_to_a_path.sys.argv = 'add_to_a_path.py /usr/bin:/usr/local/bin /bin'.split()
+	>>> args = add_to_a_path.parse_args()
+	>>> show(args)
+	{'--index': False,
+	 '--start': False,
+	 '--use_debugger': False,
+	 'PATH': '/bin',
+	 'PATHS': '/usr/bin:/usr/local/bin'}
+
+	>>> add_to_a_path.get_paths({'PATHS':'/usr/bin'}) == '/usr/bin'
+	True
+	>>> add_to_a_path.get_paths({'PATHS':'/usr/bin:/bin'}) == '/usr/bin:/bin'
+	True
+	>>> ':/usr/bin:' in add_to_a_path.get_paths({'PATHS':'PATH'})
+	True
+
+	>>> paths = ['/usr/bin', '/usr/local/bin']
+	>>> path = '/bin'
+	>>> add_to_a_path.add_path_to_paths(paths, path, False) == ['/usr/bin', '/usr/local/bin', '/bin']
+	True
+	>>> add_to_a_path.add_path_to_paths(paths, path, 0) == ['/bin', '/usr/bin', '/usr/local/bin']
+	True
+	>>> add_to_a_path.add_path_to_paths(paths, path, 1) == ['/usr/bin', '/bin', '/usr/local/bin']
+	True
+
+	>>> path_string = '/usr/bin:/usr/local/bin'
+	>>> add_to_a_path.add_path_to_path_string(args) == '/usr/bin:/usr/local/bin:/bin'
+	True
+	>>> add_to_a_path.sys.argv = 'add_to_a_path.py --start /usr/bin:/usr/local/bin /bin'.split()
+	>>> args = add_to_a_path.parse_args()
+	>>> add_to_a_path.add_path_to_path_string(args) == '/bin:/usr/bin:/usr/local/bin'
+	True
+	>>> add_to_a_path.sys.argv = 'add_to_a_path.py /usr/bin:/usr/local/bin /bin --index=1'.split()
+	>>> args = add_to_a_path.parse_args()
+	>>> add_to_a_path.add_path_to_path_string(args) == '/usr/bin:/bin:/usr/local/bin'
+	True
