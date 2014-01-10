@@ -832,7 +832,7 @@ named ()
 
 vfile ()
 {
-	$(echo "$@" | sed -e"s/up to //" -e"s/^File/fim/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
+	$(echo "$@" | sed -e"s/up to //" -e"s/^File/v/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
 }
 
 # xxxxx
