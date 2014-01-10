@@ -121,7 +121,5 @@ main ()
 	fi
 }
 
-# set -x
 trap remove_checkout EXIT
 main $*
-# set +x
