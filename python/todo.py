@@ -80,7 +80,8 @@ def parse_todo_line(line):
 
 def show_todo_item(item):
 	"""Show the item on screen, coloured by it's priority"""
-	print colours.colour_text(item.text, priority_colour(item.priority))
+	colour = priority_colour(item.priority)
+	print colours.colour_text(item.text, colour)
 
 
 def main():
