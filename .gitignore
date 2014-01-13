@@ -19,6 +19,7 @@ tags
 # root-level directories
 /bin
 /include
+/local/
 /lib
 /share
 /vim/bundle
