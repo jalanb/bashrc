@@ -11,7 +11,7 @@ install_software ()
 		sudo ./VBoxLinuxAdditions.run 
 	fi
 	sudo apt-get -y -q remove ack
-	sudo apt-get -y -qq install apt-file ipython subversion ctags tree gcc libc-dev rlwrap ack-grep tofrodos sshfs guake openssh-server
+	sudo apt-get -y -qq install apt-file subversion ctags tree gcc libc-dev rlwrap ack-grep tofrodos sshfs guake openssh-server
 	sudo apt-get -y -q install zlib1g-dev libreadline6-dev libdb4.8-dev libncurses5-dev
 	# for python, from http://askubuntu.com/questions/21547/what-are-the-packages-libraries-i-should-install-before-compiling-python-from-so
 	sudo apt-get -y -q install build-essential libz-dev libncursesw5-dev libssl-dev libgdbm-dev libsqlite3-dev libbz2-dev
