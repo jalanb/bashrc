@@ -31,7 +31,7 @@ def no_prompt():
 def _colour_16(ground, i):
 	if i > 7:
 		prefix = bold()
-		i = i = 8
+		i = i - 8
 	else:
 		prefix = ''
 	return '%s%s' % (prefix, escape('[%d%dm' % (ground, i)))

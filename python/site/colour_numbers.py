@@ -118,6 +118,11 @@ def small_values():
 		(0x0F, '#000000'),
 	]
 
+
+def small_integers():
+	return [integer for integer, _html in small_values()]
+
+
 def small_ansi_to_html(i):
 	for ansi, html in small_values():
 		if i == ansi:

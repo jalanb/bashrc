@@ -9,6 +9,13 @@ More modules for testing
 	
 	>>> import random
 
+integers
+--------
+	
+There are 16 small-numbered colours (CGA)
+	>>> all([bool(0 <= i <= 0x0F) for i in colour_numbers.small_integers()])
+	True
+
 integer to ansi
 ---------------
 
@@ -122,3 +129,4 @@ So now we can test that (with the exception of such pure colours)
 	True
 	>>> colour_numbers.small_ansi_to_html(0x10) is None
 	True
+
