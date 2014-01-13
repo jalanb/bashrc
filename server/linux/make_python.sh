@@ -19,6 +19,8 @@ then
 	cd ..
 	wget  --no-check-certificate https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg || exit
 	sh setuptools-0.6c11-py2.7.egg --prefix=$HOME || exit
+	pip install setuptools --no-use-wheel --upgrade
+	pip install ipython
 	easy_install-2.7 pudb 
 fi
 
