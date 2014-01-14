@@ -22,14 +22,16 @@ changes=0
 
 get_repo_status ()
 {
+	GIT_BRANCH=
 	local significant_svn_status=$(dirname $BASH_SOURCE)/python/significant_svn_status.py
 	test -f $significant_svn_status || return 1
 	if python $significant_svn_status .
 	then
 		export changes=1
 		return 2
-	elif git branch >/dev/null 2>&1
+	elif git branch > /dev/null
 	then
+		GIT_BRANCH=$(git branch | grep '^*' | sed -e 's/* //')
 		if git status | grep -q "nothing to commit"
 		then return 3
 		else return 4
@@ -51,7 +53,11 @@ prompt_command ()
 	changes=0
 	[[ -n $IGNORE_CHANGES ]] || get_repo_status
 	if [[ $? == 2 || $? == 4 ]]
-	then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+	then
+		if [[ -n $GIT_BRANCH ]]
+		then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD} (${GIT_BRANCH})${PROMPT_COLOUR}"
+		else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+		fi
 	#elif [[ $? == 3 ]]
 	else Dir="\$PWD"
 	fi
