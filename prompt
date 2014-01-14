@@ -54,13 +54,11 @@ prompt_command ()
 	[[ -n $IGNORE_CHANGES ]] || get_repo_status
 	if [[ $? == 2 || $? == 4 ]]
 	then
-		if [[ -n $GIT_BRANCH ]]
-		then Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD} (${GIT_BRANCH})${PROMPT_COLOUR}"
-		else Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
-		fi
+		Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
 	#elif [[ $? == 3 ]]
 	else Dir="\$PWD"
 	fi
+	[[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${PROMPT_OPPOSITE_COLOUR}${GIT_BRANCH}${PROMPT_COLOUR})"
 	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
 	if [[ -n "$VIRTUAL_ENV" ]]
 	then python_version=${python_version}.$(basename $VIRTUAL_NAME)
