@@ -3,7 +3,7 @@ The fim module
 
 	>>> import fim
 	>>> print fim.__doc__
-	Script to handle command line arguments to vim
+	Script to set up a call to vim
 
 More modules for testing
 ------------------------
@@ -83,8 +83,8 @@ Then to quote a list of them
 And the program can print that out
 	>>> files, options = fim.interpret([
 	...     'a file.pyc', 'quote".txt', '+/sought'])
-	>>> print fim._main_command(files, options)
-	/.../vim "a file.py" 'quote".txt' -p +/"sought"
+	>>> print fim._main_command('vim', files, options)
+	vim "a file.py" 'quote".txt' -p +/"sought"
 
 
 Exclude files which are being editted already
