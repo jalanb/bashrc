@@ -9,6 +9,7 @@ import doctest
 import fnmatch
 import commands
 import datetime
+import cStringIO
 from pprint import pprint, pformat
 
 
@@ -21,6 +22,16 @@ import try_plugins
 class DoctestInterrupt(KeyboardInterrupt):
 	"""This exception is for better naming of the only thing to stop doctest"""
 	pass
+
+def no_print(method, *args, **kwargs):
+	"""Discard all writes to stdout"""
+	old_stdout = sys.stdout
+	try:
+		sys.stdout = cStringIO.StringIO()
+		return method(*args, **kwargs)
+	finally:
+		sys.stdout = old_stdout
+
 
 def run_command(command):
 	"""Run a command in the local shell (usually bash)"""
@@ -177,6 +188,7 @@ def test_file(test_script, options):
 			'show' : show,
 			'bash' : run_command,
 			'DoctestInterrupt' : DoctestInterrupt,
+			'no_print' : no_print,
 		},
 		verbose=options.verbose,
 	)

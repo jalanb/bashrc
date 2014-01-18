@@ -54,7 +54,9 @@ Do not re-edit
 
 Determine whether a file is being editted
 	and whether it has any swap files
-	>>> fim.vimming(fim_py) and fim.has_swap_file(fim_py) or True
+	>>> vimming_fim = no_print(fim.vimming, fim_py)
+	>>> fim_swap_file = no_print(fim.has_swap_file, fim_py)
+	>>> vimming_fim and fim_swap_file or True
 	True
 
 Quote strings
@@ -99,7 +101,7 @@ So this should be true
 
 If without then there should be some edittable files in this list
 	(If not editting it then it should be included)
-	>>> module_is_edittable = bool(fim.vimmable_files([fim_py]))
+	>>> module_is_edittable = bool(no_print(fim.vimmable_files, [fim_py]))
 
 So one of these should always be true
 	>>> module_is_being_editted or module_is_edittable

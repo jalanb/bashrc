@@ -113,3 +113,16 @@ Edge cases
 	Traceback (most recent call last):
 	...
 	ImportError: Could not find a module for '.../not_a_file.py'
+
+Hiding output
+-------------
+
+	>>> def hello(arg):
+	...     print 'Hello'
+	...     return arg
+	>>> hello('World')
+	Hello
+	'World'
+
+	>>> no_print(hello, 'World')
+	'World'
