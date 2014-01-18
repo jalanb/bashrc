@@ -17,10 +17,8 @@ tags
 *.pyc
 
 # root-level directories
-/bin
-/include
+/include/
 /local/
-/lib
-/share
+/lib/
+/share/
 /vim/bundle
-/local
