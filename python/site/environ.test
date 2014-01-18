@@ -1,6 +1,6 @@
 	>>> import environ 
 
-A method to read the keys set in ~/.jab/environ
+A method to read the keys set in $JAB/environ
 	>>> keys = environ.read_environ_keys()
 	>>> 'JABS' in keys
 	True

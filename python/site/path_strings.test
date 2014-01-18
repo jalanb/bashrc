@@ -34,13 +34,13 @@ A path relative to the home directory
 	(could be handy for removing the home dir in tests)
 
 	>>> path_strings.from_home(path_strings.__file__)
-	<DirectPath u'.jab/python/site/path_strings.py...'>
+	<DirectPath u'.../site/path_strings.py...'>
 
 Divvying up strings
 -------------------
 
 Given a list of strings (such as might be found in sys.argv for example)
-	>>> strings = ['~/.jab', '~/.bashrc', '~/.jab/vim/vimrc', 'fred', '/usr']
+	>>> strings = ['~/bin', '~/.bashrc', '/etc/hosts', 'fred', '/usr']
 
 They can be turned to paths
 	>>> paths = path_strings.strings_to_paths(strings)
@@ -48,7 +48,7 @@ They can be turned to paths
 	True 
 
 Another method can work with a colon separated list
-	>>> path_strings.strings_to_paths(strings) == path_strings.string_to_paths('~/.jab:~/.bashrc:~/.jab/vim/vimrc:fred:/usr')
+	>>> path_strings.strings_to_paths(strings) == path_strings.string_to_paths('~/bin:~/.bashrc:/etc/hosts:fred:/usr')
 	True
 
 Or comma, space, semi-colon separated lists

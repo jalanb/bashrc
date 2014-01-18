@@ -1,6 +1,6 @@
 #! /bin/bash
 
-JAB=~/.jab
+JAB=${JAB:-$HOME/.jab}
 
 link_to ()
 {
@@ -9,7 +9,7 @@ link_to ()
 
 link_to_config ()
 {
-	for source_dir in $(find ~/.jab/etc/config -type d)
+	for source_dir in $(find $JAB/etc/config -type d)
 	do
 		dest_dir=$(echo $source_dir | sed -e "s:$JAB/etc/config:$HOME/.config:")
 		if [[ ! -e $dest_dir ]]
@@ -17,7 +17,7 @@ link_to_config ()
 		# else echo "$dest_dir already exists" >&1
 		fi
 	done
-	for source_file in $(find ~/.jab/etc/config -type f)
+	for source_file in $(find $JAB/etc/config -type f)
 	do
 		dest_link=$(echo $source_file | sed -e "s:$JAB/etc/config:$HOME/.config:")
 		if [[ -L $dest_link ]]

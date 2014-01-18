@@ -9,16 +9,16 @@ paths
 -----
 
 For example, sys.path is a list of strings
-	>>> jab_sys = [ p for p in sys.path if '.jab' in p ]
+	>>> jab_sys = [ p for p in sys.path if 'jab' in p ]
 
 The sis module has similar
-	>>> jab_sis = [ p for p in sis.path if '.jab' in p ]
+	>>> jab_sis = [ p for p in sis.path if 'jab' in p ]
 	Traceback (most recent call last):
 	...
 	AttributeError: 'module' object has no attribute 'path'
 
 Ooops, silly me, if it is a list, then it should be a plural
-	>>> jab_sis = [ p for p in sis.paths if '.jab' in p ]
+	>>> jab_sis = [ p for p in sis.paths if 'jab' in p ]
 
 But, whereas sys has a list of strings, sis has a list of paths
 	>>> type(jab_sys[0])

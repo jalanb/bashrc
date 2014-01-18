@@ -42,11 +42,11 @@ The module retains the last options, args which it parsed
 	True
 
 The module will catch any files or directories in the command line
-	>>> argv.test_args('-w alan ~/.jab ~/.bashrc ~/.jab/vim/vimrc fred /usr')
+	>>> argv.test_args('-w alan $JAB ~/.bashrc $JAB/vim/vimrc fred /usr')
 	>>> print argv.files[0], argv.files[1]
-	/.../.bashrc /.../.jab/vim/vimrc
+	/.../.bashrc /.../vim/vimrc
 	>>> print argv.directories[0], argv.directories[1]
-	/.../.jab /usr
+	/...jab /usr
 
 Many scripts act on the first directory you give them
 	This is separated out as well

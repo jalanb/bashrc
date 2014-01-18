@@ -2,7 +2,9 @@
 
 set_symbols ()
 {
-	source ~/.jab/jab_environ
+	JAB=${JAB:-$HOME/.jab}
+	[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
+	source $JAB/jab_environ
 	PYDIFF=$JAB/src/github/pydiff
 	VIM_EDITOR=vim
 	ARGS="$@"

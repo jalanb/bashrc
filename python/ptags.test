@@ -49,23 +49,23 @@ The tags_to_text() method converts a list of tags to ctags format
 The read_dirs method gets tags for all python files in a directory and recurses into sub-dirs
 	>>> tags = ptags.read_dirs(ptags_directory)
 	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
-	[<DirectPath u'.jab/python'>,
+	[<DirectPath u'.../python'>,
 	...
-	 <DirectPath u'.jab/python/testing'>]
+	 <DirectPath u'.../python/testing'>]
 
 The read_dir method does the same, but does not recurse
 	>>> tags = ptags.read_dir(ptags_directory)
 	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
-	[<DirectPath u'.jab/python'>]
+	[<DirectPath u'.../python'>]
 
 The tags are for all python files in the selected directory (ies)
-In .jab/python there should be three scripts which are programs (have a main)
+In .../python there should be three scripts which are programs (have a main)
 	kd, ptags and try
 	>>> main_tags = [t for t in tags if 'main' in t.name]
 	>>> print ptags.tags_to_text(main_tags)
-	main	.../.jab/python/kd.py	/^def +main(/
-	main	.../.jab/python/ptags.py	/^def +main(/
-	main	.../.jab/python/y.py	/^def +main(/
+	main	.../python/kd.py	/^def +main(/
+	main	.../python/ptags.py	/^def +main(/
+	main	.../python/y.py	/^def +main(/
 
 read_sys_dirs() is used to read python's system direcories
 	Which would, for example, tag the pformat method in the pprint module

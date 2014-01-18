@@ -214,7 +214,7 @@ uj ()
 	if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]
 	then
 		BACK=$(pwd)
-		if [[ $BACK != "$HOME/.jab" ]]
+		if [[ $BACK != "$JAB" ]]
 		then
 			cd $JAB
 			. bashrc

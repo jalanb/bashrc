@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# echo Welcome to $HOME/.jab/bashrc
+# echo Welcome to $JAB/bashrc
 
 source_file ()
 {
@@ -50,7 +50,7 @@ show_changes ()
 
 source_jab ()
 {
-	[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ
+	[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 	local LOCAL=$JAB/local
 	local JAB_GITHUB=$JAB/src/github
 	/bin/chmod -R a-w $JAB_GITHUB
@@ -111,7 +111,7 @@ welcome_home ()
 
 jab_bashrc()
 {
-	[[ -z $JAB ]] && JAB=~/.jab
+	JAB=${JAB:-$HOME/.jab}
 	if [[ ! -d $JAB ]]
 	then
 		echo i am lost because $JAB is not a directory >&2

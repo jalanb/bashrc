@@ -4,7 +4,7 @@ from paths import makepath
 
 def read_environ_items():
 	from path import path
-	jab = path('~/.jab').expanduser()
+	jab = path('$JAB').expanduser()
 	items = {}
 	for environ_file in jab.files('*environ*'):
 		lines = [ l.strip() for l in environ_file.lines() ]
