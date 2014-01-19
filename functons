@@ -153,13 +153,10 @@ hv ()
 
 ky ()
 {
-	if [[ -z "$1" ]]
-	then
-		cd $PYTHON_HOME
-	else
-		kd "$@" > /dev/null
-	fi
-	y
+	first_dir "$@"
+	dir=${dir:-$PYTHON_HOME}
+	kd $dir
+	y "$@"
 }
 
 pi ()

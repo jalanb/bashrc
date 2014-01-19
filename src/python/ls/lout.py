@@ -3,6 +3,7 @@ import argv
 
 
 import ls_colours
+from paths import makepath
 
 argv.add_options([
 	('quiet', 'hide directories, blank lines, etc', False),
@@ -24,7 +25,11 @@ def screen_width():
 def show_dirs(dirs):
 	if argv.options.quiet:
 		return
-	os.system('/bin/ls -d %s' % ' '.join([' '.join(d.dirs()) for d in dirs]))
+	here = makepath('.')
+	sub_dirs = []
+	for Dir in dirs:
+		sub_dirs.extend([here.relpathto(p.realpath()) for p in Dir.dirs()])
+	os.system('/bin/ls -d %s' % ' '.join(sub_dirs))
 	print
 
 

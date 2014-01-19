@@ -51,4 +51,5 @@ def main():
 		svn.show_stat()
 
 if __name__ == '__main__':
+	ly.prepare_argv()
 	argv.main(main)

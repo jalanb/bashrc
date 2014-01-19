@@ -23,13 +23,13 @@ def _post_parse(options, args):
 	for k, v in options.__dict__.iteritems():
 		try:
 			if v:
-				options.wanted.append(wanted[k])
+				options.wanted.extend(wanted[k])
 			options.exts.extend(wanted[k])
 		except KeyError:
 			pass
 	return options, args
 
-def _prepare_argv():
+def prepare_argv():
 	argv.post_parses.append(_post_parse)
 	argv.add_options([
 		('all', 'show all python related files', False),
@@ -117,6 +117,6 @@ def main():
 
 
 if __name__ == '__main__':
-	_prepare_argv()
+	prepare_argv()
 	argv.main(main)
 
