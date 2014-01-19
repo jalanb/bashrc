@@ -41,8 +41,8 @@ p ()
 
 v ()
 {
-	if python2.7 $JAB/python/fim.py "$@"
-	then bash $JAB/python/fim.sh
+	if python2.7 $JAB_PYTHON/fim.py "$@"
+	then bash $JAB_PYTHON/fim.sh
 	fi
 }
 
@@ -59,7 +59,7 @@ x ()
 y ()
 {
 	clear
-	python $JAB/python/y.py "$@"
+	python $JAB_PYTHON/y.py "$@"
 }
 
 # xx
@@ -73,7 +73,7 @@ IP ()
 {
 	for number in 172 192 100
 	do
-		if python $JAB/python/ifconfig.py $number
+		if python $JAB_PYTHON/ifconfig.py $number
 		then break
 		fi
 	done
@@ -194,7 +194,7 @@ rb ()
 
 rf ()
 {
-	PYTHON_SCRIPT=$JAB/python/rf.py
+	PYTHON_SCRIPT=$JAB_PYTHON/rf.py
 	python $PYTHON_SCRIPT "$@"
 }
 
@@ -326,7 +326,7 @@ vt ()
 
 vv ()
 {
-	v $JAB/python/fim.py
+	v $JAB_PYTHON/fim.py
 }
 
 vy ()
@@ -515,7 +515,7 @@ jju ()
 
 jjy ()
 {
-	ky $JAB/python "$@"
+	ky $JAB_PYTHON "$@"
 }
 
 jjz ()
@@ -583,7 +583,7 @@ rq. ()
 unalias try > /dev/null 2>&1
 try ()
 {
-	TRY=$JAB/python/testing/try.py
+	TRY=$JAB_PYTHON/testing/try.py
 	test -f ./try.py && TRY=./try.py
 	python $TRY "$@"
 }
@@ -880,7 +880,7 @@ todo_show ()
 	if [[ -f todo.txt ]]
 	then todo_txt=todo.txt
 	fi
-	python2.7 $JAB/python/todo.py $todo_txt
+	python2.7 $JAB_PYTHON/todo.py $todo_txt
 }
 
 # xxxxxxxxxx

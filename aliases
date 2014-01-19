@@ -75,17 +75,16 @@ alias ll="ls -lh "
 alias lr="ls -lhtr"
 alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
 alias lt="ls *.test*"
-alias lx="p $JAB/python/ls/lx.py "
-alias ly="p $JAB/python/ls/ly.py "
+alias lx="p $JAB_PYTHON/ls/lx.py "
+alias ly="p $JAB_PYTHON/ls/ly.py "
 
 alias p-="echo $OLDPWD"
 alias pc="python -c"
 alias pg="pgrep -fl"
-alias pp="p $JAB/python/mython/pp.py"
-alias pt="p $JAB/python/vim_traceback.py"
+alias pp="p ~/jab/python/mython/mython/pp.py"
+alias pt="p $JAB_PYTHON/vim_traceback.py"
 
 alias r.="rm -rvf *"
-alias rr="$JAB/python/ranger/bin/range"
 alias rq="rm -rf "
 alias ry="rf pycos"
 
@@ -131,7 +130,6 @@ alias out="to_release"
 
 alias ps3="ps axf | vim - +"
 
-alias rrs="sudo $JAB/python/ranger/bin/range"
 
 alias sib=". ~/.bashrc"
 
@@ -157,14 +155,14 @@ alias home="cd; cls"
 
 alias mine="sudo chown $(id -un):$(id -gn)"
 
-alias tags="p $JAB/python/ptags.py "
+alias tags="p $JAB_PYTHON/ptags.py "
 
 
 # xxxxx
 
 alias .....='c ../../../..'
 
-alias ptags="p $JAB/python/ptags.py "
+alias ptags="p $JAB_PYTHON/ptags.py "
 
 # xxxxxx
 
@@ -184,4 +182,4 @@ alias service="sudo /sbin/service "
 
 alias stopwatch="killall -9 watch"
 
-alias update_hosts="sudo python $JAB/python/update_hosts.py"
+alias update_hosts="sudo python $JAB_PYTHON/update_hosts.py"

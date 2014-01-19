@@ -42,7 +42,7 @@ main ()
 	local options=$*
 
 	local here_name=$(python -c "import socket; print socket.getfqdn()")
-	local here_ip=$(python $JAB/python/ifconfig.py 172)
+	local here_ip=$(python $JAB_PYTHON/ifconfig.py 172)
 	local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
 	if [[ $here_ip == $there_ip ]]
 	then

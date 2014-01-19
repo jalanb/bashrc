@@ -83,7 +83,7 @@ clean_jab()
 
 show_todo ()
 {
-	builtin cd $JAB/python
+	builtin cd $JAB_PYTHON
 	if python2.7 -c"a=0" >/dev/null 2>&1
 	then test -f todo.py && python2.7 todo.py
 	else

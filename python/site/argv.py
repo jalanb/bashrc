@@ -209,6 +209,7 @@ def parse_args(command_line=None):
 		try:
 			import pudb as pdb
 		except ImportError:
+			print 'cannot import pudb'
 			import pdb
 		pdb.set_trace()
 	for post_parse in post_parses:

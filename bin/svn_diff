@@ -31,7 +31,7 @@ IP ()
 {
 	for number in 172 192 100
 	do
-		if python $JAB/python/ifconfig.py $number
+		if python $JAB_PYTHON/ifconfig.py $number
 		then break
 		fi
 	done

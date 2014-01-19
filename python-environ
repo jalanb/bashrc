@@ -1,8 +1,9 @@
 #! /bin/bash
 
-add_to_a_path PYTHONPATH $JAB/python/site
-export TRY="$JAB/python/testing/try.py"
+export JAB_PYTHON=$JAB/python
+add_to_a_path PYTHONPATH $JAB_PYTHON/site
+export TRY="$JAB_PYTHON/testing/try.py"
 
-test -d $JAB/python && export PYTHON_HOME=$JAB/python
+test -d $JAB_PYTHON && export PYTHON_HOME=$JAB_PYTHON
 test -d ~/src/python && export PYTHON_HOME=~/src/python
 test -f ~/.pythonrc.py &&  export PYTHONSTARTUP=~/.pythonrc.py
