@@ -245,7 +245,7 @@ def vimming_files(pid, arg_string):
 def vimming_process(path_to_file):
 	"""Search for vim editting that file with the ps command"""
 	filename = escape_quotes(os.path.basename(path_to_file))
-	command = 'ps -o pid,args | grep -v grep | grep "vim.*%s"' % (filename)
+	command = 'ps -o pid,args | grep -v grep | grep "vim.*\s.*%s"' % (filename)
 	output = commands.getoutput(command)
 	if not output:
 		return None, None
