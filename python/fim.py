@@ -46,6 +46,7 @@ def add_to_script(string):
 	with open(path_to_script(), 'a') as output:
 		print >> output, string
 
+
 def quote(string):
 	"""Add quotation marks around the string
 
@@ -107,13 +108,31 @@ def quote_finds(strings):
 	return result
 
 
+def is_dash_option(string):
+	"""Whether that string looks like an option
+
+	>>> is_dash_option('-p')
+	True
+	"""
+	return string[0] == '-'
+
+
+def is_plus_option(string):
+	"""Whether that string looks like an option
+
+	>>> is_plus_option('+/sought')
+	True
+	"""
+	return string[0] == '+'
+
+
 def is_option(string):
 	"""Whether that string looks like an option to vim
 
 	>>> is_option('-p') and is_option('+/sought')
 	True
 	"""
-	return string[0] in '-+'
+	return is_dash_option(string) or is_plus_option(string)
 
 
 def divide(items, divider):
@@ -258,9 +277,25 @@ def get_swap_files(path_to_file):
 	return get_globs(directory, glob)
 
 
+def separate_options(strings):
+	result = set()
+	for string in strings:
+			result.update(string[1:])
+	return result
+
+
+def start_debugging():
+	try:
+		import pdb
+	pdb.set_trace()
+
+
 def interpret(args):
 	"""Interpret the args from a command line"""
 	options, args = divide(args, is_option)
+	options = separate_options(options)
+	if 'U' in options:
+		start_debugging()
 	files = [tab_complete(a) for a in args]
 	text_files = [textify(f) for f in files]
 	return text_files, options
@@ -312,6 +347,7 @@ def main(args):
 		command = _main_command('post_vimming', vim_files, options)
 		add_to_script(command)
 	return os.EX_OK
+
 
 if __name__ == '__main__':
 	sys.exit(main(sys.argv[1:]))
