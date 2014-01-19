@@ -88,7 +88,7 @@ class path(_base):
 		If the result is a file return self.__file_class__(result)
 
 		>>> p = path('/home/guido')
-		>>> p.__div__('python') == p / 'python' == p.joinpath('python')
+		>>> p.__div__('fred') == p / 'fred' == p.joinpath('fred')
 		True
 		"""
 		if child:
@@ -126,8 +126,8 @@ class path(_base):
 	def _get_namebase(self):
 		"""The same as path.name, but with one file extension stripped off.
 
-		>>> print path('/home/guido/python.tar')._get_namebase()
-		python
+		>>> print path('/home/guido/fred.tar')._get_namebase()
+		fred
 		"""
 		base, ext = os.path.splitext(self.name)
 		return base
@@ -155,9 +155,9 @@ class path(_base):
 
 		An absolute path starts with an empty string, a relative path does not
 
-		>>> path(u'/usr/local/lib/libpython.so').dirnames() == [ u'', u'usr', u'local', u'lib']
+		>>> path(u'/path/to/module.py').dirnames() == [ u'', u'path', u'to']
 		True
-		>>> path(u'usr/local/lib/libpython.so').dirnames() == [ u'usr', u'local', u'lib']
+		>>> path(u'path/to/module.py').dirnames() == [ u'path', u'to']
 		True
 		"""
 		return self.dirname().split(os.path.sep)
@@ -167,9 +167,9 @@ class path(_base):
 
 		No empty parts are included
 
-		>>> path(u'usr/local/lib/libpython.so').directories() == [ u'usr', u'local', u'lib']
+		>>> path(u'path/to/module.py').directories() == [ u'path', u'to']
 		True
-		>>> path(u'/usr/local//lib/libpython.so').directories() == [ u'usr', u'local', u'lib']
+		>>> path(u'/path/to/module.py').directories() == [ u'path', u'to']
 		True
 		"""
 		return [d for d in self.dirnames() if d]
@@ -178,7 +178,7 @@ class path(_base):
 		dirname, None, None,
 		""" This path's parent directory, as a new path object.
 
-		>>> path('/usr/local/lib/libpython.so').parent == path('/usr/local/lib')
+		>>> path('/path/to/module.py').parent == path('/path/to')
 		True
 		""")
 
@@ -186,7 +186,7 @@ class path(_base):
 		dirnames, None, None,
 		""" This path's parent directories, as a list of strings.
 
-		>>> path(u'/usr/local/lib/libpython.so').parents == [ u'', u'usr', u'local', u'lib']
+		>>> path(u'/path/to/module.py').parents == [ u'', u'path', u'to']
 		True
 		""")
 
@@ -194,7 +194,7 @@ class path(_base):
 		basename, None, None,
 		""" The name of this file or directory without the full path.
 
-		>>> path('/usr/local/lib/libpython.so').name == 'libpython.so'
+		>>> path('/path/to/module.py').name == 'module.py'
 		True
 		""")
 

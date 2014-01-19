@@ -318,3 +318,31 @@ def home():
 
 def pwd():
 	return makepath(os.getcwd())
+
+
+def	first_dir(path_string):
+	"""Get the first directory in that path
+
+	>>> first_dir('usr/local/bin') == 'usr'
+	True
+	"""
+	parts = path_string.split(os.path.sep)
+	return parts[0]
+
+
+def first_dirs(path_strings):
+	"""Get the roots of those paths
+
+	>>> first_dirs(['usr/local/bin', 'usr/bin', 'bin']) == ['usr', 'usr', 'bin']
+	True
+	"""
+	return [first_dir(p) for p in path_strings]
+
+
+def unique_first_dirs(path_strings):
+	"""Get the unique roots of those paths
+
+	>>> unique_first_dirs(['usr/local/bin', 'usr/bin', 'bin']) == set(['usr', 'bin'])
+	True
+	"""
+	return set(first_dirs(path_strings))
