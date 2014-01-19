@@ -663,6 +663,14 @@ wat ()
 
 # xxxx
 
+bump ()
+{
+	part=${1:-patch}
+	bumpversion $part
+	git push origin --tags
+	grep current_version .bumpversion.cfg
+}
+
 down ()
 {
 	c ~/Download* "$@"
