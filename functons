@@ -41,8 +41,9 @@ p ()
 
 v ()
 {
-	python2.7 $JAB/python/fim.py "$@"
-	bash $JAB/python/fim.sh
+	if python2.7 $JAB/python/fim.py "$@"
+	then bash $JAB/python/fim.sh
+	fi
 }
 
 w ()

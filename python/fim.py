@@ -342,13 +342,17 @@ def vimmable_files(text_files):
 
 def main(args):
 	new_script()
-	text_files, options = interpret(args)
-	vim_files = vimmable_files(text_files)
-	if vim_files:
-		command = _main_command('$VIM_EDITOR', vim_files, options)
-		add_to_script(command)
-		command = _main_command('post_vimming', vim_files, options)
-		add_to_script(command)
+	try:
+		text_files, options = interpret(args)
+		vim_files = vimmable_files(text_files)
+		if vim_files:
+			command = _main_command('$VIM_EDITOR', vim_files, options)
+			add_to_script(command)
+			command = _main_command('post_vimming', vim_files, options)
+			add_to_script(command)
+	except (OSError, IOError), e:
+		print >> sys.stderr, e
+		return os.EX_IOERR
 	return os.EX_OK
 
 
