@@ -788,25 +788,10 @@ vvvy ()
 
 build ()
 {
-	if [[ $USER == "jab" ]]
-	then
-		if [[ -n "$1" ]]
-		then
-			user=abrogan
-		else
-			user=builder
-		fi
-	else
-		user=$USER
-	fi
-	if [[ -n "$1" && "$1" == "2" ]]
-	then
-		ssh $user@ie-build-2
-	elif [[ "$HOSTNAME" == "ie-build-1" ]]
-	then
-		ssh $user@ie-build-2
-	else
-		ssh $user@ie-build-1
+	if [[ -f build.sh ]]
+	then bash build.sh "$@"
+	elif [[ -f Makefile ]]
+	then make "$@"
 	fi
 }
 
