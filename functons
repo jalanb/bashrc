@@ -17,7 +17,7 @@ c ()
 
 f ()
 {
-	first_dir
+	first_dir "$@"
 	name=$1
 	shift
 	find $dir -name "$name" -print
@@ -92,7 +92,7 @@ cv ()
 
 ff ()
 {
-	first_dir
+	first_dir "$@"
 	name=$1
 	shift
 	for path in $(find $dir -name $name -print)
@@ -107,7 +107,7 @@ ff ()
 
 fv ()
 {
-	first_dir
+	first_dir "$@"
 	name=$1
 	shift
 	find $dir -name $name -exec vim {} \;
