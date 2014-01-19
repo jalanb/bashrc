@@ -302,6 +302,7 @@ def interpret(args):
 	options, args = divide(args, is_option)
 	options = separate_options(options)
 	if 'U' in options:
+		options.remove('U')
 		start_debugging()
 	files = [tab_complete(a) for a in args]
 	text_files = [textify(f) for f in files]
