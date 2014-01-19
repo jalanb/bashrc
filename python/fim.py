@@ -278,7 +278,7 @@ def get_swap_files(path_to_file):
 
 
 def separate_options(strings):
-	result = set()
+	result = []
 	for string in strings:
 		if is_dash_option(string):
 			result.update(string[1:])
