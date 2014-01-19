@@ -1,6 +1,6 @@
 #! /bin/bash
 
-export JAB_PYTHON=$JAB/python
+export JAB_PYTHON=$JAB/src/python
 add_to_a_path PYTHONPATH $JAB_PYTHON/site
 export TRY="$JAB_PYTHON/testing/try.py"
 
