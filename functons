@@ -226,19 +226,6 @@ uj ()
 	fi
 }
 
-ut ()
-{
-	if [[ -f $HOME/bin/upTrackers ]]
-	then
-		sh $HOME/bin/upTrackers
-	elif [[ $(hostname) == "ie-build-1" ]]
-	then
-		sudo su - builder -c "sh ~/bin/upTrackers"
-	else
-		ssh builder@ie-build-1 "sh ~/bin/upTrackers"
-	fi
-}
-
 hd ()
 {
 	if [[ -n "$3" ]]
@@ -429,36 +416,6 @@ fpy ()
 	fi
 }
 
-jj1 ()
-{
-	ssj abrogan ie-build-1.$EMPLOYER_DOMAIN
-} 
-
-jj2 ()
-{
-	ssj abrogan ie-build-2.$EMPLOYER_DOMAIN
-} 
-
-jj3 ()
-{
-	ssj abrogan ie-build-3.$EMPLOYER_DOMAIN
-} 
-
-jja ()
-{
-	ssj abrogan jab-track-1.$EMPLOYER_DOMAIN
-} 
-
-jjb ()
-{
-	sst builder ie-build-1.$EMPLOYER_DOMAIN
-} 
-
-jjd ()
-{
-	ssj jab abrogan-dev.$EMPLOYER_DOMAIN
-} 
-
 jjj ()
 {
 # ssh back to the jab.ook (which is my laptop
@@ -467,65 +424,19 @@ jjj ()
 	if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
 	then
 		jjj_host=jab.ook
-	elif ping -c 1 -w 1 dhcp92.$EMPLOYER_DOMAIN >/dev/null 2>&1
-	then
-		jjj_host=dhcp92.$EMPLOYER_DOMAIN
-	elif ping -c 1 -w 1 172.16.1.92 >/dev/null 2>&1
-	then
-		jjj_host=172.16.1.92
 	fi
 	if [[ -z $jjj_host ]]
 	then
-		echo Could not ping jab.ook, dhcp92.$EMPLOYER_DOMAIN, 172.16.1.92
+		echo Could not ping jab.ook
 	else
 		ssj jab $jjj_host
 	fi
 }
 
 
-jjk ()
-{
-	ssj jab jab-track-1.$EMPLOYER_DOMAIN
-} 
-
-jjl ()
-{
-	ssj albrogan abrogan.$EMPLOYER_DOMAIN
-} 
-
-jjp ()
-{
-	ssj root ie-protex-1.$EMPLOYER_DOMAIN
-} 
-
-jjr ()
-{
-	ssj jab abrogan-run.$EMPLOYER_DOMAIN
-} 
-
-jjt ()
-{
-	ssj abrogan $EMPLOYER_SERVER
-} 
-
-jju ()
-{
-	ssj abrogan abrogan1304.$EMPLOYER_DOMAIN
-}
-
 jjy ()
 {
 	ky $JAB_PYTHON "$@"
-}
-
-jjz ()
-{
-	sst abrogan r9dev1.$EMPLOYER_DOMAIN
-} 
-
-jjZ ()
-{
-	sst abrogan sz-build-1.$EMPLOYER_DOMAIN
 }
 
 . $JAB/bin/first_dir

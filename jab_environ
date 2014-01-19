@@ -6,7 +6,7 @@ export JAB_KEY=$JAB/ssh/id_jab
 export JAB_HOME=$HOME
 export JAB_PYTHON=$JAB/src/python
 export EMPLOYER_DOMAIN=s3group.com
-export EMPLOYER_SERVER=ie-track-1.$EMPLOYER_DOMAIN
+export EMPLOYER_USERNAME=alanb
 JABS=
 if [ -d /usr/local/svn/jabs ]
 then JABS=file:///usr/local/svn/jabs
