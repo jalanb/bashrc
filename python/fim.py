@@ -280,12 +280,15 @@ def get_swap_files(path_to_file):
 def separate_options(strings):
 	result = set()
 	for string in strings:
+		if is_dash_option(string):
 			result.update(string[1:])
 	return result
 
 
 def start_debugging():
 	try:
+		import pudb as pdb
+	except ImportError:
 		import pdb
 	pdb.set_trace()
 
