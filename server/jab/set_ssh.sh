@@ -1,6 +1,7 @@
 #! /bin/bash
 
-JAB_SSH=~/.jab/ssh
+JAB=${JAB:-$HOME/.jab}
+JAB_SSH=$JAB/ssh
 JAB_STEM=$JAB_SSH/id_jab
 JAB_KEY=${JAB_STEM}.pub
 LOCAL_SSH=~/.ssh

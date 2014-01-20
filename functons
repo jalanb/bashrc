@@ -17,7 +17,7 @@ c ()
 
 f ()
 {
-	first_dir
+	first_dir "$@"
 	name=$1
 	shift
 	find $dir -name "$name" -print
@@ -41,8 +41,9 @@ p ()
 
 v ()
 {
-	python2.7 $JAB/python/fim.py "$@"
-	bash $JAB/python/fim.sh
+	if python2.7 $JAB_PYTHON/fim.py "$@"
+	then bash $JAB_PYTHON/fim.sh
+	fi
 }
 
 w ()
@@ -58,7 +59,7 @@ x ()
 y ()
 {
 	clear
-	python $JAB/python/y.py "$@"
+	python $JAB_PYTHON/y.py "$@"
 }
 
 # xx
@@ -72,7 +73,7 @@ IP ()
 {
 	for number in 172 192 100
 	do
-		if python $JAB/python/ifconfig.py $number
+		if python $JAB_PYTHON/ifconfig.py $number
 		then break
 		fi
 	done
@@ -91,7 +92,7 @@ cv ()
 
 ff ()
 {
-	first_dir
+	first_dir "$@"
 	name=$1
 	shift
 	for path in $(find $dir -name $name -print)
@@ -106,7 +107,7 @@ ff ()
 
 fv ()
 {
-	first_dir
+	first_dir "$@"
 	name=$1
 	shift
 	find $dir -name $name -exec vim {} \;
@@ -152,13 +153,10 @@ hv ()
 
 ky ()
 {
-	if [[ -z "$1" ]]
-	then
-		cd $PYTHON_HOME
-	else
-		kd "$@" > /dev/null
-	fi
-	y
+	first_dir "$@"
+	dir=${dir:-$PYTHON_HOME}
+	kd $dir
+	y "$@"
 }
 
 pi ()
@@ -193,7 +191,7 @@ rb ()
 
 rf ()
 {
-	PYTHON_SCRIPT=$JAB/python/rf.py
+	PYTHON_SCRIPT=$JAB_PYTHON/rf.py
 	python $PYTHON_SCRIPT "$@"
 }
 
@@ -214,7 +212,7 @@ uj ()
 	if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]
 	then
 		BACK=$(pwd)
-		if [[ $BACK != "$HOME/.jab" ]]
+		if [[ $BACK != "$JAB" ]]
 		then
 			cd $JAB
 			. bashrc
@@ -222,19 +220,6 @@ uj ()
 		else
 			. bashrc
 		fi
-	fi
-}
-
-ut ()
-{
-	if [[ -f $HOME/bin/upTrackers ]]
-	then
-		sh $HOME/bin/upTrackers
-	elif [[ $(hostname) == "ie-build-1" ]]
-	then
-		sudo su - builder -c "sh ~/bin/upTrackers"
-	else
-		ssh builder@ie-build-1 "sh ~/bin/upTrackers"
 	fi
 }
 
@@ -325,7 +310,7 @@ vt ()
 
 vv ()
 {
-	v $JAB/python/fim.py
+	v $JAB_PYTHON/fim.py
 }
 
 vy ()
@@ -428,36 +413,6 @@ fpy ()
 	fi
 }
 
-jj1 ()
-{
-	ssj abrogan ie-build-1.$EMPLOYER_DOMAIN
-} 
-
-jj2 ()
-{
-	ssj abrogan ie-build-2.$EMPLOYER_DOMAIN
-} 
-
-jj3 ()
-{
-	ssj abrogan ie-build-3.$EMPLOYER_DOMAIN
-} 
-
-jja ()
-{
-	ssj abrogan jab-track-1.$EMPLOYER_DOMAIN
-} 
-
-jjb ()
-{
-	sst builder ie-build-1.$EMPLOYER_DOMAIN
-} 
-
-jjd ()
-{
-	ssj jab abrogan-dev.$EMPLOYER_DOMAIN
-} 
-
 jjj ()
 {
 # ssh back to the jab.ook (which is my laptop
@@ -466,65 +421,19 @@ jjj ()
 	if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
 	then
 		jjj_host=jab.ook
-	elif ping -c 1 -w 1 dhcp92.$EMPLOYER_DOMAIN >/dev/null 2>&1
-	then
-		jjj_host=dhcp92.$EMPLOYER_DOMAIN
-	elif ping -c 1 -w 1 172.16.1.92 >/dev/null 2>&1
-	then
-		jjj_host=172.16.1.92
 	fi
 	if [[ -z $jjj_host ]]
 	then
-		echo Could not ping jab.ook, dhcp92.$EMPLOYER_DOMAIN, 172.16.1.92
+		echo Could not ping jab.ook
 	else
 		ssj jab $jjj_host
 	fi
 }
 
 
-jjk ()
-{
-	ssj jab jab-track-1.$EMPLOYER_DOMAIN
-} 
-
-jjl ()
-{
-	ssj albrogan abrogan.$EMPLOYER_DOMAIN
-} 
-
-jjp ()
-{
-	ssj root ie-protex-1.$EMPLOYER_DOMAIN
-} 
-
-jjr ()
-{
-	ssj jab abrogan-run.$EMPLOYER_DOMAIN
-} 
-
-jjt ()
-{
-	ssj abrogan $EMPLOYER_SERVER
-} 
-
-jju ()
-{
-	ssj abrogan abrogan1304.$EMPLOYER_DOMAIN
-}
-
 jjy ()
 {
-	ky $JAB/python "$@"
-}
-
-jjz ()
-{
-	sst abrogan r9dev1.$EMPLOYER_DOMAIN
-} 
-
-jjZ ()
-{
-	sst abrogan sz-build-1.$EMPLOYER_DOMAIN
+	ky $JAB_PYTHON "$@"
 }
 
 . $JAB/bin/first_dir
@@ -582,7 +491,7 @@ rq. ()
 unalias try > /dev/null 2>&1
 try ()
 {
-	TRY=$JAB/python/testing/try.py
+	TRY=$JAB_PYTHON/testing/try.py
 	test -f ./try.py && TRY=./try.py
 	python $TRY "$@"
 }
@@ -661,6 +570,14 @@ wat ()
 }
 
 # xxxx
+
+bump ()
+{
+	part=${1:-patch}
+	bumpversion $part
+	git push origin --tags
+	grep current_version .bumpversion.cfg
+}
 
 down ()
 {
@@ -787,25 +704,10 @@ vvvy ()
 
 build ()
 {
-	if [[ $USER == "jab" ]]
-	then
-		if [[ -n "$1" ]]
-		then
-			user=abrogan
-		else
-			user=builder
-		fi
-	else
-		user=$USER
-	fi
-	if [[ -n "$1" && "$1" == "2" ]]
-	then
-		ssh $user@ie-build-2
-	elif [[ "$HOSTNAME" == "ie-build-1" ]]
-	then
-		ssh $user@ie-build-2
-	else
-		ssh $user@ie-build-1
+	if [[ -f build.sh ]]
+	then bash build.sh "$@"
+	elif [[ -f Makefile ]]
+	then make "$@"
 	fi
 }
 
@@ -886,7 +788,7 @@ todo_show ()
 	if [[ -f todo.txt ]]
 	then todo_txt=todo.txt
 	fi
-	python2.7 $JAB/python/todo.py $todo_txt
+	python2.7 $JAB_PYTHON/todo.py $todo_txt
 }
 
 # xxxxxxxxxx

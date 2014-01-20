@@ -32,7 +32,7 @@ find_python ()
 add_to_a_path ()
 {
 	find_python
-	eval $1=$(PYTHONPATH=$JAB/python/site $PYTHON $JAB/python/add_to_a_path.py "$@")
+	eval $1=$(PYTHONPATH=$JAB_PYTHON/site $PYTHON $JAB_PYTHON/add_to_a_path.py "$@")
 	export $1
 }
 

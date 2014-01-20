@@ -4,12 +4,14 @@
 # Backups
 *~
 *.bak
+*.history
+history.*
 
 # Temporary files
 fred
 fred.*
 *.tmp
-python/fim.sh
+src/python/fim.sh
 
 # Derived development files
 tags
@@ -17,10 +19,8 @@ tags
 *.pyc
 
 # root-level directories
-/bin
-/include
+/include/
 /local/
-/lib
-/share
+/lib/
+/share/
 /vim/bundle
-/local

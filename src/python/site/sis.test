@@ -1,0 +1,67 @@
+The sis module
+==============
+
+	>>> import sis
+	>>> print sis.__doc__
+	A companion module to sys
+
+paths
+-----
+
+For example, sys.path is a list of strings
+	>>> jab_sys = [ p for p in sys.path if 'jab' in p ]
+
+The sis module has similar
+	>>> jab_sis = [ p for p in sis.path if 'jab' in p ]
+	Traceback (most recent call last):
+	...
+	AttributeError: 'module' object has no attribute 'path'
+
+Ooops, silly me, if it is a list, then it should be a plural
+	>>> jab_sis = [ p for p in sis.paths if 'jab' in p ]
+
+But, whereas sys has a list of strings, sis has a list of paths
+	>>> type(jab_sys[0])
+	<type 'str'>
+	>>> type(jab_sis[0])
+	<class 'path.path'>
+
+The two attributes are not kept in sync
+	>>> sys.path[-1] == str(sis.paths[-1])
+	True
+	>>> sys.path.append('/usr/local/lib')
+	>>> sys.path[-1] == str(sis.paths[-1])
+	False
+
+So, if you change sys.path, call the sis.refresh_paths() method to update sys.paths
+	>>> sis.refresh_paths()
+	>>> sys.path[-1] == str(sis.paths[-1])
+	True
+	>>> del sys.path[-1]
+	>>> sys.path[-1] == str(sis.paths[-1])
+	False
+	>>> sis.refresh_paths()
+	>>> sys.path[-1] == str(sis.paths[-1])
+	True
+
+Filtering sis.paths
+-------------------
+
+sis.sites() is a method to filter out any site-packages directory
+	(will include sub-directories)
+	>>> import random
+	>>> site = random.choice(sis.sites())
+	>>> 'site-packages' in site.splitall()
+	True
+
+You could supply your own list of paths to filter
+	the default is sis.paths
+	>>> sis.sites(sis.paths) == sis.sites()
+	True
+	
+And a method to filter out directories whose name is site_packages
+	(will not include sub-directories)
+	which also defaults to sis.paths
+	>>> site_package = random.choice(sis.site_packages())
+	>>> site_package.name == 'site-packages'
+	True

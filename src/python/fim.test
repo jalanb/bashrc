@@ -1,0 +1,108 @@
+The fim module
+==============
+
+	>>> import fim
+	>>> print fim.__doc__
+	Script to set up a call to vim
+
+More modules for testing
+------------------------
+
+	>>> import os
+
+Set up
+------
+
+	>>> fim.new_script()
+
+Find files
+----------
+
+The command line to vim is going to be made up of filenames and options
+
+	>>> fim.is_option('-d')
+	True
+
+Complete tab-completion
+-----------------------
+
+Tab completion tests depend on being in the right directory
+	i.e. where we have a "fim.py to complete on
+	>>> fim_here = 'fim.py' in os.listdir('.')
+	>>> short_fim = fim_here and 'fim.' or 'fim.py'
+
+The command line coming in may have been partially tab-completed
+	typically looking like "fim."
+		because there's more than one "fim.*" file here
+		and bash's tab completion stops there
+	But we often know which one to edit
+	>>> fim.tab_complete(short_fim) == 'fim.py'
+	True
+
+Non-existent files do not get completed
+	>>> fim.tab_complete('not_a_real_file.') == 'not_a_real_file.'
+	True
+
+No point in editting non-text files
+	>>> fim.textify('fim.pyc') == 'fim.py'
+	True
+
+Do not re-edit
+--------------
+
+	>>> fim_py = fim.textify(fim.__file__)
+
+Determine whether a file is being editted
+	and whether it has any swap files
+	>>> vimming_fim = no_print(fim.vimming, fim_py)
+	>>> fim_swap_file = no_print(fim.has_swap_file, fim_py)
+	>>> vimming_fim and fim_swap_file or True
+	True
+
+Quote strings
+--------------
+
+Then we need to quote individual files
+	>>> fim.quote('xxx') == '"xxx"'
+	True
+	>>> fim.quote('x"xx') == """'x"xx'"""
+	True
+	>>> fim.quote("x'xx") == '''"x'xx"'''
+	True
+	>>> fim.quote("""x'x"x""") == '''"x'x\\"x"'''
+	True
+
+Special exemption - do not add extra quotes if it just looks like a string
+	>>> fim.quote('"xxx"') == '"xxx"'
+	True
+
+Then to quote a list of them
+	>>> fim.quotes(['x"xx', "x'xx"]) == ["""'x"xx'""", '''"x'xx"''']
+	True
+
+And the program can print that out
+	>>> files, options = fim.interpret([
+	...     'a file.pyc', 'quote".txt', '+/sought'])
+	>>> print fim._main_command('vim', files, options)
+	vim "a file.py" 'quote".txt' -p +/"sought"
+
+
+Exclude files which are being editted already
+---------------------------------------------
+
+This test will sometines be run from within vim
+	And sometimes without
+
+If within there should be a pid
+	>>> pid, _ = fim.vimming_process(fim_py)
+
+So this should be true
+	>>> module_is_being_editted = bool(pid)
+
+If without then there should be some edittable files in this list
+	(If not editting it then it should be included)
+	>>> module_is_edittable = bool(no_print(fim.vimmable_files, [fim_py]))
+
+So one of these should always be true
+	>>> module_is_being_editted or module_is_edittable
+	True

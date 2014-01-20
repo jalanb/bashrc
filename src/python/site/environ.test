@@ -1,0 +1,24 @@
+	>>> import environ 
+
+A method to read the keys set in $JAB/environ
+	>>> keys = environ.read_environ_keys()
+	>>> 'JABS' in keys
+	True
+	>>> 'EDITOR' in keys
+	True
+
+Turn those keys into a dictionary with values from bash's environment
+	>>> int(environ.jab['HISTSIZE']) > 1000
+	True
+	>>> environ.jab['EDITOR'].endswith('/vim')
+	True
+
+Bash's environment variables are attributes of the module
+	>>> print environ.JABS == environ.jab['JABS']
+	True
+	>>> print environ.EDITOR == environ.jab['EDITOR']
+	True
+
+	>>> paths = environ.environ_paths()
+	>>> paths.JAB.isdir() and paths.PYTHONSTARTUP.isfile()
+	True

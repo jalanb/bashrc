@@ -7,7 +7,7 @@ source = https://github.com/sjl/clam.vim.git
 type = git
 
 [vim-easymotion]
-source = https://github.com/Lokaltog/vim-easymotion.git
+source = https://github.com/haya14busa/vim-easymotion.git
 type = git
 
 [syntastic]

@@ -93,7 +93,7 @@ if !exists("Try")
 		elseif filereadable($TRY)
 			let try_py = $TRY
 		else
-			let try_py = '~/.jab/python/testing/try.py'
+			let try_py = '$JAB_PYTHON/testing/try.py'
 		endif
 		let command = "! TERM=linux && python " . try_py . " -qa "
 		let command_line = command . item_name . " | grep -v DocTestRunner.merge "
@@ -140,7 +140,7 @@ if !exists("Try")
 		if ! z
 			return
 		endif
-		let command_line = "! python ~/.jab/python/fix_failures.py "
+		let command_line = "! python $JAB_PYTHON/fix_failures.py "
 		if a:quietly
 			let quiet_line = command_line . s:file_fail . " 2>&1 || true"
 		else

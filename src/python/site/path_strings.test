@@ -1,0 +1,86 @@
+The path_strings module
+================
+
+	>>> import path_strings
+
+path_strings reads from environ
+	>>> import environ
+
+And looks for paths therein
+	It tries anything with a "/"
+	>>> environ.EDITOR.endswith('/vim')
+	True
+	>>> path_strings.environ.EDITOR.name == 'vim'
+	True
+
+Path lists are split up
+	>>> home_bin = path_strings.home() / 'bin'
+	>>> root_bin = path_strings.makepath('/bin')
+	>>> home_bin in path_strings.environ.PATH and root_bin in path_strings.environ.PATH
+	True
+
+Handy path_strings.attributes
+----------------------
+
+The user's home directory
+	>>> bashrc = path_strings.home() / '.bashrc'
+	>>> bashrc.isfile()
+	True
+
+Handy path_strings.methods
+-------------------
+
+A path relative to the home directory
+	(could be handy for removing the home dir in tests)
+
+	>>> path_strings.from_home(path_strings.__file__)
+	<DirectPath u'.../site/path_strings.py...'>
+
+Divvying up strings
+-------------------
+
+Given a list of strings (such as might be found in sys.argv for example)
+	>>> strings = ['~/bin', '~/.bashrc', '/etc/hosts', 'fred', '/usr']
+
+They can be turned to paths
+	>>> paths = path_strings.strings_to_paths(strings)
+	>>> paths[0].isdir() and paths[1].isfile()
+	True 
+
+Another method can work with a colon separated list
+	>>> path_strings.strings_to_paths(strings) == path_strings.string_to_paths('~/bin:~/.bashrc:/etc/hosts:fred:/usr')
+	True
+
+Or comma, space, semi-colon separated lists
+	>>> [makepath('a'), makepath('b')] == path_strings.string_to_paths('a,b') == path_strings.string_to_paths('a b') == path_strings.string_to_paths('a;b')
+	True
+
+We can get all of the ones which are existing files
+	>>> [ p.isfile() for p in path_strings.files(strings) ]
+	[True, True]
+
+Or the ones which are existing directories
+	>>> [ p.isdir() for p in path_strings.directories(strings) ]
+	[True, True]
+
+Or 2 lists, of files and non-files
+	>>> files, non_files = path_strings.split_files(strings)
+
+This test assumes that the "fred" entry does not exist
+	>>> [ p.isfile() for p in files ], [ p.isfile() for p in non_files ]
+	([True, True], [False, False, False])
+
+Direcories and non-directories
+	>>> directories, non_directories = path_strings.split_directories(strings)
+	>>> [ p.isdir() for p in directories ], [ p.isdir() for p in directories ],
+	([True, True], [True, True])
+
+Or 3 lists, of directories, files  and neither
+	>>> directories, files, neither = path_strings.split_directories_files(strings)
+	>>> [ p.isdir() for p in directories ], [ p.isfile() for p in files ], [ p.isfile() or p.isdir() for p in neither ] 
+	([True, True], [True, True], [False])
+
+Command line for this test should have no directories, this file, and no other strings
+	>>> directories, files, neither = path_strings.split_directories_files(sys.argv)
+	>>> not directories, files[0] == test.path_to_test, not neither
+	(True, True, True)
