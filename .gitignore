@@ -4,6 +4,8 @@
 # Backups
 *~
 *.bak
+*.history
+history.*
 
 # Temporary files
 fred
