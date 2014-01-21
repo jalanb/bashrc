@@ -96,9 +96,6 @@ alias so="sort "
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
 
-alias tf="tail -f"
-
-
 alias xk="exchange_keys"
 
 alias yy="y $PYTHON_HOME"

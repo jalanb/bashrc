@@ -206,6 +206,14 @@ ru ()
 	fi
 }
 
+tf ()
+{
+	if [ $? -eq 0 ]
+	then echo "true"
+	else echo "false"
+	fi
+}
+
 uj ()
 {
 # update $JAB from the repository
