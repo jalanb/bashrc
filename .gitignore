@@ -24,3 +24,6 @@ tags
 /lib/
 /share/
 /vim/bundle
+
+# from root-level directories
+/ipython/profile_default/db/
