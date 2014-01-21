@@ -8,6 +8,26 @@
 
 # xx
 
+sc ()
+{
+	svn ci -m"$@"
+}
+
+si ()
+{
+	svn_info "$@"
+}
+
+sl ()
+{
+	svn_log "$@"
+}
+
+st ()
+{
+	stat "$@"
+}
+
 sk ()
 {
 	cp $1 ${1}.keep
@@ -27,24 +47,24 @@ sv ()
 
 # xxx
 
-scd ()
+sdc ()
 {
 	svn diff --diff-cmd colordiff "$@"
 }
 
-shd ()
+sdh ()
 {
 	svn_diff horizontal "$@"
 }
 
-svd ()
-{
-	svn_diff vertical "$@"
-}
-
-spd ()
+sdp ()
 {
 	svn_diff python "$@"
+}
+
+sdv ()
+{
+	svn_diff vertical "$@"
 }
 
 stv ()

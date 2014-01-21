@@ -1,4 +1,11 @@
 #! /bin/bash
 
-source_file $JAB/subversion/aliases
-source_file $JAB/subversion/functons
+BASH_DIR=$(dirname $BASH_SOURCE)
+
+source_here ()
+{
+	what_source $BASH_DIR/$1 optional
+}
+
+source_here aliases
+source_here functons

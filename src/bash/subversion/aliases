@@ -9,16 +9,3 @@
 alias 7="svn"
 
 # xx
-
-alias sc="svn ci -m"
-alias si="svn_info "
-alias sl="svn_log "
-alias st="stat "
-
-# xxx
-
-# xxxx
-
-alias sth="statvim shd"
-alias stm="statvim shd | grep -v ^r"
-alias stv="statvim svd "
