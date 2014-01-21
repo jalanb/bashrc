@@ -54,33 +54,9 @@ gtj ()
 	git status $JAB
 }
 
-# xxxx
-
-stat ()
-{
-	if [[ -z "$1" ]]
-	then
-		rf -q
-		do_stat
-	else
-		for file in "$@"
-		do 
-			do_stat $file
-		done
-	fi
-}
-
 # xxxxx
 # xxxxxx
 # xxxxxxx
-
-do_stat ()
-{
-	if first_path "$@"
-	then git status -s "$path"
-	else echo \"$path\" is not a file, nor dir
-	fi
-}
 
 statvim ()
 {
@@ -88,11 +64,21 @@ statvim ()
 	shift
 	if [[ -z "$1" ]]
 	then
-		do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
+		do_git_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
 	else
 		for file in "$@"
 		do 
-			do_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
+			do_git_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
 		done
 	fi | sort
+}
+
+# xxxxxxxxxxx
+
+do_git_stat ()
+{
+	if first_path "$@"
+	then git status -s "$path"
+	else echo \"$path\" is not a file, nor dir
+	fi
 }
