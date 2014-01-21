@@ -19,16 +19,18 @@ Some methods need options which look like they came from an OptionParser
 	>>> options = Values()
 	>>> options.directories = False
 	>>> options.files = False
+	>>> options.ignore_case = False
+	>>> options.basename = False
 
 locate
 ------
 
 The script will need to run locate commands
-	>>> print locate.make_locate_command('fred')
-	/.../locate fred
+	>>> print locate.make_locate_command('fred', options)
+	/.../locate "fred"
 
 The standard locate command gives many files for its own name
-	>>> lines = locate.run_locate('locate')
+	>>> lines = locate.run_locate('locate', options)
 	>>> len(lines) > 10
 	True
 
@@ -47,6 +49,6 @@ Using options
 We can insist on finding only directories
 	>>> options.directories = True
 
-Bt, it turns out there are no directories called 'locate'
+But, it turns out there are no directories called 'locate'
 	>>> not locate.locate('locate', options)
 	True
