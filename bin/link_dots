@@ -34,7 +34,7 @@ main ()
 	link  etc/pylintrc         .pylintrc
 	link  etc/sackrc           .sackrc
 
-	link  python/pythonrc.py   .pythonrc.py
+	link  src/python/pythonrc.py   .pythonrc.py
 
 	link  vim                  .vim
 	link  vim/vimrc            .vimrc
