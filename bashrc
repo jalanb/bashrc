@@ -42,10 +42,12 @@ show_changes ()
 {
 	JAB_BASH=$JAB/src/bash
 	if [[ -d $JAB/.svn ]]
-	then source $JAB_BASH/subversion/source
-	else source $JAB_BASH/git/source
+	then svn stat $JAB
+	elif [[ -d $JAB/.git ]]
+	then git status $JAB
 	fi
-	stat
+	source $JAB_BASH/subversion/source
+	source $JAB_BASH/git/source
 }
 
 source_jab ()
