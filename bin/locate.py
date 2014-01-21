@@ -49,7 +49,7 @@ def make_check(method, options):
 		return is_dir
 	if options.files:
 		def is_file(string):
-			return method(string) and os.path.isdir(string)
+			return method(string) and os.path.isfile(string)
 		return is_file
 	return method
 
@@ -63,12 +63,18 @@ def locate(string, options):
 		return os.path.basename(path) == string
 	check = make_check(has_basename, options)
 	result = [l for l in lines if check(l)]
-	if result:
+	if result or options.basename:
 		return result
 	def directory_in_path(path):
+		test_string = string
 		if options.ignore_case:
-			return string.upper() in path.upper().split(os.path.sep)
-		return string in path.split(os.path.sep)
+			test_string = string.upper()
+			path = path.upper()
+		parts = path.split(os.path.sep)
+		if options.basename:
+			return test_string == parts[-1]
+		else:
+			return test_string in parts
 	check = make_check(directory_in_path, options)
 	result = [l for l in lines if check(l)]
 	if result:
@@ -81,6 +87,7 @@ def locate(string, options):
 def handle_command_line():
 	"""Handle options and arguments from the command line"""
 	parser = optparse.OptionParser()
+	parser.add_option('-b', '--basename', action='store_true', help='only find basenames')
 	parser.add_option('-d', '--directories', action='store_true', help='only locate directories')
 	parser.add_option('-f', '--files', action='store_true', help='only locate files')
 	parser.add_option('-i', '--ignore-case', action='store_true', help='ignore case in searches')
