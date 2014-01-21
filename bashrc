@@ -63,7 +63,7 @@ source_jab ()
 	source_file environ
 	source_file $JAB/python-environ optional
 	source_file $LOCAL/environ
-	source_file $LOCAL/python-environ
+	source_file $LOCAL/python-environ optional
 	source_file $JAB/prompt green
 	source_file $LOCAL/prompt
 	source_file $JAB_GITHUB/what/what.sh

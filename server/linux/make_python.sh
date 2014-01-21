@@ -5,7 +5,7 @@ cd /tmp/Downloads
 
 if python -c "import sys; sys.exit(int(sys.version.split()[0] >= '2.7.4'))"
 then
-	wget http://www.python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+	wget http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tgz
 	tar zxf Python-2.7.5.tgz 
 	cd Python-2.7.5
 	./configure --prefix=$HOME

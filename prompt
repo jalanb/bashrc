@@ -22,8 +22,7 @@ changes=0
 
 get_repo_status ()
 {
-	GIT_BRANCH=
-	local significant_svn_status=$(dirname $BASH_SOURCE)/python/significant_svn_status.py
+	local significant_svn_status=$JAB_PYTHON/significant_svn_status.py
 	test -f $significant_svn_status || return 1
 	if python $significant_svn_status .
 	then

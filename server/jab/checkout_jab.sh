@@ -92,7 +92,7 @@ link_dots ()
 	link_to_home vim/gvimrc
 	link_to_home editrc
 	link_to_home inputrc
-	link_to_home python/pythonrc.py
+	link_to_home src/python/pythonrc.py
 	link_to_home etc/dir_colors
 	link_to_home etc/ackrc
 	link_to_ipython config_helper_functions.py
