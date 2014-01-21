@@ -10,7 +10,10 @@
 
 gc ()
 {
-	git commit -v "$@"
+	if [[ -z "$@" ]]
+	then git commit -a -v
+	else git commit -v "$@"
+	fi
 }
 
 gl ()
