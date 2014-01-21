@@ -47,6 +47,12 @@ spd ()
 	svn_diff python "$@"
 }
 
+stv ()
+{
+	first_dir
+	svn stat $dir | sed -e "s/^ M/svd/" -e "s/^?? /vim /"
+}
+
 # xxxx
 
 cocn ()
@@ -59,11 +65,6 @@ cocq ()
 {
 	svn co -q $1
 	cd ${1##*/}
-}
-
-dark ()
-{
-	svn revert -q $JAB/vim/vimrc
 }
 
 stat ()
@@ -142,11 +143,3 @@ svn_info ()
 	test -n "$1" && dir=$1 || dir="."
 	svn info $dir 
 }
-
-# xxxxxxxxx
-
-svn_issue ()
-{
-	svn log "$@" | grep -i "^issue" | head
-}
-

@@ -61,7 +61,6 @@ alias cy="c \$PYTHON_HOME"
 alias eg="env | g "
 
 alias ga="alias | g"
-alias gc="git commit -v"
 
 alias jj="c $JAB"
 
