@@ -21,6 +21,8 @@ noremap <leader>-	bh/\l\u<cr>cr_
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
+" PEP 8 calls for indentation with 4 spaces
+setlocal expandtab tabstop=4 shiftwidth=4
 set foldmethod=indent
 set foldlevel=0
 NoMatchParen
