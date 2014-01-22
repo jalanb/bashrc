@@ -8,6 +8,11 @@
 
 # xx
 
+gb ()
+{
+	gs "$@" | grep 'On.branch'
+}
+
 gc ()
 {
 	if [[ -z "$@" ]]
@@ -26,12 +31,12 @@ gs ()
 	do_git_status "$@"
 }
 
-jb ()
-{
-	gsj | grep 'On.branch'
-}
-
 # xxx
+
+gbj ()
+{
+	gb $JAB
+}
 
 gdc ()
 {
