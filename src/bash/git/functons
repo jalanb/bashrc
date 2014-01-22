@@ -21,6 +21,11 @@ gl ()
 	git log "$@"
 }
 
+gs ()
+{
+	do_git_status "$@"
+}
+
 jb ()
 {
 	gtj | grep 'On.branch'
