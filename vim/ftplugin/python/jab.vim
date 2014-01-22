@@ -211,9 +211,9 @@ if !exists("Mash")
 		" replace tabs with 4 spaces
 		try
 			if &filetype == "doctest"
-				exec "%s/\t/^    /"
+				exec "%s/^\t/    /"
 			else
-				exec "%s/\t/^    /g"
+				exec "%s/^\t/    /g"
 			endif
 		catch /.*/
 		endtry
