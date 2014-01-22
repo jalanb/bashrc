@@ -28,7 +28,7 @@ gs ()
 
 jb ()
 {
-	gtj | grep 'On.branch'
+	gsj | grep 'On.branch'
 }
 
 # xxx
@@ -61,7 +61,7 @@ gtv ()
 	do_git_stat "$@" | sed -e "s/^ M/gdv/" -e "s/^?? /vim /"
 }
 
-gtj ()
+gsj ()
 {
 	do_git_status $JAB
 }
