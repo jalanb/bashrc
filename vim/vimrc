@@ -302,7 +302,6 @@ abbreviate seperate separate
 " Miscellaneous
 "
 autocmd FileType c,cpp,h,java set cindent
-autocmd FileType python compiler pylint
 
 "
 " PyMode (no longer using this one)

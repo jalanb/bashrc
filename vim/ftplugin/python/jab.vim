@@ -25,6 +25,7 @@ set foldmethod=indent
 set foldlevel=0
 NoMatchParen
 
+compiler pylint
 set autowrite
 let s:file_name = expand("%")
 let s:file_stem = fnamemodify(s:file_name,":r")
