@@ -48,8 +48,7 @@ gdv ()
 
 gtv ()
 {
-	first_dir
-	git status -s $dir | sed -e "s/^ M/gdv/" -e "s/^?? /vim /"
+	do_git_stat "$@" | sed -e "s/^ M/gdv/" -e "s/^?? /vim /"
 }
 
 gtj ()
@@ -80,8 +79,25 @@ statvim ()
 
 do_git_stat ()
 {
+	local __doc__="get the short status from git"
 	if first_path "$@"
 	then git status -s "$path"
 	else echo \"$path\" is not a file, nor dir
+	fi
+}
+
+# xxxxxxxxxxxxx
+
+do_git_status ()
+{
+	local __doc__="get the full status from git"
+	first_dir "$@"
+	if [[ -n $dir && $dir != $PWD ]]
+	then
+		cd $dir
+		git status $dir
+		cd - > /dev/null
+	else
+		git status
 	fi
 }
