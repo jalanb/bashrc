@@ -208,15 +208,14 @@ if !exists("Try")
 endif
 if !exists("Mash")
 	function Mash()
-		" replace spaces with a tab
+		" replace tabs with 4 spaces
 		try
 			if &filetype == "doctest"
-				exec "%s/^    /\t/"
+				exec "%s/\t/^    /"
 			else
-				exec "%s/^    /\t/g"
+				exec "%s/\t/^    /g"
 			endif
 		catch /.*/
-			" echo fred
 		endtry
 	endfunction
 	command -nargs=0 Mash :call Mash()
