@@ -12,7 +12,7 @@ set t_Co=256
 "noremap  <F5>
 "noremap  <F6>
 "noremap  <F7>
- noremap  <F8>      :SeeTab<CR>
+ noremap  <F8>      :set list!<CR>
  noremap  <F9>      :w!<CR>
 "noremap <F10>
  noremap <F11>      :map <F11> 
@@ -137,7 +137,6 @@ noremap t<left>  :tabprev<cr>
 noremap t<right> :tabnext<cr>
 noremap th       :tabprev<cr>
 noremap tl       :tabnext<cr>
-noremap <S-Tab>  :SeeTab<cr>
 noremap <Up> 	 ddkP
 noremap <Down>	 ddp
 noremap <left>      :tabprev<cr>
