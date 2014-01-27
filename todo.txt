@@ -1,10 +1,6 @@
-Work:
-
-Self
-	pym:
-		try more unparsers, 1
-	mial:
-		move data to redis, 1
-		answer in vim, 3
-	$JAB: move to github, 3
-	Python 3.3 somewhere, 4
+pym:
+	try more unparsers, 1
+mial:
+	move data to redis, 1
+	answer in vim, 3
+Python 3.3 somewhere, 4
