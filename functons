@@ -783,11 +783,15 @@ cleanest ()
 todo_edit ()
 {
 	local todo_txt="$JAB_TODO"
+	local git_options="--git-dir=$JAB/.git --work-tree=$JAB"
 	if [[ -f todo.txt ]]
-	then todo_txt=todo.txt
+	then
+		todo_txt=todo.txt
+		git_options=
 	fi
 	v $todo_txt
-	svn ci -m'more or less stuff to be done' "$JAB_TODO"
+	git $git_options add "$JAB_TODO"
+	git $git_options commit -m 'more or less stuff to be done' -- "$JAB_TODO"
 }
 
 todo_show ()
