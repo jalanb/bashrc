@@ -58,6 +58,8 @@ source_jab ()
 	/bin/chmod -R a-w $JAB_GITHUB
 	find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
 	find $JAB_GITHUB -name "viack" -exec /bin/chmod +w {} \;
+	local DEV_GITHUB=$JAB_GITHUB
+	[[ -d ~/src/github ]] && DEV_GITHUB=~/src/github
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
 	# update_jab
@@ -68,13 +70,13 @@ source_jab ()
 	source_file $LOCAL/python-environ optional
 	source_file $JAB/prompt green
 	source_file $LOCAL/prompt
-	source_file $JAB_GITHUB/what/what.sh
+	source_file $DEV_GITHUB/what/what.sh
 	what_source $JAB/aliases
 	what_source $LOCAL/aliases optional
 	source_file $JAB/functons
 	source_file $LOCAL/functons
-	source_file $JAB_GITHUB/kd/kd.sh
-	source_file $JAB_GITHUB/viack/viack optional
+	source_file $DEV_GITHUB/kd/kd.sh
+	source_file $DEV_GITHUB/viack/viack optional
 	show_changes
 }
 
