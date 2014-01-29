@@ -63,6 +63,7 @@ source_jab ()
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
 	# update_jab
+	[[ -x $HOME/bin/python ]] && PYTHON=$HOME/bin/python
 	source_file $JAB/bin/add_to_a_path.sh
 	source_file environ
 	source_file $JAB/python-environ optional
