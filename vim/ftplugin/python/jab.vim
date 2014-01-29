@@ -243,7 +243,7 @@ endfunction
 
 " From http://www.vex.net/~x/python_and_vim.html
   " Remove trailing space when writing the file
-  autocmd BufWritePre * :call WritePython()<cr>
+  autocmd BufWritePre * call WritePython()
 
 if !exists("PPP")
 	function WritePEP()
