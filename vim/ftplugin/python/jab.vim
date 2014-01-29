@@ -241,10 +241,9 @@ function WritePython()
 	exec "%s/\\s\\+$//e"
 endfunction
 
-
 " From http://www.vex.net/~x/python_and_vim.html
   " Remove trailing space when writing the file
-  autocmd BufWritePre *.py call WritePython()
+  autocmd BufWritePre * :call WritePython()<cr>
 
 if !exists("PPP")
 	function WritePEP()
