@@ -111,15 +111,15 @@ def _handle_command_line(args):
 
 def locate_file(command_line):
     """Locate the file(s) in that command line"""
-    return call('%s -f' % command_line)
+    return locate('%s -f' % command_line)
 
 
 def locate_directory(command_line):
     """Locate the directory/ies in that command line"""
-    return call('%s -d' % command_line)
+    return locate('%s -d' % command_line)
 
 
-def call(command_line):
+def locate(command_line):
     """Main method for calling from python"""
     args = shlex.split(command_line)
     options, args = _handle_command_line(args)
