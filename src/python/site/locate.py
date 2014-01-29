@@ -2,6 +2,7 @@
 
 
 import os
+import shlex
 import commands
 import optparse
 
@@ -108,7 +109,20 @@ def handle_command_line(args):
     return options, args
 
 
+def call(command_line):
+    """Main method for calling from python"""
+    args = shlex.split(command_line)
+    options, args = handle_command_line(args)
+    result = {}
+    if len(args) == 1:
+        return locate(args[0], options)
+    for arg in args:
+        result[arg] = locate(arg, options)
+    return result
+
+
 def main(args):
+    """Main method for calling from bash"""
     options, args = handle_command_line(args)
     for arg in args:
         paths = locate(arg, options)
