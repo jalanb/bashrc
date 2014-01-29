@@ -12,6 +12,7 @@ noremap tm :Mash<cr>
 noremap tt :MashTry<cr>
 noremap tn :Try<cr>
 noremap tp :Pylint<cr>
+noremap <S-F9> :call WritePEP()<cr>
 noremap <leader><space> :%s/\s\+$//<cr>
 noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
@@ -236,41 +237,49 @@ endif
     \   exe "normal g`\"" |
     \ endif
  
-function WritePython()
+function ReSpacePython()
 	exec "retab"
 	exec "%s/\\s\\+$//e"
 endfunction
 
+
+function WritePython()
+	call ReSpacePython()
+endfunction
+
+
 " From http://www.vex.net/~x/python_and_vim.html
   " Remove trailing space when writing the file
-  autocmd BufWritePre * :call WritePython()<cr>
+  autocmd BufWritePre * :call WritePython()
 
 if !exists("PPP")
 	function WritePEP()
+		mkview
 		normal zR
-		exec "%s/\\s\\+$//ce"
+		call ReSpacePython()
 		exec "%s/'''/\"\"\"/gce"
 		exec "%s/^\\([^<'\"[]\\+\\):\\([^ ]\\)/\\1: \\2/gce"
 		exec "%s/\\([^ ]\\) #/\\1  #/e"
 		exec "%s/\\([^\\s]\\)\\n^\\n\\([a-z]\\)/\\1\\2/ce"
 		exec "%s/\\[ \\(.*\\) ]/[\\1]/gce"
 		exec "%s/\\[ /[/gce"
-		exec "%s/ \\]/]/gce"
+		exec "%s/\\([^ ]\\) \\]/\\1]/gce"
 		exec "%s/( \\(.*\\) )/(\\1)/gce"
 		exec "%s/( /(/gce"
 		exec "%s/ )/)/gce"
 		exec "%s/{ \\(.*\\) }/{\\1}/gce"
 		exec "%s/{ /{/gce"
-		exec "%s/ }/}/gce"
+		exec "%s/\\([^ ]\\) }/}/gce"
 		exec "%s/ , /, /gce"
 		exec "%s/\\(^\\(\\s\\+\\)\\(try\\|for\\|if\\|except\\)\\( [^:]*\\)\\?: \\)/\\1\\2	/ce"
 		" exec "%s/\\([^ ]\\)\\([=+-]\\)/\\1 \\2/gce"
 		" exec "%s/\\([=+,-]\\)\\([^ =]\\)/\\1 \\2/gce"
 		exec "%s/,\\([^ ]\\)/, \\1/gce"
 		exec "%s/ += \\[\\(.*\\)]/.append(\\1)/gce"
-		exec "%s/ += \\(.*\\)$/.append(\\1)/gce"
+		exec "%s/ += \\([^0-9].*\\)$/.append(\\1)/gce"
 		exec "%s/\\s\\+$//ge"
 		exec "%s/raise \\([A-Za-z]\\+\\), \\(.*\\)/raise \\1(\\2)/gce"
+		loadview
 	endfunction
 	function AddDocstrings()
 		exec '%s/\(^\s*def \)\([^(]\+\)\((.*):\n\)\(\s\+\)\([^"]\)/\1\2\3\4""""""\4\5/e'
