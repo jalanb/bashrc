@@ -5,7 +5,9 @@ import os
 import commands
 import optparse
 
+
 from repositories import repository
+
 
 def path_to_locate():
     """Location of the locate command on most unixen"""
@@ -57,6 +59,7 @@ def make_check(method, options):
 def locate(string, options):
     """Locate some files called string, restricted by the given options"""
     lines = run_locate(string, options)
+
     def has_basename(path):
         if options.ignore_case:
             return os.path.basename(path).upper() == string.upper()
@@ -65,6 +68,7 @@ def locate(string, options):
     result = [l for l in lines if check(l)]
     if result or options.basename:
         return result
+
     def directory_in_path(path):
         test_string = string
         if options.ignore_case:
@@ -87,11 +91,16 @@ def locate(string, options):
 def handle_command_line():
     """Handle options and arguments from the command line"""
     parser = optparse.OptionParser()
-    parser.add_option('-b', '--basename', action='store_true', help='only find basenames')
-    parser.add_option('-d', '--directories', action='store_true', help='only locate directories')
-    parser.add_option('-f', '--files', action='store_true', help='only locate files')
-    parser.add_option('-i', '--ignore-case', action='store_true', help='ignore case in searches')
-    parser.add_option('-U', '--Use_debugger', action='store_true', help='debug with pudb')
+    parser.add_option('-b', '--basename', action='store_true',
+                      help='only find basenames')
+    parser.add_option('-d', '--directories', action='store_true',
+                      help='only locate directories')
+    parser.add_option('-f', '--files', action='store_true',
+                      help='only locate files')
+    parser.add_option('-i', '--ignore-case', action='store_true',
+                      help='ignore case in searches')
+    parser.add_option('-U', '--Use_debugger', action='store_true',
+                      help='debug with pudb')
     options, args = parser.parse_args()
     if options.Use_debugger:
         import pudb
@@ -106,4 +115,3 @@ def main(args):
         if paths:
             print '\n'.join(paths)
     return os.EX_OK
-
