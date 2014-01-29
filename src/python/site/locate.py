@@ -88,7 +88,7 @@ def locate(string, options):
     return lines
 
 
-def handle_command_line():
+def handle_command_line(args):
     """Handle options and arguments from the command line"""
     parser = optparse.OptionParser()
     parser.add_option('-b', '--basename', action='store_true',
@@ -101,7 +101,7 @@ def handle_command_line():
                       help='ignore case in searches')
     parser.add_option('-U', '--Use_debugger', action='store_true',
                       help='debug with pudb')
-    options, args = parser.parse_args()
+    options, args = parser.parse_args(args)
     if options.Use_debugger:
         import pudb
         pudb.set_trace()
@@ -109,7 +109,7 @@ def handle_command_line():
 
 
 def main(args):
-    options, args = handle_command_line()
+    options, args = handle_command_line(args)
     for arg in args:
         paths = locate(arg, options)
         if paths:
