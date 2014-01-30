@@ -282,7 +282,7 @@ if !exists("PPP")
 		loadview
 	endfunction
 	function AddDocstrings()
-		exec '%s/\(^\s*def \)\([^(]\+\)\((.*):\n\)\(\s\+\)\([^"]\)/\1\2\3\4""""""\4\5/e'
+		exec '%s/\(^\s*def \)\([^(]\+\)\((.*):\n\)\(\s\+\)\([^ 	"]\)/\1\2\3\4""""""\4\5/e'
 		let empty_docstring_line = search('""""""',"cn")
 		if empty_docstring_line != 0
 			exec '/"""\zs"""'
