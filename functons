@@ -9,10 +9,12 @@
 c ()
 {
 	kd "$@"
+	value=$?
 	if [[ -f todo.txt ]]
 	then
 		todo_show
 	fi
+	return $value
 }
 
 f ()
@@ -81,7 +83,9 @@ IP ()
 
 cl ()
 {
-	c $(locate "$@")
+	if c "$@"
+	then ls
+	fi
 }
 
 cv ()
@@ -345,6 +349,11 @@ cff ()
 	cd fred
 }
 
+
+clo ()
+{
+	c $(locate "$@")
+}
 
 cls ()
 {
