@@ -69,10 +69,26 @@ def common_doctest_arguments(func):
             '-n', '--name', default='NoName',
             help='See :func:`doctest.run_docstring_examples`.',
         ),
+        argument(
+            '-f', '--file', default='', action='store_true',
+            help='The object to be tested is a file'
+        ),
+        argument(
+            '-o', '--options', default=0,
+            help="""
+            Use these doctest options, e.g.
+                %%doctest --options=doctest.ELLIPSIS object
+            """
+        ),
     ]
     for c in commons:
         func = c(func)
     return func
+
+
+def _load_testfile(filename):
+    with open(filename) as f:
+        return f.read(), filename
 
 
 @magics_class
@@ -81,17 +97,30 @@ class DoctestMagic(Magics):
     def _run_docstring_examples(self, obj, args):
         verbose = args.verbose
         name = args.name
-        optionflags = 0
+        try:
+            optionflags = eval(args.options)
+        except AttributeError, e:
+            if args.options.startswith('doctest.'):
+                raise AttributeError(str(e).replace(
+                    "'module' object", "doctest module"))
         globs = self.shell.user_ns
-        FinderClass = doctest.DocTestFinder
         RunnerClass = doctest.DebugRunner if args.stop else \
                       doctest.DocTestRunner
-        finder = FinderClass(verbose=verbose, recurse=False)
         runner = RunnerClass(verbose=verbose, optionflags=optionflags)
-        for test in finder.find(obj, name, globs=globs):
+        if args.file:
+            text, filename = _load_testfile(obj)
+            parser = doctest.DocTestParser()
+            test = parser.get_doctest(text, globs, name, filename, 0)
             runner.run(test, compileflags=None)
-            self._test_tries += runner.tries
-            self._test_failures += runner.failures
+            self._test_tries = runner.tries
+            self._test_failures = runner.failures
+        else:
+            FinderClass = doctest.DocTestFinder
+            finder = FinderClass(verbose=verbose, recurse=False)
+            for test in finder.find(obj, name, globs=globs):
+                runner.run(test, compileflags=None)
+                self._test_tries += runner.tries
+                self._test_failures += runner.failures
 
     @contextmanager
     def _doctest_report(self, num_objects=None):
@@ -117,7 +146,7 @@ class DoctestMagic(Magics):
     @magic_arguments()
     @argument(
         'object', nargs='+',
-        help='Doctest is ran against docstrings of this object.',
+        help='Doctest is run against docstrings of this object.',
     )
     @common_doctest_arguments
     @line_magic('doctest')
@@ -130,6 +159,7 @@ class DoctestMagic(Magics):
           %doctest some_object other_object  # run doctest for several objects
           %doctest -v some_object            # verbose ouput
           %doctest -x some_object            # debug doctest
+          %doctest -f                        # doctest file
 
         Use the cell magic version of this magic command (``%%doctest``)
         to write doctest directly in IPython shell.
