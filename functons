@@ -862,7 +862,7 @@ blank_script ()
 
 console_whoami ()
 {
-	console_title_on $USER@$(hostname -s)  
+	console_title_on $USER@$(hostname -s)...$(basename $PWD)
 }
 
 source_aliases ()
