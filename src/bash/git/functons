@@ -38,29 +38,6 @@ gbj ()
 	gb $JAB
 }
 
-gdc ()
-{
-	git difftool -y --extcmd=colordiff "$@"
-}
-
-gdh ()
-{
-	git difftool -y --extcmd="vim -d -o"  "$@"
-}
-
-gdp ()
-{
-	if [[ -x "$PYDIFF" ]]
-	then git difftool -y --extcmd="$PYDIFF" "$@"
-	else echo "\$PYDIFF ($PYDIFF) is not executable" >72
-	fi
-}
-
-gdv ()
-{
-	git difftool -y --extcmd="vim -d -O"  "$@"
-}
-
 gtv ()
 {
 	do_git_stat "$@" | sed -e "s/^ M/gdv/" -e "s/^?? /vim /"
