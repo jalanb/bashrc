@@ -1,6 +1,6 @@
-"""This module provides some known ANSI escape codes which may work with terminals
+"""This module provides some known ANSI escape codes which work with terminals
 
-All numbers used in this file refer to values usable directly in an ANSI escape sequence
+All numbers used in this file are values usable in an ANSI escape sequence
     See http://en.wikipedia.org/wiki/ANSI_escape_code for values
 """
 
@@ -11,6 +11,7 @@ def escape(string):
 
 def escape_sequence(string):
     return escape('[%sm' % string)
+
 
 def bold():
     return escape_sequence('1')
@@ -82,7 +83,11 @@ def background_string(text, i):
 
 
 def grounds_string(text, background_colour, foreground_colour):
-    return '%s%s%s%s' % (background(background_colour), foreground(foreground_colour), text, no_colour())
+    return '%s%s%s%s' % (
+        background(background_colour),
+        foreground(foreground_colour),
+        text,
+        no_colour())
 
 
 def prompt_string(text, i):

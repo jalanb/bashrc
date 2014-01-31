@@ -21,6 +21,7 @@ def integer_to_ansi(integer):
 
     if integer < 16:
         return integer
+
     def rgb_to_decimal(i):
         i -= 0x10
         if i < 0:
@@ -39,9 +40,9 @@ def integer_to_ansi(integer):
     result = grey_shade(red, green, blue)
     if result:
         return result
-    red   = rgb_to_decimal(red)
+    red = rgb_to_decimal(red)
     green = rgb_to_decimal(green)
-    blue  = rgb_to_decimal(blue)
+    blue = rgb_to_decimal(blue)
     return (red * 36) + (green * 6) + blue + 16
 
 
@@ -49,6 +50,7 @@ def ansi_to_red_green_blue(ansi):
     a = ansi
     assert 231 >= a >= 16
     red, green, blue = ((a - 16) / 36) % 6, ((a - 16) / 6) % 6, (a - 16) % 6
+
     def decimal_to_rgb(i):
         if not i:
             return 0
@@ -58,14 +60,15 @@ def ansi_to_red_green_blue(ansi):
 
 def red_green_blue_to_integer(red, green, blue):
     assert 0 <= red < 256 and 0 <= blue < 256 and 0 <= green < 256
-    return (red<<16) + (green << 8) + blue
+    return (red << 16) + (green << 8) + blue
 
 
 def _hex_regexp():
     return re.compile('(([0-9a-f]{6})|([0-9a-f]{3}))', re.IGNORECASE)
 
+
 def html_to_integer(string):
-    """Use the first sequence of 3 or 6 hex digits in the string as a html colour picker"""
+    """Use the first 3 or 6 hex digits in the string as a html colour picker"""
     try:
         hex_string = _hex_regexp().search(string).group(0)
     except AttributeError:
@@ -145,5 +148,5 @@ def ansi_to_html(ansi):
 
 
 def name_to_number(name):
-    cga_names = dict([(string, i) for i, string in enumerate(colour_names.cga())])
+    cga_names = dict([(s, i) for i, s in enumerate(colour_names.cga())])
     return cga_names.get(name, None)
