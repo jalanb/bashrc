@@ -733,6 +733,23 @@ clean ()
 	rf -q "$@"
 }
 
+detab ()
+{
+	if [[ -f $1 ]]
+	then
+		if grep -Pq "^\s*\t\s*[^ \t]" $1
+		then
+			expand -i --tabs=4 $1 > /tmp/txt                                                                                                
+			mv /tmp/txt $1
+			echo detabbed
+		else
+			echo no tabs
+		fi
+	else
+		echo not a file $1
+	fi
+}
+
 kodos ()
 {
 	pushd ~/bin/kodos-2.4.9/ >/dev/null
