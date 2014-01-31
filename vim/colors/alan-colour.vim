@@ -46,6 +46,9 @@ highlight Special           ctermfg=226                                    guifg
 highlight Constant          ctermfg=Cyan     ctermbg=234                   guifg=#0066FF
 highlight Directory         ctermfg=DarkGreen ctermbg=233                  guifg=#008800
 
+" Spacings
+highlight pythonIndentError ctermfg=Black    ctermbg=198                   guifg=#FF0087
+highlight pythonSpaceError  ctermfg=Black    ctermbg=198                   guifg=#FF0087
 
 highlight Folded            ctermfg=White    ctermbg=Black                    guifg=#ffffff  guibg=Black
 highlight FoldColumn        ctermfg=White    ctermbg=Black                guifg=#ffffff  guibg=Black
