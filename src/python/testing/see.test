@@ -1,46 +1,46 @@
 The see module
 ==============
 
-	>>> import  see
+    >>> import  see
 
 The basic method is a better version of dir() 
-	>>> see.see()
-	DoctestInterrupt()    bash()    makepath()    see    see_attributes()
-	see_methods()    show()    spread()    sys    test
+    >>> see.see()
+    DoctestInterrupt()    bash()    makepath()    see    see_attributes()
+    see_methods()    show()    spread()    sys    test
 
-	>>> see.see(sys)
-	help()    .api_version    .argv    .builtin_module_names    .byteorder
-	...
+    >>> see.see(sys)
+    help()    .api_version    .argv    .builtin_module_names    .byteorder
+    ...
 
-	>>> see.see(sys,pattern="*a*")
-	.api_version    .argv    .builtin_module_names    .call_tracing()
-	...
+    >>> see.see(sys,pattern="*a*")
+    .api_version    .argv    .builtin_module_names    .call_tracing()
+    ...
 
-	>>> see.see(sys,pattern=".all*")
+    >>> see.see(sys,pattern=".all*")
 
-	>>> see.see(sys,r=".all*")
-	.call_tracing()    .callstats()    .getcheckinterval()
-	...
+    >>> see.see(sys,r=".all*")
+    .call_tracing()    .callstats()    .getcheckinterval()
+    ...
 
-	>>> see.see(sys,pattern="*a*",attributes=True)
-	.api_version    .argv    .builtin_module_names    .executable    .flags
-	...
+    >>> see.see(sys,pattern="*a*",attributes=True)
+    .api_version    .argv    .builtin_module_names    .executable    .flags
+    ...
 
-	>>> see.see(sys,pattern="*a*",methods=True)
-	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
-	...
+    >>> see.see(sys,pattern="*a*",methods=True)
+    .call_tracing()    .callstats()    .displayhook()    .exc_clear()
+    ...
 
-	>>> see.see_attributes(sys,pattern="*a*")
-	.api_version    .argv    .builtin_module_names    .executable    .flags
-	...
+    >>> see.see_attributes(sys,pattern="*a*")
+    .api_version    .argv    .builtin_module_names    .executable    .flags
+    ...
 
-	>>> see.see_methods(sys,pattern="*a*")
-	.call_tracing()    .callstats()    .displayhook()    .exc_clear()
-	...
+    >>> see.see_methods(sys,pattern="*a*")
+    .call_tracing()    .callstats()    .displayhook()    .exc_clear()
+    ...
 
-	>>> see.spread(sys)
-	<module
-	...
-		path : [...]
-	...
-	>
+    >>> see.spread(sys)
+    <module
+    ...
+        path : [...]
+    ...
+    >

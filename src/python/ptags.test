@@ -2,78 +2,78 @@ Testsing the ptags script
 =========================
 
 ptags is a module
-	>>> import ptags
+    >>> import ptags
 
 which resides in this directory
-	>>> from paths import makepath
-	>>> ptags_directory = makepath(ptags.__file__).parent
+    >>> from paths import makepath
+    >>> ptags_directory = makepath(ptags.__file__).parent
 
 and has this source file
-	>>> ptags_file = ptags_directory / str('%s.py' % ptags.__name__)
+    >>> ptags_file = ptags_directory / str('%s.py' % ptags.__name__)
 
 which looks like this
-	>>> print ptags_file.name
-	ptags.py
+    >>> print ptags_file.name
+    ptags.py
 
 It is intended to be run as a script
-	>>> ptags.argv.test_args('-v')
-	>>> ptags.argv.options.verbose
-	True
+    >>> ptags.argv.test_args('-v')
+    >>> ptags.argv.options.verbose
+    True
 
-	>>> ptags.argv.options.recursive
-	False
+    >>> ptags.argv.options.recursive
+    False
 
 methods
 -------
 
-	>>> from pprint import pprint as show
+    >>> from pprint import pprint as show
 
 The read_file() method creates a list of tags for a python file
-	>>> tags = ptags.read_file(ptags.__file__.replace('.pyc','.py'))
-	>>> tags = tags[0:5]
-	>>> show(tags)
-	[<FileTag "ptags">,
-	 <Tag "def_or_class_regexp">,
-	 <Tag "find_tag_in_line">,
-	 <Tag "Tag">,
-	 <Tag "address_pattern">]
+    >>> tags = ptags.read_file(ptags.__file__.replace('.pyc','.py'))
+    >>> tags = tags[0:5]
+    >>> show(tags)
+    [<FileTag "ptags">,
+     <Tag "def_or_class_regexp">,
+     <Tag "find_tag_in_line">,
+     <Tag "Tag">,
+     <Tag "address_pattern">]
 
 The tags_to_text() method converts a list of tags to ctags format
-	>>> print ptags.tags_to_text(tags)
-	Tag	/.../ptags.py	/^class +Tag:/
-	address_pattern	/.../ptags.py	/^ +def +address_pattern(/
-	def_or_class_regexp	/.../ptags.py	/^def +def_or_class_regexp(/
-	find_tag_in_line	/.../ptags.py	/^def +find_tag_in_line(/
-	ptags	/.../ptags.py	1
+    >>> print ptags.tags_to_text(tags)
+    Tag	/.../ptags.py	/^class +Tag:/
+    address_pattern	/.../ptags.py	/^ +def +address_pattern(/
+    def_or_class_regexp	/.../ptags.py	/^def +def_or_class_regexp(/
+    find_tag_in_line	/.../ptags.py	/^def +find_tag_in_line(/
+    ptags	/.../ptags.py	1
 
 The read_dirs method gets tags for all python files in a directory and recurses into sub-dirs
-	>>> tags = ptags.read_dirs(ptags_directory)
-	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
-	[<DirectPath u'.../python'>,
-	...
-	 <DirectPath u'.../python/testing'>]
+    >>> tags = ptags.read_dirs(ptags_directory)
+    >>> show( ptags.all_directories_in_a_list_of_tags(tags) )
+    [<DirectPath u'.../python'>,
+    ...
+     <DirectPath u'.../python/testing'>]
 
 The read_dir method does the same, but does not recurse
-	>>> tags = ptags.read_dir(ptags_directory)
-	>>> show( ptags.all_directories_in_a_list_of_tags(tags) )
-	[<DirectPath u'.../python'>]
+    >>> tags = ptags.read_dir(ptags_directory)
+    >>> show( ptags.all_directories_in_a_list_of_tags(tags) )
+    [<DirectPath u'.../python'>]
 
 The tags are for all python files in the selected directory (ies)
 In .../python there should be three scripts which are programs (have a main)
-	kd, ptags and try
-	>>> main_tags = [t for t in tags if 'main' in t.name]
-	>>> print ptags.tags_to_text(main_tags)
-	main	.../python/kd.py	/^def +main(/
-	main	.../python/ptags.py	/^def +main(/
-	main	.../python/y.py	/^def +main(/
+    kd, ptags and try
+    >>> main_tags = [t for t in tags if 'main' in t.name]
+    >>> print ptags.tags_to_text(main_tags)
+    main	.../python/kd.py	/^def +main(/
+    main	.../python/ptags.py	/^def +main(/
+    main	.../python/y.py	/^def +main(/
 
 read_sys_dirs() is used to read python's system direcories
-	Which would, for example, tag the pformat method in the pprint module
-	>>> sys_tags = ptags.read_sys_dirs()
-	>>> [ t.path.name for t in sys_tags if t.name == 'pformat']
-	[u'pprint.py']
+    Which would, for example, tag the pformat method in the pprint module
+    >>> sys_tags = ptags.read_sys_dirs()
+    >>> [ t.path.name for t in sys_tags if t.name == 'pformat']
+    [u'pprint.py']
 
 It actually tags all files found in sys.paths,
-	so should include path.py, so should include a tag for makedirs
-	>>> print [ t for t in sys_tags if t.name == 'makedirs'][0]
-	makedirs	.../path.py	/^ +def +makedirs(/
+    so should include path.py, so should include a tag for makedirs
+    >>> print [ t for t in sys_tags if t.name == 'makedirs'][0]
+    makedirs	.../path.py	/^ +def +makedirs(/

@@ -1,123 +1,123 @@
 The test_files module
 =====================
 
-	>>> import test_files
-	>>> print test_files.paths_to_doctests(args=['no_such_file'], recursive=False)
-	Traceback (most recent call last):
-	...
-	UserMessage: ...no_such_file.test*, ...no_such_file.py not found
+    >>> import test_files
+    >>> print test_files.paths_to_doctests(args=['no_such_file'], recursive=False)
+    Traceback (most recent call last):
+    ...
+    UserMessage: ...no_such_file.test*, ...no_such_file.py not found
 
 
 We'll need to find all possible extension of a stem
-	>>> path_to_test_files = makepath(test_files.__file__)
-	>>> path_to_test_stem, ext = path_to_test_files.splitext()
-	>>> path_to_test_directory = path_to_test_files.parent
-	>>> extended_files = [f.name for f in test_files._existing_test_extensions(path_to_test_stem)]
-	>>> 'test_files.py' in extended_files and 'test_files.tests' in extended_files
-	True
+    >>> path_to_test_files = makepath(test_files.__file__)
+    >>> path_to_test_stem, ext = path_to_test_files.splitext()
+    >>> path_to_test_directory = path_to_test_files.parent
+    >>> extended_files = [f.name for f in test_files._existing_test_extensions(path_to_test_stem)]
+    >>> 'test_files.py' in extended_files and 'test_files.tests' in extended_files
+    True
 
 Find test files related to a text file
-	>>> path_to_test_files = makepath(test_files.__file__)
-	>>> path_to_text_equivalent = path_to_test_files.splitext()[0] + '.txt'
-	>>> bool(test_files._existing_test_files(path_to_text_equivalent))
-	True
+    >>> path_to_test_files = makepath(test_files.__file__)
+    >>> path_to_text_equivalent = path_to_test_files.splitext()[0] + '.txt'
+    >>> bool(test_files._existing_test_files(path_to_text_equivalent))
+    True
 
-	>>> path_to_tests = test_files._get_path_to_test_directory([path_to_test_files])
-	>>> path_to_tests == path_to_test_directory
-	True
+    >>> path_to_tests = test_files._get_path_to_test_directory([path_to_test_files])
+    >>> path_to_tests == path_to_test_directory
+    True
 
 Edge cases
 ----------
 
-	>>> test_files._get_path_to_test_directory([path_to_test_directory]) == path_to_test_directory
-	True
-	>>> test_files._get_path_to_test_directory([str(path_to_test_directory / 'not_a_file')])
-	Traceback (most recent call last):
-	...
-	UserMessage: No doctests found in ['/.../testing/not_a_file']
-	>>> test_files._get_path_to_test_directory('/etc/httpd/conf')
-	Traceback (most recent call last):
-	...
-	UserMessage: No doctests found in '/etc/httpd/conf'
+    >>> test_files._get_path_to_test_directory([path_to_test_directory]) == path_to_test_directory
+    True
+    >>> test_files._get_path_to_test_directory([str(path_to_test_directory / 'not_a_file')])
+    Traceback (most recent call last):
+    ...
+    UserMessage: No doctests found in ['/.../testing/not_a_file']
+    >>> test_files._get_path_to_test_directory('/etc/httpd/conf')
+    Traceback (most recent call last):
+    ...
+    UserMessage: No doctests found in '/etc/httpd/conf'
 
-	>>> test_files._existing_test_files(path_to_test_directory / 'fred/fred/fred')
-	[]
+    >>> test_files._existing_test_files(path_to_test_directory / 'fred/fred/fred')
+    []
 
-	>>> path_to_test_directory in test_files._get_path_stems([str(path_to_test_directory)], True)
-	True
+    >>> path_to_test_directory in test_files._get_path_stems([str(path_to_test_directory)], True)
+    True
 
-	>>> test_files.is_python_doctest_extension('.test')
-	True
-	>>> test_files.is_python_doctest_extension('.tests')
-	True
-	>>> test_files.is_python_doctest_extension('.text')
-	False
-	>>> test_files.is_python_doctest_extension('.py')
-	False
-	>>> test_files.has_python_doctest_extension('fred.test')
-	True
-	>>> test_files.has_python_doctest_extension('fred/fred.tests')
-	True
-	>>> test_files.has_python_doctest_extension('fred.text')
-	False
-	>>> test_files.has_python_doctest_extension('fred/fred.py')
-	False
+    >>> test_files.is_python_doctest_extension('.test')
+    True
+    >>> test_files.is_python_doctest_extension('.tests')
+    True
+    >>> test_files.is_python_doctest_extension('.text')
+    False
+    >>> test_files.is_python_doctest_extension('.py')
+    False
+    >>> test_files.has_python_doctest_extension('fred.test')
+    True
+    >>> test_files.has_python_doctest_extension('fred/fred.tests')
+    True
+    >>> test_files.has_python_doctest_extension('fred.text')
+    False
+    >>> test_files.has_python_doctest_extension('fred/fred.py')
+    False
 
-	>>> path_to_test_stem.write_lines(['#! /usr/local/python', 'print 0'])
-	>>> path_to_test_stem in test_files.all_possible_test_files_in(path_to_test_directory, False)
-	True
-	>>> path_to_test_stem in test_files._expand_stems([path_to_test_stem])
-	True
-	>>> path_to_test_stem in test_files.paths_to_doctests([path_to_test_stem], False)
-	True
-	>>> path_to_test_stem.remove()
+    >>> path_to_test_stem.write_lines(['#! /usr/local/python', 'print 0'])
+    >>> path_to_test_stem in test_files.all_possible_test_files_in(path_to_test_directory, False)
+    True
+    >>> path_to_test_stem in test_files._expand_stems([path_to_test_stem])
+    True
+    >>> path_to_test_stem in test_files.paths_to_doctests([path_to_test_stem], False)
+    True
+    >>> path_to_test_stem.remove()
 
-	>>> test_files._first_line_is_python_shebang(['#! /usr/local/python', 'print 0'])
-	True
-	>>> test_files._first_line_is_python_shebang(['print 0', '#! /usr/local/python'])
-	False
-	>>> test_files._first_line_is_python_shebang([])
-	False
+    >>> test_files._first_line_is_python_shebang(['#! /usr/local/python', 'print 0'])
+    True
+    >>> test_files._first_line_is_python_shebang(['print 0', '#! /usr/local/python'])
+    False
+    >>> test_files._first_line_is_python_shebang([])
+    False
 
-	>>> options, args = test_files.handle_command_line()
+    >>> options, args = test_files.handle_command_line()
 
-	>>> test_files.main() == 0
-	/.../testing/test_files.tests
-	...
-	True
+    >>> test_files.main() == 0
+    /.../testing/test_files.tests
+    ...
+    True
 
-	>>> import sys
-	>>> sys.stderr = sys.stdout
-	>>> sys.argv = ['try.py', 'not_a_file']
-	>>> test_files.main() == 1
-	not_a_file.test*, not_a_file.py not found
-	True
-	>>> sys.stderr = sys.__stderr__
+    >>> import sys
+    >>> sys.stderr = sys.stdout
+    >>> sys.argv = ['try.py', 'not_a_file']
+    >>> test_files.main() == 1
+    not_a_file.test*, not_a_file.py not found
+    True
+    >>> sys.stderr = sys.__stderr__
 
-	>>> test_files.has_doctests('not space    >>> print True')
-	False
-	>>> test_files.has_doctests('not space\n    >>> print True')
-	True
-	>>> test_files.has_doctests('not space\n\t>>> print True')
-	True
-	>>> test_files.has_doctests('not space\n>>> print True')
-	True
+    >>> test_files.has_doctests('not space    >>> print True')
+    False
+    >>> test_files.has_doctests('not space\n    >>> print True')
+    True
+    >>> test_files.has_doctests('not space\n\t>>> print True')
+    True
+    >>> test_files.has_doctests('not space\n>>> print True')
+    True
 
 
 Adding sub_directories
 ----------------------
 
 Derive some paths for testing from the module under test
-	>>> test_files_script = makepath(test_files.__file__)
-	>>> test_files_parent = test_files_script.parent
-	>>> test_files_grandparent = test_files_parent.parent
+    >>> test_files_script = makepath(test_files.__file__)
+    >>> test_files_parent = test_files_script.parent
+    >>> test_files_grandparent = test_files_parent.parent
 
 The add_sub_dirs() method takes a lis of paths
-	and gives a set of all sub_directories under them
-	So if we give ir the grandparent directory it should give back the parent
-	>>> test_files_parent in test_files.add_sub_dirs([test_files_grandparent])
-	True
+    and gives a set of all sub_directories under them
+    So if we give ir the grandparent directory it should give back the parent
+    >>> test_files_parent in test_files.add_sub_dirs([test_files_grandparent])
+    True
 
 It also returns the grandparent
-	>>> test_files_grandparent in test_files.add_sub_dirs([test_files_grandparent])
-	True
+    >>> test_files_grandparent in test_files.add_sub_dirs([test_files_grandparent])
+    True

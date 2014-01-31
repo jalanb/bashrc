@@ -2,40 +2,40 @@ The files module
 ================
 
 This module handles files
-	>>> import files
+    >>> import files
 
-		It can show    spaces and	tabs
-		
+        It can show    spaces and	tabs
+        
 and ends of lines
 
-	>>> files.looks_like_this(test.path,[5,10])
-	 5: 	>>> import files
-	 6: 
-	 7: 		It can show    spaces and	tabs
-	 8: 		
-	 9: and ends of lines
-	10: 
+    >>> files.looks_like_this(test.path,[5,10])
+     5: 	>>> import files
+     6: 
+     7: 		It can show    spaces and	tabs
+     8: 		
+     9: and ends of lines
+    10: 
 
-	>>> files.looks_like_this(test.path,[5,10],space='.',tab='|...',sol='^',eol='$',numbers=False)
-	^|...>>>.import.files$
-	^$
-	^|...|...It.can.show....spaces.and|...tabs$
-	^|...|...$
-	^and.ends.of.lines$
-	^$
+    >>> files.looks_like_this(test.path,[5,10],space='.',tab='|...',sol='^',eol='$',numbers=False)
+    ^|...>>>.import.files$
+    ^$
+    ^|...|...It.can.show....spaces.and|...tabs$
+    ^|...|...$
+    ^and.ends.of.lines$
+    ^$
 
-	>>> files.looks_like_this(test.path,[5,10],tab='------->',numbers=True)
-	 5: ------->>>> import files
-	 6: 
-	 7: ------->------->It can show    spaces and------->tabs
-	 8: ------->------->
-	 9: and ends of lines
-	10: 
+    >>> files.looks_like_this(test.path,[5,10],tab='------->',numbers=True)
+     5: ------->>>> import files
+     6: 
+     7: ------->------->It can show    spaces and------->tabs
+     8: ------->------->
+     9: and ends of lines
+    10: 
 
 Line numbers start at 1
-	>>> files.looks_like_this(test.path,[1,2],tab='------->',numbers=True)
-	 1: The files module
-	 2: ================
-	>>> files.looks_like_this(test.path,[2,1],tab='------->',numbers=True)
-	 2: ================
-	>>> files.looks_like_this(test.path,[0,0],tab='------->',numbers=True)
+    >>> files.looks_like_this(test.path,[1,2],tab='------->',numbers=True)
+     1: The files module
+     2: ================
+    >>> files.looks_like_this(test.path,[2,1],tab='------->',numbers=True)
+     2: ================
+    >>> files.looks_like_this(test.path,[0,0],tab='------->',numbers=True)

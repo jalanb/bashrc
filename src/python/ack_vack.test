@@ -1,61 +1,61 @@
 The ack_vack module
 ===================
 
-	>>> import ack_vack
-	>>> print ack_vack.__doc__
-	Script to change -v for an ack command to vack
+    >>> import ack_vack
+    >>> print ack_vack.__doc__
+    Script to change -v for an ack command to vack
 
 More modules for testing
 ------------------------
-	>>> import shlex
+    >>> import shlex
 
 Test main
 ---------
 
 Convenience method
-	>>> def test_main(string):
-	...     ack_vack.main(shlex.split(string))
+    >>> def test_main(string):
+    ...     ack_vack.main(shlex.split(string))
 
 ack should be added to arguments
-	>>> test_main('stuff')
-	ack stuff
+    >>> test_main('stuff')
+    ack stuff
 
 '-v' should change that to vack
-	>>> test_main('stuff -v')
-	vack stuff
+    >>> test_main('stuff -v')
+    vack stuff
 
-	>>> test_main('-v stuff ')
-	vack stuff
+    >>> test_main('-v stuff ')
+    vack stuff
 
 Quotes should be preserved
-	>>> test_main('stuff "and nonsense"')
-	ack stuff "and nonsense"
+    >>> test_main('stuff "and nonsense"')
+    ack stuff "and nonsense"
 
 Except that bash would have stripped the actual quotation marks away
-	so we can only guess, and prefer double quotes
-	>>> test_main("stuff 'and nonsense'")
-	ack stuff "and nonsense"
+    so we can only guess, and prefer double quotes
+    >>> test_main("stuff 'and nonsense'")
+    ack stuff "and nonsense"
 
 If there's a dollar in it then single quotes must have been used
-	>>> test_main("stuff 'and $nonsense'")
-	ack stuff 'and $nonsense'
+    >>> test_main("stuff 'and $nonsense'")
+    ack stuff 'and $nonsense'
 
 Combination of -v and quotes
-	>>> test_main('stuff -v "and nonsense"')
-	vack stuff "and nonsense"
+    >>> test_main('stuff -v "and nonsense"')
+    vack stuff "and nonsense"
 
 Other options should pass through
-	>>> test_main('stuff -w "and nonsense"')
-	ack stuff -w "and nonsense"
-	>>> test_main('stuff -v -w "and nonsense"')
-	vack stuff -w "and nonsense"
-	>>> test_main('stuff -vw "and nonsense"')
-	vack stuff -w "and nonsense"
-	>>> test_main('stuff -wv "and nonsense"')
-	vack stuff -w "and nonsense"
-	>>> test_main('stuff -iwv "and nonsense"')
-	vack stuff -iw "and nonsense"
-	>>> test_main('stuff -ivw "and nonsense"')
-	vack stuff -iw "and nonsense"
-	>>> test_main('stuff -viw "and nonsense"')
-	vack stuff -iw "and nonsense"
+    >>> test_main('stuff -w "and nonsense"')
+    ack stuff -w "and nonsense"
+    >>> test_main('stuff -v -w "and nonsense"')
+    vack stuff -w "and nonsense"
+    >>> test_main('stuff -vw "and nonsense"')
+    vack stuff -w "and nonsense"
+    >>> test_main('stuff -wv "and nonsense"')
+    vack stuff -w "and nonsense"
+    >>> test_main('stuff -iwv "and nonsense"')
+    vack stuff -iw "and nonsense"
+    >>> test_main('stuff -ivw "and nonsense"')
+    vack stuff -iw "and nonsense"
+    >>> test_main('stuff -viw "and nonsense"')
+    vack stuff -iw "and nonsense"

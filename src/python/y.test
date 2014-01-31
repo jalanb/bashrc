@@ -1,5 +1,5 @@
 The y module
 ============
-	>>> import y
-	>>> print y.__doc__
-	y not?
+    >>> import y
+    >>> print y.__doc__
+    y not?

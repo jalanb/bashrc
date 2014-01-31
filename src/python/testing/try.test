@@ -1,23 +1,23 @@
 The try module
 ==============
 
-	>>> import try
-	Traceback (most recent call last):
-	...
-	     import try
-	              ^
-	SyntaxError: invalid syntax
+    >>> import try
+    Traceback (most recent call last):
+    ...
+         import try
+                  ^
+    SyntaxError: invalid syntax
 
 Well ! That's a good name,
-	No one will ever import that
+    No one will ever import that
 
 
 How to test the test script ?
 
-	>>> import this
-	The Zen of Python...
-	...
-	Explicit is better than implicit.
-	...
-	Readability counts.
-	...
+    >>> import this
+    The Zen of Python...
+    ...
+    Explicit is better than implicit.
+    ...
+    Readability counts.
+    ...

@@ -1,34 +1,34 @@
 The site/spine module
 =====================
 
-	>>> import spine
-	>>> print spine.__doc__
-	Show the spine of a class
+    >>> import spine
+    >>> print spine.__doc__
+    Show the spine of a class
 
 A Thing is a kind of Spine
-	which can provide a string value
-	>>> class Thing(spine.Spine):
-	...     def __str__(self):
-	...         return 'string'
+    which can provide a string value
+    >>> class Thing(spine.Spine):
+    ...     def __str__(self):
+    ...         return 'string'
 
 Instantiate a thing
-	>>> thing = Thing()
+    >>> thing = Thing()
 
 The repr() includes the string value
-	>>> thing
-	<Thing 'string'>
+    >>> thing
+    <Thing 'string'>
 
 Names are as expected
-	>>> thing.full_class_name() == '__main__.Thing' and thing.class_name() == 'Thing' and thing.list_name() == 'Things'
-	True
+    >>> thing.full_class_name() == '__main__.Thing' and thing.class_name() == 'Thing' and thing.list_name() == 'Things'
+    True
 
 One fish, two fish
 ------------------
 
-	>>> class Fish(spine.Spine):
-	...     pass
-	>>> fish = Fish()
+    >>> class Fish(spine.Spine):
+    ...     pass
+    >>> fish = Fish()
 
 Plurals are handled properly
-	>>> fish.class_name() == fish.list_name()
-	True
+    >>> fish.class_name() == fish.list_name()
+    True

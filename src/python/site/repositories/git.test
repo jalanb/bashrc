@@ -1,6 +1,6 @@
 The git module
 ==============
 
-	>>> import git
-	>>> print git.__doc__
-	This module provides git handling
+    >>> import git
+    >>> print git.__doc__
+    This module provides git handling

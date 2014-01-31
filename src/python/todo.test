@@ -1,34 +1,34 @@
 The todo script
 ===============
 
-	>>> import todo
-	>>> print todo.__doc__
-	Script to display a todo list
+    >>> import todo
+    >>> print todo.__doc__
+    Script to display a todo list
 
 More modules for testing
 ------------------------
 
-	>>> import random
-	>>> import colour_numbers
+    >>> import random
+    >>> import colour_numbers
 
 Data
 ----
 
 The script knows where to get it's data
-	And how to read it, and convert it to a list of items
-	>>> items = todo.read_todo_items()
+    And how to read it, and convert it to a list of items
+    >>> items = todo.read_todo_items()
 
-	>>> item = random.choice(items)
+    >>> item = random.choice(items)
 
 An item has a priority, which is a limited number
-	>>> 0 < item.priority < 6
-	True
+    >>> 0 < item.priority < 6
+    True
 
 From which we can get a colour
-	>>> item_colour = todo.priority_colour(item.priority)
-	>>> colour_numbers.name_to_number(item_colour) in colour_numbers.small_integers()
-	True
+    >>> item_colour = todo.priority_colour(item.priority)
+    >>> colour_numbers.name_to_number(item_colour) in colour_numbers.small_integers()
+    True
 
 And some text
-	>>> ' ' in item.text
-	True
+    >>> ' ' in item.text
+    True

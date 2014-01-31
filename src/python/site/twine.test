@@ -1,58 +1,58 @@
 The twine module
 ================
 
-	>>> from twine import Twine
+    >>> from twine import Twine
 
 A Twine is ako string
-	>>> twine = Twine('Fred')
-	>>> print twine
-	Fred
+    >>> twine = Twine('Fred')
+    >>> print twine
+    Fred
 
 With a different representation than string
-	>>> twine
-	<Twine 'Fred'>
+    >>> twine
+    <Twine 'Fred'>
 
 And can parse out its class name
-	>>> print twine.class_name(), twine.full_class_name(), twine.list_name()
-	Twine twine.Twine Twines
+    >>> print twine.class_name(), twine.full_class_name(), twine.list_name()
+    Twine twine.Twine Twines
 
 A subclass of Twine
-	>>> class Freddy(Twine): pass
-	>>> twine = Freddy('Fred')
+    >>> class Freddy(Twine): pass
+    >>> twine = Freddy('Fred')
 
 is also ako string
-	>>> print twine
-	Fred
+    >>> print twine
+    Fred
 
 and knows its class
-	>>> twine
-	<Freddy 'Fred'>
+    >>> twine
+    <Freddy 'Fred'>
 
 and parses its name
-	Note:
-		full class name has no module as it was created in this script
-	Note again:
-		This is now version dependent, 2.7 calls this script's module "__main__"
-	>>> print twine.class_name(), twine.full_class_name(), twine.list_name()
-	Freddy ...Freddy Freddies
+    Note:
+        full class name has no module as it was created in this script
+    Note again:
+        This is now version dependent, 2.7 calls this script's module "__main__"
+    >>> print twine.class_name(), twine.full_class_name(), twine.list_name()
+    Freddy ...Freddy Freddies
 
 I think this one is a meta-sub-class
-	but it might be a sub-meta-class.
-	Anyway, the class name you provide is sent into a method
-	>>> from twine import twist
-	>>> Teddy = twist('Teddy')
+    but it might be a sub-meta-class.
+    Anyway, the class name you provide is sent into a method
+    >>> from twine import twist
+    >>> Teddy = twist('Teddy')
 
 And that gives you a new class
-	>>> ted = Teddy('ted')
+    >>> ted = Teddy('ted')
 
 which is also ako string
-	>>> print ted
-	ted
+    >>> print ted
+    ted
 
 and knows its class
-	>>> ted
-	<Teddy 'ted'>
+    >>> ted
+    <Teddy 'ted'>
 
 and parses its name
-	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()
-	Teddy twine.Teddy Teddies
+    >>> print ted.class_name(), ted.full_class_name(), ted.list_name()
+    Teddy twine.Teddy Teddies

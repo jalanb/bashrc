@@ -1,11 +1,11 @@
 The see_code module
 -------------------
 
-	>>> import see_code
+    >>> import see_code
 
-	>>> print see_code.code_of_method(see_code.code_of_method)
-	def code_of_method(method):
-	    if not callable(method):
-		...
-		return subsequent_lines_with_more...
+    >>> print see_code.code_of_method(see_code.code_of_method)
+    def code_of_method(method):
+        if not callable(method):
+        ...
+        return subsequent_lines_with_more...
 

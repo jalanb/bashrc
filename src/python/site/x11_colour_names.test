@@ -1,14 +1,14 @@
 The x11_colour_names module
 ===========================
 
-	>>> import x11_colour_names
-	>>> print x11_colour_names.__doc__
-	Methods to provide names for colours
-	...
+    >>> import x11_colour_names
+    >>> print x11_colour_names.__doc__
+    Methods to provide names for colours
+    ...
 
-	>>> 'red' in x11_colour_names.names()
-	True
+    >>> 'red' in x11_colour_names.names()
+    True
 
-	>>> import os
-	>>> '256' not in os.environ.get('TERM') or 'snow' in x11_colour_names.names()
-	True
+    >>> import os
+    >>> '256' not in os.environ.get('TERM') or 'snow' in x11_colour_names.names()
+    True

@@ -1,84 +1,84 @@
 The test_files module
 =====================
 
-	>>> import test_files
-	>>> print test_files.__doc__
-	This module provides convenience methods to handle test files
-	...
+    >>> import test_files
+    >>> print test_files.__doc__
+    This module provides convenience methods to handle test files
+    ...
 
 More modules for testing
 ------------------------
 
-	>>> import os
+    >>> import os
 
 What's a test script
 --------------------
 
 There's a method to show what the module thinks are test files:
-	those with certain extensions
+    those with certain extensions
 
 Note the order here
-	which goes from more edge-case and detailed to more exemplary and short
-	>>> test_files.possible_test_extensions()
-	['.tests', '.test', '.py', '']
+    which goes from more edge-case and detailed to more exemplary and short
+    >>> test_files.possible_test_extensions()
+    ['.tests', '.test', '.py', '']
 
 In some scenarios we may not want to include she-bang scripts
-	>>> test_files.positive_test_extensions()
-	['.tests', '.test', '.py']
+    >>> test_files.positive_test_extensions()
+    ['.tests', '.test', '.py']
 
 Can test if something is a test extension
-	>>> test_files.is_possible_test_extension('.py') and not test_files.is_possible_test_extension('.pyc')
-	True
+    >>> test_files.is_possible_test_extension('.py') and not test_files.is_possible_test_extension('.pyc')
+    True
 
 Or a file has one
-	>>> test_files.has_possible_test_extension('/path/to/fred.test') and not test_files.has_possible_test_extension('path/fred.text')
-	True
+    >>> test_files.has_possible_test_extension('/path/to/fred.test') and not test_files.has_possible_test_extension('path/fred.text')
+    True
 
 And the positive equivalents
-	>>> test_files.has_possible_test_extension('fred') and not test_files.has_positive_test_extension('fred')
-	True
+    >>> test_files.has_possible_test_extension('fred') and not test_files.has_positive_test_extension('fred')
+    True
 
 paths_to_doctests()
 -------------------
 
 The module provides a method which gets all possible test files
-	which means *.tests, *.test, *.py, in that order
+    which means *.tests, *.test, *.py, in that order
 
-	>>> paths_to_test_scripts = test_files.paths_to_doctests([], False)
+    >>> paths_to_test_scripts = test_files.paths_to_doctests([], False)
 
 With default arguments we don't really know what we get back
-	but if there were any at all they are test files
-	>>> all([test_files.has_possible_test_extension(p) for p in paths_to_test_scripts])
-	True
+    but if there were any at all they are test files
+    >>> all([test_files.has_possible_test_extension(p) for p in paths_to_test_scripts])
+    True
 
 paths_to_doctests(args)
 -----------------------
 
 The method takes arguments of
-	1) a list of possible stems 
-	2) whether to search directories recursively
+    1) a list of possible stems 
+    2) whether to search directories recursively
 
 To test a bit more extensively we'll specify some known stems
 
 First stem to test with is the only file we're sure of: the name of the module we are actually testing
-	>>> test_file_stem, ext = os.path.splitext(test_files.__file__)
+    >>> test_file_stem, ext = os.path.splitext(test_files.__file__)
 
 And we think there are also some files in same directory called "try.*"
-	>>> test_file_name = os.path.basename(test_file_stem)
-	>>> try_stem = test_file_stem.replace(test_file_name, 'try')
+    >>> test_file_name = os.path.basename(test_file_stem)
+    >>> try_stem = test_file_stem.replace(test_file_name, 'try')
 
 Test with those stems
-	>>> stems = [test_file_stem, try_stem]
-	>>> paths_to_test_scripts = test_files.paths_to_doctests(stems, False)
+    >>> stems = [test_file_stem, try_stem]
+    >>> paths_to_test_scripts = test_files.paths_to_doctests(stems, False)
 
 Only testing the names of those scripts
-	>>> test_script_names = [ p.name for p in paths_to_test_scripts]
+    >>> test_script_names = [ p.name for p in paths_to_test_scripts]
 
 We expect that the equivalent files with the standard test extensions have been found
-	>>> 'test_files.test' in test_script_names and 'try.py' in test_script_names
-	True
+    >>> 'test_files.test' in test_script_names and 'try.py' in test_script_names
+    True
 
 And we expect them to appear only once
-	>>> test_script_paths = test_files.paths_to_doctests([], False)
-	>>> all([test_script_paths.count(path) == 1 for path in test_script_paths])
-	True
+    >>> test_script_paths = test_files.paths_to_doctests([], False)
+    >>> all([test_script_paths.count(path) == 1 for path in test_script_paths])
+    True

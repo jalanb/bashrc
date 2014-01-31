@@ -1,38 +1,38 @@
 The colour_names module
 =======================
 
-	>>> import colour_names
-	>>> print colour_names.__doc__
-	Methods to provide names for colours
-	...
+    >>> import colour_names
+    >>> print colour_names.__doc__
+    Methods to provide names for colours
+    ...
 
 
 Basic colour names
 -----------------
 
 Start with the easy ones
-	>>> show(colour_names.bw())
-	['black', 'white']
-	>>> show(colour_names.primaries())
-	['red', 'green', 'blue']
-	>>> show(colour_names.complementaries())
-	['cyan', 'yellow', 'magenta']
+    >>> show(colour_names.bw())
+    ['black', 'white']
+    >>> show(colour_names.primaries())
+    ['red', 'green', 'blue']
+    >>> show(colour_names.complementaries())
+    ['cyan', 'yellow', 'magenta']
 
 All of those are considered basic
-	>>> colour_names.basic() == colour_names.bw() + colour_names.primaries() + colour_names.complementaries()
-	True
+    >>> colour_names.basic() == colour_names.bw() + colour_names.primaries() + colour_names.complementaries()
+    True
 
 CGA colour names
 ----------------
 
 CGA has all the basic names
-	>>> all([name in colour_names.cga() for name in colour_names.basic()])
-	True
+    >>> all([name in colour_names.cga() for name in colour_names.basic()])
+    True
 
 And some extra ones
-	>>> 'gray' in colour_names.cga() and 'gray' not in colour_names.basic()
-	True
+    >>> 'gray' in colour_names.cga() and 'gray' not in colour_names.basic()
+    True
 
 And light versions
-	>>> 'light red' in colour_names.cga() and 'light cyan' in colour_names.cga()
-	True
+    >>> 'light red' in colour_names.cga() and 'light cyan' in colour_names.cga()
+    True

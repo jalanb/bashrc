@@ -3,21 +3,21 @@ The dates module
 
 now() is hard to test, reproducibly
 
-	>>> import dates
-	>>> p = makepath('test_me_now')
-	>>> if p.exists(): p.remove()
+    >>> import dates
+    >>> p = makepath('test_me_now')
+    >>> if p.exists(): p.remove()
 
 Make a file, now
-	>>> p.touch()
+    >>> p.touch()
 
 Get the date/time now
-	>>> now = dates.now()
+    >>> now = dates.now()
 
 Find the creation time of the created file
-	>>> import time
-	>>> year, month, day, hour, minute, second, _, _, _ = time.gmtime(p.getctime())
-	>>> p.remove()
+    >>> import time
+    >>> year, month, day, hour, minute, second, _, _, _ = time.gmtime(p.getctime())
+    >>> p.remove()
 
 Test that the call to now was within a second of when the file was created
-	>>> now.year == year and now.day == day and now.second == second
-	True
+    >>> now.year == year and now.day == day and now.second == second
+    True

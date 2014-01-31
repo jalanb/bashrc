@@ -1,52 +1,52 @@
 The l module
 ============
 
-	>>> import l
-	>>> l.argv.test_args('-h')
-	Usage: l.tests [options]
-	...
-	  -h, --help    show this help message and exit
+    >>> import l
+    >>> l.argv.test_args('-h')
+    Usage: l.tests [options]
+    ...
+      -h, --help    show this help message and exit
 
-	>>> print l.get_dirs(['No such directory'])
-	Traceback (most recent call last):
-	...
-	ValueError: No such directory: No such directory
+    >>> print l.get_dirs(['No such directory'])
+    Traceback (most recent call last):
+    ...
+    ValueError: No such directory: No such directory
 
-	>>> print l.get_dirs(['No such directory', 'Nor is this'])
-	Traceback (most recent call last):
-	...
-	ValueError: No such directories: No such directory, Nor is this
+    >>> print l.get_dirs(['No such directory', 'Nor is this'])
+    Traceback (most recent call last):
+    ...
+    ValueError: No such directories: No such directory, Nor is this
 
-	
-	>>> l.as_paths('fred')
-	[<path u'fred'>]
+    
+    >>> l.as_paths('fred')
+    [<path u'fred'>]
 
-	>>> l.as_paths()
-	[]
+    >>> l.as_paths()
+    []
 
-	>>> l.as_paths('.')
-	[<path u'.'>]
+    >>> l.as_paths('.')
+    [<path u'.'>]
 
-	>>> l.as_paths([ 'fred', '.' ])
-	[<path u'fred'>, <path u'.'>]
+    >>> l.as_paths([ 'fred', '.' ])
+    [<path u'fred'>, <path u'.'>]
 
-	>>> l.as_paths([ 'fred', 999, '.' ])
-	Traceback (most recent call last):
-	...
-	NotImplementedError: Cannot convert 999 to a path
+    >>> l.as_paths([ 'fred', 999, '.' ])
+    Traceback (most recent call last):
+    ...
+    NotImplementedError: Cannot convert 999 to a path
 
-	>>> sources = [ '*.c', '*.py' ]
-	>>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
-	>>> l.remove_ignored(files,sources) == l.remove_ignored(files,ignores=sources)
-	True
-	>>> l.remove_ignored(files,sources)
-	[<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
+    >>> sources = [ '*.c', '*.py' ]
+    >>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
+    >>> l.remove_ignored(files,sources) == l.remove_ignored(files,ignores=sources)
+    True
+    >>> l.remove_ignored(files,sources)
+    [<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
 
-	>>> from path import path
-	>>> import  glob_path
-	>>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
+    >>> from path import path
+    >>> import  glob_path
+    >>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
 
-	>>> files = l.remove_ignored(files,extra_ignores=['lout*'])
-	>>> path('lout.test') in sorted( files )
-	False
+    >>> files = l.remove_ignored(files,extra_ignores=['lout*'])
+    >>> path('lout.test') in sorted( files )
+    False
 

@@ -1,6 +1,6 @@
 The svn module
 ==============
 
-	>>> import svn
-	>>> print svn.__doc__
-	This module provides subversion handling
+    >>> import svn
+    >>> print svn.__doc__
+    This module provides subversion handling

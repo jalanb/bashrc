@@ -1,67 +1,67 @@
 The tally module
 ================
 
-	>>> from tally import Tally
-	>>> from tally import tlist
+    >>> from tally import Tally
+    >>> from tally import tlist
 
 A Tally is ako list
-	>>> a_list = [0, 1, 'hello', 2, 3]
-	>>> tally = Tally(a_list)
-	>>> print tally
-	[0, 1, 'hello', 2, 3]
+    >>> a_list = [0, 1, 'hello', 2, 3]
+    >>> tally = Tally(a_list)
+    >>> print tally
+    [0, 1, 'hello', 2, 3]
 
 With a different represenation than a list
-	>>> a_list
-	[0, 1, 'hello', 2, 3]
-	>>> tally
-	<Tally [0, 1, 'hello', 2, 3]>
+    >>> a_list
+    [0, 1, 'hello', 2, 3]
+    >>> tally
+    <Tally [0, 1, 'hello', 2, 3]>
 
 And can parse out its class name
-	>>> print tally.class_name(), tally.full_class_name(), tally.list_name()
-	Tally tally.Tally Tallies
+    >>> print tally.class_name(), tally.full_class_name(), tally.list_name()
+    Tally tally.Tally Tallies
 
 A subclass of Tally
-	>>> class Freddy(Tally): pass
-	>>> fred = Freddy(a_list)
+    >>> class Freddy(Tally): pass
+    >>> fred = Freddy(a_list)
 
 is also ako list
-	>>> print fred
-	[0, 1, 'hello', 2, 3]
+    >>> print fred
+    [0, 1, 'hello', 2, 3]
 
 and knows its class
-	>>> fred
-	<Freddy [0, 1, 'hello', 2, 3]>
+    >>> fred
+    <Freddy [0, 1, 'hello', 2, 3]>
 
 and parses its name
-	Note:
-		full class name has no module as it was created in this script
-	Note again:
-		This is now version dependent, 2.7 calls this script's module "__main__"
-	>>> print fred.class_name(), fred.full_class_name(), fred.list_name()
-	Freddy ...Freddy Freddies
+    Note:
+        full class name has no module as it was created in this script
+    Note again:
+        This is now version dependent, 2.7 calls this script's module "__main__"
+    >>> print fred.class_name(), fred.full_class_name(), fred.list_name()
+    Freddy ...Freddy Freddies
 
 I think this one is a meta-sub-class
-	but it might be a sub-meta-class.
-	Anyway, the class name you provide is sent into a method
-	>>> Teddy = tlist('Teddy')
+    but it might be a sub-meta-class.
+    Anyway, the class name you provide is sent into a method
+    >>> Teddy = tlist('Teddy')
 
 And that gives you a new class
-	Initialised from a string, just for a change
-	>>> ted = Teddy('ted')
+    Initialised from a string, just for a change
+    >>> ted = Teddy('ted')
 
 When it starts from a string it still looks like a string
-	>>> print ted
-	ted
-	>>> ted
-	<Teddy 'ted'>
+    >>> print ted
+    ted
+    >>> ted
+    <Teddy 'ted'>
 
 But it is really ako list
-	>>> print ted.upper()
-	Traceback (most recent call last):
-	...
-	AttributeError: 'Teddy' object has no attribute 'upper'
+    >>> print ted.upper()
+    Traceback (most recent call last):
+    ...
+    AttributeError: 'Teddy' object has no attribute 'upper'
 
 It still parses its name the same way
-	>>> print ted.class_name(), ted.full_class_name(), ted.list_name()
-	Teddy tally.Teddy Teddies
+    >>> print ted.class_name(), ted.full_class_name(), ted.list_name()
+    Teddy tally.Teddy Teddies
 

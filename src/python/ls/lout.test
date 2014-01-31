@@ -3,45 +3,45 @@ lout
 
 This module handles output for other scripts in this directory
 
-	>>> import l, lout
-	>>> lout.argv.test_args('-h ')
-	Usage: ... [options]
-	<BLANKLINE>
-	Options:
-	  -q, --quiet   hide directories, blank lines, ...
-	  -l, --lines   separate by returns (tabs is default)
-	  -i, --ignore  Do not ignore files (that subversion ignores)
-	  -h, --help    show this help message and exit
+    >>> import l, lout
+    >>> lout.argv.test_args('-h ')
+    Usage: ... [options]
+    <BLANKLINE>
+    Options:
+      -q, --quiet   hide directories, blank lines, ...
+      -l, --lines   separate by returns (tabs is default)
+      -i, --ignore  Do not ignore files (that subversion ignores)
+      -h, --help    show this help message and exit
 
-	>>> files = l.get_files()
-	>>> files = l.remove_ignored(files)
-	>>> names = l.get_names(files)
-	>>> show( lout.format(names) )
-	['glob_path.py,test',
-	 'l.py,test,tests',
-	 'lout.py,test',
-	 'lx.py,test,tests',
-	 'ly.py,test']
+    >>> files = l.get_files()
+    >>> files = l.remove_ignored(files)
+    >>> names = l.get_names(files)
+    >>> show( lout.format(names) )
+    ['glob_path.py,test',
+     'l.py,test,tests',
+     'lout.py,test',
+     'lx.py,test,tests',
+     'ly.py,test']
 
-	>>> lout.show(lout.format(names))
-	glob_path.py,test l.py,test,tests   lout.py,test      lx.py,test,tests  ly.py,test        
+    >>> lout.show(lout.format(names))
+    glob_path.py,test l.py,test,tests   lout.py,test      lx.py,test,tests  ly.py,test        
 
-	>>> lout.os.environ['COLUMNS'] = '60'
-	>>> lout.show(lout.format(names))
-	glob_path.py,test l.py,test,tests   lout.py,test      
-	lx.py,test,tests  ly.py,test        
+    >>> lout.os.environ['COLUMNS'] = '60'
+    >>> lout.show(lout.format(names))
+    glob_path.py,test l.py,test,tests   lout.py,test      
+    lx.py,test,tests  ly.py,test        
 
-	>>> lout.os.environ['COLUMNS'] = '40'
-	>>> lout.show(lout.format(names))
-	glob_path.py,test l.py,test,tests   
-	lout.py,test      lx.py,test,tests  
-	ly.py,test        
+    >>> lout.os.environ['COLUMNS'] = '40'
+    >>> lout.show(lout.format(names))
+    glob_path.py,test l.py,test,tests   
+    lout.py,test      lx.py,test,tests  
+    ly.py,test        
 
-	>>> lout.os.environ['COLUMNS'] = '80'
-	>>> lout.argv.test_args('-l ')
-	>>> lout.show(lout.format(names))
-	glob_path.py,test 
-	l.py,test,tests   
-	lout.py,test      
-	lx.py,test,tests  
-	ly.py,test        
+    >>> lout.os.environ['COLUMNS'] = '80'
+    >>> lout.argv.test_args('-l ')
+    >>> lout.show(lout.format(names))
+    glob_path.py,test 
+    l.py,test,tests   
+    lout.py,test      
+    lx.py,test,tests  
+    ly.py,test        

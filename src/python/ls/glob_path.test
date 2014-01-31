@@ -1,51 +1,51 @@
 The glob_path module
 ====================
 
-	>>> import glob_path
-	>>> print glob_path.__doc__
-	A class to encapsulate a glob pattern, which may match some files
+    >>> import glob_path
+    >>> print glob_path.__doc__
+    A class to encapsulate a glob pattern, which may match some files
 
 Let's just make sure we are startting in the same directory as the module
-	>>> from path import cd
-	>>> cd(glob_path.__file__)
-	True 
+    >>> from path import cd
+    >>> cd(glob_path.__file__)
+    True 
 
 Instantiate the class with a glob for the module itself
-	>>> gp = glob_path.glob_path('glob_path.')
+    >>> gp = glob_path.glob_path('glob_path.')
 
 Note that, if the given glob does not contain '*' or '?'
-	then '*' is added as a suffix
-	>>> gp
-	<glob_path ./glob_path.*>
+    then '*' is added as a suffix
+    >>> gp
+    <glob_path ./glob_path.*>
 
 We can test whether any existing file matches the glob
-	>>> gp.isfile()
-	True
+    >>> gp.isfile()
+    True
 
 We can test whether any existing dir matches the glob
-	>>> gp.isdir()
-	False
+    >>> gp.isdir()
+    False
 
 We take that the glob exists if either a file or a dir exists
-	>>> gp.exists()
-	True
+    >>> gp.exists()
+    True
 
 Or not
-	>>> glob_path.glob_path('you would never call a file this.*').exists()
-	False
+    >>> glob_path.glob_path('you would never call a file this.*').exists()
+    False
 
 Let's use a slightly more specific glob
-	>>> gp = glob_path.glob_path('glob_path.*[yt]')
+    >>> gp = glob_path.glob_path('glob_path.*[yt]')
 
 The string value is the glob (not any matches)
-	>>> print gp
-	./glob_path.*[yt]
+    >>> print gp
+    ./glob_path.*[yt]
 
 And the repr() just wraps that in the class name
-	>>> gp
-	<glob_path ./glob_path.*[yt]>
+    >>> gp
+    <glob_path ./glob_path.*[yt]>
 
 Can also get a list of matching files
-	>>> show( gp.files() )
-	[<path u'./glob_path.py'>, <path u'./glob_path.test'>]
+    >>> show( gp.files() )
+    [<path u'./glob_path.py'>, <path u'./glob_path.test'>]
 

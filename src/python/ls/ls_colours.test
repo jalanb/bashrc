@@ -1,40 +1,40 @@
 The ls_colours module
 =====================
 
-	>>> import ls_colours
-	>>> print ls_colours.__doc__
-	Methods to colour files by same rules as ls
+    >>> import ls_colours
+    >>> print ls_colours.__doc__
+    Methods to colour files by same rules as ls
 
 More imports for testing
 ------------------------
 
-	>>> import ansi_escapes
+    >>> import ansi_escapes
 
 Get colours for files
 ---------------------
 
-	>>> python_colour = '00;31'
-	>>> ext_colours, glob_colours = ls_colours.load_ls_colours()
-	>>> ext_colours['.py'] == python_colour
-	True
+    >>> python_colour = '00;31'
+    >>> ext_colours, glob_colours = ls_colours.load_ls_colours()
+    >>> ext_colours['.py'] == python_colour
+    True
 
-	>>> ls_colours._is_extension_glob('*.py')
-	True
-	>>> ls_colours._is_extension_glob('*py')
-	False
+    >>> ls_colours._is_extension_glob('*.py')
+    True
+    >>> ls_colours._is_extension_glob('*py')
+    False
 
-	>>> ls_colours._get_file_colour('ls_colours.py') == python_colour
-	True
+    >>> ls_colours._get_file_colour('ls_colours.py') == python_colour
+    True
 
-	>>> ansi_string = ls_colours.colourize_file('ls_colours.py')
-	>>> python_colour in ansi_string and 'ls_colours.py' in ansi_string
-	True
-	>>> ansi_string.endswith(ansi_escapes.no_colour())
-	True
-	>>> ansi_string = ls_colours.colourize_extension('.py')
-	>>> python_colour in ansi_string and '.py' in ansi_string
-	True
-	>>> ansi_string.endswith(ansi_escapes.no_colour())
-	True
-	>>> ansi_string.replace('.py', 'py') == ls_colours.colourize_extension('py')
-	True
+    >>> ansi_string = ls_colours.colourize_file('ls_colours.py')
+    >>> python_colour in ansi_string and 'ls_colours.py' in ansi_string
+    True
+    >>> ansi_string.endswith(ansi_escapes.no_colour())
+    True
+    >>> ansi_string = ls_colours.colourize_extension('.py')
+    >>> python_colour in ansi_string and '.py' in ansi_string
+    True
+    >>> ansi_string.endswith(ansi_escapes.no_colour())
+    True
+    >>> ansi_string.replace('.py', 'py') == ls_colours.colourize_extension('py')
+    True

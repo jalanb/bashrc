@@ -1,68 +1,68 @@
 The lx script
 =============
 
-	>>> import lx
+    >>> import lx
 
 
 More modules for testing
 ------------------------
 
-	>>> import paths
-	>>> import l
+    >>> import paths
+    >>> import l
 
 Test the module's file
 ----------------------
 
 We shall base tests of the lx module's file
-	>>> path_to_lx = paths.makepath(lx.__file__)
-	>>> path_to_lx_dir = path_to_lx.parent
-	>>> path_to_lx_dir.cd()
-	True
+    >>> path_to_lx = paths.makepath(lx.__file__)
+    >>> path_to_lx_dir = path_to_lx.parent
+    >>> path_to_lx_dir.cd()
+    True
 
 lx is a script
-	>>> lx.argv.test_args('-h ')
-	Usage: lx.test [options]
-	...
-	  -h, --help    show this help message and exit
+    >>> lx.argv.test_args('-h ')
+    Usage: lx.test [options]
+    ...
+      -h, --help    show this help message and exit
 
 We know these files exist
-	>>> this_python_file = path_to_lx
-	>>> this_test_file = path_to_lx_dir / 'lx.test'
-	>>> this_tests_file = path_to_lx_dir / 'lx.tests'
+    >>> this_python_file = path_to_lx
+    >>> this_test_file = path_to_lx_dir / 'lx.test'
+    >>> this_tests_file = path_to_lx_dir / 'lx.tests'
 
 get_exts
 --------
 
-	>>> files_here = path_to_lx_dir.files()
+    >>> files_here = path_to_lx_dir.files()
 
 The get_exts() method turns the list of files into a dictionary 
-	>>> files_by_extension = lx.get_exts(files_here)
+    >>> files_by_extension = lx.get_exts(files_here)
 
 Keyed by the extensions of the files
-	So the extension of this file should show up
-	>>> '.test' in files_by_extension.keys()
-	True
+    So the extension of this file should show up
+    >>> '.test' in files_by_extension.keys()
+    True
 
 And values are a list of file paths,
-	so these files should be separated by extension
-	>>> this_test_file in files_by_extension['.test']
-	True
-	>>> this_python_file in files_by_extension['.py'] + files_by_extension['.pyc']
-	True
-	>>> this_tests_file in files_by_extension['.tests']
-	True
+    so these files should be separated by extension
+    >>> this_test_file in files_by_extension['.test']
+    True
+    >>> this_python_file in files_by_extension['.py'] + files_by_extension['.pyc']
+    True
+    >>> this_tests_file in files_by_extension['.tests']
+    True
 
 Despite best intentions there's always more python files than test files
-	And this directory should be "mature" by now
-	>>> len(files_by_extension['.test']) <= len(files_by_extension['.py']) 
-	True
+    And this directory should be "mature" by now
+    >>> len(files_by_extension['.test']) <= len(files_by_extension['.py']) 
+    True
 
-	>>> files_in_the_home_directory = l.get_files(l.get_dirs('~'))
+    >>> files_in_the_home_directory = l.get_files(l.get_dirs('~'))
 
 Special rule for dot files: 
-	they are all lumped together under the ext "."
-	>>> hidden_home_files = lx.get_exts(files_in_the_home_directory)['.']
+    they are all lumped together under the ext "."
+    >>> hidden_home_files = lx.get_exts(files_in_the_home_directory)['.']
 
 And I expect one of the hidden files in the home directory to be called
-	>>> '.bashrc' in [ f.name for f in hidden_home_files ]
-	True
+    >>> '.bashrc' in [ f.name for f in hidden_home_files ]
+    True

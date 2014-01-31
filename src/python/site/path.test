@@ -1,11 +1,11 @@
 The path module
 ===============
 
-	>>> import path
+    >>> import path
 
 A path has interesting methods
-	>>> path.path(path.__file__).isfile()
-	True
+    >>> path.path(path.__file__).isfile()
+    True
 
-	>>> path.path('path.test').ishidden()
-	False
+    >>> path.path('path.test').ishidden()
+    False

@@ -1,89 +1,89 @@
 The l module
 ============
 
-	>>> import l
+    >>> import l
 
 More modules for testing
 ========================
-	>>> import os
-	>>> from path import path
+    >>> import os
+    >>> from path import path
 
 Start here
 ==========
 
-	>>> os.chdir(path(l.__file__).parent)
+    >>> os.chdir(path(l.__file__).parent)
 
 If that worked, then we can test for these files:
 
-	>>> this_python_file = path('l.py')
-	>>> this_test_file = path('l.test')
-	>>> this_tests_file = path('l.tests')
+    >>> this_python_file = path('l.py')
+    >>> this_test_file = path('l.test')
+    >>> this_tests_file = path('l.tests')
 
 These files should exist in this directory
-	>>> these_files = this_python_file, this_test_file, this_tests_file
-	>>> [ f.isfile() for f in these_files ]
-	[True, True, True]
+    >>> these_files = this_python_file, this_test_file, this_tests_file
+    >>> [ f.isfile() for f in these_files ]
+    [True, True, True]
 
 as_paths
 --------
 
 This method turns its arguments into a list of paths
 
-	>>> l.as_paths([ 'fred', '~', path('.') ])
-	[<path u'fred'>, <path u'...'>, <path u'.'>]
+    >>> l.as_paths([ 'fred', '~', path('.') ])
+    [<path u'fred'>, <path u'...'>, <path u'.'>]
 
 It does not add the current directory
-	>>> l.as_paths([ 'fred', '~'])
-	[<path u'fred'>, <path u'/Users/jab'>]
+    >>> l.as_paths([ 'fred', '~'])
+    [<path u'fred'>, <path u'/Users/jab'>]
 
 get_dirs
 --------
 
 get_dirs converts a list of strings to a list of paths
-	if they exist
+    if they exist
 
-	>>> dirs = l.get_dirs([this_test_file, '..', 'No such path'])
-	>>> '.' in dirs and '..' in dirs
-	True
+    >>> dirs = l.get_dirs([this_test_file, '..', 'No such path'])
+    >>> '.' in dirs and '..' in dirs
+    True
 
 It expands paths if possible
-	>>> import os
-	>>> expected = [ path(os.environ['PYTHON_HOME']), path( os.environ['HOME']), path('/') ]
-	>>> l.get_dirs([ '~', '$PYTHON_HOME', '/' ]) == expected
-	True
+    >>> import os
+    >>> expected = [ path(os.environ['PYTHON_HOME']), path( os.environ['HOME']), path('/') ]
+    >>> l.get_dirs([ '~', '$PYTHON_HOME', '/' ]) == expected
+    True
 
 It defaults to only the current directory
-	but always returns a list
-	>>> here = l.get_dirs()[0]
-	>>> here
-	<path u'.'>
+    but always returns a list
+    >>> here = l.get_dirs()[0]
+    >>> here
+    <path u'.'>
 
 get_files
 ---------
 
-	>>> dirs = l.get_dirs(['/usr/local/lib','/usr/bin','/usr/local/bin'])
+    >>> dirs = l.get_dirs(['/usr/local/lib','/usr/bin','/usr/local/bin'])
 
 get_files converts a list of directories to a list of all their files' paths
-	>>> files = l.get_files(dirs)
+    >>> files = l.get_files(dirs)
 
 The list of files is flat
-	>>> all([ f.isfile() for f in files ])
-	True
+    >>> all([ f.isfile() for f in files ])
+    True
 
 get_names
 ---------
 
 This method converts a list of files to a dictionary of names
-	The name of this file is 'l' (filename without extension)
-	>>> names = l.get_names(l.get_files(['.']))
+    The name of this file is 'l' (filename without extension)
+    >>> names = l.get_names(l.get_files(['.']))
 
 In the current directory, there should be a few files named l
-	>>> 'l' in names
-	True
+    >>> 'l' in names
+    True
 
 All the permanent paths to l:
-	>>> [p for p in names['l'] if p.ext not in [ '.fail', '.pyc'] and not p.endswith('~') ]
-	[<path u'l.py'>, <path u'l.test'>, <path u'l.tests'>]
+    >>> [p for p in names['l'] if p.ext not in [ '.fail', '.pyc'] and not p.endswith('~') ]
+    [<path u'l.py'>, <path u'l.test'>, <path u'l.tests'>]
 
 remove_ignored
 --------------
@@ -91,44 +91,44 @@ remove_ignored
 This method removes globs
 
 The method can take a specific list of globs to be ignored
-	Here's some of those for testing
-	>>> sources = [ '*.c', '*.py' ]
-	>>> project_managers = [ 'fred*', 'mary*' ]
+    Here's some of those for testing
+    >>> sources = [ '*.c', '*.py' ]
+    >>> project_managers = [ 'fred*', 'mary*' ]
 
 It defaults to here (again) for its files
-	but we'll test with these ones
-	>>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
+    but we'll test with these ones
+    >>> files = l.as_paths([ 'fred.py', 'fred.py~', 'fred.pyc', 'mary.py', 'alan.txt'])
 
 The default list of globs comes from ~/.subversion/config
-	It includes *~ and *.pyc
-	It also includes fred* (on the advice of Dr Mike Smith),
-		so I'd normally only see alan and mary
-	>>> l.remove_ignored(files)
-	[<path u'mary.py'>, <path u'alan.txt'>]
+    It includes *~ and *.pyc
+    It also includes fred* (on the advice of Dr Mike Smith),
+        so I'd normally only see alan and mary
+    >>> l.remove_ignored(files)
+    [<path u'mary.py'>, <path u'alan.txt'>]
 
 But sometimes we need to ignore program managers too
-	Fred and Mary are taking program manager roles today
-	>>> l.remove_ignored(files,project_managers)
-	[<path u'alan.txt'>]
+    Fred and Mary are taking program manager roles today
+    >>> l.remove_ignored(files,project_managers)
+    [<path u'alan.txt'>]
 
 The globs can be used instead of the default
-	What do we have apart from source code?
-	>>> l.remove_ignored(files,sources)
-	[<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
+    What do we have apart from source code?
+    >>> l.remove_ignored(files,sources)
+    [<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
 
 Or the globs can be added to the default
-	What do we have that's neither Fred's, nor source ?
-	>>> l.remove_ignored(files,extra_ignores=sources)
-	[<path u'alan.txt'>]
+    What do we have that's neither Fred's, nor source ?
+    >>> l.remove_ignored(files,extra_ignores=sources)
+    [<path u'alan.txt'>]
 
 finding common starts paths
 ---------------------------
 
-	>>> path1 = 'some/path/to/file1.py'
-	>>> path2 = 'some/path/to/file2.py'
-	>>> i = l.common_start(path1,path2)
-	>>> print '%s | %s' % (path1[:i], path1[i:])
-	some/path/to/file | 1.py
-	>>> l.common_start_dirs('a/an','a/as')
-	2
+    >>> path1 = 'some/path/to/file1.py'
+    >>> path2 = 'some/path/to/file2.py'
+    >>> i = l.common_start(path1,path2)
+    >>> print '%s | %s' % (path1[:i], path1[i:])
+    some/path/to/file | 1.py
+    >>> l.common_start_dirs('a/an','a/as')
+    2
 

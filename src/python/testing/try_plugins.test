@@ -1,17 +1,17 @@
 The try_plugins module
 ======================
 
-	>>> import try_plugins
-	>>> print try_plugins.__doc__
-	This module holds plugins for try.py
+    >>> import try_plugins
+    >>> print try_plugins.__doc__
+    This module holds plugins for try.py
 
 Plugin methods
 --------------
 
 Before the test plugin is called with path to the test
-	>>> try_plugins.pre_test('try_plugins.test')
-	True
+    >>> try_plugins.pre_test('try_plugins.test')
+    True
 
 And afterwards we also get number of fails, tests
-	>>> try_plugins.post_test('try_plugins.test', 0, 3)
-	True
+    >>> try_plugins.post_test('try_plugins.test', 0, 3)
+    True

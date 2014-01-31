@@ -1,21 +1,21 @@
 The ansi_escapes module
 =======================
 
-	>>> import ansi_escapes
-	>>> print ansi_escapes.__doc__
-	This module provides some known ANSI escape codes which may work with terminals
-	...
+    >>> import ansi_escapes
+    >>> print ansi_escapes.__doc__
+    This module provides some known ANSI escape codes which may work with terminals
+    ...
 
 Get a coloured text
 -------------------
 
 Basic method of the module allows getting a string with color ANSI codes
-	>>> colour_text = ansi_escapes.foreground_string('hello', 4)
+    >>> colour_text = ansi_escapes.foreground_string('hello', 4)
 
 The given text is enbedded in the string
-	>>> 'hello' in colour_text
-	True
+    >>> 'hello' in colour_text
+    True
 
 The string always ends with a code to return to default colours
-	>>> colour_text.endswith(ansi_escapes.no_colour())
-	True
+    >>> colour_text.endswith(ansi_escapes.no_colour())
+    True

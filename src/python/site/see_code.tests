@@ -1,15 +1,15 @@
 Edge cases of the see_code module
 ---------------------------------
 
-	>>> import see_code
+    >>> import see_code
 
-	>>> see_code.code_of_method(0)
-	Traceback (most recent call last):
-	...
-	NoCode: Not callable: 0
+    >>> see_code.code_of_method(0)
+    Traceback (most recent call last):
+    ...
+    NoCode: Not callable: 0
 
-	>>> see_code.code_of_method(cmp)
-	Traceback (most recent call last):
-	...
-	NoCode: No code available for <built-in function cmp>
+    >>> see_code.code_of_method(cmp)
+    Traceback (most recent call last):
+    ...
+    NoCode: No code available for <built-in function cmp>
 

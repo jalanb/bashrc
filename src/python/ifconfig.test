@@ -1,6 +1,6 @@
 The ifconfig module
 ===================
 
-	>>> import ifconfig
-	>>> print ifconfig.__doc__
-	A script to run ifconfig, extract IP addresses
+    >>> import ifconfig
+    >>> print ifconfig.__doc__
+    A script to run ifconfig, extract IP addresses

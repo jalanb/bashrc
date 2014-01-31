@@ -1,17 +1,17 @@
 The words module
 ================
 
-	>>> import words
-	>>> print words.__doc__
-	This module provides methods to handle some features of English words
+    >>> import words
+    >>> print words.__doc__
+    This module provides methods to handle some features of English words
 
 Plurals
 -------
 
 Can find plurals of words
-	>>> words.pluralize('fred') == 'freds'
-	True
+    >>> words.pluralize('fred') == 'freds'
+    True
 
 Which preserves case
-	>>> words.pluralize('Freddy') == 'Freddies'
-	True
+    >>> words.pluralize('Freddy') == 'Freddies'
+    True
