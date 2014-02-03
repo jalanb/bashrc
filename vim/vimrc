@@ -403,7 +403,9 @@ set backupskip=/tmp/*,/private/tmp/*,~/temp
 "
 " Stronger encryption
 "
-set cm=blowfish
+if exists('+cm')
+	set cm=blowfish
+endif
 autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= nobackup noshelltemp history=0 secure | endif
 
 "
