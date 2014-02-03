@@ -21,3 +21,5 @@
 	dv = difftool -y --extcmd=\"vim -d -O\"
 	last = log -1 HEAD
 	lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+[help]
+	autocorrect = 1
