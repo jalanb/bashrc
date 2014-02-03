@@ -63,7 +63,7 @@ prompt_command ()
 	[[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
 	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
 	if [[ -n "$VIRTUAL_ENV" ]]
-	then python_version=${python_version}.$(basename $VIRTUAL_NAME)
+	then python_version=${python_version}.$(basename $VIRTUAL_ENV)
 	fi
 	console_whoami 2>/dev/null
 	# local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
