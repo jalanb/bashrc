@@ -78,6 +78,7 @@ source_jab ()
 	source_file $LOCAL/functons
 	source_file $DEV_GITHUB/kd/kd.sh
 	source_file $DEV_GITHUB/viack/viack optional
+	source_file $JAB/src/bash/git-completion.bash
 	show_changes
 }
 
