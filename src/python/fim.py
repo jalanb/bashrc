@@ -36,15 +36,20 @@ def new_script():
     with open(path_to_script(), 'w') as output:
         print >> output, '''#! /bin/bash
 
+set -x
 VIM_EDITOR="%s"
+cat ${BASH_SOURCE/.sh/_functions.sh}
 source ${BASH_SOURCE/.sh/_functions.sh}
+set +x
 ''' % path_to_editor()
 
 
 def add_to_script(string):
     """Add that string to the fim script"""
     with open(path_to_script(), 'a') as output:
+        print >> output, 'set -x'
         print >> output, string
+        print >> output, 'set +x'
 
 
 def quote(string):

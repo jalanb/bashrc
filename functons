@@ -43,9 +43,11 @@ p ()
 
 v ()
 {
+	set -x
 	if python2.7 $JAB_PYTHON/fim.py "$@"
-	then bash $JAB_PYTHON/fim.sh
+	then bash -x $JAB_PYTHON/fim.sh
 	fi
+	set +x
 }
 
 w ()
@@ -816,8 +818,13 @@ todo_edit ()
 		git_options=
 	fi
 	v $todo_txt
-	git $git_options add "$JAB_TODO"
-	git $git_options commit -m 'more or less stuff to be done' -- "$JAB_TODO"
+	if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"
+	then
+		git add $JAB_TODO
+		git commit -m'more or less stuff to be done' $JAB_TODO
+	elif svn stat "$JAB_TODO" 2>&1 | grep -q "M .* $JAB_TODO"
+	then svn ci -m'more or less stuff to be done' "$JAB_TODO"
+	fi
 }
 
 todo_show ()
