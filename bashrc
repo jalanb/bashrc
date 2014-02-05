@@ -8,7 +8,7 @@ source_file ()
 	shift
 	local optional=
 	[[ $1 == "optional" || $path_to_file =~ /local/ ]] && optional=1
-	
+
 	if [[ -z $path_to_file ]]
 	then
 		echo No file specified
@@ -59,9 +59,9 @@ source_jab ()
 	find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
 	find $JAB_GITHUB -name "viack" -exec /bin/chmod +w {} \;
 	local DEV_GITHUB=$JAB_GITHUB
-	[[ -d ~/src/github ]] && DEV_GITHUB=~/src/github
-	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn 
-	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn 
+	[[ -d ~/src/github ]] && DEV_GITHUB=~/src/git/hub
+	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
+	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
 	# update_jab
 	[[ -x $HOME/bin/python ]] && PYTHON=$HOME/bin/python
 	source_file $JAB/bin/add_to_a_path.sh
