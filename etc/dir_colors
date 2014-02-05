@@ -62,6 +62,9 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .bz2          00;34
 .deb          00;34
 .egg          00;34
+.gz           00;34
+.jar          00;34
+.iso          00;34
 .rpm          00;34
 .tar          00;34
 .tbz          00;34
@@ -71,9 +74,12 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
 # Text - Yellow
 .csv          00;33
+.doc          00;33
 .eml          00;33
 .log          00;33
 .md           00;33
+.odt          00;33
+.pdf          00;33
 .txt          00;33
 *README*      00;33
 *readme*      00;33
@@ -90,7 +96,9 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .mbr          00;36
 .m3u          00;36
 .png          00;36
+.rdf          00;36
 .xls          00;36
+.xlsx         00;36
 
 
 # Something else - YELLOW
