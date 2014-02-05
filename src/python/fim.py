@@ -161,7 +161,7 @@ def missing_extension(string):
 
 
 def extend(string):
-    known_extensions = ['py', 'sh', 'c', 'cpp',]
+    known_extensions = ['py', 'sh', 'c', 'cpp', ]
     for extension in known_extensions:
         extended_string = '%s%s' % (string, extension)
         yield extended_string
@@ -204,7 +204,9 @@ def get_globs(directory, glob):
     """A list of any files matching that glob in that directory"""
     if directory == '':
         directory = '.'
-    return [os.path.join(directory, f) for f in os.listdir(directory) if fnmatch(f, glob)]
+    return [os.path.join(directory, f)
+            for f in os.listdir(directory)
+            if fnmatch(f, glob)]
 
 
 def process_cwd(pid):
@@ -245,7 +247,7 @@ def vimming_files(pid, arg_string):
 def vimming_process(path_to_file):
     """Search for vim editting that file with the ps command"""
     filename = escape_quotes(os.path.basename(path_to_file))
-    command = 'ps -o pid,args | grep -v grep | grep "vim.*\s.*%s"' % (filename)
+    command = 'ps -o pid,args | grep -v grep | grep "vim.*\\s.*%s"' % filename
     output = commands.getoutput(command)
     if not output:
         return None, None
