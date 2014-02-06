@@ -59,7 +59,7 @@ source_jab ()
 	find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
 	find $JAB_GITHUB -name "viack" -exec /bin/chmod +w {} \;
 	local DEV_GITHUB=$JAB_GITHUB
-	[[ -d ~/src/github ]] && DEV_GITHUB=~/src/git/hub
+	[[ -d ~/src/git/hub ]] && DEV_GITHUB=~/src/git/hub
 	[[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
 	[[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
 	# update_jab
