@@ -47,6 +47,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
 # Other files found near code - LIGHT MAGENTA
 .beam         01;35
+.class        01;35
 .ezt          01;35
 .fail         01;35
 .htaccess     01;35

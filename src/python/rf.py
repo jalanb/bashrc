@@ -30,7 +30,7 @@ def get_globs(options):
     """A list of globs for all files to be deleted"""
     result = ['*~', '.*~', '*.orig', 'fred*', 'mary', '*.tmp', '*.bak', 'one', 'two', 'a.out']
     if options.python:
-        result.extend(['*.py[oc]', '*.fail'])
+        result.extend(['*.py[oc]', '*.fail', '*$py.class'])
     return result
 
 
