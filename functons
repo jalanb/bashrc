@@ -814,6 +814,10 @@ todo_edit ()
 	then
 		todo_txt=todo.txt
 		git_options=
+	elif [[ -f TODO.md ]]
+	then 
+		todo_txt=TODO.md
+		git_options=
 	fi
 	v $todo_txt
 	if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"
@@ -830,6 +834,8 @@ todo_show ()
 	local todo_txt="$JAB_TODO"
 	if [[ -f todo.txt ]]
 	then todo_txt=todo.txt
+	elif [[ -f TODO.md ]]
+	then todo_txt=TODO.md
 	fi
 	python2.7 $JAB_PYTHON/todo.py $todo_txt
 }
