@@ -16,8 +16,8 @@ gb ()
 gc ()
 {
 	if [[ -z "$@" ]]
-	then git commit -a -v
-	else git commit -v "$@"
+	then git commit --all --verbose
+	else git commit --verbose "$@"
 	fi
 }
 
