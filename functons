@@ -842,13 +842,6 @@ todo_show ()
 
 # xxxxxxxxxx
 
-to_source ()
-{
-	cd $SOURCE/"$@"
-	clear
-	ls
-}
-
 vim_diff ()
 {
 	one="$1"
@@ -865,13 +858,6 @@ vim_diff ()
 }
 
 # xxxxxxxxxx
-
-to_release ()
-{
-	cd $RELEASES/"$@"
-	clear
-	ls
-}
 
 # xxxxxxxxxxx
 
