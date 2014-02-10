@@ -108,6 +108,15 @@ def quote_finds(strings):
     return result
 
 
+def is_final_option(string):
+    """Whether that string means there will be no further options
+
+    >>> is_final_option('--')
+    True
+    """
+    return string == '--'
+
+
 def is_dash_option(string):
     """Whether that string looks like an option
 
@@ -132,6 +141,11 @@ def is_option(string):
     >>> is_option('-p') and is_option('+/sought')
     True
     """
+    end = 'finished'
+    if is_final_option(string):
+        setattr(is_option, end, True)
+    if getattr(is_option, end, False):
+        return False
     return is_dash_option(string) or is_plus_option(string)
 
 
@@ -311,13 +325,17 @@ def interpret(args):
     return text_files, options
 
 
+def _main_options(text_files, options):
+    if len(text_files) > 1 and '-p' not in options:
+        options.insert(0, '-p')
+    return quote_finds(options)
+
+
 def _main_command(executable, text_files, options):
     """Make a vim command for those files and options"""
     command_words = [executable]
     command_words.extend(quotes(text_files))
-    if len(text_files) > 1 and '-p' not in options:
-        options.insert(0, '-p')
-    command_words.extend(quote_finds(options))
+    command_words.extend(options)
     return ' '.join(command_words)
 
 
@@ -353,9 +371,10 @@ def main(args):
         text_files, options = interpret(args)
         vim_files = vimmable_files(text_files)
         if vim_files:
-            command = _main_command('$VIM_EDITOR', vim_files, options)
+            vim_options = _main_options(text_files, options)
+            command = _main_command('$VIM_EDITOR', vim_files, vim_options)
             add_to_script(command)
-            command = _main_command('post_vimming', vim_files, options)
+            command = _main_command('post_vimming', vim_files, [])
             add_to_script(command)
     except (OSError, IOError), e:
         print >> sys.stderr, e
