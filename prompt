@@ -12,7 +12,7 @@ then
 	export PROMPT_OPPOSITE_COLOUR="$PROMPT_CYAN"
 elif [ "$1" == "blue" ]
 then
-	export PROMPT_COLOUR="$PROMPT_BLUE"
+	export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
 	export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
 else
 	export PROMPT_COLOUR=none
@@ -62,6 +62,9 @@ prompt_command ()
 	fi
 	[[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
 	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
+    if which jython > /dev/null 2>&1
+    then python_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
+    fi
 	if [[ -n "$VIRTUAL_ENV" ]]
 	then python_version=${python_version}.$(basename $VIRTUAL_ENV)
 	fi
