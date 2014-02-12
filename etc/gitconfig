@@ -12,6 +12,7 @@
 [credential]
 	helper = store
 [alias]
+    ai = add --interactive
 	br = branch
 	ci = commit
 	co = checkout
