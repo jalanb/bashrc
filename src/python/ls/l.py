@@ -35,7 +35,7 @@ def common_start_dirs(a, b):
 
 
 def default_ignores():
-    ignores = set(svn.global_ignores())
+    ignores = svn.global_ignores()
     ignores.update(['*~', '.*.sw[lmnop]'])
     return list(ignores)
 
