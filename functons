@@ -430,6 +430,11 @@ fpy ()
 	fi
 }
 
+gv. ()
+{
+    PYTHONPATH=$(readlink -f .) gvim .
+}
+
 jjj ()
 {
 # ssh back to the jab.ook (which is my laptop
