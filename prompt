@@ -57,14 +57,13 @@ prompt_command ()
 	if [[ $? == 2 ]]
 	then
 		Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
-	#elif [[ $? == 3 ]]
 	else Dir="\$PWD"
 	fi
 	[[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
 	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
-    if which jython > /dev/null 2>&1
-    then python_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
-    fi
+	if which jython > /dev/null 2>&1
+	then python_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
+	fi
 	if [[ -n "$VIRTUAL_ENV" ]]
 	then python_version=${python_version}.$(basename $VIRTUAL_ENV)
 	fi
