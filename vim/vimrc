@@ -227,7 +227,8 @@ set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
 set ts=4
 set shiftwidth=4
-set noexpandtab
+set expandtab
+set smarttab
 set tabpagemax=1000
 set nospell
 "
