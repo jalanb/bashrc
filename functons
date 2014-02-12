@@ -583,7 +583,7 @@ vff ()
 
 vvv ()
 {
-	v $JAB/vim
+	v $JAB/vim/$1
 }
 
 wat ()
