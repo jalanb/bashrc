@@ -10,27 +10,27 @@ JAB=${JAB:-$HOME/.jab}
 
 usage ()
 {
-	ARGS="$*"
-	if [[ $# != 2 ]]
-	then
-		if [[ $# == 1 ]]
-		then
-			parts=$(echo $1 | tr '@' '\n' | wc -l)
-			if [[ $parts -eq 1 ]]
-			then
-				ARGS=$USER@$1
-			elif [[ $parts -ne 2 ]]
-			then
-				echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
-				exit 1
-			fi
-		fi
-	fi
+    ARGS="$*"
+    if [[ $# != 2 ]]
+    then
+        if [[ $# == 1 ]]
+        then
+            parts=$(echo $1 | tr '@' '\n' | wc -l)
+            if [[ $parts -eq 1 ]]
+            then
+                ARGS=$USER@$1
+            elif [[ $parts -ne 2 ]]
+            then
+                echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
+                exit 1
+            fi
+        fi
+    fi
 }
 
 main ()
 {
-	$PATH_TO_SCRIPTS/sst $ARGS -i $JAB_KEY -X
+    $PATH_TO_SCRIPTS/sst $ARGS -i $JAB_KEY -X
 }
 
 usage $*

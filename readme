@@ -2,41 +2,41 @@
 
 If I have any of these back them up now
 
-	rm -rf .ackrc
-	rm -rf .dir_colors
-	rm -rf .editrc
-	rm -rf .gitignore_global
-	rm -rf .inputrc
-	rm -rf .pylintrc
-	rm -rf .sackrc
-	rm -rf .py .pythonrc.py
-	rm -rf .vim
-	rm -rf .vimrc
-	rm -rf .vimpagerrc
+    rm -rf .ackrc
+    rm -rf .dir_colors
+    rm -rf .editrc
+    rm -rf .gitignore_global
+    rm -rf .inputrc
+    rm -rf .pylintrc
+    rm -rf .sackrc
+    rm -rf .py .pythonrc.py
+    rm -rf .vim
+    rm -rf .vimrc
+    rm -rf .vimpagerrc
 
 Go $HOME
-	
-	cd
+    
+    cd
 
 Check out from the main branch of the repository
 
-	git clone https://github.com/jalanb/dotjab.git .jab
+    git clone https://github.com/jalanb/dotjab.git .jab
 
 Run the setup script
 
-	cd .jab/server
-	bash setup.sh
+    cd .jab/server
+    bash setup.sh
 
 Or, as it is always "a work in progress" I might be better off with
-	cat setup.sh
+    cat setup.sh
 
 Link the dot files
 
-	cd -
-	bash bin/link_dots
+    cd -
+    bash bin/link_dots
 
 Whichever way gets it done, complete it by:
-	Logout and in
+    Logout and in
 
 
 Smile :-)

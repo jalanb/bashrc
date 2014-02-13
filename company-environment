@@ -7,12 +7,12 @@ unset PYTHONPATH
 
 if [[ -d /Users/jab ]]  # looks like OS X
 then
-	USER=abrogan
-	if [[ $1 != "local" ]]
-	then
-		if ! ping -c 1 -t 3 $EMPLOYER_SERVER >/dev/null 2>&1 
-		then
-			echo Cannot contact $EMPLOYER_SERVER
-		fi
-	fi
+    USER=abrogan
+    if [[ $1 != "local" ]]
+    then
+        if ! ping -c 1 -t 3 $EMPLOYER_SERVER >/dev/null 2>&1 
+        then
+            echo Cannot contact $EMPLOYER_SERVER
+        fi
+    fi
 fi

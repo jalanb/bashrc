@@ -4,83 +4,83 @@
 export PROMPT_COLOUR=none
 if [ "$1" == "green" ]
 then
-	export PROMPT_COLOUR="$PROMPT_GREEN"
-	export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
+    export PROMPT_COLOUR="$PROMPT_GREEN"
+    export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
 elif [ "$1" == "red" ]
 then
-	export PROMPT_COLOUR="$PROMPT_RED"
-	export PROMPT_OPPOSITE_COLOUR="$PROMPT_CYAN"
+    export PROMPT_COLOUR="$PROMPT_RED"
+    export PROMPT_OPPOSITE_COLOUR="$PROMPT_CYAN"
 elif [ "$1" == "blue" ]
 then
-	export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
-	export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
+    export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
+    export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
 else
-	export PROMPT_COLOUR=none
+    export PROMPT_COLOUR=none
 fi
 
 changes=0
 
 get_repo_status ()
 {
-	GIT_BRANCH=
-	local significant_svn_status=$JAB_PYTHON/significant_svn_status.py
-	test -f $significant_svn_status || return 1
-	if python $significant_svn_status .
-	then
-		export changes=1
-		return 2
-	elif git branch > /dev/null 2>&1
-	then
-		GIT_BRANCH=$(git branch 2>/dev/null | grep '^*' | sed -e 's/* //')
-		if git status | grep -q "nothing to commit"
-		then return 3
-		else
-			GIT_BRANCH=${PROMPT_OPPOSITE_COLOUR}${GIT_BRANCH}${PROMPT_COLOUR}
-		 	return 2
-		fi
-	fi
+    GIT_BRANCH=
+    local significant_svn_status=$JAB_PYTHON/significant_svn_status.py
+    test -f $significant_svn_status || return 1
+    if python $significant_svn_status .
+    then
+        export changes=1
+        return 2
+    elif git branch > /dev/null 2>&1
+    then
+        GIT_BRANCH=$(git branch 2>/dev/null | grep '^*' | sed -e 's/* //')
+        if git status | grep -q "nothing to commit"
+        then return 3
+        else
+            GIT_BRANCH=${PROMPT_OPPOSITE_COLOUR}${GIT_BRANCH}${PROMPT_COLOUR}
+            return 2
+        fi
+    fi
 }
 
 prompt_command ()
 {
-	if [ -z "$1" ]
-	then
-		how_do_you_do_nothing_in_a_bash_script=0
-	elif [[ $1 == 0 ]]
-	then
-		export STATUS="${PROMPT_GREEN}$1${PROMPT_NO_COLOUR}"
-	else
-		export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
-	fi
-	changes=0
-	[[ -n $IGNORE_CHANGES ]] || get_repo_status
-	if [[ $? == 2 ]]
-	then
-		Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
-	else Dir="\$PWD"
-	fi
-	[[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
-	local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
-	if which jython > /dev/null 2>&1
-	then python_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
-	fi
-	if [[ -n "$VIRTUAL_ENV" ]]
-	then python_version=${python_version}.$(basename $VIRTUAL_ENV)
-	fi
-	console_whoami 2>/dev/null
-	# local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
-	export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
-	history -a
+    if [ -z "$1" ]
+    then
+        how_do_you_do_nothing_in_a_bash_script=0
+    elif [[ $1 == 0 ]]
+    then
+        export STATUS="${PROMPT_GREEN}$1${PROMPT_NO_COLOUR}"
+    else
+        export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
+    fi
+    changes=0
+    [[ -n $IGNORE_CHANGES ]] || get_repo_status
+    if [[ $? == 2 ]]
+    then
+        Dir="${PROMPT_OPPOSITE_COLOUR}\${PWD}${PROMPT_COLOUR}"
+    else Dir="\$PWD"
+    fi
+    [[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
+    local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
+    if which jython > /dev/null 2>&1
+    then python_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
+    fi
+    if [[ -n "$VIRTUAL_ENV" ]]
+    then python_version=${python_version}.$(basename $VIRTUAL_ENV)
+    fi
+    console_whoami 2>/dev/null
+    # local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
+    export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@\h:$Dir]${PROMPT_NO_COLOUR}\n$ "
+    history -a
 }
 
 if [[ -n "$MYVIMRC" ]]
 then
-	export PS1="\$? [\u@\h:\$PWD]\n$ "
-	export PROMPT_COMMAND='prompt_command $?'
+    export PS1="\$? [\u@\h:\$PWD]\n$ "
+    export PROMPT_COMMAND='prompt_command $?'
 elif [[ "$PROMPT_COLOUR" == "none" ]]
 then
-	unset PROMPT_COMMAND
-	export PS1="\$? [\u@\h:\$PWD]\n$ "
+    unset PROMPT_COMMAND
+    export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
-	export PROMPT_COMMAND='prompt_command $?'
+    export PROMPT_COMMAND='prompt_command $?'
 fi

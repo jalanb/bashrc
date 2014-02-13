@@ -43,29 +43,29 @@ export XAUTHORITY=$HOME/.Xauthority
 
 if [[ -f /usr/local/bin/gls ]]
 then
-	LS_PROGRAM=/usr/local/bin/gls
-	DIRCOLORS=/usr/local/bin/gdircolors
+    LS_PROGRAM=/usr/local/bin/gls
+    DIRCOLORS=/usr/local/bin/gdircolors
 else
-	LS_PROGRAM=/bin/ls
-	if [[ -f /usr/bin/dircolors ]]
-	then DIRCOLORS=/usr/bin/dircolors
-	fi
+    LS_PROGRAM=/bin/ls
+    if [[ -f /usr/bin/dircolors ]]
+    then DIRCOLORS=/usr/bin/dircolors
+    fi
 fi
 
 if $LS_PROGRAM -@ >/dev/null 2>&1 
 then
-	export LS_COLOUR_OPTION='-@'
+    export LS_COLOUR_OPTION='-@'
 elif $LS_PROGRAM --color=auto >/dev/null 2>&1
 then
-	export LS_COLOUR_OPTION='--color=auto'
+    export LS_COLOUR_OPTION='--color=auto'
 else
-	export LS_COLOUR_OPTION=
+    export LS_COLOUR_OPTION=
 fi
 if $LS_PROGRAM --group-directories-first >/dev/null 2>&1
 then
-	export LS_DIRS_OPTION='--group-directories-first'
+    export LS_DIRS_OPTION='--group-directories-first'
 else
-	export LS_DIRS_OPTION=
+    export LS_DIRS_OPTION=
 fi
 [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 
@@ -87,9 +87,9 @@ export PS1
 
 if [ -x /usr/local/bin/which ]
 then
-	export WHICH=/usr/local/bin/which
+    export WHICH=/usr/local/bin/which
 else
-	export WHICH=/usr/bin/which
+    export WHICH=/usr/bin/which
 fi
 export EDITOR=`$WHICH vim`
 export EMAIL="al@al-got-rhythm.net"
