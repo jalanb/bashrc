@@ -125,7 +125,7 @@ jab_bashrc()
         builtin cd $JAB
         source_jab
         clean_jab
-        [[ $USER == "builder" ]] || welcome_home
+        welcome_home
     fi
     source_file ~/.oldpwd optional
 }

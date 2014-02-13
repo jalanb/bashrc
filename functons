@@ -192,11 +192,6 @@ ra ()
     run_as abrogan "$@"
 }
 
-rb ()
-{
-    run_as builder "$@"
-}
-
 rf ()
 {
     PYTHON_SCRIPT=$JAB_PYTHON/rf.py
