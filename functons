@@ -432,7 +432,7 @@ fpy ()
 
 gv. ()
 {
-    PYTHONPATH=$(readlink -f .) gvim .
+    PYTHONPATH=$(readlink -f .) gvim . 2>> ~/log/gvim.log
 }
 
 jjj ()
@@ -704,7 +704,8 @@ vvvb ()
 
 vvvg ()
 {
-	gv $JAB/vim/gvimrc
+    date >> ~/log/gvim.log
+	gv $JAB/vim/gvimrc 2>> ~/log/gvim.log
 }
 
 vvvp ()
