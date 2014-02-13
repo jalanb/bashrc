@@ -96,7 +96,9 @@ cv ()
 
 ff ()
 {
-    first_dir "$@"
+    if first_dir "$@"
+    then shift
+    fi
     name=$1
     shift
     for path in $(find $dir -name $name -print)
@@ -142,7 +144,9 @@ gh ()
 
 gv ()
 {
-    gvim "$@"
+    date >> ~/log/gvim.log
+    echo gvim "$@" >> ~/log/gvim.log
+    gvim "$@" 2>> ~/log/gvim.log
 }
 
 hh ()
@@ -432,7 +436,7 @@ fpy ()
 
 gv. ()
 {
-    PYTHONPATH=$(readlink -f .) gvim . 2>> ~/log/gvim.log
+    PYTHONPATH=$(readlink -f .) gv .
 }
 
 jjj ()
@@ -704,8 +708,7 @@ vvvb ()
 
 vvvg ()
 {
-    date >> ~/log/gvim.log
-    gv $JAB/vim/gvimrc 2>> ~/log/gvim.log
+    gv $JAB/vim/gvimrc
 }
 
 vvvp ()
