@@ -34,7 +34,7 @@ h()
 p ()
 {
     local me=$USER
-    local here=$(hostname -s)
+    local here=$(jostname)
     export PYTHON=${PYTHON-python}
     console_title_on "python@${here}" && \
         $PYTHON "$@" && \
@@ -645,7 +645,7 @@ SUDO ()
         you_sir=root
     fi
     me=$USER
-    here=$(hostname -s)
+    here=$(jostname)
     console_title_on "${you_sir}@${here}" && \
         sudo -i $user && \
         console_title_off "${me}@${here}"
@@ -810,6 +810,11 @@ cleanest ()
     clean -pqr "$@"
 }
 
+jostname ()
+{
+    echo ${HOSTNAME:-$(hostname -s)}
+}
+
 todo_edit ()
 {
     local todo_txt="$JAB_TODO"
@@ -880,7 +885,7 @@ blank_script ()
 
 console_whoami ()
 {
-    console_title_on $USER@$(hostname -s)...$(basename $PWD)
+    console_title_on $USER@$(jostname)...$(basename $PWD)
 }
 
 source_aliases ()
