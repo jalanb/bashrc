@@ -8,613 +8,618 @@
 
 c ()
 {
-	kd "$@"
-	value=$?
-	if [[ -f todo.txt ]]
-	then
-		todo_show
-	fi
-	return $value
+    kd "$@"
+    value=$?
+    if [[ -f todo.txt ]]
+    then
+        todo_show
+    fi
+    return $value
 }
 
 f ()
 {
-	first_dir "$@"
-	name=$1
-	shift
-	find $dir -name "$name" -print
+    first_dir "$@"
+    name=$1
+    shift
+    find $dir -name "$name" -print
 }
 
 h()
 {
-	local lines=${1:-25}
-	history | tail -n $lines
+    local lines=${1:-25}
+    history | tail -n $lines
 }
 
 p ()
 {
-	local me=$USER
-	local here=$(hostname -s)
-	export PYTHON=${PYTHON-python}
-	console_title_on "python@${here}" && \
-		$PYTHON "$@" && \
-		console_title_off "${me}@${here}"
+    local me=$USER
+    local here=$(hostname -s)
+    export PYTHON=${PYTHON-python}
+    console_title_on "python@${here}" && \
+        $PYTHON "$@" && \
+        console_title_off "${me}@${here}"
 }
 
 v ()
 {
-	if python2.7 $JAB_PYTHON/fim.py "$@"
-	then bash $JAB_PYTHON/fim.sh
-	fi
+    if python2.7 $JAB_PYTHON/fim.py "$@"
+    then bash $JAB_PYTHON/fim.sh
+    fi
 }
 
 w ()
 {
-	what "$@"
+    what "$@"
 }
 
 x ()
 {
-	/Users/jab/bin/exercise
+    /Users/jab/bin/exercise
 }
 
 y ()
 {
-	clear
-	python $JAB_PYTHON/y.py "$@"
+    clear
+    python $JAB_PYTHON/y.py "$@"
 }
 
 # xx
 
 3d ()
 {
-	tree -d "$@" | less
+    tree -d "$@" | less
 }
 
 IP ()
 {
-	for number in 172 192 100
-	do
-		if python $JAB_PYTHON/ifconfig.py $number
-		then break
-		fi
-	done
+    for number in 172 192 100
+    do
+        if python $JAB_PYTHON/ifconfig.py $number
+        then break
+        fi
+    done
 }
 
 cl ()
 {
-	if c "$@"
-	then ls
-	fi
+    if c "$@"
+    then ls
+    fi
 }
 
 cv ()
 {
-	kd $1
-	fim $(basename $1)
+    kd $1
+    fim $(basename $1)
 }
 
 ff ()
 {
-	first_dir "$@"
-	name=$1
-	shift
-	for path in $(find $dir -name $name -print)
-	do
-		echo cd $path
-		if [[ -f $path ]]
-		then builtin cd $(dirname $path)
-		else builtin cd $path
-		fi
-	done
+    first_dir "$@"
+    name=$1
+    shift
+    for path in $(find $dir -name $name -print)
+    do
+        echo cd $path
+        if [[ -f $path ]]
+        then builtin cd $(dirname $path)
+        else builtin cd $path
+        fi
+    done
 }
 
 fv ()
 {
-	first_dir "$@"
-	name=$1
-	shift
-	find $dir -name $name -exec vim {} \;
+    first_dir "$@"
+    name=$1
+    shift
+    find $dir -name $name -exec vim {} \;
 }
 
 gg ()
 {
-	local readme="show grep results as vim commands"
-	sought="$1"
-	shift
-	grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+    local readme="show grep results as vim commands"
+    sought="$1"
+    shift
+    grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
 gp ()
 {
-	local __doc__="grep in python files under here, show results as vim commands"
-	sought=$1
-	shift
-	seek=${sought//\\/\\\\}
-	find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):vim \1 +/\"$seek\":" | sort | uniq
+    local __doc__="grep in python files under here, show results as vim commands"
+    sought=$1
+    shift
+    seek=${sought//\\/\\\\}
+    find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):vim \1 +/\"$seek\":" | sort | uniq
 }
 
 gh ()
 {
-	local __doc__="show stuff from history"
-	history | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
+    local __doc__="show stuff from history"
+    history | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
 }
 
 gv ()
 {
-	gvim "$@"
+    gvim "$@"
 }
 
 hh ()
 {
-	history -n
+    history -n
 }
 
 hv ()
 {
-	history | vim - +
+    history | vim - +
 }
 
 ky ()
 {
-	first_dir "$@"
-	dir=${dir:-$PYTHON_HOME}
-	kd $dir
-	y "$@"
+    first_dir "$@"
+    dir=${dir:-$PYTHON_HOME}
+    kd $dir
+    y "$@"
 }
 
 pi ()
 {
-	if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]
-	then ipython --no-confirm-exit "$@"
-	else ipython -noconfirm_exit "$@"
-	fi
+    if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]
+    then ipython --no-confirm-exit "$@"
+    else ipython -noconfirm_exit "$@"
+    fi
 }
 
 py ()
 {
-	if [[ -z "$@" ]]
-	then
-		python2.7
-	else
-		script=${1/%./.py}
-		shift
-		python $script "$@"
-	fi
+    if [[ -z "$@" ]]
+    then
+        python2.7
+    else
+        script=${1/%./.py}
+        shift
+        python $script "$@"
+    fi
 }
 
 ra ()
 {
-	run_as abrogan "$@"
+    run_as abrogan "$@"
 }
 
 rb ()
 {
-	run_as builder "$@"
+    run_as builder "$@"
 }
 
 rf ()
 {
-	PYTHON_SCRIPT=$JAB_PYTHON/rf.py
-	python $PYTHON_SCRIPT "$@"
+    PYTHON_SCRIPT=$JAB_PYTHON/rf.py
+    python $PYTHON_SCRIPT "$@"
 }
 
 ru ()
 {
 # do da root root route, do da ru !
-	if [ -z "$@" ]
-	then 
-		SUDO
-	else
-		sudo "$@"
-	fi
+    if [ -z "$@" ]
+    then 
+        SUDO
+    else
+        sudo "$@"
+    fi
 }
 
 tf ()
 {
-	if [ $? -eq 0 ]
-	then echo "true"
-	else echo "false"
-	fi
+    if [ $? -eq 0 ]
+    then echo "true"
+    else echo "false"
+    fi
 }
 
 uj ()
 {
 # update $JAB from the repository
-	if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]
-	then
-		BACK=$(pwd)
-		if [[ $BACK != "$JAB" ]]
-		then
-			cd $JAB
-			. bashrc
-			cd $BACK
-		else
-			. bashrc
-		fi
-	fi
+    if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]
+    then
+        BACK=$(pwd)
+        if [[ $BACK != "$JAB" ]]
+        then
+            cd $JAB
+            . bashrc
+            cd $BACK
+        else
+            . bashrc
+        fi
+    fi
 }
 
 hd ()
 {
-	if [[ -n "$3" ]]
-	then vim_diff "$1" "$2" "$3" -o
-	else vim_diff "$1" "$2" -o
-	fi
+    if [[ -n "$3" ]]
+    then vim_diff "$1" "$2" "$3" -o
+    else vim_diff "$1" "$2" -o
+    fi
 }
 
 v. ()
 {
-	v .
+    v .
 }
 
 va ()
 {
-	_edit_jab aliases
+    _edit_jab aliases
 }
 
 vb ()
 {
-	_edit_jab bashrc
+    _edit_jab bashrc
 }
 
 vd ()
 {
-	if [[ -n "$3" ]]
-	then vim_diff "$1" "$2" "$3" -O
-	else vim_diff "$1" "$2" -O
-	fi
+    if [[ -n "$3" ]]
+    then vim_diff "$1" "$2" "$3" -O
+    else vim_diff "$1" "$2" -O
+    fi
 }
 
 ve ()
 {
-	_edit_jab environ
+    _edit_jab environ
 }
 
 vf ()
 {
-	_edit_jab functons
+    _edit_jab functons
 }
 
 vh ()
 {
-	v ~/.bash_history +
+    v ~/.bash_history +
 }
 
 vj ()
 {
-	v $JAB
+    v $JAB
 }
 
 vp ()
 {
-	_edit_jab prompt "$@"
+    _edit_jab prompt "$@"
 }
 
 vr ()
 {
-	set -x
-	if [[ -n $1 && -f $1 ]]
-	then
-		filename=$1
-	elif [[ -f errors.err ]]
-	then
-		echo "filename = ./errors.err"
-		filename=./errors.err
-	elif [[ -f ~/errors.err ]]
-	then
-		echo "filename = ${HOME}/errors.err"
-		filename=${HOME}/errors.err
-	elif [[ -f /tmp/errors.err ]]
-	then
-		echo "filename = /tmp/errors.err"
-		filename=/tmp/errors.err
-	fi
-	vim -c "call ReadTraceback(\"$filename\")"
-	set +x
+    set -x
+    if [[ -n $1 && -f $1 ]]
+    then
+        filename=$1
+    elif [[ -f errors.err ]]
+    then
+        echo "filename = ./errors.err"
+        filename=./errors.err
+    elif [[ -f ~/errors.err ]]
+    then
+        echo "filename = ${HOME}/errors.err"
+        filename=${HOME}/errors.err
+    elif [[ -f /tmp/errors.err ]]
+    then
+        echo "filename = /tmp/errors.err"
+        filename=/tmp/errors.err
+    fi
+    vim -c "call ReadTraceback(\"$filename\")"
+    set +x
 }
 
 vt ()
 {
-	first_dir "$@"
-	v -p "$dir"/*.txt
+    first_dir "$@"
+    v -p "$dir"/*.txt
 }
 
 vv ()
 {
-	v $JAB_PYTHON/fim.py
+    v $JAB_PYTHON/fim.py
 }
 
 vy ()
 {
-	v $PYTHON_HOME
+    v $PYTHON_HOME
 }
 
 zm ()
 {
-	du -cms $1 | sort -n | sed -e "s/      / M     /g"
+    du -cms $1 | sort -n | sed -e "s/      / M     /g"
 }
 
 # xxx
 
 cff ()
 {
-	if [[ ! -d fred ]]
-	then
-		if [[ -e fred ]]
-		then rm -f fred
-		fi
-		mkdir fred
-	fi
-	cd fred
+    if [[ ! -d fred ]]
+    then
+        if [[ -e fred ]]
+        then rm -f fred
+        fi
+        mkdir fred
+    fi
+    cd fred
 }
 
 
 clo ()
 {
-	c $(locate "$@")
+    c $(locate "$@")
 }
 
 cls ()
 {
 # clean, clear, ls
-	rf -q
-	clear
-	if [ -z "$@" ]
-	then
-	    ls -d $(pwd)
-	    echo
-	fi
-	ls "$@"
+    rf -q
+    clear
+    if [ -z "$@" ]
+    then
+        ls -d $(pwd)
+        echo
+    fi
+    ls "$@"
 }
 
 dev ()
 {
-	if [[ -d ~/dev ]]
-	then
-		echo ~/dev exists
-		echo 
-		here=$PWD
-		cd ~/dev
-		ls
-		cd $here
-		echo You may wish to try
-		echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
-	fi
-	[[ ! -d ~/src ]] && mkdir ~/src
-	c ~/src "$@"
-	ls
+    if [[ -d ~/dev ]]
+    then
+        echo ~/dev exists
+        echo 
+        here=$PWD
+        cd ~/dev
+        ls
+        cd $here
+        echo You may wish to try
+        echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
+    fi
+    [[ ! -d ~/src ]] && mkdir ~/src
+    c ~/src "$@"
+    ls
 }
 
 fgp ()
 {
-	fgv *.py "$@"
+    fgv *.py "$@"
 }
 
 fgt ()
 {
-	fgv *.test *.tests "$@"
+    fgv *.test *.tests "$@"
 }
 
 fsh ()
 {
 # run fred by his extension
-	if [ -f fred.sh ]
-	then
-		bash fred.sh "$@"
-	elif [ -f fred.py ]
-	then
-		p fred.py "$@"
-	elif [ -f "fred.test" ]
-	then
-		try "fred.test" "$@"
-	elif [ -f fred.c ]
-	then
-		/bin/rm -vf a.out
-		gcc fred.c
-		if [ -f a.out ]
-		then
-			./a.out
-		fi
-	else
-		bash fred "$@"
-	fi
+    if [ -f fred.sh ]
+    then
+        bash fred.sh "$@"
+    elif [ -f fred.py ]
+    then
+        p fred.py "$@"
+    elif [ -f "fred.test" ]
+    then
+        try "fred.test" "$@"
+    elif [ -f fred.c ]
+    then
+        /bin/rm -vf a.out
+        gcc fred.c
+        if [ -f a.out ]
+        then
+            ./a.out
+        fi
+    else
+        bash fred "$@"
+    fi
 }
 
 fpy ()
 {
 # run fred.py if fred.sh exists
-	if [ -f fred.py ]
-	then
-		p fred.py "$@"
-	fi
+    if [ -f fred.py ]
+    then
+        p fred.py "$@"
+    fi
+}
+
+gv. ()
+{
+    PYTHONPATH=$(readlink -f .) gvim . 2>> ~/log/gvim.log
 }
 
 jjj ()
 {
 # ssh back to the jab.ook (which is my laptop
 # it goes by different hostnames, try in order of probablity
-	local jjj_host=
-	if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
-	then
-		jjj_host=jab.ook
-	fi
-	if [[ -z $jjj_host ]]
-	then
-		echo Could not ping jab.ook
-	else
-		ssj jab $jjj_host
-	fi
+    local jjj_host=
+    if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
+    then
+        jjj_host=jab.ook
+    fi
+    if [[ -z $jjj_host ]]
+    then
+        echo Could not ping jab.ook
+    else
+        ssj jab $jjj_host
+    fi
 }
 
 
 jjy ()
 {
-	ky $JAB_PYTHON "$@"
+    ky $JAB_PYTHON "$@"
 }
 
 . $JAB/bin/first_dir
 
 llt ()
 {
-	first_dir "$@"
-	l --color=always -lhtr "$dir" | less -R -m -N +G
+    first_dir "$@"
+    l --color=always -lhtr "$dir" | less -R -m -N +G
 }
 
 lly ()
 {
-	first_dir "$@"
-	reset=$(shopt -p dotglob)
-	shopt -s dotglob
-	ls -lhtr "$dir"/*.tests
-	echo
-	ls -lhtr "$dir"/*.test
-	echo
-	ls -lhtr "$dir"/*.py
-	$reset
+    first_dir "$@"
+    reset=$(shopt -p dotglob)
+    shopt -s dotglob
+    ls -lhtr "$dir"/*.tests
+    echo
+    ls -lhtr "$dir"/*.test
+    echo
+    ls -lhtr "$dir"/*.py
+    $reset
 }
 
 lyy ()
 {
-	reset=$(shopt -p dotglob)
-	shopt -s dotglob
-	ls -xd $(ls -F |grep \/$)
-	echo
-	ls -xhtr *.tests 2>/dev/null
-	echo
-	ls -xhtr *.test 2>/dev/null
-	echo
-	ls -xhtr *.py 2>/dev/null
-	$reset
+    reset=$(shopt -p dotglob)
+    shopt -s dotglob
+    ls -xd $(ls -F |grep \/$)
+    echo
+    ls -xhtr *.tests 2>/dev/null
+    echo
+    ls -xhtr *.test 2>/dev/null
+    echo
+    ls -xhtr *.py 2>/dev/null
+    $reset
 }
 
 rff ()
 {
-	r fred
-	r fred.*
+    r fred
+    r fred.*
 }
 
 rfq ()
 {
-	rq fred
-	rq fred.*
+    rq fred
+    rq fred.*
 }
 
 rq. ()
 {
-	/bin/rm -rf ./*
+    /bin/rm -rf ./*
 }
 
 unalias try > /dev/null 2>&1
 try ()
 {
-	TRY=$JAB_PYTHON/testing/try.py
-	test -f ./try.py && TRY=./try.py
-	python $TRY "$@"
+    TRY=$JAB_PYTHON/testing/try.py
+    test -f ./try.py && TRY=./try.py
+    python $TRY "$@"
 }
 
 vib ()
 {
-	$EDITOR ~/.bashrc
-	source_file ~/.bashrc
+    $EDITOR ~/.bashrc
+    source_file ~/.bashrc
 }
 
 vla ()
 {
-	_edit_locals aliases
+    _edit_locals aliases
 }
 
 vlb ()
 {
-	_edit_locals bashrc
+    _edit_locals bashrc
 }
 
 vle ()
 {
-	_edit_locals environ
+    _edit_locals environ
 }
 
 vlf ()
 {
-	_edit_locals functons
+    _edit_locals functons
 }
 
 vlp ()
 {
-	_edit_locals prompt
+    _edit_locals prompt
 }
 
 vpe ()
 {
-	v $JAB/python-environ
-	spe
+    v $JAB/python-environ
+    spe
 }
 
 
 vff ()
 {
-	FRED=
-	found_fred=0
-	test -f fred && FRED=fred
-	if [[ -n $FRED ]]
-	then
-		found_fred=1
-	fi
-	found_wild=0
-	for f in fred*[^~]
-	do
-		test -f $f && found_wild=1
-	done
-	if [[ $found_fred == 1 && $found_wild == 1 ]]
-	then 
-		v -p fred fred*[^~]
-	elif [[ $found_wild == 1 ]]
-	then 
-		v -p fred*[^~] 
-	else
-		v fred
-	fi
+    FRED=
+    found_fred=0
+    test -f fred && FRED=fred
+    if [[ -n $FRED ]]
+    then
+        found_fred=1
+    fi
+    found_wild=0
+    for f in fred*[^~]
+    do
+        test -f $f && found_wild=1
+    done
+    if [[ $found_fred == 1 && $found_wild == 1 ]]
+    then 
+        v -p fred fred*[^~]
+    elif [[ $found_wild == 1 ]]
+    then 
+        v -p fred*[^~] 
+    else
+        v fred
+    fi
 }
 
 vvv ()
 {
-	v $JAB/vim
+    v $JAB/vim/$1
 }
 
 wat ()
 {
-	vat $(which $1)
+    vat $(which $1)
 }
 
 # xxxx
 
 bump ()
 {
-	part=${1:-patch}
-	bumpversion $part
-	git push origin --tags
-	grep current_version .bumpversion.cfg
+    part=${1:-patch}
+    bumpversion $part
+    git push origin --tags
+    grep current_version .bumpversion.cfg
 }
 
 down ()
 {
-	c ~/Download* "$@"
-	ls -alhtr
+    c ~/Download* "$@"
+    ls -alhtr
 }
 
 fgpp ()
 {
-	fgv *.py *.test *.tests "$@"
+    fgv *.py *.test *.tests "$@"
 }
 
 jjya ()
 {
-	jjy alanology
+    jjy alanology
 }
 
 jjys ()
 {
-	jjy site
+    jjy site
 }
 
 mkcd () 
@@ -625,150 +630,151 @@ mkcd ()
 
 rq.. ()
 {
-	local directory_here=$(basename "$(pwd)")
-	cd ..
-	/bin/rm -rf "$directory_here"
+    local directory_here=$(basename "$(pwd)")
+    cd ..
+    /bin/rm -rf "$directory_here"
 }
 
 SUDO ()
 {
-	if [[ -n $1 ]]
-	then
-		user="-u $1"
-		you_sir="$1"
-	else
-		user=
-		you_sir=root
-	fi
-	me=$USER
-	here=$(hostname -s)
-	console_title_on "${you_sir}@${here}" && \
-		sudo -i $user && \
-		console_title_off "${me}@${here}"
+    if [[ -n $1 ]]
+    then
+        user="-u $1"
+        you_sir="$1"
+    else
+        user=
+        you_sir=root
+    fi
+    me=$USER
+    here=$(hostname -s)
+    console_title_on "${you_sir}@${here}" && \
+        sudo -i $user && \
+        console_title_off "${me}@${here}"
 }
 
 dicp ()
 {
-	COMMAND_FOR_SAME_FILES=cp
-	dixx "$1" "$2"
+    COMMAND_FOR_SAME_FILES=cp
+    dixx "$1" "$2"
 }
 
 dihh ()
 {
-	COMMAND_FOR_SAME_FILES=hd
-	dixx "$@"
+    COMMAND_FOR_SAME_FILES=hd
+    dixx "$@"
 }
 
 divv ()
 {
-	COMMAND_FOR_SAME_FILES=vd
-	dixx "$@"
+    COMMAND_FOR_SAME_FILES=vd
+    dixx "$@"
 }
 
 dixx ()
 {
-	source_dir="$1"
-	destination_dir="$2"
-	local number_in_both=$(_divv_get_difference | grep Files | wc -l)
-	if [[ $number_in_both -gt 0 ]]
-	then
-		echo
-		echo "# Files 1 and 2 differ"
-		_divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
-	fi
-	local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
-	if [[ $number_in_source -gt 0 ]]
-	then
-		echo
-		echo "Only in $source_dir"
-		_divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
-	fi
-	local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
-	if [[ $number_in_destination -gt 0 ]]
-	then
-		echo
-		echo "Only in $destination_dir"
-		_divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
-	fi
+    source_dir="$1"
+    destination_dir="$2"
+    local number_in_both=$(_divv_get_difference | grep Files | wc -l)
+    if [[ $number_in_both -gt 0 ]]
+    then
+        echo
+        echo "# Files 1 and 2 differ"
+        _divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
+    fi
+    local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
+    if [[ $number_in_source -gt 0 ]]
+    then
+        echo
+        echo "Only in $source_dir"
+        _divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+    fi
+    local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
+    if [[ $number_in_destination -gt 0 ]]
+    then
+        echo
+        echo "Only in $destination_dir"
+        _divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+    fi
 }
 
 vvvb ()
 {
-	v $JAB/vim/ftplugin/sh.vim
+    v $JAB/vim/ftplugin/sh.vim
 }
 
 vvvg ()
 {
-	gv $JAB/vim/gvimrc
+    date >> ~/log/gvim.log
+    gv $JAB/vim/gvimrc 2>> ~/log/gvim.log
 }
 
 vvvp ()
 {
-	v $JAB/vim/ftplugin/python
+    v $JAB/vim/ftplugin/python
 }
 
 vvvv ()
 {
-	v $JAB/vim/vimrc
+    v $JAB/vim/vimrc
 }
 
 vvvy ()
 {
-	v $JAB/vim/ftplugin/python/jab.vim
+    v $JAB/vim/ftplugin/python/jab.vim
 }
 
 # xxxxx
 
 build ()
 {
-	if [[ -f build.sh ]]
-	then bash build.sh "$@"
-	elif [[ -f Makefile ]]
-	then make "$@"
-	fi
+    if [[ -f build.sh ]]
+    then bash build.sh "$@"
+    elif [[ -f Makefile ]]
+    then make "$@"
+    fi
 }
 
 clean ()
 {
-	rf -q "$@"
+    rf -q "$@"
 }
 
 detab ()
 {
-	if [[ -f $1 ]]
-	then
-		if grep -Pq "^\s*\t\s*[^ \t]" $1
-		then
-			expand -i --tabs=4 $1 > /tmp/txt                                                                                                
-			mv /tmp/txt $1
-			echo detabbed
-		else
-			echo no tabs
-		fi
-	else
-		echo not a file $1
-	fi
+    if [[ -f $1 ]]
+    then
+        if grep -Pq "^\s*\t\s*[^ \t]" $1
+        then
+            expand -i --tabs=4 $1 > /tmp/txt                                                                                                
+            mv /tmp/txt $1
+            echo detabbed
+        else
+            echo no tabs
+        fi
+    else
+        echo not a file $1
+    fi
 }
 
 kodos ()
 {
-	pushd ~/bin/kodos-2.4.9/ >/dev/null
-	/usr/bin/python kodos.py &
-	popd >/dev/null
+    pushd ~/bin/kodos-2.4.9/ >/dev/null
+    /usr/bin/python kodos.py &
+    popd >/dev/null
 }
 
 named ()
 {
-	dir=
-	if first_dir $1
-	then shift
-	fi
-	find $dir -name "$@"
+    dir=
+    if first_dir $1
+    then shift
+    fi
+    find $dir -name "$@"
 }
 
 vfile ()
 {
-	$(echo "$@" | sed -e"s/up to //" -e"s/^File/v/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
+    $(echo "$@" | sed -e"s/up to //" -e"s/^File/v/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
 }
 
 # xxxxx
@@ -777,101 +783,87 @@ vfile ()
 
 bright ()
 {
-	sed -i -e/color/d ~/.vimrc
+    sed -i -e/color/d ~/.vimrc
 }
 
 run_as ()
 {
-	username=$1
-	shift
-	if [[ -n "$1" ]]
-	then 
-		sudo -u $username "$@"
-	else
-		SUDO $username
-	fi
+    username=$1
+    shift
+    if [[ -n "$1" ]]
+    then 
+        sudo -u $username "$@"
+    else
+        SUDO $username
+    fi
 }
 
 # xxxxxxx
 
 cleaner ()
 {
-	rf -qr "$@"
+    rf -qr "$@"
 }
 
 # xxxxxxxx
 
 cleanest ()
 {
-	clean -pqr "$@"
+    clean -pqr "$@"
 }
 
 todo_edit ()
 {
-	local todo_txt="$JAB_TODO"
-	local git_options="--git-dir=$JAB/.git --work-tree=$JAB"
-	if [[ -f todo.txt ]]
-	then
-		todo_txt=todo.txt
-		git_options=
-	elif [[ -f TODO.md ]]
-	then 
-		todo_txt=TODO.md
-		git_options=
-	fi
-	v $todo_txt
-	if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"
-	then
-		git add $JAB_TODO
-		git commit -m'more or less stuff to be done' $JAB_TODO
-	elif svn stat "$JAB_TODO" 2>&1 | grep -q "M .* $JAB_TODO"
-	then svn ci -m'more or less stuff to be done' "$JAB_TODO"
-	fi
+    local todo_txt="$JAB_TODO"
+    local git_options="--git-dir=$JAB/.git --work-tree=$JAB"
+    if [[ -f todo.txt ]]
+    then
+        todo_txt=todo.txt
+        git_options=
+    elif [[ -f TODO.md ]]
+    then 
+        todo_txt=TODO.md
+        git_options=
+    fi
+    v $todo_txt
+    if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"
+    then
+        git add $JAB_TODO
+        git commit -m'more or less stuff to be done' $JAB_TODO
+    elif svn stat "$JAB_TODO" 2>&1 | grep -q "M .* $JAB_TODO"
+    then svn ci -m'more or less stuff to be done' "$JAB_TODO"
+    fi
 }
 
 todo_show ()
 {
-	local todo_txt="$JAB_TODO"
-	if [[ -f todo.txt ]]
-	then todo_txt=todo.txt
-	elif [[ -f TODO.md ]]
-	then todo_txt=TODO.md
-	fi
-	python2.7 $JAB_PYTHON/todo.py $todo_txt
+    local todo_txt="$JAB_TODO"
+    if [[ -f todo.txt ]]
+    then todo_txt=todo.txt
+    elif [[ -f TODO.md ]]
+    then todo_txt=TODO.md
+    fi
+    python2.7 $JAB_PYTHON/todo.py $todo_txt
 }
 
 # xxxxxxxxxx
-
-to_source ()
-{
-	cd $SOURCE/"$@"
-	clear
-	ls
-}
 
 vim_diff ()
 {
-	one="$1"
-	shift
-	two="$1"
-	shift
-	options="$@"
-	if ! diff -q "$one" "$two" >/dev/null
-	then
-		vim -d $options "$one" "$two"
-	else
-		echo same
-	fi
+    one="$1"
+    shift
+    two="$1"
+    shift
+    options="$@"
+    if ! diff -q "$one" "$two" >/dev/null
+    then
+        vim -d $options "$one" "$two"
+    else
+        echo same
+    fi
 }
 
 # xxxxxxxxxx
-
-to_release ()
-{
-	cd $RELEASES/"$@"
-	clear
-	ls
-}
 
 # xxxxxxxxxxx
 
@@ -879,9 +871,9 @@ to_release ()
 
 blank_script ()
 {
-	test -f $1 && return
-	echo "#! /bin/bash" > $1
-	echo "" >> $1
+    test -f $1 && return
+    echo "#! /bin/bash" > $1
+    echo "" >> $1
 }
 
 # xxxxxxxxxxxxx
@@ -890,14 +882,14 @@ blank_script ()
 
 console_whoami ()
 {
-	console_title_on $USER@$(hostname -s)...$(basename $PWD)
+    console_title_on $USER@$(hostname -s)...$(basename $PWD)
 }
 
 source_aliases ()
 {
-	local __doc__='source files which have aliases and remember the filenames'
-	ALIASES="$ALIASES:$1"
-	source $1
+    local __doc__='source files which have aliases and remember the filenames'
+    ALIASES="$ALIASES:$1"
+    source $1
 }
 
 # xxxxxxxxxxxxxxx
@@ -906,49 +898,49 @@ source_aliases ()
 
 console_title_on ()
 {
-	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
-	then
-		echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
-	elif env | grep -iq konsole 2>/dev/null
-	then
-		dcop $KONSOLE_DCOP_SESSION renameSession $1
-	elif env | grep -iq gnome.terminal
-	then
-		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-	elif [[ -n $TERM ]]
-	then 
-		if [[ $TERM == "linux" ]]
-		then echo -e "]1;$1"
-		elif [[ $TERM =~ "xterm" ]]
-		then echo -ne "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-		fi
-	else
-		echo "Title: $1"
-	fi
+    if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
+    then
+        echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
+    elif env | grep -iq konsole 2>/dev/null
+    then
+        dcop $KONSOLE_DCOP_SESSION renameSession $1
+    elif env | grep -iq gnome.terminal
+    then
+        echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+    elif [[ -n $TERM ]]
+    then 
+        if [[ $TERM == "linux" ]]
+        then echo -e "]1;$1"
+        elif [[ $TERM =~ "xterm" ]]
+        then echo -ne "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+        fi
+    else
+        echo "Title: $1"
+    fi
 }
 
 # xxxxxxxxxxxxxxxxx
 
 console_title_off ()
 {
-	if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
-	then
-		echo -e "]0;$1"
-	elif env | grep -iq konsole 2>/dev/null
-	then
-		dcop $KONSOLE_DCOP_SESSION renameSession $1
-	elif env | grep -iq gnome.terminal
-	then
-		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-	elif [[ -n $TERM && $TERM == "linux" ]]
-	then
-		echo -e "]1;$1"
-	elif [[ $TERM == "xterm" ]]
-	then
-		echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-	else
-		echo "Title: $1"
-	fi
+    if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
+    then
+        echo -e "]0;$1"
+    elif env | grep -iq konsole 2>/dev/null
+    then
+        dcop $KONSOLE_DCOP_SESSION renameSession $1
+    elif env | grep -iq gnome.terminal
+    then
+        echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+    elif [[ -n $TERM && $TERM == "linux" ]]
+    then
+        echo -e "]1;$1"
+    elif [[ $TERM == "xterm" ]]
+    then
+        echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+    else
+        echo "Title: $1"
+    fi
 }
 
 # _xxxxxxxxxxxxxxxxxxx
@@ -956,60 +948,60 @@ console_title_off ()
 
 _edit_source ()
 {
-	local filepath=$1
-	shift
-	blank_script $filepath
-	$EDITOR $filepath
-	if echo $filepath | grep -q alias
-	then
-		source_aliases $filepath
-	else
-		source_file $filepath "$@"
-	fi
+    local filepath=$1
+    shift
+    blank_script $filepath
+    $EDITOR $filepath
+    if echo $filepath | grep -q alias
+    then
+        source_aliases $filepath
+    else
+        source_file $filepath "$@"
+    fi
 }
-	
+    
 _edit_jab ()
 {
-	if [[ -z $JAB ]]
-	then
-		echo \$JAB is empty >&2
-	else
-		test -d $JAB || mkdir -p $JAB
-		local filepath=$JAB/$1
-		shift
-		_edit_source $filepath "$@"
-	fi
+    if [[ -z $JAB ]]
+    then
+        echo \$JAB is empty >&2
+    else
+        test -d $JAB || mkdir -p $JAB
+        local filepath=$JAB/$1
+        shift
+        _edit_source $filepath "$@"
+    fi
 }
 
 _edit_locals ()
 {
-	local local_dir=$JAB/local
-	test -d $local_dir || mkdir -p $local_dir
-	_edit_source $local_dir/$1
+    local local_dir=$JAB/local
+    test -d $local_dir || mkdir -p $local_dir
+    _edit_source $local_dir/$1
 }
-	
+    
 _divv_get_difference ()
 {
-	local source_gitignore=
-	test -f "$source_dir/.gitignore" && source_gitignore="--exclude-from=$source_dir/.gitignore"
-	local destination_gitignore=
-	test -f "$destination_dir/.gitignore" && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
-	diff -q -r \
-		--exclude=.svn \
-		--exclude=.git \
-		--exclude=.DS_Store \
-		--exclude="*.fail" \
-		--exclude="*.py[co]" \
-		--exclude=tags \
-		--exclude=".*sw[po]" \
-		--exclude=tmp \
-		--exclude="*~" \
-		--exclude="*.beam" \
-		--exclude="*.a" \
-		--exclude="*.o" \
-		--exclude=.gitignore \
-		$source_gitignore \
-		$destination_gitignore \
-	"$source_dir" "$destination_dir" 2>/dev/null
+    local source_gitignore=
+    test -f "$source_dir/.gitignore" && source_gitignore="--exclude-from=$source_dir/.gitignore"
+    local destination_gitignore=
+    test -f "$destination_dir/.gitignore" && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
+    diff -q -r \
+        --exclude=.svn \
+        --exclude=.git \
+        --exclude=.DS_Store \
+        --exclude="*.fail" \
+        --exclude="*.py[co]" \
+        --exclude=tags \
+        --exclude=".*sw[po]" \
+        --exclude=tmp \
+        --exclude="*~" \
+        --exclude="*.beam" \
+        --exclude="*.a" \
+        --exclude="*.o" \
+        --exclude=.gitignore \
+        $source_gitignore \
+        $destination_gitignore \
+    "$source_dir" "$destination_dir" 2>/dev/null
 }
 

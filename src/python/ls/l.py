@@ -1,5 +1,6 @@
 """Basic functionality for the various ls scripts"""
 
+
 import argv
 import path
 from glob_path import glob_path, any_fnmatch
@@ -33,9 +34,8 @@ def common_start_dirs(a, b):
     return None
 
 
-
 def default_ignores():
-    ignores = set(svn.global_ignores())
+    ignores = svn.global_ignores()
     ignores.update(['*~', '.*.sw[lmnop]'])
     return list(ignores)
 
@@ -46,6 +46,7 @@ def all_ignores(ignores=None, extra_ignores=None):
     if extra_ignores:
         ignores.extend(extra_ignores)
     return ignores
+
 
 def remove_ignored(files, ignores=None, extra_ignores=None):
     if argv.options.notice:
@@ -89,14 +90,16 @@ def get_dirs(args=None):
         if not dirs:
             singular = hasattr(args, 'startswith') or len(args) == 1
             suffix = singular and 'y' or 'ies'
-            raise ValueError('No such director%s: %s' % (suffix, ', '.join(arg_paths)))
+            raise ValueError(
+                'No such director%s: %s' % (suffix, ', '.join(arg_paths)))
     return dirs
 
+
 def as_paths(thing=None):
-    '''Convert thing to a list of path.path() instances.
+    """Convert thing to a list of path.path() instances.
 
     Will always return a list, which might be empty
-    '''
+    """
     if thing is None:
         return []
     try:
@@ -123,9 +126,9 @@ def as_paths(thing=None):
                 for thing in things:
                     result.extend(as_paths(thing))
             except TypeError:
-                raise NotImplementedError('Cannot convert %r to a path' % thing)
+                raise NotImplementedError('Cannot use %r as a path' % thing)
             except ValueError:
-                raise NotImplementedError('Cannot convert %r to a path' % thing)
+                raise NotImplementedError('Cannot use %r as a path' % thing)
             return result
     raise NotImplementedError('Forgot a case: %s' % thing)
 
@@ -137,6 +140,7 @@ def get_files(dirs):
     for d in dirs:
         files.extend([here.relpathto(f) for f in d.files()])
     return files
+
 
 def get_names(files):
     if not files:

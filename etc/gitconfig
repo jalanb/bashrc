@@ -1,26 +1,27 @@
 [user]
-	name = Alan Brogan
-	email = github@al-got-rhythm.net
+    name = Alan Brogan
+    email = github@al-got-rhythm.net
 [core]
-	editor = vim
+    editor = vim
 [merge]
-	tool = vimdiff
+    tool = vimdiff
 [color]
-	ui = auto
+    ui = auto
 [push]
-	default = simple
+    default = simple
 [credential]
-	helper = store
+    helper = store
 [alias]
-	br = branch
-	ci = commit
-	co = checkout
-	dc = difftool -y --extcmd=colordiff
-	dh = difftool -y --extcmd=\"vim -d -o\"
-	dp = difftool -y --extcmd=pydiff
-	dv = difftool -y --extcmd=\"vim -d -O\"
-	dw = diff --word-diff
-	last = log -1 HEAD
-	lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+    ai = add --interactive
+    br = branch
+    ci = commit
+    co = checkout
+    dc = difftool -y --extcmd=colordiff
+    dh = difftool -y --extcmd=\"vim -d -o\"
+    dp = difftool -y --extcmd=pydiff
+    dv = difftool -y --extcmd=\"vim -d -O\"
+    dw = diff --word-diff
+    last = log -1 HEAD
+    lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
 [help]
-	autocorrect = 1
+    autocorrect = 1

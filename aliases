@@ -1,20 +1,20 @@
 #! /bin/bash
 
 # all alan"s aliases
-# 	as ordered by strcmp()
+#   as ordered by strcmp()
 
 # One quote might help in reading these files:
-# 	"If in doubt, call it Fred", Dr. Mike Scott, Dublin City University, late 80s
+#   "If in doubt, call it Fred", Dr. Mike Scott, Dublin City University, late 80s
 
 # This list is quite long enough, we accept no other aliases
-#	Thanks anyway
+#   Thanks anyway
 unalias -a 
 
 # The wee x headings are counts
-# 	all the wee aliases in this wee section have only one character, oui,
-#		Awwww.
+#   all the wee aliases in this wee section have only one character, oui,
+#       Awwww.
 #   There is an alias for every letter
-#		albeit most are unused
+#       albeit most are unused
 
 # x
 

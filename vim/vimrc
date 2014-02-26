@@ -137,8 +137,8 @@ noremap t<left>  :tabprev<cr>
 noremap t<right> :tabnext<cr>
 noremap th       :tabprev<cr>
 noremap tl       :tabnext<cr>
-noremap <Up> 	 ddkP
-noremap <Down>	 ddp
+noremap <Up>     ddkP
+noremap <Down>   ddp
 noremap <left>      :tabprev<cr>
 noremap <right>     :tabnext<cr>
 "
@@ -204,8 +204,8 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>[ :cp<cr>zzzv
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
  noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
- noremap <leader><Left>		<<
- noremap <leader><Right>	>>
+ noremap <leader><Left>     <<
+ noremap <leader><Right>    >>
 "
 " Kinda keys
 "
@@ -225,9 +225,10 @@ set title
 set showmode " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd  " Show (partial) command in the last line of the screen.
 set nowrap
-set ts=4
+set tabstop=4
 set shiftwidth=4
-set noexpandtab
+set expandtab
+set smarttab
 set tabpagemax=1000
 set nospell
 "
@@ -255,32 +256,32 @@ let g:easytags_auto_highlight = 0
 " vimdiff, aka vim -d
 "
 function EnterBuffer ()
-	"
-	" diff options
-	"
-	if &diff
-		noremap <buffer> o :diffget<cr>
-		noremap <buffer> p :diffput<cr>
-		noremap <buffer> ] ]czz
-		noremap <buffer> [ [czz
-		syntax off
-		set diffopt=filler  ",iwhite
-		function! DiffNoSpace()
-			set diffopt=filler,iwhite
-		endfunction
-		function! DiffSpace()
-			set diffopt=filler
-		endfunction
-	else
-		" noremap ] <C-]>
-		" noremap [ <C-T>
-		syntax on
-	endif
-	let &titlestring = $HOSTNAME . ":vim " . expand("%:p:~")
+    "
+    " diff options
+    "
+    if &diff
+        noremap <buffer> o :diffget<cr>
+        noremap <buffer> p :diffput<cr>
+        noremap <buffer> ] ]czz
+        noremap <buffer> [ [czz
+        syntax off
+        set diffopt=filler  ",iwhite
+        function! DiffNoSpace()
+            set diffopt=filler,iwhite
+        endfunction
+        function! DiffSpace()
+            set diffopt=filler
+        endfunction
+    else
+        " noremap ] <C-]>
+        " noremap [ <C-T>
+        syntax on
+    endif
+    let &titlestring = $HOSTNAME . ":vim " . expand("%:p:~")
 endfunction
 
 function! LeaveBuffer ()
-	let &titlestring = $HOSTNAME . ":not " . expand("%:p:~")
+    let &titlestring = $HOSTNAME . ":not " . expand("%:p:~")
 endfunction
 
 autocmd BufEnter * call EnterBuffer()
@@ -290,7 +291,7 @@ autocmd BufLeave * call LeaveBuffer()
 " diff to when I started editting
 "
 if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 "
 " Ok, ok, so I have some spelling blind-spots:
@@ -317,49 +318,49 @@ let g:pylint_show_rate = 0
 " <leader>n is bound (above) to ChangeNumber()
 "
 function! SetRelativeNumber()
-	if exists('&relativenumber') && (&relativenumber == 0)
-		set relativenumber
-	endif
+    if exists('&relativenumber') && (&relativenumber == 0)
+        set relativenumber
+    endif
 endfunction
 
 function! SetAbsoluteNumber()
-	set number
+    set number
 endfunction
 
 function! ChangeNumber()
-	if exists('&relativenumber')
-		call CycleNumber()
-	else
-		call ToggleNumber()
-	endif
+    if exists('&relativenumber')
+        call CycleNumber()
+    else
+        call ToggleNumber()
+    endif
 endfunction
 
 function! ToggleNumber()
-	if &number == 1
-		set nonumber
-	else
-		set number
-	endif
+    if &number == 1
+        set nonumber
+    else
+        set number
+    endif
 endfunc
 
 function CycleNumber()
-	" There are (logically) 4 states to cycle between
-	" both off: set number on, relative off
-	" number on, relative off: set number off, relative on
-	" number off, relative on: set number on, relative on
-	" both on: set both off
-	" However, when setting one on, vim sets the other off
-	" 	so both on is not actually possible, so:
-	" both off: set number off, relative on
-	" number off, relative on: set number on, relative off
-	" number on, relative off: set both off
-	if &number == 0 && &relativenumber == 0
-		set nonumber relativenumber
-	elseif &number == 0 && &relativenumber == 1
-		set number norelativenumber
-	elseif &number == 1 && &relativenumber == 0
-		set nonumber norelativenumber
-	endif
+    " There are (logically) 4 states to cycle between
+    " both off: set number on, relative off
+    " number on, relative off: set number off, relative on
+    " number off, relative on: set number on, relative on
+    " both on: set both off
+    " However, when setting one on, vim sets the other off
+    "   so both on is not actually possible, so:
+    " both off: set number off, relative on
+    " number off, relative on: set number on, relative off
+    " number on, relative off: set both off
+    if &number == 0 && &relativenumber == 0
+        set nonumber relativenumber
+    elseif &number == 0 && &relativenumber == 1
+        set number norelativenumber
+    elseif &number == 1 && &relativenumber == 0
+        set nonumber norelativenumber
+    endif
 endfunction
 "
 " Start without 'em, as they are now so easy to turn on
@@ -367,44 +368,44 @@ endfunction
 set nonumber
 "
 " <leader>\ is bound to calling this
-" 	The leader key is also \, so really \\ calls this
+"   The leader key is also \, so really \\ calls this
 "
 function ToggleHighlightSearch()
-	if &hlsearch
-		set nohlsearch
-	else
-		set hlsearch
-	endif
+    if &hlsearch
+        set nohlsearch
+    else
+        set hlsearch
+    endif
 endfunction
 "
 " Some miscellaneous stuff from around the interwebs
 "
 " From http://items.sjbach.com/319/configuring-vim-right
 "
-set hidden		" When on a buffer becomes hidden when it is abandoned.
-set scrolloff=3	" Minimal number of screen lines to keep above and below the cursor.
+set hidden      " When on a buffer becomes hidden when it is abandoned.
+set scrolloff=3 " Minimal number of screen lines to keep above and below the cursor.
 set ruler
 set shortmess=atI
 set visualbell
 "
 " From http://www.pixelbeat.org/settings/.vimrc
 "
-set nojoinspaces	" Do not insert two spaces after a '.', '?' and '!' with a join command.
-set cursorline		" Highlight the screen line of the cursor with CursorLine
+set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
+set cursorline      " Highlight the screen line of the cursor with CursorLine
 set wildmenu
 set wildmode=list:longest,full
 "Ignore these files when completing names and in Explorer
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
 "
 " From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html
-"	When one of the patterns matches with the name of the file which is written, no backup file is created.
+"   When one of the patterns matches with the name of the file which is written, no backup file is created.
 "
 set backupskip=/tmp/*,/private/tmp/*,~/temp
 "
 " Stronger encryption
 "
 if exists('+cm')
-	set cm=blowfish
+    set cm=blowfish
 endif
 autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= nobackup noshelltemp history=0 secure | endif
 
@@ -422,7 +423,7 @@ let g:SeekKey = 'f'
 let g:SeekBackKey = 'F'
 "
 " for Tab Completion
-"	from vim's help
+"   from vim's help
 "
 "function! CleverTab()
    "if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -434,19 +435,19 @@ let g:SeekBackKey = 'F'
 " and if we need a Tab in the middle of a line: use <S-Tab>
 "
 function! RetabAndStripTrailingWhitespace()
-	:retab!
-	:%s/\s\+$//e
+    :retab!
+    :%s/\s\+$//e
 endfunction
 "
 " This looks like one of mine
 "
 function! ReadTraceback(filename)
-	:set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
-	:map <F11> :cn<cr>zzzv
-	:map <F10> :cp<cr>zvzz
-	exec "cf " . a:filename
-	exec "clast"
-	normal zv
+    :set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
+    :map <F11> :cn<cr>zzzv
+    :map <F10> :cp<cr>zvzz
+    exec "cf " . a:filename
+    exec "clast"
+    normal zv
 endfunction
 "
 " for history
@@ -487,8 +488,8 @@ set modelines=1
 " Enable screen swapping, which seems missing in the linux terminfo entry
 " help xterm-screens for more info
 if &term == "linux"
-	set t_ti=[?1049h
-	set t_te=[?1049l
+    set t_ti=[?1049h
+    set t_te=[?1049l
 endif
 
 "

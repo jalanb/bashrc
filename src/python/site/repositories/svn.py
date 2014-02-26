@@ -8,16 +8,50 @@ from paths import makepath
 from paths import PathError
 
 
+def _get_existing_file(path_to_file):
+    result = makepath(path_to_file)
+    if result.isfile():
+        return result
+    raise ValueError('%s is not a file' % result)
+
+
+def _home_subversion_config():
+    return '~/.subversion/config'
+
+
+def _jab_subversion_config():
+    return '$JAB/etc/subversion/config'
+
+
+def _get_some_subversion_config_lines(path_to_config, match):
+    try:
+        path_to_file = _get_existing_file(path_to_config)
+    except ValueError:
+        return []
+    lines = path_to_file.lines()
+    return [l for l in lines if match(l)]
+
+
+def _get_svn_global_ignores():
+    def _match(line):
+        return line.startswith('global-ignores')
+    path_to_home_config = _home_subversion_config()
+    lines = False
+    if path_to_home_config:
+        lines = _get_some_subversion_config_lines(path_to_home_config, _match)
+    if not lines:
+        path_to_jab_config = _jab_subversion_config()
+        lines = _get_some_subversion_config_lines(path_to_jab_config, _match)
+    return lines
+
+
 def global_ignores():
     """A list of globs that are ignored by subversion
 
     >>> '*.o' in global_ignores()
     True
     """
-    svn_config = makepath('~/.subversion/config')
-    if not svn_config.isfile():
-        raise ValueError('%s is not a file' % svn_config)
-    ignores_lines = [l for l in svn_config.lines() if l.startswith('global-ignores')]
+    ignores_lines = _get_svn_global_ignores()
     if not ignores_lines:
         return set()
     ignores_line = ignores_lines[0]

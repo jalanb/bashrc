@@ -2,43 +2,43 @@
 
 check_jab ()
 {
-	if [[ -z $JAB ]]
-	then JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
-	fi
-	if [[ ! -f $JAB/etc/ackrc ]]
-	then
-		echo $JAB/etc/ackrc is not a file >&2
-		exit 1
-	fi
+    if [[ -z $JAB ]]
+    then JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
+    fi
+    if [[ ! -f $JAB/etc/ackrc ]]
+    then
+        echo $JAB/etc/ackrc is not a file >&2
+        exit 1
+    fi
 }
 
 link ()
 {
-	source="$1"
-	destination="$2"
-	if [[ -e "$destination" ]]
-	then rm -rf "$destination"
-	fi
-	ln -s $JAB/"$source" $HOME/"$destination"
+    source="$1"
+    destination="$2"
+    if [[ -e "$destination" ]]
+    then rm -rf "$destination"
+    fi
+    ln -s $JAB/"$source" $HOME/"$destination"
 }
 
 main ()
 {
-	cd $HOME
+    cd $HOME
 
-	link  etc/ackrc            .ackrc
-	link  etc/dir_colors       .dir_colors
-	link  etc/editrc           .editrc
-	link  etc/gitignore_global .gitignore_global
-	link  etc/inputrc          .inputrc
-	link  etc/pylintrc         .pylintrc
-	link  etc/sackrc           .sackrc
+    link  etc/ackrc            .ackrc
+    link  etc/dir_colors       .dir_colors
+    link  etc/editrc           .editrc
+    link  etc/gitignore_global .gitignore_global
+    link  etc/inputrc          .inputrc
+    link  etc/pylintrc         .pylintrc
+    link  etc/sackrc           .sackrc
 
-	link  src/python/pythonrc.py   .pythonrc.py
+    link  src/python/pythonrc.py   .pythonrc.py
 
-	link  vim                  .vim
-	link  vim/vimrc            .vimrc
-	link  vim/vimpagerrc       .vimpagerrc
+    link  vim                  .vim
+    link  vim/vimrc            .vimrc
+    link  vim/vimpagerrc       .vimpagerrc
 }
 
 check_jab

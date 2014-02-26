@@ -43,7 +43,7 @@ set match-hidden-files on
 
 $if Bash
 # Bind some keys to useful macros
-# 	generally - pipe into the "expected command for that letter"
+#   generally - pipe into the "expected command for that letter"
 
 Control-g: " | grep --color "
 

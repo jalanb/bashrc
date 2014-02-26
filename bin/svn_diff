@@ -2,125 +2,125 @@
 
 set_symbols ()
 {
-	JAB=${JAB:-$HOME/.jab}
-	[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
-	source $JAB/jab_environ
-	PYDIFF=$JAB/src/github/pydiff
-	VIM_EDITOR=vim
-	ARGS="$@"
+    JAB=${JAB:-$HOME/.jab}
+    [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
+    source $JAB/jab_environ
+    PYDIFF=$JAB/src/github/pydiff
+    VIM_EDITOR=vim
+    ARGS="$@"
 }
 
 remove_checkout ()
 {
-	if [[ -n "$COPY_OF_CHECKOUT" ]]
-	then
-		if [[ -f "$COPY_OF_CHECKOUT" ]]
-		then
-			if [[ -n $DO_NOT_REMOVE ]]
-			then
-				echo
-				ls "$COPY_OF_CHECKOUT"
-			else
-				rm -f "$COPY_OF_CHECKOUT"
-			fi
-		fi
-	fi
+    if [[ -n "$COPY_OF_CHECKOUT" ]]
+    then
+        if [[ -f "$COPY_OF_CHECKOUT" ]]
+        then
+            if [[ -n $DO_NOT_REMOVE ]]
+            then
+                echo
+                ls "$COPY_OF_CHECKOUT"
+            else
+                rm -f "$COPY_OF_CHECKOUT"
+            fi
+        fi
+    fi
 }
 
 IP ()
 {
-	for number in 172 192 100
-	do
-		if python $JAB_PYTHON/ifconfig.py $number
-		then break
-		fi
-	done
+    for number in 172 192 100
+    do
+        if python $JAB_PYTHON/ifconfig.py $number
+        then break
+        fi
+    done
 }
 
 show_python_diff ()
 {
-	if [[ -d $PYDIFF ]]
-	then
-		python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT" 
-		local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
-		if [[ -f $pydiff_output ]]
-		then
-			if [[ -d  $WWW_ROOT/pydiff ]]
-			then
-				cp $pydiff_output $WWW_ROOT/pydiff/index.html
-				echo "http://$(IP)/pydiff"
-			else
-				cp $pydiff_output /tmp/pydiff.html
-				ls -l /tmp/pydiff.html
-			fi
-		else
-			echo $pydiff_output is not a file
-			exit 2
-		fi
-	else
-		echo "$PYDIFF is not a directory" >&2
-		exit 1
-	fi
+    if [[ -d $PYDIFF ]]
+    then
+        python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT" 
+        local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
+        if [[ -f $pydiff_output ]]
+        then
+            if [[ -d  $WWW_ROOT/pydiff ]]
+            then
+                cp $pydiff_output $WWW_ROOT/pydiff/index.html
+                echo "http://$(IP)/pydiff"
+            else
+                cp $pydiff_output /tmp/pydiff.html
+                ls -l /tmp/pydiff.html
+            fi
+        else
+            echo $pydiff_output is not a file
+            exit 2
+        fi
+    else
+        echo "$PYDIFF is not a directory" >&2
+        exit 1
+    fi
 }
 
 svn_diff_file ()
 {
-	local direction=$1
-	PATH_TO_FILE=$2
-	local revision=
-	if [[ -n $3 ]]
-	then revision="$3"
-	else
-		if svn stat $PATH_TO_FILE | grep -q "[AM]"
-		then revision=$(svn info $PATH_TO_FILE | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
-		else
-			echo no change in $PATH_TO_FILE
-			exit
-		fi
-	fi
-	COPY_OF_CHECKOUT=${PATH_TO_FILE}.svn_checkout.r$revision
-	svn cat -r $revision "$PATH_TO_FILE" > "$COPY_OF_CHECKOUT"
-	if [[ "$direction" == "python" ]]
-	then
-		show_python_diff
-	else
-		local vim_options="-O"
-		[[ "$direction" == "horizontal" ]] && vim_options="-o"
-		$VIM_EDITOR -d $vim_options "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
-	fi
+    local direction=$1
+    PATH_TO_FILE=$2
+    local revision=
+    if [[ -n $3 ]]
+    then revision="$3"
+    else
+        if svn stat $PATH_TO_FILE | grep -q "[AM]"
+        then revision=$(svn info $PATH_TO_FILE | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
+        else
+            echo no change in $PATH_TO_FILE
+            exit
+        fi
+    fi
+    COPY_OF_CHECKOUT=${PATH_TO_FILE}.svn_checkout.r$revision
+    svn cat -r $revision "$PATH_TO_FILE" > "$COPY_OF_CHECKOUT"
+    if [[ "$direction" == "python" ]]
+    then
+        show_python_diff
+    else
+        local vim_options="-O"
+        [[ "$direction" == "horizontal" ]] && vim_options="-o"
+        $VIM_EDITOR -d $vim_options "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
+    fi
 }
 
 svn_diff_dir ()
 {
-	local direction=$1
-	local path_to_directory=$2
-	local revision=
-	[[ -n $3 ]] && revision="$3"
-	for modified in $(svn stat $path_to_directory | grep "^\s*M" | sed -e "s/M\s\+//")
-	do
-		svn_diff_file $direction $modified $revision
-		if [[ -f svn.stop ]]
-		then
-			rm -f svn.stop
-			break
-		fi
-	done
+    local direction=$1
+    local path_to_directory=$2
+    local revision=
+    [[ -n $3 ]] && revision="$3"
+    for modified in $(svn stat $path_to_directory | grep "^\s*M" | sed -e "s/M\s\+//")
+    do
+        svn_diff_file $direction $modified $revision
+        if [[ -f svn.stop ]]
+        then
+            rm -f svn.stop
+            break
+        fi
+    done
 }
 
 main ()
 {
-	set_symbols "$@"
-	if [[ $ARGS =~ -g ]]
-	then 
-		VIM_EDITOR="gvim -f"
-		ARGS=${ARGS/-g}
-	fi
-	if [[ -f $path ]]
-	then
-		svn_diff_file $ARGS
-	else
-		svn_diff_dir $ARGS
-	fi
+    set_symbols "$@"
+    if [[ $ARGS =~ -g ]]
+    then 
+        VIM_EDITOR="gvim -f"
+        ARGS=${ARGS/-g}
+    fi
+    if [[ -f $path ]]
+    then
+        svn_diff_file $ARGS
+    else
+        svn_diff_dir $ARGS
+    fi
 }
 
 trap remove_checkout EXIT
