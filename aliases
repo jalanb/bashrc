@@ -103,6 +103,7 @@ alias z.="zm \*"
 
 # xxx
 
+alias ..l='cl ..'
 alias ...='c ../..'
 
 alias doc="c ~/Documents"
