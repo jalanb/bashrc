@@ -582,10 +582,10 @@ vff ()
     done
     if [[ $found_fred == 1 && $found_wild == 1 ]]
     then 
-        v -p fred fred*[^~]
+        v fred fred*[^~]
     elif [[ $found_wild == 1 ]]
     then 
-        v -p fred*[^~] 
+        v fred*[^~] 
     else
         v fred
     fi
