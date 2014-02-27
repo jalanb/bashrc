@@ -3,6 +3,7 @@
     email = github@al-got-rhythm.net
 [core]
     editor = vim
+	excludesfile = /home/alanb/.gitignore_global
 [merge]
     tool = vimdiff
 [color]
