@@ -305,7 +305,6 @@ vp ()
 
 vr ()
 {
-    set -x
     if [[ -n $1 && -f $1 ]]
     then
         filename=$1
@@ -323,7 +322,6 @@ vr ()
         filename=/tmp/errors.err
     fi
     vim -c "call ReadTraceback(\"$filename\")"
-    set +x
 }
 
 vt ()
