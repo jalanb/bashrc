@@ -1,0 +1,4 @@
+set -g prefix C-a
+unbind C-b
+bind C-a send-prefix
+# set -g status-position top

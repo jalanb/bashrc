@@ -209,6 +209,19 @@ ru ()
     fi
 }
 
+tm ()
+{
+    if [[ -z $1 ]]
+    then SESSION=$HOSTNAME
+    else
+        SESSION=$1
+        shift
+    fi
+    if ! tmux attach-session -t $SESSION "$@"
+    then tmux new-session -s $SESSION "$@"
+    fi
+}
+
 tf ()
 {
     if [ $? -eq 0 ]
