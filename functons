@@ -795,6 +795,11 @@ bright ()
     sed -i -e/color/d ~/.vimrc
 }
 
+please ()
+{
+    sudo $(history -p !-1)
+}
+
 run_as ()
 {
     username=$1
