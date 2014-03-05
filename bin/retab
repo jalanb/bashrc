@@ -1,0 +1,4 @@
+#! /bin/bash
+
+expand -i --tabs=4 $1 > /tmp/$(basename $1)
+mv /tmp/$(basename $1) $1
