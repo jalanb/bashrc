@@ -34,7 +34,7 @@ h()
 p ()
 {
     local me=$USER
-    local here=$(hostname -s)
+    local here=$(jostname)
     export PYTHON=${PYTHON-python}
     console_title_on "python@${here}" && \
         $PYTHON "$@" && \
@@ -98,7 +98,9 @@ cv ()
 
 ff ()
 {
-    first_dir "$@"
+    if first_dir "$@"
+    then shift
+    fi
     name=$1
     shift
     for path in $(find $dir -name $name -print)
@@ -144,7 +146,9 @@ gh ()
 
 gv ()
 {
-    gvim "$@"
+    date >> ~/log/gvim.log
+    echo gvim "$@" >> ~/log/gvim.log
+    gvim "$@" 2>> ~/log/gvim.log
 }
 
 hh ()
@@ -190,11 +194,6 @@ ra ()
     run_as abrogan "$@"
 }
 
-rb ()
-{
-    run_as builder "$@"
-}
-
 rf ()
 {
     PYTHON_SCRIPT=$JAB_PYTHON/rf.py
@@ -209,6 +208,19 @@ ru ()
         SUDO
     else
         sudo "$@"
+    fi
+}
+
+tm ()
+{
+    if [[ -z $1 ]]
+    then SESSION=$HOSTNAME
+    else
+        SESSION=$1
+        shift
+    fi
+    if ! tmux attach-session -t $SESSION "$@"
+    then tmux new-session -s $SESSION "$@"
     fi
 }
 
@@ -295,7 +307,6 @@ vp ()
 
 vr ()
 {
-    set -x
     if [[ -n $1 && -f $1 ]]
     then
         filename=$1
@@ -313,7 +324,6 @@ vr ()
         filename=/tmp/errors.err
     fi
     vim -c "call ReadTraceback(\"$filename\")"
-    set +x
 }
 
 vt ()
@@ -434,7 +444,7 @@ fpy ()
 
 gv. ()
 {
-    PYTHONPATH=$(readlink -f .) gvim . 2>> ~/log/gvim.log
+    PYTHONPATH=$(readlink -f .) gv .
 }
 
 jjj ()
@@ -574,10 +584,10 @@ vff ()
     done
     if [[ $found_fred == 1 && $found_wild == 1 ]]
     then 
-        v -p fred fred*[^~]
+        v fred fred*[^~]
     elif [[ $found_wild == 1 ]]
     then 
-        v -p fred*[^~] 
+        v fred*[^~] 
     else
         v fred
     fi
@@ -648,7 +658,7 @@ SUDO ()
         you_sir=root
     fi
     me=$USER
-    here=$(hostname -s)
+    here=$(jostname)
     console_title_on "${you_sir}@${here}" && \
         sudo -i $user && \
         console_title_off "${me}@${here}"
@@ -706,8 +716,7 @@ vvvb ()
 
 vvvg ()
 {
-    date >> ~/log/gvim.log
-    gv $JAB/vim/gvimrc 2>> ~/log/gvim.log
+    gv $JAB/vim/gvimrc
 }
 
 vvvp ()
@@ -788,6 +797,11 @@ bright ()
     sed -i -e/color/d ~/.vimrc
 }
 
+please ()
+{
+    sudo $(history -p !-1)
+}
+
 run_as ()
 {
     username=$1
@@ -812,6 +826,11 @@ cleaner ()
 cleanest ()
 {
     clean -pqr "$@"
+}
+
+jostname ()
+{
+    echo ${HOSTNAME:-$(hostname -s)}
 }
 
 todo_edit ()
@@ -884,7 +903,7 @@ blank_script ()
 
 console_whoami ()
 {
-    console_title_on $USER@$(hostname -s)...$(basename $PWD)
+    console_title_on $USER@$(jostname)...$(basename $PWD)
 }
 
 source_aliases ()

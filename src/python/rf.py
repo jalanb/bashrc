@@ -10,13 +10,17 @@ import optparse
 import fnmatch
 
 
-def parse_options(arg_list = None):
+def parse_options(arg_list=None):
     """Find out what user wants at command line"""
     parser = optparse.OptionParser()
-    parser.add_option('-p', '--python', action='store_true', help='remove python temporary files too')
-    parser.add_option('-r', '--recursive', action='store_true', help='remove from subdirectories too')
-    parser.add_option('-q', '--quiet', action='store_true', help='do not show files being removed')
-    parser.add_option('-T', '--Trial-Run', action='store_true', help='show which files would be removed, but do nothing')
+    parser.add_option('-p', '--python', action='store_true',
+                      help='remove python temporary files too')
+    parser.add_option('-r', '--recursive', action='store_true',
+                      help='remove from subdirectories too')
+    parser.add_option('-q', '--quiet', action='store_true',
+                      help='do not show files being removed')
+    parser.add_option('-T', '--Trial-Run', action='store_true',
+                      help='show which files would be removed, but do nothing')
     options, args = parser.parse_args(arg_list)
     if options.quiet and options.Trial_Run:
         print 'Using --quiet and --Trial-Run: Do nothing'
@@ -28,7 +32,8 @@ def parse_options(arg_list = None):
 
 def get_globs(options):
     """A list of globs for all files to be deleted"""
-    result = ['*~', '.*~', '*.orig', 'fred*', 'mary', '*.tmp', '*.bak', 'one', 'two', 'a.out']
+    result = ['*~', '.*~', '*.orig', '*.tmp', '*.bak', 'a.out',
+              'fred*', 'mary', 'one', 'two', ]
     if options.python:
         result.extend(['*.py[oc]', '*.fail', '*$py.class'])
     return result
@@ -40,6 +45,7 @@ def get_names_in(directory):
         return os.listdir(directory)
     except (IOError, OSError):
         return []
+
 
 def get_paths_in(directory, glob):
     """A list of all items in that directory, which match that glob"""

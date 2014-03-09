@@ -12,7 +12,7 @@ endif
 let g:colors_name = "alan-colour"
 
 highlight CursorLine                                      cterm=underline                 guibg=#080808   gui=underline
-highlight StatusLine        ctermfg=Black    ctermbg=Blue cterm=None       guifg=#000000  guibg=#0000ff   gui=none
+highlight StatusLine        ctermfg=Black                 cterm=None       guifg=#000000  guibg=#0000ff   gui=none
 highlight Normal            ctermfg=White    ctermbg=Black                 guifg=#ffffff  guibg=#000000
 highlight Error                              ctermbg=Red                                  guibg=#ff0000
 highlight Todo              ctermfg=Black    ctermbg=Green                 guifg=#000080  guibg=#c0c000
