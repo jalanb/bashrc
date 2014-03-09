@@ -43,7 +43,9 @@ p ()
 
 v ()
 {
-    if python2.7 $JAB_PYTHON/fim.py "$@"
+    if [[ -z $* ]]
+    then vim
+    elif python2.7 $JAB_PYTHON/fim.py "$@"
     then bash $JAB_PYTHON/fim.sh
     fi
 }
