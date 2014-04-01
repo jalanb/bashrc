@@ -640,6 +640,11 @@ mkcd ()
     mkdir -p "$@" && cd "$@"
 }
 
+rqa. ()
+{
+    /bin/rm -rf ./* ./.*
+}
+
 rq.. ()
 {
     local directory_here=$(basename "$(pwd)")
