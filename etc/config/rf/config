@@ -9,5 +9,5 @@ Use-Debugger = False
 
 [globs]
 temporary = *.bak *.orig *.tmp *~ .*~ a.out fred* mary one two
-python = *.pyc *.pyo *.fail *$py.class
+python = *.pyc *.pyo *.fail *$py.class *.profile
 old = *.old
