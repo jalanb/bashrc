@@ -49,45 +49,65 @@ def as_configuration_name(name):
     return '-'.join([s.lower() for s in name.split('-')])
 
 
+def compare_options(a, b):
+    if a[0][0].isupper() and b[0][0].islower():
+        return +1
+    if a[0][0].islower() and b[0][0].isupper():
+        return -1
+    return cmp(a[0], b[0])
+
+
+def get_help_text(configured_globs):
+    explanations = [
+        ('recursive', 'remove from subdirectories too'),
+        ('quiet', 'do not show files being removed'),
+        ('Trial-Run', 'show which files would be removed, but do nothing'),
+        ('Use-Debugger', 'run the program in a debugger'),
+    ]
+    explanation_names = [a for a, _ in explanations]
+    glob_explations = [(name, 'remove "%s"' % value)
+                       for name, value in configured_globs.items()
+                       if name not in explanation_names]
+    return sorted(explanations + glob_explations, cmp=compare_options)
+
+
+def add_options(parser, configured_options, configured_globs):
+    explanations = get_help_text(configured_globs)
+    for name, explanation in explanations:
+        configuration_name = as_configuration_name(name)
+        default = configured_options.get(configuration_name, False)
+        add_option(parser, name, default, explanation)
+
+
+def start_debugging():
+    try:
+        import pudb as pdb
+    except ImportError:
+        import pdb
+    pdb.set_trace()
+
+
+def wanted_globs(options, configured_globs):
+    """A list of globs for all files to be deleted"""
+    return [glob
+            for key, value in configured_globs.items()
+            if getattr(options, key)
+            for glob in value.split()]
+
+
 def parse_options(arg_list=None):
     """Find out what user wants at command line"""
     configured_options, configured_globs = read_configuration()
     parser = optparse.OptionParser()
-    explanations = [
-        ('old', 'remove old files'),
-        ('python', 'remove python files'),
-        ('recursive', 'remove from subdirectories too'),
-        ('quiet', 'do not show files being removed'),
-        ('temporary', 'remove temporary files'),
-        ('Trial-Run', 'show which files would be removed, but do nothing'),
-        ('Use-Debugger', 'run the program in a debugger'),
-    ]
-    for name, explanation in explanations:
-        configuration_name = as_configuration_name(name)
-        default = configured_options[configuration_name]
-        add_option(parser, name, default, explanation)
+    add_options(parser, configured_options, configured_globs)
     options, args = parser.parse_args(arg_list)
     if options.Use_Debugger:
-        try:
-            import pudb as pdb
-        except ImportError:
-            import pdb
-        pdb.set_trace()
+        start_debugging()
     if options.quiet and options.Trial_Run:
         print 'Using --quiet and --Trial-Run: Do nothing'
         raise NotImplementedError
-    if not args:
-        args = ['.']
-    return options, args, get_globs(options, configured_globs)
-
-
-def get_globs(options, configured_globs):
-    """A list of globs for all files to be deleted"""
-    globs = []
-    for option in ['temporary', 'python', 'old']:
-        if getattr(options, option):
-            globs.extend(configured_globs[option].split())
-    return globs
+    args = args if args else ['.']
+    return options, args, wanted_globs(options, configured_globs)
 
 
 def get_names_in(directory):

@@ -11,13 +11,13 @@ The rf script
     >>> options.recursive is True and '/path' in args
     True
 
-    >>> 'fred*' in rf.get_globs(options, configured_globs)
+    >>> 'fred*' in rf.wanted_globs(options, configured_globs)
     True
 
-    >>> '*.fail' in rf.get_globs(options, configured_globs)
+    >>> '*.fail' in rf.wanted_globs(options, configured_globs)
     False
     >>> options.python = True
-    >>> '*.fail' in rf.get_globs(options, configured_globs)
+    >>> '*.fail' in rf.wanted_globs(options, configured_globs)
     True
 
     >>> '/etc' in rf.get_paths_in('/', 'etc')
