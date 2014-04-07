@@ -6,17 +6,18 @@ The rf script
     Script to remove temporary files
     ...
 
-    >>> options, args = rf.parse_options(['-r', '/path'])
+    >>> configured_options, configured_globs = rf.read_configuration()
+    >>> options, args, globs = rf.parse_options(['-r', '/path'])
     >>> options.recursive is True and '/path' in args
     True
 
-    >>> 'fred*' in rf.get_globs(options)
+    >>> 'fred*' in rf.get_globs(options, configured_globs)
     True
 
-    >>> '*.fail' in rf.get_globs(options)
+    >>> '*.fail' in rf.get_globs(options, configured_globs)
     False
     >>> options.python = True
-    >>> '*.fail' in rf.get_globs(options)
+    >>> '*.fail' in rf.get_globs(options, configured_globs)
     True
 
     >>> '/etc' in rf.get_paths_in('/', 'etc')
