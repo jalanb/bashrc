@@ -51,8 +51,10 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .ezt          01;35
 .fail         01;35
 .htaccess     01;35
+.lprof        01;35
 .o            01;35
 .pyc          01;35
+.prof         01;35
 .swf          01;35
 .tmpl         01;35
 .xsl          01;35
@@ -115,6 +117,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 # Fred - GRAY
 .fred         00;37
 .one          00;37
+.old          00;37
 .two          00;37
 .tmp          00;37
 
