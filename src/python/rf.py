@@ -53,16 +53,16 @@ def parse_options(arg_list=None):
     """Find out what user wants at command line"""
     configured_options, configured_globs = read_configuration()
     parser = optparse.OptionParser()
-    explanations = {
-        'temporary': 'remove temporary files',
-        'old': 'remove old files',
-        'python': 'remove python files',
-        'recursive': 'remove from subdirectories too',
-        'quiet': 'do not show files being removed',
-        'Trial-Run': 'show which files would be removed, but do nothing',
-        'Use-Debugger': 'run the program in a debugger',
-    }
-    for name, explanation in explanations.items():
+    explanations = [
+        ('old', 'remove old files'),
+        ('python', 'remove python files'),
+        ('recursive', 'remove from subdirectories too'),
+        ('quiet', 'do not show files being removed'),
+        ('temporary', 'remove temporary files'),
+        ('Trial-Run', 'show which files would be removed, but do nothing'),
+        ('Use-Debugger', 'run the program in a debugger'),
+    ]
+    for name, explanation in explanations:
         configuration_name = as_configuration_name(name)
         default = configured_options[configuration_name]
         add_option(parser, name, default, explanation)
