@@ -8,35 +8,80 @@ import os
 import sys
 import optparse
 import fnmatch
+import ConfigParser
+
+
+def get_module_name():
+    name, _ = os.path.splitext(os.path.basename(__file__))
+    return name
+
+
+def _get_path_to_config():
+    path_to_config = '~/.config/%s/config' % get_module_name()
+    return os.path.expanduser(path_to_config)
+
+
+def has_true(value):
+    return value.lower() in ['true', 't', 'yes', 'y', '1']
+
+
+def read_configuration():
+    parser = ConfigParser.SafeConfigParser()
+    parser.read(_get_path_to_config())
+    configured_options = dict([
+        (key, has_true(value)) for key, value in parser.items('options')])
+    globs = dict(parser.items('globs'))
+    return configured_options, globs
 
 
 def parse_options(arg_list=None):
     """Find out what user wants at command line"""
+    configured_options, configured_globs = read_configuration()
     parser = optparse.OptionParser()
     parser.add_option('-p', '--python', action='store_true',
+                      default=configured_options['python'],
                       help='remove python temporary files too')
+    parser.add_option('-o', '--old', action='store_true',
+                      default=configured_options['old'],
+                      help='remove old files')
     parser.add_option('-r', '--recursive', action='store_true',
+                      default=configured_options['recursive'],
                       help='remove from subdirectories too')
     parser.add_option('-q', '--quiet', action='store_true',
+                      default=configured_options['quiet'],
                       help='do not show files being removed')
+    parser.add_option('-t', '--temporary', action='store_true',
+                      default=configured_options['temporary'],
+                      help='remove temporary files')
     parser.add_option('-T', '--Trial-Run', action='store_true',
+                      default=configured_options['trial-run'],
                       help='show which files would be removed, but do nothing')
+    parser.add_option('-U', '--Use-Debugger', action='store_true',
+                      default=configured_options['use-debugger'],
+                      help='Run the code under pudb')
     options, args = parser.parse_args(arg_list)
+    if options.Use_Debugger:
+        try:
+            import pudb as pdb
+        except ImportError:
+            import pdb
+        pdb.set_trace()
     if options.quiet and options.Trial_Run:
         print 'Using --quiet and --Trial-Run: Do nothing'
         raise NotImplementedError
     if not args:
         args = ['.']
-    return options, args
+    return options, args, get_globs(options, configured_globs)
 
 
-def get_globs(options):
+def get_globs(options, configured_globs):
     """A list of globs for all files to be deleted"""
-    result = ['*~', '.*~', '*.orig', '*.tmp', '*.bak', 'a.out',
-              'fred*', 'mary', 'one', 'two', ]
+    globs = configured_globs['temporary'].split()
     if options.python:
-        result.extend(['*.py[oc]', '*.fail', '*$py.class'])
-    return result
+        globs.extend(configured_globs['python'].split())
+    if options.old:
+        globs.extend(configured_globs['old'].split())
+    return globs
 
 
 def get_names_in(directory):
@@ -110,10 +155,9 @@ def remove_files(files, quiet, trial_run):
 def main():
     """Run the program"""
     try:
-        options, args = parse_options()
+        options, args, globs = parse_options()
     except NotImplementedError:
         return os.EX_USAGE
-    globs = get_globs(options)
     result = os.EX_OK
     for arg in args:
         files = get_files(arg, globs, options.recursive)
