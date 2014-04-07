@@ -34,31 +34,38 @@ def read_configuration():
     return configured_options, globs
 
 
+def add_option(parser, name, default, explanation):
+    letter = '-%s' % name[0]
+    word = '--%s' % name
+    action = 'store_true'
+    if default:
+        explanation = 'do not %s' % explanation
+        action = 'store_false'
+    parser.add_option(
+        letter, word, action=action, default=default, help=explanation)
+
+
+def as_configuration_name(name):
+    return '-'.join([s.lower() for s in name.split('-')])
+
+
 def parse_options(arg_list=None):
     """Find out what user wants at command line"""
     configured_options, configured_globs = read_configuration()
     parser = optparse.OptionParser()
-    parser.add_option('-p', '--python', action='store_true',
-                      default=configured_options['python'],
-                      help='remove python temporary files too')
-    parser.add_option('-o', '--old', action='store_true',
-                      default=configured_options['old'],
-                      help='remove old files')
-    parser.add_option('-r', '--recursive', action='store_true',
-                      default=configured_options['recursive'],
-                      help='remove from subdirectories too')
-    parser.add_option('-q', '--quiet', action='store_true',
-                      default=configured_options['quiet'],
-                      help='do not show files being removed')
-    parser.add_option('-t', '--temporary', action='store_true',
-                      default=configured_options['temporary'],
-                      help='remove temporary files')
-    parser.add_option('-T', '--Trial-Run', action='store_true',
-                      default=configured_options['trial-run'],
-                      help='show which files would be removed, but do nothing')
-    parser.add_option('-U', '--Use-Debugger', action='store_true',
-                      default=configured_options['use-debugger'],
-                      help='Run the code under pudb')
+    explanations = {
+        'temporary': 'remove temporary files',
+        'old': 'remove old files',
+        'python': 'remove python files',
+        'recursive': 'remove from subdirectories too',
+        'quiet': 'do not show files being removed',
+        'Trial-Run': 'show which files would be removed, but do nothing',
+        'Use-Debugger': 'run the program in a debugger',
+    }
+    for name, explanation in explanations.items():
+        configuration_name = as_configuration_name(name)
+        default = configured_options[configuration_name]
+        add_option(parser, name, default, explanation)
     options, args = parser.parse_args(arg_list)
     if options.Use_Debugger:
         try:
@@ -76,11 +83,10 @@ def parse_options(arg_list=None):
 
 def get_globs(options, configured_globs):
     """A list of globs for all files to be deleted"""
-    globs = configured_globs['temporary'].split()
-    if options.python:
-        globs.extend(configured_globs['python'].split())
-    if options.old:
-        globs.extend(configured_globs['old'].split())
+    globs = []
+    for option in ['temporary', 'python', 'old']:
+        if getattr(options, option):
+            globs.extend(configured_globs[option].split())
     return globs
 
 
