@@ -58,7 +58,9 @@ def compare_options(a, b):
 
 
 def get_help_text(configured_globs):
+    all_glob_names = ', '.join([k for k in configured_globs.keys()])
     explanations = [
+        ('all', 'remove all (%s)' % all_glob_names),
         ('recursive', 'remove from subdirectories too'),
         ('quiet', 'do not show files being removed'),
         ('Trial-Run', 'show which files would be removed, but do nothing'),
@@ -103,6 +105,8 @@ def parse_options(arg_list=None):
     options, args = parser.parse_args(arg_list)
     if options.Use_Debugger:
         start_debugging()
+    if options.all:
+        [setattr(options, name, True) for name in configured_globs.keys()]
     if options.quiet and options.Trial_Run:
         print 'Using --quiet and --Trial-Run: Do nothing'
         raise NotImplementedError
