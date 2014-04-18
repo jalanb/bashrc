@@ -96,7 +96,15 @@ cv ()
     fim $(basename $1)
 }
 
-ff ()
+gf ()
+{
+    first_dir "$@"
+    name=$1
+    shift
+    find $dir -name $name -exec grep --colour "$@" -nH {} \;
+}
+
+fc ()
 {
     if first_dir "$@"
     then shift
@@ -111,6 +119,14 @@ ff ()
         else builtin cd $path
         fi
     done
+}
+
+ff ()
+{
+    first_dir "$@"
+    name=$1
+    shift
+    find $dir -name $name "$@"
 }
 
 fv ()
