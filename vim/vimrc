@@ -1,9 +1,10 @@
-set t_Co=256
+" vim:fdm=marker
+
 " My stuff
 "
-" Keyboard
+" Keyboard {{{1
 "
-" function keys 
+" function keys {{{2
 "
  noremap  <F1>      :help<cr>
 "noremap  <F2>
@@ -21,9 +22,9 @@ set t_Co=256
  noremap <S-F4> <C-W>P
 nnoremap <C-F4> <C-W>c
 "
-" ordinary keys 
+" ordinary keys {{{2
 "
-" letters
+" letters {{{3
 "
 "noremap a - append
 "noremap b - backword
@@ -61,7 +62,7 @@ nnoremap <C-F4> <C-W>c
  noremap z- zc
  noremap z_ zC
 "
-" Punctuation
+" Punctuation {{{3
 "
 "noremap =
  noremap ] <C-]>   " do this on bufenter
@@ -75,7 +76,7 @@ nnoremap <C-F4> <C-W>c
 "noremap / - search
 "noremap `
 "
-" Shifted punctuation
+" Shifted punctuation {{{3
 "
 "noremap {
 "noremap }
@@ -99,7 +100,7 @@ nnoremap <C-F4> <C-W>c
 "noremap _
 "noremap +
 "
-" LETTERS
+" LETTERS {{{3
 "
 "noremap A - Append
 "noremap B - WORDS backwards
@@ -128,8 +129,7 @@ nnoremap K <PageUp>zz
 "noremap Y - aka yy
  noremap Z :q!<cr>
 "
-" ordinary keys 
-"     for movement
+" ordinary keys for movement {{{2
 "
 noremap <Space><Space>  <PageDown>zz
 noremap <BS>     <PageUp>zz
@@ -142,7 +142,7 @@ noremap <Down>   ddp
 noremap <left>      :tabprev<cr>
 noremap <right>     :tabnext<cr>
 "
-" control keys
+" control keys {{{2
 "
  noremap     <C-d> :qa<CR>
  noremap     <C-n> :next<CR>
@@ -159,7 +159,7 @@ inoremap     <C-q> <Esc>:qa!<CR>
 inoremap <C-Right> <Esc>lwi
 inoremap <C-Left>  <Esc>bi
 "
-" Alt keys
+" Alt keys {{{2
 "
  noremap     <A-q>      :qa!<CR>
  noremap <A-Right>      :tabnext<Cr>
@@ -168,7 +168,7 @@ inoremap     <A-q> <Esc>:qa!<CR>
 inoremap <A-Right> <Esc>:tabnext<CR>
 inoremap  <A-Left> <Esc>:tabprev<CR>
 "
-" Leader keys
+" Leader keys {{{2
 "
  noremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
@@ -207,7 +207,7 @@ nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
  noremap <leader><Left>     <<
  noremap <leader><Right>    >>
 "
-" Kinda keys
+" Kinda keys {{{1
 "
 set backspace=eol,start,indent
 set autoindent smartindent
@@ -216,7 +216,7 @@ set listchars=tab:>-,trail:?,eol:$
 set tildeop
 set whichwrap+=<,>,h,l,[,] " http://vim.wikia.com/wiki/Automatically_wrap_left_and_right
 "
-" Screen
+" Screen {{{1
 "
 set background=dark
 colorscheme alan-colour
@@ -232,11 +232,29 @@ set smarttab
 set tabpagemax=1000
 set nospell
 "
-" Cusror shapes differing in different modes
+" Terminal {{{2
+"
+" Enable screen swapping {{{3
+" which seems missing in the linux terminfo entry
+" help xterm-screens for more info
+if &term == "linux"
+    set t_ti=[?1049h
+    set t_te=[?1049l
+endif
+"
+" Colours {{{3
+"
+set t_Co=256
+"
+" Cusror shapes differing in different modes {{{3
 " from http://www.reddit.com/user/Eyckelboom
 " " set a nicer cursor in insert mode (from terryma on github)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+"
+" Plugins {{{1
+"
+" Pathogen {{{2
 "
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)
@@ -246,14 +264,22 @@ call pathogen#helptags()
 filetype on
 filetype plugin on
 filetype indent on
-
 "
-" Tagging plugins
+"EasyMotion {{{2
+"
+let g:EasyMotion_keys = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+let g:EasyMotion_leader_key = '<Space>'
+"
+" Tagging plugins {{{2
 "
 let g:easytags_auto_highlight = 0
+"
+" pylint {{{2
+"
+let g:pylint_show_rate = 0                                                                                                     
 
 "
-" vimdiff, aka vim -d
+" vimdiff, aka vim -d {{{1
 "
 function EnterBuffer ()
     "
@@ -294,40 +320,69 @@ if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 "
-" Ok, ok, so I have some spelling blind-spots:
+" Ok, ok, so I have some spelling blind-spots {{{1
 "
 abbreviate becuase because
 abbreviate seperate separate
 "
-" Miscellaneous
+" Some miscellaneous stuff from around the interwebs {{{1
 "
 autocmd FileType c,cpp,h,java set cindent
+"
+" From http://items.sjbach.com/319/configuring-vim-right {{{2
+"
+set hidden      " When on a buffer becomes hidden when it is abandoned.
+set scrolloff=3 " Minimal number of screen lines to keep above and below the cursor.
+set ruler
+set shortmess=atI
+set visualbell
+"
+" From http://www.pixelbeat.org/settings/.vimrc {{{2
+"
+set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
+set cursorline      " Highlight the screen line of the cursor with CursorLine
+set wildmenu
+set wildmode=list:longest,full
+"
+" Ignorance {{{2
+"Ignore these files when completing names and in Explorer
+set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
+"
+" From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html {{{2
+"   When one of the patterns matches with the name of the file which is written, no backup file is created.
+"
+set backupskip=/tmp/*,/private/tmp/*,~/temp
+"
+" Stronger encryption {{{2
+"
+if exists('+cm')
+    set cm=blowfish
+endif
+autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= nobackup noshelltemp history=0 secure | endif
+"
+" Despacing {{{2
+"
+function! RetabAndStripTrailingWhitespace()
+    :retab!
+    :%s/\s\+$//e
+endfunction
 
 "
-" PyMode (no longer using this one)
-"
-" let g:pymode_lint_config = "$HOME/.pylintrc"
-
-"
-" pylint
-"
-let g:pylint_show_rate = 0                                                                                                     
-"
-" Showing numbers in left-hand gutter
+" Showing numbers in left-hand gutter {{{2
 "
 " <leader>n is bound (above) to ChangeNumber()
 "
-function! SetRelativeNumber()
+function! SetRelativeNumber() " {{{3
     if exists('&relativenumber') && (&relativenumber == 0)
         set relativenumber
     endif
 endfunction
 
-function! SetAbsoluteNumber()
+function! SetAbsoluteNumber() " {{{3
     set number
 endfunction
 
-function! ChangeNumber()
+function! ChangeNumber() " {{{3
     if exists('&relativenumber')
         call CycleNumber()
     else
@@ -335,7 +390,7 @@ function! ChangeNumber()
     endif
 endfunction
 
-function! ToggleNumber()
+function! ToggleNumber() " {{{3
     if &number == 1
         set nonumber
     else
@@ -343,7 +398,7 @@ function! ToggleNumber()
     endif
 endfunc
 
-function CycleNumber()
+function CycleNumber() " {{{3
     " There are (logically) 4 states to cycle between
     " both off: set number on, relative off
     " number on, relative off: set number off, relative on
@@ -367,6 +422,7 @@ endfunction
 "
 set nonumber
 "
+" Search {{{2
 " <leader>\ is bound to calling this
 "   The leader key is also \, so really \\ calls this
 "
@@ -377,41 +433,6 @@ function ToggleHighlightSearch()
         set hlsearch
     endif
 endfunction
-"
-" Some miscellaneous stuff from around the interwebs
-"
-" From http://items.sjbach.com/319/configuring-vim-right
-"
-set hidden      " When on a buffer becomes hidden when it is abandoned.
-set scrolloff=3 " Minimal number of screen lines to keep above and below the cursor.
-set ruler
-set shortmess=atI
-set visualbell
-"
-" From http://www.pixelbeat.org/settings/.vimrc
-"
-set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
-set cursorline      " Highlight the screen line of the cursor with CursorLine
-set wildmenu
-set wildmode=list:longest,full
-"Ignore these files when completing names and in Explorer
-set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
-"
-" From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html
-"   When one of the patterns matches with the name of the file which is written, no backup file is created.
-"
-set backupskip=/tmp/*,/private/tmp/*,~/temp
-"
-" Stronger encryption
-"
-if exists('+cm')
-    set cm=blowfish
-endif
-autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= nobackup noshelltemp history=0 secure | endif
-
-"
-" for searching
-"
 set ignorecase
 set smartcase
 set incsearch
@@ -421,23 +442,6 @@ set hlsearch
 "
 let g:SeekKey = 'f' 
 let g:SeekBackKey = 'F'
-"
-" for Tab Completion
-"   from vim's help
-"
-"function! CleverTab()
-   "if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      "return "\<Tab>"
-   "else
-      "return "\<C-N>"
-"endfunction
-"
-" and if we need a Tab in the middle of a line: use <S-Tab>
-"
-function! RetabAndStripTrailingWhitespace()
-    :retab!
-    :%s/\s\+$//e
-endfunction
 "
 " This looks like one of mine
 "
@@ -450,12 +454,12 @@ function! ReadTraceback(filename)
     normal zv
 endfunction
 "
-" for history
+" History {{{2
 "
 set history=1000
 set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
 "
-" for filename completion (with Tab)
+" for filename completion (with Tab) {{{2
 "
 let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
 let g:explVertical=1
@@ -468,6 +472,7 @@ let g:netrw_altv = 1
 let g:netrw_browse_split = 2
 let g:netrw_list_hide='^\.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[oce],\~\([^\i]\|$\)'
 let g:netrw_keepdir=0
+let g:netrw_banner = 0
 
 let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
 let g:jabVertical=1
@@ -478,29 +483,7 @@ let g:jabSortBy='date'
 
 let g:is_posix = 1
 
-" au InsertEnter * set paste
-" au InsertLeave * set nopaste
-
-" Honour those wee lines at eof
+" Honour those wee lines at eof {{{2
 set modeline
 set modelines=1
 
-" Enable screen swapping, which seems missing in the linux terminfo entry
-" help xterm-screens for more info
-if &term == "linux"
-    set t_ti=[?1049h
-    set t_te=[?1049l
-endif
-
-"
-"EasyMotion
-"
-let g:EasyMotion_keys = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-let g:EasyMotion_leader_key = '<Space>'
-"
-" Python Mode
-"
-let g:pymode_folding = 0
-let g:pymode_syntax = 0
-let g:pymode_syntax_all = 0
-let g:pymode_options_indent = 0
