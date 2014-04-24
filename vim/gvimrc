@@ -1,12 +1,57 @@
-"gui
+" vim:fdm=marker
+"
+" GUI {{{1
 syntax on
-set guifont=Monospace\ 12
+set guifont=Monospace\ 14
 winpos 100 30
 winsize 100 48
 "
+" gui keys {{{2
 " Some keys that only work in gui
 inoremap <C-Space> <C-X><C-U>
 noremap <C-[> <C-t>
 
 set tabpagemax=20
 set guioptions=abcegimrLtT
+"
+" Zooming {{{1
+" based on the plugin at http://www.vim.org/scripts/script.php?script_id=2321
+" Changed regexps (he was using OSX fonts?) and key mappings
+let save_cpo = &cpo
+set cpo&vim
+
+" keep default value
+let g:current_font = &guifont
+
+" command
+command! -narg=0 ZoomIn    :call ZoomIn()
+command! -narg=0 ZoomOut   :call ZoomOut()
+command! -narg=0 ZoomReset :call ZoomReset()
+
+" map
+noremap <leader>= :call ZoomReset()<CR>
+noremap <leader>+ :call ZoomIn()<CR>
+noremap <leader>- :call ZoomOut()<CR>
+
+" guifont size + 1
+function! ZoomIn()
+  let l:fsize = substitute(&guifont, '^[^ ]* \([0-9]\+\)', '\1', '')
+  let l:fsize += 1
+  let l:guifont = substitute(&guifont, '^\([^ ]*\) \([0-9]\+\)', '\1 ' . l:fsize, '')
+  let &guifont = l:guifont
+endfunction
+
+" guifont size - 1
+function! ZoomOut()
+  let l:fsize = substitute(&guifont, '^[^ ]* \([0-9]\+\)', '\1', '')
+  let l:fsize -= 1
+  let l:guifont = substitute(&guifont, '^\([^ ]*\) \([0-9]\+\)', '\1 ' . l:fsize, '')
+  let &guifont = l:guifont
+endfunction
+
+" reset guifont size
+function! ZoomReset()
+  let &guifont = g:current_font
+endfunction
+
+let &cpo = save_cpo
