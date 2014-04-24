@@ -1,13 +1,13 @@
 " vim:fdm=marker
 "
-" GUI {{{1
+" GUI only {{{1
+"
 syntax on
 set guifont=Monospace\ 14
 winpos 100 30
 winsize 100 48
 "
-" gui keys {{{2
-" Some keys that only work in gui
+" Some keys that only work in gui {{{2
 inoremap <C-Space> <C-X><C-U>
 noremap <C-[> <C-t>
 
