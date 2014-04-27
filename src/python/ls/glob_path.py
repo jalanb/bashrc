@@ -1,6 +1,6 @@
 '''A class to encapsulate a glob pattern, which may match some files'''
 
-import path
+from dotsite import path
 
 class glob_path:
     def __init__(self,p):

@@ -6,9 +6,9 @@ The glob_path module
     A class to encapsulate a glob pattern, which may match some files
 
 Let's just make sure we are startting in the same directory as the module
-    >>> from path import cd
+    >>> from dotsite.path import cd
     >>> cd(glob_path.__file__)
-    True 
+    True
 
 Instantiate the class with a glob for the module itself
     >>> gp = glob_path.glob_path('glob_path.')

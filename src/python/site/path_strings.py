@@ -1,6 +1,6 @@
 import os
 
-from paths import makepath, home
+from dotsite.paths import makepath, home
 
 def environ_paths():
     import environ

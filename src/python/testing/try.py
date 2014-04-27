@@ -13,7 +13,7 @@ import cStringIO
 from pprint import pprint, pformat
 
 
-from paths import makepath
+from dotsite.paths import makepath
 from see import see, see_methods, see_attributes, spread
 import test_files
 import try_plugins

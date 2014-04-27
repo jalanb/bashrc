@@ -1,13 +1,13 @@
 '''A companion module to sys'''
 import sys
-from path import path as path_path
+from dotsite.path import path as Path
 
 paths = None
 
 def refresh_paths():
     '''Refresh the module-level paths'''
     global paths
-    paths = [ path_path(p) for p in sys.path ]
+    paths = [ Path(p) for p in sys.path ]
 
 def get_refreshed_paths():
     '''Refresh the module-level paths and return it'''

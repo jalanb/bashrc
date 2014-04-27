@@ -17,7 +17,7 @@ The l module
     ...
     ValueError: No such directories: No such directory, Nor is this
 
-    
+
     >>> l.as_paths('fred')
     [<path u'fred'>]
 
@@ -42,7 +42,7 @@ The l module
     >>> l.remove_ignored(files,sources)
     [<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
 
-    >>> from path import path
+    >>> from dotsite.path import path
     >>> import  glob_path
     >>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
 

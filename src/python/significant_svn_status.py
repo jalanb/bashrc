@@ -24,5 +24,6 @@ def main(args):
             return not os.EX_OK
     return not os.EX_OK
 
+
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))

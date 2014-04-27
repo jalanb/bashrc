@@ -1,9 +1,9 @@
 import os
 
-from paths import makepath
+from dotsite.paths import makepath
 
 def read_environ_items():
-    from path import path
+    from dotsite.path import path
     jab = path('$JAB').expanduser()
     items = {}
     for environ_file in jab.files('*environ*'):

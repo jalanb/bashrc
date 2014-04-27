@@ -27,7 +27,7 @@ argv.add_options([
     ('recursive', 'Recurse into sub-directories', False)
 ])
 
-from paths import makepath, pwd, home
+from dotsite.paths import makepath, pwd, home
 from repositories import svn
 
 

@@ -6,7 +6,7 @@ import re
 from fnmatch import fnmatch
 
 
-from decorators import memoize
+from dotsite.decorators import memoize
 import ansi_escapes
 
 

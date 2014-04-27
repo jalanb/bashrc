@@ -14,7 +14,7 @@ import sys
 from optparse import OptionParser
 
 
-from paths import makepath
+from dotsite.paths import makepath
 from repositories import svn
 
 

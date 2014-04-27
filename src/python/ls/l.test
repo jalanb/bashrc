@@ -6,7 +6,7 @@ The l module
 More modules for testing
 ========================
     >>> import os
-    >>> from path import path
+    >>> from dotsite.path import path
 
 Start here
 ==========

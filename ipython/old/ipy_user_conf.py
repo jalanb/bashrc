@@ -41,8 +41,8 @@ def main():
     o.confirm_exit = 0
 
     config_helper_functions.import_modules('os sys re')
-    config_helper_functions.import_some('path', 'path')
-    config_helper_functions.import_some('paths', 'makepath')
+    config_helper_functions.import_some('dotsite.path', 'path')
+    config_helper_functions.import_some('dotsite.paths', 'makepath')
     config_helper_functions.import_some('see','see spread see_methods see_attributes')
     config_helper_functions.import_some('see_code','code highlight')
 

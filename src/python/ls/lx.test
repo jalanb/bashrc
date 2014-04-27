@@ -7,7 +7,7 @@ The lx script
 More modules for testing
 ------------------------
 
-    >>> import paths
+    >>> from dotsite import paths
     >>> import l
 
 Test the module's file
@@ -35,7 +35,7 @@ get_exts
 
     >>> files_here = path_to_lx_dir.files()
 
-The get_exts() method turns the list of files into a dictionary 
+The get_exts() method turns the list of files into a dictionary
     >>> files_by_extension = lx.get_exts(files_here)
 
 Keyed by the extensions of the files
@@ -54,12 +54,12 @@ And values are a list of file paths,
 
 Despite best intentions there's always more python files than test files
     And this directory should be "mature" by now
-    >>> len(files_by_extension['.test']) <= len(files_by_extension['.py']) 
+    >>> len(files_by_extension['.test']) <= len(files_by_extension['.py'])
     True
 
     >>> files_in_the_home_directory = l.get_files(l.get_dirs('~'))
 
-Special rule for dot files: 
+Special rule for dot files:
     they are all lumped together under the ext "."
     >>> hidden_home_files = lx.get_exts(files_in_the_home_directory)['.']
 

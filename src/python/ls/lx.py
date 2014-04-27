@@ -25,7 +25,7 @@ def hidden_extension(path_to_file):
 
     If the file startswith '.', just use '.'
 
-    >>> from path import path
+    >>> from dotsite.path import path
     >>> hidden_extension(path(__file__)) in ['.py', '.pyc']
     True
     >>> hidden_extension(path('.bashrc')) == '.'
@@ -39,7 +39,7 @@ def hidden_extension(path_to_file):
 def get_exts(paths_to_files):
     """Collect those paths into a dictionary, keyed by extension
 
-    >>> from path import path
+    >>> from dotsite.path import path
     >>> exts = get_exts([path('one.py'), path('one.pyc'), path('two.py')])
     >>> exts['.py'] == [path('one.py'), path('two.py')]
     True

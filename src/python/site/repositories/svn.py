@@ -4,8 +4,8 @@
 import commands
 
 
-from paths import makepath
-from paths import PathError
+from dotsite.paths import makepath
+from dotsite.paths import PathError
 
 
 def _get_existing_file(path_to_file):

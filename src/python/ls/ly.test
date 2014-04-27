@@ -6,7 +6,7 @@ The ly module
 More modules for testing
 ------------------------
 
-    >>> from paths import makepath
+    >>> from dotsite.paths import makepath
     >>> import l
 
 Test files in the module's directory

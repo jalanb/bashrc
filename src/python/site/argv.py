@@ -221,7 +221,7 @@ def _find_files_in_args(args):
     global files
     global directories
     global first_directory
-    import paths
+    from dotsite import paths
     directories, files, _ = paths.split_directories_files(args)
     first_directory = directories and directories[0] or paths.makepath('.')
 

@@ -3,7 +3,7 @@ import argv
 
 
 import ls_colours
-from paths import makepath
+from dotsite.paths import makepath
 
 argv.add_options([
     ('quiet', 'hide directories, blank lines, etc', False),

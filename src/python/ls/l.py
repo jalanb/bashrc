@@ -2,7 +2,7 @@
 
 
 import argv
-import path
+from dotsite import path
 from glob_path import glob_path, any_fnmatch
 from repositories import svn
 
