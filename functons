@@ -70,7 +70,7 @@ y ()
 
 3d ()
 {
-    tree -d "$@" | less
+    tree -d "$@" | more
 }
 
 IP ()
@@ -458,6 +458,11 @@ fpy ()
     fi
 }
 
+ght ()
+{
+    gh "$@" | tail
+}
+
 gv. ()
 {
     PYTHONPATH=$(readlink -f .) gv .
@@ -575,6 +580,11 @@ vle ()
 vlf ()
 {
     _edit_locals functons
+}
+
+vlo ()
+{
+    v $(locate "$@")
 }
 
 vlp ()
