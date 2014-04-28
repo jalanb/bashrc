@@ -57,6 +57,13 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
 		exec "tabnew " s:file_grammar
 		set filetype=doctest
 	endif
+	let s:unit_test = substitute(s:file_py,'\.py$','_test.py',"")
+	if filereadable(s:unit_test) && s:file_py != s:unit_test && &loadplugins
+		setl autoread
+		exec "tabnew " s:unit_test
+		set filetype=python
+		set foldlevel=1
+	endif
 	let s:file_test = substitute(s:file_py,'\.py$','.test',"")
 	if filereadable(s:file_test) && s:file_py != s:file_test && &loadplugins
 		setl autoread
