@@ -5,9 +5,11 @@ import os
 import shlex
 import commands
 import optparse
+from fnmatch import fnmatch
 
 
 from repositories import repository
+from dotsite import splits
 
 
 def _path_to_locate():
@@ -21,6 +23,7 @@ def _path_to_locate():
 def _make_locate_command(string, options):
     """Make a command to locate that string"""
     option = options.ignore_case and '-i' or ''
+    string = options.globs and splits.split(string, '[*?[]')[0] or string
     return '%s %s "%s"' % (_path_to_locate(), option, string)
 
 
@@ -61,10 +64,17 @@ def _locate(string, options):
     """Locate some files called string, restricted by the given options"""
     lines = _run_locate(string, options)
 
-    def _has_basename(path):
+    def _compare(one, two):
         if options.ignore_case:
-            return os.path.basename(path).upper() == string.upper()
-        return os.path.basename(path) == string
+            one = one.upper()
+            two = two.upper()
+        if options.globs:
+            return fnmatch(one, two)
+        return cmp(one, two) == 0
+
+    def _has_basename(path):
+        return _compare(os.path.basename(path), string)
+
     check = _make_check_method(_has_basename, options)
     result = [l for l in lines if check(l)]
     if result or options.basename:
@@ -72,14 +82,14 @@ def _locate(string, options):
 
     def _directory_in_path(path):
         test_string = string
-        if options.ignore_case:
-            test_string = string.upper()
-            path = path.upper()
         parts = path.split(os.path.sep)
         if options.basename:
-            return test_string == parts[-1]
-        else:
-            return test_string in parts
+            parts = parts[-1:]
+        for part in parts:
+            if _compare(part, test_string):
+                return True
+        return False
+
     check = _make_check_method(_directory_in_path, options)
     result = [l for l in lines if check(l)]
     if result:
@@ -98,6 +108,8 @@ def _handle_command_line(args):
                       help='only locate directories')
     parser.add_option('-f', '--files', action='store_true',
                       help='only locate files')
+    parser.add_option('-g', '--globs', action='store_true',
+                      help='match on globs')
     parser.add_option('-i', '--ignore-case', action='store_true',
                       help='ignore case in searches')
     parser.add_option('-U', '--Use_debugger', action='store_true',

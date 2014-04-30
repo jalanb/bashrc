@@ -7,7 +7,7 @@ The locate module
 
 More modules for testing
 ------------------------
-    
+
     >>> import os
 
 Mock options
@@ -21,21 +21,22 @@ Some methods need options which look like they came from an OptionParser
     >>> options.files = False
     >>> options.ignore_case = False
     >>> options.basename = False
+    >>> options.globs = False
 
 locate
 ------
 
 The script will need to run locate commands
-    >>> print locate.make_locate_command('fred', options)
+    >>> print locate._make_locate_command('fred', options)
     /.../locate "fred"
 
 The standard locate command gives many files for its own name
-    >>> lines = locate.run_locate('locate', options)
+    >>> lines = locate._run_locate('locate', options)
     >>> len(lines) > 10
     True
 
 But the module cuts that down to just the files named locate
-    >>> lines = locate.locate('locate', options)
+    >>> lines = locate._locate('locate', options)
     >>> len(lines) < 10
     True
 
@@ -50,5 +51,12 @@ We can insist on finding only directories
     >>> options.directories = True
 
 But, it turns out there are no directories called 'locate'
-    >>> not locate.locate('locate', options)
+    >>> not locate._locate('locate', options)
+    True
+
+So we can use a glob instead
+    >>> options.directories = False
+    >>> options.globs = True
+    >>> locates = locate._locate('lo*te', options)
+    >>> locate._path_to_locate() in locates
     True
