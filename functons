@@ -93,7 +93,7 @@ cl ()
 cv ()
 {
     kd $1
-    fim $(basename $1)
+    v $(basename $1)
 }
 
 gf ()
