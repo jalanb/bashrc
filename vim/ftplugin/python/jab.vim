@@ -64,6 +64,13 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
 		set filetype=python
 		set foldlevel=1
 	endif
+	let s:test_unit = substitute(s:file_py,'^','test_',"")
+	if filereadable(s:test_unit) && s:file_py != s:test_unit && &loadplugins
+		setl autoread
+		exec "tabnew " s:test_unit
+		set filetype=python
+		set foldlevel=1
+	endif
 	let s:file_test = substitute(s:file_py,'\.py$','.test',"")
 	if filereadable(s:file_test) && s:file_py != s:file_test && &loadplugins
 		setl autoread
