@@ -10,4 +10,4 @@ Use-Debugger = False
 development = tags a.out *.log
 old = *.old
 python = *.pyc *.pyo *.fail *$py.class *.profile
-temporary = *.bak *.orig *.tmp *~ .*~ fred* mary one two
+temporary = *.bak *.orig temp.* *.tmp *~ .*~ fred* mary one two
