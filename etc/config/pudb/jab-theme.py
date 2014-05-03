@@ -20,7 +20,7 @@
 # This file is exec'd by pudb, so does not play nice with pylint
 # Specifically - some globals are supplied, with look undefined to pylint
 #
-# pylint: disable-msg=E0602
+# pylint: disable-msg=E0602,E126
 
 # Initially set a palette to dark vim
 palette.update({
