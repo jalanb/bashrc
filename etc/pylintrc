@@ -57,11 +57,15 @@ load-plugins=
 # W0201 is "Attribute '...' defined outside __init__".
 # W0603 is "Using the global statement" We have the statement, we use it
 #
+# Don't be so fussy
+#
+# C0111 is Missing docstring
+#
 # I said "Shut up" So: shut up!
 #
 # I0011 is "Locally disabling ..."
 #
-disable=E1103,E1101,W0142,W0201,R0903,I0011,W0403,W0232,C0103
+disable=E1103,E1101,W0142,W0201,R0903,I0011,W0403,W0232,C0103,C0111
 
 
 [REPORTS]
