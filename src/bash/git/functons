@@ -8,11 +8,6 @@
 
 # xx
 
-gb ()
-{
-	gs "$@" | grep 'On.branch'
-}
-
 gc ()
 {
 	if [[ -z "$@" ]]
@@ -21,33 +16,12 @@ gc ()
 	fi
 }
 
-gl ()
-{
-	git log "$@"
-}
-
 gs ()
 {
 	do_git_status "$@"
 }
 
 # xxx
-
-gbj ()
-{
-	gb $JAB
-}
-
-gtv ()
-{
-	do_git_stat "$@" | sed -e "s/^ M/gdv/" -e "s/^?? /vim /"
-}
-
-gsj ()
-{
-	do_git_status $JAB
-}
-
 # xxxxx
 # xxxxxx
 # xxxxxxx
