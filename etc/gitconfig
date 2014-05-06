@@ -24,5 +24,7 @@
     dw = diff --word-diff
     last = log -1 HEAD
     lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+    pr = pull --rebase
+    pu = push
 [help]
     autocorrect = 1
