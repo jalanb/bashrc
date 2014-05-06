@@ -22,6 +22,14 @@ gs ()
 }
 
 # xxx
+
+gpp ()
+{
+    git pull --rebase
+    git push
+}
+
+# xxxx
 # xxxxx
 # xxxxxx
 # xxxxxxx
