@@ -50,6 +50,7 @@
 #
 # Dot files (and directories)
 #
+.sw[op]
 .*.sw[op]
 .DS_Store*
 .coverage
