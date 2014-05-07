@@ -830,7 +830,9 @@ bright ()
 
 please ()
 {
-    sudo $(history -p !-1)
+    local last=$(history -p !-1)
+    echo "sudo $last"
+    sudo $last
 }
 
 run_as ()
