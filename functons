@@ -955,7 +955,8 @@ console_title_on ()
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
     elif env | grep -iq konsole 2>/dev/null
     then
-        dcop $KONSOLE_DCOP_SESSION renameSession $1
+        #dcop $KONSOLE_DCOP_SESSION renameSession $1
+        echo -e "\033]0;$1\007" # http://stackoverflow.com/a/21380108/500942
     elif env | grep -iq gnome.terminal
     then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
