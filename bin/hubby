@@ -1,0 +1,59 @@
+#! /bin/bash
+
+show_status ()
+{
+    dir=$1
+    local local_changes=$(git -C $dir status -s)
+    local dir_shown=
+    if [[ -n $local_changes ]]
+    then
+        echo -e ${PROMPT_LIGHT_GREEN}${dir}${PROMPT_NO_COLOUR}
+        dir_shown=1
+        git -C $dir status # -s
+    fi
+    local remote_changes=$(git -C $dir status | head -n 2 | tail -n 1 | grep "ahead of")
+    if [[ -n $remote_changes ]]
+    then
+        if [[ -z $dir_shown ]]
+        then
+            echo -e ${PROMPT_LIGHT_GREEN}${dir}${PROMPT_NO_COLOUR}
+            dir_shown=1
+        fi
+        local count=$(echo $remote_changes | sed -e "s/[^0-9]*\([0-9]*\).*/\1/")
+        git -C $dir log --pretty=format:"%ad, %h: %s" --date=relative --name-only -n $count
+    fi
+    test -z $dir_shown || echo
+    if [[ -n $dir_shown ]]
+    then echo
+    fi
+}
+
+show_hubs ()
+{
+    local hub=$1
+    cd $hub
+    for dirname in $(ls)
+    do
+        local path=$hub/$dirname
+        if [[ -d $path ]]
+        then
+            if [[ -d $path/.git ]]
+            then 
+                if [[ ! -f $path/.hubignore ]]
+                then show_status $path
+                fi
+            else echo Not a path $path/.git
+            fi
+        fi
+    done
+}
+
+main ()
+{
+    show_status $JAB
+    if [[ -d ~/src/git/hub ]]
+    then show_hubs ~/src/git/hub
+    fi
+}
+
+main 
