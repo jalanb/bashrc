@@ -50,6 +50,7 @@ show_hubs ()
     for dirname in $(ls)
     do
         local path=$hub/$dirname
+        [[ $(readlink -f $path) == $(readlink -f $JAB) ]] && continue
         if [[ -d $path ]]
         then
             if [[ -d $path/.git ]]
