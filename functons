@@ -73,6 +73,11 @@ y ()
     tree -d "$@" | more
 }
 
+3y ()
+{
+    tree -P "*.py" | more
+}
+
 IP ()
 {
     for number in 172 192 100
