@@ -9,8 +9,8 @@ print 'import re'
 import sys
 print 'import sys'
 
-from dotsite.path import path
-print 'from dotsite.path import path'
+from path import path
+print 'from path import path'
 from dotsite.paths import makepath
 print 'from dotsite.paths import makepath'
 from see import see

@@ -1,4 +1,4 @@
-from dotsite import path
+import path
 import argv
 import l
 import lout

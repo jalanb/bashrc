@@ -1,4 +1,4 @@
-The lx script
+script
 =============
 
     >>> import lx
@@ -7,7 +7,7 @@ The lx script
 More modules for testing
 ------------------------
 
-    >>> from dotsite import paths
+    >>> import paths
     >>> import l
 
 Test the module's file
