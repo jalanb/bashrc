@@ -745,6 +745,11 @@ dixx ()
     fi
 }
 
+this ()
+{
+    python -c "import this"
+}
+
 vvvb ()
 {
     v $JAB/vim/ftplugin/sh.vim
