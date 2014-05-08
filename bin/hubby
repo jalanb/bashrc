@@ -22,8 +22,8 @@ show_status ()
         local count=$(echo $remote_changes | sed -e "s/[^0-9]*\([0-9]*\).*/\1/")
         git -C $dir log --pretty=format:"%ad, %h: %s" --date=relative --name-only -n $count
     else
-        local sha_one=$(git -C $dir ls-remote origin master | cut -d\  -f1)
-        local sha_two=$(git -C $JAB show-ref origin/master | cut -d\  -f1)
+        local sha_one=$(git -C $dir ls-remote origin master | sed -e "s/\s.*//")
+        local sha_two=$(git -C $dir show-ref origin/master | sed -e "s/\s.*//")
         if [[ $sha_one != $sha_two ]]
         then
             if [[ -z $dir_shown ]]
@@ -31,7 +31,7 @@ show_status ()
                 echo -e ${PROMPT_LIGHT_GREEN}${dir}${PROMPT_NO_COLOUR}
                 dir_shown=1
             fi
-            echo Remote changed
+            echo Remote changed $sha_one $sha_two
         fi
     fi
     test -z $dir_shown || echo
