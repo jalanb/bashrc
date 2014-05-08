@@ -50,11 +50,6 @@ v ()
     fi
 }
 
-w ()
-{
-    what "$@"
-}
-
 x ()
 {
     /Users/jab/bin/exercise
