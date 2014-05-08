@@ -20,10 +20,16 @@ def _path_to_locate():
     return '/usr/bin/locate'
 
 
+def glob_to_regexp(string):
+    return '.*'.join(splits.split_and_strip_whole(string, '[*?[]'))
+
+
 def _make_locate_command(string, options):
     """Make a command to locate that string"""
     option = options.ignore_case and '-i' or ''
-    string = options.globs and splits.split(string, '[*?[]')[0] or string
+    if options.globs:
+        option = '--regexp'
+        string = glob_to_regexp(string)
     return '%s %s "%s"' % (_path_to_locate(), option, string)
 
 
