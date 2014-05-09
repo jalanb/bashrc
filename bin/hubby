@@ -12,7 +12,7 @@ show_status ()
         dir_shown=1
         $GIT status -s
     fi
-    local remote_changes=$(git log --no-color --oneline origin/master --ancestry-path HEAD..origin/master)
+    local remote_changes=$($GIT log --no-color --oneline origin/master --ancestry-path HEAD..origin/master)
     if [[ -z $remote_changes ]]
     then remote_changes=$($GIT fetch --dry-run 2>&1)
     fi
