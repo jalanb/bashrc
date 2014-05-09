@@ -629,11 +629,6 @@ vvv ()
     v $JAB/vim/$1
 }
 
-wat ()
-{
-    vat $(which $1)
-}
-
 # xxxx
 
 bump ()
