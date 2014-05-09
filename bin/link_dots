@@ -33,12 +33,12 @@ main ()
     link  etc/inputrc          .inputrc
     link  etc/pylintrc         .pylintrc
     link  etc/sackrc           .sackrc
+    link  etc/vimpagerrc       .vimpagerrc
 
     link  src/python/pythonrc.py   .pythonrc.py
 
     link  vim                  .vim
     link  vim/vimrc            .vimrc
-    link  vim/vimpagerrc       .vimpagerrc
 }
 
 check_jab
