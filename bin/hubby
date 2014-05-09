@@ -57,10 +57,14 @@ show_hubs ()
 
 main ()
 {
-    show_status $JAB
-    if [[ -d ~/src/git/hub ]]
-    then show_hubs ~/src/git/hub
+    if [[ -n $* ]]
+    then show_status "$@"
+    else
+        show_status $JAB
+        if [[ -d ~/src/git/hub ]]
+        then show_hubs ~/src/git/hub
+        fi
     fi
 }
 
-main 
+main "$@"
