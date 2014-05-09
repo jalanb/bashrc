@@ -2,7 +2,7 @@
 
 # echo Welcome to $JAB/bashrc
 
-source_file ()
+_source_file ()
 {
     local path_to_file=$1
     shift
@@ -21,7 +21,7 @@ source_file ()
     fi
 }
 
-show_changes ()
+_show_changes ()
 {
     JAB_BASH=$JAB/src/bash
     if [[ -d $JAB/.svn ]]
@@ -33,7 +33,7 @@ show_changes ()
     source $JAB_BASH/git/source
 }
 
-source_jab ()
+_source_jab ()
 {
     [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
     local LOCAL=$JAB/local
@@ -42,30 +42,30 @@ source_jab ()
     [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
     [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
     [[ -x $HOME/bin/python ]] && PYTHON=$HOME/bin/python
-    source_file $JAB/bin/add_to_a_path.sh
-    source_file environ
-    source_file $JAB/python-environ optional
-    source_file $LOCAL/environ
-    source_file $LOCAL/python-environ optional
-    source_file $JAB/prompt green
-    source_file $LOCAL/prompt
-    source_file $DEV_GITHUB/what/what.sh
+    _source_file $JAB/bin/add_to_a_path.sh
+    _source_file environ
+    _source_file $JAB/python-environ optional
+    _source_file $LOCAL/environ
+    _source_file $LOCAL/python-environ optional
+    _source_file $JAB/prompt green
+    _source_file $LOCAL/prompt
+    _source_file $DEV_GITHUB/what/what.sh
     what_source $JAB/aliases
     what_source $LOCAL/aliases optional
-    source_file $JAB/functons
-    source_file $LOCAL/functons
-    source_file $DEV_GITHUB/kd/kd.sh
-    source_file $DEV_GITHUB/viack/viack optional
-    source_file $JAB/src/bash/git-completion.bash
-    show_changes
+    _source_file $JAB/functons
+    _source_file $LOCAL/functons
+    _source_file $DEV_GITHUB/kd/kd.sh
+    _source_file $DEV_GITHUB/viack/viack optional
+    _source_file $JAB/src/bash/git-completion.bash
+    _show_changes
 }
 
-clean_jab()
+_clean_jab()
 {
     /bin/rm -rf $JAB/tmp/*
 }
 
-show_todo ()
+_show_todo ()
 {
     builtin cd $JAB_PYTHON
     if python2.7 -c"a=0" >/dev/null 2>&1
@@ -77,9 +77,9 @@ show_todo ()
     builtin cd - >/dev/null 2>&1
 }
 
-welcome_home ()
+_welcome_home ()
 {
-    show_todo
+    _show_todo
     if pgrep -fl vim > /dev/null
     then
         echo
@@ -101,11 +101,11 @@ jab_bashrc()
         echo i am lost because $JAB is not a directory >&2
     else
         builtin cd $JAB
-        source_jab
-        clean_jab
-        welcome_home
+        _source_jab
+        _clean_jab
+        _welcome_home
     fi
-    source_file ~/.oldpwd optional
+    _source_file ~/.oldpwd optional
 }
 
 [[ $- == *i* ]] && jab_bashrc
