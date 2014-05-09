@@ -2,17 +2,7 @@
 
 If I have any of these back them up now
 
-    rm -rf .ackrc
-    rm -rf .dir_colors
-    rm -rf .editrc
-    rm -rf .gitignore_global
-    rm -rf .inputrc
-    rm -rf .pylintrc
-    rm -rf .sackrc
-    rm -rf .py .pythonrc.py
-    rm -rf .vim
-    rm -rf .vimrc
-    rm -rf .vimpagerrc
+    grep link bin/link_dots
 
 Go $HOME
     
@@ -20,11 +10,11 @@ Go $HOME
 
 Check out from the main branch of the repository
 
-    git clone https://github.com/jalanb/dotjab.git .jab
+    git clone https://github.com/jalanb/dotjab.git
 
 Run the setup script
 
-    cd .jab/server
+    cd dotjab/server
     bash setup.sh
 
 Or, as it is always "a work in progress" I might be better off with
@@ -39,4 +29,10 @@ Whichever way gets it done, complete it by:
     Logout and in
 
 
-Smile :-)
+
+Live
+    Laugh
+    Love
+    Let Go
+    Lose It
+
