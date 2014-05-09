@@ -21,23 +21,6 @@ source_file ()
     fi
 }
 
-update_jab ()
-{
-    [[ -z $JABS ]] && return
-    local svn_ls="$SVN_CLIENT ls --non-interactive"
-    local jab_dirs=$($svn_ls --trust-server-cert $JABS 2>&1)
-    if [[ $jab_dirs =~ "invalid option: --trust-server-cert" ]]
-    then jab_dirs=$($svn_ls  $JABS)
-    fi
-    if [[ $jab_dirs =~ bin ]]
-    then $SVN_CLIENT up -q $JAB
-    else
-        echo Cannot contact $JABS
-        echo Expected \"...bin...\"
-        echo Actual $jab_dirs
-    fi
-}
-
 show_changes ()
 {
     JAB_BASH=$JAB/src/bash
@@ -58,7 +41,6 @@ source_jab ()
     [[ -d ~/src/git/hub ]] && DEV_GITHUB=~/src/git/hub
     [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
     [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
-    # update_jab
     [[ -x $HOME/bin/python ]] && PYTHON=$HOME/bin/python
     source_file $JAB/bin/add_to_a_path.sh
     source_file environ
