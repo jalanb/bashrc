@@ -7,7 +7,7 @@
     diff =
 [core]
     editor = vim
-    excludesfile = /home/alanb/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [alias]
     br = branch
     ci = commit
