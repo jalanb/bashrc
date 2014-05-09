@@ -1,6 +1,0 @@
-[submodule "src/github/ackg"]
-	path = src/github/ackg
-	url = https://github.com/tkruse/ackg.git
-[submodule "src/github/vimpager"]
-	path = src/github/vimpager
-	url = git://github.com/rkitover/vimpager.git
