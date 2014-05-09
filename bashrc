@@ -54,11 +54,7 @@ source_jab ()
 {
     [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
     local LOCAL=$JAB/local
-    local JAB_GITHUB=$JAB/src/github
-    /bin/chmod -R a-w $JAB_GITHUB
-    find $JAB_GITHUB -name "*.history" -exec /bin/chmod +w {} \;
-    find $JAB_GITHUB -name "viack" -exec /bin/chmod +w {} \;
-    local DEV_GITHUB=$JAB_GITHUB
+    local DEV_GITHUB=
     [[ -d ~/src/git/hub ]] && DEV_GITHUB=~/src/git/hub
     [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
     [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
