@@ -37,8 +37,9 @@ _source_jab ()
 {
     [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
     local LOCAL=$JAB/local
-    local DEV_GITHUB=
-    [[ -d ~/src/git/hub ]] && DEV_GITHUB=~/src/git/hub
+    GITHUB_SOURCES=
+    [[ -d ~/src/git/hub ]] && GITHUB_SOURCES=~/src/git/hub
+    export GITHUB_SOURCES
     [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
     [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
     [[ -x $HOME/bin/python ]] && PYTHON=$HOME/bin/python
@@ -49,13 +50,13 @@ _source_jab ()
     _source_file $LOCAL/python-environ optional
     _source_file $JAB/prompt green
     _source_file $LOCAL/prompt
-    _source_file $DEV_GITHUB/what/what.sh
+    _source_file $GITHUB_SOURCES/what/what.sh
     what_source $JAB/aliases
     what_source $LOCAL/aliases optional
     _source_file $JAB/functons
     _source_file $LOCAL/functons
-    _source_file $DEV_GITHUB/kd/kd.sh
-    _source_file $DEV_GITHUB/viack/viack optional
+    _source_file $GITHUB_SOURCES/kd/kd.sh
+    _source_file $GITHUB_SOURCES/viack/viack optional
     _source_file $JAB/src/bash/git-completion.bash
     _show_changes
 }
