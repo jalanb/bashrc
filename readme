@@ -11,6 +11,7 @@ Go $HOME
 Check out from the main branch of the repository
 
     git clone https://github.com/jalanb/dotjab.git
+    JAB=$(readlink -f dotjab)
 
 Run the setup script
 
@@ -23,7 +24,7 @@ Or, as it is always "a work in progress" I might be better off with
 Link the dot files
 
     cd -
-    bash bin/link_dots
+    bash $JAB/bin/link_dots
 
 Whichever way gets it done, complete it by:
     Logout and in
