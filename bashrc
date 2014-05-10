@@ -2,7 +2,7 @@
 
 # echo Welcome to $JAB/bashrc
 
-_source_file ()
+source_file ()
 {
     local path_to_file=$1
     shift
@@ -43,21 +43,21 @@ _source_jab ()
     [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
     [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
     [[ -x $HOME/bin/python ]] && PYTHON=$HOME/bin/python
-    _source_file $JAB/bin/add_to_a_path.sh
-    _source_file environ
-    _source_file $JAB/python-environ optional
-    _source_file $LOCAL/environ
-    _source_file $LOCAL/python-environ optional
-    _source_file $JAB/prompt green
-    _source_file $LOCAL/prompt
-    _source_file $GITHUB_SOURCES/what/what.sh
+    source_file $JAB/bin/add_to_a_path.sh
+    source_file environ
+    source_file $JAB/python-environ optional
+    source_file $LOCAL/environ
+    source_file $LOCAL/python-environ optional
+    source_file $JAB/prompt green
+    source_file $LOCAL/prompt
+    source_file $GITHUB_SOURCES/what/what.sh
     what_source $JAB/aliases
     what_source $LOCAL/aliases optional
-    _source_file $JAB/functons
-    _source_file $LOCAL/functons
-    _source_file $GITHUB_SOURCES/kd/kd.sh
-    _source_file $GITHUB_SOURCES/viack/viack optional
-    _source_file $JAB/src/bash/git-completion.bash
+    source_file $JAB/functons
+    source_file $LOCAL/functons
+    source_file $GITHUB_SOURCES/kd/kd.sh
+    source_file $GITHUB_SOURCES/viack/viack optional
+    source_file $JAB/src/bash/git-completion.bash
     _show_changes
 }
 
@@ -106,7 +106,7 @@ jab_bashrc()
         _clean_jab
         _welcome_home
     fi
-    _source_file ~/.oldpwd optional
+    source_file ~/.oldpwd optional
 }
 
 [[ $- == *i* ]] && jab_bashrc
