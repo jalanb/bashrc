@@ -1,6 +1,6 @@
 #! /bin/bash
 
-show_status ()
+_show_status ()
 {
     dir=$1
     local GIT="git -C $dir"
@@ -34,7 +34,19 @@ show_status ()
     fi
 }
 
-show_hubs ()
+_show_dir ()
+{
+    path=$1
+    if [[ -d $path/.git ]]
+    then
+        if [[ ! -f $path/.hubignore ]]
+        then _show_status $path
+        fi
+    else echo Not a path $path/.git
+    fi
+}
+
+_show_dirs ()
 {
     local hub=$1
     cd $hub
@@ -44,13 +56,7 @@ show_hubs ()
         [[ $(readlink -f $path) == $(readlink -f $JAB) ]] && continue
         if [[ -d $path ]]
         then
-            if [[ -d $path/.git ]]
-            then 
-                if [[ ! -f $path/.hubignore ]]
-                then show_status $path
-                fi
-            else echo Not a path $path/.git
-            fi
+            _show_dir $path
         fi
     done
 }
@@ -58,11 +64,11 @@ show_hubs ()
 main ()
 {
     if [[ -n $* ]]
-    then show_status "$@"
+    then _show_dir "$@"
     else
-        show_status $JAB
+        _show_status $JAB
         if [[ -d ~/src/git/hub ]]
-        then show_hubs ~/src/git/hub
+        then _show_dirs ~/src/git/hub
         fi
     fi
 }
