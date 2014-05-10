@@ -1,0 +1,13 @@
+The dotjab module
+=================
+
+    >>> import dotjab
+    >>> print dotjab.__doc__
+    Support for dotjab's scripts
+    ...
+
+    >>> dotjab.JAB().endswith('jab')
+    True
+
+    >>> dotjab.github_sources().isdir()
+    True
