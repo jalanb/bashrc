@@ -556,6 +556,11 @@ try ()
     python $TRY "$@"
 }
 
+vat ()
+{
+    $GITHUB_SOURCES/vimpager/vimcat "$@"
+}
+
 vib ()
 {
     $EDITOR ~/.bashrc
