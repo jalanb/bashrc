@@ -60,8 +60,6 @@ alias cy="c \$PYTHON_HOME"
 
 alias eg="env | g "
 
-alias ga="alias | g"
-
 alias jj="c $JAB"
 
 alias kp="rsync -a"
