@@ -852,7 +852,21 @@ run_as ()
     fi
 }
 
+toggle ()
+{
+    cd /home/alanb/src/git/hub/jpm/jpm
+    python -c "import jpm; client = jpm.mpd_client(); jpm.toggle(client)"
+    cd - >/dev/null 2>&1
+}
+
 # xxxxxxx
+
+current ()
+{
+    cd /home/alanb/src/git/hub/jpm/jpm
+    python -c "import jpm; client = jpm.mpd_client(); print jpm.format_current_album(client)"
+    cd - >/dev/null 2>&1
+}
 
 cleaner ()
 {
