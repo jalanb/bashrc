@@ -28,6 +28,11 @@ gs ()
 
 # xxx
 
+ghi ()
+{
+    TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"
+}
+
 gpp ()
 {
     git pull --rebase
