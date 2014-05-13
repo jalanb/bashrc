@@ -50,7 +50,10 @@ _source_jab ()
     source_file $LOCAL/python-environ optional
     source_file $JAB/prompt green
     source_file $LOCAL/prompt
-    source_file $GITHUB_SOURCES/what/what.sh
+    if [[ -n $GITHUB_SOURCES ]]
+    then source_file $GITHUB_SOURCES/what/what.sh
+    else alias what_source=source_file
+    fi
     what_source $JAB/aliases
     what_source $LOCAL/aliases optional
     source_file $JAB/functons

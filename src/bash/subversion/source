@@ -4,7 +4,11 @@ BASH_DIR=$(dirname $BASH_SOURCE)
 
 source_here ()
 {
-	what_source $BASH_DIR/$1 optional
+    if [[ -n $GITHUB_SOURCES ]]
+    then what_source $BASH_DIR/$1 optional
+    elif [[ -f $BASH_DIR/$1 ]]
+    then source $BASH_DIR/$1
+    fi
 }
 
 source_here aliases
