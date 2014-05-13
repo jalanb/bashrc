@@ -6,6 +6,7 @@ import re
 import sys
 from fnmatch import fnmatch
 import commands
+import itertools
 
 
 def path_to_editor():
@@ -313,6 +314,23 @@ def start_debugging():
     pdb.set_trace()
 
 
+def find_abbreviations(args):
+    hub = os.environ['GITHUB_SOURCES']
+    abbreviations = {
+        'jpm': [
+            os.path.join(hub, 'jpm/jpm/jpm.py'),
+            os.path.join(hub, 'jpm/bin/jpm')],
+        'kd':  [os.path.join(hub, 'kd/kd.py')],
+        'what': [
+            os.path.join(hub, 'what/what.sh'),
+            os.path.join(hub, 'what/what.py')],
+        #'': [
+        #    os.path.join(hub, ''),],
+    }
+    result = [abbreviations[a] for a in args if a in abbreviations]
+    return list(itertools.chain(*result))
+
+
 def interpret(args):
     """Interpret the args from a command line"""
     options, args = divide(args, is_option)
@@ -320,6 +338,9 @@ def interpret(args):
     if 'U' in options:
         options.remove('U')
         start_debugging()
+    known_files = find_abbreviations(args)
+    if known_files:
+        return known_files, options
     files = [tab_complete(a) for a in args]
     text_files = [textify(f) for f in files]
     return text_files, options
