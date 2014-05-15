@@ -396,6 +396,11 @@ cls ()
     ls "$@"
 }
 
+ddg ()
+{
+    firefox "https://next.duckduckgo.com/?q=$*"
+}
+
 dev ()
 {
     if [[ -d ~/dev ]]
