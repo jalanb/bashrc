@@ -495,7 +495,7 @@ jjy ()
 
 jpm ()
 {
-    python $GITHUB_SOURCES/jpm/bin/jpm "$@"
+    PYTHONPATH=$PYTHONPATH:$GITHUB_SOURCES/jpm python $GITHUB_SOURCES/jpm/bin/jpm "$@"
 }
 
 llt ()
