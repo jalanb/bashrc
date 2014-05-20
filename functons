@@ -20,8 +20,8 @@ c ()
 f ()
 {
     first_dir "$@"
-    name=$1
     shift
+    name=$1
     find $dir -name "$name" -print
 }
 
