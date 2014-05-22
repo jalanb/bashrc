@@ -290,7 +290,8 @@ def get_swap_files(path_to_file):
     if os.path.islink(path_to_file):
         path_to_file = os.readlink(path_to_file)
     directory = os.path.dirname(path_to_file)
-    glob = '.%s.sw*' % os.path.basename(path_to_file)
+    template = '%s.sw*' if path_to_file.startswith('.') else '.%s.sw*'
+    glob = template % os.path.basename(path_to_file)
     return get_globs(directory, glob)
 
 
