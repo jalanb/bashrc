@@ -1,0 +1,5 @@
+#! /bin/bash
+
+python2 $GITHUB_SOURCES/psydiff/psydiff.py $*
+firefox $(ls *${2/.py}*.html)
+rm -f *${2/.py}*.html
