@@ -15,6 +15,7 @@
 "noremap  <F7>
  noremap  <F8>      :set list!<CR>
  noremap  <F9>      :w!<CR>
+inoremap  <F9>      <esc>:w!<CR>
 "noremap <F10>
  noremap <F11>      :map <F11> 
  noremap <F12>      :map <F12> 
