@@ -69,8 +69,8 @@ else
 fi
 [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 
-add_to_a_path PATH $JAB/bin --start
-add_to_a_path PATH $HOME/bin --index=1
+add_to_a_path PATH $HOME/bin --start
+add_to_a_path PATH $JAB/bin --index=1
 add_to_a_path PATH /bin
 add_to_a_path PATH /usr/bin
 add_to_a_path PATH /usr/local/bin
