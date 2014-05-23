@@ -25,13 +25,35 @@ def has_true(value):
     return value.lower() in ['true', 't', 'yes', 'y', '1']
 
 
+def default_options():
+    options = {
+        'all': ',False',
+        'recursive': ',False',
+        'quiet': ',False',
+        'temporary': ',True',
+        'Trial-Run': ',False',
+        'Use-Debugger': ',False',
+    }
+    globs = {
+        'development': ',tags a.out *.log',
+        'old': ',*.old',
+        'python': ',*.pyc *.pyo *.fail *$py.class *.profile',
+        'temporary':
+        ',*.bak *.orig temp.* *.tmp *~ .*~ fred* mary mary.* one two',
+    }
+    return options, globs
+
+
 def read_configuration():
     parser = ConfigParser.SafeConfigParser()
-    parser.read(_get_path_to_config())
-    configured_options = dict([
+    path = _get_path_to_config()
+    if not os.path.isfile(path):
+        return default_options()
+    parser.read(path)
+    options = dict([
         (key, has_true(value)) for key, value in parser.items('options')])
     globs = dict(parser.items('globs'))
-    return configured_options, globs
+    return options, globs
 
 
 def add_option(parser, name, default, explanation):
@@ -106,7 +128,7 @@ def parse_options(arg_list=None):
     if options.Use_Debugger:
         start_debugging()
     if options.all:
-        [setattr(options, name, True) for name in configured_globs.keys()]
+        _ = [setattr(options, name, True) for name in configured_globs.keys()]
     if options.quiet and options.Trial_Run:
         print 'Using --quiet and --Trial-Run: Do nothing'
         raise NotImplementedError
