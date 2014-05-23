@@ -3,7 +3,7 @@
 " GUI only {{{1
 "
 syntax on
-set guifont=Monospace\ 14
+set guifont=Monospace\ 12
 winpos 100 30
 winsize 100 48
 "

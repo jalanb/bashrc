@@ -473,6 +473,11 @@ gv. ()
     PYTHONPATH=$(readlink -f .) gv .
 }
 
+gvd ()
+{
+    EDITOR=gvim vd "$@"
+}
+
 jjj ()
 {
 # ssh back to the jab.ook (which is my laptop
@@ -926,7 +931,7 @@ vim_diff ()
     options="$@"
     if ! diff -q "$one" "$two" >/dev/null
     then
-        vim -d $options "$one" "$two"
+        $EDITOR -d $options "$one" "$two"
     else
         echo same
     fi
