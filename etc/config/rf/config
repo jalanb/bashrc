@@ -1,5 +1,5 @@
 [options]
-all = Flase
+all = False
 recursive = False
 quiet = False
 temporary = True
