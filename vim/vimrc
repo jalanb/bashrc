@@ -62,6 +62,10 @@ nnoremap <C-F4> <C-W>c
  noremap z= zo
  noremap z- zc
  noremap z_ zC
+ noremap zn nzMzv
+ noremap zN NzMzv
+ noremap z/ /<cr>zMzv
+ noremap z? ?<cr>zMzv
 "
 " Punctuation {{{3
 "
