@@ -70,7 +70,7 @@ y ()
 
 3y ()
 {
-    tree -P "*.py" | more
+    tree -P "*.py" "$@" | more
 }
 
 IP ()
