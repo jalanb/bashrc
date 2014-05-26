@@ -1,5 +1,7 @@
 #! /bin/bash
 
-python2 $GITHUB_SOURCES/psydiff/psydiff.py $*
-firefox $(ls *${2/.py}*.html)
-rm -f *${2/.py}*.html
+HTML_GLOB=*${2/.py}*.html
+if python2 $GITHUB_SOURCES/psydiff/psydiff.py $*
+then firefox $(ls $HTML_GLOB)
+fi
+rm -f $HTML_GLOB
