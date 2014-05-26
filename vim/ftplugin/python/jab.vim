@@ -17,8 +17,9 @@ noremap <leader><space> :%s/\s\+$//<cr>
 noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
 noremap <leader>8	b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
-noremap <leader>d	?^\s*def \zs\i<cr>*
 noremap <leader>c	?^\s*class \zs\i<cr>*
+noremap <leader>d	?^\s*def \zs\i<cr>*
+noremap <leader>o   O<esc>
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
@@ -59,6 +60,15 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
 		set filetype=doctest
 	endif
 	let s:unit_test = substitute(s:file_py,'\.py$','_test.py',"")
+	if ! filereadable(s:unit_test) 
+        let s:unit_test = 'test/' . s:unit_test
+        if ! filereadable(s:unit_test) 
+            let s:unit_test = 'test/' . substitute(s:file_py,'\.py$','_test.py',"")
+            if ! filereadable(s:unit_test)
+                let s:unit_test = 'test/test_' . s:file_py
+            endif
+        endif
+    endif
 	if filereadable(s:unit_test) && s:file_py != s:unit_test && &loadplugins
 		setl autoread
 		exec "tabnew " s:unit_test
