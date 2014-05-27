@@ -478,6 +478,12 @@ gvd ()
     EDITOR=gvim vd "$@"
 }
 
+hub ()
+{
+    c $GITHUB_SOURCES "$@"
+    ls
+}
+
 jjj ()
 {
 # ssh back to the jab.ook (which is my laptop
