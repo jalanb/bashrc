@@ -1,6 +1,7 @@
 """Methods to run the locate script more exactly"""
 
 
+import re
 import os
 import shlex
 import commands
@@ -20,15 +21,27 @@ def _path_to_locate():
     return '/usr/bin/locate'
 
 
+def _locate_regexp_option():
+    command = '%s --help'
+    _status, output = commands.getstatusoutput(command)
+    return '--regexp' if '--regexp' in output else '--regex'
+
+
 def glob_to_regexp(string):
-    return '.*'.join(splits.split_and_strip_whole(string, '[*?[]'))
+    parts = splits.split_and_strip_whole(string, '[*?[]')
+    if len(parts) == 1:
+        if re.match('[*?[]', string[0]):
+            parts.insert(0, '')
+        elif re.match('[*?[]', string[-1]):
+            parts.append('')
+    return '.*'.join(parts)
 
 
 def _make_locate_command(string, options):
     """Make a command to locate that string"""
     option = options.ignore_case and '-i' or ''
     if options.globs:
-        option = '--regexp'
+        option = _locate_regexp_option()
         string = glob_to_regexp(string)
     return '%s %s "%s"' % (_path_to_locate(), option, string)
 
