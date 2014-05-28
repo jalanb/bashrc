@@ -28,6 +28,11 @@ gs ()
 
 # xxx
 
+gaa ()
+{
+    git add -A
+}
+
 ghi ()
 {
     TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"
