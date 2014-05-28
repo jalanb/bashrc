@@ -192,9 +192,12 @@ gv ()
     gvim "$@" 2>> ~/log/gvim.log
 }
 
-hh ()
+hd ()
 {
-    history -n
+    if [[ -n "$3" ]]
+    then vim_diff "$1" "$2" "$3" -o
+    else vim_diff "$1" "$2" -o
+    fi
 }
 
 hv ()
@@ -255,7 +258,7 @@ ru ()
 tm ()
 {
     if [[ -z $1 ]]
-    then SESSION=$HOSTNAME
+    then SESSION=$(jostname)
     else
         SESSION=$1
         shift
@@ -287,14 +290,6 @@ uj ()
         else
             . bashrc
         fi
-    fi
-}
-
-hd ()
-{
-    if [[ -n "$3" ]]
-    then vim_diff "$1" "$2" "$3" -o
-    else vim_diff "$1" "$2" -o
     fi
 }
 
@@ -616,11 +611,6 @@ vla ()
     _edit_locals aliases
 }
 
-vlb ()
-{
-    _edit_locals bashrc
-}
-
 vle ()
 {
     _edit_locals environ
@@ -650,27 +640,7 @@ vpe ()
 
 vff ()
 {
-    FRED=
-    found_fred=0
-    test -f fred && FRED=fred
-    if [[ -n $FRED ]]
-    then
-        found_fred=1
-    fi
-    found_wild=0
-    for f in fred*[^~]
-    do
-        test -f $f && found_wild=1
-    done
-    if [[ $found_fred == 1 && $found_wild == 1 ]]
-    then 
-        v fred fred*[^~]
-    elif [[ $found_wild == 1 ]]
-    then 
-        v fred*[^~] 
-    else
-        v fred
-    fi
+    $($PYTHON $JAB_PYTHON/vff.py "$@")
 }
 
 vvv ()
@@ -692,21 +662,6 @@ down ()
 {
     c ~/Download* "$@"
     ls -alhtr
-}
-
-fgpp ()
-{
-    fgv *.py *.test *.tests "$@"
-}
-
-jjya ()
-{
-    jjy alanology
-}
-
-jjys ()
-{
-    jjy site
 }
 
 mkcd () 
@@ -742,46 +697,19 @@ SUDO ()
 dicp ()
 {
     COMMAND_FOR_SAME_FILES=cp
-    dixx "$1" "$2"
+    _dixx "$1" "$2"
 }
 
 dihh ()
 {
     COMMAND_FOR_SAME_FILES=hd
-    dixx "$@"
+    _dixx "$@"
 }
 
 divv ()
 {
     COMMAND_FOR_SAME_FILES=vd
-    dixx "$@"
-}
-
-dixx ()
-{
-    source_dir="$1"
-    destination_dir="$2"
-    local number_in_both=$(_divv_get_difference | grep Files | wc -l)
-    if [[ $number_in_both -gt 0 ]]
-    then
-        echo
-        echo "# Files 1 and 2 differ"
-        _divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
-    fi
-    local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
-    if [[ $number_in_source -gt 0 ]]
-    then
-        echo
-        echo "Only in $source_dir"
-        _divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
-    fi
-    local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
-    if [[ $number_in_destination -gt 0 ]]
-    then
-        echo
-        echo "Only in $destination_dir"
-        _divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
-    fi
+    _dixx "$@"
 }
 
 this ()
@@ -852,19 +780,6 @@ detab ()
     fi
 }
 
-kodos ()
-{
-    pushd ~/bin/kodos-2.4.9/ >/dev/null
-    /usr/bin/python kodos.py &
-    popd >/dev/null
-}
-
-named ()
-{
-    first_dir $1 && shift
-    find $dir -name "$@"
-}
-
 vfile ()
 {
     $(echo "$@" | sed -e"s/up to //" -e"s/^File/v/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
@@ -873,11 +788,6 @@ vfile ()
 # xxxxx
 
 # xxxxxx
-
-bright ()
-{
-    sed -i -e/color/d ~/.vimrc
-}
 
 please ()
 {
@@ -900,17 +810,7 @@ run_as ()
 
 # xxxxxxx
 
-cleaner ()
-{
-    rf -qr "$@"
-}
-
 # xxxxxxxx
-
-cleanest ()
-{
-    clean -pqr "$@"
-}
 
 jostname ()
 {
@@ -1051,6 +951,33 @@ console_title_off ()
 
 # _xxxxxxxxxxxxxxxxxxx
 # functions starting with an underscore are intended for use within this file only
+
+_dixx ()
+{
+    source_dir="$1"
+    destination_dir="$2"
+    local number_in_both=$(_divv_get_difference | grep Files | wc -l)
+    if [[ $number_in_both -gt 0 ]]
+    then
+        echo
+        echo "# Files 1 and 2 differ"
+        _divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
+    fi
+    local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
+    if [[ $number_in_source -gt 0 ]]
+    then
+        echo
+        echo "Only in $source_dir"
+        _divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+    fi
+    local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
+    if [[ $number_in_destination -gt 0 ]]
+    then
+        echo
+        echo "Only in $destination_dir"
+        _divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+    fi
+}
 
 _edit_source ()
 {
