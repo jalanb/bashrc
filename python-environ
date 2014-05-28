@@ -7,4 +7,4 @@ export TRY="$JAB_PYTHON/testing/try.py"
 
 test -d $JAB_PYTHON && export PYTHON_HOME=$JAB_PYTHON
 test -d ~/src/python && export PYTHON_HOME=~/src/python
-test -f $JAB_PYTHON/pythonrc.py && PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
+test -f $JAB_PYTHON/pythonrc.py && export PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
