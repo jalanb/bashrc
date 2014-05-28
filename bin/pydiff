@@ -1,7 +1,13 @@
 #! /bin/bash
 
 HTML_GLOB=*${2/.py}*.html
-if python2 $GITHUB_SOURCES/psydiff/psydiff.py $*
-then firefox $(ls $HTML_GLOB)
+HTML=$(python2 $GITHUB_SOURCES/psydiff/psydiff.py $* | grep 'HTML:' | sed -e 's/HTML: //')
+if [[ -z $HTML ]]
+then echo no diff
+elif [[ ! -f $HTML ]]
+then echo $HTML is not a file
+else
+    open $HTML
+    sleep 5 # give browser a chance to catch up
+    rm -rf $HTML
 fi
-rm -f $HTML_GLOB
