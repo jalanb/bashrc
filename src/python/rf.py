@@ -27,12 +27,12 @@ def has_true(value):
 
 def default_options():
     options = {
-        'all': ',False',
-        'recursive': ',False',
-        'quiet': ',False',
-        'temporary': ',True',
-        'Trial-Run': ',False',
-        'Use-Debugger': ',False',
+        'all': False,
+        'recursive': False,
+        'quiet': False,
+        'temporary': True,
+        'Trial-Run': False,
+        'Use-Debugger': False,
     }
     globs = {
         'development': ',tags a.out *.log',
