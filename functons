@@ -1,5 +1,7 @@
 #! /bin/bash
 
+. $JAB/bin/first_dir
+
 # Called functons because "functions" is ... something else
 
 # sorted by strcmp of function name
@@ -19,10 +21,10 @@ c ()
 
 f ()
 {
-    first_dir "$@"
-    shift
+    first_dir "$@" && shift
     name=$1
-    find $dir -name "$name" -print
+    shift
+    find $dir -name "$name" -print "$@"
 }
 
 h()
@@ -98,17 +100,15 @@ cv ()
 
 gf ()
 {
-    first_dir "$@"
+    first_dir "$@" && shift
     name=$1
     shift
-    find $dir -name $name -exec grep --colour "$@" -nH {} \;
+    find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
 fc ()
 {
-    if first_dir "$@"
-    then shift
-    fi
+    first_dir "$@" && shift
     name=$1
     shift
     for path in $(find $dir -name $name -print)
@@ -123,15 +123,14 @@ fc ()
 
 ff ()
 {
-    first_dir "$@"
+    first_dir "$@" && shift
     name=$1
-    shift
     find $dir -name $name "$@"
 }
 
 fv ()
 {
-    first_dir "$@"
+    first_dir "$@" && shift
     name=$1
     shift
     find $dir -name $name -exec vim {} \;
@@ -179,7 +178,7 @@ hv ()
 
 ky ()
 {
-    first_dir "$@"
+    first_dir "$@" && shift
     dir=${dir:-$PYTHON_HOME}
     kd $dir
     y "$@"
@@ -344,7 +343,7 @@ vr ()
 
 vt ()
 {
-    first_dir "$@"
+    first_dir "$@" && shift
     v -p "$dir"/*.txt
 }
 
@@ -506,8 +505,6 @@ jjy ()
 {
     ky $JAB_PYTHON "$@"
 }
-
-. $JAB/bin/first_dir
 
 jpm ()
 {
@@ -833,10 +830,7 @@ kodos ()
 
 named ()
 {
-    dir=
-    if first_dir $1
-    then shift
-    fi
+    first_dir $1 && shift
     find $dir -name "$@"
 }
 
