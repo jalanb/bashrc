@@ -322,7 +322,9 @@ def find_abbreviations(args):
         'jpm': [
             os.path.join(hub, 'jpm/jpm/jpm.py'),
             os.path.join(hub, 'jpm/bin/jpm')],
-        'kd':  [os.path.join(hub, 'kd/kd.py')],
+        'kd':  [
+            os.path.join(hub, 'kd/kd.py'),
+            os.path.expanduser('~/.config/kd')],
         'rf': [
             os.path.join(jab_python, 'rf.py'),
             os.path.expanduser('~/.config/rf/config')],
