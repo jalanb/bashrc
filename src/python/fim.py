@@ -317,11 +317,15 @@ def start_debugging():
 
 def find_abbreviations(args):
     hub = os.environ['GITHUB_SOURCES']
+    jab_python = os.environ['JAB_PYTHON']
     abbreviations = {
         'jpm': [
             os.path.join(hub, 'jpm/jpm/jpm.py'),
             os.path.join(hub, 'jpm/bin/jpm')],
         'kd':  [os.path.join(hub, 'kd/kd.py')],
+        'rf': [
+            os.path.join(jab_python, 'rf.py'),
+            os.path.expanduser('~/.config/rf/config')],
         'what': [
             os.path.join(hub, 'what/what.sh'),
             os.path.join(hub, 'what/what.py')],
