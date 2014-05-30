@@ -72,7 +72,18 @@ y ()
 
 3y ()
 {
-    tree -P "*.py" "$@" | more
+    if [[ -f $1 ]]
+    then
+        dir=$(dirname $1)
+        shift
+    elif [[ -d $1 ]]
+    then
+        dir=$1
+        shift
+    else
+        dir=
+    fi
+    tree -P "*.py" $dir "$@" | more
 }
 
 IP ()
