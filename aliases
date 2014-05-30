@@ -117,6 +117,7 @@ alias kpp="kp --progress"
 
 alias lda="ls -1da"
 alias lff="ls fred*"
+alias lll="ll -a"
 alias lra="lr -a"
 alias lrd="lr -d"
 alias lsh="ls *.sh"
