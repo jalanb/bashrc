@@ -22,8 +22,14 @@ c ()
 f ()
 {
     first_dir "$@" && shift
-    name=$1
+    local name=$1
     shift
+    if [[ $name == "-name" ]]
+    then 
+        echo "Do not use '-name'"
+        name=$1
+        shift
+    fi
     find $dir -name "$name" -print "$@"
 }
 
@@ -132,10 +138,19 @@ fc ()
     done
 }
 
+fd ()
+{
+    first_dir "$@" && shift
+    name=$1
+    shift
+    find $dir -type d -name $name "$@"
+}
+    
 ff ()
 {
     first_dir "$@" && shift
     name=$1
+    shift
     find $dir -name $name "$@"
 }
 
