@@ -121,7 +121,7 @@ syn keyword pythonKeyword	as assert del exec global
 syn keyword pythonBranch	break continue
 syn keyword pythonKeyword	lambda nonlocal pass print return with yield
 syn keyword pythonClassStatement	class nextgroup=pythonClassname skipwhite
-syn keyword pythonFuncStatement	def nextgroup=pythonFunction skipwhite
+syn keyword pythonFuncStatement	def cdef nextgroup=pythonFunction skipwhite
 syn keyword pythonConditional	elif else if
 syn keyword pythonRepeat	for while
 syn keyword pythonOperator	and in is not or
