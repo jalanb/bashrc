@@ -21,7 +21,7 @@ unalias -a
 alias -- -="c -"
 alias 1=todo_edit
 alias 2=todo_show
-alias 3="tree"
+alias 3=Tree
 alias a="ack"
 alias b="b"
 # c is a function
@@ -53,8 +53,6 @@ alias z="du -sh"
 # xx
 
 alias ..='c ..'
-
-alias 3l="tree | less"
 
 alias cy="c \$PYTHON_HOME"
 

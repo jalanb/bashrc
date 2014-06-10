@@ -67,7 +67,7 @@ y ()
 
 3d ()
 {
-    tree -d "$@" | more
+    Tree -d "$@"
 }
 
 3y ()
@@ -83,7 +83,7 @@ y ()
     else
         dir=
     fi
-    tree -P "*.py" $dir "$@" | more
+    Tree -P "*.py" $dir "$@"
 }
 
 IP ()
@@ -797,6 +797,11 @@ vvvv ()
 vvvy ()
 {
     v $JAB/vim/ftplugin/python/jab.vim
+}
+
+Tree ()
+{
+    tree "$@" | more
 }
 
 # xxxxx
