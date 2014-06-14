@@ -23,7 +23,7 @@ gc ()
         then git commit --verbose "$@"
         else
             shift
-            git commit -m "$first" "$@"
+            git commit -m "${first/-m/}" "$@"
         fi
 	fi
 }
