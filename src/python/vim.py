@@ -3,6 +3,7 @@
 
 import os
 import re
+import bdb
 import sys
 from fnmatch import fnmatch
 import commands
@@ -262,7 +263,13 @@ def vimming_files(pid, arg_string):
 def vimming_process(path_to_file):
     """Search for vim editting that file with the ps command"""
     filename = escape_quotes(os.path.basename(path_to_file))
-    command = 'ps -o pid,args | grep -v grep | grep "vim.*\\s.*%s"' % filename
+    if not filename:
+        return None, None
+    get_pids = 'ps -o pid,args'
+    remove_knowns = 'grep -v -e grep -e "%s"' % textify(__file__)
+    find_file = 'grep "vim.*\\s.*%s"' % filename
+    pipe = ' | '
+    command = pipe.join([get_pids, remove_knowns, find_file])
     output = commands.getoutput(command)
     if not output:
         return None, None
@@ -409,6 +416,8 @@ def main(args):
     except (OSError, IOError), e:
         print >> sys.stderr, e
         return os.EX_IOERR
+    except bdb.BdbQuit:
+        pass
     return os.EX_OK
 
 
