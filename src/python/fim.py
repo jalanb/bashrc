@@ -331,6 +331,8 @@ def find_abbreviations(args):
         'what': [
             os.path.join(hub, 'what/what.sh'),
             os.path.join(hub, 'what/what.py')],
+        'v': [
+            os.path.join(jab_python, 'fim.py')],
         #'': [
         #    os.path.join(hub, ''),],
     }
