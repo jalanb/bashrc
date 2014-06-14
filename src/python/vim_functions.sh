@@ -1,4 +1,4 @@
-# This file should be sourced by fim.sh, which will provide the $VIM value
+# This file should be sourced by vim.sh, which will provide the $VIM value
 recover ()
 {
 	local swap_file="$2"

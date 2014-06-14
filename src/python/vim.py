@@ -33,7 +33,7 @@ def path_to_script():
 
 
 def new_script():
-    """Make a new fim script"""
+    """Make a new vim script"""
     with open(path_to_script(), 'w') as output:
         print >> output, '''#! /bin/bash
 
@@ -43,7 +43,7 @@ source ${BASH_SOURCE/.sh/_functions.sh}
 
 
 def add_to_script(string):
-    """Add that string to the fim script"""
+    """Add that string to the vim script"""
     with open(path_to_script(), 'a') as output:
         print >> output, string
 
@@ -206,7 +206,7 @@ def tab_complete(string):
 def textify(path_to_file):
     """Change some file extensions to those which are more likely to be text
 
-    >>> textify('fim.pyc') == 'fim.py'
+    >>> textify('vim.pyc') == 'vim.py'
     True
     """
     stem, ext = os.path.splitext(path_to_file)
@@ -332,7 +332,7 @@ def find_abbreviations(args):
             os.path.join(hub, 'what/what.sh'),
             os.path.join(hub, 'what/what.py')],
         'v': [
-            os.path.join(jab_python, 'fim.py')],
+            os.path.join(jab_python, 'vim.py')],
         #'': [
         #    os.path.join(hub, ''),],
     }
