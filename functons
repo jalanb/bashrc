@@ -338,7 +338,7 @@ vp ()
 
 vv ()
 {
-    v $JAB_PYTHON/fim.py
+    v $JAB/vim/$1
 }
 
 zm ()
@@ -589,10 +589,36 @@ vff ()
     $($PYTHON $JAB_PYTHON/vff.py "$@")
 }
 
+vvb ()
+{
+    vvf sh.vim
+}
+
+vvf ()
+{
+    vv ftplugin/$1
+}
+
+vvg ()
+{
+    gv $JAB/vim/gvimrc
+}
+
+vvp ()
+{
+    vvf python
+}
+
 vvv ()
 {
-    v $JAB/vim/$1
+    vv vimrc
 }
+
+vvy ()
+{
+    vvf python/jab.vim
+}
+
 
 # xxxx
 
@@ -661,31 +687,6 @@ divv ()
 this ()
 {
     python -c "import this"
-}
-
-vvvb ()
-{
-    v $JAB/vim/ftplugin/sh.vim
-}
-
-vvvg ()
-{
-    gv $JAB/vim/gvimrc
-}
-
-vvvp ()
-{
-    v $JAB/vim/ftplugin/python
-}
-
-vvvv ()
-{
-    v $JAB/vim/vimrc
-}
-
-vvvy ()
-{
-    v $JAB/vim/ftplugin/python/jab.vim
 }
 
 Tree ()
