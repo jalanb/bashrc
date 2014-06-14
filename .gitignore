@@ -30,6 +30,7 @@ tags
 /ipython/profile_default/db/
 /ipython/README
 /ipython/profile_default/static/
+/ipython/profile_default/security/
 
 # work in progress
 /bin/hubby.py
