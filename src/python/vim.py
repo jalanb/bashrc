@@ -260,16 +260,27 @@ def vimming_files(pid, arg_string):
     return result
 
 
+def find_vimming_process_command(filename):
+    """Make a command to look for a vim command in processes
+
+    Pipe together commands to:
+        Get pid and args of all commands
+        Remove processes for grep and this script
+        Find a vim command for that fileanme
+    """
+    get_pids = 'ps -o pid,args'
+    remove_knowns = 'grep -v -e grep -e "%s"' % textify(__file__)
+    find_file = 'grep "vim.*\\s.*%s"' % filename
+    pipe = ' | '
+    return pipe.join([get_pids, remove_knowns, find_file])
+
+
 def vimming_process(path_to_file):
     """Search for vim editting that file with the ps command"""
     filename = escape_quotes(os.path.basename(path_to_file))
     if not filename:
         return None, None
-    get_pids = 'ps -o pid,args'
-    remove_knowns = 'grep -v -e grep -e "%s"' % textify(__file__)
-    find_file = 'grep "vim.*\\s.*%s"' % filename
-    pipe = ' | '
-    command = pipe.join([get_pids, remove_knowns, find_file])
+    command = find_vimming_process_command(filename)
     output = commands.getoutput(command)
     if not output:
         return None, None
