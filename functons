@@ -331,51 +331,14 @@ vh ()
     v ~/.bash_history +
 }
 
-vj ()
-{
-    v $JAB
-}
-
 vp ()
 {
     _edit_jab prompt "$@"
 }
 
-vr ()
-{
-    if [[ -n $1 && -f $1 ]]
-    then
-        filename=$1
-    elif [[ -f errors.err ]]
-    then
-        echo "filename = ./errors.err"
-        filename=./errors.err
-    elif [[ -f ~/errors.err ]]
-    then
-        echo "filename = ${HOME}/errors.err"
-        filename=${HOME}/errors.err
-    elif [[ -f /tmp/errors.err ]]
-    then
-        echo "filename = /tmp/errors.err"
-        filename=/tmp/errors.err
-    fi
-    vim -c "call ReadTraceback(\"$filename\")"
-}
-
-vt ()
-{
-    first_dir "$@" && shift
-    v -p "$dir"/*.txt
-}
-
 vv ()
 {
     v $JAB_PYTHON/fim.py
-}
-
-vy ()
-{
-    v $PYTHON_HOME
 }
 
 zm ()
@@ -595,11 +558,6 @@ try ()
     python $TRY "$@"
 }
 
-vat ()
-{
-    $GITHUB_SOURCES/vimpager/vimcat "$@"
-}
-
 vib ()
 {
     $EDITOR ~/.bashrc
@@ -625,18 +583,6 @@ vlo ()
 {
     v $(locate "$@")
 }
-
-vlp ()
-{
-    _edit_locals prompt
-}
-
-vpe ()
-{
-    v $JAB/python-environ
-    spe
-}
-
 
 vff ()
 {
