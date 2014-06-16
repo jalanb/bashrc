@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# functons for subversion
+# functons for git
 
 # sorted by strcmp of function name
 
