@@ -5,11 +5,16 @@ import os
 import sys
 
 
+import vim_traceback
+
+
 def main(args):
     if len(args) == 1:
-        args = args[0].split()
-    _, path, _, line = args[:4]
-    print 'vim %s +%s' % (path.rstrip(',').strip('"'), line.rstrip(','))
+        line = args
+    else:
+        line = ' '.join(args)
+    path, line_number = vim_traceback.parse_line(line)
+    print 'vim %s +%s' % (path, line_number)
     return os.EX_OK
 
 
