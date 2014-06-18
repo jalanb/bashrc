@@ -235,7 +235,7 @@ py ()
     else
         script=${1/%./.py}
         shift
-        python $script "$@"
+        python2.7 $script "$@"
     fi
 }
 
