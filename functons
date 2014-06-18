@@ -625,6 +625,10 @@ vvy ()
     vvf python/jab.vim
 }
 
+vtr ()
+{
+    python $JAB_PYTHON/vim_traceback.py "$@"
+}
 
 # xxxx
 
@@ -735,7 +739,8 @@ detab ()
 
 vfile ()
 {
-    $(python2.7 $JAB_PYTHON/vfile.py "$@")
+    echo "I should've used vtr"
+    python2.7 $JAB_PYTHON/vfile.py "$@"
 }
 
 # xxxxx
