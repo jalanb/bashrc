@@ -3,6 +3,7 @@
 Re-format the file list as suitable for a vim list
 """
 
+
 import re
 import os
 import sys
@@ -39,7 +40,7 @@ def parse_line(string):
 def as_vim_command(lines):
     first, rest = lines[0], lines[1:]
     command = 'vim %s +%s' % first
-    args = [str('+"tabnew +%s %s"' % (line, file)) for file, line in rest]
+    args = [str('+"tabnew +%s %s"' % (line, file_)) for file_, line in rest]
     args.insert(0, command)
     return ' '.join(args)
 
@@ -54,6 +55,7 @@ def main(args):
     lines = [l for l in lines if l]
     print as_vim_command(lines)
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
