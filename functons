@@ -735,7 +735,7 @@ detab ()
 
 vfile ()
 {
-    $(echo "$@" | sed -e"s/up to //" -e"s/^File/v/" | sed -e"s/, line \([0-9]*\).*/ +\1/" -e"s/\.test +\([0-9]*\)/.py -c :tabnext|\1/")
+    $(python2.7 $JAB_PYTHON/vfile.py "$@")
 }
 
 # xxxxx
