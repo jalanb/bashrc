@@ -9,5 +9,6 @@ Use-Debugger = False
 [globs]
 development = tags a.out *.log
 old = *.old
+swaps = .*.sw[a-z]
 python = *.pyc *.pyo *.fail *$py.class *.profile
 temporary = *.bak *.orig temp.* *.tmp *~ .*~ fred* mary mary.* one two
