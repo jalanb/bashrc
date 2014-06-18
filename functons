@@ -501,12 +501,6 @@ jpm ()
     PYTHONPATH=$PYTHONPATH:$GITHUB_SOURCES/jpm python $GITHUB_SOURCES/jpm/bin/jpm "$@"
 }
 
-llt ()
-{
-    first_dir "$@"
-    l --color=always -lhtr "$dir" | less -R -m -N +G
-}
-
 lly ()
 {
     first_dir "$@" && shift
@@ -518,6 +512,12 @@ lly ()
     echo
     ls -lhtr "$dir"/*.py
     $reset
+}
+
+lrt ()
+{
+    first_dir "$@" && shift
+    /bin/ls --color=always -lhtr "$dir" |  less -R -m -N +G
 }
 
 lyy ()
