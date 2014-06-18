@@ -509,7 +509,7 @@ llt ()
 
 lly ()
 {
-    first_dir "$@"
+    first_dir "$@" && shift
     reset=$(shopt -p dotglob)
     shopt -s dotglob
     ls -lhtr "$dir"/*.tests
