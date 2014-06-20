@@ -8,19 +8,19 @@ import tarfile
 from dotsite.paths import makepath
 
 
-def type_of_tarball(path):
+def has_tarball_extension(path):
     ext = path.ext
     if ext == '.tar':
-        return 'tar'
+        return True
     if ext in ['.gz', '.bz2']:
         stem, _ = path.splitext()
         if stem.ext == '.tar':
-            return ext[1:]
-    return None
+            return True
+    return False
 
 
 def is_tarball(path):
-    return path.isfile() and type_of_tarball(path) is not None
+    return path.isfile() and has_tarball_extension(path)
 
 
 def directory_tarballs(paths):
