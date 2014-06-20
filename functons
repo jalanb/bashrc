@@ -25,7 +25,7 @@ f ()
     local name=$1
     shift
     if [[ $name == "-name" ]]
-    then 
+    then
         echo "Do not use '-name'"
         name=$1
         shift
@@ -145,7 +145,7 @@ fd ()
     shift
     find $dir -type d -name $name "$@"
 }
-    
+
 ff ()
 {
     first_dir "$@" && shift
@@ -250,11 +250,16 @@ rf ()
     python $PYTHON_SCRIPT "$@"
 }
 
+rt ()
+{
+    $(python2.7 $JAB_PYTHON/remove_tarball.py "$@")
+}
+
 ru ()
 {
 # do da root root route, do da ru !
     if [ -z "$@" ]
-    then 
+    then
         SUDO
     else
         sudo "$@"
@@ -395,7 +400,7 @@ dev ()
     if [[ -d ~/dev ]]
     then
         echo ~/dev exists
-        echo 
+        echo
         here=$PWD
         cd ~/dev
         ls
@@ -646,8 +651,8 @@ down ()
     ls -alhtr
 }
 
-mkcd () 
-{ 
+mkcd ()
+{
     local __doc__='make a directory and start using it';
     mkdir -p "$@" && cd "$@"
 }
@@ -726,7 +731,7 @@ detab ()
     then
         if grep -Pq "^\s*\t\s*[^ \t]" $1
         then
-            expand -i --tabs=4 $1 > /tmp/txt                                                                                                
+            expand -i --tabs=4 $1 > /tmp/txt
             mv /tmp/txt $1
             echo detabbed
         else
@@ -759,7 +764,7 @@ run_as ()
     username=$1
     shift
     if [[ -n "$1" ]]
-    then 
+    then
         sudo -u $username "$@"
     else
         SUDO $username
@@ -784,7 +789,7 @@ todo_edit ()
         todo_txt=todo.txt
         git_options=
     elif [[ -f TODO.md ]]
-    then 
+    then
         todo_txt=TODO.md
         git_options=
     fi
@@ -872,7 +877,7 @@ console_title_on ()
     then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
     elif [[ -n $TERM ]]
-    then 
+    then
         if [[ $TERM == "linux" ]]
         then echo -e "]1;$1"
         elif [[ $TERM =~ "xterm" ]]
@@ -950,7 +955,7 @@ _edit_source ()
         source_file $filepath "$@"
     fi
 }
-    
+
 _edit_jab ()
 {
     if [[ -z $JAB ]]
@@ -970,7 +975,7 @@ _edit_locals ()
     test -d $local_dir || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }
-    
+
 _divv_get_difference ()
 {
     local source_gitignore=
