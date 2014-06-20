@@ -748,7 +748,10 @@ vfile ()
     python2.7 $JAB_PYTHON/vfile.py "$@"
 }
 
-# xxxxx
+ylint ()
+{
+    python2.7 /home/alanb/.jab/src/python/site/ylint.py "$@"
+}
 
 # xxxxxx
 
