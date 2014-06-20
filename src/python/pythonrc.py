@@ -1,5 +1,7 @@
 """Dirty up the main namespace with some extra imports"""
 
+from __future__ import print_function
+
 
 try:
     see
@@ -8,9 +10,11 @@ except NameError:
         """layout a dir listing filtered by the given regexp"""
         if regexp:
             import re
-            print '\n'.join(sorted([item for item in dir(thing) if re.match(regexp, item)]))
+            print('\n'.join(sorted([item
+                                    for item in dir(thing)
+                                    if re.match(regexp, item)])))
         else:
-            print '\n'.join(sorted(dir(thing)))
+            print('\n'.join(sorted(dir(thing))))
 
 
 def _path_to_history(os):
@@ -25,11 +29,8 @@ def _path_to_history(os):
 def _write_time_stamp(path_to_history):
     """Add a commented time stamp to that history file"""
     import datetime
-    try:
-        history_file = file(path_to_history, 'a')
-        print >> history_file, '#', datetime.datetime.now().ctime()
-    finally:
-        history_file.close()
+    with open(path_to_history, 'a') as history_file:
+        print('# %s' % datetime.datetime.now().ctime(), file=history_file)
 
 
 def _read_history(readline):
@@ -48,8 +49,10 @@ def complete():
         import readline
         readline.parse_and_bind('tab: complete')
         _read_history(readline)
-    except ImportError, e:
-        print 'Python shell enhancement modules not available because %s' % e
+    except ImportError as e:
+        import sys
+        print('Python shell enhancement modules not available because %s' % e,
+              file=sys.stderr)
 
 
 complete()
