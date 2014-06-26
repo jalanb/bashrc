@@ -207,6 +207,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 
  noremap <leader>] :cn<cr>zzzv
  noremap <leader>[ :cp<cr>zzzv
+ noremap <leader>: q:
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
  noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
  noremap <leader><Left>     <<
