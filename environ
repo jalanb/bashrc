@@ -43,10 +43,10 @@ export XAUTHORITY=$HOME/.Xauthority
 
 if [[ -f /usr/local/bin/gls ]]
 then
-    LS_PROGRAM=/usr/local/bin/gls
+    export LS_PROGRAM=/usr/local/bin/gls
     DIRCOLORS=/usr/local/bin/gdircolors
 else
-    LS_PROGRAM=/bin/ls
+    export LS_PROGRAM=/bin/ls
     if [[ -f /usr/bin/dircolors ]]
     then DIRCOLORS=/usr/bin/dircolors
     fi
