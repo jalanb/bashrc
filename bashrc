@@ -90,7 +90,7 @@ _welcome_home ()
         echo --------------------
         echo vim sessions running
         echo --------------------
-        pgrep -fl vim
+        pgrep -fl vim | grep -v -e YouCompleteMe -e bash.*vim.sh
     fi
     echo
     echo Welcome jab, to $HOSTNAME
