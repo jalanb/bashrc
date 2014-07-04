@@ -14,7 +14,7 @@
 "noremap  <F6>
 "noremap  <F7>
  noremap  <F8>      :set list!<CR>
- noremap  <F9>      :w!<CR>
+ noremap  <F9>      :w!<CR>:Limelight<cr>
 inoremap  <F9>      <esc>:w!<CR>
 "noremap <F10>
  noremap <F11>      :map <F11> 
@@ -283,6 +283,10 @@ let g:easytags_auto_highlight = 0
 " pylint {{{2
 "
 let g:pylint_show_rate = 0                                                                                                     
+"
+" Limelight {{{2
+"
+let g:limelight_default_coefficient = 0.7
 
 "
 " vimdiff, aka vim -d {{{1
