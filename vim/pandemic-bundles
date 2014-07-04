@@ -2,6 +2,14 @@
 source = https://github.com/nathanaelkane/vim-indent-guides.git
 type = git
 
+[Limelight]
+source = https://github.com/junegunn/limelight.vim.git
+type = git
+
+[YouCompleteMe]
+source = https://github.com/Valloric/YouCompleteMe.git
+type = git
+
 [syntastic]
 source = https://github.com/scrooloose/syntastic.git
 type = git
