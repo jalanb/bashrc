@@ -1,10 +1,11 @@
+#! /usr/bin/env python2
 """Script to act as a template"""
 
 import os
 import sys
 
 
-def main(args):
+def main(_args):
     return os.EX_OK
 
 
