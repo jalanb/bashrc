@@ -6,12 +6,12 @@ The colour_numbers module
 
 More modules for testing
 ------------------------
-    
+
     >>> import random
 
 integers
 --------
-    
+
 There are 16 small-numbered colours (CGA)
     >>> all([bool(0 <= i <= 0x0F) for i in colour_numbers.small_integers()])
     True
@@ -90,7 +90,13 @@ Can convert from integer to hex string (html) and back again for any number
     >>> all([colour_numbers.html_to_integer(colour_numbers.integer_to_html(i)) == i for i in range(0x000000,0xFFFFFF,step)])
     True
 
-    >>> colour_numbers.html_to_integer('not a colour code') == ''
+    >>> colour_numbers.html_to_integer('not a colour code') is None
+    True
+
+Can get the integer in 3 parts, for red, green, blue
+    >>> r, g, b = colour_numbers.html_to_red_green_blue('#A79')
+    >>> i = colour_numbers.html_to_integer('#A79')
+    >>> r * 256 * 256 + g * 256 + b == i
     True
 
 convert ansi to html and back
@@ -104,7 +110,7 @@ In converting ANSI codes into html codes and back again some do not pass through
 
 Test method to recognise pure colours
     >>> def pure_colour(string):
-    ...    return string == '#808080' or all([bool(c in '0F') for c in string[1:]]) 
+    ...    return string == '#808080' or all([bool(c in '0F') for c in string[1:]])
 
 By "pure colour" I mean anything with only 0 and F, and Silver ('#808080')
     >>> silver = '#808080'

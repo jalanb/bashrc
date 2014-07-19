@@ -67,15 +67,30 @@ def _hex_regexp():
     return re.compile('(([0-9a-f]{6})|([0-9a-f]{3}))', re.IGNORECASE)
 
 
-def html_to_integer(string):
-    """Use the first 3 or 6 hex digits in the string as a html colour picker"""
+def _extract_html_hex(string):
+    """Get the first 3 or 6 hex digits in the string"""
     try:
         hex_string = _hex_regexp().search(string).group(0)
     except AttributeError:
-        return ''
+        return None
     if len(hex_string) == 3:
         hex_string = hex_string[0] * 2 + hex_string[1] * 2 + hex_string[2] * 2
+    return hex_string
+
+
+def html_to_integer(string):
+    """Use the first 3 or 6 hex digits in the string as a html colour picker"""
+    hex_string = _extract_html_hex(string)
+    if hex_string is None:
+        return None
     return int(hex_string, 16)
+
+
+def html_to_red_green_blue(string):
+    string = _extract_html_hex(string)
+    if string is None:
+        return None, None, None
+    return int(string[:2], 16), int(string[2:4], 16), int(string[4:], 16)
 
 
 def integer_to_html(integer):
