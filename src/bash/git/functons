@@ -18,7 +18,8 @@ gc ()
 	if [[ -z "$@" ]]
 	then git commit --all --verbose
 	else
-        git commit -m "$@"
+        python -c "print 'git commit -m\"$*\"'" > /tmp/fred.sh
+        bash fred.sh
 	fi
 }
 
