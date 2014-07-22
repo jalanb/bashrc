@@ -8,6 +8,7 @@ import sys
 from fnmatch import fnmatch
 import commands
 import itertools
+import tempfile
 
 
 def path_to_editor():
@@ -27,26 +28,31 @@ def path_to_editor():
     return editor
 
 
-def path_to_script():
-    path_to_here = os.path.realpath(__file__)
-    stem, _ext = os.path.splitext(path_to_here)
-    return '%s.sh' % stem
+class VimBashScript(object):
+    """Write a bash script to run vim"""
+    def __init__(self):
+        self.lines = [
+            '#! /bin/bash',
+            '',
+            'VIM_EDITOR="%s"' % path_to_editor(),
+            'source $(dirname $(readlink -f $BASH_SOURCE))/vim_functions.sh',
+        ]
 
+    def add(self, line):
+        self.lines.append(line)
 
-def new_script():
-    """Make a new vim script"""
-    with open(path_to_script(), 'w') as output:
-        print >> output, '''#! /bin/bash
+    def _script_stream(self):
+        #  pylint: disable=no-self-use
+        return tempfile.NamedTemporaryFile(
+            suffix='-vim.sh',
+            dir=os.path.dirname(os.path.realpath(__file__)),
+            delete=False)
 
-VIM_EDITOR="%s"
-source ${BASH_SOURCE/.sh/_functions.sh}
-''' % path_to_editor()
-
-
-def add_to_script(string):
-    """Add that string to the vim script"""
-    with open(path_to_script(), 'a') as output:
-        print >> output, string
+    def write(self):
+        self.add('rm -f $(readlink -f $0)')
+        with self._script_stream() as stream:
+            print >> stream, '\n'.join(self.lines)
+            return stream.name
 
 
 def quote(string):
@@ -387,43 +393,44 @@ def _main_command(executable, text_files, options):
     return ' '.join(command_words)
 
 
-def recover_old_swaps(text_file, swaps):
+def recover_old_swaps(text_file, swaps, script):
     if len(swaps) > 1:
         print >> sys.stderr, 'Too many swaps: %r' % ','.join(swaps)
         return False
     swap = swaps[0]
-    add_to_script('echo "A swap file exists: %s"' % swap)
+    script.add('echo "A swap file exists: %s"' % swap)
     if ' ' in text_file:
         return False
-    add_to_script('recover %s %s && \\' % (text_file, swap))
+    script.add('recover %s %s && \\' % (text_file, swap))
     return True
 
 
-def vimmable_files(text_files):
+def vimmable_files(text_files, script):
     result = []
     for text_file in text_files:
         if vimming(text_file):
-            add_to_script('echo "A vim process is running for %s"' % text_file)
+            script.add('echo "A vim process is running for %s"' % text_file)
             continue
         swaps = get_swap_files(text_file)
         if any(swaps):
-            if not recover_old_swaps(text_file, swaps):
+            if not recover_old_swaps(text_file, swaps, script):
                 continue
         result.append(text_file)
     return result
 
 
 def main(args):
-    new_script()
+    script = VimBashScript()
     try:
         text_files, options = interpret(args)
-        vim_files = vimmable_files(text_files)
+        vim_files = vimmable_files(text_files, script)
         if vim_files:
             vim_options = _main_options(text_files, options)
             command = _main_command('$VIM_EDITOR', vim_files, vim_options)
-            add_to_script(command)
+            script.add(command)
             command = _main_command('post_vimming', vim_files, [])
-            add_to_script(command)
+            script.add(command)
+            print script.write()
     except (OSError, IOError), e:
         print >> sys.stderr, e
         return os.EX_IOERR

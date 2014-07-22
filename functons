@@ -53,8 +53,10 @@ v ()
 {
     if [[ -z $* ]]
     then vim
-    elif python2.7 $JAB_PYTHON/vim.py "$@"
-    then bash $JAB_PYTHON/vim.sh
+    else
+        if script=$(python2.7 $JAB_PYTHON/vim.py "$@")
+        then bash $script
+        fi
     fi
 }
 
