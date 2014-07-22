@@ -223,10 +223,15 @@ ky ()
 
 pi ()
 {
+    local me=$USER
+    local here=$(jostname)
+    local options=-noconfirm_exit
     if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]
-    then ipython --no-confirm-exit "$@"
-    else ipython -noconfirm_exit "$@"
+    then options=--no-confirm-exit 
     fi
+    console_title_on "ipython@${here}" && \
+        ipython $options "$@" && \
+        console_title_off "${me}@${here}"
 }
 
 py ()
