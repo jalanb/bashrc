@@ -19,7 +19,7 @@ gc ()
 	then git commit --all --verbose
 	else
         python -c "print 'git commit -m\"$*\"'" > /tmp/fred.sh
-        bash fred.sh
+        bash /tmp/fred.sh
 	fi
 }
 
