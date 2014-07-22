@@ -568,6 +568,11 @@ rqa ()
     /bin/rm -rf ./* ./.* 2>&1 | grep -v 'cannot remove directory: `\./\.'
 }
 
+tmp ()
+{
+    c ~/tmp "$@"
+}
+
 unalias try > /dev/null 2>&1
 try ()
 {
