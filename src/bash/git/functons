@@ -18,13 +18,7 @@ gc ()
 	if [[ -z "$@" ]]
 	then git commit --all --verbose
 	else
-        first=$1
-        if [[ -f $1 ]]
-        then git commit --verbose "$@"
-        else
-            shift
-            git commit -m "${first/-m/}" "$@"
-        fi
+        git commit -m "$@"
 	fi
 }
 
