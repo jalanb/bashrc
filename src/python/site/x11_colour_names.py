@@ -25,10 +25,11 @@ def _rgb_txt_directories():
 
 
 def use_rgb_txt(path_to_rgb_txt):
-    if not os.path.isfile(path_to_rgb_txt):
-        return False
     def new_method():
         return [path_to_rgb_txt]
+
+    if not os.path.isfile(path_to_rgb_txt):
+        return False
     # Yes, we are "Redefining name '_rgb_txt_directories' from outer scope"
     # pylint: disable-msg=W0621
     _rgb_txt_directories = new_method
