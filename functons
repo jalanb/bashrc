@@ -546,6 +546,14 @@ lyy ()
     $reset
 }
 
+ps3 ()
+{
+    if [[ -z "$@" ]]
+    then ps axf | vim - +
+    else ps axf | vim - +/"$*"
+    fi
+}
+
 rff ()
 {
     r fred

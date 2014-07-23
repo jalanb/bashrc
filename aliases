@@ -122,9 +122,6 @@ alias lsh="ls *.sh"
 
 alias out="to_release"
 
-alias ps3="ps axf | vim - +"
-
-
 alias sib=". ~/.bashrc"
 
 alias sla="source $JAB/local/aliases"
