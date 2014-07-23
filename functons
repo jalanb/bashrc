@@ -820,6 +820,11 @@ run_as ()
 
 # xxxxxxx
 
+pylinum ()
+{
+    pylint --help-msg $1 | head -n 1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/"
+}
+
 # xxxxxxxx
 
 jostname ()
