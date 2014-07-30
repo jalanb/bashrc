@@ -588,7 +588,7 @@ rqa ()
 
 tmp ()
 {
-    c ~/tmp "$@"
+    pushd ~/tmp "$@"
 }
 
 unalias try > /dev/null 2>&1
