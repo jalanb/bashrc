@@ -588,7 +588,7 @@ rqa ()
 
 tmp ()
 {
-    pushd ~/tmp "$@"
+    pushd $(python $GITHUB_SOURCES/kd/kd.py ~/tmp "$@")
 }
 
 unalias try > /dev/null 2>&1
