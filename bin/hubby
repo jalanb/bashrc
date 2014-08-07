@@ -4,6 +4,7 @@ _show_status ()
 {
     dir=$1
     local GIT="git -C $dir"
+    owner=$($GIT remote show origin | grep Fetch.URL | cut -d\/ -f 4)
     local local_changes=$($GIT status -s)
     local dir_shown=
     if [[ -n $local_changes ]]
@@ -25,8 +26,13 @@ _show_status ()
         else
             echo
         fi
-        $GIT fetch -q
-        $GIT lg origin/master --ancestry-path HEAD..origin/master
+        if [[ $owner == "jalanb" ]]
+        then
+            $GIT fetch -q
+            $GIT lg origin/master --ancestry-path HEAD..origin/master
+        else
+            $GIT pull --rebase
+        fi
     fi
     test -z $dir_shown || echo
     if [[ -n $dir_shown ]]
