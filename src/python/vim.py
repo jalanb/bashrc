@@ -360,6 +360,13 @@ def find_abbreviations(args):
         #'': [
         #    os.path.join(hub, ''),],
     }
+    aliases = {
+        'c': 'kd'
+    }
+    for key, value in aliases.items():
+        if key in args:
+            paths = abbreviations[value]
+            abbreviations.update({key: paths})
     result = [abbreviations[a] for a in args if a in abbreviations]
     return list(itertools.chain(*result))
 
