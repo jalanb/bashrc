@@ -75,7 +75,6 @@ alias ly="p $JAB_PYTHON/ls/ly.py "
 
 alias p-="echo $OLDPWD"
 alias pc="python -c"
-alias pg="pgrep -fl"
 alias pp="p ~/jab/python/mython/mython/pp.py"
 alias pt="p $JAB_PYTHON/vim_traceback.py"
 

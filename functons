@@ -223,6 +223,11 @@ ky ()
     y "$@"
 }
 
+pg ()
+{
+    ps -ef | grep -v grep | grep "$@"
+}
+
 pi ()
 {
     local me=$USER
