@@ -358,7 +358,7 @@ vp ()
 
 vv ()
 {
-    vv vimrc
+    v ~/.vimrc
 }
 
 xe()
