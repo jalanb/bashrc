@@ -35,6 +35,17 @@ gaa ()
     git add -A
 }
 
+gcj ()
+{
+    local GIT="git -C $JAB"
+	if [[ -z "$@" ]]
+	then $GIT commit --all --verbose
+	else
+        python -c "print '$GIT commit -m\"$*\"'" > /tmp/fred.sh
+        bash /tmp/fred.sh
+	fi
+}
+
 ghi ()
 {
     echo move to local 'TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"'
