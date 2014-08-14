@@ -70,6 +70,7 @@ prompt_command ()
     console_whoami 2>/dev/null
     # local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
+    python $GITHUB_SOURCES/kd/kd.py --add .
     history -a
 }
 

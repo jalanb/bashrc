@@ -486,6 +486,12 @@ ght ()
     gh "$@" | tail
 }
 
+ghv ()
+{
+    local __doc__="edit stuff from history"
+    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^[0-9]* *//" | vim - +/"$@"
+}
+
 gv. ()
 {
     PYTHONPATH=$(readlink -f .) gv .
