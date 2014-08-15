@@ -689,6 +689,11 @@ down ()
     ls -alhtr
 }
 
+main ()
+{
+    cp $JAB_PYTHON/main.py $1
+}
+
 mkcd ()
 {
     local __doc__='make a directory and start using it';
