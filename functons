@@ -705,7 +705,8 @@ down ()
 
 main ()
 {
-    cp $JAB_PYTHON/main.py $1
+    first_dir "$@" && shift
+    [[ -n $* ]] && cp $JAB_PYTHON/main.py $1 || cp $JAB_PYTHON/main.py $dir
 }
 
 mkcd ()
