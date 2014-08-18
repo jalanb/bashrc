@@ -531,6 +531,19 @@ jjy ()
     ky $JAB_PYTHON "$@"
 }
 
+jpi ()
+{
+    cd ~/src/git/jpm
+    source /home/alanb/.virtualenvs/bdr/bin/activate
+    add_to_a_path PATH $GITHUB_SOURCES/jpm/bin
+    add_to_a_path PYTHONPATH $GITHUB_SOURCES/jpm/jpm
+    if [[ -n $* ]]
+    then
+        "$@"
+    fi
+    
+}
+
 jpm ()
 {
     PYTHONPATH=$PYTHONPATH:$GITHUB_SOURCES/jpm python $GITHUB_SOURCES/jpm/bin/jpm "$@"
