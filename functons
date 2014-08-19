@@ -882,6 +882,28 @@ jostname ()
     echo ${HOSTNAME:-$(hostname -s)}
 }
 
+maketest ()
+{
+    local path=$1
+    if [[ ! -f $path ]]
+    then
+        echo $path is not a file >&2
+        return 1
+    fi
+    local filename=$(basename $path)
+    local stem=${filename%.*}
+    local classname=$(python -c "print 'Test%s' % '$stem'.title()")
+    local methodname="test_$stem"
+    local test_file=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
+    if [[ -f $test_file ]]
+    then
+        echo $test_file is already a file >&2
+        return 1
+    fi
+    local test_dir=$(dirname $test_file)
+    [[ -d $test_dir ]] || mkdir -p $test_dir
+    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB_PYTHON/test_.py > $test_file
+}
 todo_edit ()
 {
     local todo_txt="$JAB_TODO"
