@@ -1,5 +1,5 @@
 #! /usr/bin/env python2
-"""Script to act as a template"""
+"""Script to """
 
 import os
 import sys
