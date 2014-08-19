@@ -30,7 +30,12 @@ NoMatchParen
 
 " Checkers
 let g:syntastic_python_checkers=['pep8', 'pylint', 'python']
-set statusline+=%#warningmsg#%{SyntasticStatuslineFlag()}%*
+"
+" commenting this out because on jab.ook vim says
+" E117: Unknown function: SyntasticStatuslineFlag
+" E15: Invalid expression: SyntasticStatuslineFlag()
+"
+" set statusline+=%#warningmsg#%{SyntasticStatuslineFlag()}%*
 set laststatus=2
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1

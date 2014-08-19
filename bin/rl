@@ -1,0 +1,61 @@
+#! /usr/bin/env python2
+"""Script to recursively list"""
+
+import os
+import sys
+import argparse
+from bdb import BdbQuit
+
+
+from dotsite.paths import makepath
+
+
+def start_debugging():
+    try:
+        import pudb as pdb
+    except ImportError:
+        import pdb
+    pdb.set_trace()
+
+
+def parse_args():
+    """Parse out command line arguments"""
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument('-i', '--ignores', default=[], nargs='*',
+                        help='ignore these globs')
+    parser.add_argument('-r', '--relative', action='store_true',
+                        help='show relative paths')
+    parser.add_argument('glob', default=['*'], nargs='*',
+                        help='path to the project (default .)')
+    parser.add_argument('-U', '--Use_debugger', action='store_true',
+                        help='Run the script with pdb (or pudb if available)')
+    args = parser.parse_args()
+    if args.Use_debugger:
+        start_debugging()
+    return args
+
+
+def recursively_list(args):
+    here = makepath('.')
+    for f in here.walkfiles(pattern=args.glob[0], ignores=args.ignores):
+        if args.relative:
+            print f.short_relative_path_from_here()
+        else:
+            print f
+
+
+def main():
+    """Run the script"""
+    try:
+        args = parse_args()
+        recursively_list(args)
+    except (SystemExit, BdbQuit):
+        pass
+    except Exception, e:
+        print >> sys.stderr, e
+        return not os.EX_OK
+    return os.EX_OK
+
+
+if __name__ == '__main__':
+    sys.exit(main())
