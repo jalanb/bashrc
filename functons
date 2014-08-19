@@ -533,10 +533,11 @@ jjy ()
 
 jpi ()
 {
-    cd ~/src/git/jpm
-    source /home/alanb/.virtualenvs/bdr/bin/activate
-    add_to_a_path PATH $GITHUB_SOURCES/jpm/bin
-    add_to_a_path PYTHONPATH $GITHUB_SOURCES/jpm/jpm
+    local path_to_jpm=$GITHUB_SOURCES/jpm
+    cd $path_to_jpm
+    source /home/alanb/.virtualenvs/jpm/bin/activate
+    add_to_a_path PATH $path_to_jpm/bin
+    add_to_a_path PYTHONPATH $path_to_jpm/jpm
     if [[ -n $* ]]
     then
         "$@"
