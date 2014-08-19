@@ -32,7 +32,7 @@ gs ()
 
 gaa ()
 {
-    git add -A
+    git add .
 }
 
 gcj ()
