@@ -14,6 +14,10 @@ type = git
 source = https://github.com/scrooloose/syntastic.git
 type = git
 
+[targets]
+source = https://github.com/wellle/targets.vim.git
+type = git
+
 [vim-abolish]
 source = https://github.com/tpope/vim-abolish.git
 type = git
