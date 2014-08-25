@@ -419,14 +419,14 @@ function CycleNumber() " {{{3
     " both on: set both off
     " However, when setting one on, vim sets the other off
     "   so both on is not actually possible, so:
-    " both off: set number off, relative on
-    " number off, relative on: set number on, relative off
-    " number on, relative off: set both off
+    " both off: set number on, relative off
+    " number on, relative off: set number off, relative on
+    " number off, relative on: set both off
     if &number == 0 && &relativenumber == 0
-        set nonumber relativenumber
-    elseif &number == 0 && &relativenumber == 1
         set number norelativenumber
     elseif &number == 1 && &relativenumber == 0
+        set nonumber relativenumber
+    elseif &number == 0 && &relativenumber == 1
         set nonumber norelativenumber
     endif
 endfunction
