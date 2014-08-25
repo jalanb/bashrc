@@ -6,8 +6,9 @@ def backup_with_suffix(filename, suffix):
     file('%s%s' % (filename, suffix), 'w').write(text)
 
 
-# pylint: disable-msg=R0913
-def looks_like_this(filename, limits = None, numbers=True, space=' ', tab='\t', sol=None, eol=None, count_from=1):
+# pylint: disable-msg=too-many-arguments
+def looks_like_this(filename, limits=None, numbers=True, space=' ', tab='\t',
+                    sol=None, eol=None, count_from=1):
     lines = file(filename).readlines()
     lines = _look_like_that(lines, limits, count_from, numbers, space, tab, sol)
     for line in lines:

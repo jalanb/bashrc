@@ -9,28 +9,28 @@ This module handles files
 and ends of lines
 
     >>> files.looks_like_this(test.path,[5,10])
-     5: 	>>> import files
-     6: 
-     7: 		It can show    spaces and	tabs
-     8: 		
+     5:     >>> import files
+     6:
+     7:         It can show    spaces and   tabs
+     8:
      9: and ends of lines
-    10: 
+    10:
 
     >>> files.looks_like_this(test.path,[5,10],space='.',tab='|...',sol='^',eol='$',numbers=False)
-    ^|...>>>.import.files$
+    ^....>>>.import.files$
     ^$
-    ^|...|...It.can.show....spaces.and|...tabs$
-    ^|...|...$
+    ^........It.can.show....spaces.and|...tabs$
+    ^........$
     ^and.ends.of.lines$
     ^$
 
     >>> files.looks_like_this(test.path,[5,10],tab='------->',numbers=True)
-     5: ------->>>> import files
-     6: 
-     7: ------->------->It can show    spaces and------->tabs
-     8: ------->------->
+     5:     >>> import files
+     6:
+     7:         It can show    spaces and------->tabs
+     8:         
      9: and ends of lines
-    10: 
+    10:
 
 Line numbers start at 1
     >>> files.looks_like_this(test.path,[1,2],tab='------->',numbers=True)
