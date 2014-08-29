@@ -18,7 +18,7 @@ welcome_all ()
 {
     for file in $WELCOME_FILES
     do
-        welcome $file
+        test -f $file && welcome $file
     done
 }
 
@@ -26,7 +26,7 @@ unwelcome_all ()
 {
     for file in $WELCOME_FILES
     do
-        unwelcome $file
+        test -f $file && unwelcome $file
     done
 }
 
