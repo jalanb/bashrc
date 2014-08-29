@@ -12,7 +12,7 @@ welcome ()
     sudo sed -i -e "s/\([^#]*\)# \(echo.*Bye from.*\)/\1\2/" $1
 }
 
-WELCOME_FILES="$HOME/.bashrc $HOME/.profile /root/.bashrc /root/.bash_profile /root/.profile /etc/bash.bashrc /etc/bashrc /etc/profile"
+WELCOME_FILES="$HOME/.bashrc $HOME/.profile $HOME/.bash_profile /root/.bashrc /root/.bash_profile /root/.profile /etc/bash.bashrc /etc/bashrc /etc/profile"
 
 welcome_all ()
 {
