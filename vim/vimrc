@@ -142,8 +142,10 @@ noremap t<left>  :tabprev<cr>
 noremap t<right> :tabnext<cr>
 noremap th       :tabprev<cr>
 noremap tl       :tabnext<cr>
-noremap <Up>     ddkP
-noremap <Down>   ddp
+"noremap <Up>     ddkP
+"noremap <Down>   ddp
+noremap <PageUp>   37kzz
+noremap <PageDown> 37jzz
 noremap <left>      :tabprev<cr>
 noremap <right>     :tabnext<cr>
 "
