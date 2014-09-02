@@ -614,6 +614,11 @@ lly ()
     $reset
 }
 
+lrl ()
+{
+    lra | grep --color -- "->"
+}
+
 lrt ()
 {
     first_dir "$@" && shift
