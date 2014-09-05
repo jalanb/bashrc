@@ -16,7 +16,7 @@ ga ()
 gc ()
 {
 	if [[ -z "$@" ]]
-	then git commit --all --verbose
+	then git commit --verbose
 	else
         python -c "print 'git commit -m\"$*\"'" > /tmp/fred.sh
         bash /tmp/fred.sh

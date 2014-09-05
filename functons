@@ -153,17 +153,23 @@ ff ()
     first_dir "$@" && shift
     name=$1
     shift
-    find $dir -name $name "$@"
+    find $dir -type f -name $name "$@"
 }
 
 fv ()
 {
     first_dir "$@" && shift
-    name=$1
-    shift
-    files=$(find $dir -name $name "$@")
-    echo $files | tr ' ' '\n' | sed -e "s:^\./::"
-    vim -p $files
+    if [[ -z "$@" ]]
+    then echo Nothing to find
+    else
+        files=$(find $dir -name "$@")
+        if [[ -z $files ]]
+        then echo "$@" not found
+        else
+            echo $files | tr ' ' '\n' | sed -e "s:^\./::"
+            vim -p $files
+        fi
+    fi
 }
 
 gg ()
@@ -213,6 +219,11 @@ hd ()
 hv ()
 {
     history | vim - +
+}
+
+jp ()
+{
+    python
 }
 
 ky ()
@@ -291,6 +302,7 @@ pi ()
         ipython $options "$@" && \
         console_title_off "${me}@${here}"
 }
+
 
 py ()
 {
@@ -642,6 +654,30 @@ lyy ()
 num ()
 {
     v $JAB/local/numbers.txt
+}
+
+poi ()
+{
+    local path_to_pym=$GITHUB_SOURCES/pym
+    #readlink -f $path_to_pym
+    cd $path_to_pym
+    add_to_a_path PATH $path_to_pym/bin
+    add_to_a_path PYTHONPATH $path_to_pym/pym
+    [[ -n $* ]] && "$@"
+    2
+    3y -L 2 --noreport | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
+    echo
+    ls *.py
+    echo
+    local _status=$(git status -s)
+    if [[ -n $_status ]]
+    then
+        echo -n "\$ git status -s: "
+        git status -s
+    fi
+    return
+    source /home/alanb/.virtualenvs/pym/bin/activate
+    
 }
 
 ps3 ()
