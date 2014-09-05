@@ -15,11 +15,14 @@ ga ()
 
 gc ()
 {
+    local _storage=/tmp/fred.sh
 	if [[ -z "$@" ]]
 	then git commit --verbose
 	else
-        python -c "print 'git commit -m\"$*\"'" > /tmp/fred.sh
-        bash /tmp/fred.sh
+        python -c "print 'git commit -m\"$*\"'" > $_storage
+        bash $_storage
+        cat $_storage
+        rq $_storage
 	fi
 }
 
