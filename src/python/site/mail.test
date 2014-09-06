@@ -1,0 +1,14 @@
+The mail module
+===============
+
+    >>> import mail
+    >>> print mail.__doc__
+    This program should handle mail
+    ...
+
+Read boring issues
+------------------
+
+Boring issues are stored in a file, and re-read for each email
+    >>> mail.is_boring_issue('19034')
+    True

@@ -1,0 +1,32 @@
+The private module
+==================
+
+    >>> import private
+    >>> print private.__doc__
+    Module to hold private account data
+
+More imports for testing
+------------------------
+    >>> import os
+
+Names and addresses
+-------------------
+
+    >>> private.personal_email('fred') == 'fred@al-got-rhythm.net'
+    True
+
+    >>> private.employee_address() == 'abrogan@altobridge.com'
+    True
+
+    >>> private.employer_email('fred') == 'fred@altobridge.com'
+    True
+
+    >>> private.employer_server('fred') == 'fred.altobridge.com'
+    True
+
+localhost files
+---------------
+
+    >>> path_to_mail_html = private.path_in_localhost('mail.html')
+    >>> os.path.isfile(path_to_mail_html)
+    True
