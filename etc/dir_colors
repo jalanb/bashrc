@@ -38,6 +38,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .html         00;35
 .ini          00;35
 .in           00;35
+.pth          00;35
 .spec         00;35
 .test         00;35
 .tests        00;35
@@ -98,6 +99,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .list         00;36
 .mbr          00;36
 .m3u          00;36
+.m3u8         00;36
 .png          00;36
 .rdf          00;36
 .xls          00;36
@@ -120,6 +122,9 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .old          00;37
 .two          00;37
 .tmp          00;37
+.new          00;37
+.new2         00;37
+.new3         00;37
 
 
 # Other - WHITE
