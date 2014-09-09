@@ -62,16 +62,7 @@ alias jj="c $JAB"
 
 alias kp="rsync -a"
 
-alias l1="ls -1tr "
-alias la="ls -a "
-alias ld="ls -1d"
-alias lj="ls $JAB"
-alias ll="ls -lh "
-alias lr="ls -lhtr"
 alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
-alias lt="ls *.test*"
-alias lx="p $JAB_PYTHON/ls/lx.py "
-alias ly="p $JAB_PYTHON/ls/ly.py "
 
 alias p-="echo $OLDPWD"
 alias pc="python -c"

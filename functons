@@ -223,6 +223,57 @@ ky ()
     y "$@"
 }
 
+
+l1 ()
+{
+	ls -1tr 
+}
+
+la ()
+{
+	ls -a 
+}
+
+ld ()
+{
+	ls -1d
+}
+
+lf ()
+{
+    locate -f "$@"
+}
+
+lj ()
+{
+	ls $JAB
+}
+
+ll ()
+{
+	ls -lh 
+}
+
+lr ()
+{
+	ls -lhtr
+}
+
+lt ()
+{
+	ls *.test*
+}
+
+lx ()
+{
+	p $JAB_PYTHON/ls/lx.py 
+}
+
+ly ()
+{
+	p $JAB_PYTHON/ls/ly.py 
+}
+
 pg ()
 {
     ps -ef | grep -v grep | grep "$@"
@@ -581,6 +632,11 @@ lyy ()
     echo
     ls -xhtr *.py 2>/dev/null
     $reset
+}
+
+num ()
+{
+    v $JAB/local/numbers.txt
 }
 
 ps3 ()
