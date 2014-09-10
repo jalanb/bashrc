@@ -1,5 +1,5 @@
-Live, 1
-    Love, 2
-        Laugh, 3
+Live, 0
+    Love, 1
+        Laugh, 2
              Let Go, 4
-                   Lose It, 5
+                   Lose It, 6

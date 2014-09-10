@@ -5,12 +5,13 @@ import re
 import os
 import sys
 try:
-    from namedtuple import namedtuple
+    from namedtuple import namedtuple  # pylint: disable=import-error
 except ImportError:
     from collections import namedtuple
 
 
 import colours
+
 
 def todo_file():
     """Get the filename from the environment"""
@@ -42,12 +43,16 @@ def read_todo_items():
 def priorities():
     """The recognised priorities in this system"""
     Priority = namedtuple('Priority', 'number, name, colour')
+    # pylint: disable=bad-whitespace
+    # Yeah, fuck off
     return [
-        Priority(1, 'yesterday', 'red'),
-        Priority(2, 'today',     'light red'),
-        Priority(3, 'tomorrow',  'light magenta'),
-        Priority(4, 'feature',   'magenta'),
-        Priority(5, 'wish',      'gray'),
+        Priority(0, 'bug',       'red'),
+        Priority(1, 'yesterday', 'magenta'),
+        Priority(2, 'today',     'blue'),
+        Priority(3, 'tomorrow',  'cyan'),
+        Priority(4, 'feature',   'green'),
+        Priority(5, 'wish',      'yellow'),
+        Priority(6, 'text',      'gray'),
     ]
 
 
@@ -68,7 +73,8 @@ def parse_todo_line(line):
 
     Each item is a tuple of (text, priority)
     """
-    item_regexp = re.compile('^(?P<text>.*), (?P<priority>[%s])$' % priority_keys_string())
+    item_regexp = re.compile('^(?P<text>.*), (?P<priority>[%s])$' %
+                             priority_keys_string())
     match = item_regexp.match(line)
     TodoItem = namedtuple('TodoItem', 'text, priority')
     if not match:
