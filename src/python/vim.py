@@ -342,6 +342,7 @@ def start_debugging():
 def find_abbreviations(args):
     hub = os.environ['GITHUB_SOURCES']
     jab_python = os.environ['JAB_PYTHON']
+    jab_todo = os.environ['JAB_TODO']
     abbreviations = {
         'jpm': [
             os.path.join(hub, 'jpm/jpm/jpm.py'),
@@ -357,6 +358,9 @@ def find_abbreviations(args):
             os.path.join(hub, 'what/what.py')],
         'v': [
             os.path.join(jab_python, 'vim.py')],
+        '2': [
+            os.path.join(jab_python, 'todo.py'),
+            jab_todo],
         #'': [
         #    os.path.join(hub, ''),],
     }
