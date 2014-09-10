@@ -665,7 +665,7 @@ poi ()
     add_to_a_path PYTHONPATH $path_to_pym/pym
     [[ -n $* ]] && "$@"
     2
-    3y -L 2 --noreport | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
+    3y -L 2 --noreport pym | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
     echo
     ls *.py
     echo
@@ -675,7 +675,6 @@ poi ()
         echo -n "\$ git status -s: "
         git status -s
     fi
-    return
     source /home/alanb/.virtualenvs/pym/bin/activate
     
 }
