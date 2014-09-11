@@ -677,7 +677,7 @@ poi ()
         echo -n "\$ git status -s: "
         git status -s
     fi
-    source /home/alanb/.virtualenvs/pym/bin/activate
+    # source /home/alanb/.virtualenvs/pym/bin/activate
     if [[ -n $* ]]
     then
         if first_dir "$@" 
