@@ -143,8 +143,11 @@ fc ()
 fd ()
 {
     first_dir "$@" && shift
-    name=$1
-    shift
+    if [[ -n $1 ]]
+    then
+        name=$1
+        shift
+    fi
     find $dir -type d -name $name "$@"
 }
 
