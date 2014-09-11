@@ -663,7 +663,6 @@ poi ()
     cd $path_to_pym
     add_to_a_path PATH $path_to_pym/bin
     add_to_a_path PYTHONPATH $path_to_pym/pym
-    [[ -n $* ]] && "$@"
     2
     3y -L 2 --noreport pym | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
     echo
@@ -676,7 +675,16 @@ poi ()
         git status -s
     fi
     source /home/alanb/.virtualenvs/pym/bin/activate
-    
+    if [[ -n $* ]]
+    then
+        if first_dir "$@" 
+        then
+            shift
+            cd $dir
+        else
+            "$@"
+        fi
+    fi
 }
 
 ps3 ()
