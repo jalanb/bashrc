@@ -44,7 +44,7 @@ def priorities():
     """The recognised priorities in this system"""
     Priority = namedtuple('Priority', 'number, name, colour')
     # pylint: disable=bad-whitespace
-    # Yeah, fuck off
+    # Yeah, fuck off!
     return [
         Priority(0, 'bug',       'red'),
         Priority(1, 'yesterday', 'magenta'),
