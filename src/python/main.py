@@ -32,9 +32,10 @@ def main():
         _args = parse_args()
     except (SystemExit, BdbQuit):
         pass
-    except Exception, e:
-        print >> sys.stderr, e
-        return not os.EX_OK
+    # Uncomment for v 1.0
+    #except Exception, e:
+        #print >> sys.stderr, e
+        #return not os.EX_OK
     return os.EX_OK
 
 
