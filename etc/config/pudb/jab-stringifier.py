@@ -43,11 +43,14 @@ import signal
 import sys
 import math
 
+
 class TimeOutError(Exception):
     pass
 
+
 def timeout(_signum, _frame, a_time):
     raise TimeOutError("Timed out after %d seconds" % a_time)
+
 
 def run_with_timeout(code, a_time, symbols=None):
     """
@@ -66,9 +69,10 @@ The return value is whatever ``code`` returns.
         # Use math.ceil to round a float up.
         a_time = int(math.ceil(a_time))
         signal.alarm(a_time)
-    r = eval(code, symbols)
-    signal.alarm(0) # Disable the alarm
+    r = eval(code, symbols)  # pylint: disable=eval-used
+    signal.alarm(0)  # Disable the alarm
     return r
+
 
 def pudb_stringifier(obj):
     """
@@ -78,23 +82,28 @@ It returns str(obj), unless it take more than a second to compute,
 in which case it falls back to type(obj).
 """
     if type(obj) == type(pudb_stringifier):
-        return 'def %s%s' % (obj.func_name, '(%s): ...' % ', '.join(obj.func_code.co_varnames[:obj.func_code.co_argcount]))
+        return 'def %s%s' % (obj.func_name, '(%s): ...' % ', '.join(
+            obj.func_code.co_varnames[:obj.func_code.co_argcount]))
     elif type(obj) == type(sys):
         return 'imported'
+    elif callable(obj):
+        return 'XXX'  # pylint: disable=fixme
     try:
-        return run_with_timeout("str(obj)", 0.5, {'obj':obj})
+        return run_with_timeout("str(obj)", 0.5, {'obj': obj})
     except TimeOutError:
         return (type(obj), "(str too slow to compute)")
 
 # Example usage
 
+
 class FastString(object):
     def __str__(self):
         return "This was fast to compute."
 
+
 class SlowString(object):
     def __str__(self):
-        time.sleep(10) # Return the string value after ten seconds
+        time.sleep(10)  # Return the string value after ten seconds
         return "This was slow to compute."
 
 fast = FastString()
