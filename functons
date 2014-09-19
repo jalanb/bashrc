@@ -240,17 +240,17 @@ ky ()
 
 l1 ()
 {
-	ls -1tr 
+	ls -1tr "$@"
 }
 
 la ()
 {
-	ls -a 
+	ls -a "$@"
 }
 
 ld ()
 {
-	ls -1d
+	ls -1d "$@"
 }
 
 lf ()
@@ -260,17 +260,17 @@ lf ()
 
 lj ()
 {
-	ls $JAB
+	ls $JAB "$@"
 }
 
 ll ()
 {
-	ls -lh 
+	ls -lh  "$@"
 }
 
 lr ()
 {
-	ls -lhtr
+	ls -lhtr "$@"
 }
 
 lt ()
@@ -280,12 +280,12 @@ lt ()
 
 lx ()
 {
-	p $JAB_PYTHON/ls/lx.py 
+	p $JAB_PYTHON/ls/lx.py  "$@"
 }
 
 ly ()
 {
-	p $JAB_PYTHON/ls/ly.py 
+	p $JAB_PYTHON/ls/ly.py  "$@"
 }
 
 pg ()
@@ -631,7 +631,7 @@ lly ()
 
 lrl ()
 {
-    lra | grep --color -- "->"
+    lra "$@" | grep --color -- "->"
 }
 
 lrt ()
