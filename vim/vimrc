@@ -438,6 +438,10 @@ endfunction
 set nonumber
 "
 " Search {{{2
+" 
+" Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci
+:set grepprg=grep\ -nH
+"
 " <leader>\ is bound to calling ToggleHighlightSearch
 "   The leader key is also \, so really \\ calls this
 "
