@@ -51,6 +51,9 @@ load-plugins=
 # F0401 is Unable to import module
 # W0403 is Relative imports
 #
+# Known bug in pylint, see https://bitbucket.org/logilab/pylint/issue/205/wrong-no-value-for-parameter-warnings-when
+# E1120 is "No value for argument ... in unbound method call"
+#
 # Python is a dynamic language, I like that
 #
 # E1103 is "Instance of ... has no ... member (but some types could not be inferred)".
@@ -67,7 +70,7 @@ load-plugins=
 #
 # I0011 is "Locally disabling ..."
 #
-disable=E1103,E1101,W0142,W0201,R0903,I0011,W0403,W0232,C0103,C0111,R0921,W0406
+disable=E1103,E1101,W0142,W0201,R0903,I0011,W0403,W0232,C0103,C0111,R0921,W0406,E1120
 
 
 [REPORTS]
