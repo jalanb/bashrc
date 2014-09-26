@@ -33,9 +33,9 @@ def main():
     except (SystemExit, BdbQuit):
         pass
     # Uncomment for v 1.0
-    #except Exception, e:
-        #print >> sys.stderr, e
-        #return not os.EX_OK
+    # except Exception, e:
+        # print >> sys.stderr, e
+        # return not os.EX_OK
     return os.EX_OK
 
 
