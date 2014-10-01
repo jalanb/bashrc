@@ -9,8 +9,8 @@
  noremap  <F1>      :help<cr>
 "noremap  <F2>
 "noremap  <F3>
- noremap  <F4>       <c-w>W
-"noremap  <F5>
+ noremap  <F4>      <c-w>w
+ noremap  <F5>      <C-W>_
 "noremap  <F6>
 "noremap  <F7>
  noremap  <F8>      :set list!<CR>
@@ -20,8 +20,10 @@ inoremap  <F9>      <esc>:w!<CR>
  noremap <F11>      :map <F11> 
  noremap <F12>      :map <F12> 
 
- noremap <S-F4> <C-W>P
-nnoremap <C-F4> <C-W>c
+ noremap <S-F4>     <C-W>p
+nnoremap <C-F4>     <C-W>c
+
+ noremap <S-F5>     <C-W>=
 "
 " ordinary keys {{{2
 "
