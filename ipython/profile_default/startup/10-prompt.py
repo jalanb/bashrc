@@ -13,13 +13,18 @@ from IPython.core.prompts import LazyEvaluate as promptify
 @promptify
 def prompt():
     color = coloransi.TermColors()
-    return '%s0 %s[%s%s python%s %s@%s:%s%s]%s%s\n>>> ' % (
+    virtual_env = os.environ.get('VIRTUAL_ENV', '')
+    virtual_environment = ''
+    if virtual_env:
+        virtual_environment = '.%s' % os.path.basename(virtual_env)
+    return '%s0 %s[%s%s python%s%s %s@%s:%s%s]%s%s\n>>> ' % (
         color.White,
         color.LightRed,
         color.LightCyan,
         time.strftime("%A %Y-%m-%d.%H:%M:%S"),
         sys.version.split()[0],
-        os.environ.get('USER','nobody'),
+        virtual_environment,
+        os.environ.get('USER', 'nobody'),
         os.uname()[1],
         os.getcwd(),
         color.LightRed,
