@@ -434,6 +434,10 @@ def main(args):
     script = VimBashScript()
     try:
         text_files, options = interpret(args)
+        if not text_files and not options:
+            script.add('$VIM_EDITOR')
+            print script.write()
+            return os.EX_OK
         vim_files = vimmable_files(text_files, script)
         if vim_files:
             vim_options = _main_options(text_files, options)

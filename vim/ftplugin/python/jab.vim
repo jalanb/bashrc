@@ -20,6 +20,7 @@ noremap <leader>8	b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
 noremap <leader>c	?^\s*class \zs\i<cr>*
 noremap <leader>d	?^\s*def \zs\i<cr>*zv
 noremap <leader>o   O<esc>
+noremap <leader>e	?^\s*def \zs\i<cr>*#zv
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 

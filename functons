@@ -191,7 +191,7 @@ gp ()
 gh ()
 {
     local __doc__="show stuff from history"
-    HISTTIMEFORMAT= history | sed -e "s/^[0-9]*  //"  | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
+    HISTTIMEFORMAT= history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
 }
 
 gv ()
