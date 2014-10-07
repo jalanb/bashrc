@@ -225,8 +225,6 @@ set matchpairs+=<:>
 set listchars=tab:>-,trail:?,eol:$
 set tildeop
 set whichwrap+=<,>,h,l,[,] " http://vim.wikia.com/wiki/Automatically_wrap_left_and_right
-" Suggested by ZeroKelvinKeyboard (which must hurt ?!) http://stackoverflow.com/a/26235811/500942
-set mouse=
 "
 " Screen {{{1
 "
