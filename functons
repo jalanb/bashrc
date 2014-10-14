@@ -121,6 +121,12 @@ gf ()
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
+gr ()                                                                                                                                                                        
+{
+    first_dir "$@" && shift
+    sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file 
+}
+
 fc ()
 {
     first_dir "$@" && shift
@@ -236,17 +242,17 @@ ky ()
 
 l1 ()
 {
-	ls -1tr "$@"
+    ls -1tr "$@"
 }
 
 la ()
 {
-	ls -a "$@"
+    ls -a "$@"
 }
 
 ld ()
 {
-	ls -1d "$@"
+    ls -1d "$@"
 }
 
 lf ()
@@ -256,32 +262,37 @@ lf ()
 
 lj ()
 {
-	ls $JAB "$@"
+    ls $JAB "$@"
 }
 
 ll ()
 {
-	ls -lh  "$@"
+    ls -lh  "$@"
 }
 
 lr ()
 {
-	ls -lhtr "$@"
+    ls -lhtr "$@"
+}
+
+lp ()
+{
+    source $GITHUB_SOURCES/liquidprompt/liquidprompt
 }
 
 lt ()
 {
-	ls *.test*
+    ls *.test*
 }
 
 lx ()
 {
-	p $JAB_PYTHON/ls/lx.py  "$@"
+    p $JAB_PYTHON/ls/lx.py  "$@"
 }
 
 ly ()
 {
-	p $JAB_PYTHON/ls/ly.py  "$@"
+    p $JAB_PYTHON/ls/ly.py  "$@"
 }
 
 pg ()
@@ -295,7 +306,7 @@ pi ()
     local here=$(jostname)
     local options=-noconfirm_exit
     if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]
-    then options=--no-confirm-exit 
+    then options=--no-confirm-exit
     fi
     console_title_on "ipython@${here}" && \
         ipython $options "$@" && \
@@ -318,6 +329,11 @@ py ()
 ra ()
 {
     run_as abrogan "$@"
+}
+
+rb ()
+{
+    echo "Welcome to moon"
 }
 
 rf ()
@@ -405,12 +421,12 @@ vd ()
 
 ve ()
 {
-    _edit_jab environ
+    _edit_jab environ "$@"
 }
 
 vf ()
 {
-    _edit_jab functons
+    _edit_jab functons "$@"
 }
 
 vh ()
@@ -604,7 +620,7 @@ jpi ()
     then
         "$@"
     fi
-    
+
 }
 
 jpm ()
@@ -676,7 +692,7 @@ poi ()
     # source /home/alanb/.virtualenvs/pym/bin/activate
     if [[ -n $* ]]
     then
-        if first_dir "$@" 
+        if first_dir "$@"
         then
             shift
             cd $dir
