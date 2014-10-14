@@ -74,14 +74,26 @@ prompt_command ()
     history -a
 }
 
-if [[ -n "$MYVIMRC" ]]
-then
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
-    export PROMPT_COMMAND='prompt_command $?'
-elif [[ "$PROMPT_COLOUR" == "none" ]]
+# liquidprompt features
+export LP_ENABLE_TIME=1
+
+
+# /liquidprompt features
+
+PROMPT_COMMAND=off
+if [[ $PROMPT_COMMAND == off ]]
 then
     unset PROMPT_COMMAND
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
+    source $GITHUB_SOURCES/liquidprompt/liquidprompt
 else
-    export PROMPT_COMMAND='prompt_command $?'
+    if [[ -n "$MYVIMRC" ]]
+    then
+        export PS1="\$? [\u@\h:\$PWD]\n$ "
+        export PROMPT_COMMAND='prompt_command $?'
+    elif [[ "$PROMPT_COLOUR" == "none" ]]
+    then
+        export PS1="\$? [\u@\h:\$PWD]\n$ "
+    else
+        export PROMPT_COMMAND='prompt_command $?'
+    fi
 fi
