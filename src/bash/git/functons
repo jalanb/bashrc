@@ -38,6 +38,11 @@ gaa ()
     git add .
 }
 
+gac ()
+{
+    git add . ; gc "$@"
+}
+
 gcj ()
 {
     local GIT="git -C $JAB"
