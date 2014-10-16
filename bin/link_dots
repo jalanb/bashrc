@@ -14,8 +14,8 @@ check_jab ()
 
 link ()
 {
-    source="$1"
-    destination="$2"
+    destination="$1"
+    source="$2"
     if [[ -e "$destination" ]]
     then rm -rf "$destination"
     fi
@@ -25,20 +25,21 @@ link ()
 main ()
 {
     cd $HOME
+    link ~/.editrc ~/.jab/etc/editrc
+    link ~/.dir_colors ~/.jab/etc/dir_colors
+    link ~/.ackrc ~/.jab/etc/ackrc
+    link ~/.inputrc ~/.jab/etc/inputrc
+    link ~/.gitignore_global ~/.jab/etc/gitignore_global
+    link ~/.sackrc ~/.jab/etc/sackrc
+    link ~/.pylintrc ~/.jab/etc/pylintrc
+    link ~/.vimrc ~/.jab/vim/vimrc
+    link ~/.vimpagerrc ~/.jab/vim/vimpagerrc
+    link ~/.vim ~/.jab/vim
+    link ~/.ipython ~/.jab/ipython/
+    link ~/.pythonrc.py ~/.jab/src/python/pythonrc.py
+    link ~/.tmux.conf .jab/etc/tmux
+    link ~/.gvimrc ~/.jab/vim/gvimrc
 
-    link  etc/ackrc            .ackrc
-    link  etc/dir_colors       .dir_colors
-    link  etc/editrc           .editrc
-    link  etc/gitignore_global .gitignore_global
-    link  etc/inputrc          .inputrc
-    link  etc/pylintrc         .pylintrc
-    link  etc/sackrc           .sackrc
-    link  etc/vimpagerrc       .vimpagerrc
-
-    link  src/python/pythonrc.py   .pythonrc.py
-
-    link  vim                  .vim
-    link  vim/vimrc            .vimrc
 }
 
 check_jab
