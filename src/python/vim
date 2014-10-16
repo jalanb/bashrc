@@ -1,5 +1,5 @@
 #! /usr/bin/env python2
-"""Script to """
+"""Script to provide entry to the vim script"""
 
 from __future__ import print_function
 import os
@@ -9,6 +9,9 @@ from bdb import BdbQuit
 
 
 __version__ = '0.1.0'
+
+
+from vim_script import vim_main
 
 
 class ScriptError(NotImplementedError):
@@ -41,8 +44,8 @@ def Use_debugger(_args):
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('items', metavar='items', type=str, nargs='+',
-                        help='some items')
+    parser.add_argument('files', metavar='files', type=str, nargs='+',
+                        help='files to edit')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
@@ -52,15 +55,25 @@ def parse_args(methods):
     return args
 
 
-def script(args):
-    raise ScriptError(repr(args))
+def strip_uv(args):
+    result = []
+    for arg in args:
+        if arg in ['--Use_debugger', '--version']:
+            continue
+        if arg[0] == '-':
+            arg = ''.join([c for c in arg if c not in 'vU'])
+            if arg == '-':
+                continue
+        result.append(arg)
+    return result
 
 
 def main():
     """Run the script"""
     try:
-        args = parse_args(locals())
-        return os.EX_OK if script(args) else not os.EX_OK
+        parse_args(globals())
+        args = strip_uv(sys.argv[1:])
+        return vim_main(args)
     except (SystemExit, BdbQuit):
         pass
     except Exception, e:  # pylint: disable=broad-except

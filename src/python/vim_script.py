@@ -3,12 +3,13 @@
 
 import os
 import re
-import bdb
 import sys
 from fnmatch import fnmatch
 import commands
-import itertools
 import tempfile
+
+
+import script_paths
 
 
 def path_to_editor():
@@ -300,7 +301,6 @@ def vimming(path_to_file):
     if not pid:
         return False
     files = vimming_files(pid, arg_string)
-    print pid, arg_string, files
     return real_path(os.getcwd(), path_to_file) in files
 
 
@@ -331,58 +331,11 @@ def separate_options(strings):
     return result
 
 
-def start_debugging():
-    try:
-        import pudb as pdb
-    except ImportError:
-        import pdb
-    pdb.set_trace()
-
-
-def find_abbreviations(args):
-    hub = os.environ['GITHUB_SOURCES']
-    jab_python = os.environ['JAB_PYTHON']
-    jab_todo = os.environ['JAB_TODO']
-    abbreviations = {
-        'jpm': [
-            os.path.join(hub, 'jpm/jpm/jpm.py'),
-            os.path.join(hub, 'jpm/bin/jpm')],
-        'kd':  [
-            os.path.join(hub, 'kd/kd.py'),
-            os.path.expanduser('~/.config/kd')],
-        'rf': [
-            os.path.join(jab_python, 'rf.py'),
-            os.path.expanduser('~/.config/rf/config')],
-        'what': [
-            os.path.join(hub, 'what/what.sh'),
-            os.path.join(hub, 'what/what.py')],
-        'v': [
-            os.path.join(jab_python, 'vim.py')],
-        '2': [
-            os.path.join(jab_python, 'todo.py'),
-            jab_todo],
-        #'': [
-        #    os.path.join(hub, ''),],
-    }
-    aliases = {
-        'c': 'kd'
-    }
-    for key, value in aliases.items():
-        if key in args:
-            paths = abbreviations[value]
-            abbreviations.update({key: paths})
-    result = [abbreviations[a] for a in args if a in abbreviations]
-    return list(itertools.chain(*result))
-
-
 def interpret(args):
     """Interpret the args from a command line"""
     options, args = divide(args, is_option)
     options = separate_options(options)
-    if 'U' in options:
-        options.remove('U')
-        start_debugging()
-    known_files = find_abbreviations(args)
+    known_files = script_paths.get(args)
     if known_files:
         return known_files, options
     files = [tab_complete(a) for a in args]
@@ -430,7 +383,7 @@ def vimmable_files(text_files, script):
     return result
 
 
-def main(args):
+def vim_main(args):
     script = VimBashScript()
     try:
         text_files, options = interpret(args)
@@ -449,10 +402,4 @@ def main(args):
     except (OSError, IOError), e:
         print >> sys.stderr, e
         return os.EX_IOERR
-    except bdb.BdbQuit:
-        pass
     return os.EX_OK
-
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:]))
