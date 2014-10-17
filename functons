@@ -51,7 +51,7 @@ p ()
 
 v ()
 {
-    if script=$(python2.7 $JAB_PYTHON/vim.py "$@")
+    if script=$(python2.7 $JAB_PYTHON/vim "$@")
     then bash $script
     fi
 }
@@ -121,10 +121,10 @@ gf ()
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
-gr ()                                                                                                                                                                        
+gr ()
 {
     first_dir "$@" && shift
-    sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file 
+    sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file
 }
 
 fc ()
@@ -316,30 +316,39 @@ pi ()
 
 py ()
 {
+    set -x
     if [[ -z "$@" ]]
     then
         python2.7
     else
-        script=${1/%./.py}
-        shift
-        python2.7 $script "$@"
+        args=${*/-U}
+        script=$(python2.7 $JAB_PYTHON/scripts.py -m $args)
+        if [[ -z $script ]]
+        then
+            script=${1/%./.py}
+            shift
+        fi
+        echo python2.7 $script "$@"
     fi
+    set +x
 }
 
 ra ()
 {
-    run_as abrogan "$@"
-}
-
-rb ()
-{
-    echo "Welcome to moon"
+    range "$@"
 }
 
 rf ()
 {
     PYTHON_SCRIPT=$JAB_PYTHON/rf.py
     python $PYTHON_SCRIPT "$@"
+}
+
+rj ()
+{
+    pushd $JAB
+    range "$@"
+    popd >/dev/null 2>&1
 }
 
 rt ()
@@ -671,35 +680,41 @@ num ()
     v $JAB/local/numbers.txt
 }
 
-poi ()
+pyi ()
 {
-    local path_to_pym=$GITHUB_SOURCES/pym
-    #readlink -f $path_to_pym
-    cd $path_to_pym
-    add_to_a_path PATH $path_to_pym/bin
-    add_to_a_path PYTHONPATH $path_to_pym/pym
-    2
-    3y -L 2 --noreport pym | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
-    echo
-    ls *.py
-    echo
-    local _status=$(git status -s)
-    if [[ -n $_status ]]
-    then
-        echo -n "\$ git status -s: "
-        git status -s
-    fi
-    # source /home/alanb/.virtualenvs/pym/bin/activate
+    cd $GITHUB_SOURCES/pym
+    add_to_a_path PATH ./bin
+    add_to_a_path PYTHONPATH ./pym
+    source ~/.virtualenvs/pym/bin/activate
+    set -x
     if [[ -n $* ]]
     then
         if first_dir "$@"
         then
             shift
             cd $dir
-        else
-            "$@"
         fi
     fi
+    #clear
+    pwd
+    set +x
+    return
+    2
+    local _status=$(git status -s)
+    if [[ -n $_status ]]
+    then
+        echo -n "\$ git status -s: "
+        git status -s
+    else
+        3y -L 2 --noreport pym | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
+        echo
+        if [[ -n $(ls *.py 2>/dev/null) ]]
+        then ls *.py
+        else ls
+        fi
+        echo
+    fi
+    [[ -n $* ]] && "$@"
 }
 
 ps3 ()
@@ -799,6 +814,12 @@ vvp ()
 vvy ()
 {
     vvf python/jab.vim
+}
+
+vvv ()
+{
+    set +x
+    v v "$@"
 }
 
 vtr ()
@@ -953,6 +974,7 @@ range ()
         echo "ranger $destination"
     fi
     ranger "$destination"
+    console_whoami
     return 0
 }
 
@@ -992,7 +1014,8 @@ run_as ()
 
 pylinum ()
 {
-    pylint --help-msg $1 | head -n 1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/"
+    local string=$(pylint --help-msg $1 | head -n 1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
+    [[ $string != "# pylint: disable=No" ]] && echo $string
 }
 
 # xxxxxxxx
@@ -1059,6 +1082,11 @@ todo_show ()
 }
 
 # xxxxxxxxxx
+
+jab_scripts()
+{
+    python $JAB_PYTHON/scripts.py "$@"
+}
 
 vim_diff ()
 {
