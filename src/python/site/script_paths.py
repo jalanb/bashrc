@@ -13,30 +13,36 @@ def get(strings):
     jab_todo = paths.environ_path('JAB_TODO')
     config = paths.makepath('~/.config')
     abbreviations = {
-        'jpm': [hub / 'jpm/jpm/jpm.py',
-                hub / 'jpm/bin/jpm'],
-        'kd':  [hub / 'kd/kd.py',
-                config / 'kd'],
-        'rf': [jab_python / 'rf.py',
-               config / 'rf/config'],
-        'main': [hub / 'main.py'],
-        'what': [hub / 'what/what.sh',
-                 hub / 'what/what.py'],
-        'scripts': [jab_python / 'scripts.py',
-                    jab_python / 'site/script_paths.py'],
-        'v': [jab_python / 'vim',
-              jab_python / 'vim_script.py'],
-        '2': [jab_python / 'todo.py',
-              jab_todo],
-        #'': [
-        #    hub / '',],
+        '2': [
+            jab_todo,
+            jab_python / 'todo.py',
+        ], 'scripts': [
+            jab_python / 'site/script_paths.py',
+            jab_python / 'scripts.py',
+        ], 'v': [
+            jab_python / 'vim',
+            jab_python / 'vim_script.py',
+        ], 'rf': [
+            jab_python / 'rf.py',
+            config / 'rf/config',
+        ], 'jpm': [
+            hub / 'jpm/jpm/jpm.py',
+            hub / 'jpm/bin/jpm',
+        ], 'kd':  [
+            hub / 'kd/kd.py',
+            config / 'kd',
+        ], 'main': [
+            hub / 'main.py',
+        ], 'paths': [
+            hub / 'dotsite/dotsite/paths.py',
+        ], 'what': [
+            hub / 'what/what.sh',
+            hub / 'what/what.py',
+        ],
+        #], '': [
+        #    hub / '',
+        #],
     }
-    aliases = {
-        'c': 'kd'
-    }
-    for key, value in aliases.items():
-        if key in strings:
-            abbreviated_paths = abbreviations[value]
-            abbreviations.update({key: abbreviated_paths})
-    result = [abbreviations[s] for s in strings if s in abbreviations]
-    return list(itertools.chain(*result))
+    return list(
+        itertools.chain(
+            *[abbreviations[s] for s in strings if s in abbreviations]))
