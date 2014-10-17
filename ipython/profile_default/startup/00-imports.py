@@ -2,17 +2,17 @@
 
 # pylint: disable-msg=W0611
 
-import this
-print
+# import this
+# print
 
 import os
 import re
 import sys
-print 'import os, re, sys'
+from dotsite import paths
+print 'import os, re, sys, paths'
 
 from path import path
-from dotsite.paths import makepath
-print 'from dotsite.paths import path, makepath'
+print 'from path import path'
 from see import see
 from see import see_attributes
 from see import see_methods
