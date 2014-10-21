@@ -794,6 +794,11 @@ vff ()
     $($PYTHON $JAB_PYTHON/vff.py "$@")
 }
 
+vpe ()
+{
+    _edit_jab python-environ
+}
+
 vvb ()
 {
     vvf sh.vim
