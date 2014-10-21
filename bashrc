@@ -27,7 +27,7 @@ _show_changes ()
     if [[ -d $JAB/.svn ]]
     then svn stat $JAB
     elif [[ -d $JAB/.git ]]
-    then git status $JAB | \
+    then git -C $JAB status | \
         grep -v "nothing to commit, working directory clean" | \
         sed -e s:Your.branch:\$JAB: | \
         grep --color 'up-to-date.*'
