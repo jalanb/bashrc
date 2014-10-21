@@ -444,7 +444,6 @@ vf ()
 vh ()
 {
     HISTTIMEFORMAT= history | sed -e "s/^[0-9]*  //" | vim - +
-    console_whoami
 }
 
 vp ()

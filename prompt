@@ -85,6 +85,7 @@ if [[ $PROMPT_COMMAND == off ]]
 then
     unset PROMPT_COMMAND
     source $GITHUB_SOURCES/liquidprompt/liquidprompt
+    PROMPT_COMMAND="$PROMPT_COMMAND; console_whoami 2>/dev/null"
 else
     if [[ -n "$MYVIMRC" ]]
     then
