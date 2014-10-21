@@ -316,21 +316,24 @@ pi ()
 
 py ()
 {
-    set -x
     if [[ -z "$@" ]]
     then
         python2.7
     else
         args=${*/-U}
-        script=$(python2.7 $JAB_PYTHON/scripts.py -m $args)
-        if [[ -z $script ]]
+        script=$(python2.7 $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
+        if [[ $? == 0 ]]
         then
-            script=${1/%./.py}
-            shift
+            if [[ -z $script ]]
+            then
+                script=${1/%./.py}
+                shift
+            fi
+            python2.7 $script "$@"
+        else
+            python2.7 "$@"
         fi
-        echo python2.7 $script "$@"
     fi
-    set +x
 }
 
 ra ()
