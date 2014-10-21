@@ -31,12 +31,64 @@ Examples of use:
 """
 
 
+from __future__ import print_function
 import os
 import sys
-import docopt
+import argparse
+from bdb import BdbQuit
 
 
 __version__ = '0.1.0'
+
+
+class ScriptError(NotImplementedError):
+    pass
+
+
+def run_args(args, methods):
+    """Run any methods eponymous with args"""
+    if not args:
+        return False
+    valuable_args = {k for k, v in args.__dict__.items() if v}
+    arg_methods = {methods[a] for a in valuable_args if a in methods}
+    for method in arg_methods:
+        method(args)
+
+
+def version(args):
+    print('%s %s' % (args, __version__))
+    raise SystemExit
+
+
+def Use_debugger(_args):
+    try:
+        import pudb as pdb
+    except ImportError:
+        import pdb
+    pdb.set_trace()
+
+
+def parse_args(methods):
+    """Parse out command line arguments"""
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument('symbol', help='The bash symbol to be changed')
+    parser.add_argument('path', help='The path to be added')
+    parser.add_argument('-s', '--start', action='store_true',
+                        help='Add the path at start of list of paths')
+    parser.add_argument('-i', '--index', type=int,
+                        help='Specify the index at which the path will be inserted')
+    parser.add_argument('-v', '--version', action='store_true',
+                        help='Show version')
+    parser.add_argument('-U', '--Use_debugger', action='store_true',
+                        help='Run the script with pdb (or pudb if available)')
+    args = parser.parse_args()
+    if not args.index:
+        if args.start:
+            args.index = 0
+        else:
+            args.index = False
+    run_args(args, methods)
+    return args
 
 
 def add_path_to_paths(paths, path, i):
@@ -49,7 +101,7 @@ def add_path_to_paths(paths, path, i):
 
 
 def arg_path(args):
-    path = args['PATH']
+    path = args.path
     if not path:
         return None
     user_path = os.path.expanduser(path)
@@ -65,54 +117,41 @@ def split_paths(string):
 
 
 def get_paths(args):
-    path_string = args['PATHS']
+    path_string = args.symbol
     if os.path.pathsep not in path_string and path_string in os.environ:
         return os.environ[path_string]
     return path_string
 
 
-def add_path_to_path_string(args):
+def script(args):
     path = arg_path(args)
     path_string = get_paths(args)
     if not path:
-        return path_string
+        print(path_string)
+        return True
     paths = []
-    index = args['--index']
+    index = args.index
     paths = split_paths(path_string)
     if os.path.isdir(path):
-        paths = add_path_to_paths(paths, path, index)
-    return os.path.pathsep.join(paths)
-
-
-def parse_args():
-    args = docopt.docopt(__doc__, version = __version__)
-    if args.get('--use_debugger', False):
-        try:
-            import pudb as pdb
-        except ImportError:
-            import pdb
-        pdb.set_trace()
-    index = args.get('--index', '')
-    if not index:
-        if args['--start']:
-            i = 0
-        else:
-            i = False
-    else:
-        if args['--start']:
-            i = 0
-        else:
-            try:
-                i = int(index)
-            except ValueError:
-                raise UsageError('--index should use a number, not %r' % index)
-    args['--index'] = i
-    return args
+        paths = add_path_to_paths(paths, path, args.index)
+    print(os.path.pathsep.join(paths))
+    return True
 
 
 def main():
-    args = parse_args()
-    print add_path_to_path_string(args)
+    """Run the script"""
+    try:
+        args = parse_args(globals())
+        return os.EX_OK if script(args) else not os.EX_OK
+    except (SystemExit, BdbQuit):
+        pass
+    except Exception, e:  # pylint: disable=broad-except
+        if __version__[0] < '1':
+            raise
+        print(e, sys.stderr)
+        return not os.EX_OK
+    return os.EX_OK
+
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
