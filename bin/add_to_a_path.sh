@@ -37,7 +37,7 @@ add_to_a_path ()
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
-        eval $1=$(PYTHONPATH=$JAB_PYTHON/site $PYTHON $JAB_PYTHON/add_to_a_path.py "$@")
+        eval $1=$(python $JAB_PYTHON/add_to_a_path.py "$@")
         export $1
     fi
 }
