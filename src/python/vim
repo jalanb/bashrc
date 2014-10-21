@@ -74,8 +74,10 @@ def main():
         parse_args(globals())
         args = strip_uv(sys.argv[1:])
         return vim_main(args)
-    except (SystemExit, BdbQuit):
+    except BdbQuit:
         pass
+    except SystemExit as e:
+        return e.code
     except Exception, e:  # pylint: disable=broad-except
         if __version__[0] < '1':
             raise

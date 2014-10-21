@@ -87,8 +87,10 @@ def main():
     try:
         args = parse_args(globals())
         return os.EX_OK if script(args) else not os.EX_OK
-    except (SystemExit, BdbQuit):
+    except BdbQuit:
         pass
+    except SystemExit as e:
+        return e.code
     except Exception, e:  # pylint: disable=broad-except
         if __version__[0] < '1':
             raise

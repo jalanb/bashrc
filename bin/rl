@@ -49,9 +49,11 @@ def main():
     try:
         args = parse_args()
         recursively_list(args)
-    except (SystemExit, BdbQuit):
+    except BdbQuit:
         pass
-    except Exception, e:
+    except SystemExit as e:
+        return e.code
+    except Exception, e:  # pylint: disable=broad-except
         print >> sys.stderr, e
         return not os.EX_OK
     return os.EX_OK
