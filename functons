@@ -52,7 +52,9 @@ p ()
 v ()
 {
     if script=$(python2.7 $JAB_PYTHON/vim "$@")
-    then bash $script
+    then
+        [[ -n $script ]] && bash $script
+    else echo Error while writing $script
     fi
 }
 
