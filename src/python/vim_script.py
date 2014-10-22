@@ -184,8 +184,8 @@ def missing_extension(string):
 
 
 def extend(string):
-    known_extensions = ['py', 'sh', 'c', 'cpp', ]
-    for extension in known_extensions:
+    source_code_extensions = ['py', 'sh', 'c', 'cpp', ]
+    for extension in source_code_extensions:
         extended_string = '%s%s' % (string, extension)
         yield extended_string
 
@@ -223,6 +223,11 @@ def textify(path_to_file):
     return path_to_file
 
 
+def realify(path_to_file):
+    """Get the real path to the source text file"""
+    return os.path.realpath(textify(path_to_file))
+
+
 def get_globs(directory, glob):
     """A list of any files matching that glob in that directory"""
     if directory == '':
@@ -255,30 +260,40 @@ def real_path(path_to_directory, path_to_file):
     return os.path.realpath(full_path)
 
 
-def vimming_files(pid, arg_string):
-    """The files in that arg_string for that process"""
-    args = arg_string.split()
-    _vim_command, vim_args = args[0], args[1:]
-    working_dir = process_cwd(pid)
+def vimming_files(processes):
+    """The files in that arg_string for those processes"""
     result = []
-    for vim_arg in vim_args:
-        if not is_option(vim_arg):
-            result.append(real_path(working_dir, vim_arg))
+    for pid, arg_string in processes:
+        args = arg_string.split()
+        _vim_command, vim_args = args[0], args[1:]
+        working_dir = process_cwd(pid)
+        for vim_arg in vim_args:
+            if not is_option(vim_arg):
+                result.append((pid, real_path(working_dir, vim_arg)))
     return result
 
 
-def find_vimming_process_command(filename):
+def find_vimming_process_command(path_to_file):
     """Make a command to look for a vim command in processes
 
     Pipe together commands to:
         Get pid and args of all commands
         Remove processes for grep and this script
+            (unless path_to_file is this script)
         Find a vim command for that fileanme
     """
-    get_pids = 'ps -o pid,args'
-    remove_knowns = 'grep -v -e grep -e "%s"' % textify(__file__)
-    find_file = 'grep "vim.*\\s.*%s"' % filename
+    path_to_file = realify(path_to_file)
+    main_script = realify(sys.argv[0])
+    this_script = realify(__file__)
+    remove_knowns = ['grep -v -e grep']
+    if path_to_file != main_script:
+        remove_knowns.append(main_script)
+    if path_to_file != this_script:
+        remove_knowns.append(this_script)
+    remove_knowns = ' -e '.join(remove_knowns)
+    find_file = 'grep "vim.*\\s.*%s"' % os.path.basename(path_to_file)
     pipe = ' | '
+    get_pids = 'ps -e -o pid,comm,args'
     return pipe.join([get_pids, remove_knowns, find_file])
 
 
@@ -286,22 +301,31 @@ def vimming_process(path_to_file):
     """Search for vim editting that file with the ps command"""
     filename = escape_quotes(os.path.basename(path_to_file))
     if not filename:
-        return None, None
-    command = find_vimming_process_command(filename)
+        return []
+    command = find_vimming_process_command(path_to_file)
     output = commands.getoutput(command)
     if not output:
-        return None, None
-    pid, arg_string = output.split(' ', 1)
-    return pid, arg_string
+        return []
+    result = []
+    for line in output.splitlines():
+        pid, command, arg_string = line.split(' ', 2)
+        if 'vim' not in command:
+            continue
+        arg_string = arg_string.strip()
+        result.append((pid, arg_string))
+    return result
 
 
 def vimming(path_to_file):
     """Whether vim is currently editting that file"""
-    pid, arg_string = vimming_process(path_to_file)
-    if not pid:
-        return False
-    files = vimming_files(pid, arg_string)
-    return real_path(os.getcwd(), path_to_file) in files
+    processes = vimming_process(path_to_file)
+    if not processes:
+        return []
+    pids_and_files = vimming_files(processes)
+    if not pids_and_files:
+        return []
+    real_path_to_file = real_path(os.getcwd(), path_to_file)
+    return [p for p, f in pids_and_files if f == real_path_to_file]
 
 
 def has_swap_file(path_to_file):
@@ -372,8 +396,10 @@ def recover_old_swaps(text_file, swaps, script):
 def vimmable_files(text_files, script):
     result = []
     for text_file in text_files:
-        if vimming(text_file):
-            script.add('echo "A vim process is running for %s"' % text_file)
+        pids = vimming(text_file)
+        if pids:
+            echo = 'echo "A vim process (%s) is running for %s"'
+            _ = [script.add(echo % (pid, text_file)) for pid in pids]
             continue
         swaps = get_swap_files(text_file)
         if any(swaps):
@@ -399,6 +425,9 @@ def vim_main(args):
             command = _main_command('post_vimming', vim_files, [])
             script.add(command)
             print script.write()
+        else:
+            print script.write()
+            return not os.EX_OK
     except (OSError, IOError), e:
         print >> sys.stderr, e
         return os.EX_IOERR
