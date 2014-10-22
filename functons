@@ -51,10 +51,34 @@ p ()
 
 v ()
 {
-    if script=$(python2.7 $JAB_PYTHON/vim "$@")
+    if [[ -z $* ]]
     then
-        [[ -n $script ]] && bash $script
-    else echo Error while writing $script
+        $EDITOR
+    else
+        script=$(python2.7 $JAB_PYTHON/vim "$@")
+        status=$?
+        if [[ $status == 0 ]]
+        then
+            if [[ -n $script ]]
+            then
+                bash $script
+            else
+                echo No script produced, please try
+                echo python2.7 $JAB_PYTHON/vim -U "$@"
+            fi
+        else
+            echo Python error: $status
+            if [[ -n $script ]]
+            then
+                echo Script produced you could run it with
+                echo "  bash $script"
+                echo or debug the problem with
+                echo "  python2.7 $JAB_PYTHON/vim -U" "$@"
+            else
+                echo No script produced please try
+                echo python2.7 $JAB_PYTHON/vim -U "$@"
+            fi
+        fi
     fi
 }
 
