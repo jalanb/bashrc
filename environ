@@ -3,6 +3,7 @@
 export JAB=${JAB:-$HOME/.jab}
 [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 
+export LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH
 export COLUMNS
 
 export EXITSTATUS="$?"
@@ -79,6 +80,7 @@ add_to_a_path PATH /usr/local/sbin
 add_to_a_path PATH ~/git/bin
 add_to_a_path PATH /opt/local/bin
 add_to_a_path PATH /sbin 
+
 
 export PS1
 
