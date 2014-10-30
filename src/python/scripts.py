@@ -68,6 +68,7 @@ def lines(path_to_item):
 
 def script(args):
     paths_to_items = script_paths.get(args.keys)
+    result = False
     for path_to_item in paths_to_items:
         if args.python:
             if path_to_item.ext != '.py':
@@ -80,6 +81,8 @@ def script(args):
             else:
                 continue
         print(path_to_item)
+        result = True
+    return result
 
 
 def main():
