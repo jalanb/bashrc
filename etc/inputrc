@@ -50,6 +50,7 @@ Control-g: " | grep --color "
 #
 # Function keys
 #
-"\e[24~": "!$"
+# <F12>
+"\e[24~": "!$\r\e0"
 
 $endif
