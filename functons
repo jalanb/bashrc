@@ -355,7 +355,7 @@ py ()
                 script=${1/%./.py}
                 shift
             fi
-            python2.7 $script "$@"
+            python2.7 $script $*
         else
             python2.7 "$@"
         fi
@@ -729,6 +729,7 @@ pyi ()
         fi
     fi
     2
+    pwd
     local _status=$(git status -s)
     if [[ -n $_status ]]
     then
@@ -863,8 +864,7 @@ vvy ()
 
 vvv ()
 {
-    set +x
-    v v "$@"
+    v ~/.vim
 }
 
 vtr ()
