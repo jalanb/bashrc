@@ -47,6 +47,8 @@ $if Bash
 
 Control-g: " | grep --color "
 
+# Comment key
+"#": "!!\r\e0"
 #
 # Function keys
 #
