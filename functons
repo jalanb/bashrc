@@ -482,6 +482,11 @@ vv ()
     [[ -n $* ]] && vim $JAB/vim/$1 || v ~/.vimrc
 }
 
+vy ()
+{
+    v *.py
+}
+
 xe()
 {
     local amount=$1
@@ -711,11 +716,10 @@ num ()
 
 pyi ()
 {
-    cd $GITHUB_SOURCES/pym
+    cd $GITHUB_SOURCES/pym/pym
     add_to_a_path PATH ./bin
     add_to_a_path PYTHONPATH ./pym
     source ~/.virtualenvs/pym/bin/activate
-    set -x
     if [[ -n $* ]]
     then
         if first_dir "$@"
@@ -724,10 +728,6 @@ pyi ()
             cd $dir
         fi
     fi
-    #clear
-    pwd
-    set +x
-    return
     2
     local _status=$(git status -s)
     if [[ -n $_status ]]
@@ -735,10 +735,21 @@ pyi ()
         echo -n "\$ git status -s: "
         git status -s
     else
-        3y -L 2 --noreport pym | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
+        local has_dirs=
+        for item in $(ls)
+        do
+            if [[ -d $item ]]
+            then
+                has_dirs=1
+                break
+            fi
+        done
+        if [[ $has_dirs == 1 ]]
+        then 3y -L 2 --noreport . | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
+        fi
         echo
         if [[ -n $(ls *.py 2>/dev/null) ]]
-        then ls *.py
+        then ly -q
         else ls
         fi
         echo
