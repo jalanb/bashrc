@@ -65,6 +65,11 @@ gpp ()
     git push
 }
 
+grs ()
+{
+    git rerere status
+}
+
 # xxxx
 # xxxxx
 # xxxxxx
