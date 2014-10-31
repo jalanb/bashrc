@@ -1,13 +1,8 @@
 [user]
     name = J Alan Brogan
     email = github@al-got-rhythm.net
-[github]
-    user = jalanb
-[pager]
-    diff =
-[core]
-    editor = vim
-    excludesfile = ~/.gitignore_global
+[credential]
+    helper = store
 [alias]
     br = branch
     ci = commit
@@ -16,10 +11,11 @@
     dump = cat-file -p
     dv = difftool -y --extcmd=\"vim -d -O\"
     dw = diff --word-diff
+    dr = rerere diff
     dy = difftool -y --extcmd=\"$JAB/bin/pydiff\"
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
-    lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --abbrev-commit --date=relative
     mo = merge origin/master
     pr = pull --rebase
     pu = push
@@ -33,5 +29,12 @@
     ui = auto
 [help]
     autocorrect = 1
-[credential]
-    helper = store
+[github]
+    user = jalanb
+[pager]
+    diff =
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore_global
+[rerere]
+	enabled = true
