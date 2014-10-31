@@ -788,6 +788,11 @@ rqa ()
     /bin/rm -rf ./* ./.* 2>&1 | grep -v 'cannot remove directory: `\./\.'
 }
 
+sib ()
+{
+    source_file ~/.bashrc
+}
+
 tmp ()
 {
     pushd $(python $GITHUB_SOURCES/kd/kd.py ~/tmp "$@")
@@ -804,7 +809,6 @@ try ()
 vib ()
 {
     $EDITOR ~/.bashrc
-    source_file ~/.bashrc
 }
 
 vla ()

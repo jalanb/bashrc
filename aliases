@@ -112,8 +112,6 @@ alias lsh="ls *.sh"
 
 alias out="to_release"
 
-alias sib=". ~/.bashrc"
-
 alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
 alias slf="source $JAB/local/functons"
