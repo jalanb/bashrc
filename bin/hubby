@@ -48,7 +48,7 @@ _show_dir ()
         if [[ ! -f $path/.hubignore ]]
         then _show_status $path
         fi
-    else echo Path has no git repo: $path
+    else echo Path has no git repo: $path >&2
     fi
 }
 
