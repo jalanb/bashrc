@@ -6,4 +6,5 @@
 --type-set=html=.html,.js
 --type-set=erl=.erl,.hrl,.app
 --type-set=snmp=.mib,.funcs
+--type-set=log=.log
 --ignore-dir=.idea
