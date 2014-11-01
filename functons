@@ -501,7 +501,7 @@ vv ()
 
 vy ()
 {
-    v *.py
+    v $(ls *.py | grep -v __*.py*)
 }
 
 xe ()
