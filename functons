@@ -504,7 +504,7 @@ vy ()
     v *.py
 }
 
-xe()
+xe ()
 {
     local amount=$1
     local from=USD
