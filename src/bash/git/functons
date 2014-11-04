@@ -40,12 +40,17 @@ gs ()
 
 gaa ()
 {
-    git add .
+    ga .
 }
 
 gac ()
 {
-    git add . ; gc "$@"
+    ga . ; gc "$@"
+}
+
+gai ()
+{
+    ga --interactive "$@"
 }
 
 gcj ()
@@ -81,6 +86,12 @@ grs ()
 }
 
 # xxxx
+
+gaic ()
+{
+    gai .; gc "$@"
+}
+
 # xxxxx
 # xxxxxx
 # xxxxxxx
