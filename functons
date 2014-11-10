@@ -363,18 +363,24 @@ py ()
     then
         python2.7
     else
-        args=${*/-U}
-        script=$(python2.7 $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
-        if [[ $? == 0 ]]
-        then
-            if [[ -z $script ]]
-            then
-                script=${1/%./.py}
-                shift
-            fi
-            python2.7 $script $*
+        all_args="$*"
+        if [[ "$all_args" =~ "--help" || "$all_args" =~ "-h" ]]
+        then python2.7 "$@"
+        elif [[ "$all_args" =~ "-U" ]]
+        then python2.7 "$@"
         else
-            python2.7 "$@"
+            script=$(python2.7 $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
+            if [[ $? == 0 ]]
+            then
+                if [[ -z $script ]]
+                then
+                    script=${1/%./.py}
+                    shift
+                fi
+                python2.7 $script $*
+            else
+                python2.7 "$@"
+            fi
         fi
     fi
 }
@@ -395,6 +401,11 @@ rj ()
     pushd $JAB
     range "$@"
     popd >/dev/null 2>&1
+}
+
+rr ()
+{
+    ra ~
 }
 
 rt ()
@@ -533,6 +544,11 @@ cff ()
     cd fred
 }
 
+
+cjy ()
+{
+    kd $JAB_PYTHON "$@"
+}
 
 clo ()
 {
@@ -766,12 +782,13 @@ pyi ()
         then 3y -L 2 --noreport . | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
         fi
         echo
-        if [[ -n $(ls *.py 2>/dev/null) ]]
-        then ly -q
-        else ls
-        fi
-        echo
     fi
+    if [[ -n $(ls *.py | grep -v __init__.py 2>/dev/null) ]]
+    then ly -q
+    elif [[ -n $(ls * | grep -v __init__.py) ]]
+    then ls
+    fi
+    echo
     [[ -n $* ]] && "$@"
 }
 
@@ -1039,7 +1056,8 @@ range ()
     then
         echo "ranger $destination"
     fi
-    ranger "$destination"
+    cd "$destination"
+    source $(which ranger) $(which ranger)
     console_whoami
     return 0
 }
