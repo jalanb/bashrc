@@ -53,7 +53,7 @@ def parse_args(methods):
 
 
 def script(args):
-    raise ScriptError(repr(args))
+    raise ScriptError(repr(args.items))
 
 
 def main():
