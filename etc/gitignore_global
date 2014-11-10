@@ -37,6 +37,7 @@
 *.kate-swp
 *.part
 *.pyproj
+[a-z.]*-[a-z.]*.html
 #
 # Developers' data
 *.log
