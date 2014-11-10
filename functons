@@ -1056,7 +1056,7 @@ range ()
     then
         echo "ranger $destination"
     fi
-    cd "$destination"
+    pushd "$destination"
     source $(which ranger) $(which ranger)
     console_whoami
     return 0
