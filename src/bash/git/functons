@@ -26,6 +26,11 @@ gc ()
 	fi
 }
 
+gd ()
+{
+    git diff "$@"
+}
+
 gs ()
 {
 	do_git_status "$@"
@@ -52,6 +57,11 @@ gcj ()
         python -c "print '$GIT commit -m\"$*\"'" > /tmp/fred.sh
         bash /tmp/fred.sh
 	fi
+}
+
+gdv ()
+{
+    git dv "$@"
 }
 
 ghi ()
