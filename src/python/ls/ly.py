@@ -13,13 +13,14 @@ except NameError:
 
 def _post_parse(options, args):
     wanted = {
-        'tests' : ['.test', '.tests'],
-        'compiled' : ['.pyc', '.pyo'],
-        'grammar' : ['.g', '.j'],
-        'fails' : ['.fail'],
+        'tests': ['.test', '.tests'],
+        'compiled': ['.pyc', '.pyo'],
+        'grammar': ['.g', '.j'],
+        'fails': ['.fail'],
     }
     options.exts = ['.py', ]
     options.wanted = ['.py', ]
+    options.unwanted = [options.ignore]
     for k, v in options.__dict__.iteritems():
         try:
             if v:
@@ -29,11 +30,13 @@ def _post_parse(options, args):
             pass
     return options, args
 
+
 def prepare_argv():
     argv.post_parses.append(_post_parse)
     argv.add_options([
         ('all', 'show all python related files', False),
         ('compiled', 'show compiled python', False),
+        ('ignore', 'remove this path', '__init__.py'),
         ('fails', 'show fails', False),
         ('grammar', 'show grammars', False),
         ('others', 'show non python related files as well', False),
@@ -43,6 +46,8 @@ def prepare_argv():
 
 
 def _python_wanted(path_to_file):
+    if path_to_file.name in argv.options.unwanted:
+        return False
     ext = path_to_file.ext
     if ext == '.py':
         return not argv.options.ython
@@ -67,6 +72,13 @@ def _filter_names(names):
         del names[key]
 
 
+def as_items(item):
+    try:
+        return [item] if item.isalpha else []
+    except AttributeError:
+        return []
+
+
 def ly_rules(things):
     try:
         exts = [f.ext for f in things]
@@ -76,9 +88,8 @@ def ly_rules(things):
             if exts[0].endswith('.py'):
                 exts[0] = '.py'
         else:
-            if type(things) == type(''):
-                things = [things]
-            exts = [path.path(f).ext for f in things]
+            items = as_items(things)
+            exts = [path.path(t).ext for t in items]
     python_present = '.py' in exts or 'py' in exts
     hide_python = argv.options.ython
     if hide_python:
@@ -98,8 +109,6 @@ def show():
         return
     lout.show_dirs(dirs)
     files = l.get_files(dirs)
-    if not argv.options.notice:
-        files = l.remove_ignored(files)
     names = l.get_names(files)
     if not names:
         return 0
@@ -119,4 +128,3 @@ def main():
 if __name__ == '__main__':
     prepare_argv()
     argv.main(main)
-
