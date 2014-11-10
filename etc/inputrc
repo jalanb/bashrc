@@ -53,6 +53,12 @@ Control-g: " | grep --color "
 # Function keys
 #
 # <F12>
-"\e[24~": "!$\r\e0"
+"\e[24~": "!$\r"
+
+# <Home>
+"\eOH": "!$\r\e0"
+# <End>
+"\eOF": "!$\r\e$"
+
 
 $endif
