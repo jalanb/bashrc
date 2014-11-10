@@ -958,7 +958,7 @@ SUDO ()
     me=$USER
     here=$(jostname)
     console_title_on "${you_sir}@${here}" && \
-        sudo -i $user && \
+        sudo -i $user bash && \
         console_title_off "${me}@${here}"
 }
 
