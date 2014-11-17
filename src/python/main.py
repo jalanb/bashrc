@@ -59,7 +59,7 @@ def script(args):
 def main():
     """Run the script"""
     try:
-        args = parse_args(locals())
+        args = parse_args(globals())
         return os.EX_OK if script(args) else not os.EX_OK
     except BdbQuit:
         pass
