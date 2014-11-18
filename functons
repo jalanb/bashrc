@@ -55,7 +55,7 @@ v ()
     then
         $EDITOR
     else
-        script=$(python2.7 $JAB_PYTHON/vim "$@")
+        script=$(mython $JAB_PYTHON/vim "$@")
         status=$?
         if [[ $status == 0 ]]
         then
@@ -64,7 +64,7 @@ v ()
                 bash $script
             else
                 echo No script produced, please try
-                echo python2.7 $JAB_PYTHON/vim -U "$@"
+                echo mython $JAB_PYTHON/vim -U "$@"
             fi
         else
             echo Python error: $status
@@ -73,10 +73,10 @@ v ()
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
-                echo "  python2.7 $JAB_PYTHON/vim -U" "$@"
+                echo "  mython $JAB_PYTHON/vim -U" "$@"
             else
                 echo No script produced please try
-                echo python2.7 $JAB_PYTHON/vim -U "$@"
+                echo mython $JAB_PYTHON/vim -U "$@"
             fi
         fi
     fi
@@ -361,15 +361,15 @@ py ()
 {
     if [[ -z "$@" ]]
     then
-        python2.7
+        mython
     else
         all_args="$*"
         if [[ "$all_args" =~ "--help" || "$all_args" =~ "-h" ]]
-        then python2.7 "$@"
+        then mython "$@"
         elif [[ "$all_args" =~ "-U" ]]
-        then python2.7 "$@"
+        then mython "$@"
         else
-            script=$(python2.7 $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
+            script=$(mython $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
             if [[ $? == 0 ]]
             then
                 if [[ -z $script ]]
@@ -377,9 +377,9 @@ py ()
                     script=${1/%./.py}
                     shift
                 fi
-                python2.7 $script $*
+                mython $script $*
             else
-                python2.7 "$@"
+                mython "$@"
             fi
         fi
     fi
@@ -410,7 +410,7 @@ rr ()
 
 rt ()
 {
-    $(python2.7 $JAB_PYTHON/remove_tarball.py "$@")
+    $(mython $JAB_PYTHON/remove_tarball.py "$@")
 }
 
 ru ()
@@ -1065,12 +1065,12 @@ range ()
 vfile ()
 {
     echo "I should've used vtr"
-    python2.7 $JAB_PYTHON/vfile.py "$@"
+    mython $JAB_PYTHON/vfile.py "$@"
 }
 
 ylint ()
 {
-    python2.7 /home/alanb/.jab/src/python/site/ylint.py "$@"
+    mython /home/alanb/.jab/src/python/site/ylint.py "$@"
 }
 
 # xxxxxx
@@ -1080,6 +1080,12 @@ please ()
     local last=$(history -p !-1)
     echo "sudo $last"
     sudo $last
+}
+
+mython ()
+{
+    local __doc__="use the python executable at $HOME"
+    ~/bin/python2.7 "$@"
 }
 
 run_as ()
@@ -1162,7 +1168,7 @@ todo_show ()
     elif [[ -f TODO.md ]]
     then todo_txt=TODO.md
     fi
-    python2.7 $JAB_PYTHON/todo.py $todo_txt
+    mython $JAB_PYTHON/todo.py $todo_txt
 }
 
 # xxxxxxxxxx

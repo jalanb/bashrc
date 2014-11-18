@@ -66,7 +66,6 @@ alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
 
 alias p-="echo $OLDPWD"
 alias pc="python -c"
-alias pp="p ~/jab/python/mython/mython/pp.py"
 alias pt="p $JAB_PYTHON/vim_traceback.py"
 
 alias r.="rm -rvf *"
