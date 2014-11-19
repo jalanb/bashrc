@@ -131,8 +131,6 @@ alias comp="source $JAB/company-environment"
 
 alias home="cd; cls"
 
-alias mine="sudo chown $(id -un):$(id -gn)"
-
 alias tags="p $JAB_PYTHON/ptags.py "
 
 

@@ -932,6 +932,11 @@ main ()
     [[ -n $* ]] && cp $JAB_PYTHON/main.py $1 || cp $JAB_PYTHON/main.py $dir
 }
 
+mine ()
+{
+    sudo chown $(id -un):$(id -gn) "$@"
+}
+
 mkcd ()
 {
     local __doc__='make a directory and start using it';
