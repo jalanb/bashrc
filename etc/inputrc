@@ -55,10 +55,17 @@ Control-g: " | grep --color "
 # <F12>
 "\e[24~": "!$\r"
 
-# <Home>
-"\eOH": "!$\r\e0"
-# <End>
-"\eOF": "!$\r\e$"
+set keymap vi-insert
+# <PageUp>
+"\e[5~": "\ek0"
+# <PageDown>
+"\e[6~": "\ej$"
+
+set keymap vi-command
+# <PageUp>
+"\e[5~": "k0"
+# <PageDown>
+"\e[6~": "j$"
 
 
 $endif
