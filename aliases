@@ -70,7 +70,6 @@ alias pt="p $JAB_PYTHON/vim_traceback.py"
 
 alias r.="rm -rvf *"
 alias rq="rm -rf "
-alias ry="rf -p"
 
 alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
