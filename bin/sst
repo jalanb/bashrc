@@ -59,7 +59,7 @@ main ()
     local me=$USER
     local here=`hostname -s`
     console_title_on ${you}@${there_small} && \
-        ssh $options $you@$there_name && \
+        ssh -o ConnectTimeout=5 $options $you@$there_name && \
         console_title_off ${me}@${here}
 }
 
