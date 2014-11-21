@@ -3,7 +3,7 @@
 export JAB=${JAB:-$HOME/.jab}
 [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 
-export LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH
+add_to_a_path LD_LIBRARY_PATH $HOME/lib --start
 export COLUMNS
 
 export EXITSTATUS="$?"

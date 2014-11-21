@@ -9,7 +9,7 @@ Options:
     -v, --version            Show version number and exit
     -U, --use_debugger       Run the script with pudb debugger
     -s, --start              Add the path at start of list of paths
-    -i INDEX, --index=INDEX  Specify the index at which the path will be inserted
+    -i INDEX, --index=INDEX  The index at which the path will be inserted
 
 
 Examples of use:
@@ -76,7 +76,7 @@ def parse_args(methods):
     parser.add_argument('-s', '--start', action='store_true',
                         help='Add the path at start of list of paths')
     parser.add_argument('-i', '--index', type=int,
-                        help='Specify the index at which the path will be inserted')
+                        help='The index at which the path will be inserted')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
@@ -103,37 +103,40 @@ def add_path_to_paths(paths, path, i):
 def arg_path(args):
     path = args.path
     if not path:
-        return None
+        return ''
     user_path = os.path.expanduser(path)
     real_path = os.path.realpath(user_path)
     if not os.path.isdir(real_path):
-        return None
+        return ''
     return real_path
 
 
 def split_paths(string):
+    if not string:
+        return []
     return [p for p in string.split(os.path.pathsep) if p]
 
 
-
 def get_paths(args):
-    path_string = args.symbol
-    if os.path.pathsep not in path_string and path_string in os.environ:
-        return os.environ[path_string]
-    return path_string
+    symbol = args.symbol
+    paths_string = ''
+    if symbol in os.environ:
+        paths_string = os.environ[symbol]
+    elif os.path.pathsep in symbol:
+        paths_string = symbol
+    return split_paths(paths_string)
 
 
 def script(args):
     path = arg_path(args)
-    path_string = get_paths(args)
+    paths = get_paths(args)
     if not path:
-        print(path_string)
-        return True
-    paths = []
-    index = args.index
-    paths = split_paths(path_string)
-    if os.path.isdir(path):
+        if not paths:
+            return False
+    elif os.path.isdir(path):
         paths = add_path_to_paths(paths, path, args.index)
+    else:
+        return False
     print(os.path.pathsep.join(paths))
     return True
 
