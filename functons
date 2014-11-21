@@ -827,6 +827,11 @@ sib ()
     source_file ~/.bashrc
 }
 
+sto ()
+{
+    firefox "http://stackoverflow.com/search?q=$*"
+}
+
 tmp ()
 {
     pushd $(python $GITHUB_SOURCES/kd/kd.py ~/tmp "$@")
