@@ -78,6 +78,7 @@ prompt_command ()
 export LP_ENABLE_TIME=1
 export LP_PS1_PREFIX="${PROMPT_BLUE}$(date +%F) "
 export LP_PS1_POSTFIX="\n$ "
+export LP_ENABLE_SHORTEN_PATH=0
 
 
 # /liquidprompt features
