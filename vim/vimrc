@@ -127,7 +127,7 @@ nnoremap K <PageUp>zz
 "noremap P - paste forward
  noremap Q :qa!<CR>
 "noremap R - Replace
- noremap S :%s///gc
+ noremap S :%s///<Left><Left>
  noremap T :!tags
  noremap U :redo<cr>
 "noremap V
