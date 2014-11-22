@@ -515,7 +515,7 @@ vy ()
     v $(ls *.py | grep -v __*.py*)
 }
 
-xe ()
+xe()
 {
     local amount=$1
     local from=USD
@@ -904,6 +904,7 @@ vvy ()
 {
     vvf python/jab.vim
 }
+
 
 vvv ()
 {
