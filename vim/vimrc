@@ -352,7 +352,7 @@ autocmd FileType c,cpp,h,java set cindent
 " From http://items.sjbach.com/319/configuring-vim-right {{{2
 "
 set hidden      " When on a buffer becomes hidden when it is abandoned.
-set scrolloff=3 " Minimal number of screen lines to keep above and below the cursor.
+set scrolloff=9 " Minimal number of screen lines to keep above and below the cursor.
 set ruler
 set shortmess=atI
 set visualbell
