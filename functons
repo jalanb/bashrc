@@ -1047,12 +1047,11 @@ detab ()
 
 range ()
 {
-    local python_script=$GITHUB_SOURCES/kd/kd.py
-    value=1
     local destination=.
     if [[ -n "$*" ]]
     then
-        if ! destination=$(PYTHONPATH=$python_directory python $python_script "$@" 2>&1)
+        local kd_script=$GITHUB_SOURCES/kd/kd.py
+        if ! destination=$(PYTHONPATH=$python_directory python $kd_script "$@" 2>&1)
         then
             echo "$destination"
             return 1
