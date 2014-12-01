@@ -298,6 +298,9 @@ let g:limelight_default_coefficient = 0.7
 "
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+" gitgutter {{{2
+" Faster updates (See the readme at https://github.com/airblade/vim-gitgutter)
+set updatetime=500
 "
 " vimdiff, aka vim -d {{{1
 "
