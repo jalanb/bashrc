@@ -165,8 +165,10 @@ def locate(command_line):
 def main(args):
     """Main method for calling from bash"""
     options, args = _handle_command_line(args)
+    result = not os.EX_OK
     for arg in args:
         paths = _locate(arg, options)
         if paths:
             print '\n'.join(paths)
-    return os.EX_OK
+            result = os.EX_OK
+    return result
