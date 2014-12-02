@@ -42,7 +42,7 @@ nnoremap <C-F4>     <C-W>c
  noremap k kzz
 "noremap l - go right
 "noremap m - mark
- noremap n nzzzv
+nnoremap n nzzzv
 "noremap o - open new line
 "noremap p - paste
  noremap q :q<CR>
