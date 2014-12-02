@@ -30,7 +30,10 @@ f ()
         name=$1
         shift
     fi
-    find $dir -name "$name" -print "$@"
+    for FOUND in $(find $dir -name "$name" -print "$@" | tr '\n' ' ')
+    do
+        $PYTHON -c "from dotsite.paths import pwd; print pwd().relpathto('$FOUND')"
+    done
 }
 
 h()
