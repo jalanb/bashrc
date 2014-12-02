@@ -45,7 +45,13 @@ gaa ()
 
 gac ()
 {
-    ga . ; gc "$@"
+    local addable=.
+    if [[ -e $1 ]]
+    then
+        addable=$1
+        shift
+    fi
+    ga $addable ; gc "$@"
 }
 
 gai ()
