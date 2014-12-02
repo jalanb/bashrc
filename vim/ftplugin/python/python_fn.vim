@@ -69,19 +69,19 @@ let b:loaded_py_ftplugin = 1
 " You may prefer use <s-up> and <s-down>... :-)
 
 " jump to previous class
-  map  [c   :call PythonDec("class", -1)<CR>w
+  map  [c   :call PythonDec("class", -1)<CR>
 " vmap ]J   :call PythonDec("class", -1)<CR>
 
 " jump to next class
-  map  ]c   :call PythonDec("class", 1)<CR>w
+  map  ]c   :call PythonDec("class", 1)<CR>
 " vmap ]j   :call PythonDec("class", 1)<CR>
 
 " jump to previous function
-  map  [d   :call PythonDec("function", -1)<CR>w
+  map  [d   :call PythonDec("function", -1)<CR>
 " vmap ]F   :call PythonDec("function", -1)<CR>
 
 " jump to next function
-  map  ]d   :call PythonDec("function", 1)<CR>w
+  map  ]d   :call PythonDec("function", 1)<CR>
 " vmap ]f   :call PythonDec("function", 1)<CR>
 
 
