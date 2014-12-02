@@ -83,7 +83,7 @@ export LP_ENABLE_SHORTEN_PATH=0
 
 # /liquidprompt features
 
-PROMPT_COMMAND=off
+test -d $GITHUB_SOURCES/liquidprompt && PROMPT_COMMAND=off
 if [[ $PROMPT_COMMAND == off ]]
 then
     unset PROMPT_COMMAND
