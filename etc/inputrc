@@ -47,13 +47,13 @@ $if Bash
 
 Control-g: " | grep --color "
 
-# Comment key
-"#": "!!\r\e0"
 #
 # Function keys
 #
 # <F12>
 "\e[24~": "!$\r"
+# <Shift-F12>
+"\e[24;2~": "!!\r\e0"
 
 set keymap vi-insert
 # <PageUp>
