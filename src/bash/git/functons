@@ -91,6 +91,14 @@ grs ()
     git rerere status
 }
 
+gsd ()
+{
+    for f in $(git status -s | grep "^ M" | cut -dM -f2)
+    do
+        git dv $f     
+    done
+    v $(git status -s | grep "??" | cut -d' ' -f2)
+}
 # xxxx
 
 gaic ()
