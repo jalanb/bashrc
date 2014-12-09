@@ -51,7 +51,9 @@ gac ()
         addable=$1
         shift
     fi
-    ga $addable ; gc "$@"
+    if ga $addable
+    then gc "$@"
+    fi
 }
 
 gai ()
