@@ -1,2 +1,3 @@
 set noloadplugins
 unmap q
+nnoremap q :q<cr>
