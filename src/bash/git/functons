@@ -104,6 +104,16 @@ gsd ()
     done
     v $(git status -s | grep "??" | cut -d' ' -f2)
 }
+
+gsi ()
+{
+    for f in $(git status -s | grep "^ M" | cut -dM -f2)
+    do
+        git di $f     
+    done
+    vimcat $(git status -s | grep "??" | cut -d' ' -f2)
+}
+
 # xxxx
 
 gaic ()
