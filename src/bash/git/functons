@@ -104,7 +104,10 @@ gsd ()
     do
         git dv $f     
     done
-    v $(git status -s | grep "??" | cut -d' ' -f2)
+    ADDED=$(git status -s | grep "??" | cut -d' ' -f2)
+    if [[ -n $ADDED ]]
+    then v $ADDED
+    fi
 }
 
 gsi ()
@@ -113,7 +116,9 @@ gsi ()
     do
         git di $f     
     done
-    vimcat $(git status -s | grep "??" | cut -d' ' -f2)
+    if [[ -n $ADDED ]]
+    then vimcat $ADDED
+    fi
 }
 
 # xxxx
