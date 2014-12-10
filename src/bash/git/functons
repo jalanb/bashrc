@@ -115,6 +115,12 @@ gsi ()
     for f in $(git status -s | grep "^ M" | cut -dM -f2)
     do
         git di $f     
+        read -e -n1 -p "a to add to staging area; q to quit; <cr> for next" answer
+        if [[ $answer =~ [qQ] ]]
+        then return
+        elif [[ $answer =~ [aA] ]]
+        then git add $f
+        fi
     done
     if [[ -n $ADDED ]]
     then vimcat $ADDED
