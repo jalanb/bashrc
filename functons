@@ -448,6 +448,21 @@ tf ()
     fi
 }
 
+tt ()
+{
+    if echo $1 | grep -q "gz$"
+    then
+        contents=tz
+        extract=xz
+    else
+        contents=t
+        extract=x
+    fi
+    tar ${extract}f $1
+    cd $(tar ${contents}f $1 | head -n 1)
+    ra
+}
+
 uj ()
 {
 # update $JAB from the repository
