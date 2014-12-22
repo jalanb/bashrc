@@ -75,7 +75,6 @@ alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
 alias se="source $JAB/environ"
 alias sf="source $JAB/functons"
-alias so="sort "
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
 
