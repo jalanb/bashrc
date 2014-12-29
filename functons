@@ -27,13 +27,16 @@ f ()
     if [[ $name == "-name" ]]
     then
         echo "Do not use '-name'"
-        name=$1
         shift
+        name=$1
     fi
-    for FOUND in $(find $dir -name "$name" -print "$@" | tr '\n' ' ')
+    local old_ifs=$IFS
+    IFS=;
+    for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
     do
-        $PYTHON -c "from dotsite.paths import pwd; print pwd().relpathto('$FOUND')"
+        relpath -s $FOUND
     done
+    IFS=$old_ifs
 }
 
 h()
