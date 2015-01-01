@@ -1,13 +1,21 @@
-[Indent-Guides]
-source = https://github.com/nathanaelkane/vim-indent-guides.git
-type = git
-
 [Limelight]
 source = https://github.com/junegunn/limelight.vim.git
 type = git
 
+[Indent-Guides]
+source = https://github.com/nathanaelkane/vim-indent-guides.git
+type = git
+
 [YouCompleteMe]
 source = https://github.com/Valloric/YouCompleteMe.git
+type = git
+
+[vim-abolish]
+source = https://github.com/tpope/vim-abolish.git
+type = git
+
+[vim-easymotion]
+source = https://github.com/haya14busa/vim-easymotion.git
 type = git
 
 [gitgutter]
@@ -20,14 +28,6 @@ type = git
 
 [targets]
 source = https://github.com/wellle/targets.vim.git
-type = git
-
-[vim-abolish]
-source = https://github.com/tpope/vim-abolish.git
-type = git
-
-[vim-easymotion]
-source = https://github.com/haya14busa/vim-easymotion.git
 type = git
 
 [vinegar]
