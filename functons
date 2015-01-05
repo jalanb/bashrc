@@ -1216,11 +1216,27 @@ vim_diff ()
     two="$1"
     shift
     options="$@"
-    if ! diff -q "$one" "$two" >/dev/null
+    if [[ $options =~ -.* ]]
     then
-        $EDITOR -d $options "$one" "$two"
+        three="$1"
+        shift
+        options="$@"
     else
-        echo same
+        three=
+    fi
+    if ! diff -q "$one" "$two" >/dev/null
+    then $EDITOR -d $options "$one" "$two" "$three"
+    else
+        if [[ -n $three ]]
+        then
+            if ! diff -q "$one" "$three" >/dev/null
+            then $EDITOR -d $options "$one" "$two" "$three"
+            elif ! diff -q "$two" "$three" >/dev/null
+            then $EDITOR -d $options "$one" "$two" "$three"
+            fi
+        else
+            echo same
+        fi
     fi
 }
 
