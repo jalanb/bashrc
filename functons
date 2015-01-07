@@ -31,7 +31,7 @@ f ()
         name=$1
     fi
     local old_ifs=$IFS
-    IFS=;
+    IFS=";"
     for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
     do
         relpath -s $FOUND
