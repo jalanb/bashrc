@@ -1074,6 +1074,11 @@ detab ()
     fi
 }
 
+debug ()
+{
+    set -x; "$@"; set +x
+}
+
 range ()
 {
     local destination=.
