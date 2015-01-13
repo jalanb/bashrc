@@ -17,14 +17,12 @@ ga ()
 
 gc ()
 {
-    local _storage=/tmp/fred.sh
+    local _storage=/tmp/gc.sh
 	if [[ -z "$@" ]]
 	then git commit --verbose
 	else
         python -c "print 'git commit -m\"$*\"'" > $_storage
-        bash $_storage
-        cat $_storage
-        rq $_storage
+        _show_run_storage
 	fi
 }
 
@@ -65,12 +63,13 @@ gai ()
 
 gcj ()
 {
+    local _storage=/tmp/gcj.sh
     local GIT="git -C $JAB"
 	if [[ -z "$@" ]]
 	then $GIT commit --all --verbose
 	else
-        python -c "print '$GIT commit -m\"$*\"'" > /tmp/fred.sh
-        bash /tmp/fred.sh
+        python -c "print '$GIT commit -m\"$*\"'" > $_storage
+        _run_storage
 	fi
 }
 
@@ -82,11 +81,6 @@ gdi ()
 gdv ()
 {
     git dv "$@"
-}
-
-ghi ()
-{
-    echo move to local 'TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"'
 }
 
 gpp ()
@@ -156,20 +150,17 @@ statvim ()
 	fi | sort
 }
 
-# xxxxxxxxxxx
+# xxxxxxxxxxxx
 
-do_git_stat ()
+_run_storage ()
 {
-	local __doc__="get the short status from git"
-	if first_path "$@"
-	then git status -s "$path"
-	else echo \"$path\" is not a file, nor dir
-	fi
+    bash $_storage
+    rq $_storage
 }
 
 # xxxxxxxxxxxxx
 
-do_git_status ()
+_do_git_status ()
 {
 	local __doc__="get the full status from git"
 	first_dir "$@"
@@ -182,3 +173,12 @@ do_git_status ()
 		git status
 	fi
 }
+
+# xxxxxxxxxxxxxxxxx
+
+_show_run_storage ()
+{
+    cat $_storage
+    _run_storage
+}
+
