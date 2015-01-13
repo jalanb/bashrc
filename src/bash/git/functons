@@ -33,7 +33,8 @@ gd ()
 
 gs ()
 {
-	do_git_status "$@"
+    shift_dir "$@" && shift
+	_do_git_status "$@"
 }
 
 # xxx
@@ -124,6 +125,19 @@ gsi ()
     fi
 }
 
+gsv ()
+{
+    shift_dir "$@" || shift
+    for f in $(git -C $dir status -s)
+    do
+        if echo $f | grep -q "^ M" 
+        then git dv $(echo $f | cut -dM -f2)
+        elif echo $f | grep -q "^ A"
+        then vim  $(echo $f | cut -dM -f2)
+        fi
+    done
+}
+
 # xxxx
 
 gaic ()
@@ -135,19 +149,14 @@ gaic ()
 # xxxxxx
 # xxxxxxx
 
-statvim ()
+_do_git_stat ()
 {
-	local replacement="$1"
-	shift
-	if [[ -z "$1" ]]
-	then
-		do_git_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
-	else
-		for file in "$@"
-		do 
-			do_git_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
-		done
-	fi | sort
+	local __doc__="get the short status from git"
+    reuse_dir "$@" && shift
+	if shift_path "$@"
+	then git -C $dir status -s "$path"
+	else echo \"$path\" is not a file
+	fi
 }
 
 # xxxxxxxxxxxx
@@ -162,16 +171,10 @@ _run_storage ()
 
 _do_git_status ()
 {
-	local __doc__="get the full status from git"
-	first_dir "$@"
-	if [[ -n $dir && $dir != $PWD ]]
-	then
-		cd $dir
-		git status $dir
-		cd - > /dev/null
-	else
-		git status
-	fi
+	local __doc__="get the status from git"
+    reuse_dir "$@" && shift
+	[[ -z $dir ]] && dir=$PWD
+	git -C $dir status "$@"
 }
 
 # xxxxxxxxxxxxxxxxx
