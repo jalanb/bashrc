@@ -1,5 +1,11 @@
 #! /bin/bash
 
+ghi_ook ()
+{
+    local __doc__="Move this to local on jab.ook"
+    TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"
+}
+
 . $JAB/bin/first_dir
 
 # Called functons because "functions" is ... something else
