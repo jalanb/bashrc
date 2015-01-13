@@ -1,5 +1,7 @@
 #! /bin/bash
 
+. $JAB/bin/first_dir
+
 # functons for git
 
 # sorted by strcmp of function name
@@ -100,11 +102,12 @@ grs ()
 
 gsd ()
 {
-    for f in $(git status -s | grep "^ M" | cut -dM -f2)
+    shift_dir "$@" && shift
+    for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
     do
         git dv $f     
     done
-    ADDED=$(git status -s | grep "??" | cut -d' ' -f2)
+    ADDED=$(git -C $dir status -s | grep "??" | cut -d' ' -f2)
     if [[ -n $ADDED ]]
     then v $ADDED
     fi
@@ -112,15 +115,15 @@ gsd ()
 
 gsi ()
 {
-    for f in $(git status -s | grep "^ M" | cut -dM -f2)
+    shift_dir "$@" || shift
+    for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
     do
         git di $f     
-        read -e -n1 -p "a to add to staging area; q to quit; <cr> for next" answer
-        if [[ $answer =~ [qQ] ]]
-        then return
-        elif [[ $answer =~ [aA] ]]
-        then git add $f
-        fi
+        read -e -n1 -p "a to add to staging area; i for add -i; c for commit; q to quit; <other> for next" answer
+        [[ $answer =~ [qQ] ]] && return
+        [[ $answer =~ [aA] ]] && ga $f
+        [[ $answer =~ [iI] ]] && gai $f
+        [[ $answer =~ [cC] ]] && gc
     done
     if [[ -n $ADDED ]]
     then vimcat $ADDED
