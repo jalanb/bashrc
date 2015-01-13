@@ -27,7 +27,7 @@ c ()
 
 f ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     local name=$1
     shift
     if [[ $name == "-name" ]]
@@ -153,7 +153,7 @@ cv ()
 
 gf ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     name=$1
     shift
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
@@ -161,13 +161,13 @@ gf ()
 
 gr ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file
 }
 
 fc ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     name=$1
     shift
     for path in $(find $dir -name $name -print)
@@ -182,7 +182,7 @@ fc ()
 
 fd ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     if [[ -n $1 ]]
     then
         name=$1
@@ -193,7 +193,7 @@ fd ()
 
 ff ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     name=$1
     shift
     find $dir -type f -name $name "$@"
@@ -201,7 +201,7 @@ ff ()
 
 fv ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     if [[ -z "$@" ]]
     then echo Nothing to find
     else
@@ -271,7 +271,7 @@ jp ()
 
 ky ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     dir=${dir:-$PYTHON_HOME}
     kd $dir
     y "$@"
@@ -741,7 +741,7 @@ jpm ()
 
 lly ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     reset=$(shopt -p dotglob)
     shopt -s dotglob
     ls -lhtr "$dir"/*.tests
@@ -759,7 +759,7 @@ lrl ()
 
 lrt ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     /bin/ls --color=always -lhtr "$dir" |  less -R -m -N +G
 }
 
@@ -790,7 +790,7 @@ pyi ()
     source ~/.virtualenvs/pym/bin/activate
     if [[ -n $* ]]
     then
-        if first_dir "$@"
+        if shift_dir "$@"
         then
             shift
             cd $dir
@@ -969,7 +969,7 @@ down ()
 
 main ()
 {
-    first_dir "$@" && shift
+    shift_dir "$@" && shift
     [[ -n $* ]] && cp $JAB_PYTHON/main.py $1 || cp $JAB_PYTHON/main.py $dir
 }
 

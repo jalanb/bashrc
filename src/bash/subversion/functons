@@ -69,7 +69,7 @@ sdv ()
 
 stv ()
 {
-	first_dir
+	shift_dir "$@" && shift
 	svn stat $dir | sed -e "s/^ M/svd/" -e "s/^?? /vim /"
 }
 

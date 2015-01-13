@@ -1,11 +1,16 @@
 #! /bin/bash
 
-first_path()
+reuse_path()
+{
+    [[ -n $path && -d $path ]] && return 0
+    shift_path "$@"
+    return $?
+}
+
+shift_path()
 {
     path=$(pwd)
-    if [[ -z "$*" ]]
-    then return 0
-    fi
+    [[ -z "$*" ]] && return 0
     for p in "$@"
     do
         if [[ -f $p || -d $p ]]
@@ -17,12 +22,17 @@ first_path()
     return 1
 }
 
-first_dir()
+reuse_dir ()
+{
+    [[ -n $dir && -d $dir ]] && return 0
+    shift_dir "$@"
+    return $?
+}
+
+shift_dir()
 {
     dir=$(pwd)
-    if [[ -z "$*" ]]
-    then return 0
-    fi
+    [[ -z "$*" ]] && return 0
     for d in "$@"
     do
         if [[ -d $d ]]
@@ -33,16 +43,3 @@ first_dir()
     done
     return 1
 }
-
-last_dir()
-{
-    dir=$(pwd)
-    for d in "$@"
-    do
-        if [[ -d $d ]]
-        then
-            dir=$(python -c"import os; print os.path.realpath('$d')")
-        fi
-    done
-}
-
