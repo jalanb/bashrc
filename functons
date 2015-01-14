@@ -21,6 +21,7 @@ c ()
     if [[ -f todo.txt ]]
     then
         todo_show
+        [[ -d .git ]] && git lg --since="5 days ago"
     fi
     return $value
 }

@@ -1,6 +1,7 @@
 #! /bin/bash
 
 . $JAB/bin/first_dir
+. $JAB/colour-environ
 
 # functons for git
 
@@ -108,17 +109,43 @@ gsd ()
     fi
 }
 
+_gsi_opt ()
+{
+    local red='\[\033[0;31m\]'
+    red="\033[0;31m"
+    local no_colour='\[\033[0m\]'
+    no_colour="\033[0m"
+    GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
+}
+
+_gsi_menu ()
+{
+    GSI_MENU=
+    suffix=", "
+    _gsi_opt q uit
+    _gsi_opt a dd
+    _gsi_opt s plit
+    _gsi_opt d rop
+    _gsi_opt f asten
+    suffix=";"
+    _gsi_opt hjkl " move"
+    echo -n -e $GSI_MENU
+}
+
 gsi ()
 {
     shift_dir "$@" || shift
     for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
     do
         git di $f     
-        read -e -n1 -p "a to add to staging area; i for add -i; c for commit; q to quit; <other> for next" answer
+        _gsi_menu
+        #read -e -n1 -p "q to quit, a: add, s: add -i, d: co, f: ci, [j: down]" answer
+        read -e -n1 -p " " answer
         [[ $answer =~ [qQ] ]] && return
         [[ $answer =~ [aA] ]] && ga $f
-        [[ $answer =~ [iI] ]] && gai $f
-        [[ $answer =~ [cC] ]] && gc
+        [[ $answer =~ [sS] ]] && gai $f
+        [[ $answer =~ [dD] ]] && git co $f
+        [[ $answer =~ [fF] ]] && gc
     done
     if [[ -n $ADDED ]]
     then vimcat $ADDED
