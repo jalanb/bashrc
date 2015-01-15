@@ -16,13 +16,19 @@ ghi_ook ()
 
 c ()
 {
+    c_line=1
     kd "$@"
-    local c_result=$?
-    if $c_result
+    local c_result="$?"
+    c_line=2
+    if [[ $c_result == "0" ]]
     then
+    c_line=3
         _show_todo
+    c_line=4
         _show_git
+    c_line=6
     fi
+    c_line=8
     return $c_result
 }
 
@@ -127,6 +133,11 @@ y ()
         dir=
     fi
     Tree -P "*.py" $dir "$@"
+}
+
+db ()
+{
+    set -x; "$@"; set +x
 }
 
 IP ()
@@ -1091,11 +1102,6 @@ detab ()
     fi
 }
 
-debug ()
-{
-    set -x; "$@"; set +x
-}
-
 range ()
 {
     local destination=.
@@ -1242,7 +1248,9 @@ jab_scripts()
 _show_git ()
 {
     local days=${1:-5}
-    [[ git -C $PWD log -n 1 >/dev/null ]] && git -C $PWD lg --since="$days days ago"
+    local _log=$(git -C $PWD log -n 1)
+    $? || return
+    git -C $PWD lg --since="$days days ago"
 }
 
 _show_todo ()
