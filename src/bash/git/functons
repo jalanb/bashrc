@@ -143,7 +143,7 @@ gsi ()
         _gsi_menu
         #read -e -n1 -p "q to quit, a: add, s: add -i, d: co, f: ci, [j: down]" answer
         read -e -n1 -p " " answer
-        [[ $answer =~ [qQ] ]] && return
+        [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [aA] ]] && ga $f
         [[ $answer =~ [sS] ]] && gai $f
         [[ $answer =~ [dD] ]] && git co $f
