@@ -13,6 +13,7 @@
 
 ga ()
 {
+    [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     git add "$@"
 }
 
@@ -25,6 +26,7 @@ gc ()
         python -c "print 'git commit -m\"$*\"'" > $_storage
         _show_run_storage
 	fi
+    GIT_ADDED=
 }
 
 gd ()
@@ -103,9 +105,9 @@ gsd ()
     do
         git dv $f     
     done
-    ADDED=$(git -C $dir status -s | grep "??" | cut -d' ' -f2)
-    if [[ -n $ADDED ]]
-    then v $ADDED
+    STATUS_QUESTIONS=$(git -C $dir status -s | grep "??" | cut -d' ' -f2)
+    if [[ -n $STATUS_QUESTIONS ]]
+    then v $STATUS_QUESTIONS
     fi
 }
 
@@ -147,8 +149,9 @@ gsi ()
         [[ $answer =~ [dD] ]] && git co $f
         [[ $answer =~ [fF] ]] && gc
     done
-    if [[ -n $ADDED ]]
-    then vimcat $ADDED
+    [[ -n $GIT_ADDED ]] && gc
+    if [[ -n $STATUS_QUESTIONS ]]
+    then vimcat $STATUS_QUESTIONS
     fi
 }
 
