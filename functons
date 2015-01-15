@@ -17,13 +17,13 @@ ghi_ook ()
 c ()
 {
     kd "$@"
-    value=$?
-    if [[ -f todo.txt ]]
+    local c_result=$?
+    if $c_result
     then
-        todo_show
-        [[ -d .git ]] && git lg --since="5 days ago"
+        _show_todo
+        _show_git
     fi
-    return $value
+    return $c_result
 }
 
 f ()
@@ -137,6 +137,11 @@ IP ()
         then break
         fi
     done
+}
+
+c. ()
+{
+    c . "$@"
 }
 
 cl ()
@@ -1232,6 +1237,17 @@ todo_show ()
 jab_scripts()
 {
     python $JAB_PYTHON/scripts.py "$@"
+}
+
+_show_git ()
+{
+    local days=${1:-5}
+    [[ git -C $PWD log -n 1 >/dev/null ]] && git -C $PWD lg --since="$days days ago"
+}
+
+_show_todo ()
+{
+    [[ -f todo.txt ]] && todo_show
 }
 
 vim_diff ()
