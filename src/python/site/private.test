@@ -15,13 +15,13 @@ Names and addresses
     >>> private.personal_email('fred') == 'fred@al-got-rhythm.net'
     True
 
-    >>> private.employee_address() == 'abrogan@altobridge.com'
+    >>> private.employee_address() == 'alanb@s3group.com'
     True
 
-    >>> private.employer_email('fred') == 'fred@altobridge.com'
+    >>> private.employer_email('fred') == 'fred@s3group.com'
     True
 
-    >>> private.employer_server('fred') == 'fred.altobridge.com'
+    >>> private.employer_server('fred') == 'fred.s3group.com'
     True
 
 localhost files

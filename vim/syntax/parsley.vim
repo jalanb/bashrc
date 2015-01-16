@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language:         Parsley
-" Maintainer:       Alan Brogan (vim@al-got-rhythm.net)
+" Maintainer:       J Alan Brogan (vim@al-got-rhythm.net)
 " Last Change:      $Date: 2013-11-23
 " Version:          0.1
 
