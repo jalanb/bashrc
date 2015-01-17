@@ -1,5 +1,8 @@
 #! /bin/bash
 
+EX_OK=0
+EX_BAD=1
+
 export JAB=${JAB:-$HOME/.jab}
 [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 
