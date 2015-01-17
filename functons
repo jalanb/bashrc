@@ -1078,6 +1078,11 @@ mkcd ()
     mkdir -p "$@" && cd "$@"
 }
 
+vjkl ()
+{
+    v ~/bin/jkl
+}
+
 rq.. ()
 {
     local directory_here=$(basename "$(pwd)")
@@ -1317,15 +1322,15 @@ jab_scripts()
     python $JAB_PYTHON/scripts.py "$@"
 }
 
-_show_git ()
+_show_git_here ()
 {
     local days=${1:-5}
+    [[ -d $PWD/.git ]] || return
     local _log=$(git -C $PWD log -n 1)
-    $? || return
-    git -C $PWD lg --since="$days days ago"
+    [[ $? ]] && git -C $PWD lg --since="$days days ago"
 }
 
-_show_todo ()
+_show_todo_here ()
 {
     [[ -f todo.txt ]] && todo_show
 }
@@ -1531,3 +1536,23 @@ _divv_get_difference ()
     "$source_dir" "$destination_dir" 2>/dev/null
 }
 
+jkl () 
+{ 
+    local result=0;
+    local new_bin=;
+    [[ -d bin || -d ./bin ]] || new_bin=1;
+    [[ $new_bin == 1 ]] && mkdir bin;
+    if [[ -d bin ]]; then
+        cd bin;
+        result=$?;
+        [[ $result == 0 ]] && vjkl;
+    fi;
+    local here=$(basename $PWD);
+    [[ $here != bin ]] && return $result;
+    [[ -n $new_bin ]] && echo "rm bin?"
+}
+
+vjkl () 
+{ 
+    v .vimrc +/jkl
+}
