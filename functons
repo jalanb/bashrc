@@ -815,6 +815,11 @@ jpm ()
     PYTHONPATH=$PYTHONPATH:$GITHUB_SOURCES/jpm python $GITHUB_SOURCES/jpm/bin/jpm "$@"
 }
 
+kpj ()
+{
+    kp -e \"ssh -i $JAB_ID\"
+}
+
 lly ()
 {
     shift_dir "$@" && shift
