@@ -1053,6 +1053,14 @@ down ()
     ls -alhtr
 }
 
+left ()
+{
+    local last_command="$1"
+    echo $last_command
+    local last_command_line="$@"
+    echo $last_command_line
+}
+
 main ()
 {
     shift_dir "$@" && shift
