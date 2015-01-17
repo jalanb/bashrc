@@ -18,19 +18,13 @@ ghi_ook ()
 
 c ()
 {
-    c_line=1
     kd "$@"
     local c_result="$?"
-    c_line=2
     if [[ $c_result == "0" ]]
     then
-    c_line=3
-        _show_todo
-    c_line=4
-        _show_git
-    c_line=6
+        _show_todo_here
+        _show_git_here
     fi
-    c_line=8
     return $c_result
 }
 
@@ -137,9 +131,23 @@ y ()
     Tree -P "*.py" $dir "$@"
 }
 
+add ()
+{
+    echo $($1 + $2)
+}
+
 db ()
 {
-    set -x; "$@"; set +x
+    name=$1
+    [[ -z $name ]] && return 1
+    local line_name=db_${name}_line
+    echo 1 # $line_name (add 776 1)
+    set -x
+    echo 2 # $line_name (add 776 3)
+    "$@"
+    echo 3 # $line_name (add 776 7)
+    w $1
+    set +x
 }
 
 IP ()
@@ -293,6 +301,11 @@ jp ()
     python
 }
 
+_free_line_here ()
+{
+    :
+}
+
 ky ()
 {
     shift_dir "$@" && shift
@@ -330,6 +343,11 @@ lj ()
 ll ()
 {
     ls -lh  "$@"
+}
+
+lo ()
+{
+    locate "$@"
 }
 
 lr ()
@@ -551,6 +569,11 @@ vh ()
     HISTTIMEFORMAT= history | sed -e "s/^[0-9]*  //" | vim - +
 }
 
+vi ()
+{
+    vim ~/.inputrc +/Key.bindings
+}
+
 vj ()
 {
     pushd $JAB
@@ -742,6 +765,35 @@ jjj ()
 jjy ()
 {
     ky $JAB_PYTHON "$@"
+}
+
+# line 770
+# line 771
+# line 772
+# line 773
+# line 774
+# line 775
+# line 776
+jkl ()
+{
+    local result=0
+    local new_bin=
+    [[ -d bin || -d ./bin ]] || new_bin=1
+    [[ $new_bin == 1 ]] && mkdir bin
+    if [[ -d bin ]] 
+    then
+        cd bin
+        result=$?
+        [[ $result == 0 ]] && v jkl
+    fi
+    local here=$(basename $PWD)
+    [[ $here != bin ]] && return $result
+    [[ $new_bin ]] && echo "rm bin?"
+}
+
+add ()
+{
+    echo $(($1 + $2))
 }
 
 jpi ()
