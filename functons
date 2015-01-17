@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# set -e
+
 ghi_ook ()
 {
     local __doc__="Move this to local on jab.ook"
