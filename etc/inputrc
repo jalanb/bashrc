@@ -38,8 +38,9 @@ set match-hidden-files on
 # Do not re-assign the left/right arrows, use them for line-editting
 # Right arrow
 # "\e[C":menu-complete
+"\e[C": "db !!\r"
 # Left arrow
-# "\e[D":menu-complete-backward
+"\e[D": "we !!\r"
 
 $if Bash
 # Bind some keys to useful macros
