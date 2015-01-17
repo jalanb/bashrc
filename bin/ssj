@@ -30,7 +30,7 @@ usage ()
 
 main ()
 {
-    $PATH_TO_SCRIPTS/sst $ARGS -i $JAB_KEY -X
+    $PATH_TO_SCRIPTS/sst $ARGS -i $JAB_ID -X
 }
 
 usage $*

@@ -54,8 +54,6 @@ alias z="du -sh"
 
 alias ..='c ..'
 
-alias cy="c \$PYTHON_HOME"
-
 alias eg="env | g "
 
 alias jj="c $JAB"
@@ -97,7 +95,6 @@ alias csi='c $(python -c "import sys; print [p for p in sys.path if p.endswith(\
 
 alias jlf="sst jlfieblu jlf.ie"
 
-alias kpj="kp -e \"ssh -i $JAB_KEY\"" 
 alias kpp="kp --progress"
 
 alias lda="ls -1da"

@@ -2,7 +2,10 @@
 
 export JAB=${JAB:-$HOME/.jab}
 export JAB_TODO=$JAB/todo.txt
-test -f ~/.ssh/id_jab && export JAB_KEY=~/.ssh/id_jab
+home_id=~/.ssh/id_jab
+[[ -f $home_id ]] && export JAB_ID=$home_id
+export JAB_PUB_ID=$JAB_ID.pub
+export JAB_SSH=$(dirname $JAB_PUB_ID)
 export JAB_HOME=$HOME
 export JAB_PYTHON=$JAB/src/python
 export EMPLOYER_DOMAIN=s3group.com
