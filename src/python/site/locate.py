@@ -1,6 +1,8 @@
 """Methods to run the locate script more exactly"""
 
 
+from __future__ import print_function
+
 import re
 import os
 import shlex
@@ -131,6 +133,8 @@ def _handle_command_line(args):
                       help='match on globs')
     parser.add_option('-i', '--ignore-case', action='store_true',
                       help='ignore case in searches')
+    parser.add_option('-l', '--lsld', action='store_true',
+                      help='run "ls -ld" on locations')
     parser.add_option('-U', '--Use_debugger', action='store_true',
                       help='debug with pudb')
     options, args = parser.parse_args(args)
@@ -169,6 +173,10 @@ def main(args):
     for arg in args:
         paths = _locate(arg, options)
         if paths:
-            print '\n'.join(paths)
+            if options.lsld:
+                ls_commands = [str('ls -ld %r' % str(_)) for _ in paths]
+                __ = [print(commands.getoutput(_)) for _ in ls_commands]
+            else:
+                print('\n'.join(paths))
             result = os.EX_OK
     return result

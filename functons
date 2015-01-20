@@ -902,6 +902,11 @@ try ()
     python $TRY "$@"
 }
 
+vat ()
+{
+    vimcat "$@"
+}
+
 vib ()
 {
     $EDITOR ~/.bashrc
