@@ -126,27 +126,27 @@ _gsi_menu ()
     suffix=", "
     _gsi_opt q uit
     _gsi_opt a dd
-    _gsi_opt s plit
+    _git_modified $1 && _gsi_opt s plit
     _gsi_opt d rop
-    _gsi_opt f asten
+    [[ -n $GIT_ADDED ]] &&_gsi_opt f asten
     suffix=";"
     _gsi_opt hjkl " move"
-    echo -n -e $GSI_MENU
+    echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
 }
 
 gsi ()
 {
     shift_dir "$@" || shift
-    for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
+    for f in $(git -C $dir status -s | grep "^\( M\|??\)" | sed -e "s/^...//")
     do
-        git di $f     
-        _gsi_menu
-        #read -e -n1 -p "q to quit, a: add, s: add -i, d: co, f: ci, [j: down]" answer
+        [[ -z $f ]] && continue
+        _git_modified $f && git di $f || (_git_untracked $f && cat $f || continue)
+        _gsi_menu $f
         read -e -n1 -p " " answer
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [aA] ]] && ga $f
-        [[ $answer =~ [sS] ]] && gai $f
-        [[ $answer =~ [dD] ]] && git co $f
+        [[ $answer =~ [sS] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
+        [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
         [[ $answer =~ [fF] ]] && gc
     done
     [[ -n $GIT_ADDED ]] && gc
@@ -189,7 +189,14 @@ _do_git_stat ()
 	fi
 }
 
+# xxxxxxxxxx
+
 # xxxxxxxxxxxx
+
+_git_modified ()
+{
+    [[ $(_status_chars $1) == " M" ]]
+}
 
 _run_storage ()
 {
@@ -198,6 +205,16 @@ _run_storage ()
 }
 
 # xxxxxxxxxxxxx
+
+_git_untracked ()
+{
+    [[ $(_status_chars $1) == "??" ]]
+}
+
+_status_chars ()
+{
+    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+}
 
 _do_git_status ()
 {
