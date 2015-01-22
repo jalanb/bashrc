@@ -784,7 +784,7 @@ jkm ()
     then
         cd bin
         result=$?
-        [[ $result == 0 ]] && v jkl
+        [[ $result == 0 ]] && v qax
     fi
     local here=$(basename $PWD)
     [[ $here != bin ]] && return $result
@@ -914,6 +914,13 @@ ps3 ()
     then ps axf | vim - +
     else ps axf | vim - +/"$*"
     fi
+}
+
+q ()
+{
+    HUB=$HOME/src/git/bucket
+    cd $HUB/qaz
+    . qaz.bash
 }
 
 rff ()
@@ -1076,11 +1083,6 @@ mkcd ()
 {
     local __doc__='make a directory and start using it';
     mkdir -p "$@" && cd "$@"
-}
-
-vjkl ()
-{
-    v ~/bin/jkl
 }
 
 rq.. ()
@@ -1534,4 +1536,110 @@ _divv_get_difference ()
         $source_gitignore \
         $destination_gitignore \
     "$source_dir" "$destination_dir" 2>/dev/null
+}
+
+db () 
+{ 
+    name=$1;
+    [[ -z $name ]] && return 1;
+    local line_name=db_${name}_line;
+    echo 1;
+    set -x;
+    echo 2;
+    "$@";
+    echo 3;
+    set +x
+}
+db () 
+{ 
+    name=$1;
+    [[ -z $name ]] && return 1;
+    local line_name=db_${name}_line;
+    echo 1;
+    set -x;
+    echo 2;
+    "$@";
+    echo 3;
+    set +x
+}
+db () 
+{ 
+    name=$1;
+    [[ -z $name ]] && return 1;
+    local line_name=db_${name}_line;
+    echo 1;
+    set -x;
+    echo 2;
+    "$@";
+    echo 3;
+    set +x
+}
+db () 
+{ 
+    name=$1;
+    [[ -z $name ]] && return 1;
+    local line_name=db_${name}_line;
+    echo 1;
+    set -x;
+    echo 2;
+    "$@";
+    echo 3;
+    set +x
+}
+db () 
+{ 
+    name=$1;
+    [[ -z $name ]] && return 1;
+    local line_name=db_${name}_line;
+    echo 1;
+    set -x;
+    echo 2;
+    "$@";
+    echo 3;
+    set +x
+}
+3y () 
+{ 
+    if [[ -f $1 ]]; then
+        dir=$(dirname $1);
+        shift;
+    else
+        if [[ -d $1 ]]; then
+            dir=$1;
+            shift;
+        else
+            dir=;
+        fi;
+    fi;
+    Tree -P "*.py" $dir "$@"
+}
+3y () 
+{ 
+    if [[ -f $1 ]]; then
+        dir=$(dirname $1);
+        shift;
+    else
+        if [[ -d $1 ]]; then
+            dir=$1;
+            shift;
+        else
+            dir=;
+        fi;
+    fi;
+    Tree -P "*.py" $dir "$@"
+}
+3y () 
+{ 
+    if [[ -f $1 ]]; then
+        dir=$(dirname $1);
+        shift;
+    else
+        if [[ -d $1 ]]; then
+            dir=$1;
+            shift;
+        else
+            dir=;
+        fi;
+    fi;
+    Tree -P "*.py" $dir "$@"
 }
