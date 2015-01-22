@@ -152,7 +152,6 @@ db ()
     echo 2 # $line_name (add 776 3)
     "$@"
     echo 3 # $line_name (add 776 7)
-    w $1
     set +x
 }
 
