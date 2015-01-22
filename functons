@@ -773,30 +773,6 @@ jjy ()
     ky $JAB_PYTHON "$@"
 }
 
-# line 770
-# line 771
-# line 772
-# line 773
-# line 774
-# line 775
-# line 776
-jkm ()
-{
-    local result=0
-    local new_bin=
-    [[ -d bin || -d ./bin ]] || new_bin=1
-    [[ $new_bin == 1 ]] && mkdir bin
-    if [[ -d bin ]] 
-    then
-        cd bin
-        result=$?
-        [[ $result == 0 ]] && v qax
-    fi
-    local here=$(basename $PWD)
-    [[ $here != bin ]] && return $result
-    [[ $new_bin ]] && echo "rm bin?"
-}
-
 add ()
 {
     echo $(($1 + $2))
