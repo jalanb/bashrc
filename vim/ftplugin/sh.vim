@@ -4,6 +4,10 @@
 "
 " Keyboard
 "
+" down through functions
+"
+noremap <up> ?^[^{} \t#]<cr>
+noremap <down> /^[^{} \t#]<cr>
 " to function start/end
 noremap [d ?^[^{} \t#]<cr>
 noremap ]d /^[^{} \t#]<cr>
