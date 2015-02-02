@@ -12,8 +12,8 @@
  noremap  <F4>      <c-w>w
  noremap  <F5>      <C-W>_
  noremap  <F6>      :map <F6> 
- noremap  <F7>      :map <F7> 
- noremap  <F8>      :set list!<CR>
+ noremap  <F7>      :set list!<CR>
+ noremap  <F8>      O<esc>:w!<CR>:Limelight<cr>
  noremap  <F9>      :w!<CR>:Limelight<cr>
 inoremap  <F9>      <esc>:w!<CR>
  noremap <F10>      :map <F10> 
