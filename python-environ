@@ -8,3 +8,20 @@ export TRY="$JAB_PYTHON/testing/try.py"
 test -d $JAB_PYTHON && export PYTHON_HOME=$JAB_PYTHON
 test -d ~/src/python && export PYTHON_HOME=~/src/python
 test -f $JAB_PYTHON/pythonrc.py && export PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
+find_python ()
+{
+    test -x $PYTHON && return 0
+    test -n $PYTHON && PYTHON=
+    test -f /usr/bin/python && PYTHON=/usr/bin/python
+    test -f /usr/local/bin/python && PYTHON=/usr/local/bin/python
+    test -f ~/bin/python && PYTHON=~/bin/python
+    test -f $JAB/bin/python && PYTHON=$JAB/bin/python
+    [[ -n $VIRTUAL_ENV && -f $VIRTUAL_ENV/bin/python ]] && PYTHON=$VIRTUAL_ENV/bin/python
+    test -z $PYTHON && PYTHON=$(which python 2>/dev/null)
+    test -z $PYTHON && PYTHON=no_python
+    export PYTHON
+    [[ $PYTHON != no_python ]]
+}
+
+find_python
+
