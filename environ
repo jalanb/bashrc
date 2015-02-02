@@ -1,107 +1,118 @@
 #! /bin/bash
 
-EX_OK=0
-EX_BAD=1
-
-export JAB=${JAB:-$HOME/.jab}
-[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
-
-add_to_a_path LD_LIBRARY_PATH $HOME/lib --start
-export COLUMNS
-
-export EXITSTATUS="$?"
-export FIGNORE=.pyc:.swp:~:.o
-
-#export DISPLAY=:0
-
-# infinite history (was claimed - in practice it keeps very short histories)
-# unset HISTSIZE
-# unset HISTFILESIZE
-# So we explicitly keep very large histories
-export HISTFILESIZE=100000
-export HISTSIZE=$HISTFILESIZE
-# format history times
-export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
-# ignore some simple commands in history
-export HISTIGNORE="bg:fg:history:gh:hh"
-#  remember multi-line commands
-shopt -s cmdhist
-# edit a failed history substitution (default just ignores them)
-shopt -s histreedit
-# edit history line before executing
-shopt -s histverify
-# save multi-line commands to history with "\n", not ":"
-shopt -s lithist
-# Make bash check its window size after a process completes
-shopt -s checkwinsize
-# append to the history file, don't overwrite it
-shopt -s histappend
-# correct minor spelling errors for cd
-shopt -s cdspell
-#
-# some interesting paths
-#
-test -d $HOME/log && LOGS=$HOME/log || LOGS=/var/log
-export LOGS
-export XAUTHORITY=$HOME/.Xauthority
-
-if [[ -f /usr/local/bin/gls ]]
+if [[ -z $JAB_ENVIRON_SOURCED ]]
 then
-    export LS_PROGRAM=/usr/local/bin/gls
-    DIRCOLORS=/usr/local/bin/gdircolors
-else
-    export LS_PROGRAM=/bin/ls
-    if [[ -f /usr/bin/dircolors ]]
-    then DIRCOLORS=/usr/bin/dircolors
+    EX_OK=0
+    EX_BAD=1
+
+    export JAB=${JAB:-$HOME/.jab}
+    [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
+
+    export COLUMNS
+
+    export EXITSTATUS="$?"
+    export FIGNORE=.pyc:.swp:~:.o
+
+    #export DISPLAY=:0
+
+    # infinite history (was claimed - in practice it keeps very short histories)
+    # unset HISTSIZE
+    # unset HISTFILESIZE
+    # So we explicitly keep very large histories
+    export HISTFILESIZE=100000
+    export HISTSIZE=$HISTFILESIZE
+    # format history times
+    export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+    # ignore some simple commands in history
+    export HISTIGNORE="bg:fg:history:gh:hh"
+    #  remember multi-line commands
+    shopt -s cmdhist
+    # edit a failed history substitution (default just ignores them)
+    shopt -s histreedit
+    # edit history line before executing
+    shopt -s histverify
+    # save multi-line commands to history with "\n", not ":"
+    shopt -s lithist
+    # Make bash check its window size after a process completes
+    shopt -s checkwinsize
+    # append to the history file, don't overwrite it
+    shopt -s histappend
+    # correct minor spelling errors for cd
+    shopt -s cdspell
+    #
+    # some interesting paths
+    #
+    [[ -d ~/src/git/bitbucket ]] && BITBUCKET=~/src/git/bitbucket || BITBUCKET=no_bitbucket
+    export BITBUCKET
+    [[ -d ~/src/git/hub ]] && GITHUB=~/src/git/hub || GITHUB=no_github
+    export GITHUB
+    source $GITHUB/what/what.sh
+
+    test -d $HOME/log && LOGS=$HOME/log || LOGS=/var/log
+    export LOGS
+    export XAUTHORITY=$HOME/.Xauthority
+
+    if [[ -f /usr/local/bin/gls ]]
+    then
+        export LS_PROGRAM=/usr/local/bin/gls
+        DIRCOLORS=/usr/local/bin/gdircolors
+    else
+        export LS_PROGRAM=/bin/ls
+        if [[ -f /usr/bin/dircolors ]]
+        then DIRCOLORS=/usr/bin/dircolors
+        fi
     fi
+
+    if $LS_PROGRAM -@ >/dev/null 2>&1
+    then
+        export LS_COLOUR_OPTION='-@'
+    elif $LS_PROGRAM --color=auto >/dev/null 2>&1
+    then
+        export LS_COLOUR_OPTION='--color=auto'
+    else
+        export LS_COLOUR_OPTION=
+    fi
+    if $LS_PROGRAM --group-directories-first >/dev/null 2>&1
+    then
+        export LS_DIRS_OPTION='--group-directories-first'
+    else
+        export LS_DIRS_OPTION=
+    fi
+    [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
+
+    source_path $JAB/bin/add_to_a_path.sh
+    add_to_a_path PATH $HOME/bin --start
+    add_to_a_path PATH $JAB/bin --index=1
+    add_to_a_path PATH $HOME/.local/bin --index=2
+    add_to_a_path PATH /bin
+    add_to_a_path PATH /usr/bin
+    add_to_a_path PATH /usr/local/bin
+    add_to_a_path PATH /usr/local/sbin
+    add_to_a_path PATH ~/git/bin
+    add_to_a_path PATH /opt/local/bin
+    add_to_a_path PATH /sbin
+
+    add_to_a_path LD_LIBRARY_PATH $HOME/lib --start
+
+    export PS1
+
+    #
+    # Path dependencies
+    #
+
+    if [ -x /usr/local/bin/which ]
+    then
+        export WHICH=/usr/local/bin/which
+    else
+        export WHICH=/usr/bin/which
+    fi
+    export EDITOR=`$WHICH vim`
+    export EMAIL="dotjab@al-got-rhythm.net"
+
+    source $JAB/colour-environ
+
+    RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
+
+    set -o vi
 fi
-
-if $LS_PROGRAM -@ >/dev/null 2>&1
-then
-    export LS_COLOUR_OPTION='-@'
-elif $LS_PROGRAM --color=auto >/dev/null 2>&1
-then
-    export LS_COLOUR_OPTION='--color=auto'
-else
-    export LS_COLOUR_OPTION=
-fi
-if $LS_PROGRAM --group-directories-first >/dev/null 2>&1
-then
-    export LS_DIRS_OPTION='--group-directories-first'
-else
-    export LS_DIRS_OPTION=
-fi
-[[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
-
-add_to_a_path PATH $HOME/bin --start
-add_to_a_path PATH $JAB/bin --index=1
-add_to_a_path PATH $HOME/.local/bin --index=2
-add_to_a_path PATH /bin
-add_to_a_path PATH /usr/bin
-add_to_a_path PATH /usr/local/bin
-add_to_a_path PATH /usr/local/sbin
-add_to_a_path PATH ~/git/bin
-add_to_a_path PATH /opt/local/bin
-add_to_a_path PATH /sbin
-
-
-export PS1
-
-#
-# Path dependencies
-#
-
-if [ -x /usr/local/bin/which ]
-then
-    export WHICH=/usr/local/bin/which
-else
-    export WHICH=/usr/bin/which
-fi
-export EDITOR=`$WHICH vim`
-export EMAIL="dotjab@al-got-rhythm.net"
-
-source $JAB/colour-environ
-
-RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
-
-set -o vi
+JAB_ENVIRON_SOURCED=1
