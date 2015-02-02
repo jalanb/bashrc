@@ -27,6 +27,11 @@ nnoremap <C-F4>     <C-W>c
 "
 " ordinary keys {{{2
 "
+" search {{{3
+"
+"noremap / - search
+ noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
+"
 " letters {{{3
 "
 "noremap a - append
