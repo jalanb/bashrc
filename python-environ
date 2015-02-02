@@ -1,13 +1,5 @@
 #! /bin/bash
 
-export JAB_PYTHON=$JAB/src/python
-source $JAB/bin/add_to_a_path.sh
-add_to_a_path PYTHONPATH $JAB_PYTHON/site
-export TRY="$JAB_PYTHON/testing/try.py"
-
-test -d $JAB_PYTHON && export PYTHON_HOME=$JAB_PYTHON
-test -d ~/src/python && export PYTHON_HOME=~/src/python
-test -f $JAB_PYTHON/pythonrc.py && export PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
 find_python ()
 {
     test -x $PYTHON && return 0
@@ -35,8 +27,23 @@ _has_py ()
     _has_ext py "$@"
 }
 
+_try="$_JAB_SRC_PYTHON_DIR/testing/try.py"
+[[ -f $_try ]] || _try=no_file_try_py
+export TRY=$_try
+
 _jab_src_python_dir=$JAB/src/python
 [[ -d $_jab_src_python_dir ]] || _jab_src_python_dir=no_dir_jab_src_python
 _home_src_python_dir=~/src/python
 [[ -d $_home_src_python_dir ]] || _home_src_python_dir=no_dir_home_src_python
 
+source $JAB/environ  # provides source_path()
+source_path $JAB/bin/add_to_a_path.sh
+
+export JAB_PYTHON=$_jab_src_python_dir
+export HOME_PYTHON=$_home_src_python_dir
+_has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
+_has_py $JAB_PYTHON && add_to_a_path _SRC_PYTHON_PATH $JAB_PYTHON
+_has_py $JAB_PYTHON/site && add_to_a_path PYTHONPATH $JAB_PYTHON/site
+export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
+PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
+test -f $PYTHON_HOME/pythonrc.py && export PYTHONSTARTUP=$PYTHON_HOME/pythonrc.py
