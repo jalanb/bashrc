@@ -360,11 +360,6 @@ lr ()
     ls -lhtr "$@"
 }
 
-lp ()
-{
-    source $GITHUB_SOURCES/liquidprompt/liquidprompt
-}
-
 lt ()
 {
     ls *.test*
@@ -745,7 +740,7 @@ gvd ()
 
 hub ()
 {
-    c $GITHUB_SOURCES "$@"
+    c $GITHUB "$@"
     ls
 }
 
@@ -779,7 +774,7 @@ add ()
 
 jpi ()
 {
-    local path_to_jpm=$GITHUB_SOURCES/jpm
+    local path_to_jpm=$GITHUB/jpm
     cd $path_to_jpm
     source /home/alanb/.virtualenvs/jpm/bin/activate
     add_to_a_path PATH $path_to_jpm/bin
@@ -793,12 +788,12 @@ jpi ()
 
 jpm ()
 {
-    PYTHONPATH=$PYTHONPATH:$GITHUB_SOURCES/jpm python $GITHUB_SOURCES/jpm/bin/jpm "$@"
+    PYTHONPATH=$PYTHONPATH:$GITHUB/jpm python $GITHUB/jpm/bin/jpm "$@"
 }
 
 kpj ()
 {
-    kp -e \"ssh -i $JAB_ID\"
+    rsync -a -e \"ssh -i $JAB_ID\"
 }
 
 lly ()
@@ -825,6 +820,11 @@ lrt ()
     /bin/ls --color=always -lhtr "$dir" |  less -R -m -N +G
 }
 
+ls1 ()
+{
+    l1 "$@" | sort
+}
+
 lyy ()
 {
     reset=$(shopt -p dotglob)
@@ -846,7 +846,7 @@ num ()
 
 pyi ()
 {
-    cd $GITHUB_SOURCES/pym/pym
+    cd $GITHUB/pym/pym
     add_to_a_path PATH ./bin
     add_to_a_path PYTHONPATH ./pym
     source ~/.virtualenvs/pym/bin/activate
@@ -897,13 +897,6 @@ ps3 ()
     fi
 }
 
-q ()
-{
-    HUB=$HOME/src/git/bucket
-    cd $HUB/qaz
-    . qaz.bash
-}
-
 rff ()
 {
     r fred
@@ -938,7 +931,7 @@ sto ()
 
 tmp ()
 {
-    pushd $(python $GITHUB_SOURCES/kd/kd.py ~/tmp "$@")
+    pushd $(python $KD_DIR/kd.py ~/tmp "$@")
 }
 
 unalias try > /dev/null 2>&1
@@ -1167,7 +1160,7 @@ range ()
     local destination=.
     if [[ -n "$*" ]]
     then
-        local kd_script=$GITHUB_SOURCES/kd/kd.py
+        local kd_script=$KD_DIR/kd.py
         if ! destination=$(PYTHONPATH=$python_directory python $kd_script "$@" 2>&1)
         then
             echo "$destination"
@@ -1319,8 +1312,8 @@ jab_scripts()
 
 _show_git_here ()
 {
-    local days=${1:-5}
     [[ -d $PWD/.git ]] || return
+    local days=${1:-5}
     local _log=$(git -C $PWD log -n 1)
     [[ $? ]] && git -C $PWD lg --since="$days days ago"
 }
