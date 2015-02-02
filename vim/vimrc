@@ -354,6 +354,7 @@ endif
 " Ok, ok, so I have some spelling blind-spots {{{1
 "
 abbreviate becuase because
+abbreviate lamda lambda
 abbreviate seperate separate
 "
 " Some miscellaneous stuff from around the interwebs {{{1
