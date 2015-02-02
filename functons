@@ -1202,6 +1202,12 @@ ylint ()
 
 # xxxxxx
 
+has_py ()
+{
+    has_ext py "$@"
+}
+
+
 please ()
 {
     local last=$(history -p !-1)
@@ -1228,6 +1234,12 @@ run_as ()
 }
 
 # xxxxxxx
+
+has_ext ()
+{
+  test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | head -n 1)
+}
+
 
 pylinum ()
 {

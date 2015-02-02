@@ -25,3 +25,13 @@ find_python ()
 
 find_python
 
+_has_ext ()
+{
+  test -n $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | head -n 1)
+}
+
+_has_py ()
+{
+    _has_ext py "$@"
+}
+
