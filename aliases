@@ -8,7 +8,7 @@
 
 # This list is quite long enough, we accept no other aliases
 #   Thanks anyway
-unalias -a 
+unalias -a
 
 # The wee x headings are counts
 #   all the wee aliases in this wee section have only one character, oui,
