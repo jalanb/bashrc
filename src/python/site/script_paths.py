@@ -8,7 +8,7 @@ from dotsite import paths
 
 
 def get(strings):
-    hub = paths.environ_path('GITHUB_SOURCES')
+    hub = paths.environ_path('GITHUB')
     jab_python = paths.environ_path('JAB_PYTHON')
     jab_todo = paths.environ_path('JAB_TODO')
     config = paths.makepath('~/.config')

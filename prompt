@@ -23,7 +23,7 @@ changes=0
 get_repo_status ()
 {
     GIT_BRANCH=
-    local significant_svn_status=$JAB_PYTHON/significant_svn_status.py
+    local significant_svn_status=$JAB_PYTHON_DIR/significant_svn_status.py
     test -f $significant_svn_status || return 1
     if python $significant_svn_status .
     then
@@ -62,7 +62,7 @@ prompt_command ()
     [[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
     local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
     if which jython > /dev/null 2>&1
-    then python_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
+    then jython_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
     fi
     if [[ -n "$VIRTUAL_ENV" ]]
     then python_version=${python_version}.$(basename $VIRTUAL_ENV)
@@ -70,7 +70,7 @@ prompt_command ()
     console_whoami 2>/dev/null
     # local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
-    [ -f $GITHUB_SOURCES/kd/kd.py ] && python $GITHUB_SOURCES/kd/kd.py --add .
+    [ -f $KD_DIR/kd.py ] && python $KD_DIR/kd.py --add .
     history -a
 }
 
@@ -83,11 +83,11 @@ export LP_ENABLE_SHORTEN_PATH=0
 
 # /liquidprompt features
 
-test -d $GITHUB_SOURCES/liquidprompt && PROMPT_COMMAND=off
+test -d $GITHUB/liquidprompt && PROMPT_COMMAND=off
 if [[ $PROMPT_COMMAND == off ]]
 then
     unset PROMPT_COMMAND
-    source $GITHUB_SOURCES/liquidprompt/liquidprompt
+    source $GITHUB/liquidprompt/liquidprompt
     PROMPT_COMMAND="$PROMPT_COMMAND; console_whoami 2>/dev/null"
 else
     if [[ -n "$MYVIMRC" ]]

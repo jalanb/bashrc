@@ -24,4 +24,4 @@ def JAB():
 
 
 def github_sources():
-    return _get_environ_path('GITHUB_SOURCES')
+    return _get_environ_path('GITHUB')

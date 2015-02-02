@@ -41,7 +41,7 @@ show_python_diff ()
 {
     if [[ -d $PYDIFF ]]
     then
-        python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT" 
+        python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
         local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
         if [[ -f $pydiff_output ]]
         then
@@ -111,7 +111,7 @@ main ()
 {
     set_symbols "$@"
     if [[ $ARGS =~ -g ]]
-    then 
+    then
         VIM_EDITOR="gvim -f"
         ARGS=${ARGS/-g}
     fi

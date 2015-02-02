@@ -1,7 +1,7 @@
 #! /bin/bash
 
 HTML_GLOB=*${2/.py}*.html
-HTML=$(python2 $GITHUB_SOURCES/psydiff/psydiff.py $* | grep 'HTML:' | sed -e 's/HTML: //')
+HTML=$(python2 $GITHUB/psydiff/psydiff.py $* | grep 'HTML:' | sed -e 's/HTML: //')
 if [[ -z $HTML ]]
 then echo no diff
 elif [[ ! -f $HTML ]]
