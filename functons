@@ -23,7 +23,10 @@ c ()
     if [[ $c_result == "0" ]]
     then
         _show_todo_here
-        _show_git_here
+        echo
+        _show_git_time
+        echo
+        git_simple_status
     fi
     return $c_result
 }
@@ -1383,6 +1386,26 @@ source_aliases ()
     source $1
 }
 
+_get_git_timer ()
+{
+    git -C $PWD lg | grep $1
+}
+
+_show_git_time ()
+{
+    [[ -d $PWD/.git ]] || return
+    local _log=
+    local period=
+    for period in seconds minutes hours days weeks "month | grep -v year" year
+    do
+        _log=$(_get_git_timer $period)
+        if [[ -n $_log ]]
+        then
+            _get_git_timer $period
+            break
+        fi
+    done
+}
 # xxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxxx
@@ -1523,109 +1546,39 @@ _divv_get_difference ()
         $destination_gitignore \
     "$source_dir" "$destination_dir" 2>/dev/null
 }
-
-db () 
-{ 
-    name=$1;
-    [[ -z $name ]] && return 1;
-    local line_name=db_${name}_line;
-    echo 1;
-    set -x;
-    echo 2;
-    "$@";
-    echo 3;
-    set +x
-}
-db () 
-{ 
-    name=$1;
-    [[ -z $name ]] && return 1;
-    local line_name=db_${name}_line;
-    echo 1;
-    set -x;
-    echo 2;
-    "$@";
-    echo 3;
-    set +x
-}
-db () 
-{ 
-    name=$1;
-    [[ -z $name ]] && return 1;
-    local line_name=db_${name}_line;
-    echo 1;
-    set -x;
-    echo 2;
-    "$@";
-    echo 3;
-    set +x
-}
-db () 
-{ 
-    name=$1;
-    [[ -z $name ]] && return 1;
-    local line_name=db_${name}_line;
-    echo 1;
-    set -x;
-    echo 2;
-    "$@";
-    echo 3;
-    set +x
-}
-db () 
-{ 
-    name=$1;
-    [[ -z $name ]] && return 1;
-    local line_name=db_${name}_line;
-    echo 1;
-    set -x;
-    echo 2;
-    "$@";
-    echo 3;
-    set +x
-}
-3y () 
-{ 
-    if [[ -f $1 ]]; then
-        dir=$(dirname $1);
-        shift;
-    else
-        if [[ -d $1 ]]; then
-            dir=$1;
-            shift;
-        else
-            dir=;
+_show_git_time ()
+{
+    [[ -d $PWD/.git ]] || return;
+    local _log=;
+    for period in seconds minutes hours days weeks;
+    do
+        _log=$(git -C $PWD lg | grep $period);
+        if [[ -n $_log ]]; then
+            echo -e $_log;
+            return;
         fi;
+    done;
+    _log=$(git -C $PWD lg | grep month | grep -v year);
+    if [[ -z $_log ]]; then
+        _log=$(git -C $PWD lg | grep year);
     fi;
-    Tree -P "*.py" $dir "$@"
+    [[ -n $_log ]] && echo -e $_log
 }
-3y () 
-{ 
-    if [[ -f $1 ]]; then
-        dir=$(dirname $1);
-        shift;
-    else
-        if [[ -d $1 ]]; then
-            dir=$1;
-            shift;
-        else
-            dir=;
+_show_git_time ()
+{
+    [[ -d $PWD/.git ]] || return;
+    local _log=;
+    for period in seconds minutes hours days weeks;
+    do
+        _log=$(git -C $PWD lg | grep $period);
+        if [[ -n $_log ]]; then
+            git -C $PWD lg | grep $period
+            return;
         fi;
+    done;
+    _log=$(git -C $PWD lg | grep month | grep -v year);
+    if [[ -z $_log ]]; then
+        _log=$(git -C $PWD lg | grep year);
     fi;
-    Tree -P "*.py" $dir "$@"
-}
-3y () 
-{ 
-    if [[ -f $1 ]]; then
-        dir=$(dirname $1);
-        shift;
-    else
-        if [[ -d $1 ]]; then
-            dir=$1;
-            shift;
-        else
-            dir=;
-        fi;
-    fi;
-    Tree -P "*.py" $dir "$@"
+    [[ -n $_log ]] && echo -e $_log
 }
