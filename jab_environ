@@ -1,17 +1,32 @@
 #! /bin/bash
 
-export JAB=${JAB:-$HOME/.jab}
-export JAB_TODO=$JAB/todo.txt
-home_id=~/.ssh/id_jab
-[[ -f $home_id ]] && export JAB_ID=$home_id
-export JAB_PUB_ID=$JAB_ID.pub
-export JAB_SSH=$(dirname $JAB_PUB_ID)
-export JAB_HOME=$HOME
-export JAB_PYTHON=$JAB/src/python
-export EMPLOYER_DOMAIN=s3group.com
-export EMPLOYER_USERNAME=alanb
-JABS=
-if [ -d /usr/local/svn/jabs ]
-then JABS=file:///usr/local/svn/jabs
+_try_known_jab_paths ()
+{
+    local github_jab_dir=~/src/git/hub/dotjab
+    [[ -d $github_jab_dir ]] || github_jab_dir=
+    local myhome_jab_dir=~/.jab
+    [[ -d $myhome_jab_dir ]] || myhome_jab_dir=
+    local jab_dir=${github_jab_dir:-$myhome_jab_dir}
+    [[ -d $jab_dir ]] || jab_dir=
+
+    export DOTJAB=$github_jab_dir
+    [[ -d $DOTJAB ]] || DOTJAB=not_dir_dotjab
+    export JAB=${JAB:-jab_dir}
+    [[ -d $JAB ]] || JAB=not_dir_jab
+}
+
+if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]
+then
+    _try_known_jab_paths
+    export JAB_TODO=$JAB/todo.txt
+    [[ -f $JAB_TODO ]] || JAB_TODO=not_file_jab_todo
+    home_id=~/.ssh/id_jab
+    [[ -f $home_id ]] && export JAB_ID=$home_id
+    export JAB_PUB_ID=$JAB_ID.pub
+    export JAB_SSH=$(dirname $JAB_PUB_ID)
+    export JAB_HOME=$HOME
+    JAB_PYTHON=$JAB/src/python
+    [[ -d $JAB_PYTHON ]] || JAB_PYTHON=not_dir_jab_python
+    export JAB_PYTHON
 fi
-export JABS
+JAB_JAB_ENVIRON_SOURCED=1
