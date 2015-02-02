@@ -35,3 +35,8 @@ _has_py ()
     _has_ext py "$@"
 }
 
+_jab_src_python_dir=$JAB/src/python
+[[ -d $_jab_src_python_dir ]] || _jab_src_python_dir=no_dir_jab_src_python
+_home_src_python_dir=~/src/python
+[[ -d $_home_src_python_dir ]] || _home_src_python_dir=no_dir_home_src_python
+
