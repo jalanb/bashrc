@@ -1,5 +1,6 @@
-cd ~/src/git/code.rdkcentral.com/r/cmf/tools/blackduck/compliance; python ../protex_server/home/blackduck/bin/ScanGerritChange.py -U 942, 0
-    Lose It, 5
-           936, 1
-                 Laugh, 4
-                      Love, 2
+Live, 0
+    Love, 5
+        Let Go, 1
+              Laugh, 4
+                   Love, 2
+No visible means of support and you have not seen nothing yet, 1
