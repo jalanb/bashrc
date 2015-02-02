@@ -180,6 +180,12 @@ cl ()
     fi
 }
 
+cq ()
+{
+    sqf
+    c $QAZ
+}
+
 cv ()
 {
     kd $1
@@ -925,6 +931,12 @@ rqa ()
 sib ()
 {
     source_file ~/.bashrc
+}
+
+sqf ()
+{
+    export QAZ=$BITBUCKET/qaz
+    . $QAZ/src/bash/functons
 }
 
 sto ()
