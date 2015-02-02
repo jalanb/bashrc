@@ -53,6 +53,9 @@ nnoremap n nzzzv
  noremap q :q<CR>
 "noremap r - change one char
 "noremap s - start replacing
+nnoremap so :!xdg-open http://stackoverflow.com/search?q=
+nnoremap sp :!xdg-open http://stackoverflow.com/search?q=[python]+
+nnoremap sv :!xdg-open http://stackoverflow.com/search?q=[vim]+
 "noremap t - used by ftplugin/python/jab.vim
 "noremap u - undo
 "noremap v - start visual
