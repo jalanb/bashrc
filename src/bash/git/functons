@@ -5,6 +5,8 @@
 
 # functons for git
 
+_git_status_char_regexp="[ MADRCU]"
+_git_status_regexp="^$_git_status_char_regexp$_git_status_char_regexp"
 # sorted by strcmp of function name
 
 # x
@@ -37,7 +39,7 @@ gd ()
 gs ()
 {
     shift_dir "$@" && shift
-	_do_git_status "$@"
+	_do_git_status $dir "$@"
 }
 
 # xxx
@@ -219,13 +221,40 @@ _status_chars ()
 _do_git_status ()
 {
 	local __doc__="get the status from git"
-    reuse_dir "$@" && shift
+    dir=$1; shift
 	[[ -z $dir ]] && dir=$PWD
-	git -C $dir status "$@"
+	# [[ -d ${dir}/.git ]] || return
+    git -C $dir status "$@"
+}
+
+# xxxxxxxxxxxxxxx
+
+_any_git_changes ()
+{
+	local __doc__="whether the current dir has modified or untacked files"
+    local dir=$1
+	[[ -z $dir ]] && dir=$PWD
+	if [[ -d ${dir}/.git ]]
+    then
+        git -C $dir status -s | grep "$_git_status_regexp"
+    fi
+}
+
+_has_git_changes ()
+{
+    local dir=$1
+    local _files=$(_any_git_changes $dir)
+    [[ -n $_files ]]
 }
 
 # xxxxxxxxxxxxxxxxx
 
+git_simple_status ()
+{
+    _has_git_changes $1 || return
+    _do_git_stat $dir
+    # | grep "$_git_status_regexp"
+}
 _show_run_storage ()
 {
     cat $_storage
