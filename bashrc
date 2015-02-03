@@ -29,7 +29,7 @@ _get_source_path_from_what ()
     if test -f $what_script
     then source $what_script
     else
-        echo "$what_script is not a file" >2
+        echo "$what_script is not a file" >&2
         return 1
     fi
 }
