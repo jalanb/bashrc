@@ -95,8 +95,15 @@ def add_path_to_paths(paths, path, i):
     if i is False:
         i = len(paths)
     result = paths[:]
-    if path and path not in result:
-        result.insert(i, path)
+    if path:
+        j = lambda x, y: x.index(y) if y in x else -1
+        if path not in result:
+            result.insert(i, path)
+        else:
+            j = result.index(path)
+            if i != j:
+                del result[j]
+                result.insert(i, path)
     return result
 
 
