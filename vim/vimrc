@@ -208,7 +208,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>r :call SetRelativeNumber()<cr>
 "noremap <leader>s
  noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
-"noremap <leader>u
+ noremap <leader>u :GundoToggle<CR>
  noremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
  noremap <leader>w :w<cr>
 "noremap <leader>x
