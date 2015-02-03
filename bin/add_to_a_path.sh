@@ -37,12 +37,45 @@ add_to_a_path ()
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
-        local new_paths
-        if new_paths=$($PYTHON $JAB_PYTHON/add_to_a_path.py "$@" 2>/dev/null)
+        local new_paths=$(_run_script "$@")
+        if [[ -n $new_paths ]]
         then
             eval $1=$new_paths
             export $1
+        else
+            echo $?
+            echo $new_paths
         fi
+    fi
+}
+
+_run_script ()
+{
+    # This function can get called before PATHs are set up
+    # If they are set up: use them
+    # Else: try sensible defaults around knowing that this script exists
+
+    local jab_parent=$(echo $BASH_SOURCE | sed -e "s/jab.*/jab/")
+    local jab=${JAB:-$jab_parent}
+    local jab_src_python=$jab/src/python
+    local jab_python=${JAB_PYTHON:-$jab_src_python}
+    local script=$jab_python/add_to_a_path.py
+    if [[ -f $script ]]
+    then
+        local mython=~/bin/python
+        [[ -x $mython ]] || mython=/usr/local/bin/python
+        [[ -x $mython ]] || mython=/usr/bin/python
+        local executable=${PYTHON:-$mython}
+        local old_pythonpath=$PYTHONPATH
+        local old_library_path=$LD_LIBRARY_PATH
+        [[ $PYTHONPATH =~ $jab ]] || export PYTHONPATH=$jab_python/site
+        [[ $LD_LIBRARY_PATH =~ $HOME/lib ]] || export LD_LIBRARY_PATH=$HOME/lib
+        $executable $jab_python/add_to_a_path.py "$@"
+        export PYTHONPATH=$old_pythonpath
+        export LD_LIBRARY_PATH=$old_library_path
+    else
+        echo $script is not a file >&2
+        [[ ! -d $jab_python ]] && echo $jab_python is not a dir >&2
     fi
 }
 
