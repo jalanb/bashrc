@@ -6,8 +6,8 @@ type = git
 source = https://github.com/nathanaelkane/vim-indent-guides.git
 type = git
 
-[cute-python]
-source = https://github.com/ehamberg/vim-cute-python.git
+[vim-easymotion]
+source = https://github.com/haya14busa/vim-easymotion.git
 type = git
 
 [YouCompleteMe]
@@ -18,8 +18,8 @@ type = git
 source = https://github.com/tpope/vim-abolish.git
 type = git
 
-[vim-easymotion]
-source = https://github.com/haya14busa/vim-easymotion.git
+[cute-python]
+source = https://github.com/ehamberg/vim-cute-python.git
 type = git
 
 [gitgutter]
