@@ -39,11 +39,13 @@ _home_src_python_dir=~/src/python
 source $JAB/environ  # provides source_path()
 source_path $JAB/bin/add_to_a_path.sh
 
+[[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
+[[ $PYTHONPATH =~ $JAB ]] || export PYTHONPATH=$_jab_src_python_dir/site$suffix
+
 export JAB_PYTHON=$_jab_src_python_dir
 export HOME_PYTHON=$_home_src_python_dir
 _has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
 _has_py $JAB_PYTHON && add_to_a_path _SRC_PYTHON_PATH $JAB_PYTHON
-_has_py $JAB_PYTHON/site && add_to_a_path PYTHONPATH $JAB_PYTHON/site
 export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
 PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
 test -f $PYTHON_HOME/pythonrc.py && export PYTHONSTARTUP=$PYTHON_HOME/pythonrc.py
