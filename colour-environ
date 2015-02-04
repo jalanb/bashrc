@@ -42,4 +42,4 @@ then
     export           PROMPT_GRAY="\033[1;38m"
     export       PROMPT_GRAY_TOO="\033[0;38m"
 fi
-JAB_COLOUR_ENVIRON_SOURCED=1
+export JAB_COLOUR_ENVIRON_SOURCED=1

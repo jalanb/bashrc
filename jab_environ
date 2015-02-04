@@ -29,4 +29,4 @@ then
     [[ -d $JAB_PYTHON ]] || JAB_PYTHON=not_dir_jab_python
     export JAB_PYTHON
 fi
-JAB_JAB_ENVIRON_SOURCED=1
+export JAB_JAB_ENVIRON_SOURCED=1
