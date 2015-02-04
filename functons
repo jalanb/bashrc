@@ -150,11 +150,11 @@ db ()
     name=$1
     [[ -z $name ]] && return 1
     local line_name=db_${name}_line
-    echo 1 # $line_name (add 776 1)
+    # echo 1 # $line_name (add 776 1)
     set -x
-    echo 2 # $line_name (add 776 3)
+    # echo 2 # $line_name (add 776 3)
     "$@"
-    echo 3 # $line_name (add 776 7)
+    # echo 3 # $line_name (add 776 7)
     set +x
 }
 
