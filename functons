@@ -1362,14 +1362,24 @@ vim_diff ()
     shift
     two="$1"
     shift
-    options="$@"
-    if [[ $options =~ -.* ]]
+    options=
+    if [[ $* =~ -.* ]]
     then
-        three="$1"
-        shift
-        options="$@"
+        args=
+        for arg in "$@"
+        do
+            if [[ $arg =~ -.* ]]
+            then options="$options $arg"
+            else
+                if [[ -z $args ]]
+                then args="$arg"
+                else args="$args $arg"
+                fi
+            fi
+        done
+        three=$args
     else
-        three=
+        three="$@"
     fi
     if ! diff -q "$one" "$two" >/dev/null
     then $EDITOR -d $options "$one" "$two" "$three"
