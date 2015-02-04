@@ -137,8 +137,6 @@ _set_up_symbols ()
     JAB_LOCAL=${myhome_jab_dir}/local
     [[ -d $JAB_LOCAL ]] || JAB_LOCAL=
     [[ -z $JAB_LOCAL && -d $github_jab_dir/local ]] && JAB_LOCAL=$github_jab_dir/local
-    # export JAB=${$HOME/src/git/hub/dotjab:-$HOME/.jab}
-    # JAB=${JAB:-$HOME/.jab}
 }
 
 _jab_bashrc ()
