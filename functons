@@ -1358,12 +1358,12 @@ _show_todo_here ()
 
 vim_diff ()
 {
-    one="$1"
+    first_file="$1"
     shift
-    two="$1"
+    second_file="$1"
     shift
     options=
-    three=
+    possible_third_file=
     if [[ $* =~ -.* ]]
     then
         args=
@@ -1378,23 +1378,23 @@ vim_diff ()
                 fi
             fi
         done
-        [[ -n $args ]] && three=$args
+        [[ -n $args ]] && possible_third_file=$args
     else
-        [[ -n "$@" ]] && three="$@"
+        [[ -n "$@" ]] && possible_third_file="$@"
     fi
-    if ! diff -q "$one" "$two" >/dev/null
+    if ! diff -q "$first_file" "$second_file" >/dev/null
     then
-        if [[ -n $three ]]
-        then $EDITOR -d $options "$one" "$two" "$three"
-        else $EDITOR -d $options "$one" "$two"
+        if [[ -n $possible_third_file ]]
+        then $EDITOR -d $options "$first_file" "$second_file" "$possible_third_file"
+        else $EDITOR -d $options "$first_file" "$second_file"
         fi
     else
-        if [[ -n $three ]]
+        if [[ -n $possible_third_file ]]
         then
-            if ! diff -q "$one" "$three" >/dev/null
-            then $EDITOR -d $options "$one" "$two" "$three"
-            elif ! diff -q "$two" "$three" >/dev/null
-            then $EDITOR -d $options "$one" "$two" "$three"
+            if ! diff -q "$first_file" "$possible_third_file" >/dev/null
+            then $EDITOR -d $options "$first_file" "$second_file" "$possible_third_file"
+            elif ! diff -q "$second_file" "$possible_third_file" >/dev/null
+            then $EDITOR -d $options "$first_file" "$second_file" "$possible_third_file"
             fi
         else
             echo same
