@@ -304,10 +304,7 @@ gv ()
 
 hd ()
 {
-    if [[ -n "$3" ]]
-    then vim_diff "$1" "$2" "$3" -o
-    else vim_diff "$1" "$2" -o
-    fi
+    vim_diff "$1" "$2" "$3" -o
 }
 
 hv ()
@@ -567,10 +564,7 @@ vb ()
 
 vd ()
 {
-    if [[ -n "$3" ]]
-    then vim_diff "$1" "$2" "$3" -O
-    else vim_diff "$1" "$2" -O
-    fi
+    vim_diff "$1" "$2" "$3" -O
 }
 
 ve ()
@@ -1356,49 +1350,41 @@ _show_todo_here ()
     [[ -f todo.txt ]] && todo_show
 }
 
+_diff_two_files ()
+{
+    ! diff -q $1 $2 >/dev/null 2>&1
+}
+
+_any_diff ()
+{
+    _diff_two_files $1 $2 && return 0
+    [[ -z $3 ]] && return 1
+    _diff_two_files $1 $3 && return 0
+    _diff_two_files $2 $3 && return 0
+    return 1
+}
+
 vim_diff ()
 {
     first_file="$1"
     shift
     second_file="$1"
     shift
-    options=
-    possible_third_file=
-    if [[ $* =~ -.* ]]
+    third_file=
+    editor_command="$EDITOR -d "
+    for arg in "$@"
+    do
+        [[ $arg =~ -.* ]] && editor_command="$editor_command $arg" && continue
+        [[ -z $third_file ]] && third_file=$arg
+    done
+    if ! _any_diff "$first_file" "$second_file" "$third_file"
     then
-        args=
-        for arg in "$@"
-        do
-            if [[ $arg =~ -.* ]]
-            then options="$options $arg"
-            else
-                if [[ -z $args ]]
-                then args="$arg"
-                else args="$args $arg"
-                fi
-            fi
-        done
-        [[ -n $args ]] && possible_third_file=$args
-    else
-        [[ -n "$@" ]] && possible_third_file="$@"
+        echo same
+        return 0
     fi
-    if ! diff -q "$first_file" "$second_file" >/dev/null
-    then
-        if [[ -n $possible_third_file ]]
-        then $EDITOR -d $options "$first_file" "$second_file" "$possible_third_file"
-        else $EDITOR -d $options "$first_file" "$second_file"
-        fi
-    else
-        if [[ -n $possible_third_file ]]
-        then
-            if ! diff -q "$first_file" "$possible_third_file" >/dev/null
-            then $EDITOR -d $options "$first_file" "$second_file" "$possible_third_file"
-            elif ! diff -q "$second_file" "$possible_third_file" >/dev/null
-            then $EDITOR -d $options "$first_file" "$second_file" "$possible_third_file"
-            fi
-        else
-            echo same
-        fi
+    if [[ -n $third_file ]]
+    then $editor_command "$first_file" "$second_file" "$third_file" 
+    else $editor_command "$first_file" "$second_file"
     fi
 }
 
