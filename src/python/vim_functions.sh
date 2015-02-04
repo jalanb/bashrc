@@ -12,8 +12,8 @@ recover ()
 		# I use the "g:recovering" variable within vim to
 		# 	prevent opening of extra tabs, YMMV
 		#
-		$VIM -r "$text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
-		/bin/rm -f "$swap_file"
+		local editor=${VIM:-$EDITOR}
+		$editor -r "$text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
 		if [[ -f "$recovered_file" ]]
 		then
 			if ! diff -q "$text_file" "$recovered_file"
