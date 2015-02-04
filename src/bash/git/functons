@@ -252,7 +252,9 @@ _has_git_changes ()
 git_simple_status ()
 {
     _has_git_changes $1 || return
-    _do_git_stat $dir
+    local git_dir=$dir
+    [[ -n $1 ]] && git_dir=$1
+    _do_git_stat $git_dir
     # | grep "$_git_status_regexp"
 }
 _show_run_storage ()
