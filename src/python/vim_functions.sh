@@ -14,13 +14,14 @@ recover ()
 		#
 		local editor=${VIM:-$EDITOR}
 		$editor -r "$text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
+		/bin/rm -i "$swap_file"
 		if [[ -f "$recovered_file" ]]
 		then
 			if ! diff -q "$text_file" "$recovered_file"
 			then
 				$VIM -d "$text_file" "$recovered_file"
 			fi
-			/bin/rm -f "$recovered_file"
+			/bin/rm -i "$recovered_file"
 		fi
 		return 0
 	else
