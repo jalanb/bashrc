@@ -26,7 +26,7 @@ c ()
         echo
         _show_git_time
         echo
-        git_simple_status
+        git_simple_status .
     fi
     return $c_result
 }
@@ -966,6 +966,13 @@ try ()
     TRY=$JAB_PYTHON/testing/try.py
     test -f ./try.py && TRY=./try.py
     python $TRY "$@"
+}
+
+vaf ()
+{
+    vim -p $JAB/aliases $JAB/functons
+    source_path $JAB/aliases
+    source_path $JAB/functons
 }
 
 vat ()
