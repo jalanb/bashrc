@@ -56,8 +56,6 @@ alias ..='c ..'
 
 alias eg="env | g "
 
-alias jj="c $JAB"
-
 alias kp="rsync -a"
 
 alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
