@@ -706,14 +706,15 @@ fsh ()
 {
 # run fred by his extension
     if [ -f fred.sh ]
-    then
-        bash fred.sh "$@"
+    then bash fred.sh "$@"
     elif [ -f fred.py ]
-    then
-        p fred.py "$@"
+    then p fred.py "$@"
+    elif [ -f ~/tmp/fred.sh ]
+    then bash ~/tmp/fred.sh "$@"
+    elif [ -f ~/tmp/fred.py ]
+    then p ~/tmp/fred.py "$@"
     elif [ -f "fred.test" ]
-    then
-        try "fred.test" "$@"
+    then try "fred.test" "$@"
     elif [ -f fred.c ]
     then
         /bin/rm -vf a.out
@@ -722,8 +723,7 @@ fsh ()
         then
             ./a.out
         fi
-    else
-        bash fred "$@"
+    else bash fred "$@"
     fi
 }
 
@@ -731,8 +731,9 @@ fpy ()
 {
 # run fred.py if fred.sh exists
     if [ -f fred.py ]
-    then
-        p fred.py "$@"
+    then p fred.py "$@"
+    elif [[ -f ~/tmp/fred.py ]]
+    then p ~/tmp/fred.py "$@"
     fi
 }
 
