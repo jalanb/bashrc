@@ -35,11 +35,11 @@ def default_options():
         'Use-Debugger': False,
     }
     globs = {
-        'development': ',tags a.out *.log',
-        'old': ',*.old',
-        'python': ',*.pyc *.pyo *.fail *$py.class *.profile',
+        'development': 'tags a.out *.log',
+        'old': '*.old',
+        'python': '*.pyc *.pyo *.fail *$py.class *.profile',
         'temporary':
-        ',*.bak *.orig temp.* *.tmp *~ .*~ fred* mary mary.* one two',
+        '*.bak *.orig temp.* *.tmp *~ .*~ fred* mary mary.* one two',
     }
     return options, globs
 
