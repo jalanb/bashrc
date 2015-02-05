@@ -21,3 +21,4 @@ noremap <leader>v mvO<c-r>.=<c-r>"<esc>`v
 noremap <F8> Oset -x<esc>joset +x<esc>k
 noremap <F7> gg/^\s*set..x$<cr>:noremap <F7> ddn<cr>
 
+let g:syntastic_sh_checkers=['bashate', 'checkbashisms', 'shellcheck']
