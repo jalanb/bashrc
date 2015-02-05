@@ -1,4 +1,3 @@
-# This file should be sourced by vim.sh, which will provide the $VIM value
 recover ()
 {
 	local swap_file="$2"
@@ -19,7 +18,7 @@ recover ()
 		then
 			if ! diff -q "$text_file" "$recovered_file"
 			then
-				$VIM -d "$text_file" "$recovered_file"
+				$editor -d "$text_file" "$recovered_file"
 			fi
 			/bin/rm -i "$recovered_file"
 		fi
