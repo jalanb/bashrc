@@ -4,30 +4,30 @@
 
 _show_status ()
 {
-    if [[ -d $JAB/.svn ]]
-    then svn stat $JAB
-    elif [[ -d $JAB/.git ]]
-    then git -C $JAB status | \
+    if [[ -d "$JAB"/.svn ]]
+    then svn stat "$JAB"
+    elif [[ -d "$JAB"/.git ]]
+    then git -C "$JAB" status | \
         grep -v "nothing to commit, working directory clean" | \
         sed -e s:Your.branch:\$JAB: | \
         grep --color 'up-to-date.*'
     fi
     local jab_src_bash=$JAB/src/bash
-    source_path $jab_src_bash/subversion/source
-    source_path $jab_src_bash/git/source
+    source_path "$jab_src_bash"/subversion/source
+    source_path "$jab_src_bash"/git/source
 }
 
 source_path ()
 {
     local __doc__='Local function in case cannot find the real one'
-    [[ -f $1 ]] && source $1
+    [[ -f $1 ]] && source "$1"
 }
 
 _get_source_path_from_what ()
 {
     local what_script=$(readlink -f ~/src/git/hub/what/what.sh)
-    if test -f $what_script
-    then source $what_script
+    if test -f "$what_script"
+    then source "$what_script"
     else
         echo "$what_script is not a file" >&2
         return 1
@@ -44,7 +44,7 @@ _find_subversion ()
 
 _get_jab_environ ()
 {
-    [[ -f $JAB/jab_environ ]] && source_path $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
+    [[ -f $JAB/jab_environ ]] && source_path "$JAB"/jab_environ || echo "Cannot find $JAB/environ" >&2
 }
 
 _source_jab_scripts ()
@@ -52,15 +52,15 @@ _source_jab_scripts ()
     _get_jab_environ
     for script in environ python-environ aliases functons
     do
-        source_path $JAB/$script || continue
-        source_path $JAB_LOCAL/$script || continue
+        source_path "$JAB/$script" || continue
+        source_path "$JAB_LOCAL/$script" || continue
     done
-    source_path $GITHUB/kd/kd.sh
-    source_path $GITHUB/viack/viack
-    source_path $JAB/src/bash/git-completion.bash
-    source_path $JAB_LOCAL/employer
-    source_path $JAB/prompt green
-    source_path $JAB_LOCAL/prompt
+    source_path "$GITHUB"/kd/kd.sh
+    source_path "$GITHUB"/viack/viack
+    source_path "$JAB"/src/bash/git-completion.bash
+    source_path "$JAB_LOCAL"/employer
+    source_path "$JAB"/prompt green
+    source_path "$JAB_LOCAL"/prompt
 }
 
 _if_not_python_try_my_bin ()
@@ -76,12 +76,12 @@ _if_not_python_try_my_bin ()
 
 _remove_jab_tmp_files()
 {
-    /bin/rm -rf $JAB/tmp/*
+    /bin/rm -rf "$JAB"/tmp/*
 }
 
 _show_todo ()
 {
-    builtin cd $JAB_PYTHON
+    builtin cd "$JAB_PYTHON"
     if python2.7 -c"a=0" >/dev/null 2>&1
     then test -f todo.py && python2.7 todo.py
     else
@@ -105,7 +105,7 @@ _show_welcome ()
     _show_status
     _remove_jab_tmp_files
     echo
-    echo Welcome jab, to $HOSTNAME
+    echo "Welcome jab, to $HOSTNAME"
     echo
 }
 
@@ -114,7 +114,7 @@ _set_up_symbols ()
     JAB=
     local github_jab_dir=~/src/git/hub/dotjab
     local myhome_jab_dir=~/.jab
-    bash_jab_dir=$(dirname $(readlink -f $BASH_SOURCE))
+    bash_jab_dir=$(dirname $(readlink -f "$BASH_SOURCE"))
     if [[ $bash_jab_dir == $github_jab_dir ]]
     then
         JAB=$github_jab_dir
@@ -162,8 +162,13 @@ _no_symbols ()
 run_interactively ()
 {
     _set_up_symbols
-    [[ -d $JAB ]] && _bashrc || _no_symbols
+    if [[ -d $JAB ]]
+    then _bashrc
+    else _no_symbols
+    fi
 }
 
+#set -x
 [[ $- =~ i ]] && run_interactively
+#set +x
 builtin cd
