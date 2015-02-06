@@ -7,7 +7,7 @@
 " function keys {{{2
 "
  noremap  <F1>      :help<cr>
- noremap  <F2>      :map <F2> 
+ noremap  <F2>      :ls<CR>:b<Space>
  noremap  <F3>      :map <F3> 
  noremap  <F4>      <c-w>w
  noremap  <F5>      <C-W>_
