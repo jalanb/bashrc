@@ -61,6 +61,8 @@ noremap tn :tabnew<Space>
 "noremap u - undo
 "noremap v - start visual
 "noremap w - forword
+" Next one is from http://vi.stackexchange.com/a/479/182
+cnoremap w!! w !sudo tee % 
 "noremap x - remove char
 "noremap y - yank
  noremap yb byw
