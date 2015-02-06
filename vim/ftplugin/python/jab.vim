@@ -31,6 +31,7 @@ NoMatchParen
 
 " Checkers
 let g:syntastic_python_checkers=['pep8', 'pylint', 'python']
+"let g:syntastic_python_python_exec = '~/bin/python'
 "
 " commenting this out because on jab.ook vim says
 " E117: Unknown function: SyntasticStatuslineFlag
