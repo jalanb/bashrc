@@ -935,7 +935,7 @@ rqa ()
 
 sib ()
 {
-    source_file ~/.bashrc
+    source_path ~/.bashrc
 }
 
 sqf ()
@@ -1529,7 +1529,7 @@ _edit_source ()
     then
         source_aliases $filepath
     else
-        source_file $filepath "$@"
+        source_path $filepath "$@"
     fi
 }
 
