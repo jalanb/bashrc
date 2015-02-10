@@ -378,7 +378,8 @@ set visualbell
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
 set cursorline      " Highlight the screen line of the cursor with CursorLine
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=list:longest,full " See http://vi.stackexchange.com/questions/656/bash-like-partial-tab-complete-for-filenames-in-vim
+set completeopt=menu,preview,longest
 "
 " Ignorance {{{2
 "Ignore these files when completing names and in Explorer
