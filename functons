@@ -1577,39 +1577,3 @@ _divv_get_difference ()
         $destination_gitignore \
     "$source_dir" "$destination_dir" 2>/dev/null
 }
-_show_git_time ()
-{
-    [[ -d $PWD/.git ]] || return;
-    local _log=;
-    for period in seconds minutes hours days weeks;
-    do
-        _log=$(git -C $PWD lg | grep $period);
-        if [[ -n $_log ]]; then
-            echo -e $_log;
-            return;
-        fi;
-    done;
-    _log=$(git -C $PWD lg | grep month | grep -v year);
-    if [[ -z $_log ]]; then
-        _log=$(git -C $PWD lg | grep year);
-    fi;
-    [[ -n $_log ]] && echo -e $_log
-}
-_show_git_time ()
-{
-    [[ -d $PWD/.git ]] || return;
-    local _log=;
-    for period in seconds minutes hours days weeks;
-    do
-        _log=$(git -C $PWD lg | grep $period);
-        if [[ -n $_log ]]; then
-            git -C $PWD lg | grep $period
-            return;
-        fi;
-    done;
-    _log=$(git -C $PWD lg | grep month | grep -v year);
-    if [[ -z $_log ]]; then
-        _log=$(git -C $PWD lg | grep year);
-    fi;
-    [[ -n $_log ]] && echo -e $_log
-}
