@@ -1429,10 +1429,11 @@ _show_git_time ()
     local period=
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
-        _log=$(_get_git_timer $period)
+        regexp=$period.ago
+        _log=$(_get_git_timer $regexp)
         if [[ -n $_log ]]
         then
-            _get_git_timer $period
+            _get_git_timer $regexp
             break
         fi
     done
