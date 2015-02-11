@@ -57,7 +57,7 @@ def parse_args(methods):
 
 def get_freds(paths):
     if not paths:
-        result = [str('~/tmp/fred.%s' % _) for _ in ['py', 'sh', 'txt']]
+        result = [makepath('~/tmp/fred.%s' % _) for _ in ['py', 'sh', 'txt']]
     else:
         result = set()
         for path in paths:
