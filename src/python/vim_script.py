@@ -232,8 +232,9 @@ def get_globs(directory, glob):
     """A list of any files matching that glob in that directory"""
     if directory == '':
         directory = '.'
-    return [os.path.join(directory, f)
-            for f in os.listdir(directory)
+    path = os.path.expanduser(os.path.expandvars(directory))
+    return [os.path.join(path, f)
+            for f in os.listdir(path)
             if fnmatch(f, glob)]
 
 
