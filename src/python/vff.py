@@ -9,7 +9,7 @@ from dotsite.paths import makepath, pwd
 
 def get_freds(paths):
     if not paths:
-        paths = ['~/tmp']
+        paths = [str('~/tmp/fred.%s' % _) for _ in ['py', 'sh', 'txt']]
     result = set()
     for path in paths:
         path = makepath(path)
