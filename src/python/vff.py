@@ -57,14 +57,15 @@ def parse_args(methods):
 
 def get_freds(paths):
     if not paths:
-        paths = [str('~/tmp/fred.%s' % _) for _ in ['py', 'sh', 'txt']]
-    result = set()
-    for path in paths:
-        path = makepath(path)
-        if path.isdir():
-            result |= {p for p in path.files('fred*') if p[-1] != '~'}
-        elif path.isfile() and path.name.startswith('fred'):
-            result.add(path)
+        result = [str('~/tmp/fred.%s' % _) for _ in ['py', 'sh', 'txt']]
+    else:
+        result = set()
+        for path in paths:
+            path = makepath(path)
+            if path.isdir():
+                result |= {p for p in path.files('fred*') if p[-1] != '~'}
+            elif path.isfile() and path.name.startswith('fred'):
+                result.add(path)
     return [pwd().relpathto(p) for p in result]
 
 
