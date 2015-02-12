@@ -10,7 +10,7 @@ noremap D Oimport pudb<cr>pudb.set_trace()<esc>j
 noremap tf :Fix<cr>
 noremap tm :Mash<cr>
 noremap tt :MashTry<cr>
-noremap tn :Try<cr>
+noremap tr :Try<cr>
 noremap tp :Pylint<cr>
 noremap <S-F9> :call WritePEP()<cr>
 noremap <leader><space> :%s/\s\+$//<cr>
