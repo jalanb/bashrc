@@ -1086,6 +1086,11 @@ mkcd ()
     mkdir -p "$@" && cd "$@"
 }
 
+nose ()
+{
+    nosetests --with-progressive "$@"
+}
+
 rq.. ()
 {
     local directory_here=$(basename "$(pwd)")
