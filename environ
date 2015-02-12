@@ -85,8 +85,8 @@ then
     add_to_a_path PATH $JAB/bin --index=1
     add_to_a_path PATH $HOME/.local/bin --index=2
     add_to_a_path PATH /bin
-    add_to_a_path PATH /usr/bin
     add_to_a_path PATH /usr/local/bin
+    add_to_a_path PATH /usr/bin
     add_to_a_path PATH /usr/local/sbin
     add_to_a_path PATH ~/git/bin
     add_to_a_path PATH /opt/local/bin
