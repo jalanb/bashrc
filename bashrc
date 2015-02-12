@@ -112,8 +112,8 @@ _show_welcome ()
 _set_up_symbols ()
 {
     JAB=
-    local github_jab_dir=~/src/git/hub/dotjab
-    local myhome_jab_dir=~/.jab
+    local github_jab_dir=$(readlink -f ~/src/git/hub/dotjab)
+    local myhome_jab_dir=$(readlink -f ~/.jab)
     bash_jab_dir=$(dirname $(readlink -f "$BASH_SOURCE"))
     if [[ $bash_jab_dir == $github_jab_dir ]]
     then
