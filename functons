@@ -1419,7 +1419,7 @@ source_aliases ()
 
 _get_git_timer ()
 {
-    git -C $PWD lg | grep $1 | head -n $(( $LINES / 2 ))
+    git -C $PWD lg 2> /dev/null | grep $1 | head -n $(( $LINES / 2 ))
 }
 
 _show_git_time ()
