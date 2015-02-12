@@ -20,7 +20,7 @@ _show_status ()
 source_path ()
 {
     local __doc__='Local function in case cannot find the real one'
-    [[ -f $1 ]] && source "$1"
+    [[ -f $1 ]] && source "$@"
 }
 
 _get_source_path_from_what ()
