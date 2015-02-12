@@ -186,7 +186,7 @@ _do_git_stat ()
 	local __doc__="get the short status from git"
     reuse_dir "$@" && shift
 	if shift_path "$@"
-	then git -C $dir status -s "$path"
+	then git -C $dir status -s "$path" 2 > /dev/null
 	else echo \"$path\" is not a file
 	fi
 }
