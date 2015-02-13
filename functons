@@ -60,7 +60,13 @@ p () {
         console_title_off "${me}@${here}"
 }
 
-v () {
+q ()
+{
+    exit 0
+}
+
+v ()
+{
     if [[ -z $* ]]; then
         $EDITOR
     else
@@ -88,8 +94,9 @@ v () {
     fi
 }
 
-x () {
-    /Users/jab/bin/exercise
+x ()
+{
+    exit 1
 }
 
 y () {
