@@ -131,9 +131,15 @@ _gsi_menu ()
     _git_modified $1 && _gsi_opt s plit
     _gsi_opt d rop
     [[ -n $GIT_ADDED ]] &&_gsi_opt f asten
+    _gsi_opt v im
     suffix=";"
     _gsi_opt hjkl " move"
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
+}
+
+_gsi_vim ()
+{
+    _git_untracked $1 && v $1 || gdv $1
 }
 
 gsi ()
@@ -150,6 +156,7 @@ gsi ()
         [[ $answer =~ [sS] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
         [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
         [[ $answer =~ [fF] ]] && gc
+        [[ $answer =~ [vV] ]] && _gsi_vim $f
     done
     [[ -n $GIT_ADDED ]] && gc
     if [[ -n $STATUS_QUESTIONS ]]
