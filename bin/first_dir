@@ -43,3 +43,10 @@ shift_dir()
     done
     return 1
 }
+
+first_num ()
+{
+    num=$(python $JAB_PYTHON/first_num.py "$@")
+    args=$(python $JAB_PYTHON/first_num.py NOT_FIRST_NUM "$@")
+    [[ -n $num ]]
+}

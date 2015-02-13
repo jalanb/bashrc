@@ -19,9 +19,10 @@ unalias -a
 # x
 
 alias -- -="c -"
-alias 1=todo_edit
+alias 1=cd_one
 alias 2=todo_show
-alias 3=Tree
+alias 3=3l
+alias 4=todo_edit
 alias a="ack"
 alias b="b"
 # c is a function
@@ -52,6 +53,9 @@ alias z="du -sh"
 
 # xx
 
+alias 13="thirteen"
+alias 32="thirty_two "
+
 alias ..='c ..'
 
 alias eg="env | g "
@@ -81,6 +85,9 @@ alias yy="y $PYTHON_HOME"
 alias z.="zm \*"
 
 # xxx
+
+alias 123="one_two_three"
+alias 321="three_two_one"
 
 alias ..l='cl ..'
 alias ...='c ../..'

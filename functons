@@ -115,13 +115,17 @@ y ()
 
 3d ()
 {
-    Tree -d "$@"
+    3l "$@" -d
 }
 
-3t ()
+3l ()
 {
-    3 "$@"
-    2
+    if first_num "$@"
+    then
+        Tree -L $num $args
+    else
+        Tree -L 2 "$@"
+    fi
 }
 
 3y ()
@@ -1227,6 +1231,12 @@ ylint ()
 
 # xxxxxx
 
+cd_one ()
+{
+    shift_dir "$@" && shift
+    c $dir
+}
+
 has_py ()
 {
     has_ext py "$@"
@@ -1301,6 +1311,13 @@ maketest ()
     [[ -d $test_dir ]] || mkdir -p $test_dir
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB_PYTHON/test_.py > $test_file
 }
+
+thirteen ()
+{
+    cd_one
+    3d "$@"
+}
+
 todo_edit ()
 {
     local todo_txt="$JAB_TODO"
@@ -1341,6 +1358,14 @@ jab_scripts()
 {
     python $JAB_PYTHON/scripts.py "$@"
 }
+
+thirty_two ()
+{
+    3l "$@"
+    2
+}
+
+# _______________
 
 _show_git_here ()
 {
@@ -1388,7 +1413,7 @@ vim_diff ()
         return 0
     fi
     if [[ -n $third_file ]]
-    then $editor_command "$first_file" "$second_file" "$third_file" 
+    then $editor_command "$first_file" "$second_file" "$third_file"
     else $editor_command "$first_file" "$second_file"
     fi
 }
@@ -1407,6 +1432,25 @@ blank_script ()
 }
 
 # xxxxxxxxxxxxx
+
+one_two_three ()
+{
+    cd_one "$@"
+    if first_num "$@"
+    then
+        3d $num --noreport $args
+    else
+        3d 1 --noreport "$@"
+    fi
+    ls $(ls1 -p | g -v "/$")
+}
+
+three_two_one ()
+{
+    3d 2 "$@"
+    todo_show
+    cd_one "$@"
+}
 
 # xxxxxxxxxxxxxx
 
@@ -1530,7 +1574,15 @@ _edit_source ()
     local filepath=$1
     shift
     blank_script $filepath
-    $EDITOR $filepath
+    filedir=$(dirname $filepath)
+    if [[ $filedir == "." ]]
+    then $EDITOR $filepath
+    else
+        pushd $filedir >/dev/null 2>&1
+        echo $filedir
+        $EDITOR $filepath
+        popd
+    fi
     if echo $filepath | grep -q alias
     then
         source_aliases $filepath
