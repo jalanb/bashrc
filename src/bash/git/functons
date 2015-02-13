@@ -142,6 +142,12 @@ _gsi_vim ()
     _git_untracked $1 && v $1 || gdv $1
 }
 
+_gsi_prompt ()
+{
+    _gsi_menu $1
+    read -e -n1 -p " " answer
+}
+
 gsi ()
 {
     shift_dir "$@" || shift
@@ -149,13 +155,12 @@ gsi ()
     do
         [[ -z $f ]] && continue
         _git_modified $f && git di $f || (_git_untracked $f && cat $f || continue)
-        _gsi_menu $f
-        read -e -n1 -p " " answer
+        _gsi_prompt $f
+        if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt $f; fi
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [aA] ]] && ga $f
         [[ $answer =~ [sS] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
         [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
-        [[ $answer =~ [fF] ]] && gc
         [[ $answer =~ [vV] ]] && _gsi_vim $f
     done
     [[ -n $GIT_ADDED ]] && gc
