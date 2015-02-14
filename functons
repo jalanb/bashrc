@@ -209,11 +209,6 @@ gf ()
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
-gr ()
-{
-    git pr "$@"
-}
-
 gt ()
 {
     get_tube "$@"
@@ -749,6 +744,13 @@ ghv ()
 {
     local __doc__="edit stuff from history"
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
+}
+
+grr ()
+{
+    local __doc__="grep in python files under here, show results as vim commands"
+    sought=$1
+    shift
 }
 
 gv. ()
