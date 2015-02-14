@@ -498,6 +498,11 @@ ru ()
     fi
 }
 
+tc ()
+{
+    v ~/.gitconfig
+}
+
 tm ()
 {
     if [[ -z $1 ]]
