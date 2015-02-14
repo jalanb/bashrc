@@ -1490,14 +1490,17 @@ _show_git_time ()
     [[ -d $PWD/.git ]] || return
     local _log=
     local period=
+    local lines_left=$(( $LINES / 2 ))
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
         regexp=$period.ago
         _log=$(_get_git_timer $regexp)
         if [[ -n $_log ]]
         then
-            _get_git_timer $regexp
-            break
+            period_lines=$(_get_git_timer $regexp | wc -l)
+            _get_git_timer $regexp | head -n $lines_left
+            [[ $period_lines > $lines_left ]] && break
+            lines_left=$(( lines_left - $period_lines ))
         fi
     done
 }
