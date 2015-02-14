@@ -1441,7 +1441,9 @@ blank_script ()
 
 one_two_three ()
 {
+    clear
     cd_one "$@"
+    todo_show
     if first_num "$@"
     then
         3d $num --noreport $args
@@ -1453,6 +1455,7 @@ one_two_three ()
 
 three_two_one ()
 {
+    clear
     3d 2 "$@"
     todo_show
     cd_one "$@"
