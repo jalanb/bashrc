@@ -543,10 +543,10 @@ uj ()
         if [[ $BACK != "$JAB" ]]
         then
             cd $JAB
-            . bashrc
+            source_path bashrc
             cd $BACK
         else
-            . bashrc
+            source_path bashrc
         fi
     fi
 }
@@ -950,7 +950,7 @@ sib ()
 sqf ()
 {
     export QAZ=$BITBUCKET/qaz
-    . $QAZ/src/bash/functons
+    source_path $QAZ/src/bash/functons
 }
 
 sto ()
