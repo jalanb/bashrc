@@ -1240,6 +1240,7 @@ ylint ()
 
 cd_one ()
 {
+    clear
     shift_dir "$@" && shift
     c $dir
 }
