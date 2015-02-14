@@ -209,6 +209,11 @@ gf ()
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
+gr ()
+{
+    git pr "$@"
+}
+
 gt ()
 {
     get_tube "$@"
