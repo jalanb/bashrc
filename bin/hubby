@@ -7,27 +7,23 @@ _show_status ()
     owner=$($GIT remote show origin | grep Fetch.URL | cut -d\/ -f 4)
     local local_changes=$($GIT status -s)
     local dir_shown=
-    if [[ -n $local_changes ]]
-    then
+    if [[ -n $local_changes ]]; then
         echo -e ${PROMPT_LIGHT_GREEN}${dir}${PROMPT_NO_COLOUR}
         dir_shown=1
         $GIT status -s
     fi
     local remote_changes=$($GIT log --no-color --oneline origin/master --ancestry-path HEAD..origin/master)
-    if [[ -z $remote_changes ]]
-    then remote_changes=$($GIT fetch --dry-run 2>&1)
+    if [[ -z $remote_changes ]]; then
+        remote_changes=$($GIT fetch --dry-run 2>&1)
     fi
-    if [[ -n $remote_changes ]]
-    then
-        if [[ -z $dir_shown ]]
-        then
+    if [[ -n $remote_changes ]]; then
+        if [[ -z $dir_shown ]]; then
             echo -e ${PROMPT_LIGHT_GREEN}${dir}${PROMPT_NO_COLOUR}
             dir_shown=1
         else
             echo
         fi
-        if [[ $owner == "jalanb" ]]
-        then
+        if [[ $owner == "jalanb" ]]; then
             $GIT fetch -q
             $GIT lg origin/master --ancestry-path HEAD..origin/master
         else
@@ -35,19 +31,14 @@ _show_status ()
         fi
     fi
     test -z $dir_shown || echo
-    if [[ -n $dir_shown ]]
-    then echo
-    fi
+    [[ -n $dir_shown ]] && echo
 }
 
 _show_dir ()
 {
     path=$1
-    if [[ -d $path/.git ]]
-    then
-        if [[ ! -f $path/.hubignore ]]
-        then _show_status $path
-        fi
+    if [[ -d $path/.git ]]; then
+        [[ ! -f $path/.hubignore ]] && _show_status $path
     else echo Path has no git repo: $path >&2
     fi
 }
@@ -60,22 +51,17 @@ _show_dirs ()
     do
         local path=$hub/$dirname
         [[ $(readlink -f $path) == $(readlink -f $JAB) ]] && continue
-        if [[ -d $path ]]
-        then
-            _show_dir $path
-        fi
+        [[ -d $path ]] && _show_dir $path
     done
 }
 
 main ()
 {
-    if [[ -n $* ]]
-    then _show_dir "$@"
+    if [[ -n $* ]]; then
+        _show_dir "$@"
     else
         _show_status $JAB
-        if [[ -d ~/src/git/hub ]]
-        then _show_dirs ~/src/git/hub
-        fi
+        [[ -d ~/src/git/hub ]] && _show_dirs ~/src/git/hub
     fi
 }
 

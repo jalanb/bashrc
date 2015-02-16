@@ -12,12 +12,9 @@ set_symbols ()
 
 remove_checkout ()
 {
-    if [[ -n "$COPY_OF_CHECKOUT" ]]
-    then
-        if [[ -f "$COPY_OF_CHECKOUT" ]]
-        then
-            if [[ -n $DO_NOT_REMOVE ]]
-            then
+    if [[ -n "$COPY_OF_CHECKOUT" ]]; then
+        if [[ -f "$COPY_OF_CHECKOUT" ]]; then
+            if [[ -n $DO_NOT_REMOVE ]]; then
                 echo
                 ls "$COPY_OF_CHECKOUT"
             else
@@ -31,22 +28,17 @@ IP ()
 {
     for number in 172 192 100
     do
-        if python $JAB_PYTHON/ifconfig.py $number
-        then break
-        fi
+        python $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 
 show_python_diff ()
 {
-    if [[ -d $PYDIFF ]]
-    then
+    if [[ -d $PYDIFF ]]; then
         python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
         local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
-        if [[ -f $pydiff_output ]]
-        then
-            if [[ -d  $WWW_ROOT/pydiff ]]
-            then
+        if [[ -f $pydiff_output ]]; then
+            if [[ -d  $WWW_ROOT/pydiff ]]; then
                 cp $pydiff_output $WWW_ROOT/pydiff/index.html
                 echo "http://$(IP)/pydiff"
             else
@@ -68,11 +60,11 @@ svn_diff_file ()
     local direction=$1
     PATH_TO_FILE=$2
     local revision=
-    if [[ -n $3 ]]
-    then revision="$3"
+    if [[ -n $3 ]]; then
+        revision="$3"
     else
-        if svn stat $PATH_TO_FILE | grep -q "[AM]"
-        then revision=$(svn info $PATH_TO_FILE | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
+        if svn stat $PATH_TO_FILE | grep -q "[AM]"; then
+            revision=$(svn info $PATH_TO_FILE | grep 'Last Changed Rev' | cut -d: -f2 | tr -d ' ')
         else
             echo no change in $PATH_TO_FILE
             exit
@@ -80,8 +72,7 @@ svn_diff_file ()
     fi
     COPY_OF_CHECKOUT=${PATH_TO_FILE}.svn_checkout.r$revision
     svn cat -r $revision "$PATH_TO_FILE" > "$COPY_OF_CHECKOUT"
-    if [[ "$direction" == "python" ]]
-    then
+    if [[ "$direction" == "python" ]]; then
         show_python_diff
     else
         local vim_options="-O"
@@ -99,8 +90,7 @@ svn_diff_dir ()
     for modified in $(svn stat $path_to_directory | grep "^\s*M" | sed -e "s/M\s\+//")
     do
         svn_diff_file $direction $modified $revision
-        if [[ -f svn.stop ]]
-        then
+        if [[ -f svn.stop ]]; then
             rm -f svn.stop
             break
         fi
@@ -110,13 +100,11 @@ svn_diff_dir ()
 main ()
 {
     set_symbols "$@"
-    if [[ $ARGS =~ -g ]]
-    then
+    if [[ $ARGS =~ -g ]]; then
         VIM_EDITOR="gvim -f"
         ARGS=${ARGS/-g}
     fi
-    if [[ -f $path ]]
-    then
+    if [[ -f $path ]]; then
         svn_diff_file $ARGS
     else
         svn_diff_dir $ARGS

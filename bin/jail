@@ -3,8 +3,7 @@
 exit_without_directory ()
 {
     test -z $* && exit 1
-    if [[ ! -d $1 ]]
-    then
+    if [[ ! -d $1 ]]; then
         echo $1 is not a directory
         test -f $1 && echo $1 is a file
         exit 1
@@ -14,8 +13,7 @@ exit_without_directory ()
 exit_without_file ()
 {
     test -z $* && exit 1
-    if [[ ! -f $1 ]]
-    then
+    if [[ ! -f $1 ]]; then
         echo $1 is not a file
         test -d $1 && echo $1 is a directory
         exit 1
@@ -27,20 +25,15 @@ set_paths ()
     export MAIL_SITE_DIRECTORY=$HOME/Sites/mail
     COVERAGE_DIRECTORY=$MAIL_SITE_DIRECTORY/coverage
 
-    if [[ ! -d $MAIL_SITE_DIRECTORY ]]
-    then
+    if [[ ! -d $MAIL_SITE_DIRECTORY ]]; then
         mkdir -p $MAIL_SITE_DIRECTORY
         touch $MAIL_SITE_DIRECTORY/index.html
     fi
     [[ ! -d $COVERAGE_DIRECTORY ]] && mkdir -p $COVERAGE_DIRECTORY
 
     PYTHON=python
-    if ! $PYTHON -c "all([])" 2> /dev/null
-    then
-        PYTHON=python2.7
-    fi
-    if ! $PYTHON -c "all([])" 2> /dev/null
-    then
+    ! $PYTHON -c "all([])" 2> /dev/null && PYTHON=python2.7
+    if ! $PYTHON -c "all([])" 2> /dev/null; then
         echo "No suitable python available" >&2
         exit 2
     fi
@@ -70,8 +63,7 @@ remove_old_figleaf_data ()
     local format="-f %m"
     /usr/bin/stat --help >/dev/null 2>&1 && format="--printf %Y"
     local stat_command="/usr/bin/stat $format "
-    if [[ $($stat_command $FIGLEAF_DATA) -lt $($stat_command $1) ]]
-    then
+    if [[ $($stat_command $FIGLEAF_DATA) -lt $($stat_command $1) ]]; then
         echo $FIGLEAF_DATA is older than $1
         /bin/rm -f $FIGLEAF_DATA
         break
@@ -88,8 +80,7 @@ test_scripts ()
     done
     for script in $*
     do
-        if ! $PYTHON $FIGLEAF_BINARY -i $TESTPATH/try.py -q ${script/.py/.}
-        then
+        if ! $PYTHON $FIGLEAF_BINARY -i $TESTPATH/try.py -q ${script/.py/.}; then
             read -p"Test failed, do you want to exit [y]?" -n 1 user_wants_to_exit
             [[ -z $user_wants_to_exit || $user_wants_to_exit =~ [qQyY] ]] && exit
         fi
@@ -106,10 +97,7 @@ main ()
 {
     set_paths
     cd $MAIL_SOURCE_DIRECTORY
-    if test_scripts $PYTHONPATH/ansi*.py $PYTHONPATH/colour*.py
-    then
-        mail $*
-    fi
+    test_scripts $PYTHONPATH/ansi*.py $PYTHONPATH/colour*.py && mail $*
 }
 
 main $*

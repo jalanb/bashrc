@@ -2,11 +2,8 @@
 
 check_jab ()
 {
-    if [[ -z $JAB ]]
-    then JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
-    fi
-    if [[ ! -f $JAB/etc/ackrc ]]
-    then
+    [[ -z $JAB ]] && JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
+    if [[ ! -f $JAB/etc/ackrc ]]; then
         echo $JAB/etc/ackrc is not a file >&2
         exit 1
     fi
@@ -16,9 +13,7 @@ link ()
 {
     destination="$1"
     source="$2"
-    if [[ -e "$destination" ]]
-    then rm -rf "$destination"
-    fi
+    [[ -e "$destination" ]] && rm -rf "$destination"
     ln -s $JAB/"$source" $HOME/"$destination"
 }
 

@@ -1,7 +1,6 @@
 #! /bin/bash
 
-if [[ -z $JAB_ENVIRON_SOURCED ]]
-then
+if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     EX_OK=0
     EX_BAD=1
 
@@ -52,28 +51,22 @@ then
     export LOGS
     export XAUTHORITY=$HOME/.Xauthority
 
-    if [[ -f /usr/local/bin/gls ]]
-    then
+    if [[ -f /usr/local/bin/gls ]]; then
         export LS_PROGRAM=/usr/local/bin/gls
         DIRCOLORS=/usr/local/bin/gdircolors
     else
         export LS_PROGRAM=/bin/ls
-        if [[ -f /usr/bin/dircolors ]]
-        then DIRCOLORS=/usr/bin/dircolors
-        fi
+        [[ -f /usr/bin/dircolors ]] && DIRCOLORS=/usr/bin/dircolors
     fi
 
-    if $LS_PROGRAM -@ >/dev/null 2>&1
-    then
+    if $LS_PROGRAM -@ >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='-@'
-    elif $LS_PROGRAM --color=auto >/dev/null 2>&1
-    then
+    elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='--color=auto'
     else
         export LS_COLOUR_OPTION=
     fi
-    if $LS_PROGRAM --group-directories-first >/dev/null 2>&1
-    then
+    if $LS_PROGRAM --group-directories-first >/dev/null 2>&1; then
         export LS_DIRS_OPTION='--group-directories-first'
     else
         export LS_DIRS_OPTION=
@@ -100,8 +93,7 @@ then
     # Path dependencies
     #
 
-    if [ -x /usr/local/bin/which ]
-    then
+    if [ -x /usr/local/bin/which ]; then
         export WHICH=/usr/local/bin/which
     else
         export WHICH=/usr/bin/which

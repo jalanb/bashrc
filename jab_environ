@@ -15,8 +15,7 @@ _try_known_jab_paths ()
     [[ -d $JAB ]] || JAB=not_dir_jab
 }
 
-if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]
-then
+if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]; then
     _try_known_jab_paths
     export JAB_TODO=$JAB/todo.txt
     [[ -f $JAB_TODO ]] || JAB_TODO=not_file_jab_todo

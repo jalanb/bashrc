@@ -11,32 +11,26 @@ extract_dir()
     names=
     for arg in "$@"
     do
-        if [[ ${arg:0:1} == "*" ]]
-        then
-            if [[ -z "$names" ]]
-            then
+        if [[ ${arg:0:1} == "*" ]]; then
+            if [[ -z "$names" ]]; then
                 names="-name $arg"
             else
                 names="$names -o -name $arg"
             fi
-        elif [[ -d $arg && -z "$dir" ]]
-        then
+        elif [[ -d $arg && -z "$dir" ]]; then
             dir=$(python -c"import os; print os.path.realpath(\"$arg\")")
         else
-            if [[ -z "$sought" ]]
-            then
+            if [[ -z "$sought" ]]; then
                 sought=$arg
             else
                 sought="$sought $arg"
             fi
         fi
     done
-    if [[ -z "$names" ]]
-    then
+    if [[ -z "$names" ]]; then
         names="-name *.py"
     fi
-    if [ -z "$dir" ]
-    then
+    if [ -z "$dir" ]; then
         dir=.
     fi
 }
@@ -67,8 +61,7 @@ main ()
     local __doc__="grep in python files under here, show results as vim commands"
     extract_dir "$@"
     found_files=$(find_paths_arg)
-    if [[ -n "$found_files" ]] 
-    then
+    if [[ -n "$found_files" ]] ;then
         list $found_files
         edit $found_files
     else

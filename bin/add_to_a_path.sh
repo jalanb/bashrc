@@ -4,8 +4,7 @@
 # See also ./add_to_path.py and ./add_to_path.test
 #
 
-if [[ $0 == $BASH_SOURCE ]]
-then
+if [[ $0 == $BASH_SOURCE ]]; then
     echo "This file should be run as"
     echo "  source $0"
     echo "and should not be run as"
@@ -32,14 +31,12 @@ _find_python ()
 add_to_a_path ()
 {
     _find_python
-    if [[ -z $1 ]]
-    then
+    if [[ -z $1 ]]; then
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
         local new_paths=$(_run_script "$@")
-        if [[ -n $new_paths ]]
-        then
+        if [[ -n $new_paths ]]; then
             eval $1=$new_paths
             export $1
         else
@@ -60,8 +57,7 @@ _run_script ()
     local jab_src_python=$jab/src/python
     local jab_python=${JAB_PYTHON:-$jab_src_python}
     local script=$jab_python/add_to_a_path.py
-    if [[ -f $script ]]
-    then
+    if [[ -f $script ]]; then
         local mython=~/bin/python
         [[ -x $mython ]] || mython=/usr/local/bin/python
         [[ -x $mython ]] || mython=/usr/bin/python
@@ -83,8 +79,8 @@ show_value ()
 {
     local name=${1-SHELL}
     local value=${!name}
-    if [[ -z "$value" ]]
-    then echo \$$name is not set
+    if [[ -z "$value" ]]; then
+        echo \$$name is not set
     else
         local where=${2-bash}
         printf "$where has set \$$name to\n\t$value\n"
@@ -111,8 +107,7 @@ show_ppath ()
 
 debug_show_a_path ()
 {
-    if [[ $DEBUG_PATHS == "yes" ]]
-    then
+    if [[ $DEBUG_PATHS == "yes" ]]; then
         show_a_path $*
     fi
 }

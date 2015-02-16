@@ -2,10 +2,8 @@
 
 HTML_GLOB=*${2/.py}*.html
 HTML=$(python2 $GITHUB/psydiff/psydiff.py $* | grep 'HTML:' | sed -e 's/HTML: //')
-if [[ -z $HTML ]]
-then echo no diff
-elif [[ ! -f $HTML ]]
-then echo $HTML is not a file
+if [[ -z $HTML ]]; then echo no diff
+elif [[ ! -f $HTML ]]; then echo $HTML is not a file
 else
     open $HTML
     sleep 5 # give browser a chance to catch up

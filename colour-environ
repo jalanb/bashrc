@@ -5,8 +5,7 @@
 #
 # http://en.wikipedia.org/wiki/ANSI_escape_sequences#Colors
 #
-if [[ -z $JAB_COLOUR_ENVIRON_SOURCED ]]
-then
+if [[ -z $JAB_COLOUR_ENVIRON_SOURCED ]]; then
     export          NO_COLOUR="\[\033[0m\]"
     export                RED="\[\033[0;31m\]"
     export          LIGHT_RED="\[\033[1;31m\]"

@@ -32,10 +32,7 @@ unwelcome_all ()
 
 main ()
 {
-    if [[ -z $* ]]
-    then welcome_all
-    else unwelcome_all
-    fi
+    [[ -z $* ]] && welcome_all || unwelcome_all
 }
 
 main "$@"

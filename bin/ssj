@@ -11,16 +11,12 @@ JAB=${JAB:-$HOME/.jab}
 usage ()
 {
     ARGS="$*"
-    if [[ $# != 2 ]]
-    then
-        if [[ $# == 1 ]]
-        then
+    if [[ $# != 2 ]]; then
+        if [[ $# == 1 ]]; then
             parts=$(echo $1 | tr '@' '\n' | wc -l)
-            if [[ $parts -eq 1 ]]
-            then
+            if [[ $parts -eq 1 ]]; then
                 ARGS=$USER@$1
-            elif [[ $parts -ne 2 ]]
-            then
+            elif [[ $parts -ne 2 ]]; then
                 echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
                 exit 1
             fi

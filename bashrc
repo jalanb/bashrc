@@ -4,10 +4,10 @@
 
 _show_status ()
 {
-    if [[ -d "$JAB"/.svn ]]
-    then svn stat "$JAB"
-    elif [[ -d "$JAB"/.git ]]
-    then git -C "$JAB" status | \
+    if [[ -d "$JAB"/.svn ]]; then
+        svn stat "$JAB"
+    elif [[ -d "$JAB"/.git ]]; then
+        git -C "$JAB" status | \
         grep -v "nothing to commit, working directory clean" | \
         sed -e s:Your.branch:\$JAB: | \
         grep --color 'up-to-date.*'
@@ -26,8 +26,8 @@ source_path ()
 _get_source_path_from_what ()
 {
     local what_script=$(readlink -f ~/src/git/hub/what/what.sh)
-    if test -f "$what_script"
-    then source "$what_script"
+    if test -f "$what_script"; then
+        source "$what_script"
     else
         echo "$what_script is not a file" >&2
         return 1
@@ -66,8 +66,7 @@ _source_jab_scripts ()
 _if_not_python_try_my_bin ()
 {
     PYTHON=${PYTHON:-no_python}
-    if [[ $PYTHON == no_python ]]
-    then
+    if [[ $PYTHON == no_python ]]; then
         local python_in_home=$HOME/bin/python
         [[ -x $python_in_home ]] && PYTHON=$python_in_home
     fi
@@ -82,8 +81,8 @@ _remove_jab_tmp_files()
 _show_todo ()
 {
     builtin cd "$JAB_PYTHON"
-    if python2.7 -c"a=0" >/dev/null 2>&1
-    then test -f todo.py && python2.7 todo.py
+    if python2.7 -c"a=0" >/dev/null 2>&1; then
+        test -f todo.py && python2.7 todo.py
     else
         local version=$(python -V 2>&1)
         echo "Python version is old ($version)"
@@ -94,8 +93,7 @@ _show_todo ()
 _show_welcome ()
 {
     _show_todo
-    if pgrep -fl vim > /dev/null
-    then
+    if pgrep -fl vim > /dev/null; then
         echo
         echo --------------------
         echo vim sessions running
@@ -115,19 +113,15 @@ _set_up_symbols ()
     local github_jab_dir=$(readlink -f ~/src/git/hub/dotjab)
     local myhome_jab_dir=$(readlink -f ~/.jab)
     bash_jab_dir=$(dirname $(readlink -f "$BASH_SOURCE"))
-    if [[ $bash_jab_dir == $github_jab_dir ]]
-    then
+    if [[ $bash_jab_dir == $github_jab_dir ]]; then
         JAB=$github_jab_dir
-    elif [[ $bash_jab_dir == $myhome_jab_dir ]]
-    then
-        if [[ -f $github_jab_dir/bashrc ]]
-        then
+    elif [[ $bash_jab_dir == $myhome_jab_dir ]]; then
+        if [[ -f $github_jab_dir/bashrc ]]; then
             echo "Warn: Using $myhome_jab_dir/bashrc, while $github_jab_dir/bashrc exists" >&2
         fi
         JAB=$myhome_jab_dir
     fi
-    if [[ -n $JAB ]]
-    then
+    if [[ -n $JAB ]]; then
         export JAB
     else
         echo "Could not find this script in" $myhome_jab_dir $github_jab_dir
@@ -162,10 +156,7 @@ _no_symbols ()
 run_interactively ()
 {
     _set_up_symbols
-    if [[ -d $JAB ]]
-    then _bashrc
-    else _no_symbols
-    fi
+    [[ -d $JAB ]] && _bashrc || _no_symbols
 }
 
 #set -x

@@ -20,8 +20,7 @@ c ()
 {
     kd "$@"
     local c_result="$?"
-    if [[ $c_result == "0" ]]
-    then
+    if [[ $c_result == "0" ]]; then
         _show_todo_here
         echo
         _show_git_time
@@ -36,8 +35,7 @@ f ()
     shift_dir "$@" && shift
     local name=$1
     shift
-    if [[ $name == "-name" ]]
-    then
+    if [[ $name == "-name" ]]; then
         echo "Do not use '-name'"
         shift
         name=$1
@@ -69,16 +67,13 @@ p ()
 
 v ()
 {
-    if [[ -z $* ]]
-    then
+    if [[ -z $* ]]; then
         $EDITOR
     else
         script=$(mython $JAB_PYTHON/vim "$@")
         status=$?
-        if [[ $status == 0 ]]
-        then
-            if [[ -n $script ]]
-            then
+        if [[ $status == 0 ]]; then
+            if [[ -n $script ]]; then
                 bash $script
             else
                 echo No script produced, please try
@@ -86,8 +81,7 @@ v ()
             fi
         else
             echo Python error: $status
-            if [[ -n $script ]]
-            then
+            if [[ -n $script ]]; then
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
@@ -120,8 +114,7 @@ y ()
 
 3l ()
 {
-    if first_num "$@"
-    then
+    if first_num "$@"; then
         Tree -L $num $args
     else
         Tree -L 2 "$@"
@@ -130,12 +123,10 @@ y ()
 
 3y ()
 {
-    if [[ -f $1 ]]
-    then
+    if [[ -f $1 ]]; then
         dir=$(dirname $1)
         shift
-    elif [[ -d $1 ]]
-    then
+    elif [[ -d $1 ]]; then
         dir=$1
         shift
     else
@@ -166,9 +157,7 @@ IP ()
 {
     for number in 172 192 100
     do
-        if python $JAB_PYTHON/ifconfig.py $number
-        then break
-        fi
+        python $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 
@@ -184,9 +173,7 @@ cj ()
 
 cl ()
 {
-    if c "$@"
-    then ls
-    fi
+    c "$@" && ls
 }
 
 cq ()
@@ -222,18 +209,14 @@ fc ()
     for path in $(find $dir -name $name -print)
     do
         echo cd $path
-        if [[ -f $path ]]
-        then builtin cd $(dirname $path)
-        else builtin cd $path
-        fi
+        [[ -f $path ]] && builtin cd $(dirname $path) || else builtin cd $path
     done
 }
 
 fd ()
 {
     shift_dir "$@" && shift
-    if [[ -n $1 ]]
-    then
+    if [[ -n $1 ]]; then
         name=$1
         shift
     fi
@@ -257,12 +240,12 @@ fg ()
 fv ()
 {
     shift_dir "$@" && shift
-    if [[ -z "$@" ]]
-    then echo Nothing to find
+    if [[ -z "$@" ]]; then
+        echo Nothing to find
     else
         files=$(find $dir -name "$@")
-        if [[ -z $files ]]
-        then echo "$@" not found
+        if [[ -z $files ]]; then
+            echo "$@" not found
         else
             echo $files | tr ' ' '\n' | sed -e "s:^\./::"
             vim -p $files
@@ -295,8 +278,7 @@ gh ()
 
 gv ()
 {
-    if which gvim >/dev/null 2>&1
-    then
+    if which gvim >/dev/null 2>&1; then
         date >> ~/log/gvim.log
         echo gvim "$@" >> ~/log/gvim.log
         gvim "$@" 2>> ~/log/gvim.log
@@ -398,8 +380,7 @@ ly ()
 ma ()
 {
     local _storage=/tmp/fred.sh;
-    if [[ -z "$@" ]]
-    then
+    if [[ -z "$@" ]]; then
         python -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
@@ -422,8 +403,8 @@ pi ()
     local me=$USER
     local here=$(jostname)
     local options=-noconfirm_exit
-    if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]
-    then options=--no-confirm-exit
+    if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
+        options=--no-confirm-exit
     fi
     console_title_on "ipython@${here}" && \
         ipython $options "$@" && \
@@ -433,21 +414,18 @@ pi ()
 
 py ()
 {
-    if [[ -z "$@" ]]
-    then
+    if [[ -z "$@" ]]; then
         mython
     else
         all_args="$*"
-        if [[ "$all_args" =~ "--help" || "$all_args" =~ "-h" ]]
-        then mython "$@"
-        elif [[ "$all_args" =~ "-U" ]]
-        then mython "$@"
+        if [[ "$all_args" =~ "--help" || "$all_args" =~ "-h" ]]; then
+            mython "$@"
+        elif [[ "$all_args" =~ "-U" ]]; then
+            mython "$@"
         else
             script=$(mython $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
-            if [[ $? == 0 ]]
-            then
-                if [[ -z $script ]]
-                then
+            if [[ $? == 0 ]]; then
+                if [[ -z $script ]]; then
                     script=${1/%./.py}
                     shift
                 fi
@@ -490,12 +468,7 @@ rt ()
 ru ()
 {
 # do da root root route, do da ru !
-    if [ -z "$@" ]
-    then
-        SUDO
-    else
-        sudo "$@"
-    fi
+    [ -z "$@" ] && SUDO || sudo "$@"
 }
 
 tc ()
@@ -505,29 +478,22 @@ tc ()
 
 tm ()
 {
-    if [[ -z $1 ]]
-    then SESSION=$(jostname)
+    if [[ -z $1 ]]; then SESSION=$(jostname)
     else
         SESSION=$1
         shift
     fi
-    if ! tmux attach-session -t $SESSION "$@"
-    then tmux new-session -s $SESSION "$@"
-    fi
+    ! tmux attach-session -t $SESSION "$@" && tmux new-session -s $SESSION "$@"
 }
 
 tf ()
 {
-    if [ $? -eq 0 ]
-    then echo "true"
-    else echo "false"
-    fi
+    [ $? -eq 0 ] && echo "true" || echo "false"
 }
 
 tt ()
 {
-    if echo $1 | grep -q "gz$"
-    then
+    if echo $1 | grep -q "gz$"; then
         contents=tz
         extract=xz
     else
@@ -542,11 +508,9 @@ tt ()
 uj ()
 {
 # update $JAB from the repository
-    if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]
-    then
+    if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]; then
         BACK=$(pwd)
-        if [[ $BACK != "$JAB" ]]
-        then
+        if [[ $BACK != "$JAB" ]]; then
             cd $JAB
             source_path bashrc
             cd $BACK
@@ -638,10 +602,9 @@ zm ()
 
 cff ()
 {
-    if [[ ! -d fred ]]
-    then
-        if [[ -e fred ]]
-        then rm -f fred
+    if [[ ! -d fred ]]; then
+        if [[ -e fred ]]; then
+            rm -f fred
         fi
         mkdir fred
     fi
@@ -664,8 +627,7 @@ cls ()
 # clean, clear, ls
     rf -q
     clear
-    if [ -z "$@" ]
-    then
+    if [ -z "$@" ]; then
         ls -d $(pwd)
         echo
     fi
@@ -679,8 +641,7 @@ ddg ()
 
 dev ()
 {
-    if [[ -d ~/dev ]]
-    then
+    if [[ -d ~/dev ]]; then
         echo ~/dev exists
         echo
         here=$PWD
@@ -708,24 +669,15 @@ fgt ()
 fsh ()
 {
 # run fred by his extension
-    if [ -f fred.sh ]
-    then bash fred.sh "$@"
-    elif [ -f fred.py ]
-    then p fred.py "$@"
-    elif [ -f ~/tmp/fred.sh ]
-    then bash ~/tmp/fred.sh "$@"
-    elif [ -f ~/tmp/fred.py ]
-    then p ~/tmp/fred.py "$@"
-    elif [ -f "fred.test" ]
-    then try "fred.test" "$@"
-    elif [ -f fred.c ]
-    then
+    if [ -f fred.sh ]; then bash fred.sh "$@"
+    elif [ -f fred.py ]; then p fred.py "$@"
+    elif [ -f ~/tmp/fred.sh ]; then bash ~/tmp/fred.sh "$@"
+    elif [ -f ~/tmp/fred.py ]; then p ~/tmp/fred.py "$@"
+    elif [ -f "fred.test" ]; then try "fred.test" "$@"
+    elif [ -f fred.c ]; then
         /bin/rm -vf a.out
         gcc fred.c
-        if [ -f a.out ]
-        then
-            ./a.out
-        fi
+        [ -f a.out ] && ./a.out
     else bash fred "$@"
     fi
 }
@@ -733,10 +685,10 @@ fsh ()
 fpy ()
 {
 # run fred.py if fred.sh exists
-    if [ -f fred.py ]
-    then p fred.py "$@"
-    elif [[ -f ~/tmp/fred.py ]]
-    then p ~/tmp/fred.py "$@"
+    if [ -f fred.py ]; then
+        p fred.py "$@"
+    elif [[ -f ~/tmp/fred.py ]]; then
+        p ~/tmp/fred.py "$@"
     fi
 }
 
@@ -777,16 +729,8 @@ jjj ()
 # ssh back to the jab.ook (which is my laptop
 # it goes by different hostnames, try in order of probablity
     local jjj_host=
-    if ping -c 1 -w 1 jab.ook >/dev/null 2>&1
-    then
-        jjj_host=jab.ook
-    fi
-    if [[ -z $jjj_host ]]
-    then
-        echo Could not ping jab.ook
-    else
-        ssj jab $jjj_host
-    fi
+    ping -c 1 -w 1 jab.ook >/dev/null 2>&1 && jjj_host=jab.ook
+    [[ -z $jjj_host ]] && echo Could not ping jab.ook || ssj jab $jjj_host
 }
 
 
@@ -807,10 +751,7 @@ jpi ()
     source /home/alanb/.virtualenvs/jpm/bin/activate
     add_to_a_path PATH $path_to_jpm/bin
     add_to_a_path PYTHONPATH $path_to_jpm/jpm
-    if [[ -n $* ]]
-    then
-        "$@"
-    fi
+    [[ -n $* ]] && "$@"
 
 }
 
@@ -878,10 +819,8 @@ pyi ()
     add_to_a_path PATH ./bin
     add_to_a_path PYTHONPATH ./pym
     source ~/.virtualenvs/pym/bin/activate
-    if [[ -n $* ]]
-    then
-        if shift_dir "$@"
-        then
+    if [[ -n $* ]]; then
+        if shift_dir "$@"; then
             shift
             cd $dir
         fi
@@ -889,29 +828,25 @@ pyi ()
     2
     pwd
     local _status=$(git status -s)
-    if [[ -n $_status ]]
-    then
+    if [[ -n $_status ]]; then
         echo -n "\$ git status -s: "
         git status -s
     else
         local has_dirs=
         for item in $(ls)
         do
-            if [[ -d $item ]]
-            then
+            if [[ -d $item ]]; then
                 has_dirs=1
                 break
             fi
         done
-        if [[ $has_dirs == 1 ]]
-        then 3y -L 2 --noreport . | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
+        if [[ $has_dirs == 1 ]]; then
+            3y -L 2 --noreport . | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
         fi
         echo
     fi
-    if [[ -n $(ls *.py | grep -v __init__.py 2>/dev/null) ]]
-    then ly -q
-    elif [[ -n $(ls * | grep -v __init__.py) ]]
-    then ls
+    if [[ -n $(ls *.py | grep -v __init__.py 2>/dev/null) ]]; then ly -q
+    elif [[ -n $(ls * | grep -v __init__.py) ]]; then ls
     fi
     echo
     [[ -n $* ]] && "$@"
@@ -919,8 +854,8 @@ pyi ()
 
 ps3 ()
 {
-    if [[ -z "$@" ]]
-    then ps axf | vim - +
+    if [[ -z "$@" ]]; then
+        ps axf | vim - +
     else ps axf | vim - +/"$*"
     fi
 }
@@ -1114,8 +1049,7 @@ rq.. ()
 
 SUDO ()
 {
-    if [[ -n $1 ]]
-    then
+    if [[ -n $1 ]]; then
         user="-u $1"
         you_sir="$1"
     else
@@ -1161,10 +1095,8 @@ Tree ()
 
 build ()
 {
-    if [[ -f build.sh ]]
-    then bash build.sh "$@"
-    elif [[ -f Makefile ]]
-    then make "$@"
+    if [[ -f build.sh ]]; then bash build.sh "$@"
+    elif [[ -f Makefile ]]; then make "$@"
     fi
 }
 
@@ -1186,10 +1118,8 @@ clock ()
 
 detab ()
 {
-    if [[ -f $1 ]]
-    then
-        if grep -Pq "^\s*\t\s*[^ \t]" $1
-        then
+    if [[ -f $1 ]]; then
+        if grep -Pq "^\s*\t\s*[^ \t]" $1; then
             expand -i --tabs=4 $1 > /tmp/txt
             mv /tmp/txt $1
             echo detabbed
@@ -1204,22 +1134,18 @@ detab ()
 range ()
 {
     local destination=.
-    if [[ -n "$*" ]]
-    then
+    if [[ -n "$*" ]]; then
         local kd_script=$KD_DIR/kd.py
-        if ! destination=$(PYTHONPATH=$python_directory python $kd_script "$@" 2>&1)
-        then
+        if ! destination=$(PYTHONPATH=$python_directory python $kd_script "$@" 2>&1); then
             echo "$destination"
             return 1
         fi
     fi
     local real_destination=$(PYTHONPATH=$python_directory python -c "import os; print os.path.realpath('$destination')")
-    if [[ $destination != $real_destination ]]
-    then
+    if [[ $destination != $real_destination ]]; then
         echo "ranger ($destination ->) $real_destination"
         destination=$real_destination
-    elif [[ $destination != $1 && $1 != "-" ]]
-    then
+    elif [[ $destination != $1 && $1 != "-" ]]; then
         echo "ranger $destination"
     fi
     pushd "$destination"
@@ -1271,8 +1197,7 @@ run_as ()
 {
     username=$1
     shift
-    if [[ -n "$1" ]]
-    then
+    if [[ -n "$1" ]]; then
         sudo -u $username "$@"
     else
         SUDO $username
@@ -1303,8 +1228,7 @@ jostname ()
 maketest ()
 {
     local path=$1
-    if [[ ! -f $path ]]
-    then
+    if [[ ! -f $path ]]; then
         echo $path is not a file >&2
         return 1
     fi
@@ -1313,8 +1237,7 @@ maketest ()
     local classname=$(python -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
     local test_file=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
-    if [[ -f $test_file ]]
-    then
+    if [[ -f $test_file ]]; then
         echo $test_file is already a file >&2
         return 1
     fi
@@ -1333,32 +1256,27 @@ todo_edit ()
 {
     local todo_txt="$JAB_TODO"
     local git_options="--git-dir=$JAB/.git --work-tree=$JAB"
-    if [[ -f todo.txt ]]
-    then
+    if [[ -f todo.txt ]]; then
         todo_txt=todo.txt
         git_options=
-    elif [[ -f TODO.md ]]
-    then
+    elif [[ -f TODO.md ]]; then
         todo_txt=TODO.md
         git_options=
     fi
     v $todo_txt
-    if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"
-    then
+    if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"; then
         git add $JAB_TODO
         git commit -m'more or less stuff to be done' $JAB_TODO
-    elif svn stat "$JAB_TODO" 2>&1 | grep -q "M .* $JAB_TODO"
-    then svn ci -m'more or less stuff to be done' "$JAB_TODO"
+    elif svn stat "$JAB_TODO" 2>&1 | grep -q "M .* $JAB_TODO"; then
+        svn ci -m'more or less stuff to be done' "$JAB_TODO"
     fi
 }
 
 todo_show ()
 {
     local todo_txt="$JAB_TODO"
-    if [[ -f todo.txt ]]
-    then todo_txt=todo.txt
-    elif [[ -f TODO.md ]]
-    then todo_txt=TODO.md
+    if [[ -f todo.txt ]]; then todo_txt=todo.txt
+    elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
     mython $JAB_PYTHON/todo.py $todo_txt
 }
@@ -1418,13 +1336,12 @@ vim_diff ()
         [[ $arg =~ -.* ]] && editor_command="$editor_command $arg" && continue
         [[ -z $third_file ]] && third_file=$arg
     done
-    if ! _any_diff "$first_file" "$second_file" "$third_file"
-    then
+    if ! _any_diff "$first_file" "$second_file" "$third_file"; then
         echo same
         return 0
     fi
-    if [[ -n $third_file ]]
-    then $editor_command "$first_file" "$second_file" "$third_file"
+    if [[ -n $third_file ]]; then
+        $editor_command "$first_file" "$second_file" "$third_file"
     else $editor_command "$first_file" "$second_file"
     fi
 }
@@ -1449,8 +1366,7 @@ one_two_three ()
     clear
     cd_one "$@"
     todo_show
-    if first_num "$@"
-    then
+    if first_num "$@"; then
         3d $num --noreport $args
     else
         3d 1 --noreport "$@"
@@ -1495,8 +1411,7 @@ _show_git_time ()
     do
         regexp=$period.ago
         _log=$(_get_git_timer $regexp)
-        if [[ -n $_log ]]
-        then
+        if [[ -n $_log ]]; then
             period_lines=$(_get_git_timer $regexp | wc -l)
             _get_git_timer $regexp | head -n $lines_left
             [[ $period_lines > $lines_left ]] && break
@@ -1510,22 +1425,18 @@ _show_git_time ()
 
 console_title_on ()
 {
-    if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
-    then
+    if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
-    elif env | grep -iq konsole 2>/dev/null
-    then
+    elif env | grep -iq konsole 2>/dev/null; then
         #dcop $KONSOLE_DCOP_SESSION renameSession $1
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/21380108/500942
-    elif env | grep -iq gnome.terminal
-    then
+    elif env | grep -iq gnome.terminal; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-    elif [[ -n $TERM ]]
-    then
-        if [[ $TERM == "linux" ]]
-        then echo -e "]1;$1"
-        elif [[ $TERM =~ "xterm" ]]
-        then echo -ne "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+    elif [[ -n $TERM ]]; then
+        if [[ $TERM == "linux" ]]; then
+            echo -e "]1;$1"
+        elif [[ $TERM =~ "xterm" ]]; then
+            echo -ne "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
         fi
     else
         echo "Title: $1"
@@ -1536,20 +1447,15 @@ console_title_on ()
 
 console_title_off ()
 {
-    if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]
-    then
+    if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "]0;$1"
-    elif env | grep -iq konsole 2>/dev/null
-    then
+    elif env | grep -iq konsole 2>/dev/null; then
         dcop $KONSOLE_DCOP_SESSION renameSession $1
-    elif env | grep -iq gnome.terminal
-    then
+    elif env | grep -iq gnome.terminal; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-    elif [[ -n $TERM && $TERM == "linux" ]]
-    then
+    elif [[ -n $TERM && $TERM == "linux" ]]; then
         echo -e "]1;$1"
-    elif [[ $TERM == "xterm" ]]
-    then
+    elif [[ $TERM == "xterm" ]]; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
     else
         echo "Title: $1"
@@ -1564,22 +1470,19 @@ _dixx ()
     source_dir="$1"
     destination_dir="$2"
     local number_in_both=$(_divv_get_difference | grep Files | wc -l)
-    if [[ $number_in_both -gt 0 ]]
-    then
+    if [[ $number_in_both -gt 0 ]]; then
         echo
         echo "# Files 1 and 2 differ"
         _divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
     fi
     local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
-    if [[ $number_in_source -gt 0 ]]
-    then
+    if [[ $number_in_source -gt 0 ]]; then
         echo
         echo "Only in $source_dir"
         _divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
     fi
     local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
-    if [[ $number_in_destination -gt 0 ]]
-    then
+    if [[ $number_in_destination -gt 0 ]]; then
         echo
         echo "Only in $destination_dir"
         _divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
@@ -1592,16 +1495,15 @@ _edit_source ()
     shift
     blank_script $filepath
     filedir=$(dirname $filepath)
-    if [[ $filedir == "." ]]
-    then $EDITOR $filepath
+    if [[ $filedir == "." ]]; then
+        $EDITOR $filepath
     else
         pushd $filedir >/dev/null 2>&1
         echo $filedir
         $EDITOR $filepath
         popd
     fi
-    if echo $filepath | grep -q alias
-    then
+    if echo $filepath | grep -q alias; then
         source_aliases $filepath
     else
         source_path $filepath "$@"
@@ -1610,8 +1512,7 @@ _edit_source ()
 
 _edit_jab ()
 {
-    if [[ -z $JAB ]]
-    then
+    if [[ -z $JAB ]]; then
         echo \$JAB is empty >&2
     else
         test -d $JAB || mkdir -p $JAB

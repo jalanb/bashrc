@@ -13,8 +13,7 @@ shift_path()
     [[ -z "$*" ]] && return 0
     for p in "$@"
     do
-        if [[ -f $p || -d $p ]]
-        then
+        if [[ -f $p || -d $p ]]; then
             path=$(python -c"import os; print os.path.realpath('$p')")
             return 0
         fi
@@ -35,8 +34,7 @@ shift_dir()
     [[ -z "$*" ]] && return 0
     for d in "$@"
     do
-        if [[ -d $d ]]
-        then
+        if [[ -d $d ]]; then
             dir=$(python -c"import os; print os.path.realpath('$d')")
             return 0
         fi

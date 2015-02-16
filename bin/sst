@@ -11,13 +11,10 @@ source $JAB/functons
 
 usage ()
 {
-    if [[ $# < 2 ]]
-    then
-        if [[ $# == 1 ]]
-        then
+    if [[ $# < 2 ]]; then
+        if [[ $# == 1 ]]; then
             parts=$(echo $1 | tr '@' '\n' | wc -l)
-            if [[ $parts -ne 2 ]]
-            then
+            if [[ $parts -ne 2 ]]; then
                 echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
                 exit 1
             fi
@@ -28,8 +25,7 @@ usage ()
 main ()
 {
     parts=$(echo $1 | tr '@' '\n' | wc -l)
-    if [[ $parts -eq 2 ]]
-    then
+    if [[ $parts -eq 2 ]]; then
         you=$(echo $1 | cut -d\@ -f 1)
         there_name=$(echo $1 | cut -d\@ -f 2)
         shift
@@ -44,10 +40,8 @@ main ()
     local here_name=$(python -c "import socket; print socket.getfqdn()")
     local here_ip=$(python $JAB_PYTHON/ifconfig.py 172)
     local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
-    if [[ $here_ip == $there_ip ]]
-    then
-        if [[ $you == $(whoami) ]]
-        then
+    if [[ $here_ip == $there_ip ]]; then
+        if [[ $you == $(whoami) ]]; then
             echo "Here I am: $you@$there_name ($there_ip)" 2>&1
         else
             echo "Here is: $there_name ($there_ip)" >&2
