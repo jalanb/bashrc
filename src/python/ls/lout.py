@@ -15,6 +15,7 @@ def local_rules(*_):
     pass
 lout_rules = local_rules
 
+
 def screen_width():
     try:
         return int(os.environ['COLUMNS']) - 1
@@ -33,7 +34,7 @@ def show_dirs(dirs):
     print
 
 
-def pad(out, bands = 4):
+def pad(out, bands=4):
     chars_per_band = screen_width() / bands
     out_chars = len(out)
     out_bands = (out_chars / chars_per_band) + 1
@@ -52,29 +53,40 @@ def format_names(names):
     for name, files in names.iteritems():
         ordered_exts = ['py', 'j', 'g', 'test', 'tests', 'fail', 'pyc', 'pyo']
         try:
-            missing = [e for e in argv.options.exts if e[1:] not in ordered_exts]
+            missing = [e for e in argv.options.exts
+                       if e[1:] not in ordered_exts]
             assert not missing
         except AttributeError:
             pass
         f_exts = [f.ext[1:] for f in files]
         lout_rules(f_exts)
-        exts = [e for e in ordered_exts if e in f_exts] + [e for e in f_exts if e not in ordered_exts]
+        exts = [e for e in ordered_exts
+                if e in f_exts or e not in ordered_exts]
         coloured_exts = [ls_colours.colourize_extension(ext) for ext in exts]
         lout_rules(f_exts)
-        name_and_extensions = '%s.%s' % (name, ','.join(coloured_exts))
+        if '' not in coloured_exts:
+            name_and_extensions = '%s.%s' % (name, ','.join(coloured_exts))
+        else:
+            if len(coloured_exts) == 1:
+                name_and_extensions = name
+            else:
+                coloured_exts.remove('')
+                coloured_exts.insert(0, '')
+                name_and_extensions = '%s.%s' % (name, ','.join(coloured_exts))
         lout_rules(name_and_extensions)
         names_and_extensions.append(name_and_extensions)
     return sort_by_name(names_and_extensions)
 
 
 def show_line(outs, columns_per_line):
-    columns_this_line, remainder = outs[:columns_per_line], outs[columns_per_line:]
+    cpl = columns_per_line
+    columns_this_line, remainder = outs[:cpl], outs[cpl:]
     separator = ''
     if argv.options.lines:
         separator = '\n'
     print separator.join(columns_this_line)
     if remainder:
-        show_line(remainder, columns_per_line)
+        show_line(remainder, cpl)
 
 
 def show(outs):
@@ -85,4 +97,3 @@ def show(outs):
     columns_per_line = screen_width() / column_width
     padded = ['%-*s' % (column_width, o) for o in outs]
     show_line(padded, columns_per_line)
-

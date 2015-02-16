@@ -54,10 +54,12 @@ def _get_file_colour(filename):
     return None
 
 
-def _get_extension_colour(extension):
-    extension = extension[0] == '.' and extension or str('.%s' % extension)
+def _get_extension_colour(ext):
+    if not ext:
+        return ''
+    ext = ext[0] == '.' and ext or str('.%s' % ext)
     ext_colours, _ = load_ls_colours()
-    return ext_colours.get(extension, None)
+    return ext_colours.get(ext, None)
 
 
 def _colourize(string, getter):
@@ -70,5 +72,5 @@ def colourize_file(filename):
     return _colourize(filename, _get_file_colour)
 
 
-def colourize_extension(extension):
-    return _colourize(extension, _get_extension_colour)
+def colourize_extension(ext):
+    return _colourize(ext, _get_extension_colour)

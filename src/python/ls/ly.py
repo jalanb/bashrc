@@ -17,6 +17,7 @@ def _post_parse(options, args):
         'compiled': ['.pyc', '.pyo'],
         'grammar': ['.g', '.j'],
         'fails': ['.fail'],
+        'scripts': [''],
     }
     options.exts = ['.py', ]
     options.wanted = ['.py', ]
@@ -45,6 +46,11 @@ def prepare_argv():
     ])
 
 
+def shebang_python(path_to_file):
+    first_line = path_to_file.lines()[0]
+    return first_line[:2] == '#!' and 'python' in first_line[2:]
+
+
 def _python_wanted(path_to_file):
     if path_to_file.name in argv.options.unwanted:
         return False
@@ -54,6 +60,8 @@ def _python_wanted(path_to_file):
     if argv.options.others:
         return True
     if argv.options.all:
+        if not ext:
+            return shebang_python(path_to_file)
         return ext in argv.options.exts
     return ext in argv.options.wanted
 
