@@ -2,8 +2,7 @@
 
 # set -e
 
-ghi_ook ()
-{
+ghi_ook () {
     local __doc__="Move this to local on jab.ook"
     TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"
 }
@@ -16,8 +15,7 @@ ghi_ook ()
 
 # x
 
-c ()
-{
+c () {
     kd "$@"
     local c_result="$?"
     if [[ $c_result == "0" ]]; then
@@ -30,8 +28,7 @@ c ()
     return $c_result
 }
 
-f ()
-{
+f () {
     shift_dir "$@" && shift
     local name=$1
     shift
@@ -49,14 +46,12 @@ f ()
     IFS=$old_ifs
 }
 
-h()
-{
+h () {
     local lines=${1:-25}
     history | tail -n $lines
 }
 
-p ()
-{
+p () {
     local me=$USER
     local here=$(jostname)
     export PYTHON=${PYTHON-python}
@@ -65,8 +60,7 @@ p ()
         console_title_off "${me}@${here}"
 }
 
-v ()
-{
+v () {
     if [[ -z $* ]]; then
         $EDITOR
     else
@@ -94,26 +88,22 @@ v ()
     fi
 }
 
-x ()
-{
+x () {
     /Users/jab/bin/exercise
 }
 
-y ()
-{
+y () {
     clear
     python $JAB_PYTHON/y.py "$@"
 }
 
 # xx
 
-3d ()
-{
+3d () {
     3l "$@" -d
 }
 
-3l ()
-{
+3l () {
     if first_num "$@"; then
         Tree -L $num $args
     else
@@ -121,8 +111,7 @@ y ()
     fi
 }
 
-3y ()
-{
+3y () {
     if [[ -f $1 ]]; then
         dir=$(dirname $1)
         shift
@@ -135,13 +124,11 @@ y ()
     Tree -P "*.py" $dir "$@"
 }
 
-add ()
-{
+add () {
     echo $($1 + $2)
 }
 
-db ()
-{
+db () {
     name=$1
     [[ -z $name ]] && return 1
     local line_name=db_${name}_line
@@ -153,68 +140,58 @@ db ()
     set +x
 }
 
-IP ()
-{
+IP () {
     for number in 172 192 100
     do
         python $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 
-c. ()
-{
+c. () {
     c . "$@"
 }
 
-cj ()
-{
+cj () {
     c $JAB
 }
 
-cl ()
-{
+cl () {
     c "$@" && ls
 }
 
-cq ()
-{
+cq () {
     sqf
     c $QAZ
 }
 
-cv ()
-{
+cv () {
     kd $1
     v $(basename $1)
 }
 
-gf ()
-{
+gf () {
     shift_dir "$@" && shift
     name=$1
     shift
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
-gt ()
-{
+gt () {
     get_tube "$@"
 }
 
-fc ()
-{
+fc () {
     shift_dir "$@" && shift
     name=$1
     shift
     for path in $(find $dir -name $name -print)
     do
         echo cd $path
-        [[ -f $path ]] && builtin cd $(dirname $path) || else builtin cd $path
+        [[ -f $path ]] && builtin cd $(dirname $path) || builtin cd $path
     done
 }
 
-fd ()
-{
+fd () {
     shift_dir "$@" && shift
     if [[ -n $1 ]]; then
         name=$1
@@ -223,22 +200,19 @@ fd ()
     find $dir -type d -name $name "$@"
 }
 
-ff ()
-{
+ff () {
     shift_dir "$@" && shift
     name=$1
     shift
     find $dir -type f -name $name "$@"
 }
 
-fg ()
-{
+fg () {
     shift_dir "$@" && shift
     sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file
 }
 
-fv ()
-{
+fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then
         echo Nothing to find
@@ -253,16 +227,14 @@ fv ()
     fi
 }
 
-gg ()
-{
+gg () {
     local readme="show grep results as vim commands"
     sought="$1"
     shift
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
-gp ()
-{
+gp () {
     local __doc__="grep in python files under here, show results as vim commands"
     sought=$1
     shift
@@ -270,14 +242,12 @@ gp ()
     find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):vim \1 +/\"$seek\":" | sort | uniq
 }
 
-gh ()
-{
+gh () {
     local __doc__="show stuff from history"
     HISTTIMEFORMAT= history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
 }
 
-gv ()
-{
+gv () {
     if which gvim >/dev/null 2>&1; then
         date >> ~/log/gvim.log
         echo gvim "$@" >> ~/log/gvim.log
@@ -288,33 +258,27 @@ gv ()
     fi
 }
 
-hd ()
-{
+hd () {
     vim_diff "$1" "$2" "$3" -o
 }
 
-hv ()
-{
+hv () {
     history | vim - +
 }
 
-jj ()
-{
+jj () {
     c $JAB "$@"
 }
 
-jp ()
-{
+jp () {
     python
 }
 
-_free_line_here ()
-{
+_free_line_here () {
     :
 }
 
-ky ()
-{
+ky () {
     shift_dir "$@" && shift
     dir=${dir:-$PYTHON_HOME}
     kd $dir
@@ -322,63 +286,51 @@ ky ()
 }
 
 
-l1 ()
-{
+l1 () {
     ls -1tr "$@"
 }
 
-la ()
-{
+la () {
     ls -a "$@"
 }
 
-ld ()
-{
+ld () {
     ls -1d "$@"
 }
 
-lf ()
-{
+lf () {
     locate -f "$@"
 }
 
-lj ()
-{
+lj () {
     ls $JAB "$@"
 }
 
-ll ()
-{
+ll () {
     ls -lh  "$@"
 }
 
-lo ()
-{
+lo () {
     locate "$@"
 }
 
-lr ()
-{
+lr () {
     ls -lhtr "$@"
 }
 
-lt ()
-{
+lt () {
     ls *.test*
 }
 
-lx ()
-{
+lx () {
     p $JAB_PYTHON/ls/lx.py  "$@"
 }
 
-ly ()
-{
+ly () {
     p $JAB_PYTHON/ls/ly.py  "$@"
 }
 
-ma ()
-{
+ma () {
     local _storage=/tmp/fred.sh;
     if [[ -z "$@" ]]; then
         python -c "print 'memo -a\"$*\"'" > $_storage;
@@ -388,18 +340,15 @@ ma ()
     fi
 }
 
-ml ()
-{
+ml () {
     memo -l 9
 }
 
-pg ()
-{
+pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
-pi ()
-{
+pi () {
     local me=$USER
     local here=$(jostname)
     local options=-noconfirm_exit
@@ -412,8 +361,7 @@ pi ()
 }
 
 
-py ()
-{
+py () {
     if [[ -z "$@" ]]; then
         mython
     else
@@ -437,47 +385,39 @@ py ()
     fi
 }
 
-ra ()
-{
+ra () {
     range "$@"
 }
 
-rf ()
-{
+rf () {
     PYTHON_SCRIPT=$JAB_PYTHON/rf.py
     python $PYTHON_SCRIPT "$@"
 }
 
-rj ()
-{
+rj () {
     pushd $JAB
     range "$@"
     popd >/dev/null 2>&1
 }
 
-rr ()
-{
+rr () {
     ra ~
 }
 
-rt ()
-{
+rt () {
     $(mython $JAB_PYTHON/remove_tarball.py "$@")
 }
 
-ru ()
-{
+ru () {
 # do da root root route, do da ru !
     [ -z "$@" ] && SUDO || sudo "$@"
 }
 
-tc ()
-{
+tc () {
     v ~/.gitconfig
 }
 
-tm ()
-{
+tm () {
     if [[ -z $1 ]]; then SESSION=$(jostname)
     else
         SESSION=$1
@@ -486,13 +426,11 @@ tm ()
     ! tmux attach-session -t $SESSION "$@" && tmux new-session -s $SESSION "$@"
 }
 
-tf ()
-{
+tf () {
     [ $? -eq 0 ] && echo "true" || echo "false"
 }
 
-tt ()
-{
+tt () {
     if echo $1 | grep -q "gz$"; then
         contents=tz
         extract=xz
@@ -505,8 +443,7 @@ tt ()
     ra
 }
 
-uj ()
-{
+uj () {
 # update $JAB from the repository
     if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]; then
         BACK=$(pwd)
@@ -520,71 +457,58 @@ uj ()
     fi
 }
 
-v. ()
-{
+v. () {
     v .
 }
 
-va ()
-{
+va () {
     _edit_jab aliases
 }
 
-vb ()
-{
+vb () {
     _edit_jab bashrc
 }
 
-vd ()
-{
+vd () {
     vim_diff "$1" "$2" "$3" -O
 }
 
-ve ()
-{
+ve () {
     _edit_jab environ "$@"
 }
 
-vf ()
-{
+vf () {
     _edit_jab functons "$@"
 }
 
-vh ()
-{
+vh () {
     HISTTIMEFORMAT= history | sed -e "s/^[0-9]*  //" | vim - +
 }
 
-vi ()
-{
+vi () {
     vim ~/.inputrc +/Key.bindings
 }
 
-vj ()
-{
+vj () {
     pushd $JAB
     v.
     gsi
     popd >/dev/null 2>&1
 }
 
-vp ()
-{
+vp () {
     _edit_jab prompt "$@"
 }
 
-vv ()
-{
+vv () {
     [[ -n $* ]] && vim $JAB/vim/$1 || v ~/.vimrc
 }
 
-vy ()
-{
+vy () {
     v $(ls *.py | grep -v __*.py*)
 }
 
-xe()
-{
+xe () {
     local amount=$1
     local from=USD
     [[ -n $2 ]] && from=$2
@@ -593,15 +517,13 @@ xe()
     curl "http://www.xe.com/wap/2co/convert.cgi?Amount=$amount&From=$from&To=$to" -A "Mozilla" -s | sed -n "s/.*>\(.*\) $to<.*/\1/p";
 }
 
-zm ()
-{
+zm () {
     du -cms $1 | sort -n | sed -e "s/      / M     /g"
 }
 
 # xxx
 
-cff ()
-{
+cff () {
     if [[ ! -d fred ]]; then
         if [[ -e fred ]]; then
             rm -f fred
@@ -612,18 +534,15 @@ cff ()
 }
 
 
-cjy ()
-{
+cjy () {
     kd $JAB_PYTHON "$@"
 }
 
-clo ()
-{
+clo () {
     c $(locate "$@")
 }
 
-cls ()
-{
+cls () {
 # clean, clear, ls
     rf -q
     clear
@@ -634,13 +553,11 @@ cls ()
     ls "$@"
 }
 
-ddg ()
-{
+ddg () {
     firefox "https://next.duckduckgo.com/?q=$*"
 }
 
-dev ()
-{
+dev () {
     if [[ -d ~/dev ]]; then
         echo ~/dev exists
         echo
@@ -656,18 +573,15 @@ dev ()
     ls
 }
 
-fgp ()
-{
+fgp () {
     fgv *.py "$@"
 }
 
-fgt ()
-{
+fgt () {
     fgv *.test *.tests "$@"
 }
 
-fsh ()
-{
+fsh () {
 # run fred by his extension
     if [ -f fred.sh ]; then bash fred.sh "$@"
     elif [ -f fred.py ]; then p fred.py "$@"
@@ -682,8 +596,7 @@ fsh ()
     fi
 }
 
-fpy ()
-{
+fpy () {
 # run fred.py if fred.sh exists
     if [ -f fred.py ]; then
         p fred.py "$@"
@@ -692,40 +605,33 @@ fpy ()
     fi
 }
 
-ght ()
-{
+ght () {
     gh "$@" | tail
 }
 
-ghv ()
-{
+ghv () {
     local __doc__="edit stuff from history"
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
-glg ()
-{
+glg () {
     git lg "$@" | head -n $(( $LINES / 2 ))
 }
 
-gv. ()
-{
+gv. () {
     PYTHONPATH=$(readlink -f .) gv .
 }
 
-gvd ()
-{
+gvd () {
     EDITOR=gvim vd "$@"
 }
 
-hub ()
-{
+hub () {
     c $GITHUB "$@"
     ls
 }
 
-jjj ()
-{
+jjj () {
 # ssh back to the jab.ook (which is my laptop
 # it goes by different hostnames, try in order of probablity
     local jjj_host=
@@ -734,18 +640,15 @@ jjj ()
 }
 
 
-jjy ()
-{
+jjy () {
     ky $JAB_PYTHON "$@"
 }
 
-add ()
-{
+add () {
     echo $(($1 + $2))
 }
 
-jpi ()
-{
+jpi () {
     local path_to_jpm=$GITHUB/jpm
     cd $path_to_jpm
     source /home/alanb/.virtualenvs/jpm/bin/activate
@@ -755,18 +658,15 @@ jpi ()
 
 }
 
-jpm ()
-{
+jpm () {
     PYTHONPATH=$PYTHONPATH:$GITHUB/jpm python $GITHUB/jpm/bin/jpm "$@"
 }
 
-kpj ()
-{
+kpj () {
     rsync -a -e \"ssh -i $JAB_ID\"
 }
 
-lly ()
-{
+lly () {
     shift_dir "$@" && shift
     reset=$(shopt -p dotglob)
     shopt -s dotglob
@@ -778,24 +678,20 @@ lly ()
     $reset
 }
 
-lrl ()
-{
+lrl () {
     lra "$@" | grep --color -- "->"
 }
 
-lrt ()
-{
+lrt () {
     shift_dir "$@" && shift
     /bin/ls --color=always -lhtr "$dir" |  less -R -m -N +G
 }
 
-ls1 ()
-{
+ls1 () {
     l1 "$@" | sort
 }
 
-lyy ()
-{
+lyy () {
     reset=$(shopt -p dotglob)
     shopt -s dotglob
     ls -xd $(ls -F |grep \/$)
@@ -808,13 +704,11 @@ lyy ()
     $reset
 }
 
-num ()
-{
+num () {
     v $JAB/local/numbers.txt
 }
 
-pyi ()
-{
+pyi () {
     cd $GITHUB/pym/pym
     add_to_a_path PATH ./bin
     add_to_a_path PYTHONPATH ./pym
@@ -852,203 +746,168 @@ pyi ()
     [[ -n $* ]] && "$@"
 }
 
-ps3 ()
-{
+ps3 () {
     if [[ -z "$@" ]]; then
         ps axf | vim - +
     else ps axf | vim - +/"$*"
     fi
 }
 
-rff ()
-{
+rff () {
     r fred
     r fred.*
 }
 
-rfq ()
-{
+rfq () {
     rq fred
     rq fred.*
 }
 
-rq. ()
-{
+rq. () {
     /bin/rm -rf ./*
 }
 
-rqa ()
-{
+rqa () {
     /bin/rm -rf ./* ./.* 2>&1 | grep -v 'cannot remove directory: `\./\.'
 }
 
-sib ()
-{
+sib () {
     source_path ~/.bashrc
 }
 
-sqf ()
-{
+sqf () {
     export QAZ=$BITBUCKET/qaz
     source_path $QAZ/src/bash/functons
 }
 
-sto ()
-{
+sto () {
     firefox "http://stackoverflow.com/search?q=$*"
 }
 
-tmp ()
-{
+tmp () {
     pushd $(python $KD_DIR/kd.py ~/tmp "$@")
 }
 
 unalias try > /dev/null 2>&1
-try ()
-{
+try () {
     TRY=$JAB_PYTHON/testing/try.py
     test -f ./try.py && TRY=./try.py
     python $TRY "$@"
 }
 
-vaf ()
-{
+vaf () {
     vim -p $JAB/aliases $JAB/functons
     source_path $JAB/aliases
     source_path $JAB/functons
 }
 
-vat ()
-{
+vat () {
     vimcat "$@"
 }
 
-vib ()
-{
+vib () {
     $EDITOR ~/.bashrc
 }
 
-vla ()
-{
+vla () {
     _edit_locals aliases
 }
 
-vle ()
-{
+vle () {
     _edit_locals environ
 }
 
-vlf ()
-{
+vlf () {
     _edit_locals functons
 }
 
-vlo ()
-{
+vlo () {
     v $(locate "$@")
 }
 
-vff ()
-{
+vff () {
     $($PYTHON $JAB_PYTHON/vff.py "$@")
 }
 
-vpe ()
-{
+vpe () {
     _edit_jab python-environ
 }
 
-vvb ()
-{
+vvb () {
     vvf sh.vim
 }
 
-vvf ()
-{
+vvf () {
     vv ftplugin/$1
 }
 
-vvg ()
-{
+vvg () {
     gv $JAB/vim/gvimrc
 }
 
-vvp ()
-{
+vvp () {
     vvf python
 }
 
-vvy ()
-{
+vvy () {
     vvf python/jab.vim
 }
 
 
-vvv ()
-{
+vvv () {
     v ~/.vim
 }
 
-vtr ()
-{
+vtr () {
     python $JAB_PYTHON/vim_traceback.py "$@"
 }
 
 # xxxx
 
-bump ()
-{
+bump () {
     part=${1:-patch}
     bumpversion $part
     git push origin --tags
     grep current_version .bumpversion.cfg
 }
 
-down ()
-{
+down () {
     c ~/Download* "$@"
     ls -alhtr
 }
 
-left ()
-{
+left () {
     local last_command="$1"
     echo $last_command
     local last_command_line="$@"
     echo $last_command_line
 }
 
-main ()
-{
+main () {
     shift_dir "$@" && shift
     [[ -n $* ]] && cp $JAB_PYTHON/main.py $1 || cp $JAB_PYTHON/main.py $dir
 }
 
-mine ()
-{
+mine () {
     sudo chown $(id -un):$(id -gn) "$@"
 }
 
-mkcd ()
-{
+mkcd () {
     local __doc__='make a directory and start using it';
     mkdir -p "$@" && cd "$@"
 }
 
-nose ()
-{
+nose () {
     nosetests --with-progressive "$@"
 }
 
-rq.. ()
-{
+rq.. () {
     local directory_here=$(basename "$(pwd)")
     cd ..
     /bin/rm -rf "$directory_here"
 }
 
-SUDO ()
-{
+SUDO () {
     if [[ -n $1 ]]; then
         user="-u $1"
         you_sir="$1"
@@ -1063,50 +922,42 @@ SUDO ()
         console_title_off "${me}@${here}"
 }
 
-dicp ()
-{
+dicp () {
     COMMAND_FOR_SAME_FILES=cp
     _dixx "$1" "$2"
 }
 
-dihh ()
-{
+dihh () {
     COMMAND_FOR_SAME_FILES=hd
     _dixx "$@"
 }
 
-divv ()
-{
+divv () {
     COMMAND_FOR_SAME_FILES=vd
     _dixx "$@"
 }
 
-this ()
-{
+this () {
     python -c "import this"
 }
 
-Tree ()
-{
+Tree () {
     tree "$@" | more
 }
 
 # xxxxx
 
-build ()
-{
+build () {
     if [[ -f build.sh ]]; then bash build.sh "$@"
     elif [[ -f Makefile ]]; then make "$@"
     fi
 }
 
-clean ()
-{
+clean () {
     rf -q "$@"
 }
 
-clock ()
-{
+clock () {
     while sleep 1
     do
         tput sc
@@ -1116,8 +967,7 @@ clock ()
     done &
 }
 
-detab ()
-{
+detab () {
     if [[ -f $1 ]]; then
         if grep -Pq "^\s*\t\s*[^ \t]" $1; then
             expand -i --tabs=4 $1 > /tmp/txt
@@ -1131,8 +981,7 @@ detab ()
     fi
 }
 
-range ()
-{
+range () {
     local destination=.
     if [[ -n "$*" ]]; then
         local kd_script=$KD_DIR/kd.py
@@ -1154,47 +1003,40 @@ range ()
     return 0
 }
 
-vfile ()
-{
+vfile () {
     echo "I should've used vtr"
     mython $JAB_PYTHON/vfile.py "$@"
 }
 
-ylint ()
-{
+ylint () {
     mython /home/alanb/.jab/src/python/site/ylint.py "$@"
 }
 
 # xxxxxx
 
-cd_one ()
-{
+cd_one () {
     clear
     shift_dir "$@" && shift
     c $dir
 }
 
-has_py ()
-{
+has_py () {
     has_ext py "$@"
 }
 
 
-please ()
-{
+please () {
     local last=$(history -p !-1)
     echo "sudo $last"
     sudo $last
 }
 
-mython ()
-{
+mython () {
     local __doc__="use the python executable at $HOME"
     ~/bin/python2.7 "$@"
 }
 
-run_as ()
-{
+run_as () {
     username=$1
     shift
     if [[ -n "$1" ]]; then
@@ -1206,27 +1048,23 @@ run_as ()
 
 # xxxxxxx
 
-has_ext ()
-{
+has_ext () {
   test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | head -n 1)
 }
 
 
-pylinum ()
-{
+pylinum () {
     local string=$(pylint --help-msg $1 | head -n 1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
     [[ $string != "# pylint: disable=No" ]] && echo $string
 }
 
 # xxxxxxxx
 
-jostname ()
-{
+jostname () {
     echo ${HOSTNAME:-$(hostname -s)}
 }
 
-maketest ()
-{
+maketest () {
     local path=$1
     if [[ ! -f $path ]]; then
         echo $path is not a file >&2
@@ -1246,14 +1084,12 @@ maketest ()
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB_PYTHON/test_.py > $test_file
 }
 
-thirteen ()
-{
+thirteen () {
     cd_one
     3d "$@"
 }
 
-todo_edit ()
-{
+todo_edit () {
     local todo_txt="$JAB_TODO"
     local git_options="--git-dir=$JAB/.git --work-tree=$JAB"
     if [[ -f todo.txt ]]; then
@@ -1272,8 +1108,7 @@ todo_edit ()
     fi
 }
 
-todo_show ()
-{
+todo_show () {
     local todo_txt="$JAB_TODO"
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
@@ -1283,39 +1118,33 @@ todo_show ()
 
 # xxxxxxxxxx
 
-jab_scripts()
-{
+jab_scripts () {
     python $JAB_PYTHON/scripts.py "$@"
 }
 
-thirty_two ()
-{
+thirty_two () {
     3l "$@"
     2
 }
 
 # _______________
 
-_show_git_here ()
-{
+_show_git_here () {
     [[ -d $PWD/.git ]] || return
     local days=${1:-5}
     local _log=$(git -C $PWD log -n 1)
     [[ $? ]] && git -C $PWD lg --since="$days days ago"
 }
 
-_show_todo_here ()
-{
+_show_todo_here () {
     [[ -f todo.txt ]] && todo_show
 }
 
-_diff_two_files ()
-{
+_diff_two_files () {
     ! diff -q $1 $2 >/dev/null 2>&1
 }
 
-_any_diff ()
-{
+_any_diff () {
     _diff_two_files $1 $2 && return 0
     [[ -z $3 ]] && return 1
     _diff_two_files $1 $3 && return 0
@@ -1323,8 +1152,7 @@ _any_diff ()
     return 1
 }
 
-vim_diff ()
-{
+vim_diff () {
     first_file="$1"
     shift
     second_file="$1"
@@ -1352,8 +1180,7 @@ vim_diff ()
 
 # xxxxxxxxxxxx
 
-blank_script ()
-{
+blank_script () {
     test -f $1 && return
     echo "#! /bin/bash" > $1
     echo "" >> $1
@@ -1361,8 +1188,7 @@ blank_script ()
 
 # xxxxxxxxxxxxx
 
-one_two_three ()
-{
+one_two_three () {
     clear
     cd_one "$@"
     todo_show
@@ -1374,8 +1200,7 @@ one_two_three ()
     ls $(ls1 -p | g -v "\(pyc\|/\)$")
 }
 
-three_two_one ()
-{
+three_two_one () {
     clear
     3d 2 "$@"
     todo_show
@@ -1384,25 +1209,21 @@ three_two_one ()
 
 # xxxxxxxxxxxxxx
 
-console_whoami ()
-{
+console_whoami () {
     console_title_on $USER@$(jostname)...$(basename $PWD)
 }
 
-source_aliases ()
-{
+source_aliases () {
     local __doc__='source files which have aliases and remember the filenames'
     ALIASES="$ALIASES:$1"
     source $1
 }
 
-_get_git_timer ()
-{
+_get_git_timer () {
     git -C $PWD lg 2> /dev/null | grep $1 | head -n $(( $LINES / 2 ))
 }
 
-_show_git_time ()
-{
+_show_git_time () {
     [[ -d $PWD/.git ]] || return
     local _log=
     local period=
@@ -1423,8 +1244,7 @@ _show_git_time ()
 
 # xxxxxxxxxxxxxxxx
 
-console_title_on ()
-{
+console_title_on () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
     elif env | grep -iq konsole 2>/dev/null; then
@@ -1445,8 +1265,7 @@ console_title_on ()
 
 # xxxxxxxxxxxxxxxxx
 
-console_title_off ()
-{
+console_title_off () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "]0;$1"
     elif env | grep -iq konsole 2>/dev/null; then
@@ -1465,8 +1284,7 @@ console_title_off ()
 # _xxxxxxxxxxxxxxxxxxx
 # functions starting with an underscore are intended for use within this file only
 
-_dixx ()
-{
+_dixx () {
     source_dir="$1"
     destination_dir="$2"
     local number_in_both=$(_divv_get_difference | grep Files | wc -l)
@@ -1489,8 +1307,7 @@ _dixx ()
     fi
 }
 
-_edit_source ()
-{
+_edit_source () {
     local filepath=$1
     shift
     blank_script $filepath
@@ -1510,8 +1327,7 @@ _edit_source ()
     fi
 }
 
-_edit_jab ()
-{
+_edit_jab () {
     if [[ -z $JAB ]]; then
         echo \$JAB is empty >&2
     else
@@ -1522,15 +1338,13 @@ _edit_jab ()
     fi
 }
 
-_edit_locals ()
-{
+_edit_locals () {
     local local_dir=$JAB/local
     test -d $local_dir || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }
 
-_divv_get_difference ()
-{
+_divv_get_difference () {
     local source_gitignore=
     test -f "$source_dir/.gitignore" && source_gitignore="--exclude-from=$source_dir/.gitignore"
     local destination_gitignore=

@@ -2,8 +2,7 @@
 
 # echo Welcome to $JAB/bashrc
 
-_show_status ()
-{
+_show_status () {
     if [[ -d "$JAB"/.svn ]]; then
         svn stat "$JAB"
     elif [[ -d "$JAB"/.git ]]; then
@@ -17,14 +16,12 @@ _show_status ()
     source_path "$jab_src_bash"/git/source
 }
 
-source_path ()
-{
+source_path () {
     local __doc__='Local function in case cannot find the real one'
     [[ -f $1 ]] && source "$@"
 }
 
-_get_source_path_from_what ()
-{
+_get_source_path_from_what () {
     local what_script=$(readlink -f ~/src/git/hub/what/what.sh)
     if test -f "$what_script"; then
         source "$what_script"
@@ -34,21 +31,18 @@ _get_source_path_from_what ()
     fi
 }
 
-_find_subversion ()
-{
+_find_subversion () {
     SVN_CLIENT=no_svn_client
     [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
     [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
     export SVN_CLIENT
 }
 
-_get_jab_environ ()
-{
+_get_jab_environ () {
     [[ -f $JAB/jab_environ ]] && source_path "$JAB"/jab_environ || echo "Cannot find $JAB/environ" >&2
 }
 
-_source_jab_scripts ()
-{
+_source_jab_scripts () {
     _get_jab_environ
     for script in environ python-environ aliases functons
     do
@@ -63,8 +57,7 @@ _source_jab_scripts ()
     source_path "$JAB_LOCAL"/prompt
 }
 
-_if_not_python_try_my_bin ()
-{
+_if_not_python_try_my_bin () {
     PYTHON=${PYTHON:-no_python}
     if [[ $PYTHON == no_python ]]; then
         local python_in_home=$HOME/bin/python
@@ -73,13 +66,11 @@ _if_not_python_try_my_bin ()
     export PYTHON
 }
 
-_remove_jab_tmp_files()
-{
+_remove_jab_tmp_files () {
     /bin/rm -rf "$JAB"/tmp/*
 }
 
-_show_todo ()
-{
+_show_todo () {
     builtin cd "$JAB_PYTHON"
     if python2.7 -c"a=0" >/dev/null 2>&1; then
         test -f todo.py && python2.7 todo.py
@@ -90,8 +81,7 @@ _show_todo ()
     builtin cd - >/dev/null 2>&1
 }
 
-_show_welcome ()
-{
+_show_welcome () {
     _show_todo
     if pgrep -fl vim > /dev/null; then
         echo
@@ -107,8 +97,7 @@ _show_welcome ()
     echo
 }
 
-_set_up_symbols ()
-{
+_set_up_symbols () {
     JAB=
     local github_jab_dir=$(readlink -f ~/src/git/hub/dotjab)
     local myhome_jab_dir=$(readlink -f ~/.jab)
@@ -133,28 +122,24 @@ _set_up_symbols ()
     [[ -z $JAB_LOCAL && -d $github_jab_dir/local ]] && JAB_LOCAL=$github_jab_dir/local
 }
 
-_jab_bashrc ()
-{
+_jab_bashrc () {
     _get_source_path_from_what
     _if_not_python_try_my_bin
     _find_subversion
     _source_jab_scripts
 }
 
-_bashrc ()
-{
+_bashrc () {
     builtin cd $JAB
     _jab_bashrc
     _show_welcome
 }
 
-_no_symbols ()
-{
+_no_symbols () {
     echo "i am lost because \$JAB ($JAB) is not a directory" >&2
 }
 
-run_interactively ()
-{
+run_interactively () {
     _set_up_symbols
     [[ -d $JAB ]] && _bashrc || _no_symbols
 }

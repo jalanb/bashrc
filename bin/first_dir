@@ -1,14 +1,12 @@
 #! /bin/bash
 
-reuse_path()
-{
+reuse_path () {
     [[ -n $path && -d $path ]] && return 0
     shift_path "$@"
     return $?
 }
 
-shift_path()
-{
+shift_path () {
     path=$(pwd)
     [[ -z "$*" ]] && return 0
     for p in "$@"
@@ -21,15 +19,13 @@ shift_path()
     return 1
 }
 
-reuse_dir ()
-{
+reuse_dir () {
     [[ -n $dir && -d $dir ]] && return 0
     shift_dir "$@"
     return $?
 }
 
-shift_dir()
-{
+shift_dir () {
     dir=$(pwd)
     [[ -z "$*" ]] && return 0
     for d in "$@"
@@ -42,8 +38,7 @@ shift_dir()
     return 1
 }
 
-first_num ()
-{
+first_num () {
     num=$(python $JAB_PYTHON/first_num.py "$@")
     args=$(python $JAB_PYTHON/first_num.py NOT_FIRST_NUM "$@")
     [[ -n $num ]]

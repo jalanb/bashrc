@@ -1,7 +1,6 @@
 #! /bin/bash
 
-exit_without_directory ()
-{
+exit_without_directory () {
     test -z $* && exit 1
     if [[ ! -d $1 ]]; then
         echo $1 is not a directory
@@ -10,8 +9,7 @@ exit_without_directory ()
     fi
 }
 
-exit_without_file ()
-{
+exit_without_file () {
     test -z $* && exit 1
     if [[ ! -f $1 ]]; then
         echo $1 is not a file
@@ -20,8 +18,7 @@ exit_without_file ()
     fi
 }
 
-set_paths ()
-{
+set_paths () {
     export MAIL_SITE_DIRECTORY=$HOME/Sites/mail
     COVERAGE_DIRECTORY=$MAIL_SITE_DIRECTORY/coverage
 
@@ -56,8 +53,7 @@ set_paths ()
     exit_without_directory $PYTHONPATH
 }
 
-remove_old_figleaf_data ()
-{
+remove_old_figleaf_data () {
     test -f $FIGLEAF_DATA || return
     test -f $1 || return
     local format="-f %m"
@@ -70,8 +66,7 @@ remove_old_figleaf_data ()
     fi
 }
 
-test_scripts ()
-{
+test_scripts () {
     for script in $*
     do
         remove_old_figleaf_data $script
@@ -87,14 +82,12 @@ test_scripts ()
     done
 }
 
-mail ()
-{
+mail () {
     $PYTHON $FIGLEAF_BINARY -i $MAIL_PY $*
     $PYTHON $FIGLEAF_HTML $FIGLEAF_DATA -d $COVERAGE_DIRECTORY 2>&1 >/dev/null
 }
 
-main ()
-{
+main () {
     set_paths
     cd $MAIL_SOURCE_DIRECTORY
     test_scripts $PYTHONPATH/ansi*.py $PYTHONPATH/colour*.py && mail $*

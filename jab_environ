@@ -1,7 +1,6 @@
 #! /bin/bash
 
-_try_known_jab_paths ()
-{
+_try_known_jab_paths () {
     local github_jab_dir=~/src/git/hub/dotjab
     [[ -d $github_jab_dir ]] || github_jab_dir=
     local myhome_jab_dir=~/.jab

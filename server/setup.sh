@@ -8,8 +8,7 @@ as_root ()
     cd linux
     sudo bash make_software.sh
     local distro=$(python2.7 -c "import platform; print platform.linux_distribution()[0].lower()")
-    if [[ -d $distro ]]
-    then
+    if [[ -d $distro ]]; then
         for file in linux/$distro/*.sh
         do
             cat $file

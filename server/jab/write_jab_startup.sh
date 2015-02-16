@@ -13,8 +13,7 @@ cat > ~/.bashrc << EOB
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 echo Welcome to /home/jab/.bashrc
-if [[ \$- == *i* ]]
-then
+if [[ \$- == *i* ]]; then
 	JAB=${JAB:-$HOME/.jab}
 	test -f $JAB/bashrc && cd $JAB && . bashrc && cd >/dev/null 2>&1
 fi

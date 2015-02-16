@@ -17,8 +17,7 @@ fi
 
 changes=0
 
-get_repo_status ()
-{
+get_repo_status () {
     GIT_BRANCH=
     local significant_svn_status=$JAB_PYTHON_DIR/significant_svn_status.py
     test -f $significant_svn_status || return 1
@@ -36,8 +35,7 @@ get_repo_status ()
     fi
 }
 
-prompt_command ()
-{
+prompt_command () {
     if [ -z "$1" ]; then
         how_do_you_do_nothing_in_a_bash_script=0
     elif [[ $1 == 0 ]]; then

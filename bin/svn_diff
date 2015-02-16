@@ -1,7 +1,6 @@
 #! /bin/bash
 
-set_symbols ()
-{
+set_symbols () {
     JAB=${JAB:-$HOME/.jab}
     [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
     source $JAB/jab_environ
@@ -10,8 +9,7 @@ set_symbols ()
     ARGS="$@"
 }
 
-remove_checkout ()
-{
+remove_checkout () {
     if [[ -n "$COPY_OF_CHECKOUT" ]]; then
         if [[ -f "$COPY_OF_CHECKOUT" ]]; then
             if [[ -n $DO_NOT_REMOVE ]]; then
@@ -24,16 +22,14 @@ remove_checkout ()
     fi
 }
 
-IP ()
-{
+IP () {
     for number in 172 192 100
     do
         python $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 
-show_python_diff ()
-{
+show_python_diff () {
     if [[ -d $PYDIFF ]]; then
         python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
         local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
@@ -55,8 +51,7 @@ show_python_diff ()
     fi
 }
 
-svn_diff_file ()
-{
+svn_diff_file () {
     local direction=$1
     PATH_TO_FILE=$2
     local revision=
@@ -81,8 +76,7 @@ svn_diff_file ()
     fi
 }
 
-svn_diff_dir ()
-{
+svn_diff_dir () {
     local direction=$1
     local path_to_directory=$2
     local revision=
@@ -97,8 +91,7 @@ svn_diff_dir ()
     done
 }
 
-main ()
-{
+main () {
     set_symbols "$@"
     if [[ $ARGS =~ -g ]]; then
         VIM_EDITOR="gvim -f"

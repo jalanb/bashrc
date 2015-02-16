@@ -1,7 +1,6 @@
 #! /bin/bash
 
-_show_status ()
-{
+_show_status () {
     dir=$1
     local GIT="git -C $dir"
     owner=$($GIT remote show origin | grep Fetch.URL | cut -d\/ -f 4)
@@ -34,8 +33,7 @@ _show_status ()
     [[ -n $dir_shown ]] && echo
 }
 
-_show_dir ()
-{
+_show_dir () {
     path=$1
     if [[ -d $path/.git ]]; then
         [[ ! -f $path/.hubignore ]] && _show_status $path
@@ -43,8 +41,7 @@ _show_dir ()
     fi
 }
 
-_show_dirs ()
-{
+_show_dirs () {
     local hub=$1
     cd $hub
     for dirname in $(ls)
@@ -55,8 +52,7 @@ _show_dirs ()
     done
 }
 
-main ()
-{
+main () {
     if [[ -n $* ]]; then
         _show_dir "$@"
     else

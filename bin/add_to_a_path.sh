@@ -13,8 +13,7 @@ fi
 #
 # Gonna need python
 #
-_find_python ()
-{
+_find_python () {
     test -n $PYTHON && return 0
     test -f /usr/bin/python && PYTHON=/usr/bin/python
     test -f /usr/local/bin/python && PYTHON=/usr/local/bin/python
@@ -28,8 +27,7 @@ _find_python ()
 #
 # Once sourced there is one major command:
 #
-add_to_a_path ()
-{
+add_to_a_path () {
     _find_python
     if [[ -z $1 ]]; then
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
@@ -46,8 +44,7 @@ add_to_a_path ()
     fi
 }
 
-_run_script ()
-{
+_run_script () {
     # This function can get called before PATHs are set up
     # If they are set up: use them
     # Else: try sensible defaults around knowing that this script exists
@@ -75,8 +72,7 @@ _run_script ()
     fi
 }
 
-show_value ()
-{
+show_value () {
     local name=${1-SHELL}
     local value=${!name}
     if [[ -z "$value" ]]; then
@@ -87,35 +83,31 @@ show_value ()
     fi
 }
 
-show_a_path ()
-{
+show_a_path () {
     local name=${1-PATH}
     local value=${!name}
     local where=${2-bash}
     printf "$where has set \$$name to\n\t${value//:/\n\t}\n"
 }
 
-show_path ()
-{
+show_path () {
     show_a_path PATH $*
 }
 
-show_ppath ()
-{
+show_ppath () {
     show_a_path PYTHONPATH $*
 }
 
-debug_show_a_path ()
-{
+debug_show_a_path () {
     if [[ $DEBUG_PATHS == "yes" ]]; then
         show_a_path $*
     fi
 }
-debug_show_path ()
-{
+
+debug_show_path () {
     debug_show_a_path PATH $*
 }
-debug_show_ppath ()
-{
+
+debug_show_ppath () {
     debug_show_a_path PYTHONPATH $*
 }

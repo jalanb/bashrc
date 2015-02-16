@@ -1,7 +1,6 @@
 #! /bin/bash
 
-check_jab ()
-{
+check_jab () {
     [[ -z $JAB ]] && JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
     if [[ ! -f $JAB/etc/ackrc ]]; then
         echo $JAB/etc/ackrc is not a file >&2
@@ -9,16 +8,14 @@ check_jab ()
     fi
 }
 
-link ()
-{
+link () {
     destination="$1"
     source="$2"
     [[ -e "$destination" ]] && rm -rf "$destination"
     ln -s $JAB/"$source" $HOME/"$destination"
 }
 
-main ()
-{
+main () {
     cd $HOME
     link ~/.editrc ~/.jab/etc/editrc
     link ~/.dir_colors ~/.jab/etc/dir_colors

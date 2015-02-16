@@ -8,89 +8,69 @@
 
 # xx
 
-sc ()
-{
+sc () {
 	svn ci -m"$@"
 }
 
-si ()
-{
+si () {
 	svn_info "$@"
 }
 
-sl ()
-{
+sl () {
 	svn_log "$@"
 }
 
-st ()
-{
+st () {
 	stat "$@"
 }
 
-sk ()
-{
+sk () {
 	cp $1 ${1}.keep
 	svn revert $1
 	ls -l $1*
 }
 
-sv ()
-{
-	if [[ -n "$@" ]]
-	then
-		svn revert "$@"
-	else
-		svn revert *
-	fi
+sv () {
+	[[ -n "$@" ]] && svn revert "$@" || svn revert *
 }
 
 # xxx
 
-sdc ()
-{
+sdc () {
 	svn diff --diff-cmd colordiff "$@"
 }
 
-sdh ()
-{
+sdh () {
 	svn_diff horizontal "$@"
 }
 
-sdp ()
-{
+sdp () {
 	svn_diff python "$@"
 }
 
-sdv ()
-{
+sdv () {
 	svn_diff vertical "$@"
 }
 
-stv ()
-{
+stv () {
 	shift_dir "$@" && shift
 	svn stat $dir | sed -e "s/^ M/svd/" -e "s/^?? /vim /"
 }
 
 # xxxx
 
-cocn ()
-{
+cocn () {
 	svn co -N $1
 	cd ${1##*/}
 }
 
-cocq ()
-{
+cocq () {
 	svn co -q $1
 	cd ${1##*/}
 }
 
-stat ()
-{
-	if [[ -z "$1" ]]
-	then
+stat () {
+	if [[ -z "$1" ]]; then
 		rf -q
 		do_stat
 	else
@@ -105,24 +85,18 @@ stat ()
 # xxxxxx
 # xxxxxxx
 
-do_stat ()
-{
+do_stat () {
 	test -n "$1" && path="$1" || path="."
-	if [[ -f "$path" || -d "$path" ]]
-	then
-		if svn info "$path" > /dev/null
-		then svn stat "$path"
-		fi
+	if [[ -f "$path" || -d "$path" ]]; then
+		svn info "$path" > /dev/null && svn stat "$path"
 	else echo \"$path\" is not a file, nor dir
 	fi
 }
 
-statvim ()
-{
+statvim () {
 	local replacement="$1"
 	shift
-	if [[ -z "$1" ]]
-	then
+	if [[ -z "$1" ]]; then
 		do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
 	else
 		for file in "$@"
@@ -132,12 +106,9 @@ statvim ()
 	fi | sort
 }
 
-svn_log ()
-{
-	if [ -n "$1" ]
-	then
-		if [[ -f $1 || -d $1 ]]
-		then
+svn_log () {
+	if [ -n "$1" ]; then
+		if [[ -f $1 || -d $1 ]]; then
 			path=$1
 			shift 
 		fi
@@ -148,8 +119,7 @@ svn_log ()
 	svn log -l $limit $path
 }
 
-svn_url ()
-{
+svn_url () {
 	test -n "$1" && dir=$1 || dir="."
 	local URL=$(svn info $dir | grep URL)
 	echo $URL
@@ -158,8 +128,7 @@ svn_url ()
 
 # xxxxxxxx
 
-svn_info ()
-{
+svn_info () {
 	test -n "$1" && dir=$1 || dir="."
 	svn info $dir 
 }

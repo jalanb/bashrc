@@ -1,11 +1,9 @@
 #! /bin/bash
 
-install_software () 
-{
+install_software () {
 	sudo apt-get update
 	sudo apt-get upgrade
-	if [[ -d /media/VBOXADDITIONS_4.2.6_82870/ ]]
-	then
+	if [[ -d /media/VBOXADDITIONS_4.2.6_82870/ ]]; then
 		sudo apt-get -y -qq install dkms
 		cd /media/VBOXADDITIONS_4.2.6_82870/
 		sudo ./VBoxLinuxAdditions.run 
@@ -22,8 +20,7 @@ install_software ()
 	sudo ln -s todos unix2dos
 }
 
-main ()
-{
+main () {
 	install_software
 }
 

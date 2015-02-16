@@ -8,8 +8,7 @@ PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 JAB=${JAB:-$HOME/.jab}
 [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 
-usage ()
-{
+usage () {
     ARGS="$*"
     if [[ $# != 2 ]]; then
         if [[ $# == 1 ]]; then
@@ -24,8 +23,7 @@ usage ()
     fi
 }
 
-main ()
-{
+main () {
     $PATH_TO_SCRIPTS/sst $ARGS -i $JAB_ID -X
 }
 

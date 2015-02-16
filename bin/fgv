@@ -5,8 +5,7 @@
 # Default - find . -name "*.py"
 #   Specify another directory, or other globs as args to this script
 
-extract_dir()
-{
+extract_dir () {
     dir=
     names=
     for arg in "$@"
@@ -20,11 +19,7 @@ extract_dir()
         elif [[ -d $arg && -z "$dir" ]]; then
             dir=$(python -c"import os; print os.path.realpath(\"$arg\")")
         else
-            if [[ -z "$sought" ]]; then
-                sought=$arg
-            else
-                sought="$sought $arg"
-            fi
+            [[ -z "$sought" ]] && sought=$arg || sought="$sought $arg"
         fi
     done
     if [[ -z "$names" ]]; then
@@ -35,29 +30,24 @@ extract_dir()
     fi
 }
 
-find_files ()
-{
+find_files () {
     find $dir '(' -name .svn -o -name tags ')' -prune -o '(' $names ')' -exec grep -l "$sought" {} \;
 }
 
-find_paths_arg ()
-{
+find_paths_arg () {
     find_files | sort | uniq | tr '\n' ' '
 }
 
-list ()
-{
+list () {
     ls -lhtr "$@"
 }
 
-edit ()
-{
+edit () {
     echo vim -p "$@" +/"$sought"
     vim -p "$@" +/"$sought"
 }
 
-main ()
-{
+main () {
     local __doc__="grep in python files under here, show results as vim commands"
     extract_dir "$@"
     found_files=$(find_paths_arg)

@@ -13,17 +13,14 @@ _git_status_regexp="^$_git_status_char_regexp$_git_status_char_regexp"
 
 # xx
 
-ga ()
-{
+ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     git add "$@"
 }
 
-gc ()
-{
+gc () {
     local _storage=/tmp/gc.sh
-	if [[ -z "$@" ]]
-	then git commit --verbose
+	if [[ -z "$@" ]]; then git commit --verbose
 	else
         python -c "print 'git commit -m\"$*\"'" > $_storage
         _show_run_storage
@@ -31,100 +28,80 @@ gc ()
     GIT_ADDED=
 }
 
-gd ()
-{
+gd () {
     git diff "$@"
 }
 
-gs ()
-{
+gs () {
     shift_dir "$@" && shift
 	_do_git_status $dir "$@"
 }
 
 # xxx
 
-gaa ()
-{
+gaa () {
     ga .
 }
 
-gac ()
-{
+gac () {
     local addable=.
-    if [[ -e $1 ]]
-    then
+    if [[ -e $1 ]]; then
         addable=$1
         shift
     fi
-    if ga $addable
-    then gc "$@"
-    fi
+    ga $addable && gc "$@"
 }
 
-gai ()
-{
+gai () {
     ga --interactive "$@"
 }
 
-gcj ()
-{
+gcj () {
     local _storage=/tmp/gcj.sh
     local GIT="git -C $JAB"
-	if [[ -z "$@" ]]
-	then $GIT commit --all --verbose
+	if [[ -z "$@" ]]; then $GIT commit --all --verbose
 	else
         python -c "print '$GIT commit -m\"$*\"'" > $_storage
         _run_storage
 	fi
 }
 
-gdi ()
-{
+gdi () {
     git di "$@"
 }
 
-gdv ()
-{
+gdv () {
     git dv "$@"
 }
 
-gpp ()
-{
+gpp () {
     grr "$@"
     gpu "$@"
 }
 
-gpu ()
-{
+gpu () {
     git push "$@"
 }
 
-grr ()
-{
+grr () {
     git pull --rebase "$@"
 }
 
-grs ()
-{
+grs () {
     git rerere status
 }
 
-gsd ()
-{
+gsd () {
     shift_dir "$@" && shift
     for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
     do
         git dv $f     
     done
     STATUS_QUESTIONS=$(git -C $dir status -s | grep "??" | cut -d' ' -f2)
-    if [[ -n $STATUS_QUESTIONS ]]
-    then v $STATUS_QUESTIONS
-    fi
+    [[ -n $STATUS_QUESTIONS ]] && v $STATUS_QUESTIONS
 }
 
-_gsi_opt ()
-{
+_gsi_opt () {
     local red='\[\033[0;31m\]'
     red="\033[0;31m"
     local no_colour='\[\033[0m\]'
@@ -132,8 +109,7 @@ _gsi_opt ()
     GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
 }
 
-_gsi_menu ()
-{
+_gsi_menu () {
     GSI_MENU=
     suffix=", "
     _gsi_opt q uit
@@ -147,19 +123,16 @@ _gsi_menu ()
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
 }
 
-_gsi_vim ()
-{
+_gsi_vim () {
     _git_untracked $1 && v $1 || gdv $1
 }
 
-_gsi_prompt ()
-{
+_gsi_prompt () {
     _gsi_menu $1
     read -e -n1 -p " " answer
 }
 
-gsi ()
-{
+gsi () {
     shift_dir "$@" || shift
     for f in $(git -C $dir status -s | grep "^\( M\|??\)" | sed -e "s/^...//")
     do
@@ -174,28 +147,24 @@ gsi ()
         [[ $answer =~ [vV] ]] && _gsi_vim $f
     done
     [[ -n $GIT_ADDED ]] && gc
-    if [[ -n $STATUS_QUESTIONS ]]
-    then vimcat $STATUS_QUESTIONS
-    fi
+    [[ -n $STATUS_QUESTIONS ]] && vimcat $STATUS_QUESTIONS
 }
 
-gsv ()
-{
+gsv () {
     shift_dir "$@" || shift
     for f in $(git -C $dir status -s)
     do
-        if echo $f | grep -q "^ M" 
-        then git dv $(echo $f | cut -dM -f2)
-        elif echo $f | grep -q "^ A"
-        then vim  $(echo $f | cut -dM -f2)
+        if echo $f | grep -q "^ M" ;then
+            git dv $(echo $f | cut -dM -f2)
+        elif echo $f | grep -q "^ A"; then
+            vim  $(echo $f | cut -dM -f2)
         fi
     done
 }
 
 # xxxx
 
-gaic ()
-{
+gaic () {
     gai .; gc "$@"
 }
 
@@ -203,12 +172,11 @@ gaic ()
 # xxxxxx
 # xxxxxxx
 
-_do_git_stat ()
-{
+_do_git_stat () {
 	local __doc__="get the short status from git"
     reuse_dir "$@" && shift
-	if shift_path "$@"
-	then git -C $dir status -s "$path" 2 > /dev/null
+	if shift_path "$@"; then
+        git -C $dir status -s "$path" 2 > /dev/null
 	else echo \"$path\" is not a file
 	fi
 }
@@ -217,31 +185,26 @@ _do_git_stat ()
 
 # xxxxxxxxxxxx
 
-_git_modified ()
-{
+_git_modified () {
     [[ $(_status_chars $1) == " M" ]]
 }
 
-_run_storage ()
-{
+_run_storage () {
     bash $_storage
     rq $_storage
 }
 
 # xxxxxxxxxxxxx
 
-_git_untracked ()
-{
+_git_untracked () {
     [[ $(_status_chars $1) == "??" ]]
 }
 
-_status_chars ()
-{
+_status_chars () {
     git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
-_do_git_status ()
-{
+_do_git_status () {
 	local __doc__="get the status from git"
     dir=$1; shift
 	[[ -z $dir ]] && dir=$PWD
@@ -251,19 +214,16 @@ _do_git_status ()
 
 # xxxxxxxxxxxxxxx
 
-_any_git_changes ()
-{
+_any_git_changes () {
 	local __doc__="whether the current dir has modified or untacked files"
     local dir=$1
 	[[ -z $dir ]] && dir=$PWD
-	if [[ -d ${dir}/.git ]]
-    then
+	if [[ -d ${dir}/.git ]]; then
         git -C $dir status -s | grep "$_git_status_regexp"
     fi
 }
 
-_has_git_changes ()
-{
+_has_git_changes () {
     local dir=$1
     local _files=$(_any_git_changes $dir)
     [[ -n $_files ]]
@@ -271,16 +231,15 @@ _has_git_changes ()
 
 # xxxxxxxxxxxxxxxxx
 
-git_simple_status ()
-{
+git_simple_status () {
     _has_git_changes $1 || return
     local git_dir=$dir
     [[ -n $1 ]] && git_dir=$1
     _do_git_stat $git_dir
     # | grep "$_git_status_regexp"
 }
-_show_run_storage ()
-{
+
+_show_run_storage () {
     cat $_storage
     _run_storage
 }

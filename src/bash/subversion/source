@@ -2,12 +2,11 @@
 
 BASH_DIR=$(dirname $BASH_SOURCE)
 
-source_here ()
-{
-    if [[ -n $GITHUB ]]
-    then what_source $BASH_DIR/$1 optional
-    elif [[ -f $BASH_DIR/$1 ]]
-    then source $BASH_DIR/$1
+source_here () {
+    if [[ -n $GITHUB ]]; then
+        what_source $BASH_DIR/$1 optional
+    elif [[ -f $BASH_DIR/$1 ]]; then
+        source $BASH_DIR/$1
     fi
 }
 

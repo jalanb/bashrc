@@ -9,8 +9,7 @@ JAB=${JAB:-$HOME/.jab}
 [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 source $JAB/functons
 
-usage ()
-{
+usage () {
     if [[ $# < 2 ]]; then
         if [[ $# == 1 ]]; then
             parts=$(echo $1 | tr '@' '\n' | wc -l)
@@ -22,8 +21,7 @@ usage ()
     fi
 }
 
-main ()
-{
+main () {
     parts=$(echo $1 | tr '@' '\n' | wc -l)
     if [[ $parts -eq 2 ]]; then
         you=$(echo $1 | cut -d\@ -f 1)
