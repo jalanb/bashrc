@@ -21,7 +21,7 @@ c () {
     if [[ $c_result == "0" ]]; then
         _show_todo_here
         echo
-        _show_git_time
+        _show_git_time .
         echo
         git_simple_status .
     fi
@@ -1220,11 +1220,12 @@ source_aliases () {
 }
 
 _get_git_timer () {
-    git -C $PWD lg 2> /dev/null | grep $1 | head -n $(( $LINES / 2 ))
+    git -C $git_dir lg 2> /dev/null | grep $1 | head -n $(( $LINES / 2 ))
 }
 
 _show_git_time () {
-    [[ -d $PWD/.git ]] || return
+    git_dir=${1:-$PWD}
+    [[ -d $git_dir/.git ]] || return
     local _log=
     local period=
     local lines_left=$(( $LINES / 2 ))
@@ -1235,7 +1236,7 @@ _show_git_time () {
         if [[ -n $_log ]]; then
             period_lines=$(_get_git_timer $regexp | wc -l)
             _get_git_timer $regexp | head -n $lines_left
-            [[ $period_lines > $lines_left ]] && break
+            [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
     done
