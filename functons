@@ -408,6 +408,10 @@ ru () {
     [ -z "$@" ] && SUDO || sudo "$@"
 }
 
+ry () {
+    rf -qpr
+}
+
 tc () {
     v ~/.gitconfig
 }
@@ -517,6 +521,10 @@ zm () {
 }
 
 # xxx
+
+add () {
+    echo $($1 + $2)
+}
 
 cff () {
     if [[ ! -d fred ]]; then
