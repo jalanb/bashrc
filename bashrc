@@ -22,7 +22,8 @@ source_path () {
 }
 
 _get_source_path_from_what () {
-    local what_script=$(readlink -f ~/src/git/hub/what/what.sh)
+    GITHUB=${GITHUB:-~/src/git/hub}
+    local what_script=$(readlink -f $GITHUB/what/what.sh)
     if test -f "$what_script"; then
         source "$what_script"
     else
@@ -120,6 +121,7 @@ _set_up_symbols () {
     JAB_LOCAL=${myhome_jab_dir}/local
     [[ -d $JAB_LOCAL ]] || JAB_LOCAL=
     [[ -z $JAB_LOCAL && -d $github_jab_dir/local ]] && JAB_LOCAL=$github_jab_dir/local
+    return 0
 }
 
 _jab_bashrc () {
@@ -140,8 +142,8 @@ _no_symbols () {
 }
 
 run_interactively () {
-    _set_up_symbols
-    [[ -d $JAB ]] && _bashrc || _no_symbols
+    _set_up_symbols || _no_symbols
+    [[ -d $JAB ]] && _bashrc
 }
 
 #set -x
