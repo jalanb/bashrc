@@ -178,7 +178,19 @@ gf () {
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
 }
 
-gt () {
+gi ()
+{
+    git "$@"
+}
+
+gr ()
+{
+    shift_dir "$@" && shift
+    sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file
+}
+
+gt ()
+{
     get_tube "$@"
 }
 
