@@ -159,11 +159,6 @@ cl () {
     c "$@" && ls
 }
 
-cq () {
-    sqf
-    c $QAZ
-}
-
 cv () {
     kd $1
     v $(basename $1)
@@ -773,11 +768,6 @@ rqa () {
 
 sib () {
     source_path ~/.bashrc
-}
-
-sqf () {
-    export QAZ=$BITBUCKET/qaz
-    source_path $QAZ/src/bash/functons
 }
 
 sto () {
