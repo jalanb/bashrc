@@ -77,7 +77,7 @@ test -d $GITHUB/liquidprompt && PROMPT_COMMAND=off
 if [[ $PROMPT_COMMAND == off ]]; then
     unset PROMPT_COMMAND
     source $GITHUB/liquidprompt/liquidprompt
-    PROMPT_COMMAND="$PROMPT_COMMAND; console_whoami 2>/dev/null"
+    PROMPT_COMMAND="$PROMPT_COMMAND; history -a; console_whoami 2>/dev/null"
 else
     if [[ -n "$MYVIMRC" ]]; then
         export PS1="\$? [\u@\h:\$PWD]\n$ "
