@@ -27,6 +27,9 @@ call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 " PEP 8 calls for indentation with 4 spaces
 set foldmethod=indent
 set foldlevel=0
+" Do not treat comments differently (default has foldignore=#)
+" https://stackoverflow.com/questions/8993455/how-do-i-fix-vim-to-properly-indent-folds-containing-python-comment-lines
+set foldignore=
 NoMatchParen
 
 " Checkers
