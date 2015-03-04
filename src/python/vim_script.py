@@ -428,7 +428,7 @@ def vim_main(args):
             print script.write()
         else:
             print script.write()
-            return not os.EX_OK
+            return os.EX_OK
     except (OSError, IOError), e:
         print >> sys.stderr, e
         return os.EX_IOERR
