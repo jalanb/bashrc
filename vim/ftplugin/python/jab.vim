@@ -24,8 +24,27 @@ noremap <leader>e   ?^\s*def \zs\i<cr>*#zv
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
+function! FoldCommentsAndIndentation(lnum)
+    let line = getline(a:lnum)
+    if line =~ '.*{{{'
+        return 'a1'
+    elseif line =~ '.*}}}'
+        return 's1'
+    endif
+    let comment_re = '\v^\s*#(([{}]{3})@!.)*$'
+    if getline(a:lnum) =~ comment_re
+        if getline(a:lnum - 1) =~ comment_re
+            return '1'
+        else
+            return '0'
+        endif
+    endif
+    return indent(a:lnum) / &tabstop
+endfunction
+
 " PEP 8 calls for indentation with 4 spaces
-set foldmethod=indent
+set foldmethod=expr
+set foldexpr=FoldCommentsAndIndentation(v:lnum)
 set foldlevel=0
 " Do not treat comments differently (default has foldignore=#)
 " https://stackoverflow.com/questions/8993455/how-do-i-fix-vim-to-properly-indent-folds-containing-python-comment-lines
