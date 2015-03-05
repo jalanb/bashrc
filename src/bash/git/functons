@@ -83,7 +83,7 @@ gdv () {
 }
 
 gla () {
-    glg --author=Alan "$@"
+    glg --author=Alan.Brogan "$@"
 }
 
 glg () {
