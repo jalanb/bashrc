@@ -21,7 +21,7 @@ c () {
     if [[ $c_result == "0" ]]; then
         _show_todo_here
         echo
-        _show_git_time .
+        show_git_time .
         echo
         git_simple_status .
     fi
@@ -176,11 +176,6 @@ gf () {
     name=$1
     shift
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
-}
-
-gi ()
-{
-    git "$@"
 }
 
 gr ()
@@ -431,10 +426,6 @@ ry () {
     rf -qpr
 }
 
-tc () {
-    v ~/.gitconfig
-}
-
 tm () {
     if [[ -z $1 ]]; then SESSION=$(jostname)
     else
@@ -638,18 +629,6 @@ ght () {
 ghv () {
     local __doc__="edit stuff from history"
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
-}
-
-gla () {
-    glg --author=Alan "$@"
-}
-
-glg () {
-    git lg "$@" | head -n $(( $LINES / 2 ))
-}
-
-glt () {
-    git lt "$@" | head -n $(( $LINES / 2 ))
 }
 
 gv. () {
@@ -1158,13 +1137,6 @@ thirty_two () {
 
 # _______________
 
-_show_git_here () {
-    [[ -d $PWD/.git ]] || return
-    local days=${1:-5}
-    local _log=$(git -C $PWD log -n 1)
-    [[ $? ]] && git -C $PWD lg --since="$days days ago"
-}
-
 _show_todo_here () {
     [[ -f todo.txt ]] && todo_show
 }
@@ -1248,28 +1220,6 @@ source_aliases () {
     source $1
 }
 
-_get_git_timer () {
-    git -C $git_dir lg 2> /dev/null | grep $1 | head -n $(( $LINES / 2 ))
-}
-
-_show_git_time () {
-    git_dir=${1:-$PWD}
-    [[ -d $git_dir/.git ]] || return
-    local _log=
-    local period=
-    local lines_left=$(( $LINES / 2 ))
-    for period in seconds minutes hours days weeks "month | grep -v year" year
-    do
-        regexp=$period.ago
-        _log=$(_get_git_timer $regexp)
-        if [[ -n $_log ]]; then
-            period_lines=$(_get_git_timer $regexp | wc -l)
-            _get_git_timer $regexp | head -n $lines_left
-            [[ $period_lines -gt $lines_left ]] && break
-            lines_left=$(( lines_left - $period_lines ))
-        fi
-    done
-}
 # xxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxxx
