@@ -276,7 +276,8 @@ hv () {
 }
 
 jj () {
-    c $JAB "$@"
+    dir=$JAB
+    c $dir "$@"
 }
 
 jp () {
@@ -1235,7 +1236,7 @@ console_title_on () {
     elif [[ -n $TERM ]]; then
         if [[ $TERM == "linux" ]]; then
             echo -e "]1;$1"
-        elif [[ $TERM =~ "xterm" ]]; then
+        elif [[ $TERM =~ xterm ]]; then
             echo -ne "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
         fi
     else
@@ -1252,10 +1253,12 @@ console_title_off () {
         dcop $KONSOLE_DCOP_SESSION renameSession $1
     elif env | grep -iq gnome.terminal; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
-    elif [[ -n $TERM && $TERM == "linux" ]]; then
-        echo -e "]1;$1"
-    elif [[ $TERM == "xterm" ]]; then
-        echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+    elif [[ -n $TERM ]]; then
+        if [[ $TERM == "linux" ]]; then
+            echo -e "]1;$1"
+        elif [[ $TERM =~ xterm ]]; then
+            echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
+        fi
     else
         echo "Title: $1"
     fi
