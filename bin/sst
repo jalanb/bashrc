@@ -51,7 +51,7 @@ main () {
     local me=$USER
     local here=`hostname -s`
     console_title_on ${you}@${there_small} && \
-        ssh -o ConnectTimeout=5 $options $you@$there_name && \
+        ssh -t -o ConnectTimeout=5 $options $you@$there_name && \
         console_title_off ${me}@${here}
 }
 
