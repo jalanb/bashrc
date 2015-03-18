@@ -38,7 +38,10 @@ OF SUCH DAMAGE.
 
 """
 
-# pylint: disable-msg=W0141, R0912
+# pylint: disable=bad-builtin
+# pylint: disable=too-many-branches
+# pylint: disable-msg=broad-except
+# pylint: disable-msg=deprecated-lambda
 
 
 import re
@@ -165,7 +168,7 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
         obj.__dict__ = inspect.currentframe().f_back.f_locals
     attrs = dir(obj)
     if not use_locals:
-        for var, symbol in SYMBLS:
+        for var, symbol in SYMBOLS:
             if var not in attrs or symbol in actions:
                 continue
             elif var == '__doc__':
@@ -184,7 +187,7 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
             else:
                 if not attributes:
                     continue
-        except (AttributeError, Exception):  # pylint: disable-msg=broad-except
+        except (AttributeError, Exception):
             prop = SeeError()
         actions.append(property_name(attr, prop))
 
@@ -262,7 +265,7 @@ PY_300 = sys.version_info >= (3, 0)
 PY_301 = sys.version_info >= (3, 0, 1)
 
 
-SYMBLS = tuple(filter(lambda x: x[0], (  # pylint: disable-msg=deprecated-lambda
+SYMBOLS = tuple(filter(lambda x: x[0], (
     # callable
     ('__call__', '()'),
 
