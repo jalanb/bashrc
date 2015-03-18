@@ -50,6 +50,7 @@ import inspect
 
 
 from pprint import pformat
+from pprint import pprint
 
 __all__ = ['see']
 
@@ -85,7 +86,8 @@ def fn_filter(names, pat):
     return tuple(filter(match, names))
 
 
-class SeeError(Exception): pass
+class SeeError(Exception):
+    pass
 
 
 class _SeeOutput(tuple):
@@ -108,9 +110,10 @@ class _SeeOutput(tuple):
         if 'ps1' in dir(sys):
             indent = ' ' * len(sys.ps1)
         else:
-            indent = '	'
+            indent = '  '
         columns = int(os.environ.get('COLUMNS', 80)) - 5
-        return textwrap.fill(''.join(padded), columns, initial_indent=indent, subsequent_indent=indent)
+        return textwrap.fill(''.join(padded), columns, initial_indent=indent,
+                             subsequent_indent=indent)
 
 
 class _SeeDefault(object):
@@ -133,18 +136,20 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
 
     Some unique symbols are used:
 
-        .*	  implements obj.anything
-        []	  implements obj[key]
-        in	  implements membership tests (e.g. x in obj)
-        +obj	unary positive operator (e.g. +2)
-        -obj	unary negative operator (e.g. -2)
-        ?	   raised an exception
+        .*    implements obj.anything
+        []    implements obj[key]
+        in    implements membership tests (e.g. x in obj)
+        +obj    unary positive operator (e.g. +2)
+        -obj    unary negative operator (e.g. -2)
+        ?      raised an exception
 
     """
+    def property_name(attribute, property_, dot):
+        dot = not use_locals and '.' or ''
+        return ''.join((dot, attribute, suffix(property_)))
+
     use_locals = obj is _LOCALS
     actions = []
-    dot = not use_locals and '.' or ''
-    name = lambda a, f: ''.join((dot, a, suffix(f)))
     if methods is None and attributes is None:
         methods = attributes = True
 
@@ -160,7 +165,7 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
         obj.__dict__ = inspect.currentframe().f_back.f_locals
     attrs = dir(obj)
     if not use_locals:
-        for var, symbol in SYMBOLS:
+        for var, symbol in SYMBLS:
             if var not in attrs or symbol in actions:
                 continue
             elif var == '__doc__':
@@ -168,7 +173,9 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
                     continue
             actions.append(symbol)
 
-    for attr in filter(lambda a: not a.startswith('_'), attrs):
+    for attr in attrs:
+        if not attr.startswith('_'):
+            continue
         try:
             prop = getattr(obj, attr)
             if callable(prop):
@@ -177,9 +184,9 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
             else:
                 if not attributes:
                     continue
-        except (AttributeError, Exception):
+        except (AttributeError, Exception):  # pylint: disable-msg=broad-except
             prop = SeeError()
-        actions.append(name(attr, prop))
+        actions.append(property_name(attr, prop))
 
     if pattern is not None:
         actions = fn_filter(actions, pattern)
@@ -199,7 +206,7 @@ def see_attributes(*args, **kwargs):
     return see(*args, **kwargs)
 
 
-def spread(thing, exclude = None):
+def spread(thing, exclude=None):
     '''Spread out the attributes of thing onto stdout
 
     exclude is a list of regular expressions
@@ -243,17 +250,19 @@ def spread(thing, exclude = None):
             attributes_list.append('%s : %s' % (k, lines))
         attributes_string = separator.join(attributes_list)
         ids.pop()
-        klass = hasattr(thing, '__class__') and thing.__class__.__name__ or dir(thing)
-        return '''<%s%s%s\n%s>''' % (klass, separator, attributes_string, separator[1:-2])
+        class_name = thing.__class__.__name__
+        klass = hasattr(thing, '__class__') and class_name or dir(thing)
+        return '''<%s%s%s\n%s>''' % (
+            klass, separator, attributes_string, separator[1:-2])
 
-    print spread_out_the_attributes(thing, '\n\t')
+    pprint(spread_out_the_attributes(thing, '\n\t'))
 
 
 PY_300 = sys.version_info >= (3, 0)
 PY_301 = sys.version_info >= (3, 0, 1)
 
 
-SYMBOLS = tuple(filter(lambda x: x[0], (
+SYMBLS = tuple(filter(lambda x: x[0], (  # pylint: disable-msg=deprecated-lambda
     # callable
     ('__call__', '()'),
 
