@@ -47,7 +47,8 @@ f () {
 }
 
 h () {
-    local lines=${1:-25}
+    local half=$(( $LINES / 2 ))
+    local lines=${1:-$half}
     history | tail -n $lines
 }
 
