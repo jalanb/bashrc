@@ -1283,6 +1283,11 @@ console_title_off () {
 }
 
 # _xxxxxxxxxxxxxxxxxxx
+
+_publish_Localhost () {
+    $HOME/bin/publish_Localhost "$@"
+}
+
 # functions starting with an underscore are intended for use within this file only
 
 _dixx () {
