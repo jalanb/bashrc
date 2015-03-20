@@ -85,7 +85,7 @@ cnoremap w!! w !sudo tee %
 "noremap =
  noremap ] <C-]>   " do this on bufenter
  noremap [ <C-T>   " do this on bufenter
- noremap ; :
+ noremap ; q:
  noremap ' @a " play register a
  noremap '' "ap
 "noremap \ - leader
