@@ -167,17 +167,30 @@ cv () {
     v $(basename $1)
 }
 
+gd ()
+{
+    local __doc__="grep in any (files in first dir in args) for other args"
+    shift_dir "$@" && shift
+    sudo find $dir -type f -exec gf "$@"
+}
+
 gf () {
+    local __doc__="grep in any file args for other args"
     shift_dir "$@" && shift
     name=$1
     shift
     find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
+    local pattern=
+    for arg in "$@"; do
+        test ! -f "$arg" && pattern="$pattern $arg"
+    done
+    for arg in "$@"; do
+        [[ $(type -t "$arg") == "file" ]] && grep --colour -nH --binary-files=without-match $arg $pattern
+    done
 }
 
-gr ()
-{
-    shift_dir "$@" && shift
-    sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file
+gr () {
+    grep --colour -nH "$@"
 }
 
 gt ()
