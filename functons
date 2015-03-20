@@ -458,7 +458,7 @@ tt () {
         extract=x
     fi
     tar ${extract}f $1
-    cd $(tar ${contents}f $1 | head -n 1)
+    cd $(tar ${contents}f $1 | hd1)
     ra
 }
 
@@ -647,6 +647,14 @@ gv. () {
 
 gvd () {
     EDITOR=gvim vd "$@"
+}
+
+hd1 () {
+    head -n 1 "$@"
+}
+
+hed () {
+    head -n $(( $LINES / 2 )) "$@"
 }
 
 hub () {
@@ -1067,12 +1075,12 @@ run_as () {
 # xxxxxxx
 
 has_ext () {
-  test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | head -n 1)
+  test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | hd1)
 }
 
 
 pylinum () {
-    local string=$(pylint --help-msg $1 | head -n 1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
+    local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
     [[ $string != "# pylint: disable=No" ]] && echo $string
 }
 
