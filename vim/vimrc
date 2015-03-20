@@ -57,6 +57,7 @@ nnoremap so :!xdg-open http://stackoverflow.com/search?q=
 nnoremap sp :!xdg-open http://stackoverflow.com/search?q=[python]+
 nnoremap sv :!xdg-open http://stackoverflow.com/search?q=[vim]+
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
+noremap tf :tabnew ~/tmp/fred.txt<cr>:%d<cr>/
 noremap tn :tabnew<Space>
 "noremap u - undo
 "noremap v - start visual
