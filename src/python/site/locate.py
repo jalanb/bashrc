@@ -23,6 +23,14 @@ def _path_to_locate():
     return '/usr/bin/locate'
 
 
+def _add_option(path_to_locate, option):
+    if option[:2] != '--':
+        option = '--%s' % option
+    if option in commands.getoutput('%s -h' % path_to_locate):
+        return '%s %s' % (path_to_locate, option)
+    return path_to_locate
+
+
 def _locate_regexp_option():
     command = '%s --help'
     _status, output = commands.getstatusoutput(command)
@@ -45,7 +53,10 @@ def _make_locate_command(string, options):
     if options.globs:
         option = _locate_regexp_option()
         string = glob_to_regexp(string)
-    return '%s %s "%s"' % (_path_to_locate(), option, string)
+    path_to_locate = _path_to_locate()
+    if options.files or options.directories:
+        _add_option(path_to_locate, '--basename')
+    return '%s %s "%s"' % (path_to_locate, option, string)
 
 
 def _locatable(path):
