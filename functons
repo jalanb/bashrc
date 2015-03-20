@@ -740,6 +740,10 @@ num () {
     v $JAB/local/numbers.txt
 }
 
+pbl () {
+    _publish_Localhost
+}
+
 pyi () {
     cd $GITHUB/pym/pym
     add_to_a_path PATH ./bin
@@ -1285,7 +1289,7 @@ console_title_off () {
 # _xxxxxxxxxxxxxxxxxxx
 
 _publish_Localhost () {
-    $HOME/bin/publish_Localhost "$@"
+    /bin/bash $JAB/bin/publish_Localhost $HOME/public_html/index.html
 }
 
 # functions starting with an underscore are intended for use within this file only
