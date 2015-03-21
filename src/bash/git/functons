@@ -82,16 +82,27 @@ gdv () {
     git dv "$@"
 }
 
+_gl () {
+    local cmd=$1
+    shift
+    local loglines=$(( $LINES / 2 ))
+    git $cmd "$@" | head -n $loglines
+}
+
 gla () {
-    glg --author=Alan.Brogan "$@"
+    _gl --author=Alan.Brogan "$@"
 }
 
 glg () {
-    git lg "$@" | head -n $(( $LINES / 2 ))
+    _gl lg "$@" 
+}
+
+gln () {
+    _gl lg --name-only "$@"
 }
 
 glt () {
-    git lt "$@" | head -n $(( $LINES / 2 ))
+    _gl lt "$@"
 }
 
 gpp () {
