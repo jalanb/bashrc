@@ -671,6 +671,11 @@ hub () {
     ls
 }
 
+jub () {
+    c $GITHUB/../jab "$@"
+    ls
+}
+
 jjj () {
 # ssh back to the jab.ook (which is my laptop
 # it goes by different hostnames, try in order of probablity
