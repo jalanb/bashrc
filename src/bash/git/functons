@@ -110,12 +110,16 @@ gpp () {
     gpu "$@"
 }
 
+_gp () {
+    git stash; git "$@"; git stash pop
+}
+
 gpu () {
-    git push "$@"
+    _gp push "$@"
 }
 
 grr () {
-    git pull --rebase "$@"
+    _gp pull --rebase "$@"
 }
 
 grs () {
