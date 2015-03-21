@@ -7,6 +7,7 @@
 " down through functions
 "
 noremap <leader><up> jzOk
+noremap <leader><down> jzOw
 noremap <up> ?^[^{} \t#]<cr>jzOk
 noremap <down> /^[^{} \t#]<cr>jzOk
 " to function start/end
