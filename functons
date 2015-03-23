@@ -46,6 +46,10 @@ f () {
     IFS=$old_ifs
 }
 
+g () {
+    $(which grep) --color "$@"
+}
+
 h () {
     local half=$(( $LINES / 2 ))
     local lines=${1:-$half}
@@ -191,7 +195,7 @@ gf () {
 }
 
 gr () {
-    grep --colour -nH "$@"
+    g -nH "$@"
 }
 
 gt ()
@@ -642,6 +646,10 @@ ghv () {
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
+grep () {
+    g -h "$@"
+}
+
 gv. () {
     PYTHONPATH=$(readlink -f .) gv .
 }
@@ -905,6 +913,10 @@ bump () {
 down () {
     c ~/Download* "$@"
     ls -alhtr
+}
+
+gre () {
+    $(which grep) --color=never "$@"
 }
 
 left () {

@@ -29,7 +29,7 @@ alias b="b"
 alias d="d"
 alias e="ex --noplugin -u ~/.vim/exrc"
 # f is a function
-alias g="grep --color"
+# g is a function
 # h is a function
 alias i="i"
 alias j="j"
