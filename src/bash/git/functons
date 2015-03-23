@@ -158,10 +158,6 @@ _gsi_menu () {
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
 }
 
-_gsi_vim () {
-    _git_untracked $1 && v $1 || gdv $1
-}
-
 _gsi_prompt () {
     _gsi_menu $1
     read -e -n1 -p " " answer
@@ -179,7 +175,7 @@ gsi () {
         [[ $answer =~ [aA] ]] && ga $f
         [[ $answer =~ [sS] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
         [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
-        [[ $answer =~ [vV] ]] && _gsi_vim $f
+        [[ $answer =~ [vV] ]] && v $f
     done
     [[ -n $GIT_ADDED ]] && gc
     [[ -n $STATUS_QUESTIONS ]] && vimcat $STATUS_QUESTIONS
