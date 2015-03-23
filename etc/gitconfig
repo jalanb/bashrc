@@ -22,7 +22,7 @@
     re = rebase
     st = status
 [push]
-    default = matching
+	default = current
 [merge]
     tool = vimdiff
 [color]
