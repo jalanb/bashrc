@@ -2,11 +2,6 @@
 
 # set -e
 
-ghi_ook () {
-    local __doc__="Move this to local on jab.ook"
-    TERM=xterm-256color  /usr/local/Cellar/ghi/0.9.3/bin/ghi "$@"
-}
-
 . $JAB/bin/first_dir
 
 # Called functons because "functions" is ... something else
@@ -644,10 +639,9 @@ ghv () {
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
-grep () {
-    g -h "$@"
+gre () {
+    $(which grep) --color=never "$@"
 }
-
 gv. () {
     PYTHONPATH=$(readlink -f .) gv .
 }
@@ -717,13 +711,18 @@ lly () {
     $reset
 }
 
-lrl () {
+lr2 () {
     lra "$@" | grep --color -- "->"
+}
+
+lr1 () {
+    shift_dir "$@" && shift
+    ls -1tr --color=always "$dir" | tel
 }
 
 lrt () {
     shift_dir "$@" && shift
-    /bin/ls --color=always -lhtr "$dir" |  less -R -m -N +G
+    ls --color=always -lhtr "$dir" |  less -R -m -N +G
 }
 
 ls1 () {
@@ -918,8 +917,8 @@ down () {
     ls -alhtr
 }
 
-gre () {
-    $(which grep) --color=never "$@"
+grep () {
+    g -h "$@"
 }
 
 left () {
