@@ -1081,6 +1081,13 @@ mython () {
     ~/bin/python2.7 "$@"
 }
 
+qwerty  () {
+    echo '` 1 2 3 4 5 6 7 8 9 0 - = '
+    echo 'q w e r t y u i o p [ ] \' 
+    echo 'a s d f g h j k l ;' "'"
+    echo 'z x c v b n m , . /'
+}
+
 run_as () {
     username=$1
     shift
