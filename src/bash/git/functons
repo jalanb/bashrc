@@ -90,7 +90,7 @@ _gl () {
 }
 
 gla () {
-    _gl --author=Alan.Brogan "$@"
+    _gl lg --author=Alan.Brogan "$@"
 }
 
 glg () {
