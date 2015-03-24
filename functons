@@ -51,9 +51,7 @@ g () {
 }
 
 h () {
-    local half=$(( $LINES / 2 ))
-    local lines=${1:-$half}
-    history | tail -n $lines
+    history | tel "$@"
 }
 
 p () {
@@ -552,7 +550,7 @@ zm () {
 # xxx
 
 add () {
-    echo $($1 + $2)
+    echo $(($1 + $2))
 }
 
 cff () {
@@ -638,7 +636,7 @@ fpy () {
 }
 
 ght () {
-    gh "$@" | tail
+    gh "$@" | tel
 }
 
 ghv () {
@@ -663,7 +661,7 @@ hd1 () {
 }
 
 hed () {
-    head -n $(( $LINES / 2 )) "$@"
+    head -n ${1:-$(( $LINES / 2 ))} "$@"
 }
 
 hub () {
@@ -687,10 +685,6 @@ jjj () {
 
 jjy () {
     ky $JAB_PYTHON "$@"
-}
-
-add () {
-    echo $(($1 + $2))
 }
 
 jpi () {
@@ -826,6 +820,10 @@ sib () {
 
 sto () {
     firefox "http://stackoverflow.com/search?q=$*"
+}
+
+tel () {
+    tail -n $(( $LINES / 2 )) "$@"
 }
 
 tmp () {
