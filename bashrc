@@ -141,4 +141,4 @@ run_interactively () {
 #set -x
 [[ $- =~ i ]] && run_interactively
 #set +x
-builtin cd
+builtin cd $JAB
