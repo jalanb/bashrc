@@ -854,6 +854,10 @@ vib () {
     $EDITOR ~/.bashrc
 }
 
+vin () {
+    vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
+}
+
 vla () {
     _edit_locals aliases
 }

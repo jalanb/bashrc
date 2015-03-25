@@ -119,8 +119,6 @@ alias spe="source $JAB/python-environ"
 
 alias tra="try ~/alans_tests"
 
-alias vin="vim -"
-
 alias url="python ~/bin/show_url.py "
 
 # xxxx
