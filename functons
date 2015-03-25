@@ -1026,6 +1026,10 @@ detab () {
     fi
 }
 
+LetGo () {
+    echo 'Digger, Thumber, Tarzan, Climber'
+}
+
 range () {
     local destination=.
     if [[ -n "$*" ]]; then
