@@ -10,6 +10,10 @@
 
 # x
 
+a () {
+    ack --ignore-file=viminfo "$@"
+}
+
 c () {
     kd "$@"
     local c_result="$?"

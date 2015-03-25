@@ -23,7 +23,7 @@ alias 1=cd_one
 alias 2=todo_show
 alias 3=3l
 alias 4=todo_edit
-alias a="ack"
+# a is a function
 alias b="b"
 # c is a function
 alias d="d"
