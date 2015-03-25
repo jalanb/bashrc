@@ -32,13 +32,6 @@ _get_source_path_from_what () {
     fi
 }
 
-_find_subversion () {
-    SVN_CLIENT=no_svn_client
-    [[ -e /usr/bin/svn ]] && SVN_CLIENT=/usr/bin/svn
-    [[ -e /usr/local/bin/svn ]] && SVN_CLIENT=/usr/local/bin/svn
-    export SVN_CLIENT
-}
-
 _get_jab_environ () {
     [[ -f $JAB/jab_environ ]] && source_path "$JAB"/jab_environ || echo "Cannot find $JAB/environ" >&2
 }
@@ -127,7 +120,6 @@ _set_up_symbols () {
 _jab_bashrc () {
     _get_source_path_from_what
     _if_not_python_try_my_bin
-    _find_subversion
     _source_jab_scripts
 }
 
