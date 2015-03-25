@@ -137,7 +137,7 @@ nnoremap K <PageUp>zz
  noremap N :cn<cr>zzzv
 "noremap O - Open line above
 "noremap P - paste forward
- noremap Q :qa!<CR><esc>
+ noremap Q <esc>:qa!<CR>
 "noremap R - Replace
  noremap S :%s///<Left><Left>
  noremap T :!tags
