@@ -26,5 +26,10 @@ if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]; then
     JAB_PYTHON=$JAB/src/python
     [[ -d $JAB_PYTHON ]] || JAB_PYTHON=not_dir_jab_python
     export JAB_PYTHON
+    export EMPLOYER_DOMAIN=s3group.com
+    export EMPLOYER_USERNAME=alanb
+    JABS=
+    [[ -d /usr/local/svn/jabs ]] && JABS=file:///usr/local/svn/jabs
+    export JABS
 fi
-export JAB_JAB_ENVIRON_SOURCED=1
+JAB_JAB_ENVIRON_SOURCED=1
