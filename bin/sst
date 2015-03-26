@@ -5,7 +5,6 @@
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
-JAB=${JAB:-$HOME/.jab}
 [[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
 source $JAB/functons
 

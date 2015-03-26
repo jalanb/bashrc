@@ -1,7 +1,6 @@
 #! /bin/bash
 
 check_jab () {
-    [[ -z $JAB ]] && JAB=$(dirname $(dirname $(readlink -f $BASH_SOURCE)))
     if [[ ! -f $JAB/etc/ackrc ]]; then
         echo $JAB/etc/ackrc is not a file >&2
         exit 1

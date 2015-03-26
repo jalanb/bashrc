@@ -51,7 +51,7 @@ _source_jab_scripts () {
     source_path "$JAB_LOCAL"/prompt
 }
 
-_if_not_python_try_my_bin () {
+_if_not_python_try_home_bin () {
     PYTHON=${PYTHON:-no_python}
     if [[ $PYTHON == no_python ]]; then
         local python_in_home=$HOME/bin/python
@@ -92,7 +92,7 @@ _show_welcome () {
 }
 
 _set_up_symbols () {
-    JAB=
+    unset JAB
     local github_jab_dir=$(readlink -f ~/src/git/hub/dotjab)
     local myhome_jab_dir=$(readlink -f ~/.jab)
     bash_jab_dir=$(dirname $(readlink -f "$BASH_SOURCE"))
@@ -119,12 +119,11 @@ _set_up_symbols () {
 
 _jab_bashrc () {
     _get_source_path_from_what
-    _if_not_python_try_my_bin
     _source_jab_scripts
+    _if_not_python_try_home_bin
 }
 
 _bashrc () {
-    builtin cd $JAB
     _jab_bashrc
     _show_welcome
 }
