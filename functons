@@ -853,6 +853,10 @@ vat () {
     vimcat "$@"
 }
 
+vbl () {
+    vim $(ls -rt1 $JAB/log/*bashrc*.log | tail -n 1) + +?"^++ "
+}
+
 vib () {
     $EDITOR ~/.bashrc
 }
