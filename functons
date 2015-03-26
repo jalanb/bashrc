@@ -1093,8 +1093,8 @@ please () {
 }
 
 mython () {
-    local __doc__="use the python executable at $HOME"
-    ~/bin/python2.7 "$@"
+    local __doc__="python 2.7 in $HOME"
+    $HOME/bin/python2.7 "$@"
 }
 
 qwerty  () {
