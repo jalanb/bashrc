@@ -792,6 +792,10 @@ pyi () {
     [[ -n $* ]] && "$@"
 }
 
+pyl () {
+    pushd /home/alanb/src/git/code.rdkcentral.com/r/cmf/tools/blackduck >/dev/null 2>&1; grep "..pylint..disable=" */*/*.py | sed -e "s/=.*/=/" | uniq; popd > /dev/null 2>&1
+}
+
 ps3 () {
     if [[ -z "$@" ]]; then
         ps axf | vim - +
