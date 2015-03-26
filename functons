@@ -725,8 +725,7 @@ lr1 () {
 }
 
 lrt () {
-    shift_dir "$@" && shift
-    ls --color=always -lhtr "$dir" |  less -R -m -N +G
+    ls --color=always -lrth "$@" | tel
 }
 
 ls1 () {
