@@ -51,10 +51,6 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     export GITJAB
     source $GITHUB/what/what.sh
 
-    test -d $HOME/log && LOGS=$HOME/log || LOGS=/var/log
-    export LOGS
-    export XAUTHORITY=$HOME/.Xauthority
-
     if [[ -f /usr/local/bin/gls ]]; then
         export LS_PROGRAM=/usr/local/bin/gls
         DIRCOLORS=/usr/local/bin/gdircolors
