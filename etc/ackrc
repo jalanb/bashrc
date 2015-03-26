@@ -8,3 +8,4 @@
 --type-set=snmp=.mib,.funcs
 --type-set=log=.log
 --ignore-dir=.idea
+--ignore-directory=vim
