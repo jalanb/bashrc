@@ -150,7 +150,7 @@ db () {
 }
 
 IP () {
-    for number in 172 192 100
+    for number in 172 193 192 100
     do
         python $JAB_PYTHON/ifconfig.py $number && break
     done
@@ -676,6 +676,7 @@ jjj () {
 # ssh back to the jab.ook (which is my laptop
 # it goes by different hostnames, try in order of probablity
     local jjj_host=
+    local jab_ook=${JAB_OOK:-jab.ook}
     ping -c 1 -w 1 jab.ook >/dev/null 2>&1 && jjj_host=jab.ook
     [[ -z $jjj_host ]] && echo Could not ping jab.ook || ssj jab $jjj_host
 }
