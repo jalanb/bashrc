@@ -147,7 +147,7 @@ def see(obj=_LOCALS, pattern=None, r=None, methods=None, attributes=None):
         ?      raised an exception
 
     """
-    def property_name(attribute, property_, dot):
+    def property_name(attribute, property_):
         dot = not use_locals and '.' or ''
         return ''.join((dot, attribute, suffix(property_)))
 
