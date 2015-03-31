@@ -1,3 +1,7 @@
+[DidyouMean]
+source = https://github.com/EinfachToll/DidYouMean
+type = git
+
 [Limelight]
 source = https://github.com/junegunn/limelight.vim.git
 type = git
