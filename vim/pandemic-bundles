@@ -2,24 +2,20 @@
 source = https://github.com/EinfachToll/DidYouMean
 type = git
 
-[Limelight]
-source = https://github.com/junegunn/limelight.vim.git
+[Gundo]
+source = http://github.com/sjl/gundo.vim.git
 type = git
 
 [Indent-Guides]
 source = https://github.com/nathanaelkane/vim-indent-guides.git
 type = git
 
-[vim-easymotion]
-source = https://github.com/haya14busa/vim-easymotion.git
+[Limelight]
+source = https://github.com/junegunn/limelight.vim.git
 type = git
 
 [YouCompleteMe]
 source = https://github.com/Valloric/YouCompleteMe.git
-type = git
-
-[vim-abolish]
-source = https://github.com/tpope/vim-abolish.git
 type = git
 
 [cute-python]
@@ -34,12 +30,16 @@ type = git
 source = https://github.com/scrooloose/syntastic.git
 type = git
 
-[Gundo]
-source = http://github.com/sjl/gundo.vim.git
-type = git
-
 [targets]
 source = https://github.com/wellle/targets.vim.git
+type = git
+
+[vim-easymotion]
+source = https://github.com/haya14busa/vim-easymotion.git
+type = git
+
+[vim-abolish]
+source = https://github.com/tpope/vim-abolish.git
 type = git
 
 [vinegar]
