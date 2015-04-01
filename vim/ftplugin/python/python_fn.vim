@@ -70,10 +70,12 @@ let b:loaded_py_ftplugin = 1
 
 " jump to previous class
   map  [c   :call PythonDec("class", -1)<CR>
+  map  <C-Up>   :call PythonDec("class", -1)<CR>
 " vmap ]J   :call PythonDec("class", -1)<CR>
 
 " jump to next class
   map  ]c   :call PythonDec("class", 1)<CR>
+  map  <C-Down>   :call PythonDec("class", 1)<CR>
 " vmap ]j   :call PythonDec("class", 1)<CR>
 
 " jump to previous function
