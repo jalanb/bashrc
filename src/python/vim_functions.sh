@@ -1,5 +1,4 @@
-recover ()
-{
+recover () {
 	local swap_file="$2"
 	local text_file="$1"
 	read -p "Recover $args ? " reply
@@ -28,8 +27,7 @@ recover ()
 	fi
 }
 
-post_vimming ()
-{
+post_vimming () {
 #
 # This function is called after editting, arguments are same as vim got
 #

@@ -3,8 +3,7 @@
 # Set up initialisation files for me on a new server
 # Assuming as little as possible
 
-as_root ()
-{
+as_root () {
     cd linux
     sudo bash make_software.sh
     local distro=$(python2.7 -c "import platform; print platform.linux_distribution()[0].lower()")
@@ -21,8 +20,7 @@ as_root ()
     sudo bash network/company.sh
 }
 
-as_jab ()
-{
+as_jab () {
     cd jab
     bash clean_directories.sh
     bash checkout_jab.sh
@@ -31,8 +29,7 @@ as_jab ()
     cd ..
 }
 
-main ()
-{
+main () {
     as_root
     as_jab
 }

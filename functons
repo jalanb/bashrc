@@ -62,13 +62,11 @@ p () {
         console_title_off "${me}@${here}"
 }
 
-q ()
-{
+q () {
     exit 0
 }
 
-v ()
-{
+v () {
     if [[ -z $* ]]; then
         $EDITOR
     else
@@ -96,8 +94,7 @@ v ()
     fi
 }
 
-x ()
-{
+x () {
     exit 1
 }
 
@@ -169,8 +166,7 @@ cv () {
     v $(basename $1)
 }
 
-gd ()
-{
+gd () {
     local __doc__="grep in any (files in first dir in args) for other args"
     shift_dir "$@" && shift
     sudo find $dir -type f -exec gf "$@"
@@ -195,8 +191,7 @@ gr () {
     g -nH "$@"
 }
 
-gt ()
-{
+gt () {
     get_tube "$@"
 }
 
