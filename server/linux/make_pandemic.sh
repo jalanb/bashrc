@@ -24,7 +24,7 @@ update_pandemic () {
 	$PANDEMIC list | sed -e "s/:.*//" | xargs env GIT_SSL_NO_VERIFY=true pandemic update
 }
 
-clean_up () {
+cleanup () {
 	cd $START_HERE
 	test -d vim-pandemic-master && rm -rf vim-pandemic-master
 	test -f vim-pandemic-master.zip && rm -f vim-pandemic-master.zip
