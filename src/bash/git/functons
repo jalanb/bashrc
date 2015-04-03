@@ -167,7 +167,7 @@ _gsi_menu () {
 }
 
 _gsi_vim () {
-    _git_untracked $1 && v $1 || gdv $1
+    _git_modified $f && git dv $f || v $f
 }
 
 _gsi_prompt () {
