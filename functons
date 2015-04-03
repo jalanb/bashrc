@@ -855,7 +855,16 @@ sto () {
 }
 
 tel () {
-    tail -n $(( $LINES / 2 )) "$@"
+    # Using "$*" instead of "$@" deliberately here
+    # Side effect: args are now text, not args
+    lines=$(echo "$*" | sed -e "s/ *-n.\([0-9]\+\)/\1/")
+    if [[ -n $lines ]]; then
+        args=$(echo "$*" | sed -e "s/^\(.*\) *-n.\([0-9]\+\)\(.*\)/\1\3/")
+        echo tel $lines $args
+        tail -n $lines $args
+    else
+        tail -n $(( $LINES / 2 )) "$@"
+    fi
 }
 
 tmp () {
