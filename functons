@@ -259,7 +259,7 @@ gp () {
 
 gh () {
     local __doc__="show stuff from history"
-    HISTTIMEFORMAT= history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>" | grep --color "$@"
+    _strip_history | grep --color "$@"
 }
 
 gv () {
@@ -502,7 +502,8 @@ vf () {
 }
 
 vh () {
-    HISTTIMEFORMAT= history | sed -e "s/^[0-9]*  //" | vim - +
+    local __doc__="edit stuff from history"
+    _strip_history | vim - +
 }
 
 vi () {
@@ -1281,6 +1282,10 @@ source_aliases () {
     local __doc__='source files which have aliases and remember the filenames'
     ALIASES="$ALIASES:$1"
     source $1
+}
+
+_strip_history () {
+    HISTTIMEFORMAT= history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
 }
 
 # xxxxxxxxxxxxxxx
