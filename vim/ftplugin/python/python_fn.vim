@@ -80,12 +80,12 @@ let b:loaded_py_ftplugin = 1
 
 " jump to previous function
   map  [d   :call PythonDec("function", -1)<CR>
-  map  <Up>   :call PythonDec("function", -1)<CR>
+  map  <Up>   zx:call PythonDec("function", -1)<CR>zvjzOk
 " vmap ]F   :call PythonDec("function", -1)<CR>
 
 " jump to next function
   map  ]d   :call PythonDec("function", 1)<CR>
-  map  <Down>   :call PythonDec("function", 1)<CR>
+  map  <Down>   zx:call PythonDec("function", 1)<CR>zvjzOk
 " vmap ]f   :call PythonDec("function", 1)<CR>
 
 
