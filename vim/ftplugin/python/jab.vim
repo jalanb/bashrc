@@ -43,8 +43,8 @@ function! FoldCommentsAndIndentation(lnum)
 endfunction
 
 " PEP 8 calls for indentation with 4 spaces
-set foldmethod=expr
-set foldexpr=FoldCommentsAndIndentation(v:lnum)
+set foldmethod=indent
+" set foldexpr=FoldCommentsAndIndentation(v:lnum)
 set foldlevel=0
 " Do not treat comments differently (default has foldignore=#)
 " https://stackoverflow.com/questions/8993455/how-do-i-fix-vim-to-properly-indent-folds-containing-python-comment-lines
