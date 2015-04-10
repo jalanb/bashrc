@@ -629,8 +629,17 @@ fsh () {
     fi
 }
 
+fpu () {
+# debug fred.py if it exists here or in ~/tmp
+    if [ -f fred.py ]; then
+        pudb fred.py "$@"
+    elif [[ -f ~/tmp/fred.py ]]; then
+        pudb ~/tmp/fred.py "$@"
+    fi
+}
+
 fpy () {
-# run fred.py if fred.sh exists
+# run fred.py if it exists here or in ~/tmp
     if [ -f fred.py ]; then
         p fred.py "$@"
     elif [[ -f ~/tmp/fred.py ]]; then
