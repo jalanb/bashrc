@@ -234,7 +234,7 @@ _show_git_here () {
 git_changed () {
     git_dir=${1:-$PWD}
     [[ -d $git_dir/.git ]] || return 1
-    git -C $git_dir status --porcelain | grep -q .
+    git -C $git_dir status --porcelain | gre -q "$_git_status_regexp"
 }
 
 # xxxxxxxxxxxx
@@ -294,7 +294,7 @@ _any_git_changes () {
     local dir=$1
 	[[ -z $dir ]] && dir=$PWD
 	if [[ -d ${dir}/.git ]]; then
-        git -C $dir status -s | grep "$_git_status_regexp"
+        git -C $dir status --porcelain | gre "$_git_status_regexp"
     fi
 }
 
