@@ -114,11 +114,11 @@ _gp () {
     local stashed=
     if git_changed; then
         stashed=1
-        git stash
+        git stash -q
     fi
     git "$@"
     if [[ $stashed == 1 ]]; then
-        git stash pop
+        git stash pop -q
     fi
 }
 
