@@ -111,7 +111,15 @@ gpp () {
 }
 
 _gp () {
-    git stash; git "$@"; git stash pop
+    local stashed=
+    if git_changed; then
+        stashed=1
+        git stash
+    fi
+    git "$@"
+    if [[ $stashed == 1 ]]; then
+        git stash pop
+    fi
 }
 
 gpu () {
@@ -220,6 +228,14 @@ _show_git_here () {
 }
 
 # xxxxxxxxxx
+
+# xxxxxxxxxxx
+
+git_changed () {
+    git_dir=${1:-$PWD}
+    [[ -d $git_dir/.git ]] || return 1
+    git -C $git_dir status --porcelain | grep -q .
+}
 
 # xxxxxxxxxxxx
 
