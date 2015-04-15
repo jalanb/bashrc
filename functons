@@ -434,7 +434,11 @@ rt () {
 
 ru () {
 # do da root root route, do da ru !
-    [ -z "$@" ] && SUDO || sudo "$@"
+    if [ -z "$@" ]; then
+        SUDO
+    else
+        sudo "$@"
+    fi
 }
 
 ry () {
