@@ -1363,7 +1363,7 @@ _dixx () {
     if [[ $number_in_both -gt 0 ]]; then
         echo
         echo "# Files 1 and 2 differ"
-        _divv_get_difference | grep Files | sed -e "s/Files/$COMMAND_FOR_SAME_FILES/" -e "s/ and / /" -e "s/differ//"
+        _divv_get_difference | grep Files | sed -e 's/Files /'$COMMAND_FOR_SAME_FILES' "/' -e 's/ and /" "/' -e 's/ differ/"/'
     fi
     local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
     if [[ $number_in_source -gt 0 ]]; then
