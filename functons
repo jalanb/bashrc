@@ -1027,6 +1027,10 @@ Tree () {
     tree "$@" | more
 }
 
+vibb () {
+    vim -p ~/.bashrc $JAB/bashrc
+}
+
 # xxxxx
 
 build () {
