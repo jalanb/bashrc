@@ -134,6 +134,10 @@ add () {
     echo $($1 + $2)
 }
 
+bd () {
+    . $JAB/src/bash/bd -s "$@"
+}
+
 db () {
     name=$1
     [[ -z $name ]] && return 1
