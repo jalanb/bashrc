@@ -84,10 +84,18 @@ show_value () {
 }
 
 show_a_path () {
+    local setter=${2-bash}
     local name=${1-PATH}
-    local value=${!name}
-    local where=${2-bash}
-    printf "$where has set \$$name to\n\t${value//:/\n\t}\n"
+    echo "$setter has set \$$name to:"
+    local old_ifs=$IFS
+    IFS=":"
+    local path=
+    local paths=${!name}
+    for path in $paths
+    do
+        echo "  $path"
+    done | sort
+    IFS=$old_ifs
 }
 
 show_path () {
