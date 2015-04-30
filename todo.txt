@@ -3,5 +3,3 @@ Live, 0
            Let Go, 1
                  Laugh, 4
                       Love, 2
-
-Get size of /home/blackduck/comcast/samsung_rng150, 0
