@@ -429,7 +429,11 @@ rj () {
 }
 
 rr () {
-    ra ~
+    sudo rm -rf "$@"
+}
+
+rq () {
+    rm -rf "$@"
 }
 
 rt () {
