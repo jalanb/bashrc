@@ -9,6 +9,7 @@ from dotsite import paths
 
 def get(strings):
     hub = paths.environ_path('GITHUB')
+    jab_bin = paths.environ_path('JAB') / 'bin'
     jab_python = paths.environ_path('JAB_PYTHON')
     jab_todo = paths.environ_path('JAB_TODO')
     config = paths.makepath('~/.config')
@@ -31,6 +32,9 @@ def get(strings):
         ], 'kd':  [
             hub / 'kd/kd.py',
             config / 'kd',
+        ], 'locate': [
+            jab_bin / 'locate',
+            jab_python / 'site/locate.py',
         ], 'main': [
             hub / 'main.py',
         ], 'paths': [
@@ -39,9 +43,9 @@ def get(strings):
             hub / 'what/what.sh',
             hub / 'what/what.py',
         ],
-        #], '': [
+        # ], '': [
         #    hub / '',
-        #],
+        # ],
     }
     return list(
         itertools.chain(

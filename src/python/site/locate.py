@@ -76,7 +76,10 @@ def _run_locate(string, options):
         raise ValueError('command: %s\n output: %s' % (command, output))
     elif not output:
         return []
-    return [l for l in output.split('\n') if _locatable(l)]
+    locatable = [l for l in output.split('\n') if _locatable(l)]
+    for exclude in options.exclude:
+        locatable = [_ for _ in locatable if not re.search(exclude, _)]
+    return locatable
 
 
 def _make_check_method(method, options):
@@ -146,6 +149,8 @@ def _handle_command_line(args):
                       help='ignore case in searches')
     parser.add_option('-l', '--lsld', action='store_true',
                       help='run "ls -ld" on locations')
+    parser.add_option('-x', '--exclude', type='str', action='append',
+                      help='exclude paths which match regexp(s)')
     parser.add_option('-U', '--Use_debugger', action='store_true',
                       help='debug with pudb')
     options, args = parser.parse_args(args)
