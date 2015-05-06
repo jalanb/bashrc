@@ -8,8 +8,6 @@ _try_known_jab_paths () {
     local jab_dir=${github_jab_dir:-$myhome_jab_dir}
     [[ -d $jab_dir ]] || jab_dir=
 
-    export DOTJAB=$github_jab_dir
-    [[ -d $DOTJAB ]] || DOTJAB=not_dir_dotjab
     export JAB=${JAB:-jab_dir}
     [[ -d $JAB ]] || JAB=not_dir_jab
 }
