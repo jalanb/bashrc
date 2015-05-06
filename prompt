@@ -45,7 +45,7 @@ prompt_command () {
     fi
     changes=0
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
-    local endir="\\$(endiron "${PWD}")"
+    local endir="\\$(endiron -x PWD -- "${PWD}")"
     if [[ $? == 2 ]]; then
         Dir="${PROMPT_OPPOSITE_COLOUR}${endir}${PROMPT_COLOUR}"
     else Dir="$endir"

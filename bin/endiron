@@ -46,6 +46,8 @@ def parse_args(methods):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('directory',
                         help='path to be abbreviated')
+    parser.add_argument('-x', '--exclude', type=str, nargs='*',
+                        help='exclude environment symbol')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
@@ -55,14 +57,40 @@ def parse_args(methods):
     return args
 
 
+def matches(path_to_dir, exclude):
+    result = {}
+    for key, value in os.environ.items():
+        if key in exclude:
+            continue
+        if not value:
+            continue
+        if value in path_to_dir:
+            result[key] = value
+    return result.items()
+
+
+def replace(path_to_dir, exclude):
+    result = []
+    for key, value in matches(path_to_dir, exclude):
+        replacement = '$' + key
+        result.append(path_to_dir.replace(value, replacement))
+    return result
+
+
+def shortest(items):
+    lengths = [(len(_), _) for _ in items]
+    return sorted(lengths)[0][1]
+
+
 def script(args):
     path_to_dir = path(args.directory)
-    for key, value in os.environ.items():
-        if value and value in path_to_dir:
-            replacement = '$' + key
-            print(path_to_dir.replace(value, replacement))
-            return True
-    return False
+    replacements = replace(path_to_dir, args.exclude or [])
+    try:
+        print(shortest(replacements))
+        return True
+    except IndexError:
+        print(args.directory)
+        return False
 
 
 def main():
