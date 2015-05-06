@@ -58,7 +58,7 @@ def parse_args(methods):
 def script(args):
     path_to_dir = path(args.directory)
     for key, value in os.environ.items():
-        if value in path_to_dir:
+        if value and value in path_to_dir:
             replacement = '$' + key
             print(path_to_dir.replace(value, replacement))
             return True
