@@ -77,7 +77,7 @@ def _run_locate(string, options):
     elif not output:
         return []
     locatable = [l for l in output.split('\n') if _locatable(l)]
-    for exclude in options.exclude:
+    for exclude in options.exclude or []:
         locatable = [_ for _ in locatable if not re.search(exclude, _)]
     return locatable
 
