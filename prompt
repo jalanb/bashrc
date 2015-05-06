@@ -58,10 +58,10 @@ prompt_command () {
     if [[ -n "$VIRTUAL_ENV" ]]; then
         python_version=${python_version}.$(basename $VIRTUAL_ENV)
     fi
-    console_whoami 2>/dev/null
+    console_whoami >/dev/null 2>&1
     # local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
-    [ -f $KD_DIR/kd.py ] && python $KD_DIR/kd.py --add .
+    [ -f $KD_DIR/kd.py ] && python $KD_DIR/kd.py --add . >/dev/null 2>&1
     history -a
 }
 
