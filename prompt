@@ -27,7 +27,7 @@ get_repo_status () {
         fi
     elif git branch > /dev/null 2>&1; then
         local branch=$(git rev-parse --abbrev-ref HEAD)
-        local modified=$(git status --porcelain | wc -l)
+        local modified=$(git status --porcelain | wc -l | tr -d ' ')
         local remote="$(\git config --get branch.${branch}.remote 2>/dev/null)"
         local remote_branch="$(\git config --get branch.${branch}.merge)"
         local pushes=$(git rev-list --count ${remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD)
