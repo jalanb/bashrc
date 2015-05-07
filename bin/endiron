@@ -80,9 +80,10 @@ def shortest(items):
 
 
 def replace_home(directory):
-    home = os.environ['HOME']
-    if directory.startswith(home):
-        return directory.replace(home, '~', 1)
+    homes = [os.environ['HOME'], '$HOME', '$JAB_HOME']
+    for home in homes:
+        if directory.startswith(home):
+            return directory.replace(home, '~', 1)
     return directory
 
 
