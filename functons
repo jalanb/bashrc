@@ -513,7 +513,11 @@ vf () {
 
 vh () {
     local __doc__="edit stuff from history"
-    _strip_history | vim - +
+    if [[ -n $* ]]; then
+        _strip_history | vim - +/"$@"
+    else
+        _strip_history | vim - +
+    fi
 }
 
 vi () {
