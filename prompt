@@ -20,18 +20,34 @@ changes=0
 get_repo_status () {
     GIT_BRANCH=
     local significant_svn_status=$JAB_PYTHON_DIR/significant_svn_status.py
-    test -f $significant_svn_status || return 1
-    if python $significant_svn_status .; then
-        export changes=1
-        return 2
-    elif git branch > /dev/null 2>&1; then
-        GIT_BRANCH=$(git branch 2>/dev/null | grep '^*' | sed -e 's/* //')
-        if git status | grep -q "nothing to commit"; then
-            return 3
-        else
-            GIT_BRANCH=${PROMPT_OPPOSITE_COLOUR}${GIT_BRANCH}${PROMPT_COLOUR}
+    if [[ -f $significant_svn_status ]]; then
+        if python $significant_svn_status .; then
+            export changes=1
             return 2
         fi
+    elif git branch > /dev/null 2>&1; then
+        local branch=$(git rev-parse --abbrev-ref HEAD)
+        local modified=$(git status --porcelain | wc -l)
+        local remote="$(\git config --get branch.${branch}.remote 2>/dev/null)"
+        local remote_branch="$(\git config --get branch.${branch}.merge)"
+        local pushes=$(git rev-list --count ${remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD)
+        [[ -z $pushes ]] && pushes=0
+        local pulls=$(git rev-list --count HEAD..${remote_branch/refs\/heads/refs\/remotes\/$remote})
+        [[ -z $pulls ]] && pulls=0
+        if [[ $modified == 0 && $pushes == 0 && $pulls == 0 ]]; then
+            GIT_BRANCH=" (${branch})"
+        else
+            if [[ $pulls == 0 ]]; then
+                if [[ $pushes == 0 ]]; then
+                    GIT_BRANCH=" ${PROMPT_OPPOSITE_COLOUR}(${branch} $modified)${PROMPT_COLOUR}"
+                else
+                    GIT_BRANCH=" ${PROMPT_OPPOSITE_COLOUR}(${branch} $modified.$pushes)${PROMPT_COLOUR}"
+                fi
+            else
+                GIT_BRANCH=" ${PROMPT_OPPOSITE_COLOUR}(${branch} $modified.$pushes.$pulls)${PROMPT_COLOUR}"
+            fi
+        fi
+        return 2
     fi
 }
 
@@ -51,14 +67,15 @@ prompt_command () {
     else
         Dir="${endir/\$/\\$}"
     fi
-    [[ -n $Dir && -n ${GIT_BRANCH} ]] && Dir="$Dir (${GIT_BRANCH})"
-    local python_version=$(python -c "import sys; print 'python%s.%s' % (sys.version_info[0], sys.version_info[1])")
+    Dir="${Dir}${GIT_BRANCH}"
+    local python_version=$(python --version 2>&1 | cut -d' ' -f2)
     if which jython > /dev/null 2>&1; then
-        jython_version=$(jython -c "import sys; print 'jython%s.%s' % (sys.version_info[0], sys.version_info[1])")
+        jython_version=$(jython --version 2>&1 | cut -d' ' -f2)
     fi
     if [[ -n "$VIRTUAL_ENV" ]]; then
         python_version=${python_version}.$(basename $VIRTUAL_ENV)
     fi
+    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     console_whoami >/dev/null 2>&1
     # local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
@@ -75,7 +92,7 @@ export LP_ENABLE_SHORTEN_PATH=0
 
 # /liquidprompt features
 
-test -d $GITHUB/liquidprompt && PROMPT_COMMAND=off
+#test -d $GITHUB/liquidprompt && PROMPT_COMMAND=off
 if [[ $PROMPT_COMMAND == off ]]; then
     unset PROMPT_COMMAND
     source $GITHUB/liquidprompt/liquidprompt
