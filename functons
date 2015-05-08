@@ -288,10 +288,6 @@ jj () {
     c $dir "$@"
 }
 
-jp () {
-    python
-}
-
 _free_line_here () {
     :
 }
