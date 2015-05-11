@@ -24,7 +24,7 @@ But, whereas sys has a list of strings, sis has a list of paths
     >>> type(jab_sys[0])
     <type 'str'>
     >>> type(jab_sis[0])
-    <class 'path.path'>
+    <class 'dotsite.paths.DirectPath'>
 
 The two attributes are not kept in sync
     >>> sys.path[-1] == str(sis.paths[-1])
@@ -58,7 +58,7 @@ You could supply your own list of paths to filter
     the default is sis.paths
     >>> sis.sites(sis.paths) == sis.sites()
     True
-    
+
 And a method to filter out directories whose name is site_packages
     (will not include sub-directories)
     which also defaults to sis.paths
