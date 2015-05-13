@@ -190,7 +190,7 @@ gf () {
 }
 
 gr () {
-    g -nH "$@"
+    g -nH "$@" 2> /dev/null
 }
 
 gt () {
