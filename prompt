@@ -12,7 +12,8 @@ elif [ "$1" == "blue" ]; then
     export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
     export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
 else
-    export PROMPT_COLOUR=none
+    export PROMPT_COLOUR="$PROMPT_GREEN"
+    export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
 fi
 
 changes=0
