@@ -78,6 +78,10 @@ gdi () {
     git di "$@"
 }
 
+gdh () {
+    git dh "$@"
+}
+
 gdv () {
     git dv "$@"
 }
