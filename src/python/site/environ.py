@@ -85,5 +85,3 @@ def directories(strings):
 
 def from_home(p):
     return home.relpathto(p)
-
-# environ = environ_paths()

@@ -83,27 +83,11 @@ prompt_command () {
     history -a
 }
 
-# liquidprompt features
-export LP_ENABLE_TIME=1
-export LP_PS1_PREFIX="${PROMPT_BLUE}$(date +%F) "
-export LP_PS1_POSTFIX="\n$ "
-export LP_ENABLE_SHORTEN_PATH=0
-
-
-# /liquidprompt features
-
-#test -d $GITHUB/liquidprompt && PROMPT_COMMAND=off
-if [[ $PROMPT_COMMAND == off ]]; then
-    unset PROMPT_COMMAND
-    source $GITHUB/liquidprompt/liquidprompt
-    PROMPT_COMMAND="$PROMPT_COMMAND; history -a; console_whoami 2>/dev/null"
+if [[ -n "$MYVIMRC" ]]; then
+    export PS1="\$? [\u@\h:\$PWD]\n$ "
+    export PROMPT_COMMAND='prompt_command $?'
+elif [[ "$PROMPT_COLOUR" == "none" ]]; then
+    export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
-    if [[ -n "$MYVIMRC" ]]; then
-        export PS1="\$? [\u@\h:\$PWD]\n$ "
-        export PROMPT_COMMAND='prompt_command $?'
-    elif [[ "$PROMPT_COLOUR" == "none" ]]; then
-        export PS1="\$? [\u@\h:\$PWD]\n$ "
-    else
-        export PROMPT_COMMAND='prompt_command $?'
-    fi
+    export PROMPT_COMMAND='prompt_command $?'
 fi

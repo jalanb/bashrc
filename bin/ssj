@@ -5,7 +5,7 @@
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
-[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
+_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected;. $_actual
 
 usage () {
     ARGS="$*"

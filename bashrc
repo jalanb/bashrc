@@ -34,22 +34,21 @@ _get_source_path_from_what () {
 }
 
 _get_jab_environ () {
-    [[ -f $JAB/jab_environ ]] && source_path "$JAB"/jab_environ || echo "Cannot find $JAB/environ" >&2
+    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected;source_path $_actual
 }
 
 _source_jab_scripts () {
     _get_jab_environ
-    for script in environ python-environ aliases functons
-    do
+    for script in environ python-environ ; do
+        source_path "$JAB/envirok/$script" && continue
+    done
+    for script in aliases functons prompt employer src/bash/git-completion.bash; do
         source_path "$JAB/$script" || continue
         source_path "$JAB_LOCAL/$script" || continue
     done
-    source_path "$GITHUB"/kd/kd.sh
-    source_path "$GITHUB"/viack/viack
-    source_path "$JAB"/src/bash/git-completion.bash
-    source_path "$JAB_LOCAL"/employer
-    source_path "$JAB"/prompt green
-    source_path "$JAB_LOCAL"/prompt
+    for script in kd/kd.sh viack/viack; do
+        source_path "$GITHUB"/$script
+    done
 }
 
 _if_not_python_try_home_bin () {

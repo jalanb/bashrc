@@ -500,7 +500,7 @@ vd () {
 }
 
 ve () {
-    _edit_jab environ "$@"
+    _edit_jab envirok/environ "$@"
 }
 
 vf () {
@@ -899,7 +899,7 @@ vla () {
 }
 
 vle () {
-    _edit_locals environ
+    _edit_locals envirok/environ
 }
 
 vlf () {
@@ -915,7 +915,7 @@ vff () {
 }
 
 vpe () {
-    _edit_jab python-environ
+    _edit_jab envirok/python-environ
 }
 
 vvb () {
@@ -1135,7 +1135,7 @@ mython () {
 
 qwerty  () {
     echo '` 1 2 3 4 5 6 7 8 9 0 - = '
-    echo 'q w e r t y u i o p [ ] \' 
+    echo 'q w e r t y u i o p [ ] \'
     echo 'a s d f g h j k l ;' "'"
     echo 'z x c v b n m , . /'
 }

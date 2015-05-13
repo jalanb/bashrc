@@ -72,7 +72,7 @@ alias r.="rm -rvf *"
 
 alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
-alias se="source $JAB/environ"
+alias se="source $JAB/envirok/environ"
 alias sf="source $JAB/functons"
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "

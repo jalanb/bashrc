@@ -1,6 +1,6 @@
 #! /bin/bash
 
-[[ -f $JAB/jab_environ ]] && source $JAB/jab_environ || echo "Cannot find $JAB/environ" >&2
+_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected;. $_actual
 
 HOME_SSH=~/.ssh
 HOME_ID=$HOME_SSH/id_rsa
