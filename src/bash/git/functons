@@ -102,7 +102,7 @@ gla () {
 }
 
 glg () {
-    _gl lg "$@" 
+    _gl lg "$@" | sed -e "s/J Alan Brogan/Janus/" -e "s/ ago//"
 }
 
 gln () {
@@ -311,7 +311,7 @@ _any_git_changes () {
 }
 
 _get_git_timer () {
-    git -C $git_dir lg 2> /dev/null | grep $1 | head -n $(( $LINES / 2 ))
+    git -C $git_dir lg 2> /dev/null | sed -e "s/J Alan Brogan/Janus/" -e "s/ ago//" | grep $1 | head -n $(( $LINES / 2 ))
 }
 
 _has_git_changes () {
