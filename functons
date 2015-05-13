@@ -224,11 +224,6 @@ ff () {
     find $dir -type f -name $name "$@"
 }
 
-fg () {
-    shift_dir "$@" && shift
-    sudo find $dir -exec grep --colour -nH "$@" {} \; 2>/dev/null | g -v -e Binary.file
-}
-
 fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then
@@ -959,6 +954,14 @@ bump () {
 down () {
     c ~/Download* "$@"
     ls -alhtr
+}
+
+fynd () {
+    shift_dir "$@" && shift
+    local _level=2
+    . /home/alanb/src/git/hub/dotjab/functons
+    #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
+    sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.dotjab/$JAB/' | g "$@"
 }
 
 grep () {
