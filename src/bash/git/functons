@@ -82,6 +82,10 @@ gdh () {
     git dh "$@"
 }
 
+gdl () {
+    git diff --color=always "$@"| less -r
+}
+
 gdv () {
     git dv "$@"
 }
