@@ -1,0 +1,95 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+# set -e
+# set +e
+
+am_interactive () {
+    [[ $- =~ i ]]
+}
+
+is_running () {
+    /usr/bin/pgrep -f $1  > /dev/null 2>&1
+    return $?
+}
+
+do_not_use_proxy () {
+    unset https_proxy
+    unset http_proxy
+}
+
+use_proxy () {
+    #export https_proxy=http://w3proxy.s3group.com:3128/
+    #export http_proxy=http://w3proxy.s3group.com:3128/
+    export https_proxy=http://avproxyvlan.dublin.s3group.com:8080/
+    export http_proxy=http://avproxyvlan.dublin.s3group.com:8080/
+}
+
+_source () {
+    test -f $1 || return 1
+    pushd $(dirname $1) || return 1
+    source $1
+    popd >/dev/null 2>&1 || return 1
+    return 0
+}
+
+cd_pwd_at_logout () {
+    if [[ -f ~/.config/pwd_logout ]]; then
+        cd $(cat ~/.config/pwd_logout)
+        rm -rf ~/.config/pwd_logout
+    fi
+}
+
+run_bashrc () {
+    echo Welcome to /home/alanb/.bashrc
+    export PATH=/usr/local/bin:/usr/bin:/bin
+    export SHELL=/bin/bash
+    # Find my own environment
+    local _github=~/src/git/hub
+    local _what_script=$(readlink -f $_github/what/what.sh)
+    _source $_what_script || echo Cannot source $_what_script
+    #
+    local _jab_bash=$(readlink -f $_github/dotjab/src/bash)
+    builtin cd $_jab_bash && _source $_jab_bash/bashrc && builtin cd >/dev/null 2>&1
+    if ! is_running autocutsel
+    then
+        autocutsel &
+        autocutsel -s PRIMARY &
+    fi
+    export TERM="xterm-256color"
+    source /home/alanb/bin/virtualenvwrapper.sh
+    # added by travis gem
+    # [ -f /home/alanb/.travis/travis.sh ] && source /home/alanb/.travis/travis.sh
+    # cd_pwd_at_logout
+    do_not_use_proxy
+    echo Bye from /home/alanb/.bashrc
+}
+
+interactive_bashrc () {
+    am_interactive "$@" && run_bashrc
+}
+
+verbose_bashrc () {
+    set -x
+    interactive_bashrc "$@"
+    set +x
+}
+
+log_verbose_bashrc () {
+    local _log=~/log/bashrc.log
+    test -f $_log && mv $_log $(date +"%y_%m_%d_%H_%M_")${_log}
+    verbose_bashrc > ${_log} 2>&1 
+    vim ${_log} +
+}
+
+trace_one_bashrc () {
+    local _level="^+ "
+    verbose_bashrc | grep $_level
+}
+
+main () {
+    # trace_one_bashrc
+    log_verbose_bashrc
+    # interactive_bashrc "$@"
+}
+
+main
