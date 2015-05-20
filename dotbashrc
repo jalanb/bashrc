@@ -74,11 +74,18 @@ verbose_bashrc () {
     set +x
 }
 
-log_verbose_bashrc () {
-    local _log=~/log/bashrc.log
-    test -f $_log && mv $_log $(date +"%y_%m_%d_%H_%M_")${_log}
-    verbose_bashrc > ${_log} 2>&1 
-    vim ${_log} +
+_log_in () {
+    local _there=~/log
+    test -d $_there || return 1
+    local _now=$(date +"%y_%m_%d_%H_%M_").bashrc.log
+    verbose_bashrc > $_there/$_now 2>&1 
+    _edit_log $_there $_now
+}
+
+_edit_log () {
+    cd "$1"; vim "$2" +
+    cd
+    # KBSS: can discard the "- 2>/dev/null", in ~
 }
 
 trace_one_bashrc () {
@@ -88,7 +95,7 @@ trace_one_bashrc () {
 
 main () {
     # trace_one_bashrc
-    log_verbose_bashrc
+    _log_in
     # interactive_bashrc "$@"
 }
 
