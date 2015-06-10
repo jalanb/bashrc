@@ -26,7 +26,7 @@ use_proxy () {
 
 _source () {
     test -f $1 || return 1
-    pushd $(dirname $1) || return 1
+    pushd $(dirname $1) >/dev/null 2>&1 || return 1
     source $1
     popd >/dev/null 2>&1 || return 1
     return 0
@@ -37,6 +37,24 @@ cd_pwd_at_logout () {
         cd $(cat ~/.config/pwd_logout)
         rm -rf ~/.config/pwd_logout
     fi
+}
+
+_edit_log () {
+    cd "$1"
+    sed -i -e "s:/tmp/virtualenvwrapper-initialize-hook-[A-Za-z0-9]\+:/tmp/virtualenvwrapper-initialize-hook-XXXX:" $2
+    local _previous_log=$(ls -1tr *.bashrc.log | tail -n 2 | head -n1) 
+    local _differ=
+    if ! diff -q $_previous_log "$2"; then
+        _differ="-do $_previous_log"
+    fi
+    vim $_differ $2 + +?"^[^+'].*"
+    cd
+    # KBSS: can discard the "- 2>/dev/null", in ~
+}
+
+trace_one_bashrc () {
+    local _level="^+ "
+    verbosely interactive_bashrc | grep $_level
 }
 
 run_bashrc () {
@@ -65,38 +83,37 @@ run_bashrc () {
 }
 
 interactive_bashrc () {
-    am_interactive "$@" && run_bashrc
+    am_interactive && verbosely run_bashrc
 }
 
-verbose_bashrc () {
+verbosely () {
     set -x
-    interactive_bashrc "$@"
+    "$@"
     set +x
 }
 
-_log_in () {
+log_interactive_bashrc () {
     local _there=~/log
     test -d $_there || return 1
-    local _now=$(date +"%y_%m_%d_%H_%M_").bashrc.log
-    verbose_bashrc > $_there/$_now 2>&1 
+    local _now=$(date +"%y_%m_%d_%H_%M_%S").bashrc.log
+    local _temp=/tmp/$_now
+    interactive_bashrc > $_temp 2>&1
+    EXCLUSIONS="-e him\?xBH \
+        -e up-to-date \
+        -e tr.: \
+        -e echo..home.alanb.src.git.hub.dotjab.envirok.jab_environ \
+        -e Error..Can.t.open.display \
+        -e sed..e..s.Your.branch..JAB \
+        -e estimate.py \
+        -e ^...-- \
+        -e ^..-- \
+        -e ^.-- \
+        -e tkdiff.vimdiff.gvimdiff.xxdiff \
+        -e ^..[0-9][0-9]m \
+        "
+    grep -v $EXCLUSIONS $_temp > $_there/$_now
+    rm -f $_temp
     _edit_log $_there $_now
 }
 
-_edit_log () {
-    cd "$1"; vim "$2" +
-    cd
-    # KBSS: can discard the "- 2>/dev/null", in ~
-}
-
-trace_one_bashrc () {
-    local _level="^+ "
-    verbose_bashrc | grep $_level
-}
-
-main () {
-    # trace_one_bashrc
-    _log_in
-    # interactive_bashrc "$@"
-}
-
-main
+log_interactive_bashrc
