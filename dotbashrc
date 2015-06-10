@@ -48,8 +48,8 @@ run_bashrc () {
     local _what_script=$(readlink -f $_github/what/what.sh)
     _source $_what_script || echo Cannot source $_what_script
     #
-    local _jab_bash=$(readlink -f $_github/dotjab/src/bash)
-    builtin cd $_jab_bash && _source $_jab_bash/bashrc && builtin cd >/dev/null 2>&1
+    local _jab=$(readlink -f $_github/dotjab)
+    builtin cd $_jab && _source $_jab/bashrc && builtin cd >/dev/null 2>&1
     if ! is_running autocutsel
     then
         autocutsel &
