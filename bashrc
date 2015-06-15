@@ -42,7 +42,8 @@ _source_jab_scripts () {
     for script in environ python-environ ; do
         source_path "$JAB/envirok/$script" && continue
     done
-    for script in aliases functons prompt employer src/bash/git-completion.bash; do
+    source_path "$JAB_LOCAL/network"
+    for script in aliases functons prompt src/bash/git-completion.bash; do
         source_path "$JAB/$script" || continue
         source_path "$JAB_LOCAL/$script" || continue
     done
