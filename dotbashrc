@@ -110,6 +110,7 @@ log_interactive_bashrc () {
         -e ^.-- \
         -e tkdiff.vimdiff.gvimdiff.xxdiff \
         -e ^..[0-9][0-9]m \
+        -e nothing.to.commit..working.directory.clean
         "
     grep -v $EXCLUSIONS $_temp > $_there/$_now
     rm -f $_temp
