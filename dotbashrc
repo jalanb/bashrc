@@ -75,8 +75,6 @@ run_bashrc () {
     fi
     export TERM="xterm-256color"
     source /home/alanb/bin/virtualenvwrapper.sh
-    # added by travis gem
-    # [ -f /home/alanb/.travis/travis.sh ] && source /home/alanb/.travis/travis.sh
     # cd_pwd_at_logout
     do_not_use_proxy
     echo Bye from /home/alanb/.bashrc
