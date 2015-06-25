@@ -292,7 +292,7 @@ show_git_time () {
         _log=$(_get_git_timer $regexp)
         if [[ -n $_log ]]; then
             period_lines=$(_get_git_timer $regexp | wc -l)
-            _get_git_timer $regexp | head -n $lines_left
+            _get_git_timer $regexp | sed -e "s/J Alan Brogan/Janus/" -e "s/ ago//" | head -n $lines_left
             [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
@@ -311,7 +311,7 @@ _any_git_changes () {
 }
 
 _get_git_timer () {
-    git -C $git_dir lg 2> /dev/null | sed -e "s/J Alan Brogan/Janus/" -e "s/ ago//" | grep $1 | head -n $(( $LINES / 2 ))
+    git -C $git_dir lg 2> /dev/null | grep $1
 }
 
 _has_git_changes () {
