@@ -54,7 +54,7 @@ _edit_log () {
 
 trace_one_bashrc () {
     local _level="^+ "
-    verbosely interactive_bashrc | grep $_level
+    verbose_interactive_bashrc | grep $_level
 }
 
 run_bashrc () {
@@ -82,7 +82,11 @@ run_bashrc () {
     echo Bye from /home/alanb/.bashrc
 }
 
-interactive_bashrc () {
+concise_interactive_bashrc () {
+    am_interactive && run_bashrc
+}
+
+verbose_interactive_bashrc () {
     am_interactive && verbosely run_bashrc
 }
 
@@ -92,12 +96,12 @@ verbosely () {
     set +x
 }
 
-log_interactive_bashrc () {
+log_verbose_bashrc () {
     local _there=~/log
     test -d $_there || return 1
     local _now=$(date +"%y_%m_%d_%H_%M_%S").bashrc.log
     local _temp=/tmp/$_now
-    interactive_bashrc > $_temp 2>&1
+    verbose_interactive_bashrc > $_temp 2>&1
     EXCLUSIONS="-e him\?xBH \
         -e up-to-date \
         -e tr.: \
