@@ -32,13 +32,6 @@ _source () {
     return 0
 }
 
-cd_pwd_at_logout () {
-    if [[ -f ~/.config/pwd_logout ]]; then
-        cd $(cat ~/.config/pwd_logout)
-        rm -rf ~/.config/pwd_logout
-    fi
-}
-
 _edit_log () {
     cd "$1"
     sed -i -e "s:/tmp/virtualenvwrapper-initialize-hook-[A-Za-z0-9]\+:/tmp/virtualenvwrapper-initialize-hook-XXXX:" $2
@@ -75,7 +68,6 @@ run_bashrc () {
     fi
     export TERM="xterm-256color"
     source /home/alanb/bin/virtualenvwrapper.sh
-    # cd_pwd_at_logout
     do_not_use_proxy
     echo Bye from /home/alanb/.bashrc
 }
