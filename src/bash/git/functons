@@ -289,10 +289,10 @@ show_git_time () {
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
         regexp=$period.ago
-        _log=$(_get_git_timer $regexp)
+        _log=$(_show_git_time_log $regexp)
         if [[ -n $_log ]]; then
-            period_lines=$(_get_git_timer $regexp | wc -l)
-            _get_git_timer $regexp | sed -e "s/J Alan Brogan/Janus/" -e "s/ ago//" | head -n $lines_left
+            period_lines=$(_show_git_time_log $regexp | wc -l)
+            _show_git_time_log $regexp | sed -e "s/J Alan Brogan/Janus/" -e "s/ ago//" | head -n $lines_left
             [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
@@ -310,10 +310,6 @@ _any_git_changes () {
     fi
 }
 
-_get_git_timer () {
-    git -C $git_dir lg 2> /dev/null | grep $1
-}
-
 _has_git_changes () {
     local dir=$1
     local _files=$(_any_git_changes $dir)
@@ -328,6 +324,10 @@ git_simple_status () {
     [[ -n $1 ]] && git_dir=$1
     _do_git_stat $git_dir
     # | grep "$_git_status_regexp"
+}
+
+_show_git_time_log () {
+    git -C $git_dir lg 2> /dev/null | grep $1
 }
 
 _show_run_storage () {
