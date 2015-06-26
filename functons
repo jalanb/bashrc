@@ -399,7 +399,7 @@ py () {
 }
 
 ra () {
-    range "$@"
+    ranger "$@"
 }
 
 rf () {
