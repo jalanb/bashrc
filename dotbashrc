@@ -20,8 +20,8 @@ do_not_use_proxy () {
 use_proxy () {
     #export https_proxy=http://w3proxy.s3group.com:3128/
     #export http_proxy=http://w3proxy.s3group.com:3128/
-    export https_proxy=http://avproxyvlan.dublin.s3group.com:8080/
-    export http_proxy=http://avproxyvlan.dublin.s3group.com:8080/
+    export https_proxy=http://avproxylan.dublin.s3group.com:8080/
+    export http_proxy=http://avproxylan.dublin.s3group.com:8080/
 }
 
 _source () {
