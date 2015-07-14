@@ -112,4 +112,6 @@ log_verbose_bashrc () {
     _edit_log $_there $_now
 }
 
-log_interactive_bashrc
+# log_verbose_bashrc
+concise_interactive_bashrc
+
