@@ -69,6 +69,7 @@ run_bashrc () {
     export TERM="xterm-256color"
     source /home/alanb/bin/virtualenvwrapper.sh
     do_not_use_proxy
+    python $JAB_PYTHON/checksums.py
     echo Bye from /home/alanb/.bashrc
 }
 
