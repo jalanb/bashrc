@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e 
+
 DOWN=/home/alanb/Downloads/Python
 test -d $DOWN && rm -rf $DOWN
 mkdir -p $DOWN
