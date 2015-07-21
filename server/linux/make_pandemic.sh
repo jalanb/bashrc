@@ -21,7 +21,7 @@ make_pandemic () {
 }
 
 update_pandemic () {
-	$PANDEMIC list | sed -e "s/:.*//" | xargs env GIT_SSL_NO_VERIFY=true pandemic update
+	$PANDEMIC list | sed -e "s/:.*//" | xargs env GIT_SSL_NO_VERIFY=true $PANDEMIC update
 }
 
 cleanup () {
