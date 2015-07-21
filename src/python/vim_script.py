@@ -33,9 +33,10 @@ class VimBashScript(object):
     """Write a bash script to run vim"""
     def __init__(self):
         self.lines = [
-            '#! /bin/bash',
+            '#! /bin/bash -x',
             '',
-            'VIM_EDITOR="%s"' % path_to_editor(),
+            'Vim () {\n\tLD_LIBRARY_PATH= %s "$@"\n}' % path_to_editor(),
+            'VIM_EDITOR="Vim"',
             'source $(dirname $(readlink -f $BASH_SOURCE))/vim_functions.sh',
         ]
 
@@ -50,7 +51,7 @@ class VimBashScript(object):
             delete=False)
 
     def write(self):
-        self.add('rm -f $(readlink -f $0)')
+        # self.add('rm -f $(readlink -f $0)')
         with self._script_stream() as stream:
             print >> stream, '\n'.join(self.lines)
             return stream.name

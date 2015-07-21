@@ -1140,7 +1140,6 @@ please () {
 }
 
 mython () {
-    local __doc__="python 2.7 in $HOME"
     $HOME/bin/python2.7 "$@"
 }
 
