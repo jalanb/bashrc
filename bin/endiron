@@ -8,6 +8,9 @@ import argparse
 from bdb import BdbQuit
 
 
+from dotsite import paths
+
+
 __version__ = '0.1.0'
 
 
@@ -54,14 +57,29 @@ def parse_args(methods):
     return args
 
 
+def directory_parts(directory):
+    parts = paths.path(directory).splitall()
+    try:
+        parts.remove('/')
+    except ValueError:
+        pass
+    return parts
+
+
 def matches(directory, exclude):
+    parts = directory_parts(directory)
     result = {}
     for key, value in os.environ.items():
         if key in exclude:
             continue
         if not value:
             continue
-        if value in directory:
+        if '/' in value:
+            if ':' in value:
+                continue
+            if value in directory:
+                result[key] = value
+        elif value in parts:
             result[key] = value
     return result.items()
 
