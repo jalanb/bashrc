@@ -239,13 +239,25 @@ _show_git_here () {
     [[ $? ]] && git -C $PWD lg --since="$days days ago"
 }
 
+# xxxxxxxx
+
+git_root () {
+    root=$(git -C "${1}" rev-parse --git-dir 2>/dev/null) || return 1
+    root=${root%%.git}
+    if [[ -z $root ]]; then
+        echo $1;
+    else
+        echo $root;
+    fi
+}
+
 # xxxxxxxxxx
 
 # xxxxxxxxxxx
 
 git_changed () {
-    git_dir=${1:-$PWD}
-    [[ -d $git_dir/.git ]] || return 1
+    local git_dir=$(git_root ${1:-$PWD})
+    [[ -n $git_dir ]] || return 1
     git -C $git_dir status --porcelain | gre -q "$_git_status_regexp"
 }
 
@@ -281,8 +293,8 @@ _do_git_status () {
 # xxxxxxxxxxxxxx
 
 show_git_time () {
-    git_dir=${1:-$PWD}
-    [[ -d $git_dir/.git ]] || return
+    git_dir=$(git_root ${1:-$PWD})
+    [[ -n $git_dir ]] || return 1
     local _log=
     local period=
     local lines_left=$(( $LINES / 2 ))
@@ -320,8 +332,8 @@ _has_git_changes () {
 
 git_simple_status () {
     _has_git_changes $1 || return
-    local git_dir=$dir
-    [[ -n $1 ]] && git_dir=$1
+    local git_dir=$(git_root $dir)
+    [[ -n $git_dir ]] && git_dir=$(git_root $1)
     _do_git_stat $git_dir
     # | grep "$_git_status_regexp"
 }
