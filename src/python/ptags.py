@@ -125,7 +125,11 @@ def read_file(path_to_python):
     previous_tag = FileTag(path_to_python)
     tags = [ previous_tag ]
     problems = []
-    for line in previous_tag.path.lines():
+    try:
+        lines = previous_tag.path.lines()
+    except UnicodeDecodeError:
+        return tags
+    for line in lines:
         if not line:
             continue
         tag = find_tag_in_line(previous_tag.path, line)
