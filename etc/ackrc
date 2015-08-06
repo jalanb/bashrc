@@ -10,3 +10,4 @@
 --ignore-dir=.idea
 --ignore-dir=vim
 --ignore-dir=compliance.egg-info
+--ignore-file=match:tags
