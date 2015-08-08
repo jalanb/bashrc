@@ -6,7 +6,6 @@ _show_status () {
     if [[ -d "$JAB"/.svn ]]; then
         svn stat "$JAB"
     elif [[ -d "$JAB"/.git ]]; then
-        git -C "$JAB" fetch --all
         git -C "$JAB" status | \
         grep -v "nothing to commit, working directory clean" | \
         sed -e s:Your.branch:\$JAB: | \
