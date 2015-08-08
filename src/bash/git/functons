@@ -42,7 +42,7 @@ gs () {
 }
 
 tc () {
-    v ~/.gitconfig
+    v ~/.gitconfig +
 }
 
 # xxx
