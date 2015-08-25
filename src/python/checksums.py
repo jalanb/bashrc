@@ -1,5 +1,8 @@
 #! /usr/bin/env python2
-"""Script to """
+"""Script to see if some standard files have changed
+
+A 'change' is any change to size, mtime or md5sum
+"""
 
 from __future__ import print_function
 import os
@@ -50,21 +53,55 @@ def parse_args(methods):
     return args
 
 
-def format_data(data):
-    """Format dates and sizes nicely as strings"""
-    mtime, size, _ = data
-    date = datetime.fromtimestamp(float(mtime))
-    date_str = date.strftime('%a, %d %b %Y %H:%M:%S')
-    return '%s, %s' % (date_str, size)
+def plastic_date():
+    """Looks like a date, quacks like a date. Not a date"""
+    return 'Zun, 99 Zun 9999 99:61:61'
+
+
+class Signature(object):
+    """Identifying details for a file
+
+    Includes time, size and md5sum
+    """
+    def __init__(self, t, z, s):
+        self._time = t
+        self._size = z
+        self._sum = s
+
+    def __str__(self):
+        return ', '.join([self._time_str(), str(self._size)])
+
+    def __nonzero__(self):
+        return bool(self._time) or self._size > -1 or bool(self._sum)
+
+    def __cmp__(self, other):
+        return cmp(self.strings(), other.strings())
+
+    def _time_str(self):
+        try:
+            if not self._time:
+                raise ValueError
+            format_ = '%a, %d %b %Y %H:%M:%S'
+            return datetime.fromtimestamp(float(self._time)).strftime(format_)
+        except ValueError:
+            return plastic_date()
+
+    def strings(self):
+        return [str(self._time), str(self._size), str(self._sum)]
+
+
+class EmptySignature(Signature):
+    def __init__(self):
+        super(EmptySignature, self).__init__(0, -1, '')
 
 
 def pad_keys(items, keys):
     """Make sure all keys are in items
 
-    If any key is missing add a tuple of empty strings"""
+    If any key is missing add an empty signature"""
     for key in keys:
         if key not in items:
-            items[key] = ('', '', '')
+            items[key] = EmptySignature()
     return items
 
 
@@ -78,9 +115,9 @@ def write_files(items):
     with path_to_data().open('wb') as stream:
         writer = csv.writer(stream)
         for k, v in items.iteritems():
-            if not any(v):
+            if not v:
                 continue
-            row = [k] + [str(_) for _ in v]
+            row = [k] + v.strings()
             writer.writerow(row)
 
 
@@ -90,7 +127,7 @@ def old_values(basenames):
     with path_to_data().open() as stream:
         reader = csv.reader(stream)
         for row in reader:
-            result[row[0]] = tuple(row[1:])
+            result[row[0]] = Signature(*row[1:])
     return pad_keys(result, basenames)
 
 
@@ -105,7 +142,7 @@ def new_values(basenames):
         mtime = '%0.8f' % p.mtime
         m = md5.new()
         m.update(p.text())
-        result[basename] = mtime, size, m.hexdigest()
+        result[basename] = Signature(mtime, size, m.hexdigest())
     return pad_keys(result, basenames)
 
 
@@ -125,8 +162,8 @@ def script(args):
         if old[basename] == new[basename]:
             continue
         print('%s changed:' % basename)
-        print('\tOld: %s' % format_data(old[basename]))
-        print('\tNew: %s' % format_data(new[basename]))
+        print('\tOld: %s' % old[basename])
+        print('\tNew: %s' % new[basename])
         result = False
     if not result:
         print('')
