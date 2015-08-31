@@ -16,21 +16,21 @@ link () {
 
 main () {
     cd $HOME
-    link ~/.editrc ~/.jab/etc/editrc
-    link ~/.dir_colors ~/.jab/etc/dir_colors
-    link ~/.ackrc ~/.jab/etc/ackrc
-    link ~/.inputrc ~/.jab/etc/inputrc
-    link ~/.gitignore_global ~/.jab/etc/gitignore_global
-    link ~/.sackrc ~/.jab/etc/sackrc
-    link ~/.pylintrc ~/.jab/etc/pylintrc
-    link ~/.vimrc ~/.jab/vim/vimrc
-    link ~/.vimpagerrc ~/.jab/vim/vimpagerrc
-    link ~/.vim ~/.jab/vim
-    link ~/.ipython ~/.jab/ipython/
-    link ~/.pythonrc.py ~/.jab/src/python/pythonrc.py
-    link ~/.tmux.conf .jab/etc/tmux
-    link ~/.gvimrc ~/.jab/vim/gvimrc
-
+    link .ackrc            etc/ackrc
+    link .dir_colors       etc/dir_colors
+    link .editrc           etc/editrc
+    link .gitignore_global etc/gitignore_global
+    link .gvimrc           vim/gvimrc
+    link .inputrc          etc/inputrc
+    link .ipython          ipython/
+    link .pylintrc         etc/pylintrc
+    link .pythonrc.py      src/python/pythonrc.py
+    link .sackrc           etc/sackrc
+    link .tmux.conf        etc/tmux
+    link .vim              vim
+    link .vimpagerrc       vim/vimpagerrc
+    link .vimrc            vim/vimrc
+    link .xonshrc          etc/xonshrc
 }
 
 check_jab
