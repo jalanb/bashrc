@@ -1,0 +1,32 @@
+The personal module
+==================
+
+    >>> import personal
+    >>> print personal.__doc__
+    Module to hold info about my personal mail
+
+More imports for testing
+------------------------
+    >>> import os
+
+Names and addresses
+-------------------
+
+    >>> personal.personal_email('fred') == 'fred@al-got-rhythm.net'
+    True
+
+    >>> personal.employee_address() == 'alanb@s3group.com'
+    True
+
+    >>> personal.employer_email('fred') == 'fred@s3group.com'
+    True
+
+    >>> personal.employer_server('fred') == 'fred.s3group.com'
+    True
+
+localhost files
+---------------
+
+    >>> path_to_mail_html = personal.path_in_localhost('mail.html')
+    >>> os.path.isfile(path_to_mail_html)
+    True

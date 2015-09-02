@@ -25,7 +25,8 @@ try:
 except ImportError:
     pass
 import getch
-import private
+import personal
+import mail_accounts
 
 import colours
 
@@ -76,7 +77,7 @@ def peek_body(connection, message_id, header):
         text, extra_text = get_new_payload(part, 'text/plain', text)
         attachments = attachments or extra_html or extra_text
     if html:
-        file(private.path_in_localhost(mail_html()), 'w').write(html)
+        file(personal.path_in_localhost(mail_html()), 'w').write(html)
     if text:
         return text, bool(html), attachments
     elif html:
@@ -118,7 +119,7 @@ def sent_to_addresses(message, receivers):
 
 
 def sent_to_receivers_at_personal_domain(message, receivers):
-    addresses = [private.personal_email(receiver) for receiver in receivers]
+    addresses = [personal.personal_email(receiver) for receiver in receivers]
     return sent_to_addresses(message, addresses)
 
 
@@ -392,7 +393,7 @@ timed_out = [False]
 def read_issue(issue_id):
     if timed_out[0]:
         return ''
-    command = private.get_issue_data_command(issue_id)
+    command = personal.get_issue_data_command(issue_id)
     status, output = commands.getstatusoutput(command)
     if not status:
         return output
@@ -491,7 +492,7 @@ def handle_issue(header, text, issue_id):
     output = read_issue(issue_id)
     if output:
         issue = parse_issue(output)
-        if private.personal_name() in issue['assigned to']:
+        if personal.personal_name() in issue['assigned to']:
             show_heading('Assigned to me')
             print output
             show_date(header)
@@ -562,7 +563,7 @@ def about_mail_delivery():
 def sent_to_meeting_rooms():
 
     def check(header):
-        meetingrooms = re.compile(private.employer_email('meetingroom[0-9]'))
+        meetingrooms = re.compile(personal.employer_email('meetingroom[0-9]'))
         return sent_to_address(header, meetingrooms)
 
     def handle(header, text):
@@ -579,7 +580,7 @@ def sent_to_meeting_rooms():
 def regular_reports():
 
     def check(header):
-        for sender, subject in private.regular_reports():
+        for sender, subject in personal.regular_reports():
             if sent_by(header, sender) and has_subject(header, subject):
                 return True
         return False
@@ -604,9 +605,9 @@ def spam_messages():
             return True
         spams = [' [fF]ree ', ' career ', ' degree ', ]
         if any([has_subject_with(header, re.compile(_)) for _ in spams]):
-            if sent_to_address(header, private.employer_email('webmaster')):
+            if sent_to_address(header, personal.employer_email('webmaster')):
                 return True
-            if only_sent_to_address(header, private.spam_recipient()):
+            if only_sent_to_address(header, personal.spam_recipient()):
                 return True
         return False
 
@@ -765,7 +766,7 @@ def is_signature(line):
 
 def show_html(html):
     if html:
-        message = '    See also %s' % private.url_in_localhost(mail_html())
+        message = '    See also %s' % personal.url_in_localhost(mail_html())
         print colours.colour_text(message, 'cyan')
         print
 
@@ -868,10 +869,10 @@ def check_family():
 
     def check(header):
         return any([sent_by(header, family_email)
-                    for family_email in private.family_emails()])
+                    for family_email in personal.family_emails()])
 
     def handle(header, text, html):
-        show_heading(private.family_name())
+        show_heading(personal.family_name())
         show_subject(header)
         show_from_name(header)
         show_html(html)
@@ -1019,7 +1020,7 @@ def good_personal_email(message):
         'marksandspencer.ie': ['markandspencers'],
     }
     for translation in domain_translations.get(domain, []):
-        if sent_to_address(message, private.personal_email(translation)):
+        if sent_to_address(message, personal.personal_email(translation)):
             return True
     return False
 
@@ -1114,7 +1115,7 @@ def buy_stuff():
 
 def employee_account():
     return (
-        private.employee_account,
+        mail_accounts.employee,
         [
             check_family,
             has_out_of_office,
@@ -1131,7 +1132,7 @@ def employee_account():
 
 def main_personal_account():
     return (
-        private.main_personal_account,
+        mail_accounts.main_personal,
         [
             check_family,
             check_payment,
@@ -1139,9 +1140,9 @@ def main_personal_account():
         '', '')
 
 
-def other_personal_account():
+def second_personal_account():
     return (
-        private.other_personal_account,
+        mail_accounts.second_personal,
         [
             check_family,
             bug_reports,
@@ -1156,7 +1157,7 @@ def other_personal_account():
 
 def second_employee_account():
     return (
-        private.second_employee_account,
+        mail_accounts.second_employee,
         [
             interesting_lists,
             boring_lists,
@@ -1190,7 +1191,7 @@ def show_account_header(account_name):
 def main(args):
     # pudb.set_trace()
     account_methods = [employee_account, main_personal_account,
-                       other_personal_account, second_employee_account]
+                       second_personal_account, second_employee_account]
     for account_method in account_methods:
         if args:
             if 'all' in args or account_method.func_name in args:
