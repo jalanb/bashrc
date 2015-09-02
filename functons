@@ -502,6 +502,11 @@ vf () {
     _edit_jab functons "$@"
 }
 
+vhist () {
+    local __doc__="edit unplugged stuff from history"
+    _tease_history | [[ -n $* ]] && vim - +/"$@" 
+}
+
 vh () {
     local __doc__="edit stuff from history"
     if [[ -n $* ]]; then
@@ -660,6 +665,7 @@ ghv () {
 gre () {
     $(which grep) --color=never "$@"
 }
+
 gv. () {
     PYTHONPATH=$(readlink -f .) gv .
 }
@@ -1324,6 +1330,10 @@ source_aliases () {
     local __doc__='source files which have aliases and remember the filenames'
     ALIASES="$ALIASES:$1"
     source $1
+}
+
+_tease_history () {
+    history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
 }
 
 _strip_history () {
