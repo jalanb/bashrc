@@ -818,7 +818,8 @@ def archive_handled_messages(connection, read_folder, read_ids, unread_folder,
         copy_to_folder(connection, unread_ids, unread_folder)
     ids_string = ','.join(read_ids | unread_ids)
     if ids_string:
-        response, _data = connection.store(ids_string, r'+FLAGS', r'(\Deleted)')
+        response, _data = connection.store(
+            ids_string, r'+FLAGS', r'(\Deleted)')
         assert response == 'OK'
         response, _data = connection.expunge()
         assert response == 'OK'
