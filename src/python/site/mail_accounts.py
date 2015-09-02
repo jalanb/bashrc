@@ -41,7 +41,7 @@ def second_personal():
 
 def employee():
     """My email account at work"""
-    return _credentials('excork2.cork.s3group.com')
+    return _credentials('mail.wwts.com', 'ab13173')
 
 
 def second_employee():
