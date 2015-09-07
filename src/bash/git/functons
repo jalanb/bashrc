@@ -64,6 +64,10 @@ gai () {
     ga --interactive "$@"
 }
 
+gap () {
+    ga --patch "$@"
+}
+
 gcj () {
     local _storage=/tmp/gcj.sh
     local GIT="git -C $JAB"
@@ -165,7 +169,8 @@ _gsi_menu () {
     suffix=", "
     _gsi_opt q uit
     _gsi_opt a dd
-    _git_modified $1 && _gsi_opt s plit
+    _git_modified $1 && _gsi_opt i nteractive
+    _git_modified $1 && _gsi_opt p atch
     _gsi_opt d rop
     [[ -n $GIT_ADDED ]] &&_gsi_opt f asten
     _gsi_opt v im
@@ -193,7 +198,8 @@ gsi () {
         if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt $f; fi
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [aA] ]] && ga $f
-        [[ $answer =~ [sS] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
+        [[ $answer =~ [iI] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
+        [[ $answer =~ [pP] ]] && (_git_modified $f && gap $f || (_git_untracked $f && echo Cannot split untracked file))
         [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
         [[ $answer =~ [vV] ]] && _gsi_vim $f
     done
