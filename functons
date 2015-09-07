@@ -127,7 +127,7 @@ y () {
     else
         dir=
     fi
-    Tree -P "*.py" $dir "$@"
+    Tree -P "*.py" --prune $dir "$@"
 }
 
 add () {
