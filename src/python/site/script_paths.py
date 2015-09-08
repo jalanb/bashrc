@@ -39,6 +39,8 @@ def get(strings):
             hub / 'main.py',
         ], 'paths': [
             hub / 'dotsite/dotsite/paths.py',
+        ], 'whap': [
+            hub / 'what/whap.py',
         ], 'what': [
             hub / 'what/what.sh',
             hub / 'what/what.py',
