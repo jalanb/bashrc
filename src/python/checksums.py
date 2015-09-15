@@ -112,9 +112,9 @@ def path_to_data():
     return paths.environ_path('JAB') / 'local/login_sums.csv'
 
 
-def write_files(items):
+def write_files(items, path):
     """Write items to csv file"""
-    with path_to_data().open('wb') as stream:
+    with path.open('wb') as stream:
         writer = csv.writer(stream)
         for k, v in items.iteritems():
             if not v:
@@ -169,7 +169,7 @@ def script(args):
         result = False
     if not result:
         print('')
-        write_files(new)
+        write_files(new, path_to_data())
     return result
 
 
