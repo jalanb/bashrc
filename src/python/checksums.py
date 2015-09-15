@@ -123,7 +123,19 @@ def write_files(items, path):
             writer.writerow(row)
 
 
-def old_values(basenames):
+def default_values():
+    """Gives a dict of default values for the default basenames"""
+    return pad_keys({}, default_basenames())
+
+
+def write_default_values():
+    """Write default values to the data file"""
+    values = default_values()
+    write_files(values, path_to_data())
+    return values
+
+
+def read_old_values(basenames):
     """Read old date, size and md5sum for those basenames"""
     result = {}
     with path_to_data().open() as stream:
@@ -131,6 +143,17 @@ def old_values(basenames):
         for row in reader:
             result[row[0]] = Signature(*row[1:])
     return pad_keys(result, basenames)
+
+
+def old_values(basenames):
+    """Read old date, size and md5sum for those basenames
+
+    If old values are not present, write defaults
+    """
+    if not path_to_data().isfile():
+        return write_default_values()
+    else:
+        return read_old_values(basenames)
 
 
 def new_values(basenames):
@@ -148,15 +171,19 @@ def new_values(basenames):
     return pad_keys(result, basenames)
 
 
-def script(args):
-    """Compare date, size and md5sum for known files in $HOME"""
-    basenames = [
+def default_basenames():
+    return [
         '.bashrc',
         '.vimrc',
         '.gitconfig',
         '.netrc',
         '.profile',
     ]
+
+
+def script(args):
+    """Compare date, size and md5sum for known files in $HOME"""
+    basenames = default_basenames()
     old = old_values(basenames)
     new = new_values(basenames)
     result = True
