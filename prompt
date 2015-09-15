@@ -61,7 +61,7 @@ prompt_command () {
         export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
     fi
     changes=0
-    local endir="$(endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
+    local endir="$(mython $JAB/bin/endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
     local Dir="${endir/\$/\\$}"
     [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${endir/\$/\\$}${PROMPT_COLOUR}"
     local endir="$PWD"
@@ -73,7 +73,7 @@ prompt_command () {
     console_whoami 
     # local LEARNING=$(python -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
-    [[ -f $KD_DIR/kd.py ]] && python $KD_DIR/kd.py --add . >/dev/null 2>&1
+    [[ -f $KD_DIR/kd.py ]] && mython $KD_DIR/kd.py --add . >/dev/null 2>&1
     history -a
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
     local python_version=$(python --version 2>&1 | cut -d' ' -f2)
