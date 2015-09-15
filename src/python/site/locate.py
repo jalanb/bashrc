@@ -54,7 +54,7 @@ def _make_locate_command(string, options):
         option = _locate_regexp_option()
         string = glob_to_regexp(string)
     path_to_locate = _path_to_locate()
-    if options.files or options.directories:
+    if options.files or options.directories or options.executables:
         _add_option(path_to_locate, '--basename')
     return '%s %s "%s"' % (path_to_locate, option, string)
 
@@ -84,14 +84,20 @@ def _run_locate(string, options):
 
 def _make_check_method(method, options):
     """Make a check method by combining the given method with the options"""
+
+    def is_file(string):
+        return method(string) and os.path.isfile(string)
+
     if options.directories:
         def is_dir(string):
             return method(string) and os.path.isdir(string)
         return is_dir
     if options.files:
-        def is_file(string):
-            return method(string) and os.path.isfile(string)
         return is_file
+    if options.executables:
+        def is_exe(string):
+            return is_file(string) and os.access(string, os.X_OK)
+        return is_exe
     return method
 
 
@@ -141,6 +147,8 @@ def _handle_command_line(args):
                       help='only find basenames')
     parser.add_option('-d', '--directories', action='store_true',
                       help='only locate directories')
+    parser.add_option('-e', '--executables', action='store_true',
+                      help='only locate executable files')
     parser.add_option('-f', '--files', action='store_true',
                       help='only locate files')
     parser.add_option('-g', '--globs', action='store_true',
