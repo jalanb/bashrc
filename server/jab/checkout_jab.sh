@@ -1,6 +1,6 @@
 #! /bin/bash
 
-JAB=${JAB:-$HOME/.jab}
+JAB=${JAB:-$HOME/src/git/hub/dotjab}
 
 link_to () {
 	[ -h $2 ] || ln -s $1 $2
@@ -73,8 +73,8 @@ link_dots () {
 	link_to_home vim
 	link_to_home vim/vimrc
 	link_to_home vim/gvimrc
-	link_to_home editrc
-	link_to_home inputrc
+	link_to_home etc/editrc
+	link_to_home etc/inputrc
 	link_to_home src/python/pythonrc.py
 	link_to_home etc/dir_colors
 	link_to_home etc/ackrc
