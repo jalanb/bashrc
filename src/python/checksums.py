@@ -190,9 +190,12 @@ def script(args):
     for basename in basenames:
         if old[basename] == new[basename]:
             continue
-        print('%s changed:' % basename)
-        print('\tOld: %s' % old[basename])
-        print('\tNew: %s' % new[basename])
+        if old[basename]:
+            print('%s changed:' % basename)
+            print('\tOld: %s' % old[basename])
+        else:
+            print('%s registered:' % basename)
+            print('\tNew: %s' % new[basename])
         result = False
     if not result:
         print('')
