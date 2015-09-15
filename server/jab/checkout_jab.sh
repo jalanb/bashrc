@@ -87,21 +87,11 @@ link_dots () {
 	link_subversion_config
 }
 
-checkout_submodules () {
-	git submodule sync
-	chmod +w $JAB/src/github/kd
-	touch $JAB/src/github/kd/kd.history
-	chmod +w $JAB/src/github/kd/kd.history
-	chmod -w $JAB/src/github/kd
-	chmod +w $JAB/src/github/viack
-}
 
 main () {
 	if checkout; then
-		checkout_submodules
 		link_dots
 	fi
 }
 
 cd 
-main
