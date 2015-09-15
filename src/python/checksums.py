@@ -78,6 +78,7 @@ class Signature(object):
         return cmp(self.strings(), other.strings())
 
     def _time_str(self):
+        """A formatted string for the time"""
         try:
             if not self._time:
                 raise ValueError
@@ -87,6 +88,7 @@ class Signature(object):
             return plastic_date()
 
     def strings(self):
+        """A list of time, size and sum as strings"""
         return [str(self._time), str(self._size), str(self._sum)]
 
 
