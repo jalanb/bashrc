@@ -5,6 +5,9 @@
 unset SITE
 unset PYTHONPATH
 
+export EMPLOYER_DOMAIN=wwts.com
+export EMPLOYER_USERNAME=ab13173
+
 if [[ -d /Users/jab ]]; then  # looks like OS X
     USER=abrogan
     if [[ $1 != "local" ]]; then
