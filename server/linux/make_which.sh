@@ -2,19 +2,51 @@
 
 set -e
 
-test -d /tmp/Downloads && rm -rf /tmp/Downloads
-mkdir /tmp/Downloads
-cd /tmp/Downloads
+SCRATCH=/tmp/Downloads
+MINIMUM_VERSION=2.21
 
-wget http://ftp.gnu.org/gnu/which/which-2.21.tar.gz
-tar zxf which-2.21.tar.gz
-cd which-2.21/
-./configure --prefix=/usr
-make
-sudo make install
-if [[ -f /usr/bin/which ]]; then
-    test -f /bin/which && sudo rm -f /bin/which
-    sudo ln -s /usr/bin/which /bin/which
-fi
+set_up () {
+	trap tear_down EXIT
+	if [[ -d ${SCRATCH} ]]; then
+		 rm -rf ${SCRATCH}/*
+	else
+		 mkdir ${SCRATCH}
+	fi
+	cd ${SCRATCH}
+}
 
-rm -rf /tmp/Downloads
+tear_down () {
+	if [[ -d ${SCRATCH} ]]; then
+		rm -rf ${SCRATCH}
+	fi
+}
+
+install_which () {
+	test -d ${SCRATCH} && rm -rf ${SCRATCH}
+	mkdir ${SCRATCH}
+	cd ${SCRATCH}
+
+	wget http://ftp.gnu.org/gnu/which/which-${MINIMUM_VERSION}.tar.gz
+	tar zxf which-${MINIMUM_VERSION}.tar.gz
+	cd which-${MINIMUM_VERSION}/
+	./configure --prefix=/usr
+	make
+	sudo make install
+}
+
+main () {
+	if which which >/dev/null 2>&1; then
+		PROGRAM=$(which which 2>/dev/null | tail -n 1)
+		PROGRAM_VERSION=$($PROGRAM --version | grep v[0-9]\. | sed -e "s/.*v\([^,]*\),.*/\1/")
+		if [[ $PROGRAM_VERSION < ${MINIMUM_VERSION} ]]; then
+			sudo rm -rf $PROGRAM
+			install_which
+		fi
+	else
+		install_which
+	fi
+}
+
+set_up
+main
+tear_down
