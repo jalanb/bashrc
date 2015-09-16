@@ -150,7 +150,10 @@ def old_values(basenames):
 
     If old values are not present, write defaults
     """
-    if not path_to_data().isfile():
+    p = path_to_data()
+    if not p.isfile():
+        if not p.parent.isdir():
+            p.parent.makedirs_p()
         return write_default_values()
     else:
         return read_old_values(basenames)
