@@ -41,6 +41,7 @@ pip_install_modules () {
 	$HOME/bin/pip install pudb
 	$HOME/bin/pip install virtualenv
 	$HOME/bin/pip install virtualenvwrapper
+	$HOME/bin/pip install ansible
 }
 
 main () {
