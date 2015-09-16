@@ -1,0 +1,69 @@
+# visudo
+sudo timedatectl set-timezone Europe/Dublin
+# ps -ef | grep yum  .... kill -9
+sudo yum update
+sudo yum -y install ntp
+sudo systemctl start ntpd
+sudo systemctl enable ntpd
+cd ~/Downloads
+wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+sudo rpm -Uvh rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+wget http://dag.wieers.com/rpm/packages/RPM-GPG-KEY.dag.txt
+sudo rpm --import RPM-GPG-KEY.dag.txt
+
+# Install git
+sudo yum -y groupinstall "Development Tools"
+sudo yum -y install gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel curl-devel
+# For latest release see https://github.com/git/git/releases
+GIT_VERSION=2.5.2
+GITHUB=https://github.com
+wget $GITHUB/git/git/archive/v${GIT_VERSION}.tar.gz
+tar xvf v${GIT_VERSION}.tar.gz
+cd git-${GIT_VERSION}
+make configure
+./configure --prefix=/usr/local
+sudo make install
+
+# Install dotjab
+
+GITHUB_DIR=~/src/git/hub
+mkdir -p $GITHUB_DIR
+cd $GITHUB_DIR
+
+GIT_JALANB=$GITHUB/jalanb
+git clone $GIT_JALANB/dotjab
+git clone $GIT_JALANB/dotsite
+git clone $GIT_JALANB/what
+git clone $GIT_JALANB/kd
+git clone $GIT_JALANB/viack
+git clone $GITHUB/jeffkaufman/icdiff.git
+
+# set up JAB
+JAB=$GITHUB_DIR/dotjab
+cd $JAB
+cp dotbashrc ~/.bashrc
+cd server/linux
+bash make_software.sh
+
+# set up python
+cd $GITHUB_DIR/dotsite
+$HOME/bin/python setup.py develop
+
+
+# set up CentOS
+cd $JAB/server/linux/centos
+bash install_software.sh
+
+
+# set up Gnome
+cd ../gnome
+bash make_vim_default_editor.sh
+cd $JAB
+test -d local || mkdir local
+cd local
+
+
+# set up JAb
+
+cd $JAB/server/jab
+bash clean_directories.sh
