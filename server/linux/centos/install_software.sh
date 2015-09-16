@@ -6,7 +6,8 @@ yummy () {
     sudo yum update
     sudo yum upgrade
     # test -f guest_additions.sh && /bin/bash guest_additions.sh
-    sudo /usr/bin/yum -y -q install ctags ack sshfs openssh-server
+    sudo /usr/bin/yum -y -q install ctags sshfs openssh-server
+    curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
 }
 
 get_autocutsel () {
@@ -28,7 +29,7 @@ downloads () {
 
 main () {
     yummy
-    gitty
+    downloads
 }
 
 main
