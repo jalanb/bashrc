@@ -693,7 +693,7 @@ jub () {
 }
 
 jjj () {
-# ssh back to the jab.ook (which is my laptop
+# ssh back to the jab.ook (which is my laptop)
 # it goes by different hostnames, try in order of probablity
     local jjj_host=
     local jab_ook=${JAB_OOK:-jab.ook}
