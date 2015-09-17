@@ -697,7 +697,7 @@ jjj () {
 # it goes by different hostnames, try in order of probablity
     local jjj_host=
     local jab_ook=${JAB_OOK:-jab.ook}
-    ping -c 1 -w 1 jab.ook >/dev/null 2>&1 && jjj_host=jab.ook
+    quick_ping jab.ook >/dev/null 2>&1 && jjj_host=jab.ook
     [[ -z $jjj_host ]] && echo Could not ping jab.ook || ssj jab $jjj_host
 }
 
@@ -1240,6 +1240,16 @@ todo_show () {
 
 jab_scripts () {
     python $JAB_PYTHON/scripts.py "$@"
+}
+
+quick_ping () {
+    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | grep -q illegal; then
+        # looks like OS X
+        ping -c 1 -t 1 -W 1 "$@"
+    else
+        # make sure we return correctly
+        ping -c 1 -w 1 -W 1 "$@"
+    fi
 }
 
 thirty_two () {
