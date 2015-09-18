@@ -30,12 +30,12 @@ GITHUB_DIR=~/src/git/hub
 mkdir -p $GITHUB_DIR
 cd $GITHUB_DIR
 
-GIT_JALANB=$GITHUB/jalanb
-git clone $GIT_JALANB/dotjab
-git clone $GIT_JALANB/dotsite
-git clone $GIT_JALANB/what
-git clone $GIT_JALANB/kd
-git clone $GIT_JALANB/viack
+GITHUB_JALANB=$GITHUB/jalanb
+git clone $GITHUB_JALANB/dotjab
+git clone $GITHUB_JALANB/dotsite
+git clone $GITHUB_JALANB/what
+git clone $GITHUB_JALANB/kd
+git clone $GITHUB_JALANB/viack
 git clone $GITHUB/jeffkaufman/icdiff.git
 
 # set up JAB

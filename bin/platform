@@ -57,7 +57,7 @@ def parse_args(methods):
 
 
 def script(args):
-    system = platform.system()
+    system = platform.system().split('-')[0]
     if args.distro:
         if system != 'Linux':
             return False
