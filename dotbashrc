@@ -51,7 +51,7 @@ trace_one_bashrc () {
 }
 
 run_bashrc () {
-    echo Welcome to /home/alanb/.bashrc
+    echo Welcome to $HOME/.bashrc
     export PATH=/usr/local/bin:/usr/bin:/bin
     export SHELL=/bin/bash
     # Find my own environment
@@ -67,10 +67,10 @@ run_bashrc () {
         autocutsel -s PRIMARY &
     fi
     export TERM="xterm-256color"
-    source /home/alanb/bin/virtualenvwrapper.sh
+    source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
     python $JAB_PYTHON/checksums.py
-    echo Bye from /home/alanb/.bashrc
+    echo Bye from $HOME/.bashrc
 }
 
 concise_interactive_bashrc () {
