@@ -1,7 +1,7 @@
 #! /bin/bash
 
 find_python () {
-    test -x $PYTHON && return 0
+    [[ -n $PYTHON && -x $PYTHON ]] && return 0
     test -n $PYTHON && PYTHON=
     test -f /usr/bin/python && PYTHON=/usr/bin/python
     test -f /usr/local/bin/python && PYTHON=/usr/local/bin/python
