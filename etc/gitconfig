@@ -39,6 +39,7 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
+    trustctime = false
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
 	enabled = true
