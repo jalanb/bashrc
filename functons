@@ -1147,8 +1147,9 @@ please () {
 
 mython () {
     local executable=$HOME/bin/python2.7
-    test -x $executable || executable=python
-    $executable "$@"
+    test -x $executable || executable=/usr/local/bin/python
+    test -x $executable || executable=/usr/bin/python
+    test -x $executable && $executable "$@"
 }
 
 qwerty  () {
