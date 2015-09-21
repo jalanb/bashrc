@@ -388,7 +388,7 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 " From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html {{{2
 "   When one of the patterns matches with the name of the file which is written, no backup file is created.
 "
-set backupskip=/tmp/*,/private/tmp/*,~/temp
+set backupskip=/tmp/*,/private/tmp/*,~/tmp
 "
 " Stronger encryption {{{2
 "
@@ -396,6 +396,12 @@ if exists('+cm')
     set cm=blowfish
 endif
 autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= nobackup noshelltemp history=0 secure | endif
+
+" From vim help
+set backupdir=~/old
+" Add a date to backup file extension
+:au BufWritePre * let &bex = '-' . strftime("%F.%X") . '~'
+
 "
 " Despacing {{{2
 "
