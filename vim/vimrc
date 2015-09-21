@@ -400,7 +400,7 @@ autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= noba
 " From vim help
 set backupdir=~/old
 " Add a date to backup file extension
-:au BufWritePre * let &bex = '-' . strftime("%F.%X") . '~'
+:au BufWritePre * let &bex = '-' . strftime("%F.%T") . '~'
 
 "
 " Despacing {{{2
