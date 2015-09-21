@@ -196,6 +196,7 @@ def script(args):
         if old[basename]:
             print('%s changed:' % basename)
             print('\tOld: %s' % old[basename])
+            print('\tNew: %s' % new[basename])
         else:
             print('%s registered:' % basename)
             print('\tNew: %s' % new[basename])
