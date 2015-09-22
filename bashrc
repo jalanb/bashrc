@@ -38,6 +38,7 @@ _get_jab_environ () {
 
 _source_jab_scripts () {
     _get_jab_environ
+    JAB_ENVIRON_SOURCED=
     for script in environ python-environ ; do
         source_path "$JAB/envirok/$script"
         source_path "$JAB/local/$script"
