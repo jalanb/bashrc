@@ -679,7 +679,7 @@ hd1 () {
 }
 
 hed () {
-    head -n ${1:-$(( $LINES / 2 ))} "$@"
+    head -n ${1:-$(( ${LINES:-$(tput lines)} / 2 ))} "$@"
 }
 
 hub () {
@@ -858,7 +858,7 @@ tel () {
         echo tel $lines $args
         tail -n $lines $args
     else
-        tail -n $(( $LINES / 2 )) "$@"
+        tail -n $(( ${LINES:-$(tput lines)} / 2 )) "$@"
     fi
 }
 

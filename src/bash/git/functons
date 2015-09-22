@@ -97,7 +97,7 @@ gdv () {
 _gl () {
     local cmd=$1
     shift
-    local loglines=$(( $LINES / 2 ))
+    local loglines=$(( ${LINES:-$(tput lines)} / 2 ))
     git $cmd "$@" | head -n $loglines
 }
 
@@ -294,7 +294,7 @@ show_git_time () {
     [[ -n $git_dir ]] || return 1
     local _log=
     local period=
-    local lines_left=$(( $LINES / 2 ))
+    local lines_left=$(( ${LINES:-$(tput lines)} / 2 ))
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
         regexp=$period.ago
