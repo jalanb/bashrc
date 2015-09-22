@@ -34,9 +34,9 @@ main () {
     fi
     local options=$*
 
-    local here_name=$(python -c "import socket; print socket.getfqdn()")
-    local here_ip=$(python $JAB_PYTHON/ifconfig.py 172)
-    local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
+    local here_name=$(mython -c "import socket; print socket.getfqdn()")
+    local here_ip=$(mython $JAB_PYTHON/ifconfig.py 172)
+    local there_ip=$(mython -c "import socket; print socket.gethostbyname('$there_name')")
     if [[ $here_ip == $there_ip ]]; then
         if [[ $you == $(whoami) ]]; then
             echo "Here I am: $you@$there_name ($there_ip)" 2>&1

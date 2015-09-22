@@ -45,7 +45,7 @@ sdh () {
 }
 
 sdp () {
-	svn_diff python "$@"
+	svn_diff mython "$@"
 }
 
 sdv () {

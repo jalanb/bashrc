@@ -39,8 +39,8 @@ _get_jab_environ () {
 _source_jab_scripts () {
     _get_jab_environ
     for script in environ python-environ ; do
-        source_path "$JAB/envirok/$script" 
-        source_path "$JAB/local/$script" 
+        source_path "$JAB/envirok/$script"
+        source_path "$JAB/local/$script"
     done
     source_path "$JAB_LOCAL/network"
     for script in aliases functons prompt src/bash/git-completion.bash; do
@@ -70,7 +70,7 @@ _show_todo () {
     if python2.7 -c"a=0" >/dev/null 2>&1; then
         test -f todo.py && python2.7 todo.py
     else
-        local version=$(python -V 2>&1)
+        local version=$(mython -V 2>&1)
         echo "Python version is old ($version)"
     fi
     builtin cd - >/dev/null 2>&1

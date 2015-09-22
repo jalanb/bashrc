@@ -65,7 +65,6 @@ alias kp="rsync -a"
 alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
 
 alias p-="echo $OLDPWD"
-alias pc="python -c"
 alias pt="p $JAB_PYTHON/vim_traceback.py"
 
 alias r.="rm -rvf *"
@@ -95,7 +94,7 @@ alias doc="c ~/Documents"
 
 alias clx="cl; lx "
 alias cly="cl; ly "
-alias csi='c $(python -c "import sys; print [p for p in sys.path if p.endswith(\"site-packages\")][0]")'
+alias csi='c $(mython -c "import sys; print [p for p in sys.path if p.endswith(\"site-packages\")][0]")'
 
 alias got=git
 
@@ -120,7 +119,7 @@ alias spe="source $JAB/python-environ"
 
 alias tra="try ~/alans_tests"
 
-alias url="python ~/bin/show_url.py "
+alias url="mython ~/bin/show_url.py "
 
 # xxxx
 

@@ -45,11 +45,11 @@ pip_install_modules () {
 }
 
 main () {
-	if ! python -c "import sys; from distutils.version import LooseVersion as ver; sys.exit(int(ver(sys.version.split()[0]) < ver('"$MINIMUM_VERSION"')))"; then
 		install_home_python
 		install_home_pip
 		pip_install_modules
 	fi
+    if ! mython -c "import sys; from distutils.version import LooseVersion as ver; sys.exit(int(ver(sys.version.split()[0]) < ver('"$MINIMUM_VERSION"')))"; then
 }
 
 set_up

@@ -23,7 +23,7 @@ remove_checkout () {
 IP () {
     for number in 172 192 100
     do
-        python $JAB_PYTHON/ifconfig.py $number && break
+        mython $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 

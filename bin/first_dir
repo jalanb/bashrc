@@ -12,7 +12,7 @@ shift_path () {
     for p in "$@"
     do
         if [[ -f $p || -d $p ]]; then
-            path=$(python -c"import os; print os.path.realpath('$p')")
+            path=$(mython -c"import os; print os.path.realpath('$p')")
             return 0
         fi
     done
@@ -31,7 +31,7 @@ shift_dir () {
     for d in "$@"
     do
         if [[ -d $d ]]; then
-            dir=$(python -c"import os; print os.path.realpath('$d')")
+            dir=$(mython -c"import os; print os.path.realpath('$d')")
             return 0
         fi
     done
@@ -39,7 +39,7 @@ shift_dir () {
 }
 
 first_num () {
-    num=$(python $JAB_PYTHON/first_num.py "$@")
-    args=$(python $JAB_PYTHON/first_num.py NOT_FIRST_NUM "$@")
+    num=$(mython $JAB_PYTHON/first_num.py "$@")
+    args=$(mython $JAB_PYTHON/first_num.py NOT_FIRST_NUM "$@")
     [[ -n $num ]]
 }

@@ -40,7 +40,7 @@ f () {
     IFS=";"
     for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
     do
-        relpath -s $FOUND
+        mython $JAB/bin/relpath -s $FOUND
     done
     IFS=$old_ifs
 }
@@ -56,8 +56,8 @@ h () {
 p () {
     local me=$USER
     local here=$(jostname)
-    export PYTHON=${PYTHON-python}
-    console_title_on "python@${here}" && \
+    export PYTHON=${PYTHON:-mython}
+    console_title_on "mython@${here}" && \
         $PYTHON "$@" && \
         console_title_off "${me}@${here}"
 }
@@ -100,7 +100,7 @@ x () {
 
 y () {
     clear
-    python $JAB_PYTHON/y.py "$@"
+    mython $JAB_PYTHON/y.py "$@"
 }
 
 # xx
@@ -147,7 +147,7 @@ db () {
 IP () {
     for number in 172 193 192 100
     do
-        python $JAB_PYTHON/ifconfig.py $number && break
+        mython $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 
@@ -346,7 +346,7 @@ ly () {
 ma () {
     local _storage=/tmp/fred.sh;
     if [[ -z "$@" ]]; then
-        python -c "print 'memo -a\"$*\"'" > $_storage;
+        mython -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
         rm -rf $_storage;
@@ -404,7 +404,7 @@ ra () {
 
 rf () {
     PYTHON_SCRIPT=$JAB_PYTHON/rf.py
-    python $PYTHON_SCRIPT "$@"
+    mython $PYTHON_SCRIPT "$@"
 }
 
 rj () {
@@ -717,7 +717,7 @@ jpi () {
 }
 
 jpm () {
-    PYTHONPATH=$PYTHONPATH:$GITHUB/jpm python $GITHUB/jpm/bin/jpm "$@"
+    PYTHONPATH=$PYTHONPATH:$GITHUB/jpm mython $GITHUB/jpm/bin/jpm "$@"
 }
 
 kpj () {
@@ -863,14 +863,14 @@ tel () {
 }
 
 tmp () {
-    pushd $(python $KD_DIR/kd.py ~/tmp "$@")
+    pushd $(mython $KD_DIR/kd.py ~/tmp "$@")
 }
 
 unalias try > /dev/null 2>&1
 try () {
     TRY=$JAB_PYTHON/testing/try.py
     test -f ./try.py && TRY=./try.py
-    python $TRY "$@"
+    mython $TRY "$@"
 }
 
 vaf () {
@@ -945,7 +945,7 @@ vvv () {
 }
 
 vtr () {
-    python $JAB_PYTHON/vim_traceback.py "$@"
+    mython $JAB_PYTHON/vim_traceback.py "$@"
 }
 
 # xxxx
@@ -1036,7 +1036,7 @@ divv () {
 }
 
 this () {
-    python -c "import this"
+    mython -c "import this"
 }
 
 Tree () {
@@ -1091,12 +1091,12 @@ range () {
     local destination=.
     if [[ -n "$*" ]]; then
         local kd_script=$KD_DIR/kd.py
-        if ! destination=$(PYTHONPATH=$python_directory python $kd_script "$@" 2>&1); then
+        if ! destination=$(PYTHONPATH=$python_directory mython $kd_script "$@" 2>&1); then
             echo "$destination"
             return 1
         fi
     fi
-    local real_destination=$(PYTHONPATH=$python_directory python -c "import os; print os.path.realpath('$destination')")
+    local real_destination=$(PYTHONPATH=$python_directory mython -c "import os; print os.path.realpath('$destination')")
     if [[ $destination != $real_destination ]]; then
         echo "ranger ($destination ->) $real_destination"
         destination=$real_destination
@@ -1195,9 +1195,9 @@ maketest () {
     fi
     local filename=$(basename $path)
     local stem=${filename%.*}
-    local classname=$(python -c "print 'Test%s' % '$stem'.title()")
+    local classname=$(mython -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
-    local test_file=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
+    local test_file=$(mython -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
     if [[ -f $test_file ]]; then
         echo $test_file is already a file >&2
         return 1
@@ -1242,7 +1242,7 @@ todo_show () {
 # xxxxxxxxxx
 
 jab_scripts () {
-    python $JAB_PYTHON/scripts.py "$@"
+    mython $JAB_PYTHON/scripts.py "$@"
 }
 
 quick_ping () {
