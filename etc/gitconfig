@@ -42,7 +42,7 @@
     trustctime = false
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
-	enabled = true
+    enabled = true
 #[https]
     #proxy = http://$proxy_url:$proxy_port/
 #[http]
