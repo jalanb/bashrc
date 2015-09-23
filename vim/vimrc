@@ -399,6 +399,9 @@ set backupdir=~/old
 " Add a date to backup file extension
 :au BufWritePre * let &bex = '-' . strftime("%F.%T") . '~'
 
+" Unset an option which babun (?) has set
+set noundofile
+
 "
 " Despacing {{{2
 "
