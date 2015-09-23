@@ -76,8 +76,6 @@ alias sf="source $JAB/functons"
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
 
-alias xk="exchange_keys"
-
 alias yy="y $PYTHON_HOME"
 
 alias z.="zm \*"
