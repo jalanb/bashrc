@@ -1,50 +1,50 @@
 [user]
-    name = J Alan Brogan
-    email = github@al-got-rhythm.net
+	name = J Alan Brogan
+	email = github@al-got-rhythm.net
 [credential]
-    helper = store
+	helper = store
 [alias]
-    br = branch
-    cb = rev-parse --abbrev-ref HEAD
-    ci = commit
-    co = checkout
-    dh = difftool -y --extcmd=\"vim -d -o\"
-    dump = cat-file -p
-    di = difftool -y --extcmd=\"$GITHUB/icdiff/icdiff --line-numbers\"
-    dv = difftool -y --extcmd=\"vim -d -O\"
-    dw = diff --word-diff
-    dr = rerere diff
-    dy = difftool -y --extcmd=\"$JAB/bin/pydiff\"
-    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-    last = log -1 HEAD
-    lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' --abbrev-commit --date=relative
-    lt = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --abbrev-commit --date=relative --tags
-    mo = merge origin/master
-    pr = pull --rebase
-    pu = push
-    re = rebase
-    st = status
+	br = branch
+	cb = rev-parse --abbrev-ref HEAD
+	ci = commit
+	co = checkout
+	dh = difftool -y --extcmd=\"vim -d -o\"
+	dump = cat-file -p
+	di = difftool -y --extcmd=\"$GITHUB/icdiff/icdiff --line-numbers\"
+	dv = difftool -y --extcmd=\"vim -d -O\"
+	dw = diff --word-diff
+	dr = rerere diff
+	dy = difftool -y --extcmd=\"$JAB/bin/pydiff\"
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	last = log -1 HEAD
+	lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' --abbrev-commit --date=relative
+	lt = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --abbrev-commit --date=relative --tags
+	mo = merge origin/master
+	pr = pull --rebase
+	pu = push
+	re = rebase
+	st = status
 [push]
 	default = simple
 [merge]
-    tool = vimdiff
+	tool = vimdiff
 [color]
-    ui = auto
+	ui = auto
 [help]
-    autocorrect = 1
+	autocorrect = 1
 [github]
-    user = jalanb
+	user = jalanb
 [pager]
-    diff =
+	diff =
 [core]
-    editor = vim
-    excludesfile = ~/.gitignore_global
-    trustctime = false
+	editor = vim
+	excludesfile = ~/.gitignore_global
+	trustctime = false
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
-    enabled = true
+	enabled = true
 #[https]
-    #proxy = http://$proxy_url:$proxy_port/
+	#proxy = http://$proxy_url:$proxy_port/
 #[http]
-    #proxy = http://$proxy_url:$proxy_port/
+	#proxy = http://$proxy_url:$proxy_port/
 
