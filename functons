@@ -862,6 +862,10 @@ tel () {
     fi
 }
 
+tma () {
+    tmux new-session -A -s jabtmux
+}
+
 tmp () {
     pushd $(mython $KD_DIR/kd.py ~/tmp "$@")
 }
