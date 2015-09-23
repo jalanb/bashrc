@@ -328,11 +328,11 @@ _has_git_changes () {
 # xxxxxxxxxxxxxxxxx
 
 git_simple_status () {
-    _has_git_changes $1 || return
-    local git_dir=$(git_root $1)
-    [[ -n $git_dir ]] && git_dir=$(git_root $1)
     git -C "$git_dir" status -s 2 > /dev/null
     # | grep "$_git_status_regexp"
+    local arg_dir=${1:-$PWD}
+    _has_git_changes $arg_dir || return
+    local git_dir=$(git_root $arg_dir)
 }
 
 _show_git_time_log () {
