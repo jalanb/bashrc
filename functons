@@ -224,6 +224,10 @@ ff () {
     find $dir -type f -name $name "$@"
 }
 
+fl () {
+    freds | tr ' ' '\n'
+}
+
 fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then
@@ -504,7 +508,7 @@ vf () {
 
 vhist () {
     local __doc__="edit unplugged stuff from history"
-    _tease_history | [[ -n $* ]] && vim - +/"$@" 
+    _tease_history | [[ -n $* ]] && vim - +/"$@"
 }
 
 vh () {
@@ -562,17 +566,6 @@ add () {
     echo $(($1 + $2))
 }
 
-cff () {
-    if [[ ! -d fred ]]; then
-        if [[ -e fred ]]; then
-            rm -f fred
-        fi
-        mkdir fred
-    fi
-    cd fred
-}
-
-
 cjy () {
     kd $JAB_PYTHON "$@"
 }
@@ -620,37 +613,23 @@ fgt () {
     fgv *.test *.tests "$@"
 }
 
+fll () {
+    $(freds -l)
+}
+
 fsh () {
-# run fred by his extension
-    if [ -f fred.sh ]; then bash fred.sh "$@"
-    elif [ -f fred.py ]; then p fred.py "$@"
-    elif [ -f ~/tmp/fred.sh ]; then bash ~/tmp/fred.sh "$@"
-    elif [ -f ~/tmp/fred.py ]; then p ~/tmp/fred.py "$@"
-    elif [ -f "fred.test" ]; then try "fred.test" "$@"
-    elif [ -f fred.c ]; then
-        /bin/rm -vf a.out
-        gcc fred.c
-        [ -f a.out ] && ./a.out
-    else bash fred "$@"
-    fi
+# run fred.sh if it exists here or in ~/tmp
+    $(freds -s "$@")
 }
 
 fpu () {
 # debug fred.py if it exists here or in ~/tmp
-    if [ -f fred.py ]; then
-        pudb fred.py "$@"
-    elif [[ -f ~/tmp/fred.py ]]; then
-        pudb ~/tmp/fred.py "$@"
-    fi
+    $(freds -d "$@")
 }
 
 fpy () {
 # run fred.py if it exists here or in ~/tmp
-    if [ -f fred.py ]; then
-        p fred.py "$@"
-    elif [[ -f ~/tmp/fred.py ]]; then
-        p ~/tmp/fred.py "$@"
-    fi
+    $(freds -p "$@")
 }
 
 ght () {
@@ -824,13 +803,11 @@ ps3 () {
 }
 
 rff () {
-    r fred
-    r fred.*
+    $(freds -r "$@")
 }
 
 rfq () {
-    rq fred
-    rq fred.*
+    rff >/dev/null 2>&1
 }
 
 rq. () {
@@ -916,7 +893,7 @@ vlo () {
 }
 
 vff () {
-    $($PYTHON $JAB_PYTHON/vff.py "$@")
+    $(freds -e "$@")
 }
 
 vpe () {
@@ -1118,10 +1095,10 @@ range () {
 }
 
 taocl() {
-    curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md | 
-    pandoc -f markdown -t html | 
-    xmlstarlet fo --html --dropdtd | 
-    xmlstarlet sel -t -v "(html/body/ul/li[count(p)>0])[$RANDOM mod last()+1]" | 
+    curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md |
+    pandoc -f markdown -t html |
+    xmlstarlet fo --html --dropdtd |
+    xmlstarlet sel -t -v "(html/body/ul/li[count(p)>0])[$RANDOM mod last()+1]" |
     xmlstarlet unesc | fmt -80
 }
 
@@ -1180,7 +1157,7 @@ run_as () {
 # xxxxxxx
 
 has_ext () {
-  test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | hd1)
+    test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | hd1)
 }
 
 

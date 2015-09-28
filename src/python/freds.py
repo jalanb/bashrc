@@ -1,4 +1,4 @@
-"""This module supplies names of temporary fred files
+"""This script handles fred files
 
 "If in doubt, name it Fred"
 """
@@ -11,7 +11,6 @@ import argparse
 from bdb import BdbQuit
 
 
-from sh import ls
 from dotsite.paths import makepath
 
 
@@ -50,21 +49,34 @@ def parse_args(methods):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('directories', metavar='items', type=str, nargs='*',
                         help='Only look for fred files in these directories')
+    parser.add_argument('-d', '--debug', action='store_true',
+                        help='Debug the first fred.py with pudb')
+    parser.add_argument('-e', '--edit', action='store_true',
+                        help='Edit the freds with vim')
     parser.add_argument('-l', '--list', action='store_true',
                         help='Use long listing')
+    parser.add_argument('-r', '--remove', action='store_true',
+                        help='Remove the freds')
+    parser.add_argument('-p', '--python', action='store_true',
+                        help='Run the first fred.py script')
+    parser.add_argument('-s', '--shell', action='store_true',
+                        help='Run the first fred.sh script')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
-                        help='Run the script with pdb (or pudb if available)')
+                        help='Run this script with pdb (or pudb if available)')
     args = parser.parse_args()
     run_args(args, methods)
     return args
 
 
+def dirs():
+    return ('.', '~/tmp', '/tmp')
+
+
 def freds():
-    dirs = ('.', '~/tmp', '/tmp')
-    exts = ('py', 'sh', 'txt')
-    return [str('%s/fred.%s' % (d,e)) for d in dirs for e in exts]
+    exts = ('', '.py', '.sh', '.txt')
+    return [str('%s/fred%s' % (d,e)) for d in dirs() for e in exts]
 
 
 def paths():
@@ -83,16 +95,55 @@ def insubstantial():
     return [_ for _ in files() if not _.size]
 
 
-def purge_insubstial():
+def purge_insubstantial():
     [_.remove() for _ in insubstantial()]
 
 
+def as_path(fred):
+    string = str(fred)
+    if not ' ' in string:
+        return string
+    return '"%s"' % string
+
+
+def as_paths(freds):
+    return [as_path(_) for _ in freds]
+
+
 def script(args):
-    for fred in files():
-        if args.list:
-            print(ls(fred, '-l'))
-        else:
-            print(fred)
+    purge_insubstantial()
+    command = 'ls'
+    if args.directories:
+        global dirs
+        dirs = lambda : args.directories
+    freds = substantial()
+    if args.debug:
+        freds = [_ for _ in freds if _.ext == '.py'][:1]
+        if not freds:
+            raise ScriptError('No pythonic freds found')
+        command = 'mython -m pudb'
+    elif args.list:
+        command = 'ls -l'
+    elif args.edit:
+        command = 'vim -p'
+    elif args.remove:
+        command = 'rm -vrf'
+    elif args.python:
+        freds = [_ for _ in freds if _.ext == '.py'][:1]
+        if not freds:
+            raise ScriptError('No pythonic freds found')
+        command = 'mython'
+    elif args.shell:
+        freds = [_ for _ in freds if _.ext == '.sh'][:1]
+        if not freds:
+            raise ScriptError('No bashable freds found')
+        command = 'bash -x'
+    else:
+        print(' '.join(freds))
+        return True
+    if not freds:
+        raise ScriptError('No freds found')
+    print('%s %s' % (command, ' '.join(as_paths(freds))))
     return True
 
 
@@ -105,6 +156,9 @@ def main():
         pass
     except SystemExit as e:
         return e.code
+    except ScriptError as e:
+        print(e, sys.stderr)
+        return not os.EX_OK
     except Exception, e:  # pylint: disable=broad-except
         if __version__[0] < '1':
             raise
