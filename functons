@@ -1087,6 +1087,10 @@ detab () {
     fi
 }
 
+freds () {
+    mython $JAB_PYTHON/freds.py "$@"
+}
+
 LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }

@@ -42,6 +42,7 @@ pip_install_modules () {
     $HOME/bin/pip install virtualenv
     $HOME/bin/pip install virtualenvwrapper
     $HOME/bin/pip install ansible
+    $HOME/bin/pip install sh
 }
 
 main () {

@@ -1,5 +1,8 @@
-#! /usr/bin/env python2
-"""Script to """
+"""This module supplies names of temporary fred files
+
+"If in doubt, name it Fred"
+"""
+
 
 from __future__ import print_function
 import os
@@ -8,8 +11,8 @@ import argparse
 from bdb import BdbQuit
 
 
-from dotsite.paths import makepath, pwd
-import freds
+from sh import ls
+from dotsite.paths import makepath
 
 
 __version__ = '0.1.0'
@@ -45,8 +48,10 @@ def Use_debugger(_args):
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('items', metavar='items', type=str, nargs='*',
-                        help='some items')
+    parser.add_argument('directories', metavar='items', type=str, nargs='*',
+                        help='Only look for fred files in these directories')
+    parser.add_argument('-l', '--list', action='store_true',
+                        help='Use long listing')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
@@ -56,26 +61,38 @@ def parse_args(methods):
     return args
 
 
-def get_freds(paths):
-    if not paths:
-        freds.purge_insubstial()
-        result = freds.substantial()
-    else:
-        result = set()
-        for path in paths:
-            path = makepath(path)
-            if path.isdir():
-                result |= {p for p in path.files('fred*') if p[-1] != '~'}
-            elif path.isfile() and path.name.startswith('fred'):
-                result.add(path)
-    return [pwd().relpathto(p) for p in result]
+def freds():
+    dirs = ('.', '~/tmp', '/tmp')
+    exts = ('py', 'sh', 'txt')
+    return [str('%s/fred.%s' % (d,e)) for d in dirs for e in exts]
+
+
+def paths():
+    return [makepath(_) for _ in freds()]
+
+
+def files():
+    return [_ for _ in paths() if _.isfile()]
+
+
+def substantial():
+    return [_ for _ in files() if _.size]
+
+
+def insubstantial():
+    return [_ for _ in files() if not _.size]
+
+
+def purge_insubstial():
+    [_.remove() for _ in insubstantial()]
 
 
 def script(args):
-    freds = get_freds(args.items)
-    if not freds:
-        return False
-    print('v %s' % ' '.join(freds))
+    for fred in files():
+        if args.list:
+            print(ls(fred, '-l'))
+        else:
+            print(fred)
     return True
 
 
