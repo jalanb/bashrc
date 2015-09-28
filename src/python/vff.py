@@ -57,7 +57,9 @@ def parse_args(methods):
 
 def get_freds(paths):
     if not paths:
-        result = [makepath('~/tmp/fred.%s' % _) for _ in ['py', 'sh', 'txt']]
+        dirs = ('.', '~/tmp', '/tmp')
+        exts = ('py', 'sh', 'txt')
+        result = [makepath('%s/fred.%s' % (d,e)) for d in dirs for e in exts]
         [_.remove() for _ in result if _.isfile() and not _.size]
         existing = [_ for _ in result if _.isfile()]
         if existing:
