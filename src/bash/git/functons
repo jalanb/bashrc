@@ -290,7 +290,9 @@ _do_git_status () {
 # xxxxxxxxxxxxxx
 
 show_git_time () {
-    git_dir=$(git_root ${1:-$PWD})
+    local _arg_dir="${1:-$PWD}"
+    git_dir=$(git_root "$_arg_dir")
+    [[ $git_dir == $_arg_dir ]] && _arg_dir=
     [[ -n $git_dir ]] || return 1
     local _log=
     local period=
@@ -298,10 +300,10 @@ show_git_time () {
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
         regexp=$period.ago
-        _log=$(_show_git_time_log $regexp)
+        _log=$(_show_git_time_log $regexp $_arg_dir)
         if [[ -n $_log ]]; then
-            period_lines=$(_show_git_time_log $regexp | wc -l)
-            _show_git_time_log $regexp | _recognise_my_git_user | sed -e "s/ ago//" | head -n $lines_left
+            period_lines=$(_show_git_time_log $regexp $_arg_dir | wc -l)
+            _show_git_time_log $regexp $_arg_dir | _recognise_my_git_user | sed -e "s/ ago//" | head -n $lines_left
             [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
@@ -335,7 +337,11 @@ git_simple_status () {
 }
 
 _show_git_time_log () {
-    git -C $git_dir lg 2> /dev/null | grep $1
+    if [[ -z $2 ]]; then
+        git -C $git_dir lg 2> /dev/null | grep $1
+    else
+        git lg "$2" 2> /dev/null | grep $1
+    fi
 }
 
 _show_run_storage () {
