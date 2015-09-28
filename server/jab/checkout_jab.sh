@@ -73,6 +73,7 @@ link_dots () {
 	link_to_home etc/ackrc
 	link_to_home etc/gitconfig
 	link_to_home etc/gitignore_global
+	link_to_home etc/tmux
 	link_to_ipython config_helper_functions.py
 	link_to_ipython ipy_user_conf.py
 	link_to_ipython ipythonrc

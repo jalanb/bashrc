@@ -1,4 +1,43 @@
-set -g prefix C-a
-unbind C-b
-bind C-a send-prefix
-# set -g status-position top
+#
+# Configuration file for tmux
+#
+
+# if run as "tmux attach", create a session if one does not already exist
+# new-session -n $HOST
+
+###########################################################################
+# Basics
+###########################################################################
+#
+# Change the prefix key to the closest key to <ctrl>
+set-option -g prefix C-a
+
+# Start counting windows at 1 (do not make me go right to go left!)
+set -g base-index 1
+
+# Put the status bar at top, like most other programs
+set-option -g status-position top
+
+###########################################################################
+# Configuration
+###########################################################################
+
+# Re-read this file
+bind R source-file ~/.tmux.conf
+###########################################################################
+# Mouse mode
+###########################################################################
+
+# Start with a "normal" mouse
+set -g mode-mouse off
+
+# Allow mouse to interact with panes / windows
+set -g mouse-resize-pane off
+set -g mouse-select-pane off
+set -g mouse-select-window off
+
+# Toggle mouse on/off 
+bind m if-shell '[[ $(tmux show-options -qgv mouse-select-window) == off ]]' \
+    'set -g mode-mouse on; set -g mouse-resize-pane on; set -g mouse-select-pane on; set -g mouse-select-window on' \
+    'set -g mode-mouse off; set -g mouse-resize-pane off; set -g mouse-select-pane off; set -g mouse-select-window off'
+
