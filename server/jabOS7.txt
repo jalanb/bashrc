@@ -1,15 +1,6 @@
 # visudo
 sudo timedatectl set-timezone Europe/Dublin
 # ps -ef | grep yum  .... kill -9
-sudo yum -y update
-sudo yum -y install ntp
-sudo systemctl start ntpd
-sudo systemctl enable ntpd
-cd ~/Downloads
-wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
-sudo rpm -Uvh rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
-wget http://dag.wieers.com/rpm/packages/RPM-GPG-KEY.dag.txt
-sudo rpm --import RPM-GPG-KEY.dag.txt
 
 # Install git
 sudo yum -y groupinstall "Development Tools"
