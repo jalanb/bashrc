@@ -1,5 +1,25 @@
 #! /bin/bash
 
+set -e
+
+SCRATCH=/tmp/Downloads
+
+set_up () {
+	trap tear_down EXIT
+	if [[ -d ${SCRATCH} ]]; then
+		 rm -rf ${SCRATCH}/*
+	else
+		 mkdir ${SCRATCH}
+	fi
+	cd ${SCRATCH}
+}
+
+tear_down () {
+	if [[ -d ${SCRATCH} ]]; then
+		rm -rf ${SCRATCH}
+	fi
+}
+
 get_pandemic () {
 	wget --no-check-certificate https://github.com/jwcxz/vim-pandemic/archive/master.zip
 	mv master.zip vim-pandemic-master.zip
@@ -24,18 +44,12 @@ update_pandemic () {
 	$PANDEMIC list | sed -e "s/:.*//" | xargs env GIT_SSL_NO_VERIFY=true $PANDEMIC update
 }
 
-cleanup () {
-	cd $START_HERE
-	test -d vim-pandemic-master && rm -rf vim-pandemic-master
-	test -f vim-pandemic-master.zip && rm -f vim-pandemic-master.zip
-}
-
 main () {
-	START_HERE=$PWD
 	get_pandemic
 	make_pandemic
 	update_pandemic
 }
 
-trap cleanup EXIT
-main $*
+set_up
+main
+tear_down
