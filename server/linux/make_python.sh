@@ -33,16 +33,25 @@ install_home_python () {
 }
 
 install_home_pip () {
-    wget https://bootstrap.pypa.io/get-pip.py | $HOME/bin/python
+    wget https://bootstrap.pypa.io/get-pip.py
+    $HOME/bin/python get-pip.py --user
+    rm -rf get-pip.py
 }
 
 pip_install_modules () {
-    $HOME/bin/pip install ipython
-    $HOME/bin/pip install pudb
-    $HOME/bin/pip install virtualenv
-    $HOME/bin/pip install virtualenvwrapper
-    $HOME/bin/pip install ansible
-    $HOME/bin/pip install sh
+    PIP=$HOME/bin/pip
+    [[ -x $PIP ]] || PIP=$HOME/.local/bin/pip
+    if [[ ! -x $PIP ]]; then
+        echo >&2 Cannot find pip
+        return 1
+    fi
+    $PIP install setuptools
+    $PIP install --user ipython
+    $PIP install --user pudb
+    $PIP install --user virtualenv
+    $PIP install --user virtualenvwrapper
+    $PIP install --user ansible
+    $PIP install --user sh
 }
 
 main () {
