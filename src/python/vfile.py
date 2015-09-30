@@ -1,5 +1,5 @@
 #! /usr/bin/env python2
-"""Script to make a vim command from a traceback line"""
+"""Script to make a Vim command from a traceback line"""
 
 
 from __future__ import print_function
@@ -58,7 +58,7 @@ def script(args):
     if not parsed:
         return False
     path, line_number = parsed
-    print('vim %s +%s' % (path, line_number))
+    print('Vim %s +%s' % (path, line_number))
     return True
 
 
