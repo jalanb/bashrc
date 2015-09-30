@@ -40,9 +40,12 @@ get_more_repositories () {
 yummy () {
     sudo yum update
     get_more_repositories
+    sudo yum update
     sudo yum upgrade
     install ctags sshfs openssh-server ansible
     install ntfs ntfsprogs ntp
+    install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
+    install VirtualBox-5.0
 }
 
 get_autocutsel () {
