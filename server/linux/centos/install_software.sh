@@ -2,11 +2,16 @@
 
 set -e
 
+install () {
+    sudo /usr/bin/yum -y -q install "$@"
+}
+
 yummy () {
     sudo yum update
     sudo yum upgrade
     # test -f guest_additions.sh && /bin/bash guest_additions.sh
-    sudo /usr/bin/yum -y -q install ctags sshfs openssh-server ansible
+    install ctags sshfs openssh-server ansible
+    install ntfs ntfsprogs
     curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
 }
 
