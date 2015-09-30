@@ -25,16 +25,13 @@ install () {
 }
 
 get_more_repositories () {
-    wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
-    sudo rpm -Uvh rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
-    wget http://dag.wieers.com/rpm/packages/RPM-GPG-KEY.dag.txt
-    sudo rpm --import RPM-GPG-KEY.dag.txt
-    rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-    rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
-    rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
-    cd /etc/yum.repos.d/
-    sudo wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-    cd $SCRATCH
+    sudo rpm --import http://dag.wieers.com/rpm/packages/RPM-GPG-KEY.dag.txt
+    sudo rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    sudo rpm -Uvh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+    sudo rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+    sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+    sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+    sudo wget -O /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
 }
 
 yummy () {
