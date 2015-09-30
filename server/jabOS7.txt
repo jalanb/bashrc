@@ -1,7 +1,7 @@
 # visudo
 sudo timedatectl set-timezone Europe/Dublin
 # ps -ef | grep yum  .... kill -9
-sudo yum update
+sudo yum -y update
 sudo yum -y install ntp
 sudo systemctl start ntpd
 sudo systemctl enable ntpd
@@ -23,6 +23,8 @@ cd git-${GIT_VERSION}
 make configure
 ./configure --prefix=/usr/local
 sudo make install
+
+sudo rm -rf ~/Downloads/*
 
 # Install dotjab
 
