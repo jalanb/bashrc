@@ -9,10 +9,8 @@ install () {
 yummy () {
     sudo yum update
     sudo yum upgrade
-    # test -f guest_additions.sh && /bin/bash guest_additions.sh
     install ctags sshfs openssh-server ansible
-    install ntfs ntfsprogs
-    curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
+    install ntfs ntfsprogs ntp
 }
 
 get_autocutsel () {
@@ -31,6 +29,15 @@ get_vagrant () {
     rm -rf vagrant_1.7.4_x86_64.rpm
 }
 
+get_ack () {
+    curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
+}
+
+services () {
+    sudo systemctl start ntpd
+    sudo systemctl enable ntpd
+}
+
 downloads () {
     local HERE=$(pwd)
     cd ~/Downloads
@@ -42,6 +49,7 @@ downloads () {
 
 main () {
     yummy
+    services
     downloads
 }
 
