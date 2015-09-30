@@ -2,6 +2,24 @@
 
 set -e
 
+SCRATCH=/tmp/Downloads
+
+set_up () {
+	trap tear_down EXIT
+	if [[ -d ${SCRATCH} ]]; then
+		 rm -rf ${SCRATCH}/*
+	else
+		 mkdir ${SCRATCH}
+	fi
+	cd ${SCRATCH}
+}
+
+tear_down () {
+	if [[ -d ${SCRATCH} ]]; then
+		sudo rm -rf ${SCRATCH}
+	fi
+}
+
 install () {
     sudo /usr/bin/yum -y -q install "$@"
 }
@@ -21,6 +39,7 @@ get_autocutsel () {
     ./configure
     make
     sudo make install
+    cd $SCRATCH
 }
 
 get_vagrant () {
@@ -36,15 +55,12 @@ get_ack () {
 services () {
     sudo systemctl start ntpd
     sudo systemctl enable ntpd
+    sudo service vboxdrv setup
 }
 
 downloads () {
-    local HERE=$(pwd)
-    cd ~/Downloads
     get_autocutsel
     get_vagrant
-    sudo rm -rf ~/Downloads/*
-    cd $HERE
 }
 
 main () {
@@ -53,4 +69,6 @@ main () {
     downloads
 }
 
+set_up
 main
+tear_down
