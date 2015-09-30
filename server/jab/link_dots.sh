@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 JAB=${JAB:-$HOME/src/git/hub/dotjab}
 
 link_to () {
@@ -30,6 +32,7 @@ link_to_config () {
 		fi
 	done
 }
+
 link_to_ipython () {
 	local parent=$HOME/.ipython
 	[ -d $parent ] || mkdir -p $parent 
@@ -46,6 +49,7 @@ link_to_home () {
 }
 
 main () {
+	[[ -d ~/.vim ]] && rm -rf ~/.vim
 	link_to_home vim
 	link_to_home vim/vimrc
 	link_to_home vim/gvimrc
