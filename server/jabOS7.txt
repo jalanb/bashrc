@@ -15,7 +15,7 @@ sudo rpm --import RPM-GPG-KEY.dag.txt
 sudo yum -y groupinstall "Development Tools"
 sudo yum -y install gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel curl-devel
 # For latest release see https://github.com/git/git/releases
-GIT_VERSION=2.5.2
+GIT_VERSION=2.6.0
 GITHUB=https://github.com
 wget $GITHUB/git/git/archive/v${GIT_VERSION}.tar.gz
 tar xvf v${GIT_VERSION}.tar.gz
@@ -29,11 +29,12 @@ sudo rm -rf ~/Downloads/*
 # Install dotjab
 
 GITHUB_DIR=~/src/git/hub
-mkdir -p $GITHUB_DIR
+test -d $GITHUB_DIR || mkdir -p $GITHUB_DIR
 cd $GITHUB_DIR
 
 GITHUB_JALANB=$GITHUB/jalanb
-git clone $GITHUB_JALANB/dotjab
+# If you are reading this then dotjab
+# git clone $GITHUB_JALANB/dotjab is already cloned
 git clone $GITHUB_JALANB/dotsite
 git clone $GITHUB_JALANB/what
 git clone $GITHUB_JALANB/kd
@@ -69,3 +70,4 @@ cd local
 
 cd $JAB/server/jab
 bash clean_directories.sh
+bash link_dots.sh

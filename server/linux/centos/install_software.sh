@@ -31,6 +31,7 @@ downloads () {
     cd ~/Downloads
     get_autocutsel
     get_vagrant
+    sudo rm -rf ~/Downloads/*
     cd $HERE
 }
 
