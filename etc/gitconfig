@@ -37,7 +37,7 @@
 [pager]
 	diff =
 [core]
-	editor = vim
+	editor = Vim
 	excludesfile = ~/.gitignore_global
 	trustctime = false
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere

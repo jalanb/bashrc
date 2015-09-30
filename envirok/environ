@@ -98,7 +98,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     else
         export WHICH=/usr/bin/which
     fi
-    export EDITOR=vim
+    export EDITOR=Vim
     export EMAIL="dotjab@al-got-rhythm.net"
 
     source_path $JAB/envirok/colour-environ

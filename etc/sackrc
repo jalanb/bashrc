@@ -2,7 +2,7 @@
 #
 # @author Sampson L. Chen (sampson-chen / slchen)
 # @date 2012-10-14
-# 
+#
 # @description
 # - Configuration file for sack
 
@@ -22,7 +22,7 @@ sack__dev_null=/dev/null
 sack__OS=$(uname)
 
 # @todo: add support for editors other than vim and emacs
-sack__default_editor=vim
+sack__default_editor=Vim
 
 # # # # # # sack profiles # # # # # #
 # (Note: do not edit the beacon tags)

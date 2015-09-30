@@ -214,7 +214,7 @@ gsv () {
         if echo $f | grep -q "^ M" ;then
             git dv $(echo $f | cut -dM -f2)
         elif echo $f | grep -q "^ A"; then
-            vim  $(echo $f | cut -dM -f2)
+            Vim  $(echo $f | cut -dM -f2)
         fi
     done
 }
