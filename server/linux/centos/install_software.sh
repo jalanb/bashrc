@@ -46,6 +46,8 @@ yummy () {
     install ntfs ntfsprogs ntp
     install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
     install VirtualBox-5.0
+    install fuse 
+    modprobe fuse
 }
 
 get_autocutsel () {
