@@ -24,8 +24,22 @@ install () {
     sudo /usr/bin/yum -y -q install "$@"
 }
 
+get_more_repositories () {
+    wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+    sudo rpm -Uvh rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+    wget http://dag.wieers.com/rpm/packages/RPM-GPG-KEY.dag.txt
+    sudo rpm --import RPM-GPG-KEY.dag.txt
+    rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+    rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+    rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+    cd /etc/yum.repos.d/
+    sudo wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+    cd $SCRATCH
+}
+
 yummy () {
     sudo yum update
+    get_more_repositories
     sudo yum upgrade
     install ctags sshfs openssh-server ansible
     install ntfs ntfsprogs ntp
