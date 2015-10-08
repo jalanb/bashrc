@@ -69,7 +69,7 @@ _remove_jab_tmp_files () {
 _show_todo () {
     builtin cd "$JAB_PYTHON"
     if python2.7 -c"a=0" >/dev/null 2>&1; then
-        test -f todo.py && python2.7 todo.py
+        test -f todo.py && mython todo.py
     else
         local version=$(mython -V 2>&1)
         echo "Python version is old ($version)"
