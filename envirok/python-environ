@@ -5,7 +5,7 @@ find_python () {
     test -n $PYTHON && PYTHON=
     test -f /usr/bin/python && PYTHON=/usr/bin/python
     test -f /usr/local/bin/python && PYTHON=/usr/local/bin/python
-    test -f ~/bin/python && PYTHON=~/bin/python
+    test -f $HOME/bin/python && PYTHON=$HOME/bin/python
     test -f $JAB/bin/python && PYTHON=$JAB/bin/python
     [[ -n $VIRTUAL_ENV && -f $VIRTUAL_ENV/bin/python ]] && PYTHON=$VIRTUAL_ENV/bin/python
     test -z $PYTHON && PYTHON=$(which python 2>/dev/null)
