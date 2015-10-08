@@ -40,7 +40,7 @@ yummy () {
     sudo yum update
     sudo yum upgrade
     install ctags sshfs openssh-server ansible
-    install ntfs ntfsprogs ntp
+    install ntfs ntfsprogs ntp libpcap-devel
     install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
     install VirtualBox-5.0
     install fuse 
@@ -68,6 +68,10 @@ get_ack () {
     curl http://beyondgrep.com/ack-2.14-single-file > ~/bin/ack && chmod 0755 ~/bin/ack
 }
 
+get_nethogs () {
+    rpm -ivh  http://cdn.kanachan.me.uk/dl/rpms/nethogs/nethogs-0.8.0-1.el6.x86_64.rpm
+}
+
 services () {
     sudo systemctl start ntpd
     sudo systemctl enable ntpd
@@ -77,6 +81,8 @@ services () {
 downloads () {
     get_autocutsel
     get_vagrant
+    get_ack
+    get_nethogs
 }
 
 main () {
