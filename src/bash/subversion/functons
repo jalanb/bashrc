@@ -54,7 +54,7 @@ sdv () {
 
 stv () {
     shift_dir "$@" && shift
-    svn stat $dir | sed -e "s/^ M/svd/" -e "s/^?? /Vim /"
+    svn stat $dir | sed -e "s/^ M/svd/" -e "s/^?? /vim /"
 }
 
 # xxxx
@@ -97,11 +97,11 @@ statvim () {
     local replacement="$1"
     shift
     if [[ -z "$1" ]]; then
-        do_stat | sed -e "s/^M/$replacement/" -e "s/^A/Vim/" -e"s/^?/r/"
+        do_stat | sed -e "s/^M/$replacement/" -e "s/^A/vim/" -e"s/^?/r/"
     else
         for file in "$@"
         do
-            do_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/Vim/"
+            do_stat $file | sed -e "s/^M/$replacement/" -e "s/^A/vim/"
         done
     fi | sort
 }

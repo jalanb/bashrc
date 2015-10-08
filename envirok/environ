@@ -85,8 +85,6 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     add_to_a_path PATH /opt/local/bin
     add_to_a_path PATH /sbin
 
-    add_to_a_path LD_LIBRARY_PATH $HOME/lib --start
-
     export PS1
 
     #
@@ -98,7 +96,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     else
         export WHICH=/usr/bin/which
     fi
-    export EDITOR=Vim
+    export EDITOR=vim
     export EMAIL="dotjab@al-got-rhythm.net"
 
     source_path $JAB/envirok/colour-environ

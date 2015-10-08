@@ -40,7 +40,7 @@ _edit_log () {
     if ! diff -q $_previous_log "$2"; then
         _differ="-do $_previous_log"
     fi
-    Vim $_differ $2 + +?"^[^+'].*"
+    vim $_differ $2 + +?"^[^+'].*"
     cd
     # KBSS: can discard the "- 2>/dev/null", in ~
 }

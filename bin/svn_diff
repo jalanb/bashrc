@@ -3,7 +3,7 @@
 set_symbols () {
     _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected;. $_actual
     PYDIFF=$JAB/src/github/pydiff
-    VIM_EDITOR=Vim
+    VIM_EDITOR=vim
     ARGS="$@"
 }
 

@@ -20,11 +20,11 @@ ga () {
 
 gc () {
     local _storage=/tmp/gc.sh
-	if [[ -z "$@" ]]; then git commit --verbose
-	else
+    if [[ -z "$@" ]]; then git commit --verbose
+    else
         mython -c "print 'git commit -m\"$*\"'" > $_storage
         _show_run_storage
-	fi
+    fi
     GIT_ADDED=
 }
 
@@ -38,7 +38,7 @@ gi () {
 
 gs () {
     shift_dir "$@" && shift
-	_do_git_status $dir "$@"
+    _do_git_status $dir "$@"
 }
 
 tc () {
@@ -71,11 +71,11 @@ gap () {
 gcj () {
     local _storage=/tmp/gcj.sh
     local GIT="git -C $JAB"
-	if [[ -z "$@" ]]; then $GIT commit --all --verbose
-	else
+    if [[ -z "$@" ]]; then $GIT commit --all --verbose
+    else
         mython -c "print '$GIT commit -m\"$*\"'" > $_storage
         _run_storage
-	fi
+    fi
 }
 
 gdi () {
@@ -150,7 +150,7 @@ gsd () {
     shift_dir "$@" && shift
     for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
     do
-        git dv $f     
+        git dv $f
     done
     STATUS_QUESTIONS=$(git -C $dir status -s | grep "??" | cut -d' ' -f2)
     [[ -n $STATUS_QUESTIONS ]] && v $STATUS_QUESTIONS
@@ -214,7 +214,7 @@ gsv () {
         if echo $f | grep -q "^ M" ;then
             git dv $(echo $f | cut -dM -f2)
         elif echo $f | grep -q "^ A"; then
-            Vim  $(echo $f | cut -dM -f2)
+            vim  $(echo $f | cut -dM -f2)
         fi
     done
 }
@@ -280,10 +280,10 @@ _status_chars () {
 }
 
 _do_git_status () {
-	local __doc__="get the status from git"
+    local __doc__="get the status from git"
     dir=$1; shift
-	[[ -z $dir ]] && dir=$PWD
-	# [[ -d ${dir}/.git ]] || return
+    [[ -z $dir ]] && dir=$PWD
+    # [[ -d ${dir}/.git ]] || return
     git -C $dir status "$@"
 }
 
@@ -313,10 +313,10 @@ show_git_time () {
 # xxxxxxxxxxxxxxx
 
 _any_git_changes () {
-	local __doc__="whether the current dir has modified or untacked files"
+    local __doc__="whether the current dir has modified or untacked files"
     local dir=$1
-	[[ -z $dir ]] && dir=$PWD
-	if [[ -d ${dir}/.git ]]; then
+    [[ -z $dir ]] && dir=$PWD
+    if [[ -d ${dir}/.git ]]; then
         git -C $dir status --porcelain | gre "$_git_status_regexp"
     fi
 }

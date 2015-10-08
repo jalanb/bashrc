@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# This script should find files under a directory and then edit them with Vim
+# This script should find files under a directory and then edit them with vim
 
 # Default - find . -name "*.py"
 #   Specify another directory, or other globs as args to this script
@@ -43,8 +43,8 @@ list () {
 }
 
 edit () {
-    echo Vim -p "$@" +/"$sought"
-    Vim -p "$@" +/"$sought"
+    echo vim -p "$@" +/"$sought"
+    vim -p "$@" +/"$sought"
 }
 
 main () {

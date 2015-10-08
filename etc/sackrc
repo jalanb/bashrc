@@ -22,7 +22,7 @@ sack__dev_null=/dev/null
 sack__OS=$(uname)
 
 # @todo: add support for editors other than vim and emacs
-sack__default_editor=Vim
+sack__default_editor=vim
 
 # # # # # # sack profiles # # # # # #
 # (Note: do not edit the beacon tags)

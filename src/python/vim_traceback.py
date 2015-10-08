@@ -54,7 +54,7 @@ def parse_line(string):
 
 def as_vim_command(lines):
     first, rest = lines[0], lines[1:]
-    command = 'Vim %s +%s' % first
+    command = 'vim %s +%s' % first
     args = [str('+"tabnew +%s %s"' % (line, file_)) for file_, line in rest]
     args.insert(0, command)
     return ' '.join(args)

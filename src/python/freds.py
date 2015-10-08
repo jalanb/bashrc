@@ -125,7 +125,7 @@ def script(args):
     elif args.list:
         command = 'ls -l'
     elif args.edit:
-        command = 'Vim -p'
+        command = 'vim -p'
     elif args.remove:
         command = 'rm -vrf'
     elif args.python:

@@ -243,7 +243,7 @@ fv () {
             echo "$@" not found
         else
             echo $files | tr ' ' '\n' | sed -e "s:^\./::"
-            Vim -p $files
+            vim -p $files
         fi
     fi
 }
@@ -252,15 +252,15 @@ gg () {
     local readme="show grep results as vim commands"
     sought="$1"
     shift
-    grep "$sought" "$@" | sed -e "s/^/Vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+    grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
 gp () {
-    local __doc__="grep in python files under here, show results as Vim commands"
+    local __doc__="grep in python files under here, show results as vim commands"
     sought=$1
     shift
     seek=${sought//\\/\\\\}
-    find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):Vim \1 +/\"$seek\":" | sort | uniq
+    find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):vim \1 +/\"$seek\":" | sort | uniq
 }
 
 gh () {
@@ -284,7 +284,7 @@ hd () {
 }
 
 hv () {
-    history | Vim - +
+    history | vim - +
 }
 
 jj () {
@@ -513,20 +513,20 @@ vf () {
 
 vhist () {
     local __doc__="edit unplugged stuff from history"
-    _tease_history | [[ -n $* ]] && Vim - +/"$@"
+    _tease_history | [[ -n $* ]] && vim - +/"$@"
 }
 
 vh () {
     local __doc__="edit stuff from history"
     if [[ -n $* ]]; then
-        _strip_history | Vim - +/"$@"
+        _strip_history | vim - +/"$@"
     else
-        _strip_history | Vim - +
+        _strip_history | vim - +
     fi
 }
 
 vi () {
-    Vim ~/.inputrc +/Key.bindings
+    vim ~/.inputrc +/Key.bindings
 }
 
 vj () {
@@ -541,7 +541,7 @@ vp () {
 }
 
 vv () {
-    [[ -n $* ]] && Vim $JAB/vim/$1 || v ~/.vimrc
+    [[ -n $* ]] && vim $JAB/vim/$1 || v ~/.vimrc
 }
 
 vy () {
@@ -643,7 +643,7 @@ ght () {
 
 ghv () {
     local __doc__="edit stuff from history"
-    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | Vim - +/"$@"
+    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
 gre () {
@@ -802,8 +802,8 @@ pyl () {
 
 ps3 () {
     if [[ -z "$@" ]]; then
-        ps axf | Vim - +
-    else ps axf | Vim - +/"$*"
+        ps axf | vim - +
+    else ps axf | vim - +/"$*"
     fi
 }
 
@@ -860,7 +860,7 @@ try () {
 }
 
 vaf () {
-    Vim -p $JAB/aliases $JAB/functons
+    vim -p $JAB/aliases $JAB/functons
     source_path $JAB/aliases
     source_path $JAB/functons
 }
@@ -870,7 +870,7 @@ vat () {
 }
 
 vbl () {
-    Vim $(ls -rt1 $JAB/log/*bashrc*.log | tail -n 1) + +?"^++ "
+    vim $(ls -rt1 $JAB/log/*bashrc*.log | tail -n 1) + +?"^++ "
 }
 
 vib () {
@@ -878,7 +878,7 @@ vib () {
 }
 
 vin () {
-    Vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
+    vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
 }
 
 vla () {
@@ -1030,7 +1030,7 @@ Tree () {
 }
 
 vibb () {
-    Vim -p ~/.bashrc $JAB/bashrc
+    vim -p ~/.bashrc $JAB/bashrc
 }
 
 # xxxxx

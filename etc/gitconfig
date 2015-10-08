@@ -8,10 +8,10 @@
     cb = rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
-    dh = difftool -y --extcmd=\"Vim -d -o\"
+    dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
     di = difftool -y --extcmd=\"$GITHUB/icdiff/icdiff --line-numbers\"
-    dv = difftool -y --extcmd=\"Vim -d -O\"
+    dv = difftool -y --extcmd=\"vim -d -O\"
     dw = diff --word-diff
     dr = rerere diff
     dy = difftool -y --extcmd=\"$JAB/bin/pydiff\"
@@ -37,7 +37,7 @@
 [pager]
     diff =
 [core]
-    editor = Vim
+    editor = vim
     excludesfile = ~/.gitignore_global
     trustctime = false
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere

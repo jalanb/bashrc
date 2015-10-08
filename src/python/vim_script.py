@@ -23,7 +23,7 @@ def path_to_editor():
     True
     """
     editor = os.environ.get('EDITOR', 'vim')
-    if os.path.basename(editor) not in ['vim', 'gvim', 'Vim']:
+    if os.path.basename(editor) not in ['vim', 'gvim']:
         raise NotImplementedError(
             '%s can not work with %s' % (__file__, editor))
     return editor
@@ -35,7 +35,7 @@ class VimBashScript(object):
         self.lines = [
             '#! /bin/bash -x',
             '',
-            'VIM_EDITOR="Vim"',
+            'VIM_EDITOR="vim"',
             'source $(dirname $(readlink -f $BASH_SOURCE))/vim_functions.sh',
         ]
 
@@ -375,7 +375,7 @@ def _main_options(text_files, options):
 
 
 def _main_command(executable, text_files, options):
-    """Make a Vim command for those files and options"""
+    """Make a vim command for those files and options"""
     command_words = [executable]
     command_words.extend(quotes(text_files))
     command_words.extend(options)
