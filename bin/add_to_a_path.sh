@@ -44,15 +44,18 @@ add_to_a_path () {
     fi
 }
 
+_git_root () {
+    local __doc__="Find root od git repo a file is in"
+    (cd $(dirname $1); git rev-parse --show-toplevel)
+}
+
 _run_script () {
     # This function can get called before PATHs are set up
     # If they are set up: use them
     # Else: try sensible defaults around knowing that this script exists
 
-    local jab_parent=$(echo $BASH_SOURCE | sed -e "s/jab.*/jab/")
-    local jab=${JAB:-$jab_parent}
-    local jab_src_python=$jab/src/python
-    local jab_python=${JAB_PYTHON:-$jab_src_python}
+    local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
+    local jab_python="${JAB_PYTHON:-${jab}/src/python}"
     local script=$jab_python/add_to_a_path.py
     if [[ -f $script ]]; then
         if [[ -x $HOME/bin/python ]]; then
