@@ -55,17 +55,20 @@ _run_script () {
     local jab_python=${JAB_PYTHON:-$jab_src_python}
     local script=$jab_python/add_to_a_path.py
     if [[ -f $script ]]; then
-        local mython=~/bin/python
-        [[ -x $mython ]] || mython=/usr/local/bin/python
-        [[ -x $mython ]] || mython=/usr/bin/python
-        local executable=${PYTHON:-$mython}
-        local old_pythonpath=$PYTHONPATH
-        local old_library_path=$LD_LIBRARY_PATH
-        [[ $PYTHONPATH =~ $jab ]] || export PYTHONPATH=$jab_python/site
-        [[ $LD_LIBRARY_PATH =~ $HOME/lib ]] || export LD_LIBRARY_PATH=$HOME/lib
-        $executable $jab_python/add_to_a_path.py "$@"
-        export PYTHONPATH=$old_pythonpath
-        export LD_LIBRARY_PATH=$old_library_path
+        if [[ -x $HOME/bin/python ]]; then
+            $HOME/bin/python $script "$@"
+        else
+            if [[ -x $PYTHON ]]; then
+                $PYTHON $script "$@"
+            elif [[ -x /usr/local/bin/python ]]; then
+                /usr/local/bin/python $script "$@"
+            elif [[ -x /usr/bin/python ]]; then
+                /usr/bin/python $script "$@"
+            else
+                echo "Could not find python" >&2
+                return 1
+            fi
+        fi
     else
         echo $script is not a file >&2
         [[ ! -d $jab_python ]] && echo $jab_python is not a dir >&2
