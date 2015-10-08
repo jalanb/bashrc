@@ -1136,7 +1136,7 @@ please () {
 }
 
 mython () {
-    local executable=$HOME/bin/python2.7
+    local executable=$HOME/bin/python
     test -x $executable || executable=/usr/local/bin/python
     test -x $executable || executable=/usr/bin/python
     test -x $executable && $executable "$@"
