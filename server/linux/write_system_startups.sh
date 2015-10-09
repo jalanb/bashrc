@@ -64,7 +64,7 @@ if [ -d /etc/profile.d ]; then
 	echo Welcome to /etc/profile.d/
 	for i in /etc/profile.d/*.sh
 	do
-		test -f \$i && source \$i
+		[[ -f "\$i" ]] && source \$i
 	done
 	unset i
 	echo Bye from /etc/profile.d/
@@ -73,8 +73,8 @@ fi
 if [[ \$- == *i* ]]; then
 	if [ "\$BASH" ]; then
 		PS1='\u@\h:\w\$ '
-		test -f /etc/bashrc && source /etc/bashrc
-		test -f /etc/aliases && source /etc/aliases
+		[[ -f "/etc/bashrc" ]] && source /etc/bashrc
+		[[ -f "/etc/aliases" ]] && source /etc/aliases
 	else
 		[[ "`id -u`" -eq 0 ]] && PS1='# ' || PS1='$ '
 	fi

@@ -86,7 +86,7 @@ stat () {
 # xxxxxxx
 
 do_stat () {
-    test -n "$1" && path="$1" || path="."
+    [[ -n $1 ]] && path="$1" || path="."
     if [[ -f "$path" || -d "$path" ]]; then
         svn info "$path" > /dev/null && svn stat "$path"
     else echo \"$path\" is not a file, nor dir
@@ -120,7 +120,7 @@ svn_log () {
 }
 
 svn_url () {
-    test -n "$1" && dir=$1 || dir="."
+    [[ -n $1 ]] && dir=$1 || dir="."
     local URL=$(svn info $dir | grep URL)
     echo $URL
     SVN_URL=$(echo $URL| sed -e s/[^:]*://)
@@ -129,6 +129,6 @@ svn_url () {
 # xxxxxxxx
 
 svn_info () {
-    test -n "$1" && dir=$1 || dir="."
+    [[ -n $1 ]] && dir=$1 || dir="."
     svn info $dir
 }

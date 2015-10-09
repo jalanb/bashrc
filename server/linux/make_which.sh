@@ -22,7 +22,7 @@ tear_down () {
 }
 
 install_which () {
-	test -d ${SCRATCH} && rm -rf ${SCRATCH}
+	[[ -d "${SCRATCH}" ]] && rm -rf ${SCRATCH}
 	mkdir ${SCRATCH}
 	cd ${SCRATCH}
 

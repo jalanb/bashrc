@@ -2,12 +2,12 @@
 
 find_python () {
     [[ -n $PYTHON && -x $PYTHON ]] && return 0
-    test -n "$PYTHON" && PYTHON=
+    [[ -n $PYTHON ]] && PYTHON=
     MY_PATH=$JAB/bin:$HOME/bin:/usr/local/bin:/usr/bin
     [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
     PYTHON=$(PATH=$MY_PATH which python 2>/dev/null)
-    test -z "$PYTHON" && PYTHON=$(which python 2>/dev/null)
-    test -z "$PYTHON" && PYTHON=no_python
+    [[ -z $PYTHON ]] && PYTHON=$(which python 2>/dev/null)
+    [[ -z $PYTHON ]] && PYTHON=no_python
     export PYTHON
     [[ $PYTHON != no_python ]]
 }
@@ -15,7 +15,7 @@ find_python () {
 find_python
 
 _has_ext () {
-  test -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1)
+    [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
 }
 
 _has_py () {
@@ -43,5 +43,5 @@ _has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
 _has_py $JAB_PYTHON && add_to_a_path _SRC_PYTHON_PATH $JAB_PYTHON
 export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
 PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
-test -f "$PYTHON_HOME/pythonrc.py" && export PYTHONSTARTUP=$PYTHON_HOME/pythonrc.py
+[[ -f "$PYTHON_HOME/pythonrc.py" ]] && export PYTHONSTARTUP=$PYTHON_HOME/pythonrc.py
 export PYTHON_HOME

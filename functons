@@ -859,7 +859,7 @@ tmp () {
 unalias try > /dev/null 2>&1
 try () {
     TRY=$JAB_PYTHON/testing/try.py
-    test -f ./try.py && TRY=./try.py
+    [[ -f "./try.py" ]] && TRY=./try.py
     mython $TRY "$@"
 }
 
@@ -1163,7 +1163,7 @@ run_as () {
 # xxxxxxx
 
 has_ext () {
-    test -z $(ls ${2:-.}/*.$1 | grep -v -e fred -e log  | hd1)
+    [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | hd1) ]]
 }
 
 
@@ -1298,7 +1298,7 @@ vim_diff () {
 # xxxxxxxxxxxx
 
 blank_script () {
-    test -f $1 && return
+    [[ -f "$1" ]] && return
     echo "#! /bin/bash" > $1
     echo "" >> $1
 }
@@ -1441,7 +1441,7 @@ _edit_jab () {
     if [[ -z $JAB ]]; then
         echo \$JAB is empty >&2
     else
-        test -d "$JAB" || mkdir -p $JAB
+        [[ -d "$JAB" ]] || mkdir -p $JAB
         local filepath=$JAB/$1
         shift
         _edit_source $filepath "$@"
@@ -1450,15 +1450,15 @@ _edit_jab () {
 
 _edit_locals () {
     local local_dir=$JAB/local
-    test -d "$local_dir" || mkdir -p $local_dir
+    [[ -d "$local_dir" ]] || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }
 
 _divv_get_difference () {
     local source_gitignore=
-    test -f "$source_dir/.gitignore" && source_gitignore="--exclude-from=$source_dir/.gitignore"
+    [[ -f "$source_dir/.gitignore" ]] && source_gitignore="--exclude-from=$source_dir/.gitignore"
     local destination_gitignore=
-    test -f "$destination_dir/.gitignore" && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
+    [[ -f "$destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
     diff -q -r \
         --exclude=.svn \
         --exclude=.git \

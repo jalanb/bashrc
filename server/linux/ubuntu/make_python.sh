@@ -3,7 +3,7 @@
 set -e
 
 DOWN=/home/alanb/Downloads/Python
-test -d "$DOWN" && rm -rf $DOWN
+[[ -d "$DOWN" ]] && rm -rf $DOWN
 mkdir -p "$DOWN"
 cd $DOWN
 

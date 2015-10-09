@@ -24,7 +24,7 @@ source_path () {
 _get_source_path_from_what () {
     GITHUB=${GITHUB:-~/src/git/hub}
     local what_script=$(readlink -f $GITHUB/what/what.sh)
-    if test -f "$what_script"; then
+    if [[ -f "$what_script" ]]; then
         source "$what_script"
     else
         echo "$what_script is not a file" >&2
@@ -69,7 +69,7 @@ _remove_jab_tmp_files () {
 _show_todo () {
     builtin cd "$JAB_PYTHON"
     if python2.7 -c"a=0" >/dev/null 2>&1; then
-        test -f todo.py && mython todo.py
+        [[ -f "todo.py" ]] && mython todo.py
     else
         local version=$(mython -V 2>&1)
         echo "Python version is old ($version)"

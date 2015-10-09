@@ -1,19 +1,19 @@
 #! /bin/bash
 
 exit_without_directory () {
-    test -z $* && exit 1
+    [[ -z "$@" ]] && exit 1
     if [[ ! -d $1 ]]; then
         echo $1 is not a directory
-        test -f $1 && echo $1 is a file
+        [[ -f "$1" ]] && echo $1 is a file
         exit 1
     fi
 }
 
 exit_without_file () {
-    test -z $* && exit 1
+    [[ -z "$@" ]] && exit 1
     if [[ ! -f $1 ]]; then
         echo $1 is not a file
-        test -d $1 && echo $1 is a directory
+        [[ -d "$1" ]] && echo $1 is a directory
         exit 1
     fi
 }
@@ -54,8 +54,8 @@ set_paths () {
 }
 
 remove_old_figleaf_data () {
-    test -f "$FIGLEAF_DATA" || return
-    test -f "$1" || return
+    [[ -f "$FIGLEAF_DATA" ]] || return
+    [[ -f "$1" ]] || return
     local format="-f %m"
     /usr/bin/stat --help >/dev/null 2>&1 && format="--printf %Y"
     local stat_command="/usr/bin/stat $format "

@@ -6,7 +6,7 @@ cat > /root/.bash_profile << EOB
 echo Welcome to ~/.bash_profile
 
 # Get the aliases and functions
-test -f ~/.bashrc && source ~/.bashrc
+[[ -f "~/.bashrc" ]] && source ~/.bashrc
 
 # User specific environment and startup programs
 
@@ -28,14 +28,14 @@ cat > /root/.bashrc << EOB
 echo Welcome to ~/.bashrc
 
 JAB=${JAB:-$HOME/.jab}
-test -f "$JAB/envirok/colour-environ" && source $JAB/colour-environ
-test -f "$JAB/prompt" && source $JAB/prompt red
+[[ -f "$JAB/envirok/colour-environ" ]] && source $JAB/envirok/colour-environ
+[[ -f "$JAB/prompt" ]] && source $JAB/prompt red
 
 # enable color support of ls
-test -x /usr/bin/dircolors && eval "\$(dircolors -b)"
+[[ -x /usr/bin/dircolors ]] && eval "\$(dircolors -b)"
 
 # Alias definitions.
-test -f /root/.bash_aliases && source  /root/.bash_aliases
+[[ -f "/root/.bash_aliases" ]] && source  /root/.bash_aliases
 
 echo Bye from  ~/.bashrc
 EOB
