@@ -26,7 +26,7 @@ checkouts () {
     cd ..
     git clone $GITHUB_JALANB/what
     git clone $GITHUB_JALANB/kd
-    git clone $GITHUB_JALANB/viack
+    git clone $GITHUB_JALANB/ack2vim
     git clone $GITHUB/jeffkaufman/icdiff.git
 }
 

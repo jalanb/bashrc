@@ -48,7 +48,7 @@ _source_jab_scripts () {
         source_path "$JAB/$script" || continue
         source_path "$JAB_LOCAL/$script" || continue
     done
-    for script in kd/kd.sh viack/viack; do
+    for script in kd/kd.sh ack2vim/ack2vim; do
         source_path "$GITHUB"/$script
     done
 }
