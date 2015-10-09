@@ -113,7 +113,7 @@ alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
 alias slf="source $JAB/local/functons"
 alias slp="source $JAB/local/prompt"
-alias spe="source $JAB/python-environ"
+alias spe="source $JAB/envirok/python-environ"
 
 alias tra="try ~/alans_tests"
 
