@@ -138,6 +138,10 @@ gpu () {
     _gp push "$@"
 }
 
+gri () {
+    git rebase --interactive "$@"
+}
+
 grr () {
     _gp pull --rebase "$@"
 }
