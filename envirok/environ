@@ -5,7 +5,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     EX_BAD=1
 
     export JAB=${JAB:-$HOME/.jab}
-    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected; . $_actual
+    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected; . $_actual
 
     export COLUMNS
 
@@ -47,7 +47,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     export BITBUCKET
     [[ -d ~/src/git/hub ]] && GITHUB=~/src/git/hub || GITHUB=no_github
     export GITHUB
-    [[ -d $GITHUB/../jab ]] && GITJAB=$(readlink -f $GITHUB/../jab) || GITJAB=no_gitjab
+    [[ -d "$GITHUB/../jab" ]] && GITJAB=$(readlink -f $GITHUB/../jab) || GITJAB=no_gitjab
     export GITJAB
     source $GITHUB/what/what.sh
 

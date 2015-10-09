@@ -6,7 +6,7 @@ SCRATCH=/tmp/Downloads
 
 set_up () {
 	trap tear_down EXIT
-	if [[ -d ${SCRATCH} ]]; then
+	if [[ -d "${SCRATCH}" ]]; then
 		 rm -rf ${SCRATCH}/*
 	else
 		 mkdir ${SCRATCH}
@@ -15,7 +15,7 @@ set_up () {
 }
 
 tear_down () {
-	if [[ -d ${SCRATCH} ]]; then
+	if [[ -d "${SCRATCH}" ]]; then
 		rm -rf ${SCRATCH}
 	fi
 }
@@ -32,7 +32,7 @@ make_pandemic () {
 	sed -i -e "s|vim/bundle.remote|vim/bundle|" bin/pandemic
 	python2.7 setup.py install --prefix=$HOME
 	PANDEMIC=bin/pandemic
-	if [[ ! -f $PANDEMIC ]]; then
+	if [[ ! -f "$PANDEMIC" ]]; then
 		echo Installation of $PANDEMIC failed >&2
 		exit 1
 	else

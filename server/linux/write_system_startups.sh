@@ -9,7 +9,7 @@ echo Welcome to /etc/profile
 add_to_path () {
 	if ! echo \$PATH | /bin/egrep -q "(^|:)\$1(\$|:)"; then
 		if [[ -z \$PATH ]]; then PATH=\$1
-		elif [[ -n \$1 && -d \$1 ]] ;then
+		elif [[ -n "\$1" && -d "\$1" ]] ;then
 			if [[ "\$2" = "after" ]]; then PATH=\$PATH:\$1
 			else PATH=\$1:\$PATH
 			fi

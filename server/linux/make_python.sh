@@ -7,7 +7,7 @@ MINIMUM_VERSION=2.7.10
 
 set_up () {
     trap tear_down EXIT
-    if [[ -d ${SCRATCH} ]]; then
+    if [[ -d "${SCRATCH}" ]]; then
          rm -rf ${SCRATCH}/*
     else
          mkdir ${SCRATCH}
@@ -16,13 +16,13 @@ set_up () {
 }
 
 tear_down () {
-    if [[ -d ${SCRATCH} ]]; then
+    if [[ -d "${SCRATCH}" ]]; then
         rm -rf ${SCRATCH}
     fi
 }
 
 install_home_python () {
-    if [[ -f Python-${MINIMUM_VERSION}.tgz ]]; then
+    if [[ -f "Python-${MINIMUM_VERSION}.tgz" ]]; then
         cp ~/Downloads/Python-${MINIMUM_VERSION}.tgz .
     else
         wget http://www.python.org/ftp/python/${MINIMUM_VERSION}/Python-${MINIMUM_VERSION}.tgz
@@ -47,8 +47,8 @@ install_home_pip () {
 
 pip_install_modules () {
     PIP=$HOME/bin/pip
-    [[ -x $PIP ]] || PIP=$HOME/.local/bin/pip
-    if [[ ! -x $PIP ]]; then
+    [[ -x "$PIP" ]] || PIP=$HOME/.local/bin/pip
+    if [[ ! -x "$PIP" ]]; then
         echo >&2 Cannot find pip
         return 1
     fi

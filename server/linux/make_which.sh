@@ -7,7 +7,7 @@ MINIMUM_VERSION=2.21
 
 set_up () {
 	trap tear_down EXIT
-	if [[ -d ${SCRATCH} ]]; then
+	if [[ -d "${SCRATCH}" ]]; then
 		 rm -rf ${SCRATCH}/*
 	else
 		 mkdir ${SCRATCH}
@@ -16,7 +16,7 @@ set_up () {
 }
 
 tear_down () {
-	if [[ -d ${SCRATCH} ]]; then
+	if [[ -d "${SCRATCH}" ]]; then
 		rm -rf ${SCRATCH}
 	fi
 }

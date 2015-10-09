@@ -26,7 +26,7 @@ _run_script () {
     local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
     local jab_python="${JAB_PYTHON:-${jab}/src/python}"
     local script=$jab_python/add_to_a_path.py
-    if [[ -f $script ]]; then
+    if [[ -f "$script" ]]; then
         if _find_python; then
             $PYTHON $script "$@"
         else
@@ -35,7 +35,7 @@ _run_script () {
         fi
     else
         echo $script is not a file >&2
-        [[ ! -d $jab_python ]] && echo $jab_python is not a dir >&2
+        [[ ! -d "$jab_python" ]] && echo $jab_python is not a dir >&2
     fi
 }
 

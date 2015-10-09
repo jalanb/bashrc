@@ -74,7 +74,7 @@ v () {
         status=$?
         if [[ $status == 0 ]]; then
             if [[ -n $script ]]; then
-                if [[ -f $script ]]; then
+                if [[ -f "$script" ]]; then
                     bash $script
                     rm -rf $script
                 else
@@ -123,10 +123,10 @@ y () {
 }
 
 3y () {
-    if [[ -f $1 ]]; then
+    if [[ -f "$1" ]]; then
         dir=$(dirname $1)
         shift
-    elif [[ -d $1 ]]; then
+    elif [[ -d "$1" ]]; then
         dir=$1
         shift
     else
@@ -213,7 +213,7 @@ fc () {
     for path in $(find $dir -name $name -print)
     do
         echo cd $path
-        [[ -f $path ]] && builtin cd $(dirname $path) || builtin cd $path
+        [[ -f "$path" ]] && builtin cd $(dirname $path) || builtin cd $path
     done
 }
 
@@ -599,7 +599,7 @@ ddg () {
 }
 
 dev () {
-    if [[ -d ~/dev ]]; then
+    if [[ -d "~/dev" ]]; then
         echo ~/dev exists
         echo
         here=$PWD
@@ -609,7 +609,7 @@ dev () {
         echo You may wish to try
         echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
     fi
-    [[ ! -d ~/src ]] && mkdir ~/src
+    [[ ! -d "~/src" ]] && mkdir ~/src
     c ~/src "$@"
     ls
 }
@@ -783,7 +783,7 @@ pyi () {
         local has_dirs=
         for item in $(ls)
         do
-            if [[ -d $item ]]; then
+            if [[ -d "$item" ]]; then
                 has_dirs=1
                 break
             fi
@@ -1060,7 +1060,7 @@ clock () {
 }
 
 detab () {
-    if [[ -f $1 ]]; then
+    if [[ -f "$1" ]]; then
         if grep -Pq "^\s*\t\s*[^ \t]" $1; then
             expand -i --tabs=4 $1 > /tmp/txt
             mv /tmp/txt $1
@@ -1179,8 +1179,8 @@ jostname () {
 }
 
 maketest () {
-    local path=$1
-    if [[ ! -f $path ]]; then
+    local path="$1"
+    if [[ ! -f "$path" ]]; then
         echo $path is not a file >&2
         return 1
     fi
@@ -1189,12 +1189,12 @@ maketest () {
     local classname=$(mython -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
     local test_file=$(mython -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
-    if [[ -f $test_file ]]; then
+    if [[ -f "$test_file" ]]; then
         echo $test_file is already a file >&2
         return 1
     fi
     local test_dir=$(dirname $test_file)
-    [[ -d $test_dir ]] || mkdir -p $test_dir
+    [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB_PYTHON/test_.py > $test_file
 }
 

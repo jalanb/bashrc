@@ -12,7 +12,7 @@ link_to_config () {
 	for source_dir in $(find $JAB/etc/config -type d)
 	do
 		dest_dir=$(echo $source_dir | sed -e "s:$JAB/etc/config:$HOME/.config:")
-		[[ ! -e $dest_dir ]] && mkdir -p $dest_dir
+		[[ ! -e "$dest_dir" ]] && mkdir -p $dest_dir
 	done
 	for source_file in $(find $JAB/etc/config -type f)
 	do
@@ -22,11 +22,11 @@ link_to_config () {
 			if [[ $source_link != $source_file ]]; then
                 "$dest_link is linked to $source_link (not $source_file)" >&2
 			fi
-		elif [[ -e $dest_link ]]; then
+		elif [[ -e "$dest_link" ]]; then
             echo "$dest_link exists and is not a link" >&2
 		else
 			dest_dir=$(dirname $dest_link)
-			if [[ -d $dest_dir ]]; then ln -s $source_file $dest_link
+			if [[ -d "$dest_dir" ]]; then ln -s $source_file $dest_link
 			else echo "$dest_dir is not a directory (for $dest_link)" >&2
 			fi
 		fi
@@ -35,7 +35,7 @@ link_to_config () {
 
 link_to_ipython () {
 	local parent=$HOME/.ipython
-	[[ -d $parent ]] || mkdir -p $parent 
+	[[ -d "$parent" ]] || mkdir -p $parent 
 	link_to $JAB/ipython/$1 $parent/$1
 }
 
@@ -43,7 +43,7 @@ link_to_home () {
 	local from=$JAB/$1
     local to=$HOME/.$(basename $1)
     [[ -e "$to" ]] && rm -rf $to
-	if [[ -e $from ]]; then link_to $from $HOME/.$(basename $1)
+	if [[ -e "$from" ]]; then link_to $from $HOME/.$(basename $1)
 	else echo $from does not exist >&2
 	fi
 }

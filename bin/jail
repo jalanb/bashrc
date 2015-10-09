@@ -2,7 +2,7 @@
 
 exit_without_directory () {
     [[ -z "$@" ]] && exit 1
-    if [[ ! -d $1 ]]; then
+    if [[ ! -d "$1" ]]; then
         echo $1 is not a directory
         [[ -f "$1" ]] && echo $1 is a file
         exit 1
@@ -11,7 +11,7 @@ exit_without_directory () {
 
 exit_without_file () {
     [[ -z "$@" ]] && exit 1
-    if [[ ! -f $1 ]]; then
+    if [[ ! -f "$1" ]]; then
         echo $1 is not a file
         [[ -d "$1" ]] && echo $1 is a directory
         exit 1
@@ -22,11 +22,11 @@ set_paths () {
     export MAIL_SITE_DIRECTORY=$HOME/Sites/mail
     COVERAGE_DIRECTORY=$MAIL_SITE_DIRECTORY/coverage
 
-    if [[ ! -d $MAIL_SITE_DIRECTORY ]]; then
+    if [[ ! -d "$MAIL_SITE_DIRECTORY" ]]; then
         mkdir -p $MAIL_SITE_DIRECTORY
         touch $MAIL_SITE_DIRECTORY/index.html
     fi
-    [[ ! -d $COVERAGE_DIRECTORY ]] && mkdir -p $COVERAGE_DIRECTORY
+    [[ ! -d "$COVERAGE_DIRECTORY" ]] && mkdir -p $COVERAGE_DIRECTORY
 
     PYTHON=python
     ! $PYTHON -c "all([])" 2> /dev/null && PYTHON=python2.7

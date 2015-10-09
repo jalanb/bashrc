@@ -53,7 +53,7 @@ gaa () {
 
 gac () {
     local addable=.
-    if [[ -e $1 ]]; then
+    if [[ -e "$1" ]]; then
         addable=$1
         shift
     fi
@@ -238,7 +238,7 @@ gaic () {
 # xxxxxxx
 
 _show_git_here () {
-    [[ -d $PWD/.git ]] || return
+    [[ -d "$PWD/.git" ]] || return
     local days=${1:-5}
     local _log=$(git -C $PWD log -n 1)
     [[ $? ]] && git -C $PWD lg --since="$days days ago"
@@ -291,7 +291,7 @@ _do_git_status () {
     local __doc__="get the status from git"
     dir=$1; shift
     [[ -z $dir ]] && dir=$PWD
-    # [[ -d ${dir}/.git ]] || return
+    # [[ -d "${dir}/.git" ]] || return
     git -C $dir status "$@"
 }
 
@@ -324,7 +324,7 @@ _any_git_changes () {
     local __doc__="whether the current dir has modified or untacked files"
     local dir=$1
     [[ -z $dir ]] && dir=$PWD
-    if [[ -d ${dir}/.git ]]; then
+    if [[ -d "${dir}/.git" ]]; then
         git -C $dir status --porcelain | gre "$_git_status_regexp"
     fi
 }

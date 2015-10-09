@@ -1,7 +1,7 @@
 #! /bin/bash
 
 reuse_path () {
-    [[ -n $path && -d $path ]] && return 0
+    [[ -n $path && -d "$path" ]] && return 0
     shift_path "$@"
     return $?
 }
@@ -11,7 +11,7 @@ shift_path () {
     [[ -z "$*" ]] && return 0
     for p in "$@"
     do
-        if [[ -f $p || -d $p ]]; then
+        if [[ -f "$p" || -d "$p" ]]; then
             path=$(mython -c"import os; print os.path.realpath('$p')")
             return 0
         fi
@@ -20,7 +20,7 @@ shift_path () {
 }
 
 reuse_dir () {
-    [[ -n $dir && -d $dir ]] && return 0
+    [[ -n $dir && -d "$dir" ]] && return 0
     shift_dir "$@"
     return $?
 }
@@ -30,7 +30,7 @@ shift_dir () {
     [[ -z "$*" ]] && return 0
     for d in "$@"
     do
-        if [[ -d $d ]]; then
+        if [[ -d "$d" ]]; then
             dir=$(mython -c"import os; print os.path.realpath('$d')")
             return 0
         fi

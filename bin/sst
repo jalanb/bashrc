@@ -5,8 +5,8 @@
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
-_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected;. $_actual
-_expected=$JAB/functons; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected;. $_actual
+_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+_expected=$JAB/functons; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 
 usage () {
     if [[ $# < 2 ]]; then

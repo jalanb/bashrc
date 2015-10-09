@@ -3,8 +3,8 @@
 # Make gvim the default editor for text files in gnome
 
 DEFAULTS=/etc/gnome/defaults.list
-[[ -f $DEFAULTS ]] || DEFAULTS=/usr/share/applications/defaults.list
-if [[ -f $DEFAULTS ]]; then
+[[ -f "$DEFAULTS" ]] || DEFAULTS=/usr/share/applications/defaults.list
+if [[ -f "$DEFAULTS" ]]; then
 	sudo /bin/sed -i -e s/gedit/gvim/ $DEFAULTS
 /bin/cat > ~/.local/share/applications/defaults.list << EOF
 [Default Applications]

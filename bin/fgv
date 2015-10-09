@@ -16,7 +16,7 @@ extract_dir () {
             else
                 names="$names -o -name $arg"
             fi
-        elif [[ -d $arg && -z "$dir" ]]; then
+        elif [[ -d "$arg" && -z "$dir" ]]; then
             dir=$(mython -c"import os; print os.path.realpath(\"$arg\")")
         else
             [[ -z "$sought" ]] && sought=$arg || sought="$sought $arg"

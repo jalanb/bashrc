@@ -1,7 +1,7 @@
 #! /bin/bash
 
 find_python () {
-    [[ -n $PYTHON && -x $PYTHON ]] && return 0
+    [[ -n $PYTHON && -x "$PYTHON" ]] && return 0
     [[ -n $PYTHON ]] && PYTHON=
     MY_PATH=$JAB/bin:$HOME/bin:/usr/local/bin:/usr/bin
     [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
@@ -23,15 +23,15 @@ _has_py () {
 }
 
 _try="$_JAB_SRC_PYTHON_DIR/testing/try.py"
-[[ -f $_try ]] || _try=no_file_try_py
+[[ -f "$_try" ]] || _try=no_file_try_py
 export TRY=$_try
 
 _jab_src_python_dir=$JAB/src/python
-[[ -d $_jab_src_python_dir ]] || _jab_src_python_dir=no_dir_jab_src_python
+[[ -d "$_jab_src_python_dir" ]] || _jab_src_python_dir=no_dir_jab_src_python
 _home_src_python_dir=~/src/python
-[[ -d $_home_src_python_dir ]] || _home_src_python_dir=no_dir_home_src_python
+[[ -d "$_home_src_python_dir" ]] || _home_src_python_dir=no_dir_home_src_python
 
-_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected;source_path $_actual
+_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;source_path $_actual
 source_path $JAB/bin/add_to_a_path.sh
 
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH

@@ -18,7 +18,7 @@ _show_status () {
 
 source_path () {
     local __doc__='Local function in case cannot find the real one'
-    [[ -f $1 ]] && source "$@"
+    [[ -f "$1" ]] && source "$@"
 }
 
 _get_source_path_from_what () {
@@ -33,7 +33,7 @@ _get_source_path_from_what () {
 }
 
 _get_jab_environ () {
-    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected;source_path $_actual
+    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;source_path $_actual
 }
 
 _source_jab_scripts () {
@@ -57,7 +57,7 @@ _if_not_python_try_home_bin () {
     PYTHON=${PYTHON:-no_python}
     if [[ $PYTHON == no_python ]]; then
         local python_in_home=$HOME/bin/python
-        [[ -x $python_in_home ]] && PYTHON=$python_in_home
+        [[ -x "$python_in_home" ]] && PYTHON=$python_in_home
     fi
     export PYTHON
 }
@@ -101,7 +101,7 @@ _set_up_symbols () {
     if [[ $bash_jab_dir == $github_jab_dir ]]; then
         JAB=$github_jab_dir
     elif [[ $bash_jab_dir == $myhome_jab_dir ]]; then
-        if [[ -f $github_jab_dir/bashrc ]]; then
+        if [[ -f "$github_jab_dir/bashrc" ]]; then
             echo "Warn: Using $myhome_jab_dir/bashrc, while $github_jab_dir/bashrc exists" >&2
         fi
         JAB=$myhome_jab_dir
@@ -114,8 +114,8 @@ _set_up_symbols () {
         return 1
     fi
     JAB_LOCAL=${myhome_jab_dir}/local
-    [[ -d $JAB_LOCAL ]] || JAB_LOCAL=
-    [[ -z $JAB_LOCAL && -d $github_jab_dir/local ]] && JAB_LOCAL=$github_jab_dir/local
+    [[ -d "$JAB_LOCAL" ]] || JAB_LOCAL=
+    [[ -z $JAB_LOCAL && -d "$github_jab_dir/local" ]] && JAB_LOCAL=$github_jab_dir/local
     return 0
 }
 
@@ -136,7 +136,7 @@ _no_symbols () {
 
 run_interactively () {
     _set_up_symbols || _no_symbols
-    [[ -d $JAB ]] && _bashrc
+    [[ -d "$JAB" ]] && _bashrc
 }
 
 #set -x

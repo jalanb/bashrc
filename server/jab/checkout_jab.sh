@@ -8,12 +8,12 @@ checkout () {
 		echo please set \$JAB
 		return 1
 	fi
-	[[ -d $JAB ]] && return 0
+	[[ -d "$JAB" ]] && return 0
 	if [[ -z $JABS ]]; then
 		echo please set \$JABS
 		return 1
 	fi
-	if [[ ! -d $JAB ]]; then
+	if [[ ! -d "$JAB" ]]; then
 		git clone $JABS $JAB
 	fi
 }

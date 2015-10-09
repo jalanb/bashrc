@@ -22,7 +22,7 @@ get_repo_status () {
     PYTHON=${PYTHON:-mython}
     GIT_BRANCH=
     local significant_svn_status=$JAB_PYTHON_DIR/significant_svn_status.py
-    if [[ -f $significant_svn_status ]]; then
+    if [[ -f "$significant_svn_status" ]]; then
         if $PYTHON $significant_svn_status .; then
             export changes=1
             return 2
@@ -76,7 +76,7 @@ prompt_command () {
     console_whoami 
     # local LEARNING=$($PYTHON -c "import random; a = random.randint(0,99); b = random.randint(0,99); print '%d * %d == %d' % ( a, b , a * b )")
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
-    [[ -f $KD_DIR/kd.py ]] && mython $KD_DIR/kd.py --add . >/dev/null 2>&1
+    [[ -f "$KD_DIR/kd.py" ]] && mython $KD_DIR/kd.py --add . >/dev/null 2>&1
     history -a
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
     local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)

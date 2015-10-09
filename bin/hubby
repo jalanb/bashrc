@@ -35,8 +35,8 @@ _show_status () {
 
 _show_dir () {
     path=$1
-    if [[ -d $path/.git ]]; then
-        [[ ! -f $path/.hubignore ]] && _show_status $path
+    if [[ -d "$path/.git" ]]; then
+        [[ ! -f "$path/.hubignore" ]] && _show_status $path
     else echo Path has no git repo: $path >&2
     fi
 }
@@ -48,7 +48,7 @@ _show_dirs () {
     do
         local path=$hub/$dirname
         [[ $(readlink -f $path) == $(readlink -f $JAB) ]] && continue
-        [[ -d $path ]] && _show_dir $path
+        [[ -d "$path" ]] && _show_dir $path
     done
 }
 
