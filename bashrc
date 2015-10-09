@@ -33,7 +33,7 @@ _get_source_path_from_what () {
 }
 
 _get_jab_environ () {
-    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected;source_path $_actual
+    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected;source_path $_actual
 }
 
 _source_jab_scripts () {

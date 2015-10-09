@@ -440,7 +440,7 @@ rt () {
 
 ru () {
 # do da root root route, do da ru !
-    if [ -z "$@" ]; then
+    if [[ -z "$@" ]]; then
         SUDO
     else
         sudo "$@"
@@ -461,7 +461,7 @@ tm () {
 }
 
 tf () {
-    [ $? -eq 0 ] && echo "true" || echo "false"
+    [[ $? -eq 0 ]] && echo "true" || echo "false"
 }
 
 tt () {
@@ -587,7 +587,7 @@ cls () {
 # clean, clear, ls
     rf -q
     clear
-    if [ -z "$@" ]; then
+    if [[ -z "$@" ]]; then
         ls -d $(pwd)
         echo
     fi

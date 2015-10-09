@@ -10,7 +10,7 @@ add_to_path () {
 	if ! echo \$PATH | /bin/egrep -q "(^|:)\$1(\$|:)"; then
 		if [[ -z \$PATH ]]; then PATH=\$1
 		elif [[ -n \$1 && -d \$1 ]] ;then
-			if [ "\$2" = "after" ]; then PATH=\$PATH:\$1
+			if [[ "\$2" = "after" ]]; then PATH=\$PATH:\$1
 			else PATH=\$1:\$PATH
 			fi
 		fi
@@ -18,7 +18,7 @@ add_to_path () {
 }
 
 
-if [ -x /usr/bin/id ]; then
+if [[ -x /usr/bin/id ]]; then
 	[[ -z "\$UID" ]]  && UID=\$(/usr/bin/id -ru)
 	[[ -z "\$EUID" ]]  && EUID=\$(/usr/bin/id -u)
 	[[ -z "\$GID" ]]  && GID=\$(/usr/bin/id -rg)
@@ -26,7 +26,7 @@ if [ -x /usr/bin/id ]; then
 fi
 
 
-if [ -x /usr/bin/id ]; then
+if [[ -x /usr/bin/id ]]; then
         USER=\$(id -un)
         LOGNAME=\$USER
         MAIL="/var/spool/mail/\$USER"
@@ -48,7 +48,7 @@ HISTSIZE=100000
 HISTFILESIZE=200000
 
 
-if [ -z "\$INPUTRC" -a ! -f "\$HOME/.inputrc" ]; then
+if [[ -z "\$INPUTRC" -a ! -f "\$HOME/.inputrc" ]]; then
     INPUTRC=/etc/inputrc
 fi
 
@@ -60,7 +60,7 @@ add_to_path /bin
 
 export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE INPUTRC
 
-if [ -d /etc/profile.d ]; then
+if [[ -d /etc/profile.d ]]; then
 	echo Welcome to /etc/profile.d/
 	for i in /etc/profile.d/*.sh
 	do
@@ -71,7 +71,7 @@ if [ -d /etc/profile.d ]; then
 fi
 
 if [[ \$- == *i* ]]; then
-	if [ "\$BASH" ]; then
+	if [[ "\$BASH" ]]; then
 		PS1='\u@\h:\w\$ '
 		[[ -f "/etc/bashrc" ]] && source /etc/bashrc
 		[[ -f "/etc/aliases" ]] && source /etc/aliases
@@ -81,7 +81,7 @@ if [[ \$- == *i* ]]; then
 fi
 
 # We want umask to get set, even for non-interactive, non-login shells.
-if [ \$UID -gt 99 ] && [ "`id -gn`" = "`id -un`" ]; then
+if [[ \$UID -gt 99 ]] && [[ "`id -gn`" == "`id -un`" ]]; then
         umask 002
 else
         umask 022

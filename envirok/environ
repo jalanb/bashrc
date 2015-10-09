@@ -5,7 +5,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     EX_BAD=1
 
     export JAB=${JAB:-$HOME/.jab}
-    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected; . $_actual
+    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected; . $_actual
 
     export COLUMNS
 
@@ -91,7 +91,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     # Path dependencies
     #
 
-    if [ -x /usr/local/bin/which ]; then
+    if [[ -x /usr/local/bin/which ]]; then
         export WHICH=/usr/local/bin/which
     else
         export WHICH=/usr/bin/which

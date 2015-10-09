@@ -5,7 +5,7 @@ set -e
 JAB=${JAB:-$HOME/src/git/hub/dotjab}
 
 link_to () {
-	[ -h $2 ] || ln -s $1 $2
+	[[ -h $2 ]] || ln -s $1 $2
 }
 
 link_to_config () {
@@ -35,7 +35,7 @@ link_to_config () {
 
 link_to_ipython () {
 	local parent=$HOME/.ipython
-	[ -d $parent ] || mkdir -p $parent 
+	[[ -d $parent ]] || mkdir -p $parent 
 	link_to $JAB/ipython/$1 $parent/$1
 }
 

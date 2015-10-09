@@ -5,7 +5,7 @@ cat > ~/.profile << EOB
 
 [[ \$- != *i* ]] && return
 echo Welcome to /home/jab/.profile
-[[ -n "\$BASH_VERSION" ] && source ~/.bashrc
+[[ -n "\$BASH_VERSION" ]] && source ~/.bashrc
 echo Bye from /home/jab/.profile
 EOB
 

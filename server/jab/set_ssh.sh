@@ -1,6 +1,6 @@
 #! /bin/bash
 
-_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [ -f $_expected ] && _actual=$_expected;. $_actual
+_expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f $_expected ]] && _actual=$_expected;. $_actual
 
 HOME_SSH=~/.ssh
 HOME_ID=$HOME_SSH/id_rsa
