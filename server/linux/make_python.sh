@@ -22,7 +22,11 @@ tear_down () {
 }
 
 install_home_python () {
-    wget http://www.python.org/ftp/python/${MINIMUM_VERSION}/Python-${MINIMUM_VERSION}.tgz
+    if [[ -f Python-${MINIMUM_VERSION}.tgz ]]; then
+        cp ~/Downloads/Python-${MINIMUM_VERSION}.tgz .
+    else
+        wget http://www.python.org/ftp/python/${MINIMUM_VERSION}/Python-${MINIMUM_VERSION}.tgz
+    fi
     tar zxf Python-${MINIMUM_VERSION}.tgz
     cd Python-${MINIMUM_VERSION}
     sed -i -e "s|#SSL=/usr/local/ssl|SSL=/usr/local/ssl|" -e "s|^#_ssl|_ssl|" -e "/lssl/s/#//" -e "/USE_SSL/s/#//" Modules/Setup.dist
