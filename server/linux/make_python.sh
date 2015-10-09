@@ -33,6 +33,9 @@ install_home_python () {
     ./configure --enable-shared --prefix=$HOME 2>&1 > configuring.log
     make 2>&1 > making.log || exit
     make install 2>&1 > installing.log || exit
+    cd $HOME/bin
+    mv python${MINIMUM_VERSION%.*} python${MINIMUM_VERSION}
+    echo -e "#! /bin/bash\n\nPYTHONPATH=\$HOME/lib/python${MINIMUM_VERSION%.*}:\$PYTHONPATH LD_LIBRARY_PATH=\$HOME/lib \$HOME/bin/python$MINIMUM_VERSION \"\$@\"" > python${MINIMUM_VERSION%.*}
     cd ..
 }
 
