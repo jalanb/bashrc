@@ -121,7 +121,7 @@ def script(args):
         freds = [_ for _ in freds if _.ext == '.py'][:1]
         if not freds:
             raise ScriptError('No pythonic freds found')
-        command = 'mython -m pudb'
+        command = 'pudb'
     elif args.list:
         command = 'ls -l'
     elif args.edit:
