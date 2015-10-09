@@ -1,1 +1,3 @@
-../local/dttc
+#! /bin/bash
+
+python -c "print 'RGlnZ2VyLCBUaHVtYmVyLCBUYXJ6YW4sIENsaW1iZXI='.decode('base64')" | /bin/xsel
