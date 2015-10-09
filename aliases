@@ -18,7 +18,7 @@ unalias -a
 
 # x
 
-alias -- -="c -"
+alias -- -="cd -"
 alias 1=cd_one
 alias 2=todo_show
 alias 3=3l

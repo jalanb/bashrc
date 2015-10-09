@@ -54,8 +54,8 @@ set_paths () {
 }
 
 remove_old_figleaf_data () {
-    test -f $FIGLEAF_DATA || return
-    test -f $1 || return
+    test -f "$FIGLEAF_DATA" || return
+    test -f "$1" || return
     local format="-f %m"
     /usr/bin/stat --help >/dev/null 2>&1 && format="--printf %Y"
     local stat_command="/usr/bin/stat $format "

@@ -7,7 +7,7 @@ HOME_ID=$HOME_SSH/id_rsa
 
 authorize_jab () {
     KNOWN_KEYS=$HOME_SSH/authorized_keys
-    test -f $HOME_ID || ssh-keygen -q -t rsa -N "" -f $LOCAL_STEM
+    test -f "$HOME_ID" || ssh-keygen -q -t rsa -N "" -f $LOCAL_STEM
     chmod 600 $KNOWN_KEYS
     [ -f $KNOWN_KEYS ] && cat $JAB_PUB_ID >> $KNOWN_KEYS || cat $JAB_PUB_ID > $KNOWN_KEYS
 }

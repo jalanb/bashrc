@@ -15,14 +15,14 @@ WELCOME_FILES="$HOME/.bashrc $HOME/.profile $HOME/.bash_profile /root/.bashrc /r
 welcome_all () {
     for file in $WELCOME_FILES
     do
-        test -f $file && welcome $file
+        test -f "$file" && welcome "$file"
     done
 }
 
 unwelcome_all () {
     for file in $WELCOME_FILES
     do
-        test -f $file && unwelcome $file
+        test -f "$file" && unwelcome "$file"
     done
 }
 

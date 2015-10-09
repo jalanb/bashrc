@@ -29,7 +29,7 @@ _show_status () {
             $GIT pull --rebase
         fi
     fi
-    test -z $dir_shown || echo
+    test -z "$dir_shown" || echo
     [[ -n $dir_shown ]] && echo
 }
 

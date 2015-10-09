@@ -3,8 +3,8 @@
 set -e
 
 DOWN=/home/alanb/Downloads/Python
-test -d $DOWN && rm -rf $DOWN
-mkdir -p $DOWN
+test -d "$DOWN" && rm -rf $DOWN
+mkdir -p "$DOWN"
 cd $DOWN
 
 if python -c "import sys; sys.exit(int(sys.version.split()[0] >= '2.7.4'))"; then

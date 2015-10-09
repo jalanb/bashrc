@@ -14,12 +14,12 @@ fi
 # Gonna need python
 #
 _find_python () {
-    test -n $PYTHON && return 0
+    test -n "$PYTHON" && return 0
     MY_PATH=$jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
     PYTHON=$(PATH=$MY_PATH which python 2>/dev/null)
-    test -z $PYTHON && PYTHON=$(which python 2>/dev/null)
+    test -z "$PYTHON" && PYTHON=$(which python 2>/dev/null)
     export PYTHON
-    test -n $PYTHON
+    test -n "$PYTHON"
 }
 
 _run_script () {

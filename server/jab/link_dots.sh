@@ -42,7 +42,7 @@ link_to_ipython () {
 link_to_home () {
 	local from=$JAB/$1
     local to=$HOME/.$(basename $1)
-    test -e $to && rm -rf $to
+    test -e "$to" && rm -rf $to
 	if [[ -e $from ]]; then link_to $from $HOME/.$(basename $1)
 	else echo $from does not exist >&2
 	fi

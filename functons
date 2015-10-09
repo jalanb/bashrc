@@ -1441,7 +1441,7 @@ _edit_jab () {
     if [[ -z $JAB ]]; then
         echo \$JAB is empty >&2
     else
-        test -d $JAB || mkdir -p $JAB
+        test -d "$JAB" || mkdir -p $JAB
         local filepath=$JAB/$1
         shift
         _edit_source $filepath "$@"
@@ -1450,7 +1450,7 @@ _edit_jab () {
 
 _edit_locals () {
     local local_dir=$JAB/local
-    test -d $local_dir || mkdir -p $local_dir
+    test -d "$local_dir" || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }
 
