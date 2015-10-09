@@ -139,6 +139,10 @@ add () {
     echo $($1 + $2)
 }
 
+ag () {
+    alias | grep "$@"
+}
+
 bd () {
     . $JAB/src/bash/bd -s "$@"
 }
