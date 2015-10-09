@@ -156,7 +156,7 @@ db () {
 IP () {
     for number in 172 193 192 100
     do
-        mython $JAB_PYTHON/ifconfig.py $number && break
+        python $JAB_PYTHON/ifconfig.py $number && break
     done
 }
 
