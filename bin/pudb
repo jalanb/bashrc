@@ -13,7 +13,8 @@ _find_python () {
 
 main () {
     export TERM=xterm-256color
-    PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin $PYTHON_TWO_SEVEN pudb "$@"
+    PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin PROGRAM=$(which pudb)
+    PATH=/usr/sbin $PYTHON_TWO_SEVEN $PROGRAM "$@"
 }
 
 _find_python
