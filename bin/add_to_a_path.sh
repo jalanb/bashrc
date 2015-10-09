@@ -15,10 +15,8 @@ fi
 #
 _find_python () {
     test -n $PYTHON && return 0
-    test -f /usr/bin/python && PYTHON=/usr/bin/python
-    test -f /usr/local/bin/python && PYTHON=/usr/local/bin/python
-    test -f $JAB/bin/python && PYTHON=$JAB/bin/python
-    test -f ~/bin/python && PYTHON=~/bin/python
+    MY_PATH=$jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
+    PYTHON=$(PATH=$MY_PATH which python 2>/dev/null)
     test -z $PYTHON && PYTHON=$(which python 2>/dev/null)
     export PYTHON
     test -n $PYTHON
@@ -28,7 +26,6 @@ _find_python () {
 # Once sourced there is one major command:
 #
 add_to_a_path () {
-    _find_python
     if [[ -z $1 ]]; then
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
@@ -50,27 +47,15 @@ _git_root () {
 }
 
 _run_script () {
-    # This function can get called before PATHs are set up
-    # If they are set up: use them
-    # Else: try sensible defaults around knowing that this script exists
-
     local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
     local jab_python="${JAB_PYTHON:-${jab}/src/python}"
     local script=$jab_python/add_to_a_path.py
     if [[ -f $script ]]; then
-        if [[ -x $HOME/bin/python ]]; then
-            $HOME/bin/python $script "$@"
+        if _find_python; then
+            $PYTHON $script "$@"
         else
-            if [[ -x $PYTHON ]]; then
-                $PYTHON $script "$@"
-            elif [[ -x /usr/local/bin/python ]]; then
-                /usr/local/bin/python $script "$@"
-            elif [[ -x /usr/bin/python ]]; then
-                /usr/bin/python $script "$@"
-            else
-                echo "Could not find python" >&2
-                return 1
-            fi
+            echo "Could not find python" >&2
+            return 1
         fi
     else
         echo $script is not a file >&2

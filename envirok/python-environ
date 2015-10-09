@@ -3,11 +3,9 @@
 find_python () {
     [[ -n $PYTHON && -x $PYTHON ]] && return 0
     test -n $PYTHON && PYTHON=
-    test -f /usr/bin/python && PYTHON=/usr/bin/python
-    test -f /usr/local/bin/python && PYTHON=/usr/local/bin/python
-    test -f $HOME/bin/python && PYTHON=$HOME/bin/python
-    test -f $JAB/bin/python && PYTHON=$JAB/bin/python
-    [[ -n $VIRTUAL_ENV && -f $VIRTUAL_ENV/bin/python ]] && PYTHON=$VIRTUAL_ENV/bin/python
+    MY_PATH=$JAB/bin:$HOME/bin:/usr/local/bin:/usr/bin
+    [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
+    PYTHON=$(PATH=$MY_PATH which python 2>/dev/null)
     test -z $PYTHON && PYTHON=$(which python 2>/dev/null)
     test -z $PYTHON && PYTHON=no_python
     export PYTHON

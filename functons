@@ -1136,11 +1136,7 @@ please () {
 }
 
 mython () {
-    local suffix=bin/python
-    local executable=$HOME/$suffix
-    test -x $executable || executable=/usr/local/$suffix
-    test -x $executable || executable=/usr/$suffix
-    test -x $executable && $executable "$@"
+    PATH=$HOME/bin:/usr/local/bin:/usr/bin python "$@"
 }
 
 qwerty  () {
