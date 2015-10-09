@@ -22,6 +22,23 @@ _find_python () {
     test -n $PYTHON
 }
 
+_run_script () {
+    local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
+    local jab_python="${JAB_PYTHON:-${jab}/src/python}"
+    local script=$jab_python/add_to_a_path.py
+    if [[ -f $script ]]; then
+        if _find_python; then
+            $PYTHON $script "$@"
+        else
+            echo "Could not find python" >&2
+            return 1
+        fi
+    else
+        echo $script is not a file >&2
+        [[ ! -d $jab_python ]] && echo $jab_python is not a dir >&2
+    fi
+}
+
 #
 # Once sourced there is one major command:
 #
@@ -44,23 +61,6 @@ add_to_a_path () {
 _git_root () {
     local __doc__="Find root od git repo a file is in"
     (cd $(dirname $1); git rev-parse --show-toplevel)
-}
-
-_run_script () {
-    local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
-    local jab_python="${JAB_PYTHON:-${jab}/src/python}"
-    local script=$jab_python/add_to_a_path.py
-    if [[ -f $script ]]; then
-        if _find_python; then
-            $PYTHON $script "$@"
-        else
-            echo "Could not find python" >&2
-            return 1
-        fi
-    else
-        echo $script is not a file >&2
-        [[ ! -d $jab_python ]] && echo $jab_python is not a dir >&2
-    fi
 }
 
 show_value () {
