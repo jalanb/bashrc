@@ -22,7 +22,7 @@ tear_down () {
 }
 
 install_home_python () {
-    if [[ -f "Python-${MINIMUM_VERSION}.tgz" ]]; then
+    if [[ -f "~/Downloads/Python-${MINIMUM_VERSION}.tgz" ]]; then
         cp ~/Downloads/Python-${MINIMUM_VERSION}.tgz .
     else
         wget http://www.python.org/ftp/python/${MINIMUM_VERSION}/Python-${MINIMUM_VERSION}.tgz
