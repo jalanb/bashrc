@@ -4,6 +4,7 @@ set -e
 
 SCRATCH=/tmp/Downloads
 MINIMUM_VERSION=2.7.10
+BASH_DIR=$(dirname $BASH_SOURCE)
 
 set_up () {
     trap tear_down EXIT
@@ -53,12 +54,7 @@ pip_install_modules () {
         return 1
     fi
     $PIP install setuptools
-    $PIP install --user ipython
-    $PIP install --user pudb
-    $PIP install --user virtualenv
-    $PIP install --user virtualenvwrapper
-    $PIP install --user ansible
-    $PIP install --user sh
+    $PIP install -r $BASH_DIR/requirements.txt
 }
 
 main () {

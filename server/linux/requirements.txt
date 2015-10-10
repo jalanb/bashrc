@@ -1,0 +1,6 @@
+ipython
+pudb
+virtualenv
+virtualenvwrapper
+ansible
+sh
