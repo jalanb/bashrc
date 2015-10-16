@@ -44,6 +44,7 @@ yummy () {
     install binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
     install VirtualBox-5.0
     install fuse xsel
+    install readline-devel.x86_64 bzip2-devel.x86_64 sqlite-devel
     modprobe fuse
 }
 
