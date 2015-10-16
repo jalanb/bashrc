@@ -986,7 +986,12 @@ mine () {
 
 mkcd () {
     local __doc__='make a directory and start using it';
-    mkdir -p "$@" && cd "$@"
+    if [[ ! -d "$@" ]]; then
+        echo Directory existed "$@"
+    else
+        mkdir -p "$@"
+    fi
+    cd "$@"
 }
 
 nose () {
