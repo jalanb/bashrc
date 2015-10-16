@@ -938,6 +938,10 @@ vtr () {
     mython $JAB_PYTHON/vim_traceback.py "$@"
 }
 
+VIM () {
+    sudo vim "$@"
+}
+
 # xxxx
 
 bump () {
