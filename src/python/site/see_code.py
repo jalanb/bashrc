@@ -34,7 +34,10 @@ def code_of_method(method):
     try:
         function_code = method.func_code
     except AttributeError:
-        raise NoCode('No code available for %s' % method)
+        try:
+            function_code = method.im_func.func_code
+        except AttributeError:
+            raise NoCode('No code available for %s' % method)
     filename = re.sub('.py[co]$', '.py', method.func_code.co_filename)
     if not os.path.isfile(filename):
         raise NoCode('Source is not a file: %r' % filename)
