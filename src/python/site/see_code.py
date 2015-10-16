@@ -48,13 +48,17 @@ def higlight_code(text):
     try:
         from pygments.lexers import get_lexer_by_name
         from pygments.formatters import get_formatter_by_name
+        from pygments.styles import ClassNotFound
     except ImportError:
         return text
     language = 'python'
     lexer = get_lexer_by_name(language)
     if not lexer:
         return text
-    formatter = get_formatter_by_name('terminal256', style='alan')
+    try:
+        formatter = get_formatter_by_name('terminal256', style='alan')
+    except ClassNotFound:
+        formatter = get_formatter_by_name('terminal256', style='monokai')
     if not formatter:
         return text
     import pygments
