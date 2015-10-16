@@ -239,20 +239,25 @@ set mouse=
 "
 " Screen {{{1
 "
-set background=dark
-colorscheme alan-colour
-let g:SeeTabGuiFG="Cyan"
-set title
-set showmode " If in Insert, Replace or Visual mode put a message on the last line.
-set showcmd  " Show (partial) command in the last line of the screen.
+set background=dark     " My colorscheme works best on a dark background
+colorscheme alan-colour " I have my own colorscheme (usually at ~/.vim/colors/alan-colour.vim
+set title           " the title of the window will be set to filename being edited
+set showmode        " If in Insert, Replace or Visual mode put a message on the last line.
+set showcmd         " Show (partial) command in the last line of the screen.
 set showmatch		" Show matching brackets.
-set nowrap
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set smarttab
-set tabpagemax=1000
-set nospell
+set nowrap          " Do not wrap lines (initially)
+set tabstop=4       " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set shiftwidth=4    " Number of spaces to use for each step of (auto)indent.
+set expandtab       " tabs are expanded to spaces
+set smarttab        " When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
+set tabpagemax=1000 " Maximum number of tab pages to be opened by the -p command line argument
+                    " I set it very high as I use -p by default
+set nospell         " Turn off spell checking
+" 
+" Back in the day I used to use the SeeTab plugin
+" let g:SeeTabGuiFG="Cyan"
+" See http://www.vim.org/scripts/script.php?script_id=628 for more
 "
 " Terminal {{{2
 "
@@ -268,7 +273,7 @@ endif
 "
 set t_Co=256
 "
-" Cusror shapes differing in different modes {{{3
+" Cursor shapes differing in different modes {{{3
 " from http://www.reddit.com/user/Eyckelboom
 " " set a nicer cursor in insert mode (from terryma on github)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -285,7 +290,7 @@ call pathogen#infect()
 call pathogen#helptags()
 filetype on
 filetype plugin on
-filetype indent on
+filetype indent on  " load filetype-specific indent files
 "
 "EasyMotion {{{2
 "
@@ -374,7 +379,7 @@ set visualbell
 "
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
 set cursorline      " Highlight the screen line of the cursor with CursorLine
-set wildmenu
+set wildmenu        " visual autocomplete for command menu
 set wildmode=list:longest,full " See http://vi.stackexchange.com/questions/656/bash-like-partial-tab-complete-for-filenames-in-vim
 set completeopt=menu,preview,longest
 "
@@ -463,7 +468,7 @@ endfunction
 "
 " Start without 'em, as they are now so easy to turn on
 "
-set nonumber
+set nonumber    " Start without line numbers
 "
 " Search {{{2
 " 
@@ -480,10 +485,10 @@ function ToggleHighlightSearch()
         set hlsearch
     endif
 endfunction
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
+set ignorecase      " Ignore case while searching (\C in the regexp to search casefully)
+set smartcase       " Do not ignorecase if the regexp includes capitals
+set incsearch       " search as characters are entered
+set hlsearch        " highlight matches
 "
 " seek.vim is a plugin for 'in current line' searching
 "
