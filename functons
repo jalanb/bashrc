@@ -1339,7 +1339,7 @@ three_two_one () {
 # xxxxxxxxxxxxxx
 
 console_whoami () {
-    console_title_on $USER@$(jostname)...$(basename $PWD)
+    console_title_on $USER@$(jostname)...$(basename "$PWD")
 }
 
 source_aliases () {
