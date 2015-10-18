@@ -210,7 +210,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>u :GundoToggle<CR>
  noremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
  noremap <leader>w :w<cr>
-"noremap <leader>x
+ noremap <leader>x :call RangerExplorer()<cr>
 "noremap <leader>y
 "noremap <leader>z
 
@@ -541,6 +541,17 @@ let g:jabDetailedList=1
 let g:jabSortBy='date'
 
 let g:is_posix = 1
+
+" Use ranger as a file explorer {{2
+" From http://www.everythingcli.org/use-ranger-as-a-file-explorer-in-vim/
+function RangerExplorer()
+    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+    if filereadable('/tmp/vim_ranger_current_file')
+        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
+        call system('rm /tmp/vim_ranger_current_file')
+    endif
+    redraw!
+endfun
 
 " Honour those wee lines at eof {{{2
 set modeline
