@@ -1,0 +1,13 @@
+#! /bin/bash -x
+
+set -e
+
+. $JAB/bin/first_dir
+
+main () {
+    shift_dir "$@" && shift;
+    [[ -n $* ]] && cp $JAB_PYTHON/main.py "$@" || cp $JAB_PYTHON/main.py $dir
+}
+
+main "$@"
+
