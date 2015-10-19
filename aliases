@@ -140,7 +140,6 @@ alias ptags="p $JAB_PYTHON/ptags.py "
 
 alias ......='c ../../../../..'
 
-alias lessen="less -N"
 
 
 # xxxxxxx

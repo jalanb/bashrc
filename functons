@@ -1143,6 +1143,14 @@ has_py () {
     has_ext py "$@"
 }
 
+lessen () {
+    less -NR "$@"
+}
+
+lesser () {
+    less -R "$@"
+}
+
 online () {
     quick_ping www.google.com >/dev/null 2>&1 && echo online || echo offline
 }
