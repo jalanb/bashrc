@@ -408,6 +408,9 @@ nnoremap <f6> :move<cr>
 nnoremap <f7> :mkdir<space>
 nnoremap <f8> :delete<cr>
 
+nnoremap q :q<cr>
+nnoremap - gh
+
 " ------------------------------------------------------------------------------
 
 " Various customization examples
