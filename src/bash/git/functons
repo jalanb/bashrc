@@ -264,6 +264,10 @@ git_root () {
 
 # xxxxxxxxxx
 
+git_branch () {
+    git rev-parse --abbrev-ref HEAD
+}
+
 # xxxxxxxxxxx
 
 git_changed () {
