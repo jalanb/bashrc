@@ -15,7 +15,13 @@ _git_status_regexp="^$_git_status_char_regexp$_git_status_char_regexp"
 
 ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
-    git add "$@"
+    if [[ -z "$*" ]]; then
+        echo Nothing specified for add >&2
+        echo "Did you mean \"gaa\" (add all) ?"
+        return 1
+    else
+        git add "$@"
+    fi
 }
 
 gc () {
