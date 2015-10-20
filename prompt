@@ -68,6 +68,7 @@ prompt_command () {
     local Dir="${endir/\$/\\$}"
     [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${endir/\$/\\$}${PROMPT_COLOUR}"
     local endir="$PWD"
+    [[ -n $IGNORE_CHANGES ]] || get_repo_status
     Dir="${Dir}${GIT_BRANCH}"
     if which jython > /dev/null 2>&1; then
         jython_version=$(jython --version 2>&1 | cut -d' ' -f2)
@@ -78,7 +79,6 @@ prompt_command () {
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
     [[ -f "$KD_DIR/kd.py" ]] && mython $KD_DIR/kd.py --add . >/dev/null 2>&1
     history -a
-    [[ -n $IGNORE_CHANGES ]] || get_repo_status
     local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)
     [[ -n "$VIRTUAL_ENV" ]] && python_version=${python_version}.$(basename $VIRTUAL_ENV)
     export PS1="$STATUS ${PROMPT_COLOUR}\
