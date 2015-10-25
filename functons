@@ -259,14 +259,6 @@ gg () {
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
-gp () {
-    local __doc__="grep in python files under here, show results as vim commands"
-    sought=$1
-    shift
-    seek=${sought//\\/\\\\}
-    find . -name "*.py" -exec grep -l "$sought" {} \;  | sed -e "s:\(.*\):vim \1 +/\"$seek\":" | sort | uniq
-}
-
 gh () {
     local __doc__="show stuff from history"
     _strip_history | grep --color "$@"
