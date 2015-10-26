@@ -978,7 +978,7 @@ mine () {
 
 mkcd () {
     local __doc__='make a directory and start using it';
-    if [[ ! -d "$@" ]]; then
+    if [[ -d "$@" ]]; then
         echo Directory existed "$@"
     else
         mkdir -p "$@"
