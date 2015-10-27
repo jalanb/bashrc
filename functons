@@ -1152,7 +1152,7 @@ please () {
 }
 
 mython () {
-    PATH=$HOME/bin:/usr/local/bin:/usr/bin python "$@"
+    PATH=$HOME/bin:/usr/local/bin:/usr/bin python2.7 "$@"
 }
 
 qwerty  () {

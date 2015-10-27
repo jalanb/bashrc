@@ -5,8 +5,8 @@ find_python () {
     [[ -n $PYTHON ]] && PYTHON=
     MY_PATH=$JAB/bin:$HOME/bin:/usr/local/bin:/usr/bin
     [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
-    PYTHON=$(PATH=$MY_PATH which python 2>/dev/null)
-    [[ -z $PYTHON ]] && PYTHON=$(which python 2>/dev/null)
+    PYTHON=$(PATH=$MY_PATH which python2.7 2>/dev/null)
+    [[ -z $PYTHON ]] && PYTHON=$(which python2.7 2>/dev/null)
     [[ -z $PYTHON ]] && PYTHON=no_python
     export PYTHON
     [[ $PYTHON != no_python ]]
