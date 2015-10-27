@@ -47,8 +47,6 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     export BITBUCKET
     [[ -d ~/src/git/hub ]] && GITHUB=~/src/git/hub || GITHUB=no_github
     export GITHUB
-    [[ -d "$GITHUB/../jab" ]] && GITJAB=$(readlink -f $GITHUB/../jab) || GITJAB=no_gitjab
-    export GITJAB
     source $GITHUB/what/what.sh
 
     if [[ -f /usr/local/bin/gls ]]; then
