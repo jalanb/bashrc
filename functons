@@ -154,9 +154,17 @@ db () {
 }
 
 IP () {
+    local BREAK=yes
+    if [[ $1 == all ]]; then
+        BREAK=no
+    fi
     for number in 10 172 193 192 100
     do
-        python $JAB_PYTHON/ifconfig.py $number && break
+        if python $JAB_PYTHON/ifconfig.py $number; then
+            if [[ $BREAK == yes ]]; then
+                break
+            fi
+        fi
     done
 }
 
