@@ -2,14 +2,6 @@
 source = https://github.com/EinfachToll/DidYouMean
 type = git
 
-[Gundo]
-source = http://github.com/sjl/gundo.vim.git
-type = git
-
-[Indent-Guides]
-source = https://github.com/nathanaelkane/vim-indent-guides.git
-type = git
-
 [Limelight]
 source = https://github.com/junegunn/limelight.vim.git
 type = git
