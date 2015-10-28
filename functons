@@ -1069,9 +1069,11 @@ clock () {
 }
 
 detab () {
+    local _expand=$(which expand)
+    what -q gexpand && _expand=$(what -f gexpand)
     if [[ -f "$1" ]]; then
         if grep -Pq "^\s*\t\s*[^ \t]" $1; then
-            expand -i --tabs=4 $1 > /tmp/txt
+            $_expand -i --tabs=4 $1 > /tmp/txt
             mv /tmp/txt $1
             echo detabbed
         else
