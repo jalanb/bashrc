@@ -23,11 +23,10 @@ _show_status () {
             echo
         fi
         if [[ $owner == "jalanb" ]]; then
-            $GIT fetch -q
+            $GIT fetch -q --all
             $GIT lg origin/master --ancestry-path HEAD..origin/master
-        else
-            $GIT pull --rebase
         fi
+        $GIT pull --rebase
     fi
     [[ -z $dir_shown ]] || echo
     [[ -n $dir_shown ]] && echo
