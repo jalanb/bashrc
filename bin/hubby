@@ -56,7 +56,8 @@ main () {
         _show_dir "$@"
     else
         _show_status $JAB
-        [[ -d ~/src/git/hub ]] && _show_dirs ~/src/git/hub
+        local _github=${GITHUB:-$HOME/src/git/hub}
+        [[ -d $_github ]] && _show_dirs $_github
     fi
 }
 
