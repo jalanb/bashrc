@@ -22,6 +22,10 @@ type = git
 source = https://github.com/ehamberg/vim-cute-python.git
 type = git
 
+[fugitive]
+source = https://github.com/tpope/vim-fugitive.git
+type = git
+
 [gitgutter]
 source = https://github.com/airblade/vim-gitgutter.git
 type = git
@@ -34,12 +38,12 @@ type = git
 source = https://github.com/wellle/targets.vim.git
 type = git
 
-[vim-easymotion]
-source = https://github.com/haya14busa/vim-easymotion.git
-type = git
-
 [vim-abolish]
 source = https://github.com/tpope/vim-abolish.git
+type = git
+
+[vim-easymotion]
+source = https://github.com/haya14busa/vim-easymotion.git
 type = git
 
 [vinegar]
