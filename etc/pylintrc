@@ -42,13 +42,11 @@ load-plugins=
 #
 # C0103 is "Invalid name"
 # R0903 is "Too few public methods"
-# W0212 is Accessing protected attribute of client class
 # W0232 is Class has no __init__ method
 # W0406 is Module import itself 
 #
 # PyLint's module importation is unreliable
 #
-# F0401 is Unable to import module
 # W0403 is Relative imports
 #
 # Known bug in pylint, see https://bitbucket.org/logilab/pylint/issue/205/wrong-no-value-for-parameter-warnings-when
