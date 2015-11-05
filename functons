@@ -890,7 +890,7 @@ vla () {
 }
 
 vle () {
-    _edit_locals envirok/environ
+    _edit_locals environ
 }
 
 vlf () {
