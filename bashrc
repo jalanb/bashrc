@@ -1,6 +1,9 @@
 #! /bin/bash -x
 
-source $JAB/src/bash/asserts
+JAB_SH=$JAB/src/bash
+source $JAB_SH/asserts.sh
+
+_assert_directory $JAB_SH
 
 _assert_source_jab_environ () {
     _assert_source $JAB/environ
@@ -8,6 +11,10 @@ _assert_source_jab_environ () {
         _assert_source $_file
     done
 }
+_assert_directory $JAB_SH/git
+
+JAB_SH_GIT=$JAB_SH/git
+_assert_directory $JAB_SH_GIT
 
 _source_jab () {
     _assert_source_jab_environ
@@ -42,7 +49,7 @@ _jab_status () {
     grep -v "nothing to commit, working directory clean" | \
     sed -e s:Your.branch:\$JAB: | \
     grep --color 'up-to-date.*'
-    _assert_source $JAB/src/bash/git/source
+    _assert_source $JAB_SH_GIT/source
 }
 
 _show_welcome () {
@@ -61,13 +68,14 @@ _show_welcome () {
 }
 
 
+_assert_directory $JAB_SH/assertions.sh
 bashrc_in_jab () {
     _trap_github
     _trap_jab
     _trap_what
     _trap_jab
     _assert_is_function source_what
-    source_what $JAB/src/bash/assertions
+    source_what $JAB_SH/assertions
     _trap_python
     _show_welcome
 }

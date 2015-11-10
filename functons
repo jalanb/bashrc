@@ -144,7 +144,7 @@ ag () {
 }
 
 bd () {
-    . $JAB/src/bash/bd -s "$@"
+    . $JAB/src/bash/bd.sh -s "$@"
 }
 
 db () {
