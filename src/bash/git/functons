@@ -112,7 +112,7 @@ gla () {
 }
 
 glg () {
-    _gl lg "$@" | _recognise_my_git_user | sed -e "s/ ago//"
+    _gl lg "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
 gln () {
@@ -321,7 +321,7 @@ show_git_time () {
         _log=$(_show_git_time_log $regexp $_arg_dir)
         if [[ -n $_log ]]; then
             period_lines=$(_show_git_time_log $regexp $_arg_dir | wc -l)
-            _show_git_time_log $regexp $_arg_dir | _recognise_my_git_user | sed -e "s/ ago//" | head -n $lines_left
+            _show_git_time_log $regexp $_arg_dir | _call_me_alan | sed -e "s/ ago//" | head -n $lines_left
             [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
@@ -369,7 +369,10 @@ _show_run_storage () {
 
 # xxxxxxxxxxxxxxxxxxxxxx
 
-_recognise_my_git_user () {
-    sed -e "s/J Alan Brogan github@al-got-rhythm.net/jalanb@github/" -e "s/J Alan Brogan alan.brogan@s3group.com/alanb@s3/"  -e "s/J Alan Brogan/Janus/"
+_call_me_alan () {
+    sed \
+        -e "s/.*al-got-rhythm.net/jalanb/" \
+        -e "s/.*wwts.com/Alan Brogan/" \
+        -e "s/J Alan Brogan/Alan/"
 }
 
