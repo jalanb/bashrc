@@ -5,7 +5,7 @@ _source_jab_environ () {
     EX_BAD=1
 
     export JAB=${JAB:-$HOME/.jab}
-    _expected=$JAB/environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected; . $_actual
+    _expected=$JAB/environ.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected; . $_actual
 
     export COLUMNS
 

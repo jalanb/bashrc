@@ -1,1 +1,1 @@
-environ.d/jab
+environ.d/jab.sh

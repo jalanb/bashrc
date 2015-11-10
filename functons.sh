@@ -506,7 +506,7 @@ vd () {
 }
 
 ve () {
-    _edit_jab environ "$@"
+    _edit_jab environ.sh "$@"
 }
 
 vf () {
@@ -884,7 +884,7 @@ vla () {
 }
 
 vle () {
-    _edit_locals environ
+    _edit_locals environ.sh
 }
 
 vlf () {

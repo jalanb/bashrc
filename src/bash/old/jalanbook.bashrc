@@ -5,19 +5,17 @@ _source_jab_environ_d () {
 }
 
 _source_jab_environ () {
-    _assert_source $JAB/environ
+    _assert_source $JAB/environ.sh
     _source_jab_environ_d
 }
 
 _source_jab_scripts () {
-    require "$JAB/environ"
-    require "$JAB/python-environ"
-    require "$JAB/envirok/environ"
-    require "$JAB/envirok/python-environ"
+    require "$JAB/environ.sh"
+    require "$JAB/environ.d/python.sh"
     require "$JAB/local/network"
-    require "$JAB/aliases"
-    require "$JAB/functons"
-    require "$JAB/prompt"
+    require "$JAB/aliases.sh"
+    require "$JAB/functons.sh"
+    require "$JAB/prompt.sh"
     requite "$HUB/kd/kd.sh"
     requite "$HUB/ack2vim/ack2vim"
 }

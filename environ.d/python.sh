@@ -29,7 +29,7 @@ export TRY=$_try
 _home_src_python_dir=~/src/python
 [[ -d "$_home_src_python_dir" ]] || _home_src_python_dir=no_dir_home_src_python
 
-_expected=$JAB/environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;source_path $_actual
+_expected=$JAB/environ.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;source_path $_actual
 source_path $JAB/bin/add_to_a_path.sh
 
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
