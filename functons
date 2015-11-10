@@ -132,7 +132,7 @@ y () {
     else
         dir=
     fi
-    Tree -P "*.py" --prune $dir "$@"
+    3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
 }
 
 add () {
@@ -508,7 +508,7 @@ vd () {
 }
 
 ve () {
-    _edit_jab envirok/environ "$@"
+    _edit_jab environ "$@"
 }
 
 vf () {
@@ -906,7 +906,7 @@ vff () {
 }
 
 vpe () {
-    _edit_jab envirok/python-environ
+    _edit_jab environ.d/python
 }
 
 vvb () {

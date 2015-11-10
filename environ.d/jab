@@ -29,3 +29,8 @@ if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]; then
     export JABS
 fi
 JAB_JAB_ENVIRON_SOURCED=1
+
+    for script in $JAB/environ.d; do
+        source_what "$JAB/environ.d/$script"
+        source_what "$JAB/local/$script"
+    done
