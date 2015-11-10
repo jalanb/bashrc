@@ -77,7 +77,6 @@ def parse_args(methods):
         args_with_values = {k:v for k, v in _value_args.items() if v}
         method_args = [_ for _ in valued_args.items() if _ in methods]
         [methods[_](args) for _ in method_args]
-
         arg_methods = {methods[_] for _ in valued_args if _ in methods}
         for method in arg_methods:
             method(args)
@@ -99,6 +98,7 @@ def parse_args(methods):
     return args
 
 
+        ,action, nargs, const, default, type, choices, required, help, metavar, dest t(_name, metavar='files', type=str, nargs='+',
 def main():
     """Run the script"""
     try:
