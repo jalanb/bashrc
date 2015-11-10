@@ -7,7 +7,7 @@ Usage:
 Options:
     -h, --help               Show this help and exit
     -v, --version            Show version number and exit
-    -U, --use_debugger       Run the script with pudb debugger
+    -U, --Use_debugger       Run the script with pudb debugger
     -s, --start              Add the path at start of list of paths
     -i INDEX, --index=INDEX  The index at which the path will be inserted
 
@@ -35,6 +35,7 @@ from __future__ import print_function
 import os
 import sys
 import argparse
+from pprint import pprint
 from bdb import BdbQuit
 
 
@@ -60,12 +61,17 @@ def version(args):
     raise SystemExit
 
 
-def Use_debugger(_args):
+def _use_debugger(args):
+    if not args.Use_debugger:
+        return
     try:
         import pudb as pdb
     except ImportError:
         import pdb
+    pprint(args)
     pdb.set_trace()
+    import inspect
+    inspect.currentframe().f_back.f_locals
 
 
 def parse_args(methods):
@@ -91,19 +97,19 @@ def parse_args(methods):
     return args
 
 
-def add_path_to_paths(paths, path, i):
+def _add_symbol_to_paths(paths, symbol, i):
     if i is False:
         i = len(paths)
     result = paths[:]
-    if path:
+    if symbol:
         j = lambda x, y: x.index(y) if y in x else -1
-        if path not in result:
-            result.insert(i, path)
+        if symbol not in result:
+            result.insert(i, symbol)
         else:
-            j = result.index(path)
+            j = result.index(symbol)
             if i != j:
                 del result[j]
-                result.insert(i, path)
+                result.insert(i, symbol)
     return result
 
 
@@ -135,13 +141,14 @@ def get_paths(args):
 
 
 def script(args):
-    path = arg_path(args)
+    _use_debugger(args)
+    path_symbol = arg_path(args)
     paths = get_paths(args)
-    if not path:
+    if not path_symbol:
         if not paths:
             return False
-    elif os.path.isdir(path):
-        paths = add_path_to_paths(paths, path, args.index)
+    elif os.path.isdir(path_symbol):
+        paths = _add_symbol_to_paths(paths, path_symbol, args.index)
     else:
         return False
     print(os.path.pathsep.join(paths))
