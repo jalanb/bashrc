@@ -3,6 +3,7 @@
 --type-set=junk=.log,.swp,.pyc,.gz
 --type-set=code=.py,.test,.tests,.html,.js,.ini,.sh,.xml,.sql,.tmpl,.ezt,.wsgi,.cgi
 --type-set=nonsql=.py,.test,.tests,.html,.js,.ini,.sh,.xml,.tmpl,.ezt,.wsgi,.cgi
+--type-set=shell=.sh
 --type-set=html=.html,.js,.css
 --type-set=erl=.erl,.hrl,.app
 --type-set=snmp=.mib,.funcs

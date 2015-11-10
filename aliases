@@ -71,7 +71,7 @@ alias r.="rm -rvf *"
 
 alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
-alias se="source $JAB/envirok/environ"
+alias se="source $JAB/environ"
 alias sf="source $JAB/functons"
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
@@ -113,7 +113,7 @@ alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
 alias slf="source $JAB/local/functons"
 alias slp="source $JAB/local/prompt"
-alias spe="source $JAB/envirok/python-environ"
+alias spe="source $JAB/environ.d/python"
 
 alias tra="try ~/alans_tests"
 
@@ -123,7 +123,7 @@ alias url="mython ~/bin/show_url.py "
 
 alias ....='c ../../..'
 
-alias comp="source $JAB/company-environment"
+alias comp="source $JAB/environ.d/company"
 
 alias home="cd; cls"
 
