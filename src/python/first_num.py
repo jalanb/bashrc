@@ -53,21 +53,44 @@ def parse_args(methods):
     return sys.argv[1:]
 
 
+def _globalize(items, predicate, name):
+    from pprint import pprint
+    pprint(items)
+
+def _extract_first(predicate, items):
+    result = items[:]
+    first = None
+    for item in items:
+        if predicate(item):
+            result.remove(item)
+            return item, result
+    raise KeyError
+
+def _extract_all(predicate, items):
+    found = bool([_ for _ in items if predicate(_)])
+    return
+
+def _extract_first_digit(items):
+    return _extract_first(lambda x: x.isdigit(), items)
+
+
 def script(args):
-    others = args
-    rest = 'NOT_FIRST_NUM' in args
-    if rest:
-        args.remove('NOT_FIRST_NUM')
+    digit, args = _extract_first_digit(
+        [_ for _ in args if _ not in ('NOT_FIRST_NUM',)])
+    if digit:
+        print(digit)
+    if args:
+        print(' '.join(args))
     for i, item in enumerate(args):
         if item.isdigit():
             if rest:
-                others = args[:i] + args[i+1:]
+                args = args[:i] + args[i+1:]
                 break
             else:
                 print(item)
                 return True
     if rest:
-        print(' '.join(others))
+        print(' '.join(args))
         return True
     return False
 
