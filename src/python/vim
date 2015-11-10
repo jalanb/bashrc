@@ -98,7 +98,6 @@ def parse_args(methods):
     return args
 
 
-        ,action, nargs, const, default, type, choices, required, help, metavar, dest t(_name, metavar='files', type=str, nargs='+',
 def main():
     """Run the script"""
     try:
