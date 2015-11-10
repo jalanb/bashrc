@@ -126,12 +126,12 @@ _assert_env_executable () {
     test -x env $1
 }
 
-_assert_path_executable () {
-    _trap _trace _assert_path -x $1
+_assert_path_executable {
+    _assert_path -x $1 &&
 }
 
 _assert_executable () {
-    _assert_what_executable "$@"  || _assert_env_executable "$@" || _assert_which_executable "$@" || _assert_path_executable "$@"
+    [[ _assert_what_executable "$@"  || _assert_env_executable "$@" || _assert_which_executable "$@" || _assert_path_executable "$@" ]]
 }
 
 _assert_is_function _is_existing_function
