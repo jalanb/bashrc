@@ -1,16 +1,16 @@
 #! /bin/bash -x
 
+source $JAB/src/bash/asserts
 
-_source_jab_environ_d () {
-}
-
-_source_jab_environ () {
+_assert_source_jab_environ () {
     _assert_source $JAB/environ
-    _source_jab_environ_d
+    for _file in $(find $JAB/environ.d -type f | tr '\n' ' '); do
+        _assert_source $_file
+    done
 }
 
 _source_jab () {
-    _source_jab_environ
+    _assert_source_jab_environ
     JAB_ENVIRON_SOURCED=
     _assert_source "$JAB_LOCAL/network"
     for script in aliases functons prompt src/bash/git-completion.bash; do
@@ -34,6 +34,17 @@ _show_todo () {
     builtin cd - >/dev/null 2>&1
 }
 
+_jab_status () {
+    if [[ ! -d "$JAB"/.git ]]; then
+        $(cd $JAB; git init .)
+    fi
+    git -C "$JAB" status | \
+    grep -v "nothing to commit, working directory clean" | \
+    sed -e s:Your.branch:\$JAB: | \
+    grep --color 'up-to-date.*'
+    _assert_source $JAB/src/bash/git/source
+}
+
 _show_welcome () {
     _show_todo
     if pgrep -fl vim > /dev/null; then
@@ -51,12 +62,13 @@ _show_welcome () {
 
 
 bashrc_in_jab () {
+    _trap_github
+    _trap_jab
     _trap_what
     _trap_jab
     _assert_is_function source_what
     source_what $JAB/src/bash/assertions
     _trap_python
-    source_jab
     _show_welcome
 }
 
