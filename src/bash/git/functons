@@ -1,7 +1,7 @@
 #! /bin/bash
 
 . $JAB/bin/first_dir
-. $environ.d/colour"
+. $JAB/environ.d/colour
 
 # functons for git
 
@@ -17,7 +17,7 @@ ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     if [[ -z "$*" ]]; then
         echo Nothing specified for add >&2
-        echo "Did you mean \"gaa\" (add all) ?"
+        echo 'Did you mean "gaa" (add all) ?'
         return 1
     else
         git add "$@"
