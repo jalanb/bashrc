@@ -57,9 +57,10 @@ def parse_args(methods):
         def _predicate(self, x):
             return bool(x)
 
-        def __iter__(self, , a):
-            found = [_ for _ in self._args if self._predicate(_)]
-            return iter(found)
+        def __iter__(self):
+            for _ in self._args:
+                if self._predicate(_):
+                    yield _
 
     def _has_value(_):
         _, value = _
@@ -76,23 +77,19 @@ def parse_args(methods):
         args_with_values = {k:v for k, v in _value_args.items() if v}
         method_args = [_ for _ in valued_args.items() if _ in methods]
         [methods[_](args) for _ in method_args]
-        for value, key in valued_args.items:
 
-        arg_methods
         arg_methods = {methods[_] for _ in valued_args if _ in methods}
         for method in arg_methods:
             method(args)
         return args
 
-    def add_argument(**kwargs):
+    def _add_argument(*args, **kwargs):
         kwargs['action'] = kwargs.get('action', 'store_true')
-        parser.add_argument(**kwargs)
+        parser.add_argument(*args, **kwargs)
 
     def _parse_args():
         _args = parser.parse_args()
         _run_args(args)
-
-                            help='files to edit')
 
     _add_argument('-v', '--version')
     _add_argument('-U', '--use_debugger')
@@ -102,7 +99,6 @@ def parse_args(methods):
     return args
 
 
-        ,action, nargs, const, default, type, choices, required, help, metavar, dest t(_name, metavar='files', type=str, nargs='+',
 def main():
     """Run the script"""
     try:
