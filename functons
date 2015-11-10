@@ -1092,6 +1092,17 @@ LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }
 
+quack () {
+    local _result=1
+    for $item in "$@"; do
+        if _like_duck $item; then
+            python  $1
+            _result=0
+        fi
+    done
+    return $_result
+}
+
 range () {
     local destination=.
     if [[ -n "$*" ]]; then
@@ -1253,6 +1264,9 @@ todo_show () {
 }
 
 # xxxxxxxxxx
+_like_duck () {
+    has_py "$*"
+}
 
 jab_scripts () {
     mython $JAB_PYTHON/scripts.py "$@"
