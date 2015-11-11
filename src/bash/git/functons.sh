@@ -28,7 +28,7 @@ gc () {
     local _storage=/tmp/gc.sh
     if [[ -z "$@" ]]; then git commit --verbose
     else
-        mython -c "print 'git commit -m\"$*\"'" > $_storage
+        python -c "print 'git commit -m\"$*\"'" > $_storage
         _show_run_storage
     fi
     GIT_ADDED=
@@ -79,7 +79,7 @@ gcj () {
     local GIT="git -C $JAB"
     if [[ -z "$@" ]]; then $GIT commit --all --verbose
     else
-        mython -c "print '$GIT commit -m\"$*\"'" > $_storage
+        python -c "print '$GIT commit -m\"$*\"'" > $_storage
         _run_storage
     fi
 }

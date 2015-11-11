@@ -92,7 +92,6 @@ alias doc="c ~/Documents"
 
 alias clx="cl; lx "
 alias cly="cl; ly "
-alias csi='c $(mython -c "import sys; print [p for p in sys.path if p.endswith(\"site-packages\")][0]")'
 
 alias got=git
 
@@ -116,8 +115,6 @@ alias slp="source $JAB/local/prompt"
 alias spe="source $JAB/environ.d/python.sh"
 
 alias tra="try ~/alans_tests"
-
-alias url="mython ~/bin/show_url.py "
 
 # xxxx
 

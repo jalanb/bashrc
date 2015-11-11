@@ -12,7 +12,7 @@ shift_path () {
     for p in "$@"
     do
         if [[ -f "$p" || -d "$p" ]]; then
-            path=$(mython -c"import os; print os.path.realpath('$p')")
+            path=$(python -c"import os; print os.path.realpath('$p')")
             return 0
         fi
     done
@@ -31,7 +31,7 @@ shift_dir () {
     for d in "$@"
     do
         if [[ -d "$d" ]]; then
-            dir=$(mython -c"import os; print os.path.realpath('$d')")
+            dir=$(python -c"import os; print os.path.realpath('$d')")
             return 0
         fi
     done

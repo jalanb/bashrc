@@ -1031,7 +1031,7 @@ divv () {
 }
 
 this () {
-    mython -c "import this"
+    python -c "import this"
 }
 
 Tree () {
@@ -1108,7 +1108,7 @@ range () {
             return 1
         fi
     fi
-    local real_destination=$(PYTHONPATH=$python_directory mython -c "import os; print os.path.realpath('$destination')")
+    local real_destination=$(PYTHONPATH=$python_directory python -c "import os; print os.path.realpath('$destination')")
     if [[ $destination != $real_destination ]]; then
         echo "ranger ($destination ->) $real_destination"
         destination=$real_destination
