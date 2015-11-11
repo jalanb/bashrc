@@ -2,7 +2,7 @@
 
 # set -e
 
-. $JAB/bin/first_dir
+. $JAB/bin/first_dir.sh
 
 # Called functons.sh because "functions" is ... something else
 
@@ -483,10 +483,10 @@ uj () {
         BACK=$(pwd)
         if [[ $BACK != "$JAB" ]]; then
             cd $JAB
-            source_path bashrc
+            source_path login.sh
             cd $BACK
         else
-            source_path bashrc
+            source_path login.sh
         fi
     fi
 }
@@ -496,11 +496,11 @@ v. () {
 }
 
 va () {
-    _edit_jab aliases
+    _edit_jab aliases.sh
 }
 
 vb () {
-    _edit_jab bashrc
+    _edit_jab login.sh
 }
 
 vd () {
@@ -758,10 +758,6 @@ num () {
     v $JAB/local/numbers.txt
 }
 
-pbl () {
-    _publish_Localhost
-}
-
 pyi () {
     cd $GITHUB/pym/pym
     add_to_a_path PATH ./bin
@@ -864,8 +860,8 @@ try () {
 }
 
 vaf () {
-    vim -p $JAB/aliases $JAB/functons.sh
-    source_path $JAB/aliases
+    vim -p $JAB/aliases.sh $JAB/functons.sh
+    source_path $JAB/aliases.sh
     source_path $JAB/functons.sh
 }
 
@@ -886,7 +882,7 @@ vin () {
 }
 
 vla () {
-    _edit_locals aliases
+    _edit_locals aliases.sh
 }
 
 vle () {
@@ -1043,7 +1039,7 @@ Tree () {
 }
 
 vibb () {
-    vim -p ~/.bashrc $JAB/bashrc
+    vim -p ~/.bashrc $JAB/login.sh
 }
 
 # xxxxx
@@ -1426,7 +1422,7 @@ console_title_off () {
 # _xxxxxxxxxxxxxxxxxxx
 
 _publish_Localhost () {
-    /bin/bash $JAB/bin/publish_Localhost $HOME/public_html/index.html
+    /bin/bash $JAB/bin/publish_host.sh $HOME/public_html/index.html
 }
 
 # functions starting with an underscore are intended for use within this file only

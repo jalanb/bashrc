@@ -69,11 +69,11 @@ alias pt="p $JAB_PYTHON/vim_traceback.py"
 
 alias r.="rm -rvf *"
 
-alias sa="source_aliases $JAB/aliases"
-alias sb="c $JAB && source bashrc && -"
-alias se="source $JAB/environ"
+alias sa="source_aliases $JAB/aliases.sh"
+alias sb="c $JAB && source login.sh && -"
+alias se="source $JAB/environ.sh"
 alias sf="source $JAB/functons.sh"
-alias sp="source $JAB/prompt"
+alias sp="source $JAB/prompt.sh"
 alias sr="sudo rm -vrf "
 
 alias yy="y $PYTHON_HOME"
@@ -109,11 +109,11 @@ alias lsh="ls *.sh"
 
 alias out="to_release"
 
-alias sla="source $JAB/local/aliases"
-alias sle="source $JAB/local/environ"
+alias sla="source $JAB/local/aliases.sh"
+alias sle="source $JAB/local/environ.sh"
 alias slf="source $JAB/local/functons.sh"
 alias slp="source $JAB/local/prompt"
-alias spe="source $JAB/environ.d/python"
+alias spe="source $JAB/environ.d/python.sh"
 
 alias tra="try ~/alans_tests"
 
@@ -123,7 +123,7 @@ alias url="mython ~/bin/show_url.py "
 
 alias ....='c ../../..'
 
-alias comp="source $JAB/environ.d/company"
+alias comp="source $JAB/environ.d/company.sh"
 
 alias home="cd; cls"
 

@@ -14,8 +14,8 @@ cat > ~/.bashrc << EOB
 
 echo Welcome to /home/jab/.bashrc
 if [[ \$- == *i* ]]; then
-	JAB=${JAB:-$HOME/.jab}
-	[[ -f "$JAB/bashrc" ]] && cd $JAB && . bashrc && cd >/dev/null 2>&1
+    JAB=${JAB:-$HOME/.jab}
+    [[ -f "$JAB/login.sh" ]] && cd $JAB && . login.sh && cd >/dev/null 2>&1
 fi
 echo Bye from /home/jab/.bashrc
 EOB

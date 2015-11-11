@@ -97,7 +97,7 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     export EDITOR=vim
     export EMAIL="dotjab@al-got-rhythm.net"
 
-    source_path $JAB/environ.d/colour
+    source_path $JAB/environ.d/colour.sh
 
     RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
     export LOG_LINES_ON_CD_GIT_DIR=3

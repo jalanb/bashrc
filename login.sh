@@ -6,21 +6,21 @@ source $JAB_SH/asserts.sh
 _assert_directory $JAB_SH
 
 _assert_source_jab_environ () {
-    _assert_source $JAB/environ
+    _assert_source $JAB/environ.sh
     for _file in $(find $JAB/environ.d -type f | tr '\n' ' '); do
         _assert_source $_file
     done
 }
 _assert_directory $JAB_SH/git
-
 JAB_SH_GIT=$JAB_SH/git
+
 _assert_directory $JAB_SH_GIT
 
 _source_jab () {
     _assert_source_jab_environ
     JAB_ENVIRON_SOURCED=
     _assert_source "$JAB_LOCAL/network"
-    for script in aliases functons.sh prompt src/bash/git-completion.bash; do
+    for script in aliases.sh functons.sh prompt src/bash/git-completion.bash; do
         _assert_source "$JAB/$script" || continue
         _assert_source "$JAB_LOCAL/$script" || continue
     done
@@ -69,15 +69,11 @@ _show_welcome () {
 
 
 _assert_directory $JAB_SH/assertions.sh
+
 bashrc_in_jab () {
-    _trap_github
-    _trap_jab
-    _trap_what
     _trap_jab
     _assert_is_function source_what
-    source_what $JAB_SH/assertions
-    _trap_python
-    _show_welcome
+    source_what /assertions/$JAB_SH
 }
 
 _trap_file "$BASH_SOURCE"

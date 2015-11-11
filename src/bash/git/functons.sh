@@ -1,7 +1,7 @@
 #! /bin/bash
 
-. $JAB/bin/first_dir
-. $JAB/environ.d/colour
+. $JAB/bin/first_dir.sh
+. $JAB/environ.d/colour.sh
 
 # functons for git
 

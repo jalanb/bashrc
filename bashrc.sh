@@ -60,7 +60,7 @@ run_bashrc () {
     _source $_what_script || echo Cannot source $_what_script
     #
     local _jab=$(readlink -f $_github/dotjab)
-    builtin cd $_jab && _source $_jab/bashrc && builtin cd >/dev/null 2>&1
+    builtin cd $_jab && _source $_jab/login.sh && builtin cd >/dev/null 2>&1
     if ! is_running autocutsel
     then
         autocutsel &

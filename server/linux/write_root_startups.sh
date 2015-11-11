@@ -28,8 +28,8 @@ cat > /root/.bashrc << EOB
 echo Welcome to ~/.bashrc
 
 JAB=${JAB:-$HOME/.jab}
-[[ -f "$JAB/environ.d/colour"" ]] && source $JAB/environ.d/colour"
-[[ -f "$JAB/prompt" ]] && source $JAB/prompt red
+[[ -f "$JAB/environ.d/colour.sh"" ]] && source $JAB/environ.d/colour.sh"
+[[ -f "$JAB/prompt.sh" ]] && source $JAB/prompt.sh red
 
 # enable color support of ls
 [[ -x /usr/bin/dircolors ]] && eval "\$(dircolors -b)"
