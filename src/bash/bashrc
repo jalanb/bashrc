@@ -1,0 +1,32 @@
+iterm () {
+    if [ "$TERM_PROGRAM" == "iTerm.app" ]
+    then
+        export CLICOLOR=1
+        export LSCOLORS=gxfxcxdxbxegedabagacad
+    fi
+}
+iterm 
+
+just_osx_stuff () {
+    PATH_HOME=$(echo $HOME | sed -e s,.,,)
+    export PATH=~/bin:/Developer/usr/bin:/usr/local/bin:/bin:/usr/bin
+    if [[ $HOME =~ /Users ]]
+    then
+        export MANPAGER='col -bx | vim -c ":set ft=man nonu nolist" -R -'
+        # /usr/local/bin/gls --color=auto -xd `ls -F |grep \/$`
+        # /usr/local/bin/gls --color=auto -xdhtr `ls -F |grep -v \/$`
+    fi
+    iterm
+}
+just_osx_stuff
+
+SRC=~/src
+GIT=$SRC/git
+HUB=$GIT/hub
+JAB=$HUB/dotjab
+cd $JAB
+GITHUB=$HUB
+export PS1="\$? [\u@\h:\$PWD]\n$ "
+WHATDIR=$HOME/src/git/hub/what
+echo WHATDIR, $WHATDIR
+alias q='exit 0'
