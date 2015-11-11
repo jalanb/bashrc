@@ -22,7 +22,7 @@ export PS1="\$? [\u@\H:\$PWD]\n$ "
 JAB=$HUB/dotjab
 require $JAB/functons
 require $JAB/envirok/environ
-echo kd $JAB 
+require $HUB/ack2vim/ack2vim
 echo JAB, $JAB
 export PYTHONPATH=$JAB/src/python/site:$PYTHONPATH
 jj

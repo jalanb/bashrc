@@ -24,7 +24,7 @@ _find_python () {
 
 _run_script () {
     local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
-    local jab_python="${JAB_PYTHON:-${jab}/src/python}"
+    local jab_python="${JAB/src/python:-${jab}/src/python}"
     local script=$jab_python/add_to_a_path.py
     if [[ -f "$script" ]]; then
         if _find_python; then

@@ -6,7 +6,7 @@ set -e
 
 main () {
     shift_dir "$@" && shift;
-    [[ -n $* ]] && cp $JAB_PYTHON/main.py "$@" || cp $JAB_PYTHON/main.py $dir
+    [[ -n $* ]] && cp $JAB/src/python/main.py "$@" || cp $JAB/src/python/main.py $dir
 }
 
 main "$@"

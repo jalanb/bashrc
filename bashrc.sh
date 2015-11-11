@@ -69,7 +69,7 @@ run_bashrc () {
     export TERM="xterm-256color"
     source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
-    mython $JAB_PYTHON/checksums.py
+    mython $/Users/jab/src/git/hub/dotjab/src/python/checksums.py
     echo Bye from $HOME/.bashrc
 }
 

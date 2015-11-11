@@ -65,7 +65,7 @@ alias kp="rsync -a"
 alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
 
 alias p-="echo $OLDPWD"
-alias pt="p $JAB_PYTHON/vim_traceback.py"
+alias pt="p $JAB/src/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
 
@@ -124,14 +124,14 @@ alias comp="source $JAB/environ.d/company.sh"
 
 alias home="cd; cls"
 
-alias tags="p $JAB_PYTHON/ptags.py "
+alias tags="p $JAB/src/python/ptags.py "
 
 
 # xxxxx
 
 alias .....='c ../../../..'
 
-alias ptags="p $JAB_PYTHON/ptags.py "
+alias ptags="p $JAB/src/python/ptags.py "
 
 # xxxxxx
 
@@ -150,4 +150,4 @@ alias service="sudo /sbin/service "
 
 alias stopwatch="killall -9 watch"
 
-alias update_hosts="sudo python $JAB_PYTHON/update_hosts.py"
+alias update_hosts="sudo python $JAB/src/python/update_hosts.py"

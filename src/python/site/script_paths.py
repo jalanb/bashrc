@@ -9,8 +9,10 @@ from dotsite import paths
 
 def get(strings):
     hub = paths.environ_path('GITHUB')
-    jab_bin = paths.environ_path('JAB') / 'bin'
-    jab_python = paths.environ_path('JAB_PYTHON')
+    jab = paths.environ_path('JAB')
+    jab_bin = jab / 'bin'
+    jab_src = jab / 'src'
+    jab_python = jab_src / 'python'
     jab_todo = paths.environ_path('JAB_TODO')
     config = paths.makepath('~/.config')
     abbreviations = {

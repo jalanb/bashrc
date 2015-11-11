@@ -39,7 +39,7 @@ shift_dir () {
 }
 
 first_num () {
-    num=$(mython $JAB_PYTHON/first_num.py "$@")
-    args=$(mython $JAB_PYTHON/first_num.py NOT_FIRST_NUM "$@")
+    num=$(mython $JAB/src/python/first_num.py "$@")
+    args=$(mython $JAB/src/python/first_num.py NOT_FIRST_NUM "$@")
     [[ -n $num ]]
 }
