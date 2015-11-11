@@ -13,4 +13,4 @@ source_here () {
 }
 
 source_here aliases
-source_here functons
+source_here functons.sh

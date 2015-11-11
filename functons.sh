@@ -4,7 +4,7 @@
 
 . $JAB/bin/first_dir
 
-# Called functons because "functions" is ... something else
+# Called functons.sh because "functions" is ... something else
 
 # sorted by strcmp of function name
 
@@ -512,7 +512,7 @@ ve () {
 }
 
 vf () {
-    _edit_jab functons "$@"
+    _edit_jab functons.sh "$@"
 }
 
 vhist () {
@@ -864,9 +864,9 @@ try () {
 }
 
 vaf () {
-    vim -p $JAB/aliases $JAB/functons
+    vim -p $JAB/aliases $JAB/functons.sh
     source_path $JAB/aliases
-    source_path $JAB/functons
+    source_path $JAB/functons.sh
 }
 
 vat () {
@@ -894,7 +894,7 @@ vle () {
 }
 
 vlf () {
-    _edit_locals functons
+    _edit_locals functons.sh
 }
 
 vlo () {
@@ -959,7 +959,7 @@ down () {
 fynd () {
     shift_dir "$@" && shift
     local _level=2
-    . /home/alanb/src/git/hub/dotjab/functons
+    . $JAB/functons.sh
     #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
     sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.dotjab/$JAB/' | g "$@"
 }

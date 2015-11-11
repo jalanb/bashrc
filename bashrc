@@ -20,7 +20,7 @@ _source_jab () {
     _assert_source_jab_environ
     JAB_ENVIRON_SOURCED=
     _assert_source "$JAB_LOCAL/network"
-    for script in aliases functons prompt src/bash/git-completion.bash; do
+    for script in aliases functons.sh prompt src/bash/git-completion.bash; do
         _assert_source "$JAB/$script" || continue
         _assert_source "$JAB_LOCAL/$script" || continue
     done

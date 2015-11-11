@@ -72,7 +72,7 @@ alias r.="rm -rvf *"
 alias sa="source_aliases $JAB/aliases"
 alias sb="c $JAB && source bashrc && -"
 alias se="source $JAB/environ"
-alias sf="source $JAB/functons"
+alias sf="source $JAB/functons.sh"
 alias sp="source $JAB/prompt"
 alias sr="sudo rm -vrf "
 
@@ -111,7 +111,7 @@ alias out="to_release"
 
 alias sla="source $JAB/local/aliases"
 alias sle="source $JAB/local/environ"
-alias slf="source $JAB/local/functons"
+alias slf="source $JAB/local/functons.sh"
 alias slp="source $JAB/local/prompt"
 alias spe="source $JAB/environ.d/python"
 
