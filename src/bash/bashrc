@@ -7,22 +7,21 @@ HUB=$GIT/hub
 # echo HUB, $HUB
 GITHUB=$HUB
 # echo GITHUB, $GITHUB
-WHATDIR=$HOME/src/git/hub/what
+WHATDIR=$HUB/what
 WHAT=$WHATDIR/what.sh
-source $WHAT
+source $HUB/what/what.sh
+# . is now an alias to a fuller source, so re-do
+source_what $HUB/what/what.sh
 echo ww ww, $(ww ww)
-# . is now an alias to a fuller source, so re-do
-source_what $WHAT
-KDDIR=$HOME/src/git/hub/kd
+
+require $HUB/kd/kd.sh
+KDDIR=$HUB/kd
 KD=$KDDIR/kd.sh
-source_what $KD
-# . is now an alias to a fuller source, so re-do
-source_what $KD
 # echo PWD, $(pwd)
 export PS1="\$? [\u@\H:\$PWD]\n$ "
 JAB=$HUB/dotjab
-source_what $JAB/functons
-source_what $JAB/envirok/environ
+require $JAB/functons
+require $JAB/envirok/environ
 echo kd $JAB 
 echo JAB, $JAB
 export PYTHONPATH=$JAB/src/python/site:$PYTHONPATH
