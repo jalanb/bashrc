@@ -1,3 +1,4 @@
+<<<<<<< 35a40d11c425351acb9a31d6cff73ba91e1bd272
 iterm () {
     if [ "$TERM_PROGRAM" == "iTerm.app" ]
     then
@@ -30,3 +31,33 @@ export PS1="\$? [\u@\h:\$PWD]\n$ "
 WHATDIR=$HOME/src/git/hub/what
 echo WHATDIR, $WHATDIR
 alias q='exit 0'
+=======
+echo HOSTNAME, $(hostname -f)
+SRC=~/src
+# echo SRC, $SRC
+GIT=$SRC/git
+# echo GIT, $GIT
+HUB=$GIT/hub
+# echo HUB, $HUB
+GITHUB=$HUB
+# echo GITHUB, $GITHUB
+WHATDIR=$HOME/src/git/hub/what
+WHAT=$WHATDIR/what.sh
+source $WHAT
+echo ww ww, $(ww ww)
+# . is now an alias to a fuller source, so re-do
+source_what $WHAT
+KDDIR=$HOME/src/git/hub/kd
+KD=$KDDIR/kd.sh
+source_what $KD
+# . is now an alias to a fuller source, so re-do
+source_what $KD
+# echo PWD, $(pwd)
+export PS1="\$? [\u@\H:\$PWD]\n$ "
+JAB=$HUB/dotjab
+source_what $JAB/functons
+echo kd $JAB 
+echo JAB, $JAB
+c $JAB
+# alias q='exit 0'
+>>>>>>> Remove $JAB_PYTHON, as it annoyed me

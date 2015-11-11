@@ -14,6 +14,8 @@ a () {
     ack "$@"
 }
 
+source_what $JAB/src/bash/git/functons
+
 c () {
     kd "$@"
     local c_result="$?"
@@ -70,7 +72,7 @@ v () {
     if [[ -z $* ]]; then
         $EDITOR
     else
-        script=$(mython $JAB_PYTHON/vim "$@")
+        script=$(mython $JAB/src/python/vim "$@")
         status=$?
         if [[ $status == 0 ]]; then
             if [[ -n $script ]]; then
@@ -82,7 +84,7 @@ v () {
                 fi
             else
                 echo No script produced, please try
-                echo mython $JAB_PYTHON/vim -U "$@"
+                echo mython $JAB/src/python/vim -U "$@"
             fi
         else
             echo Python error: $status
@@ -90,10 +92,10 @@ v () {
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
-                echo "  mython $JAB_PYTHON/vim -U" "$@"
+                echo "  mython $JAB/src/python/vim -U" "$@"
             else
                 echo No script produced please try
-                echo mython $JAB_PYTHON/vim -U "$@"
+                echo mython $JAB/src/python/vim -U "$@"
             fi
         fi
     fi
@@ -105,7 +107,7 @@ x () {
 
 y () {
     clear
-    mython $JAB_PYTHON/y.py "$@"
+    mython $JAB/src/python/y.py "$@"
 }
 
 # xx
@@ -160,7 +162,7 @@ IP () {
     fi
     for number in 10 172 193 192 100
     do
-        if python $JAB_PYTHON/ifconfig.py $number; then
+        if python $JAB/src/python/ifconfig.py $number; then
             if [[ $BREAK == yes ]]; then
                 break
             fi
@@ -349,11 +351,11 @@ lt () {
 }
 
 lx () {
-    p $JAB_PYTHON/ls/lx.py  "$@"
+    p $JAB/src/python/ls/lx.py  "$@"
 }
 
 ly () {
-    p $JAB_PYTHON/ls/ly.py  "$@"
+    p $JAB/src/python/ls/ly.py  "$@"
 }
 
 ma () {
@@ -397,7 +399,7 @@ py () {
         elif [[ "$all_args" =~ "-U" ]]; then
             mython "$@"
         else
-            script=$(mython $JAB_PYTHON/scripts.py -m $args 2>/dev/null)
+            script=$(mython $JAB/src/python/scripts.py -m $args 2>/dev/null)
             if [[ $? == 0 ]]; then
                 if [[ -z $script ]]; then
                     script=${1/%./.py}
@@ -416,7 +418,7 @@ ra () {
 }
 
 rf () {
-    PYTHON_SCRIPT=$JAB_PYTHON/rf.py
+    PYTHON_SCRIPT=$JAB/src/python/rf.py
     mython $PYTHON_SCRIPT "$@"
 }
 
@@ -435,7 +437,7 @@ rq () {
 }
 
 rt () {
-    $(mython $JAB_PYTHON/remove_tarball.py "$@")
+    $(mython $JAB/src/python/remove_tarball.py "$@")
 }
 
 ru () {
@@ -576,7 +578,7 @@ add () {
 }
 
 cjy () {
-    kd $JAB_PYTHON "$@"
+    kd $JAB/src/python "$@"
 }
 
 clo () {
@@ -691,7 +693,7 @@ jjj () {
 
 
 jjy () {
-    ky $JAB_PYTHON "$@"
+    ky $JAB/src/python "$@"
 }
 
 jpi () {
@@ -854,7 +856,7 @@ tmp () {
 
 unalias try > /dev/null 2>&1
 try () {
-    TRY=$JAB_PYTHON/testing/try.py
+    TRY=$JAB/src/python/testing/try.py
     [[ -f "./try.py" ]] && TRY=./try.py
     mython $TRY "$@"
 }
@@ -931,7 +933,7 @@ vvv () {
 }
 
 vtr () {
-    mython $JAB_PYTHON/vim_traceback.py "$@"
+    mython $JAB/src/python/vim_traceback.py "$@"
 }
 
 VIM () {
@@ -973,7 +975,7 @@ left () {
 
 main () {
     shift_dir "$@" && shift
-    [[ -n $* ]] && cp $JAB_PYTHON/main.py $1 || cp $JAB_PYTHON/main.py $dir
+    [[ -n $* ]] && cp $JAB/src/python/main.py $1 || cp $JAB/src/python/main.py $dir
 }
 
 mine () {
@@ -1081,7 +1083,7 @@ detab () {
 }
 
 freds () {
-    mython $JAB_PYTHON/freds.py "$@"
+    mython $JAB/src/python/freds.py "$@"
 }
 
 LetGo () {
@@ -1131,7 +1133,7 @@ taocl() {
 
 vfile () {
     echo "I should've used vtr"
-    mython $JAB_PYTHON/vfile.py "$@"
+    mython $JAB/src/python/vfile.py "$@"
 }
 
 ylint () {
@@ -1224,7 +1226,7 @@ maketest () {
     fi
     local test_dir=$(dirname $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
-    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB_PYTHON/test_.py > $test_file
+    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB/src/python/test_.py > $test_file
 }
 
 thirteen () {
@@ -1256,7 +1258,7 @@ todo_show () {
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
-    mython $JAB_PYTHON/todo.py $todo_txt
+    mython $JAB/src/python/todo.py $todo_txt
 }
 
 # xxxxxxxxxx
@@ -1265,7 +1267,7 @@ _like_duck () {
 }
 
 jab_scripts () {
-    mython $JAB_PYTHON/scripts.py "$@"
+    mython $JAB/src/python/scripts.py "$@"
 }
 
 quick_ping () {

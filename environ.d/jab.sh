@@ -21,8 +21,6 @@ if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]; then
     export JAB_PUB_ID=$JAB_ID.pub
     export JAB_SSH=$(dirname $JAB_PUB_ID)
     export JAB_HOME=$HOME
-    JAB_PYTHON=$JAB/src/python
-    [[ -d "$JAB_PYTHON" ]] || JAB_PYTHON=not_dir_jab_python
     export JAB_PYTHON
     JABS=
     [[ -d /usr/local/svn/jabs ]] && JABS=file:///usr/local/svn/jabs

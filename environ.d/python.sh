@@ -26,8 +26,6 @@ _try="$_JAB_SRC_PYTHON_DIR/testing/try.py"
 [[ -f "$_try" ]] || _try=no_file_try_py
 export TRY=$_try
 
-_jab_src_python_dir=$JAB/src/python
-[[ -d "$_jab_src_python_dir" ]] || _jab_src_python_dir=no_dir_jab_src_python
 _home_src_python_dir=~/src/python
 [[ -d "$_home_src_python_dir" ]] || _home_src_python_dir=no_dir_home_src_python
 
@@ -35,13 +33,11 @@ _expected=$JAB/environ; _actual="No $(basename $_expected)."; [[ -f "$_expected"
 source_path $JAB/bin/add_to_a_path.sh
 
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
-[[ $PYTHONPATH =~ $JAB ]] || export PYTHONPATH=$_jab_src_python_dir/site$suffix
 
-export JAB_PYTHON=$_jab_src_python_dir
 export HOME_PYTHON=$_home_src_python_dir
 _has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
-_has_py $JAB_PYTHON && add_to_a_path _SRC_PYTHON_PATH $JAB_PYTHON
-export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
-PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
+_has_py $JAB/src/python && add_to_a_path _SRC_PYTHON_PATH $JAB/src/python
+export PYTHON_SOURCE_PATH=$JAB/src/python:$HOME_PYTHON
+PYTHON_HOME=${HOME_PYTHON:-$JAB/src/python}
 [[ -f "$PYTHON_HOME/pythonrc.py" ]] && export PYTHONSTARTUP=$PYTHON_HOME/pythonrc.py
 export PYTHON_HOME
