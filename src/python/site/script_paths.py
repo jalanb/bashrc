@@ -13,7 +13,7 @@ def get(strings):
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'
     jab_python = jab_src / 'python'
-    jab_todo = paths.environ_path('JAB_TODO')
+    jab_todo = jab / 'todo.txt'
     config = paths.makepath('~/.config')
     abbreviations = {
         '2': [

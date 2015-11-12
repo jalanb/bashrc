@@ -1,0 +1,4 @@
+Host jab.ook
+    Hostname jab-ook.local
+    User jab
+    IdentityFile ~/.ssh/id_jab

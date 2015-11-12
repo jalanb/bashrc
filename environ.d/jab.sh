@@ -12,10 +12,8 @@ _try_known_jab_paths () {
     [[ -d "$JAB" ]] || JAB=not_dir_jab
 }
 
-if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]; then
+_source_jab_environ () {
     _try_known_jab_paths
-    export JAB_TODO=$JAB/todo.txt
-    [[ -f "$JAB_TODO" ]] || JAB_TODO=not_file_jab_todo
     home_id=~/.ssh/id_jab
     [[ -f "$home_id" ]] && export JAB_ID=$home_id
     export JAB_PUB_ID=$JAB_ID.pub
@@ -24,10 +22,6 @@ if [[ -z $JAB_JAB_ENVIRON_SOURCED ]]; then
     JABS=
     [[ -d /usr/local/svn/jabs ]] && JABS=file:///usr/local/svn/jabs
     export JABS
-fi
-JAB_JAB_ENVIRON_SOURCED=1
+}
 
-    for script in $JAB/environ.d; do
-        source_what "$JAB/environ.d/$script"
-        source_what "$JAB/local/$script"
-    done
+_source_jab_environ

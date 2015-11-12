@@ -14,7 +14,7 @@ a () {
     ack "$@"
 }
 
-source_what $JAB/src/bash/git/functons
+require $JAB/src/bash/git/functons
 
 c () {
     kd "$@"
@@ -1231,7 +1231,7 @@ thirteen () {
 }
 
 todo_edit () {
-    local todo_txt="$JAB_TODO"
+    local todo_txt="$JAB/todo.txt"
     local git_options="--git-dir=$JAB/.git --work-tree=$JAB"
     if [[ -f todo.txt ]]; then
         todo_txt=todo.txt
@@ -1241,16 +1241,16 @@ todo_edit () {
         git_options=
     fi
     v $todo_txt
-    if git status -s $JAB_TODO 2>&1 | grep -q "M.*$(basename $JAB_TODO)"; then
-        git add $JAB_TODO
-        git commit -m'more or less stuff to be done' $JAB_TODO
-    elif svn stat "$JAB_TODO" 2>&1 | grep -q "M .* $JAB_TODO"; then
-        svn ci -m'more or less stuff to be done' "$JAB_TODO"
+    if git status -s $JAB/todo.txt 2>&1 | grep -q "M.*$(basename $JAB/todo.txt)"; then
+        git add $JAB/todo.txt
+        git commit -m'more or less stuff to be done' $JAB/todo.txt
+    elif svn stat "$JAB/todo.txt" 2>&1 | grep -q "M .* $JAB/todo.txt"; then
+        svn ci -m'more or less stuff to be done' "$JAB/todo.txt"
     fi
 }
 
 todo_show () {
-    local todo_txt="$JAB_TODO"
+    local todo_txt="$JAB/todo.txt"
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi

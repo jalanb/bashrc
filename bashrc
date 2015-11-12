@@ -12,8 +12,9 @@ _show_status () {
         grep --color 'up-to-date.*'
     fi
     local jab_src_bash=$JAB/src/bash
-    source_path "$jab_src_bash"/subversion/source
-    source_path "$jab_src_bash"/git/source
+    require $JAB/src/bash/git/functions
+    require $JAB/src/bash/subversion/aliases
+    require $JAB/src/bash/subversion/functions
 }
 
 source_path () {
@@ -32,25 +33,17 @@ _get_source_path_from_what () {
     fi
 }
 
-_get_jab_environ () {
-    _expected=$JAB/envirok/jab_environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;source_path $_actual
-}
-
 _source_jab_scripts () {
-    _get_jab_environ
-    JAB_ENVIRON_SOURCED=
-    for script in environ python-environ ; do
-        source_path "$JAB/envirok/$script"
-        source_path "$JAB/local/$script"
-    done
-    source_path "$JAB_LOCAL/network"
-    for script in aliases functons prompt src/bash/git-completion.bash; do
-        source_path "$JAB/$script" || continue
-        source_path "$JAB_LOCAL/$script" || continue
-    done
-    for script in kd/kd.sh ack2vim/ack2vim; do
-        source_path "$GITHUB"/$script
-    done
+    require "$JAB/environ"
+    require "$JAB/python-environ"
+    require "$JAB/envirok/environ"
+    require "$JAB/envirok/python-environ"
+    require "$JAB/local/network"
+    require "$JAB/aliases"
+    require "$JAB/functons"
+    require "$JAB/prompt"
+    requite "$HUB/kd/kd.sh"
+    requite "$HUB/ack2vim/ack2vim"
 }
 
 _if_not_python_try_home_bin () {
@@ -113,9 +106,6 @@ _set_up_symbols () {
         unset JAB
         return 1
     fi
-    JAB_LOCAL=${myhome_jab_dir}/local
-    [[ -d "$JAB_LOCAL" ]] || JAB_LOCAL=
-    [[ -z $JAB_LOCAL && -d "$github_jab_dir/local" ]] && JAB_LOCAL=$github_jab_dir/local
     return 0
 }
 

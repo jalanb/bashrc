@@ -11,7 +11,7 @@ WHATDIR=$HUB/what
 WHAT=$WHATDIR/what.sh
 source $HUB/what/what.sh
 # . is now an alias to a fuller source, so re-do
-source_what $HUB/what/what.sh
+require $HUB/what/what.sh
 echo ww ww, $(ww ww)
 
 require $HUB/kd/kd.sh
@@ -23,6 +23,8 @@ JAB=$HUB/dotjab
 require $JAB/functons
 require $JAB/envirok/environ
 require $HUB/ack2vim/ack2vim
+require $JAB/aliases
+sp
 echo JAB, $JAB
 export PYTHONPATH=$JAB/src/python/site:$PYTHONPATH
 jj

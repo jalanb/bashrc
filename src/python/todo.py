@@ -10,6 +10,7 @@ except ImportError:
     from collections import namedtuple
 
 
+from dotsite import paths
 import colours
 
 
@@ -21,7 +22,8 @@ def todo_file():
         arg = sys.argv[1]
         if os.path.isfile(arg):
             return arg
-    return os.environ['JAB_TODO']
+    jab = paths.environ_path('JAB')
+    return jab / 'todo.txt'
 
 
 def read_todo(path_to_todo):

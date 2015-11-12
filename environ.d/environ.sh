@@ -1,6 +1,6 @@
 #! /bin/bash
 
-if [[ -z $JAB_ENVIRON_SOURCED ]]; then
+_source_jab_environ () {
     EX_OK=0
     EX_BAD=1
 
@@ -103,5 +103,5 @@ if [[ -z $JAB_ENVIRON_SOURCED ]]; then
     export LOG_LINES_ON_CD_GIT_DIR=3
 
     set -o vi
-fi
-export JAB_ENVIRON_SOURCED=1
+}
+_source_jab_environ

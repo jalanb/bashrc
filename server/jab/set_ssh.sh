@@ -3,6 +3,7 @@
 _expected=$JAB/environ; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 
 HOME_SSH=~/.ssh
+JAB_SSH=$JAB/etc/ssh
 HOME_ID=$HOME_SSH/id_rsa
 
 authorize_jab () {
@@ -14,7 +15,6 @@ authorize_jab () {
 
 change_modes () {
     sudo chmod 400 -R $JAB_SSH $HOME_SSH
-    sudo chmod 700 -R $JAB_SSH/.svn
     chmod u+X $HOME_SSH $JAB_SSH
 
     chmod 400 $JAB_ID
