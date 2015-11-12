@@ -22,6 +22,7 @@ require $JAB/functons
 require $JAB/envirok/environ
 require $HUB/ack2vim/ack2vim
 require $JAB/aliases
+require $JAB/local/functons
 sp
 echo JAB, $JAB
 export PYTHONPATH=$JAB/src/python/site:$PYTHONPATH
