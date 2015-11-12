@@ -7,8 +7,6 @@ HUB=$GIT/hub
 # echo HUB, $HUB
 GITHUB=$HUB
 # echo GITHUB, $GITHUB
-WHATDIR=$HUB/what
-WHAT=$WHATDIR/what.sh
 source $HUB/what/what.sh
 # . is now an alias to a fuller source, so re-do
 require $HUB/what/what.sh
