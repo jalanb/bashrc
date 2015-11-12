@@ -96,6 +96,10 @@ gdl () {
     git diff --color=always "$@"| less -r
 }
 
+gds () {
+    git dv --staged "$@"
+}
+
 gdv () {
     git dv "$@"
 }
@@ -142,6 +146,10 @@ _gp () {
 
 gpu () {
     _gp push "$@"
+}
+
+grh () {
+    git reset HEAD "$@"
 }
 
 gri () {
