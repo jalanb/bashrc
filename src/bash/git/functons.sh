@@ -3,7 +3,7 @@
 . $JAB/bin/first_dir.sh
 . $JAB/environ.d/colour.sh
 
-# functons for git
+# functons.sh for git
 
 _git_status_char_regexp="[ MADRCU]"
 _git_status_regexp="^$_git_status_char_regexp$_git_status_char_regexp"
