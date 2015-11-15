@@ -107,7 +107,7 @@ gdv () {
 _gl () {
     local cmd=$1
     shift
-    local loglines=$(( ${LINES:-$(tput lines)} / 2 ))
+    local loglines=$(( ${LINES:-$(tput lines)} / 3 ))
     git $cmd "$@" | head -n $loglines
 }
 
