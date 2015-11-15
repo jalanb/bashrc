@@ -1,21 +1,14 @@
 echo HOSTNAME, $(hostname -f)
 SRC=~/src
-# echo SRC, $SRC
 GIT=$SRC/git
-# echo GIT, $GIT
 HUB=$GIT/hub
-# echo HUB, $HUB
 GITHUB=$HUB
-# echo GITHUB, $GITHUB
 source $HUB/what/what.sh
-# . is now an alias to a fuller source, so re-do
 require $HUB/what/what.sh
-# echo ww ww, $(ww ww)
 
 require $HUB/kd/kd.sh
 KDDIR=$HUB/kd
 KD=$KDDIR/kd.sh
-# echo PWD, $(pwd)
 JAB=$HUB/dotjab
 require $JAB/src/bash/functons.sh
 require $JAB/environ.d/environ.sh
