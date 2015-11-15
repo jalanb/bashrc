@@ -543,7 +543,7 @@ vp () {
 }
 
 vv () {
-    [[ -n $* ]] && vim $JAB/vim/$1 || v ~/.vimrc
+    [[ -n $* ]] && vim $JAB/vim/$1 || vim ~/.vimrc
 }
 
 vy () {
