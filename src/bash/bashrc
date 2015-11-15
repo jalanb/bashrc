@@ -10,7 +10,7 @@ GITHUB=$HUB
 source $HUB/what/what.sh
 # . is now an alias to a fuller source, so re-do
 require $HUB/what/what.sh
-echo ww ww, $(ww ww)
+# echo ww ww, $(ww ww)
 
 require $HUB/kd/kd.sh
 KDDIR=$HUB/kd
