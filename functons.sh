@@ -753,7 +753,7 @@ lyy () {
 }
 
 num () {
-    v $JAB/local/numbers.txt
+    vim $JAB/local/numbers.txt
 }
 
 pyi () {
