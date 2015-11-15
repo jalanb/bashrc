@@ -14,7 +14,7 @@ a () {
     ack "$@"
 }
 
-require $JAB/src/bash/git/functons
+require $JAB/src/bash/git/functons.sh
 
 c () {
     kd "$@"
