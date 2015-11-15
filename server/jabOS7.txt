@@ -35,7 +35,8 @@ git clone $GITHUB/jeffkaufman/icdiff.git
 # set up JAB
 JAB=$GITHUB_DIR/dotjab
 cd $JAB
-cp dotbashrc ~/.bashrc
+# cp dotbashrc ~/.bashrc
+# mv dotbashrc $JAB/src/jab/login.sh ?
 cd server/linux
 bash make_software.sh
 
