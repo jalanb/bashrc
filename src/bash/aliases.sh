@@ -69,11 +69,11 @@ alias pt="p $JAB/src/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
 
-alias sa="source_aliases $JAB/aliases.sh"
+alias sa="source_aliases $JAB/src/bash/aliases.sh"
 alias sb="c $JAB && source login.sh && -"
-alias se="source $JAB/environ.sh"
-alias sf="source $JAB/functons.sh"
-alias sp="source $JAB/prompt.sh"
+alias se="source $JAB/environ.d/jab.sh"
+alias sf="source $JAB/src/bash/functons.sh"
+alias sp="source $JAB/src/bash/prompt.sh"
 alias sr="sudo rm -vrf "
 
 alias yy="y $PYTHON_HOME"

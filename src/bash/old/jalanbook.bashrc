@@ -16,17 +16,17 @@ JAB_SH_GIT=$JAB_SH/git
 _assert_directory $JAB_SH_GIT
 
 _source_jab_environ () {
-    _assert_source $JAB/environ.sh
+    _assert_source $JAB/environ.d/jab.sh
     _source_jab_environ_d
 }
 
 _source_jab_scripts () {
-    require "$JAB/environ.sh"
+    require "$JAB/environ.d/jab.sh"
     require "$JAB/environ.d/python.sh"
     require "$JAB/local/network"
-    require "$JAB/aliases.sh"
-    require "$JAB/functons.sh"
-    require "$JAB/prompt.sh"
+    require "$JAB/src/bash/aliases.sh"
+    require "$JAB/src/bash/functons.sh"
+    require "$JAB/src/bash/prompt.sh"
     requite "$HUB/kd/kd.sh"
     requite "$HUB/ack2vim/ack2vim"
 }

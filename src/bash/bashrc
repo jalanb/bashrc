@@ -17,10 +17,10 @@ KDDIR=$HUB/kd
 KD=$KDDIR/kd.sh
 # echo PWD, $(pwd)
 JAB=$HUB/dotjab
-require $JAB/functons.sh
+require $JAB/src/bash/functons.sh
 require $JAB/environ.d/environ.sh
 require $HUB/ack2vim/ack2vim
-require $JAB/aliases.sh
+require $JAB/src/bash/aliases.sh
 require $JAB/local/functons.sh
 export PS1="\$? [\u@\H:\$PWD]\n$ "
 export PYTHONPATH=$JAB/src/python/site:$PYTHONPATH

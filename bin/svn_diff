@@ -1,7 +1,7 @@
 #! /bin/bash
 
 set_symbols () {
-    _expected=$JAB/environ.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+    _expected=$JAB/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
     PYDIFF=$JAB/src/github/pydiff
     VIM_EDITOR=vim
     ARGS="$@"

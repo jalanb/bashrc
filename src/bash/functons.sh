@@ -494,7 +494,7 @@ v. () {
 }
 
 va () {
-    _edit_jab aliases.sh
+    _edit_jab src/bash/aliases.sh
 }
 
 vb () {
@@ -506,11 +506,11 @@ vd () {
 }
 
 ve () {
-    _edit_jab environ.sh "$@"
+    _edit_jab environ.d/jab.sh "$@"
 }
 
 vf () {
-    _edit_jab functons.sh "$@"
+    _edit_jab src/bash/functons.sh "$@"
 }
 
 vhist () {
@@ -858,9 +858,9 @@ try () {
 }
 
 vaf () {
-    vim -p $JAB/aliases.sh $JAB/functons.sh
-    source_path $JAB/aliases.sh
-    source_path $JAB/functons.sh
+    vim -p $JAB/src/bash/aliases.sh $JAB/src/bash/functons.sh
+    source_path $JAB/src/bash/aliases.sh
+    source_path $JAB/src/bash/functons.sh
 }
 
 vat () {
@@ -953,7 +953,7 @@ down () {
 fynd () {
     shift_dir "$@" && shift
     local _level=2
-    . $JAB/functons.sh
+    . $JAB/src/bash/functons.sh
     #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
     sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.dotjab/$JAB/' | g "$@"
 }

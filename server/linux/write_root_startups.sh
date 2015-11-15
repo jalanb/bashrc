@@ -29,7 +29,7 @@ echo Welcome to ~/.bashrc
 
 JAB=${JAB:-$HOME/.jab}
 [[ -f "$JAB/environ.d/colour.sh"" ]] && source $JAB/environ.d/colour.sh"
-[[ -f "$JAB/prompt.sh" ]] && source $JAB/prompt.sh red
+[[ -f "$JAB/src/bash/prompt.sh" ]] && source $JAB/src/bash/prompt.sh red
 
 # enable color support of ls
 [[ -x /usr/bin/dircolors ]] && eval "\$(dircolors -b)"

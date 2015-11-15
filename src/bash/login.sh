@@ -98,7 +98,6 @@ log_verbose_bashrc () {
     EXCLUSIONS="-e him\?xBH \
         -e up-to-date \
         -e tr.: \
-        -e echo..home.alanb.src.git.hub.dotjab.envirok.jab_environ \
         -e Error..Can.t.open.display \
         -e sed..e..s.Your.branch..JAB \
         -e estimate.py \

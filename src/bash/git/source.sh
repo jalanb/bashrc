@@ -12,5 +12,5 @@ source_here () {
     fi
 }
 
-source_here aliases.sh
-source_here functons.sh
+source_here src/bash/aliases.sh
+source_here src/bash/functons.sh
