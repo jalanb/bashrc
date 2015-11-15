@@ -72,7 +72,7 @@ v () {
     if [[ -z $* ]]; then
         $EDITOR
     else
-        script=$(mython $JAB/src/python/vim "$@")
+        script=$(mython $JAB/src/python/vim.py "$@")
         status=$?
         if [[ $status == 0 ]]; then
             if [[ -n $script ]]; then
@@ -84,7 +84,7 @@ v () {
                 fi
             else
                 echo No script produced, please try
-                echo mython $JAB/src/python/vim -U "$@"
+                echo mython $JAB/src/python/vim.py -U "$@"
             fi
         else
             echo Python error: $status
@@ -92,10 +92,10 @@ v () {
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
-                echo "  mython $JAB/src/python/vim -U" "$@"
+                echo "  mython $JAB/src/python/vim.py -U" "$@"
             else
                 echo No script produced please try
-                echo mython $JAB/src/python/vim -U "$@"
+                echo mython $JAB/src/python/vim.py -U "$@"
             fi
         fi
     fi
