@@ -92,7 +92,7 @@ def parse_args(methods):
 
     _add_argument('-v', '--version')
     _add_argument('-U', '--use_debugger')
-    _add_argument('files', 'files to edit')
+    _add_argument('files', help='files to edit')
     args = _parse_args()
 
     return args
