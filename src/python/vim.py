@@ -4,6 +4,7 @@
 from __future__ import print_function
 import os
 import sys
+import argparse
 from bdb import BdbQuit
 
 
@@ -15,6 +16,16 @@ from vim_script import vim_main
 
 class ScriptError(NotImplementedError):
     pass
+
+
+def run_args(args, methods):
+    """Run any methods eponymous with args"""
+    if not args:
+        return False
+    valuable_args = {k for k, v in args.__dict__.items() if v}
+    arg_methods = {methods[a] for a in valuable_args if a in methods}
+    for method in arg_methods:
+        method(args)
 
 
 def version(args):
@@ -32,76 +43,36 @@ def Use_debugger(_args):
 
 def parse_args(methods):
     """Parse out command line arguments"""
-
-    import argparse
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-
-    class Arg(object):
-        def __init__(self, k, v):
-            self._key = k
-            self._value = v
-
-
-    class Args(object):
-        def __init__(self, a):
-            self._args = a.__dict__.copy()
-
-        def __contains__(self, item):
-            return self._args[item]
-
-    class PredicatedArgs(Args):
-        def __init__(self, predicate, a):
-            super(PredicatedArgs, self).__init__(a)
-            self._predicate = predicate
-
-        def _predicate(self, x):
-            return bool(x)
-
-        def __iter__(self):
-            for _ in self._args:
-                if self._predicate(_):
-                    yield _
-
-    def _has_value(_):
-        _, value = _
-        return bool(value)
-
-    class ValuedArgs(PredicatedArgs):
-        def __init__(self, a):
-            super(ValuedArgs, self).__init__(_has_value, a)
-
-    def _run_args(args):
-        """Run any methods eponymous with args"""
-        valued_args = ValuedArgs(args)
-
-        args_with_values = {k:v for k, v in _value_args.items() if v}
-        method_args = [_ for _ in valued_args.items() if _ in methods]
-        [methods[_](args) for _ in method_args]
-        arg_methods = {methods[_] for _ in valued_args if _ in methods}
-        for method in arg_methods:
-            method(args)
-        return args
-
-    def _add_argument(*args, **kwargs):
-        kwargs['action'] = kwargs.get('action', 'store_true')
-        parser.add_argument(*args, **kwargs)
-
-    def _parse_args():
-        _args = parser.parse_args()
-        _run_args(args)
-
-    _add_argument('-v', '--version')
-    _add_argument('-U', '--use_debugger')
-    _add_argument('files', help='files to edit')
-    args = _parse_args()
-
+    parser.add_argument('files', metavar='files', type=str, nargs='+',
+                        help='files to edit')
+    parser.add_argument('-v', '--version', action='store_true',
+                        help='Show version')
+    parser.add_argument('-U', '--Use_debugger', action='store_true',
+                        help='Run the script with pdb (or pudb if available)')
+    args = parser.parse_args()
+    run_args(args, methods)
     return args
+
+
+def strip_uv(args):
+    result = []
+    for arg in args:
+        if arg in ['--Use_debugger', '--version']:
+            continue
+        if arg[0] == '-':
+            arg = ''.join([c for c in arg if c not in 'vU'])
+            if arg == '-':
+                continue
+        result.append(arg)
+    return result
 
 
 def main():
     """Run the script"""
     try:
-        args = parse_args(globals())
+        parse_args(globals())
+        args = strip_uv(sys.argv[1:])
         return vim_main(args)
     except BdbQuit:
         pass
