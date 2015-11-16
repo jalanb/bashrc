@@ -46,6 +46,8 @@ def parse_args(methods):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('files', metavar='files', type=str, nargs='+',
                         help='files to edit')
+    parser.add_argument('-p', '--tabs', action='store_true',
+                        help='put files in tabs')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
@@ -55,13 +57,13 @@ def parse_args(methods):
     return args
 
 
-def strip_uv(args):
+def strip_puv(args):
     result = []
     for arg in args:
-        if arg in ['--Use_debugger', '--version']:
+        if arg in ['--Use_debugger', '--version', '--tabs']:
             continue
         if arg[0] == '-':
-            arg = ''.join([c for c in arg if c not in 'vU'])
+            arg = ''.join([c for c in arg if c not in 'pvU'])
             if arg == '-':
                 continue
         result.append(arg)
@@ -72,7 +74,7 @@ def main():
     """Run the script"""
     try:
         parse_args(globals())
-        args = strip_uv(sys.argv[1:])
+        args = strip_puv(sys.argv[1:])
         return vim_main(args)
     except BdbQuit:
         pass
