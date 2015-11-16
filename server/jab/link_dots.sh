@@ -48,6 +48,15 @@ link_to_home () {
 	fi
 }
 
+link_bashrc () {
+    LOGIN=$JAB/src/bash/login.sh
+    if [[ -f $LOGIN ]]; then
+        [[ -d ~/old ]] || mkdir ~/old
+        mv ~/.bashrc old
+        ln -s $LOGIN ~/.bashrc
+    fi
+}
+
 main () {
 	[[ -d ~/.vim ]] && rm -rf ~/.vim
 	link_to_home vim
