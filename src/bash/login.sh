@@ -1,3 +1,6 @@
+
+test -d ~/.local_login.sh && source ~/.local_login.sh
+
 echo HOSTNAME, $(hostname -f)
 SRC=~/src
 GIT=$SRC/git
