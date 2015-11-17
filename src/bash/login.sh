@@ -10,8 +10,7 @@ source $HUB/what/what.sh
 require $HUB/what/what.sh
 
 require $HUB/kd/kd.sh
-KDDIR=$HUB/kd
-KD=$KDDIR/kd.sh
+KD=$HUB/kd/kd.sh
 JAB=$HUB/dotjab
 require $JAB/src/bash/functons.sh
 require $JAB/environ.d/environ.sh

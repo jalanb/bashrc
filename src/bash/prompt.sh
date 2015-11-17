@@ -67,7 +67,7 @@ prompt_command () {
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     console_whoami 
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
-    [[ -f "$KD_DIR/kd.py" ]] && mython $KD_DIR/kd.py --add . >/dev/null 2>&1
+    what -q kd && kd --add . >/dev/null 2>&1
     history -a
     local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)
     [[ -n "$VIRTUAL_ENV" ]] && python_version=${python_version}.$(basename $VIRTUAL_ENV)
