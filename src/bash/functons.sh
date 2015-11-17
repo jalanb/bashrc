@@ -649,7 +649,7 @@ ghv () {
 }
 
 gre () {
-    $(which grep) --color=never "$@"
+    $(which grep) -h --color=never "$@"
 }
 
 gv. () {
@@ -956,10 +956,6 @@ fynd () {
     . $JAB/src/bash/functons.sh
     #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
     sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.dotjab/$JAB/' | g "$@"
-}
-
-grep () {
-    g -h "$@"
 }
 
 left () {
