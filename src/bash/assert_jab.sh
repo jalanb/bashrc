@@ -15,7 +15,7 @@ _source_jab_environ () {
 
 source_jab () {
     _source_jab_environ
-    for script in aliases.sh functons.sh prompt.sh src/bash/git-completion.bash; do
+    for script in aliases.sh functons.sh prompt.sh src/bash/git/completion.sh; do
         source_what "$JAB/src/bash/$script" || continue
     done
 }
