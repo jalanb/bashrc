@@ -33,6 +33,7 @@ _expected=$JAB/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_
 source_path $JAB/bin/add_to_a_path.sh
 
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
+export PYTHONPATH=$JAB/src/python/site$suffix
 
 export HOME_PYTHON=$_home_src_python_dir
 _has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
