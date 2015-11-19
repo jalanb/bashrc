@@ -64,7 +64,7 @@ def _extract_first(predicate, items):
         if predicate(item):
             result.remove(item)
             return item, result
-    raise KeyError
+    return None, items
 
 def _extract_all(predicate, items):
     found = bool([_ for _ in items if predicate(_)])
@@ -75,22 +75,14 @@ def _extract_first_digit(items):
 
 
 def script(args):
-    digit, args = _extract_first_digit(
-        [_ for _ in args if _ not in ('NOT_FIRST_NUM',)])
-    if digit:
+    want_everything_else = 'NOT_FIRST_NUM' in args
+    _, args = _extract_first(lambda x: x == 'NOT_FIRST_NUM', args)
+    digit, args = _extract_first_digit(args)
+    if want_everything_else:
+        print(' '.join(args))
+        return True
+    if digit is not None:
         print(digit)
-    if args:
-        print(' '.join(args))
-    for i, item in enumerate(args):
-        if item.isdigit():
-            if rest:
-                args = args[:i] + args[i+1:]
-                break
-            else:
-                print(item)
-                return True
-    if rest:
-        print(' '.join(args))
         return True
     return False
 
