@@ -32,11 +32,6 @@ def Invert(_args):
     _invert = True
 
 
-def version(args):
-    print('%s %s' % (args, __version__))
-    raise SystemExit
-
-
 def Use_debugger(_args):
     try:
         import pudb as pdb
@@ -47,19 +42,17 @@ def Use_debugger(_args):
 
 def parse_args(methods):
     """Parse out command line arguments"""
-
-    def my_arg(string):
-        return string in ['-I', '-U', '-v', '--Invert', '--Use_debugger', '--version']
-
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('items', metavar='items', type=str, nargs='*',
                         help='some items')
     parser.add_argument('-I', '--Invert', action='store_true',
                         help='Show all args except the first number')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
                         help='Run the script with pdb (or pudb if available)')
+
+    def my_arg(string):
+        return string in ['-I', '-U', '--Invert', '--Use_debugger']
+
     my_args = [a for a in sys.argv[1:] if my_arg(a)]
     args = parser.parse_args(my_args)
     run_args(args, methods)
