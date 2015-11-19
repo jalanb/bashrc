@@ -40,6 +40,6 @@ shift_dir () {
 
 first_num () {
     num=$(mython $JAB/src/python/first_num.py "$@")
-    args=$(mython $JAB/src/python/first_num.py NOT_FIRST_NUM "$@")
+    args=$(mython $JAB/src/python/first_num.py --Invert "$@")
     [[ -n $num ]]
 }

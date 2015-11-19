@@ -1,5 +1,5 @@
 #! /usr/bin/env python2
-"""Script to """
+"""Script to show the first number in its arguments"""
 
 from __future__ import print_function
 import os
@@ -25,6 +25,13 @@ def run_args(args, methods):
         method(args)
 
 
+_invert = False
+
+def Invert(_args):
+    global _invert
+    _invert = True
+
+
 def version(args):
     print('%s %s' % (args, __version__))
     raise SystemExit
@@ -40,17 +47,23 @@ def Use_debugger(_args):
 
 def parse_args(methods):
     """Parse out command line arguments"""
+
+    def my_arg(string):
+        return string in ['-I', '-U', '-v', '--Invert', '--Use_debugger', '--version']
+
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('items', metavar='items', type=str, nargs='*',
                         help='some items')
+    parser.add_argument('-I', '--Invert', action='store_true',
+                        help='Show all args except the first number')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
                         help='Run the script with pdb (or pudb if available)')
-    clean_args = [a for a in sys.argv[1:] if a[0] != '-' or a[1] in 'Uv']
-    args = parser.parse_args(clean_args)
+    my_args = [a for a in sys.argv[1:] if my_arg(a)]
+    args = parser.parse_args(my_args)
     run_args(args, methods)
-    return sys.argv[1:]
+    return [a for a in sys.argv[1:] if not my_arg(a)]
 
 
 def _globalize(items, predicate, name):
@@ -75,11 +88,9 @@ def _extract_first_digit(items):
 
 
 def script(args):
-    want_everything_else = 'NOT_FIRST_NUM' in args
-    _, args = _extract_first(lambda x: x == 'NOT_FIRST_NUM', args)
-    digit, args = _extract_first_digit(args)
-    if want_everything_else:
-        print(' '.join(args))
+    digit, others = _extract_first_digit(args)
+    if _invert:
+        print(' '.join(others))
         return True
     if digit is not None:
         print(digit)
