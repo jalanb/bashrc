@@ -17,7 +17,7 @@ ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     if [[ -z "$*" ]]; then
         echo Nothing specified for add >&2
-        echo 'Did you mean "gaa" (add all) ?'
+        echo 'Did you mean "gal" (add all) ?'
         return 1
     else
         git add "$@"
@@ -53,8 +53,12 @@ tc () {
 
 # xxx
 
-gaa () {
-    ga .
+aga () {
+    git reset HEAD "$@"
+}
+
+gal () {
+    ga "$@"
 }
 
 gac () {
