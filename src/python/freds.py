@@ -75,7 +75,7 @@ def dirs():
 
 
 def freds():
-    exts = ('', '.py', '.sh', '.txt')
+    exts = ('', '.py', '.sh', '.txt', '.now')
     return [str('%s/fred%s' % (d,e)) for d in dirs() for e in exts]
 
 
