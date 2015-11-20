@@ -247,6 +247,10 @@ gsv () {
 
 # xxxx
 
+ggai () {
+    g -q $1 $2 && gai $2 || echo fuck off
+}
+
 gaic () {
     gai .; gc "$@"
 }
