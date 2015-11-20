@@ -13,13 +13,16 @@ from fnmatch import fnmatch
 
 from repositories import repository
 from dotsite import splits
+from dotsite import paths
 
 
 def _path_to_locate():
     """Location of the locate command on most unixen"""
-    homebrewed_locate = '/usr/local/Cellar/findutils/4.4.2/bin/locate'
-    if os.path.isfile(homebrewed_locate):
-        return homebrewed_locate
+    homebrewed_findutils = paths.path('/usr/local/Cellar/findutils/4.4.2/bin/')
+    for basename in ('locate', 'glocate'):
+        homebrewed_locate = homebrewed_findutils / basename
+        if homebrewed_locate.isfile():
+            return homebrewed_locate
     return '/usr/bin/locate'
 
 
