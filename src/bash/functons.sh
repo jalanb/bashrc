@@ -267,7 +267,7 @@ gg () {
 
 gh () {
     local __doc__="show stuff from history"
-    _strip_history | grep --color "$@"
+    strip_history | grep --color "$@"
 }
 
 gv () {
@@ -515,15 +515,15 @@ vf () {
 
 vhist () {
     local __doc__="edit unplugged stuff from history"
-    _tease_history | [[ -n $* ]] && vim - +/"$@"
+    tease_history | [[ -n $* ]] && vim - +/"$@"
 }
 
 vh () {
     local __doc__="edit stuff from history"
     if [[ -n $* ]]; then
-        _strip_history | vim - +/"$@"
+        strip_history | vim - +/"$@"
     else
-        _strip_history | vim - +
+        strip_history | vim - +
     fi
 }
 
@@ -1360,14 +1360,6 @@ source_aliases () {
     local __doc__='source files which have aliases and remember the filenames'
     ALIASES="$ALIASES:$1"
     source $1
-}
-
-_tease_history () {
-    history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
-}
-
-_strip_history () {
-    HISTTIMEFORMAT= history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
 }
 
 # xxxxxxxxxxxxxxx
