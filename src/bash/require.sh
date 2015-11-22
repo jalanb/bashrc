@@ -9,7 +9,7 @@ require () {
             ls -l $HUB/what/what.sh
         fi
     fi
-    REQUIRE_SOURCE "$@"
+    $REQUIRE_SOURCE "$@"
 }
 
 export REQUIRE_SOURCE

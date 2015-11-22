@@ -7,11 +7,12 @@ GIT=$SRC/git
 HUB=$GIT/hub
 GITHUB=$HUB
 JAB=$HUB/jab
-[[ -e $HUB/jab ]] || JAB=$HUB/dotjab
-[[ -e $HUB/jab ]] || JAB=~/.jab
-if [[ ! -d $JAB ]]; then
+[[ -e $JAB ]] || JAB=$HUB/dotjab
+[[ -e $JAB ]] || JAB=~/.jab
+if [[ -d $JAB ]]; then
     . $JAB/src/bash/require.sh
     require $JAB/src/bash/functons.sh
+    require $JAB/src/bash/prompt.sh
     require $JAB/environ.d/environ.sh
     require $JAB/environ.d/python.sh
     require $HUB/ack2vim/ack2vim
@@ -25,6 +26,5 @@ if [[ ! -d $JAB ]]; then
 
     jj
 else
-    echo JAB is not a directory: $JAB >&2
     ls -l $JAB
 fi
