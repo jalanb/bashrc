@@ -539,7 +539,7 @@ vj () {
 }
 
 vp () {
-    _edit_jab prompt "$@"
+    _edit_jab src/bash/prompt.sh "$@"
 }
 
 vv () {
