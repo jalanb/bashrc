@@ -301,8 +301,8 @@ _free_line_here () {
 ky () {
     shift_dir "$@" && shift
     dir=${dir:-$PYTHON_HOME}
-    kd $dir
-    y "$@"
+    kd $dir "$@"
+    y .
 }
 
 
