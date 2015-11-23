@@ -73,7 +73,6 @@ alias sa="source_aliases $JAB/src/bash/aliases.sh"
 alias sb="c $JAB && source login.sh && -"
 alias se="source $JAB/environ.d/jab.sh"
 alias sf="source $JAB/src/bash/functons.sh"
-alias sp="source $JAB/src/bash/prompt.sh"
 alias sr="sudo rm -vrf "
 
 alias yy="y $PYTHON_HOME"

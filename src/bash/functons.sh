@@ -559,6 +559,10 @@ xe () {
     curl "http://www.xe.com/wap/2co/convert.cgi?Amount=$amount&From=$from&To=$to" -A "Mozilla" -s | sed -n "s/.*>\(.*\) $to<.*/\1/p";
 }
 
+sp () {
+    source $JAB/src/bash/prompt.sh
+}
+
 sq () {
     source_path $BITBUCKET/qaz/src/bash/qazrc
 }
