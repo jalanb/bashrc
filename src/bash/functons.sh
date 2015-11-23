@@ -15,6 +15,7 @@ a () {
 }
 
 require $JAB/src/bash/git/functons.sh
+require $JAB/src/bash/history.sh
 
 c () {
     kd "$@"
@@ -265,11 +266,6 @@ gg () {
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
-gh () {
-    local __doc__="show stuff from history"
-    strip_history | grep --color "$@"
-}
-
 gv () {
     if which gvim >/dev/null 2>&1; then
         date >> ~/log/gvim.log
@@ -511,20 +507,6 @@ ve () {
 
 vf () {
     _edit_jab src/bash/functons.sh "$@"
-}
-
-vhist () {
-    local __doc__="edit unplugged stuff from history"
-    tease_history | [[ -n $* ]] && vim - +/"$@"
-}
-
-vh () {
-    local __doc__="edit stuff from history"
-    if [[ -n $* ]]; then
-        strip_history | vim - +/"$@"
-    else
-        strip_history | vim - +
-    fi
 }
 
 vi () {
