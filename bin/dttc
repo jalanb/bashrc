@@ -1,3 +1,24 @@
 #! /bin/bash
 
-python -c "print 'RGlnZ2VyLCBUaHVtYmVyLCBUYXJ6YW4sIENsaW1iZXI='.decode('base64')" | /bin/xsel
+_find_copier () {
+    CLI_COPIER=
+    for possible in xsel pbcopy; do
+        CLI_COPIER=$(which $possible)
+        if [[ -n $CLI_COPIER ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+main () {
+    _find_copier
+    if [[ ! -x $CLI_COPIER ]]; then
+        echo "No clipboard program available" >&2
+        return 1
+    fi
+    python -c "print 'RGlnZ2VyLCBUaHVtYmVyLCBUYXJ6YW4sIENsaW1iZXI='.decode('base64')" | $CLI_COPIER
+    return 0
+}
+
+main
