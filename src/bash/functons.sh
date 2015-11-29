@@ -16,6 +16,7 @@ a () {
 
 require $JAB/src/bash/git/functons.sh
 require $JAB/src/bash/history.sh
+require $JAB/src/bash/first_num.sh
 
 c () {
     kd "$@"
