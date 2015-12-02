@@ -13,6 +13,10 @@ _trap () {
     (set -e; $_method "$_args")
 }
 
+_trap_file () {
+    (set -e; _assert_is_file "$@")
+}
+
 _test () {
     local _truthiness=$1; shift
     test $_truthiness "$*"
@@ -50,8 +54,8 @@ _assert_which_executable () {
 
 
 _assert_executable () {
-    _assert_path_executable 
-    _assert_env_executable 
+    _assert_path_executable
+    _assert_env_executable
     _assert_which_executable
     _assert_what_executable
 }
@@ -102,10 +106,10 @@ _assert_directory () {
 }
 
 _assert_github () {
-    _assert_directory $GITHUB
+    _assert_directory $HUB
     while [[ -n $1 ]]; do
-        _assert_directory $GITHUB/$1
-        echo $GITHUB/$1
+        _assert_directory $HUB/$1
+        echo $HUB/$1
         shift
     done
 }
@@ -158,7 +162,7 @@ _assert_source () {
 
 _assert_source_what () {
     local _what=$(_assert_github what)
-    local _what=$GITHUB/what/what.sh
+    local _what=$HUB/what/what.sh
     _assert_file $_what
     source $_what
     _assert_source $_what

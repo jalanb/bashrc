@@ -5,7 +5,6 @@ echo HOSTNAME, $(hostname -f)
 SRC=~/src
 GIT=$SRC/git
 HUB=$GIT/hub
-GITHUB=$HUB
 JAB=$HUB/jab
 [[ -e $JAB ]] || JAB=$HUB/dotjab
 [[ -e $JAB ]] || JAB=~/.jab

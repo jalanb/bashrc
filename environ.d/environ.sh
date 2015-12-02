@@ -1,5 +1,7 @@
 #! /bin/bash
 
+require $JAB/src/bash/hub.sh
+
 _source_jab_environ () {
     EX_OK=0
     EX_BAD=1
@@ -45,9 +47,7 @@ _source_jab_environ () {
     #
     [[ -d ~/src/git/bitbucket ]] && BITBUCKET=~/src/git/bitbucket || BITBUCKET=no_bitbucket
     export BITBUCKET
-    [[ -d ~/src/git/hub ]] && GITHUB=~/src/git/hub || GITHUB=no_github
-    export GITHUB
-    source $GITHUB/what/what.sh
+    source $HUB/what/what.sh
 
     if [[ -f /usr/local/bin/gls ]]; then
         export LS_PROGRAM=/usr/local/bin/gls
@@ -102,7 +102,7 @@ _source_jab_environ () {
     source_path $JAB/environ.d/colour.sh
 
     RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
-    export LOG_LINES_ON_CD_GIT_DIR=3
+    export LOG_LINES_ON_CD_GIT_DIR=7
 
     set -o vi
 }

@@ -10,7 +10,7 @@
     co = checkout
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
-    di = difftool -y --extcmd=\"$GITHUB/icdiff/icdiff --line-numbers\"
+    di = difftool -y --extcmd=\"$HUB/icdiff/icdiff --line-numbers\"
     dv = difftool -y --extcmd=\"vim -d -O\"
     dw = diff --word-diff
     dr = rerere diff

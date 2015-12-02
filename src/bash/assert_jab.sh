@@ -1,7 +1,7 @@
 #! /bin/bash
 
 _trap_jab () {
-    [[ ! -d $JAB && -d $GITHUB/dotjab ]] && JAB=$GITHUB/dotjab
+    [[ ! -d $JAB && -d $HUB/dotjab ]] && JAB=$HUB/dotjab
     _assert_directory $JAB
 }
 

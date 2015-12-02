@@ -20,11 +20,13 @@ tear_down () {
 	fi
 }
 
+require $JAB/src/bash/github.sh
+
 get_pandemic () {
-	wget --no-check-certificate https://github.com/jwcxz/vim-pandemic/archive/master.zip
-	mv master.zip vim-pandemic-master.zip
-	unzip vim-pandemic-master.zip
-	rm -rf vim-pandemic-master.zip
+    wget --no-check-certificate $GITHUB/jwcxz/vim-pandemic/archive/master.zip
+    mv master.zip vim-pandemic-master.zip
+    unzip vim-pandemic-master.zip
+    rm -rf vim-pandemic-master.zip
 }
 
 make_pandemic () {

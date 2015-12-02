@@ -48,9 +48,11 @@ yummy () {
     modprobe fuse
 }
 
+require $JAB/src/bash/github.sh
+
 get_autocutsel () {
-    wget https://github.com/sigmike/autocutsel/releases/download/0.10.0/autocutsel-0.10.0.tar.gz
-    tar zxf autocutsel-0.10.0.tar.gz 
+    wget $GITHUB/sigmike/autocutsel/releases/download/0.10.0/autocutsel-0.10.0.tar.gz
+    tar zxf autocutsel-0.10.0.tar.gz
     cd autocutsel-0.10.0
     sudo yum -y -q install glibc-devel glibc-devel.i686 libXtst-devel libXaw-devel
     ./configure

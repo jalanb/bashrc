@@ -27,7 +27,7 @@ def _load_environment_paths():
     Put them in module globals
     """
     jab_paths = [
-        'HOME', 'JAB', 'GITHUB', 'JAB_HOME', 'PYTHON']
+        'HOME', 'JAB', 'HUB', 'JAB_HOME', 'PYTHON']
     for _ in jab_paths:
         globals()[_] = _environ_dir(_)
 

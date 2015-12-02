@@ -2,38 +2,39 @@
 sudo timedatectl set-timezone Europe/Dublin
 # ps -ef | grep yum  .... kill -9
 
-# Install git
-sudo yum -y groupinstall "Development Tools"
-sudo yum -y install gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel curl-devel
-# For latest release see https://github.com/git/git/releases
-GIT_VERSION=2.6.0
-GITHUB=https://github.com
-wget $GITHUB/git/git/archive/v${GIT_VERSION}.tar.gz
-tar xvf v${GIT_VERSION}.tar.gz
-cd git-${GIT_VERSION}
-make configure
-./configure --prefix=/usr/local
-sudo make install
+require $JAB/src/bash/hub.sh
+require $JAB/src/bash/github.sh
+
+install_git () {
+    sudo yum -y groupinstall "Development Tools"
+    sudo yum -y install gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel curl-devel
+    # For latest release see $GITHUB/git/git/releases
+    GIT_VERSION=2.6.0
+    wget $GITHUB/git/git/archive/v${GIT_VERSION}.tar.gz
+    tar xvf v${GIT_VERSION}.tar.gz
+    cd git-${GIT_VERSION}
+    make configure
+    ./configure --prefix=/usr/local
+    sudo make install
+}
+
+install_git
 
 sudo rm -rf ~/Downloads/*
 
 # Install dotjab
 
-GITHUB_DIR=~/src/git/hub
-test -d $GITHUB_DIR || mkdir -p $GITHUB_DIR
-cd $GITHUB_DIR
+cd $HUB
 
-GITHUB_JALANB=$GITHUB/jalanb
-# If you are reading this then dotjab
-# git clone $GITHUB_JALANB/dotjab is already cloned
-git clone $GITHUB_JALANB/dotsite
-git clone $GITHUB_JALANB/what
-git clone $GITHUB_JALANB/kd
-git clone $GITHUB_JALANB/ack2vim
+# If you are reading this then dotjab ($GITHUB/jalanb/dotjab) is already cloned
+git clone $GITHUB/jalanb/dotsite
+git clone $GITHUB/jalanb/what
+git clone $GITHUB/jalanb/kd
+git clone $GITHUB/jalanb/ack2vim
 git clone $GITHUB/jeffkaufman/icdiff.git
 
 # set up JAB
-JAB=$GITHUB_DIR/dotjab
+JAB=$HUB/dotjab
 cd $JAB
 # cp dotbashrc ~/.bashrc
 # mv dotbashrc $JAB/src/jab/login.sh ?
@@ -41,7 +42,7 @@ cd server/linux
 bash make_software.sh
 
 # set up python
-cd $GITHUB_DIR/dotsite
+cd $HUB/dotsite
 $HOME/bin/python setup.py develop
 
 

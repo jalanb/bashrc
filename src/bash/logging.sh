@@ -52,16 +52,17 @@ trace_one_bashrc () {
     verbose_interactive_bashrc | grep $_level
 }
 
+require $JAB/src/bash/hub.sh
+
 run_bashrc () {
     echo Welcome to $HOME/.bashrc
     export PATH=/usr/local/bin:/usr/bin:/bin
     export SHELL=/bin/bash
     # Find my own environment
-    local _github=~/src/git/hub
-    local _what_script=$(readlink -f $_github/what/what.sh)
+    local _what_script=$(readlink -f $HUB/what/what.sh)
     _source $_what_script || echo Cannot source $_what_script
     #
-    local _jab=$(readlink -f $_github/dotjab)
+    local _jab=$(readlink -f $HUB/dotjab)
     builtin cd $_jab && _source $_jab/login.sh && builtin cd >/dev/null 2>&1
     if ! is_running autocutsel
     then

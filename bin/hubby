@@ -51,13 +51,14 @@ _show_dirs () {
     done
 }
 
+require $JAB/src/bash/hub.sh
+
 main () {
     if [[ -n $* ]]; then
         _show_dir "$@"
     else
         _show_status $JAB
-        local _github=${GITHUB:-$HOME/src/git/hub}
-        [[ -d $_github ]] && _show_dirs $_github
+        [[ -d $HUB ]] && _show_dirs $HUB
     fi
 }
 

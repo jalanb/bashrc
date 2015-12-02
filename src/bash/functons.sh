@@ -660,12 +660,12 @@ hed () {
 }
 
 hub () {
-    c $GITHUB "$@"
+    c $HUB "$@"
     ls
 }
 
 jub () {
-    c $GITHUB/../jab "$@"
+    c $HUB/../jab "$@"
     ls
 }
 
@@ -684,7 +684,7 @@ jjy () {
 }
 
 jpi () {
-    local path_to_jpm=$GITHUB/jpm
+    local path_to_jpm=$HUB/jpm
     cd $path_to_jpm
     source /home/alanb/.virtualenvs/jpm/bin/activate
     add_to_a_path PATH $path_to_jpm/bin
@@ -694,7 +694,7 @@ jpi () {
 }
 
 jpm () {
-    PYTHONPATH=$PYTHONPATH:$GITHUB/jpm mython $GITHUB/jpm/bin/jpm "$@"
+    PYTHONPATH=$PYTHONPATH:$HUB/jpm mython $HUB/jpm/bin/jpm "$@"
 }
 
 kpj () {
@@ -748,7 +748,7 @@ num () {
 }
 
 pyi () {
-    cd $GITHUB/pym/pym
+    cd $HUB/pym/pym
     add_to_a_path PATH ./bin
     add_to_a_path PYTHONPATH ./pym
     source ~/.virtualenvs/pym/bin/activate
