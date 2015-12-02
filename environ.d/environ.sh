@@ -71,10 +71,12 @@ _source_jab_environ () {
     fi
     [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 
-    source_path $JAB/bin/add_to_a_path.sh
-    add_to_a_path PATH $HOME/bin --start
-    add_to_a_path PATH $JAB/bin --index=1
-    add_to_a_path PATH $HOME/.local/bin --index=2
+    OLD_PATH=$PATH
+    PATH=
+    require $JAB/bin/add_to_a_path.sh
+    add_to_a_path PATH $HOME/bin
+    add_to_a_path PATH $JAB/bin
+    add_to_a_path PATH $HOME/.local/bin
     add_to_a_path PATH /bin
     add_to_a_path PATH /usr/local/bin
     add_to_a_path PATH /usr/bin
