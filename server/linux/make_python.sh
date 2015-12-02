@@ -2,25 +2,8 @@
 
 set -e
 
-SCRATCH=/tmp/Downloads
+
 MINIMUM_VERSION=2.7.10
-BASH_DIR=$(dirname $BASH_SOURCE)
-
-set_up () {
-    trap tear_down EXIT
-    if [[ -d "${SCRATCH}" ]]; then
-         rm -rf ${SCRATCH}/*
-    else
-         mkdir ${SCRATCH}
-    fi
-    cd ${SCRATCH}
-}
-
-tear_down () {
-    if [[ -d "${SCRATCH}" ]]; then
-        rm -rf ${SCRATCH}
-    fi
-}
 
 install_home_python () {
     if [[ -f "~/Downloads/Python-${MINIMUM_VERSION}.tgz" ]]; then
@@ -65,6 +48,8 @@ main () {
     fi
 }
 
-set_up
+require $JAB/src/bash/scratch.sh
+
+scratch_up
 main
-tear_down
+scratch_down

@@ -2,25 +2,7 @@
 
 set -e
 
-SCRATCH=/tmp/Downloads
 MINIMUM_VERSION=1.6.0
-
-set_up () {
-	trap tear_down EXIT
-	if [[ -d "${SCRATCH}" ]]; then
-		 rm -rf ${SCRATCH}/*
-	else
-		 mkdir ${SCRATCH}
-	fi
-	cd ${SCRATCH}
-}
-
-tear_down () {
-	if [[ -d "${SCRATCH}" ]]; then
-		rm -rf ${SCRATCH}
-	fi
-}
-
 install_tree () {
 	wget http://mama.indstate.edu/users/ice/tree/src/tree-${MINIMUM_VERSION}.tgz
 	tar zxf tree-${MINIMUM_VERSION}.tgz 
@@ -43,6 +25,8 @@ main () {
 	fi
 }
 
-set_up
+require $JAB/src/bash/scratch.sh
+
+scratch_up
 main
-tear_down
+scratch_down

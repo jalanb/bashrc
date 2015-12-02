@@ -2,29 +2,13 @@
 
 set -e
 
-SCRATCH=/tmp/Downloads
 MINIMUM_VERSION=2.21
 
-set_up () {
-	trap tear_down EXIT
-	if [[ -d "${SCRATCH}" ]]; then
-		 rm -rf ${SCRATCH}/*
-	else
-		 mkdir ${SCRATCH}
-	fi
-	cd ${SCRATCH}
-}
-
-tear_down () {
-	if [[ -d "${SCRATCH}" ]]; then
-		rm -rf ${SCRATCH}
-	fi
-}
+require $JAB/src/bash/scratch.sh
 
 install_which () {
-	[[ -d "${SCRATCH}" ]] && rm -rf ${SCRATCH}
-	mkdir ${SCRATCH}
-	cd ${SCRATCH}
+    clean_scratch
+    cd "${SCRATCH}"
 
 	wget http://ftp.gnu.org/gnu/which/which-${MINIMUM_VERSION}.tar.gz
 	tar zxf which-${MINIMUM_VERSION}.tar.gz
@@ -47,6 +31,6 @@ main () {
 	fi
 }
 
-set_up
+scratch_up
 main
-tear_down
+scratch_down

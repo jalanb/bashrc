@@ -2,6 +2,7 @@
 
 set -e
 
+<<<<<<< HEAD
 SCRATCH=/tmp/Downloads
 
 set_up () {
@@ -22,6 +23,8 @@ tear_down () {
 
 require $JAB/src/bash/github.sh
 
+=======
+>>>>>>> Extract scratch functions to src/bash
 get_pandemic () {
     wget --no-check-certificate $GITHUB/jwcxz/vim-pandemic/archive/master.zip
     mv master.zip vim-pandemic-master.zip
@@ -52,6 +55,8 @@ main () {
     update_pandemic
 }
 
-set_up
+require $JAB/src/bash/scratch.sh
+
+scratch_up
 main
-tear_down
+scratch_down

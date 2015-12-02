@@ -2,24 +2,6 @@
 
 set -e
 
-SCRATCH=/tmp/Downloads
-
-set_up () {
-    trap tear_down EXIT
-    if [[ -d "${SCRATCH}" ]]; then
-         rm -rf ${SCRATCH}/*
-    else
-         mkdir ${SCRATCH}
-    fi
-    cd ${SCRATCH}
-}
-
-tear_down () {
-    if [[ -d "${SCRATCH}" ]]; then
-        sudo rm -rf ${SCRATCH}
-    fi
-}
-
 install () {
     sudo /usr/bin/yum -y -q install "$@"
 }
@@ -49,6 +31,7 @@ yummy () {
 }
 
 require $JAB/src/bash/github.sh
+require $JAB/src/bash/scratch.sh
 
 get_autocutsel () {
     wget $GITHUB/sigmike/autocutsel/releases/download/0.10.0/autocutsel-0.10.0.tar.gz
@@ -94,6 +77,6 @@ main () {
     downloads
 }
 
-set_up
+scratch_up
 main
-tear_down
+scratch_down
