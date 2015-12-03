@@ -10,14 +10,6 @@
 
 # x
 
-a () {
-    ack "$@"
-}
-
-require $JAB/src/bash/git/functons.sh
-require $JAB/src/bash/history.sh
-require $JAB/src/bash/first_num.sh
-require $JAB/src/bash/rf.sh
 
 c () {
     kd "$@"
@@ -56,6 +48,10 @@ g () {
 
 h () {
     history | tel "$@"
+}
+
+l () {
+    $LS_PROGRAM
 }
 
 p () {
@@ -178,7 +174,7 @@ c. () {
 }
 
 cl () {
-    c "$@" && ls
+    c "$@" && lk
 }
 
 cn () {
@@ -313,15 +309,15 @@ ky () {
 
 
 l1 () {
-    ls -1tr "$@"
+    lk -1tr "$@"
 }
 
 la () {
-    ls -a "$@"
+    lk -a "$@"
 }
 
 ld () {
-    ls -1d "$@"
+    lk -1d "$@"
 }
 
 lf () {
@@ -329,15 +325,29 @@ lf () {
 }
 
 lj () {
-    ls $JAB "$@"
+    lk $JAB "$@"
 }
 
 lh () {
-    ls -lh  "$@"
+    lk -lh  "$@"
+}
+
+lk () {
+    LS_PROGRAM=$(which lk)
+    local _gls=$(which gls)
+    local _css=
+    local _header=
+    if [[ -f $_gls ]]; then
+        LS_PROGRAM=$_gls
+        _css="--color --classify "
+        _header=--group-directories-first
+    fi
+    $LS_PROGRAM $_css $_header "$@"
+    export LS_PROGRAM
 }
 
 ll () {
-    ls -l  "$@"
+    lk -l  "$@"
 }
 
 lo () {
@@ -345,15 +355,15 @@ lo () {
 }
 
 lr () {
-    ls -lhtr "$@"
+    lk -lhtr "$@"
 }
 
 lt () {
-    ls *.test*
+    lk *.test*
 }
 
 lx () {
-    p $JAB/src/python/ls/lx.py  "$@"
+    lk -xhtr "$@"
 }
 
 ly () {
@@ -516,7 +526,7 @@ vv () {
 }
 
 vy () {
-    v $(ls *.py | grep -v __*.py*)
+    v $(lk *.py | grep -v __*.py*)
 }
 
 xe () {
@@ -563,10 +573,10 @@ cls () {
     clean
     clear
     if [[ -n "$@" ]]; then
-        ls "$@"
+        lk "$@"
         return 0
     fi
-    ls -d $(pwd)
+    ld $(pwd)
     echo
 }
 
@@ -580,14 +590,14 @@ dev () {
         echo
         here=$PWD
         cd ~/dev
-        ls
+        lk
         cd $here
         echo You may wish to try
         echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
     fi
     [[ ! -d "~/src" ]] && mkdir ~/src
     c ~/src "$@"
-    ls
+    lk
 }
 
 fgp () {
@@ -648,12 +658,12 @@ hed () {
 
 hub () {
     c $HUB "$@"
-    ls
+    lk
 }
 
 jub () {
     c $HUB/../jab "$@"
-    ls
+    lk
 }
 
 jjj () {
@@ -688,6 +698,22 @@ kpj () {
     rsync -a -e \"ssh -i $JAB_ID\"
 }
 
+l1d () {
+    ld -1 "$@"
+}
+
+lda () {
+    ls -1da "$@"
+}
+
+lff () {
+    ls fred*
+}
+
+lll () {
+    ll -a "$@"
+}
+
 lib () {
     lr ~/.bashrc
 }
@@ -696,11 +722,11 @@ lly () {
     shift_dir "$@" && shift
     reset=$(shopt -p dotglob)
     shopt -s dotglob
-    ls -lhtr "$dir"/*.tests
+    lr "$dir"/*.tests
     echo
-    ls -lhtr "$dir"/*.test
+    lr "$dir"/*.test
     echo
-    ls -lhtr "$dir"/*.py
+    lr "$dir"/*.py
     $reset
 }
 
@@ -710,27 +736,40 @@ lr2 () {
 
 lr1 () {
     shift_dir "$@" && shift
-    ls -1tr --color=always "$dir" | tel
+    lk -1tr --color=always "$dir" | tel
+}
+
+lra () {
+    lr -a "$@"
+}
+
+lrd () {
+    lr -d "$@"
 }
 
 lrt () {
-    ls --color=always -lrth "$@" | tel
+    lk --color=always -lrth "$@" | tel
 }
 
 ls1 () {
     l1 "$@" | sort
 }
 
+lsh () {
+    lk *.sh
+}
+
+
 lyy () {
     reset=$(shopt -p dotglob)
     shopt -s dotglob
-    ls -xd $(ls -F |grep \/$)
+    lk -xd $(ls -F |grep \/$)
     echo
-    ls -xhtr *.tests 2>/dev/null
+    lx *.tests 2>/dev/null
     echo
-    ls -xhtr *.test 2>/dev/null
+    lx *.test 2>/dev/null
     echo
-    ls -xhtr *.py 2>/dev/null
+    lx *.py 2>/dev/null
     $reset
 }
 
@@ -770,7 +809,7 @@ pyi () {
         echo
     fi
     if [[ -n $(ls *.py | grep -v __init__.py 2>/dev/null) ]]; then ly -q
-    elif [[ -n $(ls * | grep -v __init__.py) ]]; then ls
+    elif [[ -n $(ls * | grep -v __init__.py) ]]; then lk
     fi
     echo
     [[ -n $* ]] && "$@"
@@ -927,7 +966,7 @@ bump () {
 
 down () {
     c ~/Download* "$@"
-    ls -alhtr
+    lr -a
 }
 
 fynd () {
@@ -1314,7 +1353,7 @@ one_two_three () {
     else
         3d 1 --noreport "$@"
     fi
-    ls $(ls1 -p | g -v "\(pyc\|/\)$")
+    lk $(ls1 -p | g -v "\(pyc\|/\)$")
 }
 
 three_two_one () {

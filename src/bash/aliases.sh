@@ -34,7 +34,7 @@ alias e="ex --noplugin -u ~/.vim/exrc"
 alias i="i"
 alias j="j"
 alias k="k"
-alias l="$LS_PROGRAM "
+# l is a function
 alias m="m"
 alias n="n"
 alias o="o"
@@ -61,8 +61,6 @@ alias ..='c ..'
 alias eg="env | g "
 
 alias kp="rsync -a"
-
-alias ls="$LS_PROGRAM $LS_COLOUR_OPTION $LS_DIRS_OPTION"
 
 alias p-="echo $OLDPWD"
 alias pt="p $JAB/src/python/vim_traceback.py"
@@ -98,12 +96,6 @@ alias jlf="sst jlfieblu jlf.ie"
 
 alias kpp="kp --progress"
 
-alias lda="ls -1da"
-alias lff="ls fred*"
-alias lll="ll -a"
-alias lra="lr -a"
-alias lrd="lr -d"
-alias lsh="ls *.sh"
 
 alias out="to_release"
 
