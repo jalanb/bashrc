@@ -61,8 +61,6 @@ _assert_executable () {
 }
 
 
-_assert_directory /assertions
-
 _assert_path () {
     set -e
     local _result=0
@@ -104,6 +102,8 @@ _assert_directory () {
         [[ -f "$@" ]] && _file=$_basename
     fi
 }
+
+_assert_directory /assertions
 
 _assert_github () {
     _assert_directory $HUB
