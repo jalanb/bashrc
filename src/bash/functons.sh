@@ -219,6 +219,10 @@ gr () {
     g -nH "$@" 2> /dev/null
 }
 
+fa () {
+    fv "$@"
+}
+
 fc () {
     shift_dir "$@" && shift
     name=$1
