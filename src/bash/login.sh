@@ -18,6 +18,7 @@ if [[ -d $JAB ]]; then
     require $JAB/src/bash/aliases.sh
     require $JAB/local/functons.sh
     require $HUB/kd/kd.sh
+    source_path ~/.oldpwd
     export PS1="\$? [\u@\H:\$PWD]\n$ "
     sp
 
