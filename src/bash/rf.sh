@@ -1,11 +1,12 @@
 #! /bin/bash
 
-SRC_BASH=$(dirname $BASH_SOURCE)
-SRC=$(dirname $SRC_BASH)
-SRC_PYTHON=$SRC/python
-
-RF_DOT_PY=$SRC_PYTHON/rf.py
-RT_DOT_PY=$SRC_PYTHON/remove_tarball.py
+_re_source () {
+    SRC_BASH=$(dirname $(readlink -f $BASH_SOURCE)) && export SRC_BASH  # ; echo "SRC_BASH = $SRC_BASH"
+    SRC=$(dirname $SRC_BASH) && export SRC # ; echo "SRC = $SRC"
+    SRC_PYTHON=$SRC/python && export SRC_PYTHON # ; echo "SRC_PYTHON = $SRC_PYTHON"
+    RF_DOT_PY=$SRC_PYTHON/rf.py && export RF_DOT_PY # ; echo "RF_DOT_PY = $RF_DOT_PY"
+    RT_DOT_PY=$SRC_PYTHON/remove_tarball.py && export RT_DOT_PY # ; echo "RT_DOT_PY = $RT_DOT_PY"
+}
 
 # x
 
@@ -20,7 +21,7 @@ rd () {
 }
 
 rf () {
-    ${PYTHON:-python2} $RF_DOT_PY "$@"
+    (_re_source; ${PYTHON:-python2} $RF_DOT_PY "$@")
 }
 
 rr () {
@@ -32,7 +33,7 @@ rq () {
 }
 
 rt () {
-    $(${PYTHON:-python2} $RT_DOT_PY "$@")
+    (_re_source; $(${PYTHON:-python2} $RT_DOT_PY "$@"))
 }
 
 ry () {
