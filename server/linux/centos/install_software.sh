@@ -5,19 +5,19 @@ set -e
 SCRATCH=/tmp/Downloads
 
 set_up () {
-	trap tear_down EXIT
-	if [[ -d "${SCRATCH}" ]]; then
-		 rm -rf ${SCRATCH}/*
-	else
-		 mkdir ${SCRATCH}
-	fi
-	cd ${SCRATCH}
+    trap tear_down EXIT
+    if [[ -d "${SCRATCH}" ]]; then
+         rm -rf ${SCRATCH}/*
+    else
+         mkdir ${SCRATCH}
+    fi
+    cd ${SCRATCH}
 }
 
 tear_down () {
-	if [[ -d "${SCRATCH}" ]]; then
-		sudo rm -rf ${SCRATCH}
-	fi
+    if [[ -d "${SCRATCH}" ]]; then
+        sudo rm -rf ${SCRATCH}
+    fi
 }
 
 install () {
