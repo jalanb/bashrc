@@ -25,6 +25,5 @@ _trap_jab () {
     [[ ! -d $JAB && -d $HUB/dotjab ]] && JAB=$HUB/dotjab
     [[ -d $JAB ]] || return 1
     [[ ! -d $JAB_LOCAL ]] && JAB_LOCAL=$JAB/local
-    builtin cd $JAB
 }
 
