@@ -7,13 +7,11 @@ A 'change' is any change to size, mtime or md5sum
 from __future__ import print_function
 import os
 import csv
-import md5
 import sys
 import argparse
 from datetime import datetime
 
 from bdb import BdbQuit
-from dotsite import paths
 
 __version__ = '1.0.0'
 
@@ -109,7 +107,8 @@ def pad_keys(items, keys):
 
 def path_to_data():
     """Where we store old values"""
-    return paths.environ_path('JAB') / 'local/login_sums.csv'
+    jab = os.environ['JAB']
+    return os.path.join(jab, 'local/login_sums.csv')
 
 
 def write_files(items, path):
@@ -159,18 +158,24 @@ def old_values(basenames):
         return read_old_values(basenames)
 
 
+def text_digest(s):
+    import hashlib
+    m = hashlib.md5()
+    m.update(s)
+    return m.hexdigest()
+
+
 def new_values(basenames):
     """Get date, size and md5sum for those basenames in $HOME"""
     result = {}
     for basename in basenames:
-        p = paths.home() / basename
-        if not p.isfile():
+        home = os.environ['HOME']
+        p = os.path.join(home, basename)
+        if not os.path.isfile(p):
             continue
         size = '%d' % p.size
         mtime = '%0.8f' % p.mtime
-        m = md5.new()
-        m.update(p.text())
-        result[basename] = Signature(mtime, size, m.hexdigest())
+        result[basename] = Signature(mtime, size, text_digest(p.text()))
     return pad_keys(result, basenames)
 
 
@@ -216,7 +221,7 @@ def main():
         pass
     except SystemExit as e:
         return e.code
-    except Exception, e:  # pylint: disable=broad-except
+    except Exception as e:  # pylint: disable=broad-except
         if __version__[0] < '1':
             raise
         print(e, file=sys.stderr)
