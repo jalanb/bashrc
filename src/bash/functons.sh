@@ -17,6 +17,7 @@ a () {
 require $JAB/src/bash/git/functons.sh
 require $JAB/src/bash/history.sh
 require $JAB/src/bash/first_num.sh
+require $JAB/src/bash/rf.sh
 
 c () {
     kd "$@"
@@ -80,7 +81,7 @@ v () {
             if [[ -n $script ]]; then
                 if [[ -f "$script" ]]; then
                     bash $script
-                    rm -rf $script
+                    rq $script
                 else
                     echo $script is not a file >&2
                 fi
@@ -357,7 +358,7 @@ ma () {
         mython -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
-        rm -rf $_storage;
+        rq $_storage;
     fi
 }
 
@@ -410,29 +411,6 @@ ra () {
     ranger "$@"
 }
 
-rf () {
-    PYTHON_SCRIPT=$JAB/src/python/rf.py
-    mython $PYTHON_SCRIPT "$@"
-}
-
-rj () {
-    pushd $JAB
-    range "$@"
-    popd >/dev/null 2>&1
-}
-
-rr () {
-    sudo rm -rf "$@"
-}
-
-rq () {
-    rm -rf "$@"
-}
-
-rt () {
-    $(mython $JAB/src/python/remove_tarball.py "$@")
-}
-
 ru () {
 # do da root root route, do da ru !
     if [[ -z "$@" ]]; then
@@ -440,10 +418,6 @@ ru () {
     else
         sudo "$@"
     fi
-}
-
-ry () {
-    rf -qpr
 }
 
 tm () {
@@ -573,14 +547,15 @@ clo () {
 }
 
 cls () {
-# clean, clear, ls
-    rf -q
+    local __doc__="clean, clear, ls"
+    clean
     clear
-    if [[ -z "$@" ]]; then
-        ls -d $(pwd)
-        echo
+    if [[ -n "$@" ]]; then
+        ls "$@"
+        return 0
     fi
-    ls "$@"
+    ls -d $(pwd)
+    echo
 }
 
 ddg () {
@@ -796,20 +771,14 @@ ps3 () {
     fi
 }
 
+raj () {
+    pushd $JAB
+    range "$@"
+    popd >/dev/null 2>&1
+}
+
 rff () {
     $(freds -r "$@")
-}
-
-rfq () {
-    rff >/dev/null 2>&1
-}
-
-rq. () {
-    /bin/rm -rf ./*
-}
-
-rqa () {
-    /bin/rm -rf ./* ./.* 2>&1 | grep -v 'cannot remove directory'
 }
 
 sib () {
@@ -979,12 +948,6 @@ nose () {
     nosetests --with-progressive "$@"
 }
 
-rq.. () {
-    local directory_here=$(basename "$(pwd)")
-    cd ..
-    /bin/rm -rf "$directory_here"
-}
-
 SUDO () {
     if [[ -n $1 ]]; then
         user="-u $1"
@@ -1036,7 +999,7 @@ build () {
 }
 
 clean () {
-    rf -q "$@"
+    rfq "$@"
 }
 
 clock () {

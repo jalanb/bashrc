@@ -122,7 +122,7 @@ def wanted_globs(options, configured_globs):
 def parse_options(arg_list=None):
     """Find out what user wants at command line"""
     configured_options, configured_globs = read_configuration()
-    parser = optparse.OptionParser()
+    parser = optparse.OptionParser(usage = "rf [options]")
     add_options(parser, configured_options, configured_globs)
     options, args = parser.parse_args(arg_list)
     if options.Use_Debugger:
@@ -130,8 +130,7 @@ def parse_options(arg_list=None):
     if options.all:
         _ = [setattr(options, name, True) for name in configured_globs.keys()]
     if options.quiet and options.Trial_Run:
-        print 'Using --quiet and --Trial-Run: Do nothing'
-        raise NotImplementedError
+        raise NotImplementedError('Using --quiet and --Trial-Run: Do nothing')
     args = args if args else ['.']
     return options, args, wanted_globs(options, configured_globs)
 

@@ -41,7 +41,7 @@ alias o="o"
 # p is a function
 # q is a function
 alias Q="exit 0"
-alias r="rm -vrf"
+# r is a function
 alias s="s"
 alias t="t"
 alias u="u"
