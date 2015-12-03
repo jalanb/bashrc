@@ -45,26 +45,27 @@ _require_from () {
 
 _require_file () {
     echo "_require_file ($*)"
-    set -x
-    local _start_dir=$(pwd)
-    local _dirname=$1
-    local _required=$2
-    local _filename="$_required".sh
-    echo "filename: $_filename, dirname: $_dirname"
-    [[ $_dirname != . ]] && cd $_dirname
-    [[ -f $_required ]] && _filename="$_required"
-    [[ -f $_filename ]] && _require "$_filename" || _require_from $_dirname $_filename
-    [[ $_start_dir == $(pwd) ]] || cd $_start_dir || echo "do not cd back"
+    (set -x;
+        local _start_dir=$(pwd);
+        local _dirname=$1;
+        local _required=$2;
+        local _filename="$_required".sh;
+        echo "filename: $_filename, dirname: $_dirname";
+        [[ $_dirname != . ]] && cd $_dirname;
+        [[ -f $_required ]] && _filename="$_required";
+        [[ -f $_filename ]] && _require "$_filename" || _require_from $_dirname $_filename;
+        [[ $_start_dir == $(pwd) ]] || cd $_start_dir || echo "do not cd back";
+    )
 }
 
 require () {
     echo "require ($*)"
-    set -x
-    local _dirname=.
-    if [[ -d $1 ]]; then _dirname=$1; shift; fi
-    echo _require_file $_dirname $1
-    [[ ! -d $1 ]] && _require_file $_dirname $1
-    set +x
+    (set -x;
+        local _dirname=.;
+        if [[ -d $1 ]]; then _dirname=$1; shift; fi;
+        echo _require_file $_dirname $1;
+        [[ ! -d $1 ]] && _require_file $_dirname $1;
+    )
 }
 
 requires () {
@@ -74,12 +75,12 @@ requires () {
         _dirname=$1
         shift
     fi
-    set -x
-    echo "require $_dirname, then require $*"
-    for arg in $*; do
-        require $dirname $arg
-    done
-    set +x
+    (set -x;
+        echo "require $_dirname, then require $*";
+        for arg in $*; do;
+            require $dirname $arg;
+        done;
+    )
 }
 
 jab_require () {
