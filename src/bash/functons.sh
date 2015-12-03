@@ -181,6 +181,10 @@ cl () {
     c "$@" && ls
 }
 
+cn () {
+    cat -n "$@"
+}
+
 cv () {
     kd $1
     v $(basename $1)
@@ -412,7 +416,7 @@ ra () {
 }
 
 ru () {
-# do da root root route, do da ru !
+    # do da root root route, do da ru !
     if [[ -z "$@" ]]; then
         SUDO
     else
@@ -536,6 +540,10 @@ zm () {
 
 add () {
     echo $(($1 + $2))
+}
+
+cib () {
+    cn ~/.bashrc
 }
 
 cjy () {
@@ -674,6 +682,10 @@ jpm () {
 
 kpj () {
     rsync -a -e \"ssh -i $JAB_ID\"
+}
+
+lib () {
+    lr ~/.bashrc
 }
 
 lly () {
@@ -894,6 +906,10 @@ vtr () {
 
 VIM () {
     sudo vim "$@"
+}
+
+xib () {
+    bash -x ~/.bashrc
 }
 
 # xxxx
