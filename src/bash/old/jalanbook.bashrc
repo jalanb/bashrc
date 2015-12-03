@@ -78,8 +78,8 @@ _assert_file $JAB_SH/assertions.sh
 bashrc_in_jab () {
     _trap_github
     _trap_jab
+    builtin cd $JAB
     _trap_what
-    _trap_jab
     _assert_is_function source_what
     source_what $JAB_SH/assertions
     _trap_python
