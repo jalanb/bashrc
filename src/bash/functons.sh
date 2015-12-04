@@ -651,7 +651,8 @@ hd1 () {
 }
 
 hed () {
-    head -n ${1:-$(( ${LINES:-$(tput lines)} / 2 ))} "$@"
+    HEADLINES=${HEADLINES:-(( ${LINES:-$(tput lines)} / 2 ))}
+    head -n ${1:-$HEADLINES} "$@"
 }
 
 hub () {
@@ -845,6 +846,8 @@ sto () {
 tel () {
     # Using "$*" instead of "$@" deliberately here
     # Side effect: args are now text, not args
+    HEADLINES=${HEADLINES:-(( ${LINES:-$(tput lines)} / 2 ))}
+    head -n ${1:-$HEADLINES} "$@"
     lines=$(echo "$*" | sed -e "s/ *-n.\([0-9]\+\)/\1/")
     if [[ -n $lines ]]; then
         args=$(echo "$*" | sed -e "s/^\(.*\) *-n.\([0-9]\+\)\(.*\)/\1\3/")
