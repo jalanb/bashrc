@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat -n
 
 # all alan"s aliases
 #   as ordered by strcmp()
