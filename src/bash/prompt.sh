@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat -n
 
 
 export PROMPT_COLOUR=none

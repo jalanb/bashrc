@@ -85,9 +85,7 @@ verbose_interactive_bashrc () {
 }
 
 verbosely () {
-    set -x
-    "$@"
-    set +x
+    (set -x; "$@")
 }
 
 log_verbose_bashrc () {
@@ -116,4 +114,3 @@ log_verbose_bashrc () {
 
 # log_verbose_bashrc
 concise_interactive_bashrc
-
