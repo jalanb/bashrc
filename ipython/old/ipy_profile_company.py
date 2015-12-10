@@ -4,7 +4,7 @@
 import config_helper_functions
 
 
-class EmployerVariables:
+class EmployerVariables(object):
     """Holder of interesting attributes"""
     def __init__(self):
         pass

@@ -54,7 +54,7 @@ def show(thing):
     return pprint(thing)
 
 
-class Test_Being_Run:
+class Test_Being_Run(object):
     """Encapsulation of the current test"""
     def __init__(self, that):
         self.here = makepath('.')
@@ -112,7 +112,7 @@ def command_line():
     return options, args
 
 
-class Sys_Path_Handler:
+class Sys_Path_Handler(object):
     def __init__(self):
         self.paths = []
 

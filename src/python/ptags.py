@@ -53,7 +53,7 @@ def find_tag_in_line(path_to_tag, string):
     return Tag(path_to_tag, match.groupdict())
 
 
-class Tag:
+class Tag(object):
     """A tag recognised by ctags"""
     # pylint: disable-msg=R0903
 

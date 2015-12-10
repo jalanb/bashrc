@@ -6,7 +6,7 @@
 from words import pluralize
 
 
-class Spine:
+class Spine(object):
     """A spine has "enough backbone to stand up for itself"
 
     In other words - it can provide its class name

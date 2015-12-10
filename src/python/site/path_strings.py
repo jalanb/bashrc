@@ -18,11 +18,10 @@ def environ_paths():
                 result[key] = existing_paths
             else:
                 result[key] = existing_paths[0]
-    class environ_paths_class:
-        pass
-    environ_paths_instance = environ_paths_class()
-    environ_paths_instance.__dict__.update(result)
-    return environ_paths_instance
+    class Result(object):
+        def __init__(self, x):
+            self.__dict__.update(x)
+    return Result(result)
 
 def string_to_paths(string):
     for c in ':, ;':

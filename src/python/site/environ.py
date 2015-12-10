@@ -51,8 +51,8 @@ def environ_paths():
                 result[key] = paths
             else:
                 result[key] = paths[0]
-    class paths: pass
-    paths = paths()
+    class Paths(object): pass
+    paths = Paths()
     paths.__dict__.update(result)
     return paths
 

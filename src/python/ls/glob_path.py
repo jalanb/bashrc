@@ -2,7 +2,7 @@
 
 import path
 
-class glob_path:
+class GlobPath(object):
     def __init__(self,p):
         self.path = path.path(p)
         self.get_parent(self.path.parent)
@@ -26,7 +26,7 @@ class glob_path:
         return '%s/%s' % (self.parent,self.glob)
 
     def __repr__(self):
-        return '<glob_path %s>' % self
+        return '<GlobPath %s>' % self
 
     def files(self):
         return self.parent.files(self.glob)

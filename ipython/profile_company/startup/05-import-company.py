@@ -1,6 +1,6 @@
 """Set up access to important employer data for IPython"""
 
-class EmployersVariables:
+class EmployersVariables(object):
     """Holder of interesting attributes"""
     def __init__(self):
         pass
