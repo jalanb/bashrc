@@ -7,7 +7,7 @@ A 'change' is any change to size, mtime or md5sum
 from __future__ import print_function
 import os
 import csv
-import md5
+import hashlib
 import sys
 import argparse
 from datetime import datetime
@@ -168,7 +168,7 @@ def new_values(basenames):
             continue
         size = '%d' % p.size
         mtime = '%0.8f' % p.mtime
-        m = md5.new()
+        m = hashlib.md5()
         m.update(p.text())
         result[basename] = Signature(mtime, size, m.hexdigest())
     return pad_keys(result, basenames)
