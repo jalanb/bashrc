@@ -4,11 +4,16 @@ export REQUIRE_SH=$(readlink -f $BASH_SOURCE)
 
 _require () {
     _source=source
-    if ! what -q source_what 2>/dev/null; then
-        $_source $HUB/what/what.sh
-        _source=source_what
-    elif [[ -d $HUB ]]; then
-        $_source $HUB/what/what.sh
+    if [[ -z $WHAT_SOURCED ]]; then
+        echo source what
+        if [[ -d $HUB ]]; then
+            $_source $HUB/what/what.sh
+        else
+            echo "HUB is not a directory" >&2
+            return 1
+        fi
+    fi
+    if [[ -n $WHAT_SOURCED ]]; then
         _source=source_what
     fi
     $_source "$@"
@@ -58,24 +63,14 @@ _ls_dot_sh () {
 }
 
 _require_file () {
-    echo "_require_file ($*)"
-    (set -x; echo "set -x; $(readlink -f $BASH_SOURCE) +${LINENO} / BASH_LINENO: ${BASH_LINENO[*]} ${FUNCNAME[0]:+${FUNCNAME[0]}(): }"
-    _lines;
-        cd $1;
-        _require $(_ls_dot_sh $2))
-}
-
-_lines () {
-    echo "echoed from ${BASH_SOURCE[$i+1]} at line number ${BASH_LINENO[*]}"
+    cd $1;
+    _require $(_ls_dot_sh $2)
 }
 
 require () {
-    echo "require ($*)"
-    (set -x; echo "set -x; $(readlink -f $BASH_SOURCE) +${LINENO} / BASH_LINENO: ${BASH_LINENO[*]} ${FUNCNAME[0]:+${FUNCNAME[0]}(): }"
-    _lines;
-        local _dirname=.
-        if [[ -d $1 ]]; then _dirname=$1; shift; fi
-        [[ ! -d $1 ]] && _require_file $_dirname $1)
+    local _dirname=.
+    if [[ -d $1 ]]; then _dirname=$1; shift; fi
+    [[ ! -d $1 ]] && _require_file $_dirname $1
 }
 
 requires () {
@@ -85,12 +80,10 @@ requires () {
         _dirname=$1
         shift
     fi
-    (set -x; echo "set -x; $(readlink -f $BASH_SOURCE) +${LINENO} / BASH_LINENO: ${BASH_LINENO[*]} ${FUNCNAME[0]:+${FUNCNAME[0]}(): }"
-    _lines;
-        echo "require $_dirname, then require $*";
-        for arg in $*; do
-            require $dirname $arg;
-        done;)
+    echo "require $_dirname, then require $*";
+    for arg in $*; do
+        require $dirname $arg;
+    done;
 }
 
 require_sh () {
