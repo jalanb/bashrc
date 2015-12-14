@@ -1,30 +1,26 @@
+#! /bin/bash
 
 test -d ~/.local_login.sh && source ~/.local_login.sh
 
-echo HOSTNAME, $(hostname -f)
+LOCAL=/usr/local
+[[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCAL/bin" || LOCALS="$LOCAL/bin"
+BINS=/usr/bin:/bin:/usr/sbin:/sbin
+HOMES=$HOME/bin:$HOME/.local
+export PATH=$LOCALS:$BINS:$HOMES:$LOCAL/go/bin
 SRC=~/src
 GIT=$SRC/git
 HUB=$GIT/hub
+echo HUB, from bashrc $HUB
 JAB=$HUB/jab
-[[ -e $JAB ]] || JAB=$HUB/dotjab
-[[ -e $JAB ]] || JAB=~/.jab
-if [[ -d $JAB ]]; then
-    . $JAB/src/bash/require.sh
-    require $JAB/src/bash/functons.sh
-    require $JAB/src/bash/prompt.sh
-    require $JAB/environ.d/environ.sh
-    require $JAB/environ.d/python.sh
-    require $HUB/ack2vim/ack2vim
-    require $JAB/src/bash/aliases.sh
-    require $JAB/local/functons.sh
-    require $HUB/kd/kd.sh
-    source_path ~/.oldpwd
-    export PS1="\$? [\u@\H:\$PWD]\n$ "
-    sp
+echo JAB, from bashrc $JAB
+echo HOSTNAME, $(hostname -f)
 
-    echo JAB, $JAB
+vbb () {
+    vim -p ~/bin/jab.sh ~/bin/jabbash.sh ~/.bashrc +/"^require_scripts_under_jab "
+}
 
-    jj
-else
-    ls -l $JAB
-fi
+export PS1="\$? [\u@\h:\$PWD]\n$ "
+
+echo $PATH
+source ~/bin/jabbash.sh
+sp green
