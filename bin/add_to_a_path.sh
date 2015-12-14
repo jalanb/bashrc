@@ -13,31 +13,7 @@ fi
 #
 # Gonna need python
 #
-_find_python () {
-    [[ -n $PYTHON ]] && return 0
-    MY_PATH=$jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
-    PYTHON=$(PATH=$MY_PATH which python2.7 2>/dev/null)
-    [[ -z $PYTHON ]] && PYTHON=$(which python2.7 2>/dev/null)
-    export PYTHON
-    [[ -n $PYTHON ]]
-}
-
-_run_script () {
-    local jab="${JAB:-$(_git_root $BASH_SOURCE)}"
-    local script=$JAB/src/python/add_to_a_path.py
-    if [[ -f "$script" ]]; then
-        if _find_python; then
-            $PYTHON $script "$@"
-        else
-            echo "Could not find python" >&2
-            return 1
-        fi
-    else
-        echo $script is not a file >&2
-        [[ ! -d "$JAB/src/python" ]] && echo $JAB/src/python is not a dir >&2
-    fi
-}
-
+require $JAB/src/bash/run_python.sh
 #
 # Once sourced there is one major command:
 #
@@ -46,7 +22,8 @@ add_to_a_path () {
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
-        local new_paths=$(_run_script "$@")
+        DOT_PY=$JAB/src/python/add_to_a_path.py
+        local new_paths=$(_run_python $DOT_PY "$@")
         if [[ -n $new_paths ]]; then
             eval $1=$new_paths
             export $1
