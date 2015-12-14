@@ -22,8 +22,6 @@ _test () {
     test $_truthiness "$*"
 }
 
-_name=sertable
-
 _assert () {
     _trap $1 _test "$@"
 }
@@ -64,7 +62,7 @@ _assert_executable () {
 _assert_path () {
     set -e
     local _result=0
-    local _option=1; shift
+    local _option=$1; shift
     local _name=$2; shift
     local _path=
     test $_option $_name && _path=_name
@@ -103,7 +101,7 @@ _assert_directory () {
     fi
 }
 
-_assert_directory /assertions
+# _assert_directory /assertions
 
 _assert_github () {
     _assert_directory $HUB
@@ -124,11 +122,11 @@ _assert_which_executable () {
     test -x which $1
 }
 
-_assert_what_executable env
-
 _assert_env_executable () {
     test -x env $1
 }
+
+_assert_env_executable
 
 _assert_path_executable () {
     _trap _trace _assert_path -x $1
@@ -138,13 +136,25 @@ _assert_executable () {
     _assert_what_executable "$@"  || _assert_env_executable "$@" || _assert_which_executable "$@" || _assert_path_executable "$@"
 }
 
-_assert_is_function _is_existing_function
+source_script () {
+    source_what $1
+}
+
+_assert_source_script () {
+    local _function_name="$1"; shift
+    _is_existing_function $_function_name && $_function_name $1
+# conditional binary operator expected
+    local _script="$1"; shift
+    _assert_is_file $_script
+    ! _is_existing_function $_function_name || source $_script
+# conditional binary operator expected
+}
 
 _assert_source_function () {
     local _source_path="$1"; shift
     local _function_name="$1"; shift
     _assert_source_script  $_function_name $_source_path
-    [[ _is_existing_function $_function_name ]] || source_script $_source_path
+    _is_existing_function $_function_name  || source_script $_source_path
 }
 
 _assert_is_function () {
@@ -167,15 +177,5 @@ _assert_source_what () {
     source $_what
     _assert_source $_what
     _assert_is_function what
-}
-
-_assert_source_script () {
-    local _function_name="$1"; shift
-    _is_existing_function $_function_name && $_function_name $1
-# conditional binary operator expected
-    local _script="$1"; shift
-    _assert_is_file $_script
-    ! _is_existing_function $_function_name || source $_script
-# conditional binary operator expected
 }
 
