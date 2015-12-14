@@ -3,7 +3,7 @@
 
 import argv
 import path
-from glob_path import glob_path, any_fnmatch
+from glob_path import GlobPath, any_fnmatch
 from repositories import svn
 
 
@@ -84,7 +84,7 @@ def get_dirs(args=None):
             elif p.isfile():
                 dirs = add_dir(dirs, p.parent)
             else:
-                gp = glob_path(p)
+                gp = GlobPath(p)
                 if gp.exists():
                     dirs = add_dir(dirs, gp)
         if not dirs:
