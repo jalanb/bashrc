@@ -1,8 +1,6 @@
-#! /bin/bash
+#! /bin/cat
 
 source_what $JAB/src/bash/repo.sh
-
-#! /bin/bash
 
 _set_jab () {
     JAB=$(path_to_this_repo)

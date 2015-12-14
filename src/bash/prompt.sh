@@ -65,7 +65,7 @@ prompt_command () {
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
     Dir="${Dir}${GIT_BRANCH}"
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    console_whoami 
+    console_whoami
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
     what -q kd && kd --add . >/dev/null 2>&1
     history -a

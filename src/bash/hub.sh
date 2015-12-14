@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 SRC=; [[ -d $HOME/src ]] && SRC=$HOME/src; export SRC
 GIT=; [[ -d $SRC/git ]] && GIT=$SRC/git; export GIT

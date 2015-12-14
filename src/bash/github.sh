@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 GITHUB=https://jalanb@github.com
 

@@ -1,4 +1,4 @@
-# /bin/bash
+#! /bin/cat
 
 # login.sh: source by ~/.bashrc
 

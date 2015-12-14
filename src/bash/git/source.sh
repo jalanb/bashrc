@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 BASH_DIR=$(dirname $BASH_SOURCE)
 

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 . $JAB/bin/first_dir.sh
 . $JAB/environ.d/colour.sh

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 _re_source () {
     SRC_BASH=$(dirname $(readlink -f $BASH_SOURCE)) && export SRC_BASH  # ; echo "SRC_BASH = $SRC_BASH"

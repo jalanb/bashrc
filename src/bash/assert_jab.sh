@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 _trap_jab () {
     [[ ! -d $JAB && -d $HUB/dotjab ]] && JAB=$HUB/dotjab

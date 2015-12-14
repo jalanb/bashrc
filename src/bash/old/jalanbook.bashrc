@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/cat
 
 JAB_SH=$JAB/src/bash
 source $JAB_SH/asserts.sh

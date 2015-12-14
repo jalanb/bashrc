@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 require $JAB/src/bash/hub.sh
 require $JAB/src/bash/asserts.sh

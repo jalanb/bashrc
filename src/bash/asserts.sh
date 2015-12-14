@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 _trapped="$BASH_SOURCE"
 
