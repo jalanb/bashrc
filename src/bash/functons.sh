@@ -517,10 +517,6 @@ vj () {
     popd >/dev/null 2>&1
 }
 
-vp () {
-    _edit_jab src/bash/prompt.sh "$@"
-}
-
 vv () {
     [[ -n $* ]] && vim $JAB/vim/$1 || vim ~/.vimrc
 }
@@ -536,10 +532,6 @@ xe () {
     local to=EUR
     [[ -n $3 ]] && to=$3
     curl "http://www.xe.com/wap/2co/convert.cgi?Amount=$amount&From=$from&To=$to" -A "Mozilla" -s | sed -n "s/.*>\(.*\) $to<.*/\1/p";
-}
-
-sp () {
-    source $JAB/src/bash/prompt.sh
 }
 
 sq () {
@@ -679,16 +671,6 @@ jjj () {
 
 jjy () {
     ky $JAB/src/python "$@"
-}
-
-jpi () {
-    local path_to_jpm=$HUB/jpm
-    cd $path_to_jpm
-    source /home/alanb/.virtualenvs/jpm/bin/activate
-    add_to_a_path PATH $path_to_jpm/bin
-    add_to_a_path PYTHONPATH $path_to_jpm/jpm
-    [[ -n $* ]] && "$@"
-
 }
 
 jpm () {

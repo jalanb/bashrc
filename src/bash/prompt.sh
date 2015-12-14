@@ -76,6 +76,14 @@ prompt_command () {
         ${PROMPT_NO_COLOUR}\n$ "
 }
 
+sp () {
+    source $JAB/src/bash/prompt.sh
+}
+
+vp () {
+    _edit_jab src/bash/prompt.sh "$@"
+}
+
 if [[ -n "$MYVIMRC" ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     export PROMPT_COMMAND='prompt_command $?'
