@@ -1,7 +1,5 @@
 #! /bin/bash
 
-require $JAB/src/bash/hub.sh
-
 _source_jab_environ () {
     EX_OK=0
     EX_BAD=1
@@ -50,11 +48,6 @@ _source_jab_environ () {
     #
     [[ -d ~/src/git/bitbucket ]] && BITBUCKET=~/src/git/bitbucket || BITBUCKET=no_bitbucket
     export BITBUCKET
-    if [[ -d $HUB ]]; then
-        source $HUB/what/what.sh
-    else
-        echo HUB is not a directory
-    fi
     if [[ -f /usr/local/bin/gls ]]; then
         export LS_PROGRAM=/usr/local/bin/gls
         DIRCOLORS=/usr/local/bin/gdircolors
