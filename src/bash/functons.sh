@@ -149,6 +149,8 @@ bd () {
 }
 
 db () {
+    ww $1;
+    w $1;
     (set -x; "$@")
 }
 
@@ -1397,6 +1399,12 @@ console_title_on () {
     else
         echo "Title: $1"
     fi
+}
+
+show_functons_in ()
+{
+    for f in $(grep "^[a-z][a-z_]\+ .. .$" $1  | sed -e "s: .. .$::"); do
+        what -v $f; done | lesser
 }
 
 # xxxxxxxxxxxxxxxxx

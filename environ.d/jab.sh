@@ -1,13 +1,13 @@
 #! /bin/bash
 
-require $JAB/src/bash/repo.sh
+source_what $JAB/src/bash/repo.sh
 
 #! /bin/bash
 
 _set_jab () {
     JAB=$(path_to_this_repo)
     export JAB
-    echo JAB = $JAB
+    echo JAB, from repo $JAB
 }
 
 _set_ssh () {
