@@ -1,0 +1,3 @@
+Bill the Lizard says "If you're just using bits of code you found on Stack Overflow to get your program to work, then you're using the site as it was intended to be used. The attribution doesn't need to be publicly displayed, but you should put a URL in your source code comments so that you and anyone else who reads your code can go back to the original source if they need to." at http://meta.stackoverflow.com/a/253622/500942
+
+Thanks Bill
