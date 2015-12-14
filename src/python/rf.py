@@ -39,7 +39,7 @@ def default_options():
         'old': '*.old',
         'python': '*.pyc *.pyo *.fail *$py.class *.profile',
         'temporary':
-        '*.bak *.orig temp.* *.tmp *~ .*~ fred* mary mary.* one two',
+        '*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two',
     }
     return options, globs
 
