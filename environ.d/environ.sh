@@ -6,8 +6,11 @@ _source_jab_environ () {
     EX_OK=0
     EX_BAD=1
 
-    export JAB=${JAB:-$HOME/.jab}
-    _expected=$JAB/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected; . $_actual
+    if [[ -d $JAB ]]; then
+        source $JAB/environ.d/jab.sh
+    else
+        echo JAB is not a directory >&2
+    fi
 
     export COLUMNS
 
@@ -47,8 +50,11 @@ _source_jab_environ () {
     #
     [[ -d ~/src/git/bitbucket ]] && BITBUCKET=~/src/git/bitbucket || BITBUCKET=no_bitbucket
     export BITBUCKET
-    source $HUB/what/what.sh
-
+    if [[ -d $HUB ]]; then
+        source $HUB/what/what.sh
+    else
+        echo HUB is not a directory
+    fi
     if [[ -f /usr/local/bin/gls ]]; then
         export LS_PROGRAM=/usr/local/bin/gls
         DIRCOLORS=/usr/local/bin/gdircolors
@@ -56,7 +62,6 @@ _source_jab_environ () {
         export LS_PROGRAM=/bin/ls
         [[ -f /usr/bin/dircolors ]] && DIRCOLORS=/usr/bin/dircolors
     fi
-
     if $LS_PROGRAM -@ >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='-@'
     elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
@@ -70,21 +75,25 @@ _source_jab_environ () {
         export LS_DIRS_OPTION=
     fi
     [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
-
     OLD_PATH=$PATH
-    PATH=
-    require $JAB/bin/add_to_a_path.sh
-    add_to_a_path PATH $HOME/bin
-    add_to_a_path PATH $JAB/bin
-    add_to_a_path PATH $HOME/.local/bin
-    add_to_a_path PATH /bin
-    add_to_a_path PATH /usr/local/bin
-    add_to_a_path PATH /usr/bin
-    add_to_a_path PATH /usr/local/sbin
-    add_to_a_path PATH ~/git/bin
-    add_to_a_path PATH /opt/local/bin
-    add_to_a_path PATH /sbin
-
+    if [[ -d $JAB ]]; then
+        source $JAB/bin/add_to_a_path.sh
+        PATH=
+        add_to_a_path PATH $HOME/bin
+        add_to_a_path PATH $JAB/bin
+        add_to_a_path PATH $HOME/.local/bin
+        add_to_a_path PATH /bin
+        add_to_a_path PATH /usr/local/bin
+        add_to_a_path PATH /usr/bin
+        add_to_a_path PATH /usr/local/sbin
+        add_to_a_path PATH ~/git/bin
+        add_to_a_path PATH /opt/local/bin
+        add_to_a_path PATH /sbin
+        export PATH
+    else
+        echo JAB is not a directory
+    fi
+    echo PATH is now $PATH
     export PS1
 
     #
@@ -99,11 +108,14 @@ _source_jab_environ () {
     export EDITOR=vim
     export EMAIL="dotjab@al-got-rhythm.net"
 
-    source_path $JAB/environ.d/colour.sh
+    if [[ -d $JAB ]]; then
+        source_path $JAB/environ.d/colour.sh
+    fi
 
     RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
     export LOG_LINES_ON_CD_GIT_DIR=7
 
     set -o vi
 }
+
 _source_jab_environ
