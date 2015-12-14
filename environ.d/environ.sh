@@ -4,10 +4,8 @@ _source_jab_environ () {
     EX_OK=0
     EX_BAD=1
 
-    if [[ -d $JAB ]]; then
+    if [[ ! -d $JAB ]]; then
         source $JAB/environ.d/jab.sh
-    else
-        echo JAB is not a directory >&2
     fi
 
     export COLUMNS
@@ -74,14 +72,18 @@ _source_jab_environ () {
         PATH=
         add_to_a_path PATH $HOME/bin
         add_to_a_path PATH $JAB/bin
+        add_to_a_path PATH $HOME/.local
         add_to_a_path PATH $HOME/.local/bin
         add_to_a_path PATH /bin
+        add_to_a_path PATH /usr/local/gnu
         add_to_a_path PATH /usr/local/bin
         add_to_a_path PATH /usr/bin
         add_to_a_path PATH /usr/local/sbin
         add_to_a_path PATH ~/git/bin
         add_to_a_path PATH /opt/local/bin
         add_to_a_path PATH /sbin
+        add_to_a_path PATH /usr/sbin
+        add_to_a_path PATH /usr/local/go/bin
         export PATH
     else
         echo JAB is not a directory
