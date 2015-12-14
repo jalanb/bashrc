@@ -1,8 +1,6 @@
 #! /bin/cat
 
 
-require $JAB/src/bash/fill_symbol.sh
-
 _find_python () {
     [[ -n $PYTHON ]] && return 0
     MY_PATH=$jab/bin:$HOME/bin:/usr/local/bin:/usr/bin

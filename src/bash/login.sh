@@ -21,6 +21,6 @@ vbb () {
 
 export PS1="\$? [\u@\h:\$PWD]\n$ "
 
-echo $PATH
+echo PATH is now $PATH
 source ~/bin/jabbash.sh
 sp green
