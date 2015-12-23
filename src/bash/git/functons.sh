@@ -88,6 +88,10 @@ gcj () {
     fi
 }
 
+gcm () {
+    git co master
+}
+
 gdi () {
     git di "$@"
 }
@@ -106,6 +110,10 @@ gds () {
 
 gdv () {
     git dv "$@"
+}
+
+gfa () {
+    git fetch --all
 }
 
 _gl () {
@@ -132,8 +140,10 @@ glt () {
 }
 
 gpp () {
+    echo "Pull"
     grr "$@"
-    gpu "$@"
+    read -p "Push? [Y]" reply
+    [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpu "$@"
 }
 
 _gp () {
