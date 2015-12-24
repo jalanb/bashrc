@@ -81,12 +81,12 @@ _source_jab_environ () {
         add_to_a_path PATH $JAB/bin
         add_to_a_path PATH $HOME/.local
         add_to_a_path PATH $HOME/.local/bin
-        add_to_a_path PATH /bin
         add_to_a_path PATH /usr/local/gnu
+        add_to_a_path PATH /bin
         add_to_a_path PATH /usr/local/bin
         add_to_a_path PATH /usr/bin
         add_to_a_path PATH /usr/local/sbin
-        add_to_a_path PATH ~/git/bin
+        add_to_a_path PATH $HOME/git/bin
         add_to_a_path PATH /opt/local/bin
         add_to_a_path PATH /sbin
         add_to_a_path PATH /usr/sbin
@@ -95,7 +95,8 @@ _source_jab_environ () {
     else
         echo JAB is not a directory
     fi
-    echo PATH is now $PATH
+    echo PATH is now
+    echo $PATH | tr ':' '\n' | sed -e "s:/:      /:"
     export PS1
 
     #
