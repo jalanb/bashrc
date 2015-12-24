@@ -44,8 +44,15 @@ _source_jab_environ () {
     #
     # some interesting paths
     #
-    [[ -d ~/src/git/bitbucket ]] && BITBUCKET=~/src/git/bitbucket || BITBUCKET=no_bitbucket
-    export BITBUCKET
+    GIT_BUCKET=no_bucket; [[ -d ~/src/git/bucket ]] && GIT_BUCKET=~/src/git/bucket; export GIT_BUCKET
+    HG_BUCKET=no_bucket; [[ -d ~/src/hg/bucket ]] && HG_BUCKET=~/src/hg/bucket; export HG_BUCKET
+    BUCKET=no_bucket
+    if [[ -d $HG_BUCKET ]]; then
+        BUCKET=$HG_BUCKET
+    elif [[ -d $GIT_BUCKET ]]; then
+        BUCKET=$GIT_BUCKET
+    fi
+    export BUCKET
     if [[ -f /usr/local/bin/gls ]]; then
         export LS_PROGRAM=/usr/local/bin/gls
         DIRCOLORS=/usr/local/bin/gdircolors
