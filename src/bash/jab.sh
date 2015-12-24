@@ -11,14 +11,16 @@
 
 # xx
 
+ar () { acquire_require; }
+
 # "c.*" means "cd ..."
 cj () { cd $JAB/$1; }
 
-# "r.* mean "require ...", but means "rm" elsewhere :-(
+# "r*" could mean "require ...", but it already means means "rm ..." 
+# so, I'll use "q*"
 
-ri () { acquire_require; }
-rh () { ri; [[ -z $1 ]] || require $HUB/$1; }
-rj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ri; [[ -z $1 ]] || require $JAB/$1; }
+qh () { ar; [[ -z $1 ]] || require $HUB/$1; }
+qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require $JAB/$1; }
 
 # xxx
 
@@ -27,11 +29,11 @@ cjb () { cd $JAB/src/bash/$1; }
 
 # "rh." means "require ... in $HUB"
 
-rh0 () { . ~/src/git/hub/what/what.sh; }
-RHH () { . ~/src/git/hub/jab/src/bash/hub.sh; }
-rha () { . $HUB/ack2vim/ack2vim.sh; . $HUB/ack2vim/grep_vim.sh; }
-rhk () { . $HUB/kd/kd.sh; }
-rhw () { . $HUB/what/what.sh; }
+qh0 () { . ~/src/git/hub/what/what.sh; }
+qh1 () { . ~/src/git/hub/jab/src/bash/hub.sh; }
+qha () { . $HUB/ack2vim/ack2vim.sh; . $HUB/ack2vim/grep_vim.sh; }
+qhk () { . $HUB/kd/kd.sh; }
+qhw () { . $HUB/what/what.sh; }
 
 
 jjl () { (        set -e;         set -n;         date; cj; "$@") >> $JAB/log/jjj.log 2>&1;
@@ -39,38 +41,38 @@ jjl () { (        set -e;         set -n;         date; cj; "$@") >> $JAB/log/jj
 
 # "rj." means "require ... in $JAB"
 
-rja () { require_jab_sh aliases; }
-rje () { require_jab_sh environ; }
-rjf () { require_jab_sh functons; }
-rjh () { require_jab_sh history; }
-rjo () { require_jab_sh repo; }
-rjr () { require_jab_sh rf; }
-rjt () { require_jab_sh prompt; }
-rjx () { require_jab_sh x; }
-rjs () { rj src/$1; }
-rjb () { rjs bash/$1 ; }
-rjp () { rjs python/$1; }
-rjg () { rjsb git/$1; }
+qja () { require_jab_sh aliases; }
+qje () { require_jab_sh environ; }
+qjf () { require_jab_sh functons; }
+qjh () { require_jab_sh history; }
+qjo () { require_jab_sh repo; }
+qjr () { require_jab_sh rf; }
+qjt () { require_jab_sh prompt; }
+qjx () { require_jab_sh x; }
+qjs () { qj src/$1; }
+qjb () { qjs bash/$1 ; }
+qjp () { qjs python/$1; }
+qjg () { qjsb git/$1; }
 
 
 # xxxx
 
-rjbg () { rjsb git/$1; }
-rjed () { rj environ.d/$1; }
-rjgc () { require_jab_git_sh completion; }
-rjgf () { require_jab_git_sh functons; }
-rjgs () { require_jab_git_sh source; }
-rjsb () { rjs bash/$1; }
-rjsp () { rjs python/$1; }
+qjbg () { qjsb git/$1; }
+qjed () { qj environ.d/$1; }
+qjgc () { require_jab_git_sh completion; }
+qjgf () { require_jab_git_sh functons; }
+qjgs () { require_jab_git_sh source; }
+qjsb () { qjs bash/$1; }
+qjsp () { qjs python/$1; }
 
 # xxxxx
 
-rjsbg () { rjbg $1; }
-rjsps () { rjsp site/$1; }
+qjsbg () { qjbg $1; }
+qjsps () { qjsp site/$1; }
 
-rjedc () { require_jab_env colour; }
-rjedo () { require_jab_env company; }
-rjedp () { require_jab_env python; }
+qjedc () { require_jab_env colour; }
+qjedo () { require_jab_env company; }
+qjedp () { require_jab_env python; }
 
 # xxxxxx
 REQUIRE_ACQUIRED=
@@ -85,7 +87,7 @@ HUB_ACQUIRED=
 require_scripts_under_hub () {
     [[ -n $HUB_ACQUIRED ]] && return;
 	HUB_ACQUIRED=$(date)
-	rh0; RHH; rha; rhk; rhw;
+	qh0; qh1; qha; qhk; qhw;
 }
 
 JAB_ACQUIRED=
@@ -96,36 +98,36 @@ set -x
 	JAB_ACQUIRED=$(date)
     echo JAB, from HUB $JAB
     acquire_require;
-    rjedc; rjedo; rjedp;
-    rja; rje; rjf; rjh; rjt; rjo; rjr; rjx;
-    rjgc; rjgf; rjgs;
+    qjedc; qjedo; qjedp;
+    qja; qje; qjf; qjh; qjt; qjo; qjr; qjx;
+    qjgc; qjgf; qjgs;
     cj;
 set +x
 }
 
 require_jab_sh () {
     require_scripts_under_hub
-    rjb $1
+    qjb $1
 }
 
 require_jab_git_sh () {
     require_scripts_under_hub
-    rjg $1
+    qjg $1
 }
 
 require_jab_env () {
     require_scripts_under_hub
-    rjed $1
+    qjed $1
 }
 
 require_jab_git_sh () {
     require_scripts_under_hub
-    rjg $1
+    qjg $1
 }
 
 require_jab_git_sh () {
     require_scripts_under_hub
-    rjg $1
+    qjg $1
 }
 
 require_jab_sh_all () {
