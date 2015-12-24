@@ -95,8 +95,7 @@ _source_jab_environ () {
     else
         echo JAB is not a directory
     fi
-    echo PATH is now
-    echo $PATH | tr ':' '\n' | sed -e "s:/:      /:"
+    show_path
     export PS1
 
     #
