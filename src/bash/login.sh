@@ -8,6 +8,7 @@ BINS=/usr/bin:/bin:/usr/sbin:/sbin
 HOMES=$HOME/bin:$HOME/.local
 export PATH=$LOCALS:$BINS:$HOMES:$LOCAL/go/bin
 SRC=~/src
+HG=$SRC/hg
 GIT=$SRC/git
 HUB=$GIT/hub
 echo HUB, from bashrc $HUB
