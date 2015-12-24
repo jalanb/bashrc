@@ -95,7 +95,7 @@ set -x
     [[ -n $JAB_ACQUIRED ]] && return;
 	JAB_ACQUIRED=$(date)
     echo JAB, from HUB $JAB
-    ri;
+    acquire_require;
     rjedc; rjedo; rjedp;
     rja; rje; rjf; rjh; rjt; rjo; rjr; rjx;
     rjgc; rjgf; rjgs;
