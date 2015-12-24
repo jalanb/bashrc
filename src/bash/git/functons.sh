@@ -119,8 +119,11 @@ gfa () {
 _gl () {
     local cmd=$1
     shift
-    local loglines=$(( ${LINES:-$(tput lines)} / 3 ))
-    git $cmd "$@" | head -n $loglines
+    local _vertical_lines=${LINES:-$(tput lines)}
+    local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
+    local _lines=${GIT_LOG_LINES:-$LINES}
+    local _loglines=${_lines:-$_one_third_of_vertical}
+    git $cmd "$@" | head -n $_loglines
 }
 
 gla () {
@@ -133,6 +136,14 @@ glg () {
 
 gln () {
     _gl lg --name-only "$@"
+}
+
+glp () {
+    git log -p "$@"
+}
+
+gls () {
+    _gl log --stat "$@"
 }
 
 glt () {
