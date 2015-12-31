@@ -57,8 +57,8 @@ aga () {
     git reset HEAD "$@"
 }
 
-gal () {
-    ga "$@"
+gaa () {
+    ga .
 }
 
 gac () {
