@@ -5,7 +5,7 @@ _source_jab_environ () {
     EX_BAD=1
 
     if [[ ! -d $JAB ]]; then
-        source $JAB/environ.d/jab.sh
+        . $JAB/environ.d/jab.sh
     fi
 
     export COLUMNS
@@ -15,30 +15,6 @@ _source_jab_environ () {
 
     #export DISPLAY=:0
 
-    # OK, let's try again - the HIST...SIZE variables should be set, but have no value
-    # This is explained at https://stackoverflow.com/questions/9457233/unlimited-bash-history/19533853#19533853
-    # and https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash/479727#479727
-    export HISTFILESIZE=
-    export HISTSIZE=
-    # Change the file location because certain bash sessions truncate .bash_history file upon close
-    # http://stackoverflow.com/a/19533853/500942
-    export HISTFILE=~/.bash_eternal_history
-    # format history times
-    export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
-    # ignore some simple commands in history
-    export HISTIGNORE="bg:fg:history:gh:hh"
-    #  remember multi-line commands
-    shopt -s cmdhist
-    # edit a failed history substitution (default just ignores them)
-    shopt -s histreedit
-    # edit history line before executing
-    shopt -s histverify
-    # save multi-line commands to history with "\n", not ":"
-    shopt -s lithist
-    # Make bash check its window size after a process completes
-    shopt -s checkwinsize
-    # append to the history file, don't overwrite it
-    shopt -s histappend
     # correct minor spelling errors for cd
     shopt -s cdspell
     #
@@ -53,29 +29,10 @@ _source_jab_environ () {
         BUCKET=$GIT_BUCKET
     fi
     export BUCKET
-    if [[ -f /usr/local/bin/gls ]]; then
-        export LS_PROGRAM=/usr/local/bin/gls
-        DIRCOLORS=/usr/local/bin/gdircolors
-    else
-        export LS_PROGRAM=/bin/ls
-        [[ -f /usr/bin/dircolors ]] && DIRCOLORS=/usr/bin/dircolors
-    fi
-    if $LS_PROGRAM -@ >/dev/null 2>&1; then
-        export LS_COLOUR_OPTION='-@'
-    elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
-        export LS_COLOUR_OPTION='--color=auto'
-    else
-        export LS_COLOUR_OPTION=
-    fi
-    if $LS_PROGRAM --group-directories-first >/dev/null 2>&1; then
-        export LS_DIRS_OPTION='--group-directories-first'
-    else
-        export LS_DIRS_OPTION=
-    fi
     [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
     OLD_PATH=$PATH
     if [[ -d $JAB ]]; then
-        source $JAB/bin/add_to_a_path.sh
+        . $JAB/bin/add_to_a_path.sh
         PATH=
         add_to_a_path PATH $HOME/bin
         add_to_a_path PATH $JAB/bin

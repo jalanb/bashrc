@@ -44,3 +44,37 @@ _tease_history () {
 _strip_history () {
     HISTTIMEFORMAT= _tease_history "$@"
 }
+
+# xxxxxxxxxxxxxx
+# xxxxxxxxxxxxxxx
+# xxxxxxxxxxxxxxxx
+
+set_history_file () {
+    # OK, let's try again - the HIST...SIZE variables should be set, but have no value
+    # This is explained at https://stackoverflow.com/questions/9457233/unlimited-bash-history/19533853#19533853
+    # and https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash/479727#479727
+    export HISTFILESIZE=
+    export HISTSIZE=
+    # Change the file location because certain bash sessions truncate .bash_history file upon close
+    # http://stackoverflow.com/a/19533853/500942
+    export HISTFILE=~/.bash_eternal_history
+    # format history times
+    export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+    # ignore some simple commands in history
+    export HISTIGNORE="bg:fg:history:gh:hh"
+    #  remember multi-line commands
+    shopt -s cmdhist
+    # edit a failed history substitution (default just ignores them)
+    shopt -s histreedit
+    # edit history line before executing
+    shopt -s histverify
+    # save multi-line commands to history with "\n", not ":"
+    shopt -s lithist
+    # Make bash check its window size after a process completes
+    shopt -s checkwinsize
+    # append to the history file, don't overwrite it
+    shopt -s histappend
+}
+
+[[ $HISTFILE =~ eternal ]] || set_history_file
+
