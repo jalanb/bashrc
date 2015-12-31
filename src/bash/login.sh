@@ -17,7 +17,7 @@ echo JAB, from bashrc $JAB
 echo HOSTNAME, $(hostname -f)
 
 vbb () {
-    vim -p ~/bin/jab.sh ~/bin/jabbash.sh ~/.bashrc +/"^require_scripts_under_jab "
+    vim -p ~/.bashrc ~/bin/jabbash.sh ~/bin/jab.sh +/jabbash
 }
 
 export PS1="\$? [\u@\h:\$PWD]\n$ "
