@@ -18,6 +18,7 @@ JAB=$HUB/jab
 . $JAB/src/bash/rf.sh 
 . $JAB/src/bash/run_python.sh
 . $JAB/src/bash/first_num.sh 
+. $JAB/src/bash/virtualenvwrapper.sh
 . $JAB/src/bash/git/completion.sh
 . $JAB/src/bash/git/functons.sh
 . $JAB/environ.d/company.sh
