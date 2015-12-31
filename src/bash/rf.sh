@@ -21,7 +21,7 @@ rd () {
 }
 
 rf () {
-    (_re_source; ${PYTHON:-python2} $RF_DOT_PY "$@")
+    (_re_source; ${PYTHON:-python2.7} $RF_DOT_PY "$@")
 }
 
 rr () {
@@ -33,7 +33,7 @@ rq () {
 }
 
 rt () {
-    (_re_source; $(${PYTHON:-python2} $RT_DOT_PY "$@"))
+    (_re_source; $(${PYTHON:-python2.7} $RT_DOT_PY "$@"))
 }
 
 ry () {

@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python2.7
 """Script to show the first number in its arguments"""
 
 from __future__ import print_function

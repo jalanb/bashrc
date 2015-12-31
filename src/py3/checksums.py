@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python3
 """Script to see if some standard files have changed
 
 A 'change' is any change to size, mtime or md5sum

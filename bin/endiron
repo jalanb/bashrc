@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python2.7
 """Script to replace environment keys in given directory"""
 
 from __future__ import print_function

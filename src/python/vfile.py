@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python2.7
 """Script to make a vim command from a traceback line"""
 
 

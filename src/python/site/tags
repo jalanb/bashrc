@@ -1,0 +1,354 @@
+MyFirstMeta	/Users/jab/src/git/hub/dotjab/src/python/site/twine.py	/^ +class +MyFirstMeta(/
+MySecondMeta	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^ +class +MySecondMeta(/
+NoCode	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^class +NoCode(/
+SeeError	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^class +SeeError(/
+Spine	/Users/jab/src/git/hub/dotjab/src/python/site/spine.py	/^class +Spine:/
+Tally	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^class +Tally(/
+Twine	/Users/jab/src/git/hub/dotjab/src/python/site/twine.py	/^class +Twine(/
+_SeeDefault	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^class +_SeeDefault(/
+_SeeOutput	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^class +_SeeOutput(/
+__init__	/Users/jab/src/git/hub/dotjab/src/python/site/__init__.py	1
+_add_option	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_add_option(/
+_any_true	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_any_true(/
+_as_five_tuple	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_as_five_tuple(/
+_background_16	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_background_16(/
+_background_256	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_background_256(/
+_cga_colour_names	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +_cga_colour_names(/
+_colour_16	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_colour_16(/
+_colour_256	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_colour_256(/
+_compare	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^ +def +_compare(/
+_consonants	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_consonants(/
+_credentials	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	/^def +_credentials(/
+_default_action	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_default_action(/
+_default_tuples	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_default_tuples(/
+_directory_in_path	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^ +def +_directory_in_path(/
+_employer_domain	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +_employer_domain(/
+_ends_in_consonant_ies	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_ends_in_consonant_ies(/
+_ends_in_consonant_suffix	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_ends_in_consonant_suffix(/
+_ends_in_consonant_y	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_ends_in_consonant_y(/
+_exceptional_plurals	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_exceptional_plurals(/
+_extract_html_hex	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +_extract_html_hex(/
+_files	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +_files(/
+_find_files_in_args	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_find_files_in_args(/
+_foreground_16	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_foreground_16(/
+_foreground_256	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_foreground_256(/
+_handle_command_line	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_handle_command_line(/
+_has_basename	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^ +def +_has_basename(/
+_hex_regexp	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +_hex_regexp(/
+_listize	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_listize(/
+_local_rgb_txt_names_and_numbers	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +_local_rgb_txt_names_and_numbers(/
+_locatable	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_locatable(/
+_locate	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_locate(/
+_locate_regexp_option	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_locate_regexp_option(/
+_make_argv_option	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_make_argv_option(/
+_make_check_method	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_make_check_method(/
+_make_locate_command	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_make_locate_command(/
+_make_parser	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_make_parser(/
+_options_to_parser	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_options_to_parser(/
+_ordered_option	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +_ordered_option(/
+_path_to_locate	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_path_to_locate(/
+_rgb_txt_directories	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +_rgb_txt_directories(/
+_rgb_txt_line	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +_rgb_txt_line(/
+_rgb_txt_names_and_numbers	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +_rgb_txt_names_and_numbers(/
+_run_locate	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +_run_locate(/
+_search_message_ids_in	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +_search_message_ids_in(/
+_small_colour_number	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +_small_colour_number(/
+_uncountables	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_uncountables(/
+_vowels	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +_vowels(/
+_with_domain	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +_with_domain(/
+_with_employer_domain	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +_with_employer_domain(/
+about_mail_delivery	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +about_mail_delivery(/
+add_boring_issue	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +add_boring_issue(/
+add_options	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +add_options(/
+after	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^ +def +after(/
+afterer	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^def +afterer(/
+ansi_escapes	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	1
+ansi_to_html	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +ansi_to_html(/
+ansi_to_integer	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +ansi_to_integer(/
+ansi_to_red_green_blue	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +ansi_to_red_green_blue(/
+archive_handled_messages	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +archive_handled_messages(/
+argv	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	1
+as_str	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^ +def +as_str(/
+ask_about_reading	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +ask_about_reading(/
+assigned_to_someone_else	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +assigned_to_someone_else(/
+background	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +background(/
+background_string	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +background_string(/
+bad_domains	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +bad_domains(/
+basic	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +basic(/
+bold	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +bold(/
+boring_issues_file	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +boring_issues_file(/
+boring_issues_filename	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +boring_issues_filename(/
+boring_lists	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +boring_lists(/
+bug_reports	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +bug_reports(/
+buy_stuff	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +buy_stuff(/
+bw	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +bw(/
+cga	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +cga(/
+check	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^ +def +check(/
+check_family	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +check_family(/
+check_payment	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +check_payment(/
+class_name	/Users/jab/src/git/hub/dotjab/src/python/site/spine.py	/^ +def +class_name(/
+clear_screen	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +clear_screen(/
+code	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +code(/
+code_of_method	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +code_of_method(/
+code_of_module	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +code_of_module(/
+colour_names	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	1
+colour_numbers	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	1
+colour_text	/Users/jab/src/git/hub/dotjab/src/python/site/colours.py	/^def +colour_text(/
+coloured_text	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +coloured_text(/
+colours	/Users/jab/src/git/hub/dotjab/src/python/site/colours.py	1
+commit_author	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +commit_author(/
+confirm_boring	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +confirm_boring(/
+confirm_forwarding	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +confirm_forwarding(/
+confirm_reading	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +confirm_reading(/
+connect	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +connect(/
+copy_to_folder	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +copy_to_folder(/
+cym	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +cym(/
+dark_cga	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +dark_cga(/
+dates	/Users/jab/src/git/hub/dotjab/src/python/site/dates.py	1
+decimal_to_rgb	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^ +def +decimal_to_rgb(/
+decode_rfc2047_header	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +decode_rfc2047_header(/
+decode_safely	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +decode_safely(/
+depluralize	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +depluralize(/
+destination_address_names	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +destination_address_names(/
+directories	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +directories(/
+directories	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +directories(/
+disable	/Users/jab/src/git/hub/dotjab/src/python/site/ylint.py	/^def +disable(/
+employee	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	/^def +employee(/
+employee_account	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +employee_account(/
+employee_address	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +employee_address(/
+employee_username	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +employee_username(/
+employer_email	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +employer_email(/
+employer_name	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +employer_name(/
+employer_server	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +employer_server(/
+environ	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	1
+environ_paths	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +environ_paths(/
+environ_paths	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +environ_paths(/
+environ_paths_class	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^ +class +environ_paths_class:/
+escape	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +escape(/
+escape_sequence	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +escape_sequence(/
+family_emails	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +family_emails(/
+family_name	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +family_name(/
+files	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +files(/
+first_rgb_file	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +first_rgb_file(/
+first_sender	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +first_sender(/
+first_sender_address	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +first_sender_address(/
+first_sender_domain	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +first_sender_domain(/
+first_sender_name	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +first_sender_name(/
+fn_filter	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^def +fn_filter(/
+foreground	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +foreground(/
+foreground_string	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +foreground_string(/
+forename	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +forename(/
+from_boring_list	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +from_boring_list(/
+from_bug_tracker	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +from_bug_tracker(/
+from_def_to	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^def +from_def_to(/
+from_home	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +from_home(/
+from_home	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +from_home(/
+from_seller_of_stuff	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +from_seller_of_stuff(/
+full_class_name	/Users/jab/src/git/hub/dotjab/src/python/site/spine.py	/^ +def +full_class_name(/
+get	/Users/jab/src/git/hub/dotjab/src/python/site/script_paths.py	/^def +get(/
+get_a_key	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_a_key(/
+get_addresses	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_addresses(/
+get_answer	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_answer(/
+get_key	/Users/jab/src/git/hub/dotjab/src/python/site/getch.py	/^def +get_key(/
+get_method_arguments	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_method_arguments(/
+get_new_payload	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_new_payload(/
+get_ord_ch	/Users/jab/src/git/hub/dotjab/src/python/site/getch.py	/^def +get_ord_ch(/
+get_refreshed_paths	/Users/jab/src/git/hub/dotjab/src/python/site/sis.py	/^def +get_refreshed_paths(/
+get_reply	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_reply(/
+get_yes	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +get_yes(/
+getch	/Users/jab/src/git/hub/dotjab/src/python/site/getch.py	/^def +getch(/
+glob_to_regexp	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +glob_to_regexp(/
+good_personal_email	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +good_personal_email(/
+grey_shade	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^ +def +grey_shade(/
+grounds_string	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +grounds_string(/
+handle	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^ +def +handle(/
+handle_issue	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +handle_issue(/
+handle_itissue	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +handle_itissue(/
+handle_messages	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +handle_messages(/
+has_email	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_email(/
+has_email_address	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_email_address(/
+has_email_name	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_email_name(/
+has_email_part	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_email_part(/
+has_out_of_office	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_out_of_office(/
+has_subject	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_subject(/
+has_subject_starting	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_subject_starting(/
+has_subject_with	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +has_subject_with(/
+heading_prefix	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +heading_prefix(/
+highlight	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +highlight(/
+highlight_method	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +highlight_method(/
+highlight_module	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +highlight_module(/
+higlight_code	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +higlight_code(/
+html_to_ansi	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +html_to_ansi(/
+html_to_integer	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +html_to_integer(/
+html_to_red_green_blue	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +html_to_red_green_blue(/
+html_to_small_ansi	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +html_to_small_ansi(/
+html_viewing_needed	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^ +def +html_viewing_needed(/
+ignore_these	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +ignore_these(/
+in_personal_domain	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +in_personal_domain(/
+indent_line	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +indent_line(/
+integer_to_ansi	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +integer_to_ansi(/
+integer_to_html	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +integer_to_html(/
+interesting_lists	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +interesting_lists(/
+is_boring_issue	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +is_boring_issue(/
+is_dir	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^ +def +is_dir(/
+is_exe	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^ +def +is_exe(/
+is_file	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^ +def +is_file(/
+is_signature	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +is_signature(/
+join_mail_site	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +join_mail_site(/
+justify	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^ +def +justify(/
+known_address_names	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +known_address_names(/
+known_colour_names_and_numbers	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +known_colour_names_and_numbers(/
+light_cga	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +light_cga(/
+list_name	/Users/jab/src/git/hub/dotjab/src/python/site/spine.py	/^ +def +list_name(/
+list_name	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^ +def +list_name(/
+locate	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +locate(/
+locate_directory	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +locate_directory(/
+locate_file	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +locate_file(/
+mail	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	1
+mail_accounts	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	1
+mail_html	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +mail_html(/
+mail_site_name	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +mail_site_name(/
+main	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +main(/
+main	/Users/jab/src/git/hub/dotjab/src/python/site/colours.py	/^def +main(/
+main	/Users/jab/src/git/hub/dotjab/src/python/site/locate.py	/^def +main(/
+main	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +main(/
+main	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^def +main(/
+main	/Users/jab/src/git/hub/dotjab/src/python/site/ylint.py	/^def +main(/
+main_personal	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	/^def +main_personal(/
+main_personal_account	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +main_personal_account(/
+match	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^ +def +match(/
+match_case	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +match_case(/
+match_subject	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +match_subject(/
+matched_groups	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +matched_groups(/
+name	/Users/jab/src/git/hub/dotjab/src/python/site/ylint.py	/^def +name(/
+name_to_number	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +name_to_number(/
+names	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +names(/
+new_method	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^ +def +new_method(/
+no_bold	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +no_bold(/
+no_colour	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +no_colour(/
+no_prompt	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +no_prompt(/
+now	/Users/jab/src/git/hub/dotjab/src/python/site/dates.py	/^def +now(/
+number_name	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +number_name(/
+only_sent_to_address	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +only_sent_to_address(/
+parse_args	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +parse_args(/
+parse_issue	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +parse_issue(/
+path_in_localhost	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +path_in_localhost(/
+path_strings	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	1
+path_to_employer_repositories	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +path_to_employer_repositories(/
+paths	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^ +class +paths:/
+peek_at	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +peek_at(/
+peek_body	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +peek_body(/
+peek_header	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +peek_header(/
+personal	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	1
+personal_domain	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +personal_domain(/
+personal_email	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +personal_email(/
+personal_name	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +personal_name(/
+pluralize	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	/^def +pluralize(/
+polite	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^def +polite +(/
+products_check	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +products_check(/
+prompt	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +prompt(/
+prompt_string	/Users/jab/src/git/hub/dotjab/src/python/site/ansi_escapes.py	/^def +prompt_string(/
+prompt_text	/Users/jab/src/git/hub/dotjab/src/python/site/colours.py	/^def +prompt_text(/
+property_name	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^ +def +property_name(/
+read_account	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +read_account(/
+read_bash	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +read_bash(/
+read_environ_items	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +read_environ_items(/
+read_environ_keys	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +read_environ_keys(/
+read_issue	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +read_issue(/
+read_issue_subject	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +read_issue_subject(/
+read_message_ids_in	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +read_message_ids_in(/
+read_passes	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	/^ +def +read_passes(/
+red_green_blue_to_integer	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +red_green_blue_to_integer(/
+refresh_paths	/Users/jab/src/git/hub/dotjab/src/python/site/sis.py	/^def +refresh_paths(/
+regex_filter	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^def +regex_filter(/
+regular_reports	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +regular_reports(/
+regular_reports	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +regular_reports(/
+require	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	1
+reset	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +reset(/
+rgb	/Users/jab/src/git/hub/dotjab/src/python/site/colour_names.py	/^def +rgb(/
+rgb_to_decimal	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^ +def +rgb_to_decimal(/
+screen	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^def +screen(/
+script_paths	/Users/jab/src/git/hub/dotjab/src/python/site/script_paths.py	1
+search_subject	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +search_subject(/
+second_employee	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	/^def +second_employee(/
+second_employee_account	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +second_employee_account(/
+second_personal	/Users/jab/src/git/hub/dotjab/src/python/site/mail_accounts.py	/^def +second_personal(/
+second_personal_account	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +second_personal_account(/
+see	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^def +see(/
+see_attributes	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^def +see_attributes(/
+see_code	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +see_code(/
+see_highlight	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +see_highlight(/
+see_methods	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^def +see_methods(/
+senders_of_spam	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +senders_of_spam(/
+sent_by	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_by(/
+sent_by_address	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_by_address(/
+sent_by_addresses	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_by_addresses(/
+sent_by_name	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_by_name(/
+sent_by_names	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_by_names(/
+sent_from	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_from(/
+sent_to_address	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_to_address(/
+sent_to_addresses	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_to_addresses(/
+sent_to_meeting_rooms	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_to_meeting_rooms(/
+sent_to_receivers_at_personal_domain	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +sent_to_receivers_at_personal_domain(/
+show_account_header	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_account_header(/
+show_all	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_all(/
+show_date	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_date(/
+show_from_address	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_from_address(/
+show_from_name	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_from_name(/
+show_heading	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_heading(/
+show_html	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_html(/
+show_message_keys	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_message_keys(/
+show_some	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_some(/
+show_subject	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_subject(/
+show_to	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_to(/
+show_unknown_message	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +show_unknown_message(/
+shower	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^def +shower(/
+shown	/Users/jab/src/git/hub/dotjab/src/python/site/require.py	/^ +def +shown(/
+sis	/Users/jab/src/git/hub/dotjab/src/python/site/sis.py	1
+site_packages	/Users/jab/src/git/hub/dotjab/src/python/site/sis.py	/^def +site_packages(/
+sites	/Users/jab/src/git/hub/dotjab/src/python/site/sis.py	/^def +sites(/
+small_ansi_to_html	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +small_ansi_to_html(/
+small_integers	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +small_integers(/
+small_values	/Users/jab/src/git/hub/dotjab/src/python/site/colour_numbers.py	/^def +small_values(/
+spam_messages	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +spam_messages(/
+spam_recipient	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +spam_recipient(/
+spine	/Users/jab/src/git/hub/dotjab/src/python/site/spine.py	1
+split_commit_text	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +split_commit_text(/
+split_directories	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +split_directories(/
+split_directories	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +split_directories(/
+split_directories_files	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +split_directories_files(/
+split_directories_files	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +split_directories_files(/
+split_files	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +split_files(/
+split_files	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +split_files(/
+spread	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^def +spread(/
+spread_out_an_attribute	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^ +def +spread_out_an_attribute(/
+spread_out_the_attributes	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^ +def +spread_out_the_attributes(/
+str_class_and_list	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^ +def +str_class_and_list(/
+str_class_and_list	/Users/jab/src/git/hub/dotjab/src/python/site/twine.py	/^ +def +str_class_and_list(/
+string_to_paths	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +string_to_paths(/
+string_to_paths	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +string_to_paths(/
+strings_to_paths	/Users/jab/src/git/hub/dotjab/src/python/site/environ.py	/^def +strings_to_paths(/
+strings_to_paths	/Users/jab/src/git/hub/dotjab/src/python/site/path_strings.py	/^def +strings_to_paths(/
+strip_bottom_level	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +strip_bottom_level(/
+strip_subject	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +strip_subject(/
+strip_top_level	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +strip_top_level(/
+subsequent_lines_with_more_indentation	/Users/jab/src/git/hub/dotjab/src/python/site/see_code.py	/^def +subsequent_lines_with_more_indentation(/
+suffix	/Users/jab/src/git/hub/dotjab/src/python/site/see.py	/^ +def +suffix(/
+surname	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +surname(/
+tally	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	1
+test	/Users/jab/src/git/hub/dotjab/src/python/site/colours.py	/^def +test(/
+test	/Users/jab/src/git/hub/dotjab/src/python/site/getch.py	/^def +test(/
+test_args	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^def +test_args(/
+testing	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +testing(/
+text_viewing_ok	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^ +def +text_viewing_ok(/
+tlist	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^def +tlist(/
+to_options	/Users/jab/src/git/hub/dotjab/src/python/site/argv.py	/^ +def +to_options(/
+to_str	/Users/jab/src/git/hub/dotjab/src/python/site/tally.py	/^ +def +to_str(/
+twine	/Users/jab/src/git/hub/dotjab/src/python/site/twine.py	1
+twist	/Users/jab/src/git/hub/dotjab/src/python/site/twine.py	/^def +twist(/
+unread_message_ids_in	/Users/jab/src/git/hub/dotjab/src/python/site/mail.py	/^def +unread_message_ids_in(/
+url_in_localhost	/Users/jab/src/git/hub/dotjab/src/python/site/personal.py	/^def +url_in_localhost(/
+use_rgb_txt	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	/^def +use_rgb_txt(/
+words	/Users/jab/src/git/hub/dotjab/src/python/site/words.py	1
+x11_colour_names	/Users/jab/src/git/hub/dotjab/src/python/site/x11_colour_names.py	1
+ylint	/Users/jab/src/git/hub/dotjab/src/python/site/ylint.py	1
