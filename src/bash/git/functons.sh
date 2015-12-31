@@ -268,12 +268,16 @@ gsv () {
 
 # xxxx
 
+gaic () {
+    gai .; gc "$@"
+}
+
 ggai () {
     g -q $1 $2 && gai $2 || echo fuck off
 }
 
-gaic () {
-    gai .; gc "$@"
+glp1 () {
+    glp -n1 "@"
 }
 
 # xxxxx
