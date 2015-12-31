@@ -693,6 +693,10 @@ lff () {
     ls fred*
 }
 
+lka () {
+    lk -a "$@"
+}
+
 lkk () {
     lk -a "$@"
 }
