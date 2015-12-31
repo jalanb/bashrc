@@ -21,7 +21,7 @@ JAB=$HUB/jab
 . $JAB/src/bash/virtualenvwrapper.sh
 . $JAB/src/bash/git/completion.sh
 . $JAB/src/bash/git/functons.sh
-. $JAB/environ.d/company.sh
+. $JAB/environ.d/company.sh 2>/dev/null
 . $JAB/environ.d/python.sh
 . $JAB/environ.d/environ.sh
 . $JAB/local/functons.sh

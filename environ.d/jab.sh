@@ -5,7 +5,7 @@ source_what $JAB/src/bash/repo.sh
 _set_jab () {
     JAB=$(path_to_this_repo)
     export JAB
-    echo JAB, from repo $JAB
+    # echo JAB, from repo $JAB
 }
 
 _set_ssh () {

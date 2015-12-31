@@ -11,10 +11,10 @@ SRC=~/src
 HG=$SRC/hg
 GIT=$SRC/git
 HUB=$GIT/hub
-echo HUB, from bashrc $HUB
+# echo HUB, from bashrc $HUB
 JAB=$HUB/jab
-echo JAB, from bashrc $JAB
-echo HOSTNAME, $(hostname -f)
+# echo JAB, from bashrc $JAB
+# echo HOSTNAME, $(hostname -f)
 
 vbb () {
     vim -p ~/.bashrc ~/bin/jabbash.sh ~/bin/jab.sh +/jabbash
@@ -22,6 +22,6 @@ vbb () {
 
 export PS1="\$? [\u@\h:\$PWD]\n$ "
 
-echo PATH is now $PATH
+# echo PATH is now $PATH
 source ~/bin/jabbash.sh
 sp green

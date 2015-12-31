@@ -52,7 +52,7 @@ _source_jab_environ () {
     else
         echo JAB is not a directory
     fi
-    show_path
+    # show_path
     export PS1
 
     #

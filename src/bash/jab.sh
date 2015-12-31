@@ -96,7 +96,7 @@ set -x
     require_scripts_under_hub
     [[ -n $JAB_ACQUIRED ]] && return;
 	JAB_ACQUIRED=$(date)
-    echo JAB, from HUB $JAB
+    # echo JAB, from HUB $JAB
     acquire_require;
     qjedc; qjedo; qjedp;
     qja; qje; qjf; qjh; qjt; qjo; qjr; qjx;
