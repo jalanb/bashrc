@@ -293,7 +293,7 @@ hv () {
 
 jj () {
     dir=$JAB
-    c $dir "$@"
+    clear; c $dir "$@"
 }
 
 _free_line_here () {
