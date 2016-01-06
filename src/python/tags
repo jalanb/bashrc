@@ -1,258 +1,258 @@
-Alan_ColourStyle	/Users/jab/src/git/hub/dotjab/src/python/alan-color.py	/^class +Alan_ColourStyle(/
-EmptySignature	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^class +EmptySignature(/
-FileTag	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^class +FileTag(/
-Invert	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +Invert(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^class +ScriptError(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^class +ScriptError(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^class +ScriptError(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^class +ScriptError(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^class +ScriptError(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^class +ScriptError(/
-ScriptError	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^class +ScriptError(/
-Signature	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^class +Signature(/
-Tag	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^class +Tag:/
-TestClass	/Users/jab/src/git/hub/dotjab/src/python/test_.py	/^class +TestClass(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^def +Use_debugger(/
-VimBashScript	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^class +VimBashScript(/
-_add_symbol_to_paths	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +_add_symbol_to_paths(/
-_extract_all	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +_extract_all(/
-_extract_first	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +_extract_first(/
-_extract_first_digit	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +_extract_first_digit(/
-_get_path_to_config	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +_get_path_to_config(/
-_globalize	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +_globalize(/
-_has_names	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +_has_names(/
-_limits_to_lines	/Users/jab/src/git/hub/dotjab/src/python/files.py	/^def +_limits_to_lines(/
-_look_like_that	/Users/jab/src/git/hub/dotjab/src/python/files.py	/^def +_look_like_that(/
-_main_command	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +_main_command(/
-_main_options	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +_main_options(/
-_path_to_history	/Users/jab/src/git/hub/dotjab/src/python/pythonrc.py	/^def +_path_to_history(/
-_read_history	/Users/jab/src/git/hub/dotjab/src/python/pythonrc.py	/^def +_read_history(/
-_script_stream	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^ +def +_script_stream(/
-_time_str	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^ +def +_time_str(/
-_use_debugger	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +_use_debugger(/
-_write_time_stamp	/Users/jab/src/git/hub/dotjab/src/python/pythonrc.py	/^def +_write_time_stamp(/
-add	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^ +def +add(/
-add_option	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +add_option(/
-add_options	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +add_options(/
-add_to_a_path	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	1
-address_pattern	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^ +def +address_pattern(/
-alan-color	/Users/jab/src/git/hub/dotjab/src/python/alan-color.py	1
-all_directories_in_a_list_of_tags	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +all_directories_in_a_list_of_tags(/
-arg_path	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +arg_path(/
-as_configuration_name	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +as_configuration_name(/
-as_path	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +as_path(/
-as_paths	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +as_paths(/
-as_vim_command	/Users/jab/src/git/hub/dotjab/src/python/vim_traceback.py	/^def +as_vim_command(/
-as_words	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +as_words(/
-backup_with_suffix	/Users/jab/src/git/hub/dotjab/src/python/files.py	/^def +backup_with_suffix(/
-checksums	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	1
-choose	/Users/jab/src/git/hub/dotjab/src/python/ifconfig.py	/^ +def +choose(/
-compare_options	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +compare_options(/
-complete	/Users/jab/src/git/hub/dotjab/src/python/pythonrc.py	/^def +complete(/
-de_comma	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +de_comma(/
-de_punctuate	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +de_punctuate(/
-de_punctuate_word	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +de_punctuate_word(/
-de_quote	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +de_quote(/
-def_or_class_regexp	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +def_or_class_regexp(/
-default_basenames	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +default_basenames(/
-default_options	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +default_options(/
-default_values	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +default_values(/
-delete	/Users/jab/src/git/hub/dotjab/src/python/y.py	/^def +delete(/
-directory_tarballs	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +directory_tarballs(/
-dirs	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +dirs(/
-divide	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +divide(/
-escape_quotes	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +escape_quotes(/
-extend	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +extend(/
-files	/Users/jab/src/git/hub/dotjab/src/python/files.py	1
-files	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +files(/
-filter_by_word	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +filter_by_word(/
-find_tag_in_line	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +find_tag_in_line(/
-find_tarballs	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +find_tarballs(/
-find_vimming_process_command	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +find_vimming_process_command(/
-first_num	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	1
-format_line	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +format_line(/
-freds	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +freds(/
-get_files	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_files(/
-get_files_in	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_files_in(/
-get_files_under	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_files_under(/
-get_freds	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +get_freds(/
-get_globs	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +get_globs(/
-get_help_text	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_help_text(/
-get_ip_addresses	/Users/jab/src/git/hub/dotjab/src/python/ifconfig.py	/^def +get_ip_addresses(/
-get_module_name	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_module_name(/
-get_names_in	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_names_in(/
-get_paths	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +get_paths(/
-get_paths_in	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_paths_in(/
-get_paths_under	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +get_paths_under(/
-get_significant_status	/Users/jab/src/git/hub/dotjab/src/python/significant_svn_status.py	/^ +def +get_significant_status(/
-get_stream	/Users/jab/src/git/hub/dotjab/src/python/vim_traceback.py	/^def +get_stream(/
-get_swap_files	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +get_swap_files(/
-has_swap_file	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +has_swap_file(/
-has_tarball_extension	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +has_tarball_extension(/
-has_true	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +has_true(/
-ifconfig	/Users/jab/src/git/hub/dotjab/src/python/ifconfig.py	1
-insubstantial	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +insubstantial(/
-interpret	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +interpret(/
-ip_dict	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +ip_dict(/
-is_dash_option	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +is_dash_option(/
-is_final_option	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +is_final_option(/
-is_option	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +is_option(/
-is_plus_option	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +is_plus_option(/
-is_tarball	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +is_tarball(/
-line_regexp	/Users/jab/src/git/hub/dotjab/src/python/vim_traceback.py	/^def +line_regexp(/
-lines	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +lines(/
-lines_of_words	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +lines_of_words(/
-looks_like_this	/Users/jab/src/git/hub/dotjab/src/python/files.py	/^def +looks_like_this(/
-main	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/ifconfig.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/significant_svn_status.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/vim_traceback.py	/^def +main(/
-main	/Users/jab/src/git/hub/dotjab/src/python/y.py	/^def +main(/
-make_chooser	/Users/jab/src/git/hub/dotjab/src/python/ifconfig.py	/^def +make_chooser(/
-merge_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +merge_hosts(/
-missing_extension	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +missing_extension(/
-more_likely_of	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +more_likely_of(/
-my_arg	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^ +def +my_arg(/
-new_values	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +new_values(/
-old_values	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +old_values(/
-pad_keys	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +pad_keys(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	/^def +parse_args(/
-parse_args	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^def +parse_args(/
-parse_line	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +parse_line(/
-parse_line	/Users/jab/src/git/hub/dotjab/src/python/vim_traceback.py	/^def +parse_line(/
-parse_options	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +parse_options(/
-parse_todo_line	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +parse_todo_line(/
-parse_traceback_lines	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	/^def +parse_traceback_lines(/
-path_to_data	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +path_to_data(/
-path_to_editor	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +path_to_editor(/
-path_to_etc_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +path_to_etc_hosts(/
-path_to_jab_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +path_to_jab_hosts(/
-paths	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +paths(/
-plastic_date	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +plastic_date(/
-priorities	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +priorities(/
-priority_colour	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +priority_colour(/
-priority_keys_string	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +priority_keys_string(/
-process_cwd	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +process_cwd(/
-ptags	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	1
-purge_insubstantial	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +purge_insubstantial(/
-pythonrc	/Users/jab/src/git/hub/dotjab/src/python/pythonrc.py	1
-quote	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +quote(/
-quote_finds	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +quote_finds(/
-quotes	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +quotes(/
-read_configuration	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +read_configuration(/
-read_dir	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +read_dir(/
-read_dirs	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +read_dirs(/
-read_etc_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +read_etc_hosts(/
-read_file	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +read_file(/
-read_host_lines	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +read_host_lines(/
-read_my_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +read_my_hosts(/
-read_old_values	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +read_old_values(/
-read_sys_dirs	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +read_sys_dirs(/
-read_todo	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +read_todo(/
-read_todo_items	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +read_todo_items(/
-read_write_dir	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +read_write_dir(/
-read_write_dirs	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +read_write_dirs(/
-real_path	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +real_path(/
-realify	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +realify(/
-recover_old_swaps	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +recover_old_swaps(/
-removable_contents	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +removable_contents(/
-remove	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	/^def +remove(/
-remove_files	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +remove_files(/
-remove_globs	/Users/jab/src/git/hub/dotjab/src/python/y.py	/^def +remove_globs(/
-remove_tarball	/Users/jab/src/git/hub/dotjab/src/python/remove_tarball.py	1
-rf	/Users/jab/src/git/hub/dotjab/src/python/rf.py	1
-run_args	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	/^def +run_args(/
-run_args	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^def +run_args(/
-run_ifconfig	/Users/jab/src/git/hub/dotjab/src/python/ifconfig.py	/^def +run_ifconfig(/
-script	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/first_num.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +script(/
-script	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	/^def +script(/
-scripts	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	1
-see	/Users/jab/src/git/hub/dotjab/src/python/pythonrc.py	/^ +def +see(/
-separate_options	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +separate_options(/
-setUp	/Users/jab/src/git/hub/dotjab/src/python/test_.py	/^ +def +setUp(/
-show_todo_item	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +show_todo_item(/
-significant_svn_status	/Users/jab/src/git/hub/dotjab/src/python/significant_svn_status.py	1
-split_address_pattern	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^ +def +split_address_pattern(/
-split_paths	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +split_paths(/
-start_debugging	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +start_debugging(/
-strings	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^ +def +strings(/
-strip_puv	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^def +strip_puv(/
-substantial	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +substantial(/
-tab_complete	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +tab_complete(/
-tags	/Users/jab/src/git/hub/dotjab/src/python/y.py	/^def +tags(/
-tags_to_text	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +tags_to_text(/
-tearDown	/Users/jab/src/git/hub/dotjab/src/python/test_.py	/^ +def +tearDown(/
-test_	/Users/jab/src/git/hub/dotjab/src/python/test_.py	1
-test_case	/Users/jab/src/git/hub/dotjab/src/python/test_.py	/^ +def +test_case(/
-textify	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +textify(/
-todo	/Users/jab/src/git/hub/dotjab/src/python/todo.py	1
-todo_file	/Users/jab/src/git/hub/dotjab/src/python/todo.py	/^def +todo_file(/
-traceback_to_pudb	/Users/jab/src/git/hub/dotjab/src/python/traceback_to_pudb.py	1
-update_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	1
-version	/Users/jab/src/git/hub/dotjab/src/python/add_to_a_path.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/freds.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/main.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/scripts.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/vff.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	/^def +version(/
-version	/Users/jab/src/git/hub/dotjab/src/python/vim.py	/^def +version(/
-vff	/Users/jab/src/git/hub/dotjab/src/python/vff.py	1
-vfile	/Users/jab/src/git/hub/dotjab/src/python/vfile.py	1
-vim	/Users/jab/src/git/hub/dotjab/src/python/vim.py	1
-vim_main	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +vim_main(/
-vim_script	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	1
-vim_traceback	/Users/jab/src/git/hub/dotjab/src/python/vim_traceback.py	1
-vimmable_files	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +vimmable_files(/
-vimming	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +vimming(/
-vimming_files	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +vimming_files(/
-vimming_process	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^def +vimming_process(/
-wanted_globs	/Users/jab/src/git/hub/dotjab/src/python/rf.py	/^def +wanted_globs(/
-wipe	/Users/jab/src/git/hub/dotjab/src/python/y.py	/^def +wipe(/
-write	/Users/jab/src/git/hub/dotjab/src/python/vim_script.py	/^ +def +write(/
-write_default_values	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +write_default_values(/
-write_dir	/Users/jab/src/git/hub/dotjab/src/python/ptags.py	/^def +write_dir(/
-write_files	/Users/jab/src/git/hub/dotjab/src/python/checksums.py	/^def +write_files(/
-write_hosts	/Users/jab/src/git/hub/dotjab/src/python/update_hosts.py	/^def +write_hosts(/
-y	/Users/jab/src/git/hub/dotjab/src/python/y.py	1
+Alan_ColourStyle	/Users/jab/src/git/hub/jab/src/python/alan-color.py	/^class +Alan_ColourStyle(/
+EmptySignature	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^class +EmptySignature(/
+FileTag	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^class +FileTag(/
+Invert	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +Invert(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/freds.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/main.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/vff.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/vim.py	/^class +ScriptError(/
+Signature	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^class +Signature(/
+Tag	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^class +Tag(/
+TestClass	/Users/jab/src/git/hub/jab/src/python/test_.py	/^class +TestClass(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +Use_debugger(/
+VimBashScript	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^class +VimBashScript(/
+_add_symbol_to_paths	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +_add_symbol_to_paths(/
+_extract_all	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +_extract_all(/
+_extract_first	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +_extract_first(/
+_extract_first_digit	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +_extract_first_digit(/
+_get_path_to_config	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +_get_path_to_config(/
+_globalize	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +_globalize(/
+_has_names	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +_has_names(/
+_limits_to_lines	/Users/jab/src/git/hub/jab/src/python/files.py	/^def +_limits_to_lines(/
+_look_like_that	/Users/jab/src/git/hub/jab/src/python/files.py	/^def +_look_like_that(/
+_main_command	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +_main_command(/
+_main_options	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +_main_options(/
+_path_to_history	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	/^def +_path_to_history(/
+_read_history	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	/^def +_read_history(/
+_script_stream	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^ +def +_script_stream(/
+_time_str	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^ +def +_time_str(/
+_use_debugger	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +_use_debugger(/
+_write_time_stamp	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	/^def +_write_time_stamp(/
+add	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^ +def +add(/
+add_option	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +add_option(/
+add_options	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +add_options(/
+add_to_a_path	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	1
+address_pattern	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^ +def +address_pattern(/
+alan-color	/Users/jab/src/git/hub/jab/src/python/alan-color.py	1
+all_directories_in_a_list_of_tags	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +all_directories_in_a_list_of_tags(/
+arg_path	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +arg_path(/
+as_configuration_name	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +as_configuration_name(/
+as_path	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +as_path(/
+as_paths	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +as_paths(/
+as_vim_command	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	/^def +as_vim_command(/
+as_words	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +as_words(/
+backup_with_suffix	/Users/jab/src/git/hub/jab/src/python/files.py	/^def +backup_with_suffix(/
+checksums	/Users/jab/src/git/hub/jab/src/python/checksums.py	1
+choose	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	/^ +def +choose(/
+compare_options	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +compare_options(/
+complete	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	/^def +complete(/
+de_comma	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +de_comma(/
+de_punctuate	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +de_punctuate(/
+de_punctuate_word	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +de_punctuate_word(/
+de_quote	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +de_quote(/
+def_or_class_regexp	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +def_or_class_regexp(/
+default_basenames	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +default_basenames(/
+default_options	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +default_options(/
+default_values	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +default_values(/
+delete	/Users/jab/src/git/hub/jab/src/python/y.py	/^def +delete(/
+directory_tarballs	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +directory_tarballs(/
+dirs	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +dirs(/
+divide	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +divide(/
+escape_quotes	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +escape_quotes(/
+extend	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +extend(/
+files	/Users/jab/src/git/hub/jab/src/python/files.py	1
+files	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +files(/
+filter_by_word	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +filter_by_word(/
+find_tag_in_line	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +find_tag_in_line(/
+find_tarballs	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +find_tarballs(/
+find_vimming_process_command	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +find_vimming_process_command(/
+first_num	/Users/jab/src/git/hub/jab/src/python/first_num.py	1
+format_line	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +format_line(/
+freds	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +freds(/
+get_files	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_files(/
+get_files_in	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_files_in(/
+get_files_under	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_files_under(/
+get_freds	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +get_freds(/
+get_globs	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +get_globs(/
+get_help_text	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_help_text(/
+get_ip_addresses	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	/^def +get_ip_addresses(/
+get_module_name	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_module_name(/
+get_names_in	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_names_in(/
+get_paths	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +get_paths(/
+get_paths_in	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_paths_in(/
+get_paths_under	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +get_paths_under(/
+get_significant_status	/Users/jab/src/git/hub/jab/src/python/significant_svn_status.py	/^ +def +get_significant_status(/
+get_stream	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	/^def +get_stream(/
+get_swap_files	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +get_swap_files(/
+has_swap_file	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +has_swap_file(/
+has_tarball_extension	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +has_tarball_extension(/
+has_true	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +has_true(/
+ifconfig	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	1
+insubstantial	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +insubstantial(/
+interpret	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +interpret(/
+ip_dict	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +ip_dict(/
+is_dash_option	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +is_dash_option(/
+is_final_option	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +is_final_option(/
+is_option	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +is_option(/
+is_plus_option	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +is_plus_option(/
+is_tarball	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +is_tarball(/
+line_regexp	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	/^def +line_regexp(/
+lines	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +lines(/
+lines_of_words	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +lines_of_words(/
+looks_like_this	/Users/jab/src/git/hub/jab/src/python/files.py	/^def +looks_like_this(/
+main	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/significant_svn_status.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/y.py	/^def +main(/
+make_chooser	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	/^def +make_chooser(/
+merge_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +merge_hosts(/
+missing_extension	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +missing_extension(/
+more_likely_of	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +more_likely_of(/
+my_arg	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^ +def +my_arg(/
+new_values	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +new_values(/
+old_values	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +old_values(/
+pad_keys	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +pad_keys(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +parse_args(/
+parse_line	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +parse_line(/
+parse_line	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	/^def +parse_line(/
+parse_options	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +parse_options(/
+parse_todo_line	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +parse_todo_line(/
+parse_traceback_lines	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	/^def +parse_traceback_lines(/
+path_to_data	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +path_to_data(/
+path_to_editor	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +path_to_editor(/
+path_to_etc_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +path_to_etc_hosts(/
+path_to_jab_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +path_to_jab_hosts(/
+paths	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +paths(/
+plastic_date	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +plastic_date(/
+priorities	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +priorities(/
+priority_colour	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +priority_colour(/
+priority_keys_string	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +priority_keys_string(/
+process_cwd	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +process_cwd(/
+ptags	/Users/jab/src/git/hub/jab/src/python/ptags.py	1
+purge_insubstantial	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +purge_insubstantial(/
+pythonrc	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	1
+quote	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +quote(/
+quote_finds	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +quote_finds(/
+quotes	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +quotes(/
+read_configuration	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +read_configuration(/
+read_dir	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_dir(/
+read_dirs	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_dirs(/
+read_etc_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +read_etc_hosts(/
+read_file	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_file(/
+read_host_lines	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +read_host_lines(/
+read_my_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +read_my_hosts(/
+read_old_values	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +read_old_values(/
+read_sys_dirs	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_sys_dirs(/
+read_todo	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +read_todo(/
+read_todo_items	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +read_todo_items(/
+read_write_dir	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_write_dir(/
+read_write_dirs	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_write_dirs(/
+real_path	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +real_path(/
+realify	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +realify(/
+recover_old_swaps	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +recover_old_swaps(/
+removable_contents	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +removable_contents(/
+remove	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +remove(/
+remove_files	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +remove_files(/
+remove_globs	/Users/jab/src/git/hub/jab/src/python/y.py	/^def +remove_globs(/
+remove_tarball	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	1
+rf	/Users/jab/src/git/hub/jab/src/python/rf.py	1
+run_args	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +run_args(/
+run_ifconfig	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	/^def +run_ifconfig(/
+script	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +script(/
+scripts	/Users/jab/src/git/hub/jab/src/python/scripts.py	1
+see	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	/^ +def +see(/
+separate_options	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +separate_options(/
+setUp	/Users/jab/src/git/hub/jab/src/python/test_.py	/^ +def +setUp(/
+show_todo_item	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +show_todo_item(/
+significant_svn_status	/Users/jab/src/git/hub/jab/src/python/significant_svn_status.py	1
+split_address_pattern	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^ +def +split_address_pattern(/
+split_paths	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +split_paths(/
+start_debugging	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +start_debugging(/
+strings	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^ +def +strings(/
+strip_puv	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +strip_puv(/
+substantial	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +substantial(/
+tab_complete	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +tab_complete(/
+tags	/Users/jab/src/git/hub/jab/src/python/y.py	/^def +tags(/
+tags_to_text	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +tags_to_text(/
+tearDown	/Users/jab/src/git/hub/jab/src/python/test_.py	/^ +def +tearDown(/
+test_	/Users/jab/src/git/hub/jab/src/python/test_.py	1
+test_case	/Users/jab/src/git/hub/jab/src/python/test_.py	/^ +def +test_case(/
+textify	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +textify(/
+todo	/Users/jab/src/git/hub/jab/src/python/todo.py	1
+todo_file	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +todo_file(/
+traceback_to_pudb	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	1
+update_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	1
+version	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +version(/
+vff	/Users/jab/src/git/hub/jab/src/python/vff.py	1
+vfile	/Users/jab/src/git/hub/jab/src/python/vfile.py	1
+vim	/Users/jab/src/git/hub/jab/src/python/vim.py	1
+vim_main	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vim_main(/
+vim_script	/Users/jab/src/git/hub/jab/src/python/vim_script.py	1
+vim_traceback	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	1
+vimmable_files	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vimmable_files(/
+vimming	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vimming(/
+vimming_files	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vimming_files(/
+vimming_process	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vimming_process(/
+wanted_globs	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +wanted_globs(/
+wipe	/Users/jab/src/git/hub/jab/src/python/y.py	/^def +wipe(/
+write	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^ +def +write(/
+write_default_values	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +write_default_values(/
+write_dir	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +write_dir(/
+write_files	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +write_files(/
+write_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	/^def +write_hosts(/
+y	/Users/jab/src/git/hub/jab/src/python/y.py	1
