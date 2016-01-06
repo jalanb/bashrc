@@ -133,7 +133,7 @@ y () {
     else
         dir=
     fi
-    3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
+    3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
 }
 
 add () {
