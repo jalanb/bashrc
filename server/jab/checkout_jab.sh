@@ -1,7 +1,7 @@
 #! /bin/bash
 
 require $JAB/src/bash/hub.sh
-JAB=${HUB/dotjab}
+JAB=${HUB/jab}
 
 require $JAB/src/bash/github.sh
 DOTJAB=$GITHUB/jalanb/dotjab

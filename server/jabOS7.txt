@@ -34,7 +34,7 @@ git clone $GITHUB/jalanb/ack2vim
 git clone $GITHUB/jeffkaufman/icdiff.git
 
 # set up JAB
-JAB=$HUB/dotjab
+JAB=$HUB/jab
 cd $JAB
 # cp dotbashrc ~/.bashrc
 # mv dotbashrc $JAB/src/jab/login.sh ?

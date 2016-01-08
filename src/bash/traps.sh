@@ -22,7 +22,7 @@ _trap_python () {
 
 
 _trap_jab () {
-    [[ ! -d $JAB && -d $HUB/dotjab ]] && JAB=$HUB/dotjab
+    [[ ! -d $JAB && -d $HUB/jab ]] && JAB=$HUB/jab
     [[ -d $JAB ]] || return 1
     [[ ! -d $JAB_LOCAL ]] && JAB_LOCAL=$JAB/local
 }

@@ -62,7 +62,7 @@ run_bashrc () {
     local _what_script=$(readlink -f $HUB/what/what.sh)
     _source $_what_script || echo Cannot source $_what_script
     #
-    local _jab=$(readlink -f $HUB/dotjab)
+    local _jab=$(readlink -f $HUB/jab)
     builtin cd $_jab && _source $_jab/login.sh && builtin cd >/dev/null 2>&1
     if ! is_running autocutsel
     then
@@ -72,7 +72,7 @@ run_bashrc () {
     export TERM="xterm-256color"
     source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
-    mython $/Users/jab/src/git/hub/dotjab/src/python/checksums.py
+    mython $/Users/jab/src/git/hub/jab/src/python/checksums.py
     echo Bye from $HOME/.bashrc
 }
 

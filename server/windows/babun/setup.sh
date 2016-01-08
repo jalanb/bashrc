@@ -15,7 +15,7 @@ run_these_before_running_this_script () {
 }
 
 setup_symbols () {
-    JAB=$HUB/dotjab
+    JAB=$HUB/jab
 }
 
 checkouts () {

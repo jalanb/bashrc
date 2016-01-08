@@ -1,7 +1,7 @@
 #! /bin/cat
 
 _trap_jab () {
-    [[ ! -d $JAB && -d $HUB/dotjab ]] && JAB=$HUB/dotjab
+    [[ ! -d $JAB && -d $HUB/jab ]] && JAB=$HUB/jab
     _assert_directory $JAB
 }
 
