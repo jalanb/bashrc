@@ -190,12 +190,6 @@ cy () {
     [[ -n $PYTHON_HOME ]] && c $PYTHON_HOME || echo "\$PYTHON_HOME not set"
 }
 
-gd () {
-    local __doc__="grep in any (files in first dir in args) for other args"
-    shift_dir "$@" && shift
-    sudo find $dir -type f -exec gf "$@"
-}
-
 gf () {
     local __doc__="grep in any file args for other args"
     shift_dir "$@" && shift
