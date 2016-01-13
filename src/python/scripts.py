@@ -43,10 +43,8 @@ def Use_debugger(_args):
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('keys', metavar='keys', type=str, nargs='+',
+    parser.add_argument('keys', metavar='keys', type=str, nargs='*',
                         help='keys to find')
-    parser.add_argument('-i', '--inverse', action='store_true',
-                        help='show inverse')
     parser.add_argument('-m', '--mains', action='store_true',
                         help='show python scripts with main methods')
     parser.add_argument('-p', '--python', action='store_true',
