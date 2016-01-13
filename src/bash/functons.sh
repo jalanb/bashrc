@@ -386,11 +386,12 @@ pi () {
     local me=$USER
     local here=$(jostname)
     local options=-noconfirm_exit
+    local _ipython=${IPYTHON:-ipython}
     if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
         options=--no-confirm-exit
     fi
     console_title_on "ipython@${here}" && \
-        ipython $options "$@" && \
+        $_ipython $options "$@" && \
         console_title_off "${me}@${here}"
 }
 
@@ -768,6 +769,14 @@ lyy () {
 
 num () {
     vim $JAB/local/numbers.txt
+}
+
+pi2 () {
+    IPYTHON=ipython2; pi "$@"
+}
+
+pi3 () {
+    IPYTHON=ipython3; pi "$@"
 }
 
 pyi () {
