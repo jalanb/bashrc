@@ -4,27 +4,29 @@
 import itertools
 
 
-from dotsite import paths
+from dotsite.paths import environ_path
+from dotsite.paths import makepath
 
 
 def get(strings):
-    hub = paths.environ_path('HUB')
-    jab = paths.environ_path('JAB')
+    hub = environ_path('HUB')
+    jab = environ_path('JAB')
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'
     jab_python = jab_src / 'python'
     jab_todo = jab / 'todo.txt'
-    config = paths.makepath('~/.config')
+    config = makepath('~/.config')
     abbreviations = {
         '2': [
             jab_todo,
             jab_python / 'todo.py',
         ], 'scripts': [
-            jab_python / 'site/script_paths.py',
             jab_python / 'scripts.py',
+            jab_python / 'site/script_paths.py',
         ], 'v': [
-            jab_python / 'vim',
+            jab_python / 'vim.py',
             jab_python / 'vim_script.py',
+            jab_python / 'site/script_paths.py',
         ], 'rf': [
             jab_python / 'rf.py',
             config / 'rf/config',
@@ -32,6 +34,7 @@ def get(strings):
             hub / 'jpm/jpm/jpm.py',
             hub / 'jpm/bin/jpm',
         ], 'kd':  [
+            hub / 'kd/kd.sh',
             hub / 'kd/kd.py',
             config / 'kd',
         ], 'locate': [
@@ -51,6 +54,9 @@ def get(strings):
         #    hub / '',
         # ],
     }
-    return list(
-        itertools.chain(
-            *[abbreviations[s] for s in strings if s in abbreviations]))
+    if strings:
+        lists_of_paths = [abbreviations[s] for s in strings if s in abbreviations]
+    else:
+        lists_of_paths = [v for k, v in abbreviations.items()]
+    paths = list(itertools.chain(*lists_of_paths))
+    return [_ for _ in paths if _.isfile()]
