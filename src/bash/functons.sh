@@ -17,8 +17,11 @@ c () {
     if [[ $c_result == "0" ]]; then
         _show_todo_here
         echo
-        show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
         echo
+        echo
+        glg
+        #show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
+        #echo
         git_simple_status $(pwd)
     fi
     return $c_result
