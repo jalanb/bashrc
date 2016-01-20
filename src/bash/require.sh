@@ -62,7 +62,7 @@ _ls_dot_sh () {
     (set -e; ls $_script)
 }
 
-_require_file () {
+_require_file_in () {
     cd $1;
     _require $(_ls_dot_sh $2)
 }
@@ -70,7 +70,7 @@ _require_file () {
 require () {
     local _dirname=.
     if [[ -d $1 ]]; then _dirname=$1; shift; fi
-    [[ ! -d $1 ]] && _require_file $_dirname $1
+    [[ ! -d $1 ]] && _require_file_in $_dirname $1
 }
 
 requires () {
