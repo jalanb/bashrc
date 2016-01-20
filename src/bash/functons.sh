@@ -507,14 +507,22 @@ vi () {
 fi
 
 vj () {
-    pushd $JAB
-    v.
-    gsi
-    popd >/dev/null 2>&1
+    (cd $JAB;
+        v.
+        gsi)
+}
+
+
+vu () {
+    __doc__="Edit vim files in $JAB. Add home vim files if different"
+    local _vimrc="$JAB/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
+    local _vim="$JAB/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
+    vim -p $_vimrc $_vim
 }
 
 vv () {
-    [[ -n $* ]] && vim $JAB/vim/$1 || vim ~/.vimrc
+    local __doc__="Edit vim files"
+    [[ -n $* ]] && vu || vva "$@"
 }
 
 vy () {
@@ -927,12 +935,18 @@ vpe () {
     _edit_jab environ.d/python
 }
 
+vva () {
+    __doc__="Edit all args in $JAB/vim"
+    (cd $JAB/vim;
+    vim -p vimrc "$@")
+}
+
 vvb () {
     vvf sh.vim
 }
 
 vvf () {
-    vv ftplugin/$1
+    vvv ftplugin/$1
 }
 
 vvg () {
@@ -949,7 +963,7 @@ vvy () {
 
 
 vvv () {
-    v ~/.vim
+    vva .
 }
 
 vtr () {

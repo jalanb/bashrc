@@ -6,10 +6,6 @@ type = git
 source = https://github.com/junegunn/limelight.vim.git
 type = git
 
-[YouCompleteMe]
-source = https://github.com/Valloric/YouCompleteMe.git
-type = git
-
 [cute-python]
 source = https://github.com/ehamberg/vim-cute-python.git
 type = git
