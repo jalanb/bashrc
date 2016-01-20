@@ -24,7 +24,7 @@ alias 2=todo_show
 alias 3=3l
 alias 4=todo_edit
 # a is a function
-alias b="b"
+# b is a function
 # c is a function
 alias d="d"
 alias e="ex --noplugin -u ~/.vim/exrc"

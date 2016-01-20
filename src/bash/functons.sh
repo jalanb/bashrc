@@ -11,6 +11,14 @@
 # x
 
 
+b () {
+    if [[ -f ./build.sh ]]; then
+        bash ./build.sh
+    elif [[ -f Makefile ]]; then
+        make
+    fi
+}
+
 c () {
     kd "$@"
     local c_result="$?"
