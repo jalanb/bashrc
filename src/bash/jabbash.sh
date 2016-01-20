@@ -7,9 +7,7 @@
 . $HUB/kd/kd.sh;
 . $HUB/what/what.sh
 JAB=$HUB/jab
-DOT_ALIAS=$(alias . | sed -e "s/.*=//" -e "s/'//g")
 . $JAB/src/bash/aliases.sh
-alias .=$DOT_ALIAS
 . $JAB/src/bash/asserts.sh
 . $JAB/src/bash/environ.sh 
 . $JAB/src/bash/functons.sh

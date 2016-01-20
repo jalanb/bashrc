@@ -8,7 +8,9 @@
 
 # This list is quite long enough, we accept no other aliases
 #   Thanks anyway
+DOT_ALIAS=$(alias . | sed -e "s/.*=//" -e "s/'//g")
 unalias -a
+alias .=$DOT_ALIAS
 
 # The wee x headings are counts
 #   all the wee aliases in this wee section have only one character, oui,
