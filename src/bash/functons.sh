@@ -552,6 +552,10 @@ cjy () {
     kd $JAB/src/python "$@"
 }
 
+clf () {
+    cat $JAB/local/functons.sh
+}
+
 clo () {
     c $(locate "$@")
 }
