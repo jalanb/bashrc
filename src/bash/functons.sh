@@ -329,15 +329,14 @@ lh () {
 }
 
 lk () {
-    LS_PROGRAM=$(which lk)
-    local _gls=$(which gls)
+    LS_PROGRAM=$(which ls 2>/dev/null)
+    local _gls=$(which gls 2>/dev/null)
+    [[ -f $_gls ]] && LS_PROGRAM=$_gls
     local _css=
+    $LS_PROGRAM  --help 2>/dev/null | grep -q -- --color && _css=--color
+    $LS_PROGRAM  --help 2>/dev/null | grep -q -- --classify && _css="$_css --classify"
     local _header=
-    if [[ -f $_gls ]]; then
-        LS_PROGRAM=$_gls
-        _css="--color --classify "
-        _header=--group-directories-first
-    fi
+    $LS_PROGRAM  --help 2>/dev/null | grep -q -- --group-directories-first && _header=--group-directories-first
     $LS_PROGRAM $_css $_header "$@"
     export LS_PROGRAM
 }
