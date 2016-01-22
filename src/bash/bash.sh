@@ -17,4 +17,3 @@ DIR=$JAB/src/bash
 . $DIR/virtualenvwrapper.sh
 . $DIR/github.sh
 . $DIR/git/bash.sh
-. $JAB/environ.d/bash.sh

@@ -8,7 +8,8 @@
 . $HUB/what/what.sh
 
 JAB=$HUB/jab
-. $JAB/src/bash.sh
+. $JAB/src/bash/bash.sh
+. $JAB/environ.d/bash.sh
 . $JAB/local/bash.sh
 
 echo Bye from $JAB on $(hostname -f)
