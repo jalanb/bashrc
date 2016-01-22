@@ -15,11 +15,11 @@ GIT=$SRC/git
 HUB=$GIT/hub
 export HUB
 
-source $HUB/jab/bash.sh
+source $HUB/jab/__init__.sh
 
 
 vbb () {
-    vim -p ~/.bashrc $HUB/jab/bash.sh +/bash
+    vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
 }
 
 export PS1="\$? [\u@\h:\$PWD]\n$ "
