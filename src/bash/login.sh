@@ -26,4 +26,5 @@ export PS1="\$? [\u@\h:\$PWD]\n$ "
 
 # set -x
 jj
+sp
 # set +x
