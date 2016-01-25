@@ -11,6 +11,10 @@
 # x
 
 
+/. () {
+    c . "$@"
+}
+
 b () {
     if [[ -f ./build.sh ]]; then
         bash ./build.sh
@@ -404,6 +408,10 @@ pi () {
         console_title_off "${me}@${here}"
 }
 
+
+pt () {
+    ptpython "$@"
+}
 
 py () {
     if [[ -z "$@" ]]; then

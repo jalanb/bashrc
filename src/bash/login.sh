@@ -18,6 +18,11 @@ export HUB
 source $HUB/jab/__init__.sh
 
 
+source $HUB/jab/src/bash/jabbash.sh
+echo JABm $JAB
+
+export PS1="\$? [\u@\h:\$PWD]\n$ "
+
 vbb () {
     vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
 }

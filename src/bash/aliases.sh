@@ -65,7 +65,6 @@ alias eg="env | g "
 alias kp="rsync -a"
 
 alias p-="echo $OLDPWD"
-alias pt="p $JAB/src/python/vim_traceback.py"
 
 alias r.="rm -rvf *"
 
