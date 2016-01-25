@@ -174,6 +174,10 @@ _gp () {
     fi
 }
 
+gpo () {
+    gpu  "$@"
+}
+
 gpu () {
     _gp push "$@"
 }

@@ -1,5 +1,7 @@
 #! /bin/bash
 
+. $JAB/local/functions.sh
+
 _find_copier () {
     CLI_COPIER=
     for possible in xsel pbcopy; do
@@ -17,7 +19,7 @@ main () {
         echo "No clipboard program available" >&2
         return 1
     fi
-    python -c "print 'RGlnZ2VyLCBUaHVtYmVyLCBUYXJ6YW4sIENsaW1iZXI='.decode('base64')" | $CLI_COPIER
+    _dttc | $CLI_COPIER
     return 0
 }
 
