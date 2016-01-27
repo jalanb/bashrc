@@ -1148,6 +1148,10 @@ LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }
 
+hosts () {
+    g -e ^Host -e Host[nN]ame ~/.ssh/config
+}
+
 quack () {
     local _result=1
     for $item in "$@"; do
