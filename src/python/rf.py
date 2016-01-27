@@ -203,7 +203,7 @@ def remove_files(files, quiet, trial_run):
     return result
 
 
-def script(args):
+def script(options, args, globs):
     """Run the script"""
     result = os.EX_OK
     for arg in args:
@@ -220,7 +220,7 @@ def main():
         options, args, globs = parse_options()
     except NotImplementedError:
         return os.EX_USAGE
-    return script(args)
+    return script(options, args, globs)
 
 if __name__ == '__main__':
     sys.exit(main())
