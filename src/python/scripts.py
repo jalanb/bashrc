@@ -5,6 +5,7 @@ from __future__ import print_function
 import os
 import sys
 import argparse
+import commands
 from bdb import BdbQuit
 
 
@@ -45,10 +46,14 @@ def parse_args(methods):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('keys', metavar='keys', type=str, nargs='*',
                         help='keys to find')
+    parser.add_argument('-l', '--list', action='store_true',
+                        help='$ ls -l scripts')
     parser.add_argument('-m', '--mains', action='store_true',
                         help='show python scripts with main methods')
     parser.add_argument('-p', '--python', action='store_true',
                         help='show python scripts only')
+    parser.add_argument('-s', '--shortlist', action='store_true',
+                        help='$ ls scripts')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     parser.add_argument('-U', '--Use_debugger', action='store_true',
@@ -77,6 +82,14 @@ def script(args):
                 if line.startswith('def main('):
                     break
             else:
+                continue
+        if args.list or args.shortlist:
+            list_command = 'PATH=/bin:/usr/bin ls' + ' -l' if args.list else ''
+            command = '%s %s' % (list_command, path_to_item)
+            status, output = commands.getstatusoutput(command)
+            if status == os.EX_OK:
+                print(output)
+                result = True
                 continue
         print(path_to_item)
         result = True
