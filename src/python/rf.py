@@ -203,12 +203,8 @@ def remove_files(files, quiet, trial_run):
     return result
 
 
-def main():
-    """Run the program"""
-    try:
-        options, args, globs = parse_options()
-    except NotImplementedError:
-        return os.EX_USAGE
+def script(args):
+    """Run the script"""
     result = os.EX_OK
     for arg in args:
         files = get_files(arg, globs, options.recursive)
@@ -217,6 +213,14 @@ def main():
             result = file_result
     return result
 
+
+def main():
+    """Run the program"""
+    try:
+        options, args, globs = parse_options()
+    except NotImplementedError:
+        return os.EX_USAGE
+    return script(args)
 
 if __name__ == '__main__':
     sys.exit(main())
