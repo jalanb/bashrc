@@ -1,8 +1,8 @@
 #! /bin/bash
 
 _source_jab_environ () {
-    EX_OK=0
-    EX_BAD=1
+    export EX_OK=0
+    export EX_BAD=1
 
     if [[ ! -d $JAB ]]; then
         . $JAB/environ.d/jab.sh
