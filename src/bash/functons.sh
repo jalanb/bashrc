@@ -410,7 +410,17 @@ pi () {
 
 
 pt () {
-    ptpython "$@"
+    if what -q ptpython; then
+        PTPYTHON=$(what -f ptpython)
+    else
+        . $JAB/local/environ.sh
+        [[ -e $PTPYTHON ]] || return 1
+    fi
+    $PTPYTHON \
+        --vi \
+        --config-dir=~/.config/ptpython \
+        --interactive=$JAB/etc/ptpythonrc.py
+        "$@"
 }
 
 py () {
