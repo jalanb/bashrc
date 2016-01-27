@@ -11,7 +11,7 @@ from bdb import BdbQuit
 __version__ = '0.1.0'
 
 
-from vim_script import vim_main
+from vim_script import script
 
 
 class ScriptError(NotImplementedError):
@@ -75,7 +75,7 @@ def main():
     try:
         parse_args(globals())
         args = strip_puv(sys.argv[1:])
-        return vim_main(args)
+        return script(args)
     except BdbQuit:
         pass
     except SystemExit as e:

@@ -410,7 +410,7 @@ def vimmable_files(text_files, script):
     return result
 
 
-def vim_main(args):
+def script(args):
     script = VimBashScript()
     try:
         text_files, options = interpret(args)
