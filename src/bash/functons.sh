@@ -476,20 +476,6 @@ tt () {
     ra
 }
 
-uj () {
-# update $JAB from the repository
-    if [[ $(svn up $JAB | grep -v "At revision" | wc -l) != "0" ]]; then
-        BACK=$(pwd)
-        if [[ $BACK != "$JAB" ]]; then
-            cd $JAB
-            source_path login.sh
-            cd $BACK
-        else
-            source_path login.sh
-        fi
-    fi
-}
-
 v. () {
     v .
 }
