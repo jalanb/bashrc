@@ -13,7 +13,7 @@ fi
 #
 # Gonna need python
 #
-require $JAB/src/bash/run_python.sh
+. $JAB/src/bash/run_python.sh
 #
 # Once sourced there is one major command:
 #
