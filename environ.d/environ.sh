@@ -33,6 +33,7 @@ _source_jab_environ () {
     OLD_PATH=$PATH
     if [[ -d $JAB ]]; then
         . $JAB/bin/add_to_a_path.sh
+        _find_python
         PATH=
         add_to_a_path PATH $HOME/bin
         add_to_a_path PATH $JAB/bin
