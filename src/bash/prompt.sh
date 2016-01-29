@@ -3,17 +3,17 @@
 
 export PROMPT_COLOUR=none
 if [[ "$1" == "green" ]]; then
-    export PROMPT_COLOUR="$PROMPT_GREEN"
-    export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
+    export PROMPT_COLOUR="$GREEN"
+    export PROMPT_OPPOSITE_COLOUR="$MAGENTA"
 elif [[ "$1" == "red" ]]; then
-    export PROMPT_COLOUR="$PROMPT_RED"
-    export PROMPT_OPPOSITE_COLOUR="$PROMPT_CYAN"
+    export PROMPT_COLOUR="$RED"
+    export PROMPT_OPPOSITE_COLOUR="$CYAN"
 elif [[ "$1" == "blue" ]]; then
-    export PROMPT_COLOUR="$PROMPT_LIGHT_BLUE"
-    export PROMPT_OPPOSITE_COLOUR="$PROMPT_YELLOW"
+    export PROMPT_COLOUR="$LIGHT_BLUE"
+    export PROMPT_OPPOSITE_COLOUR="$YELLOW"
 else
-    export PROMPT_COLOUR="$PROMPT_GREEN"
-    export PROMPT_OPPOSITE_COLOUR="$PROMPT_MAGENTA"
+    export PROMPT_COLOUR="$GREEN"
+    export PROMPT_OPPOSITE_COLOUR="$MAGENTA"
 fi
 
 changes=0
@@ -53,9 +53,9 @@ prompt_command () {
     if [[ -z "$1" ]]; then
         how_do_you_do_nothing_in_a_bash_script=0
     elif [[ $1 == 0 ]]; then
-        export STATUS="${PROMPT_GREEN}$1${PROMPT_NO_COLOUR}"
+        export STATUS="${GREEN}$1${NO_COLOUR}"
     else
-        export STATUS="${PROMPT_RED}$1${PROMPT_NO_COLOUR}"
+        export STATUS="${RED}$1${NO_COLOUR}"
     fi
     changes=0
     local endir="$(mython $JAB/bin/endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
@@ -66,14 +66,14 @@ prompt_command () {
     Dir="${Dir}${GIT_BRANCH}"
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     console_whoami
-    export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${PROMPT_NO_COLOUR}\n$ "
+    export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${NO_COLOUR}\n$ "
     what -q kd && kd --add . >/dev/null 2>&1
     history -a
     local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)
     [[ -n "$VIRTUAL_ENV" ]] && python_version=${python_version}.$(basename $VIRTUAL_ENV)
     export PS1="$STATUS ${PROMPT_COLOUR}\
 [\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]\
-        ${PROMPT_NO_COLOUR}\n$ "
+        ${NO_COLOUR}\n$ "
 }
 
 sp () {
