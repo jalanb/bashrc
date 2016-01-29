@@ -5,7 +5,6 @@ DIR=$JAB/src/bash
 
 . $DIR/aliases.sh
 . $DIR/asserts.sh
-. $DIR/environ.sh 
 . $DIR/functons.sh
 . $DIR/history.sh 
 . $DIR/prompt.sh 

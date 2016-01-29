@@ -8,8 +8,8 @@
 . $HUB/what/what.sh
 
 JAB=$HUB/jab
-. $JAB/src/bash/__init__.sh
 . $JAB/environ.d/__init__.sh
+. $JAB/src/bash/__init__.sh
 . $JAB/local/__init__.sh
 
 echo Bye from $JAB on $(hostname -f)

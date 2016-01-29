@@ -2,6 +2,7 @@
 
 DIR=$JAB/environ.d
 
-. $DIR/company.sh 2>/dev/null
-. $DIR/python.sh
+. $DIR/jab.sh
 . $DIR/environ.sh
+. $DIR/python.sh
+. $DIR/company.sh 2>/dev/null
