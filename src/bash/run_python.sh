@@ -2,7 +2,7 @@
 
 
 _find_python () {
-    [[ -n $PYTHON ]] && return 0
+    [[ -e $PYTHON ]] && return 0
     MY_PATH=$jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
     PYTHON=$(PATH=$MY_PATH which python2.7 2>/dev/null)
     [[ -z $PYTHON ]] && PYTHON=$(which python2.7 2>/dev/null)
