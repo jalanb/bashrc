@@ -808,6 +808,13 @@ pi3 () {
     IPYTHON=ipython3; pi "$@"
 }
 
+ps3 () {
+    if [[ -z "$@" ]]; then
+        ps axf | vim - +
+    else ps axf | vim - +/"$*"
+    fi
+}
+
 pyi () {
     cd $HUB/pym/pym
     add_to_a_path PATH ./bin
@@ -846,15 +853,9 @@ pyi () {
     [[ -n $* ]] && "$@"
 }
 
-pyl () {
-    pushd /home/alanb/src/git/code.rdkcentral.com/r/cmf/tools/blackduck >/dev/null 2>&1; grep "..pylint..disable=" */*/*.py | sed -e "s/=.*/=/" | uniq; popd > /dev/null 2>&1
-}
-
-ps3 () {
-    if [[ -z "$@" ]]; then
-        ps axf | vim - +
-    else ps axf | vim - +/"$*"
-    fi
+pym () {
+    hub pym pym "$@"
+    [[ ! $VIRTUAL_ENV =~ /pym$ ]] && workon pym
 }
 
 raj () {
@@ -1090,6 +1091,10 @@ Tree () {
 
 vibb () {
     vim -p ~/.bashrc $JAB/login.sh
+}
+
+vini () {
+    vim -p $(find $JAB -name __init__.sh | tr '\n' ' ')
 }
 
 # xxxxx
