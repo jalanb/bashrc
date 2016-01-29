@@ -1,7 +1,7 @@
 #! /bin/bash
 
-require $JAB/src/bash/hub.sh
-require $JAB/src/bash/github.sh
+. $JAB/src/bash/hub.sh
+. $JAB/src/bash/github.sh
 
 run_these_before_running_this_script () {
     babun shell /bin/bash

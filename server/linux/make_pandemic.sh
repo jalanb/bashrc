@@ -21,7 +21,7 @@ tear_down () {
     fi
 }
 
-require $JAB/src/bash/github.sh
+. $JAB/src/bash/github.sh
 
 =======
 >>>>>>> Extract scratch functions to src/bash
@@ -55,7 +55,7 @@ main () {
     update_pandemic
 }
 
-require $JAB/src/bash/scratch.sh
+. $JAB/src/bash/scratch.sh
 
 scratch_up
 main

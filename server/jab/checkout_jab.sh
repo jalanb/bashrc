@@ -1,9 +1,9 @@
 #! /bin/bash
 
-require $JAB/src/bash/hub.sh
+. $JAB/src/bash/hub.sh
 JAB=${HUB/jab}
 
-require $JAB/src/bash/github.sh
+. $JAB/src/bash/github.sh
 DOTJAB=$GITHUB/jalanb/dotjab
 
 checkout () {

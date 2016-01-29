@@ -4,7 +4,7 @@ set -e
 
 MINIMUM_VERSION=2.21
 
-require $JAB/src/bash/scratch.sh
+. $JAB/src/bash/scratch.sh
 
 install_which () {
     clean_scratch

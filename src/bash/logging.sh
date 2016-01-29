@@ -52,7 +52,7 @@ trace_one_bashrc () {
     verbose_interactive_bashrc | grep $_level
 }
 
-require $JAB/src/bash/hub.sh
+. $JAB/src/bash/hub.sh
 
 run_bashrc () {
     echo Welcome to $HOME/.bashrc
