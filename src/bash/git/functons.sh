@@ -223,6 +223,7 @@ _gsi_menu () {
     suffix=", "
     _gsi_opt q uit
     _gsi_opt a dd
+    _gsi_opt c ommit
     _git_modified $1 && _gsi_opt i nteractive
     _git_modified $1 && _gsi_opt p atch
     _gsi_opt d rop
@@ -256,6 +257,7 @@ gsi () {
         [[ $answer =~ [pP] ]] && (_git_modified $f && gap $f || (_git_untracked $f && echo Cannot split untracked file))
         [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
         [[ $answer =~ [vV] ]] && _gsi_vim $f
+        [[ $answer =~ [cC] ]] && git commit
     done
     gc
     [[ -n $STATUS_QUESTIONS ]] && vimcat $STATUS_QUESTIONS
