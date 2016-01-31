@@ -669,6 +669,11 @@ jub () {
     lk
 }
 
+jjb () {
+    dir=$JAB/src/bash
+    clear; c $dir "$@"
+}
+
 jjj () {
 # ssh back to the jab.ook (which is my laptop)
 # it goes by different hostnames, try in order of probablity
