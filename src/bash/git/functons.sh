@@ -153,7 +153,7 @@ glt () {
     _gl lt "$@"
 }
 
-gpp () {
+grp () {
     echo "Pull"
     grr "$@"
     read -p "Push? [Y]" reply
@@ -176,7 +176,7 @@ gpo () {
     gpu  "$@"
 }
 
-gpu () {
+gpp () {
     _gp push "$@"
 }
 
