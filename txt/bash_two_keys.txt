@@ -1,0 +1,66 @@
+qq q (ymmv)
+QQ 
+ww 
+WW 
+ee 
+EE 
+rr 
+RR 
+tt 
+TT 
+yy 
+YY 
+uu 
+UU 
+ii 
+II 
+oo 
+OO 
+pp 
+PP 
+[[ start a condition
+]] end a condition
+aa find text and start edit all files found (ymmv)
+AA 
+ss 
+SS 
+dd 
+DD 
+ff 
+FF 
+gg 
+GG 
+hh 
+HH 
+jj cd $JAB (ymmv)
+JJ 
+kk 
+KK 
+ll long listing
+LL 
+;; 2 noops
+:: 
+"" empty string
+'' empty string
+\\ 
+`` empty command
+zz 
+ZZ 
+xx 
+XX 
+cc 
+CC 
+vv 
+VV 
+bb 
+BB 
+nn 
+NN 
+mm 
+MM 
+,, 
+<< read stdin from
+.. 
+>> write stdout to 
+// /
+?? 

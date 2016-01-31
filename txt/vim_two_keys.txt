@@ -1,0 +1,66 @@
+qq quit 2 files (ymmv)
+QQ stop editing, quit all files without saving (ymmv)
+ww move to start of 2nd word
+WW write all files twice (ymmv)
+ee move to end of 2nd word
+EE ee
+rr replace current char with r
+RR replace current char with R and start editing
+tt move to start of next t
+TT move to end of next T
+yy yank current line
+YY yank current line
+uu undo twice
+UU noop
+ii insert an i and start editing
+II insernt an I at start of line and start editing
+oo add a new line after current line and start it with an o
+OO add a new line before current line and start it with an O
+pp paste twice
+PP paste twice backwards
+[[ jump 2 tags (ymmv)
+]] jump back twice (ymmv)
+aa add an a and start editing
+AA add an A at start of line and start editing
+ss replace current char with an s and start editing
+SS start replacing S throughout the file (ymmv)
+dd delete current line
+DD D
+ff move to next f
+FF move to prev F
+gg go to first line
+GG G
+hh go 2 chars left
+HH H
+jj go 2 lines down
+JJ append next 2 lines
+kk go 2 lines up
+KK K
+ll go 2 chars right
+LL L
+;; edit command lines (ymmv)
+:: start a command line with :
+"" set mark ' (ymmv)
+'' go to the ' mark
+\\ toggle search highlighting (ymmv)
+`` jump to the ' mark
+zz redraw folds
+ZZ Write and quit
+xx remove 2 chars
+XX Write and quit twice
+cc dd and start editing
+CC delete rest of line, add a C, and start editing
+vv noop
+VV noop
+bb go to start of previous word
+BB bb
+nn find 2nd next match
+NN no errors
+mm set mark m
+MM M
+,, goto mark m (ymmv)
+<< dedent
+.. repeat last action twice
+>> indent
+// Search for /
+?? Search back for ?
