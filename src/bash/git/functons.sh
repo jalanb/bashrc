@@ -74,10 +74,6 @@ gai () {
     ga --patch "$@"
 }
 
-gap () {
-    ga --patch "$@"
-}
-
 gcj () {
     local _storage=/tmp/gcj.sh
     local GIT="git -C $JAB"
@@ -278,7 +274,11 @@ gsv () {
 # xxxx
 
 gaic () {
-    gai .; gc "$@"
+    gaii .; gc "$@"
+}
+
+gaii () {
+    ga --interactive "$@"
 }
 
 ggai () {
