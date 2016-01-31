@@ -47,6 +47,21 @@ _strip_history () {
 
 # xxxxxxxxxxxxxx
 # xxxxxxxxxxxxxxx
+
+_history_commands () {
+    _strip_history | \
+        sed "s/^(//" | \     # remove leading (
+        g -v '^["$!)-]' | \  # remove quotes, symbol use, history expansions, cd -
+        cut -d' ' -f 1 | \   # take first word (command)
+        sed -e "s/[);]$//" \ # remove trailing chars
+            -e "s/^\(.\|..\)$//" | \    # remove small commands
+        grep -v "^$" | \     # remove blank lines
+        sort | uniq | \      # sort and get unique words
+        # grep "=" | \         # find assignments
+        # wc -l | \            # count
+        cat                  # send to stdout
+}
+
 # xxxxxxxxxxxxxxxx
 
 set_history_file () {
