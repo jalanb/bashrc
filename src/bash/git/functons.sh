@@ -20,7 +20,9 @@ ga () {
         echo 'Did you mean "gal" (add all) ?'
         return 1
     else
+        set -x
         git add "$@"
+        set +x
     fi
 }
 
@@ -255,7 +257,7 @@ gsi () {
         [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
         [[ $answer =~ [vV] ]] && _gsi_vim $f
     done
-    [[ -n $GIT_ADDED ]] && gc
+    gc
     [[ -n $STATUS_QUESTIONS ]] && vimcat $STATUS_QUESTIONS
 }
 
