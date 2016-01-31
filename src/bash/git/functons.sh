@@ -71,7 +71,7 @@ gac () {
 }
 
 gai () {
-    ga --interactive "$@"
+    ga --patch "$@"
 }
 
 gap () {
