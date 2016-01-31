@@ -22,7 +22,7 @@ pt ()
 {
     local __doc__="function to run https://github.com/jonathanslenders/ptpython, if installed"
     local _ptpython=
-    [[ what -q ptpython ]] && _ptpython=$(what -f ptpython)
+    what -q ptpython && _ptpython=$(what -f ptpython)
     [[ -z $_ptpython && -e $PTPYTHON ]] && _ptpython=$PTPYTHON
     [[ $1 != hub && -z $_ptpython && -d $HUB/ptpython ]] && (cd $HUB/pypython; python setup.py install) && pt hub
     if [[ $1 == -h || $1 == --help ]]; then
