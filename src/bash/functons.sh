@@ -51,7 +51,7 @@ f () {
     IFS=";"
     for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
     do
-        mython $JAB/bin/relpath -s $FOUND
+        relpath -s $FOUND
     done
     IFS=$old_ifs
 }
@@ -1249,6 +1249,10 @@ has_ext () {
 pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
     [[ $string != "# pylint: disable=No" ]] && echo $string
+}
+
+relpath () {
+    python $JAB/src/python/relpath.py "$@"
 }
 
 # xxxxxxxx
