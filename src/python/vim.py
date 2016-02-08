@@ -33,7 +33,7 @@ def version(args):
     raise SystemExit
 
 
-def Use_debugger(_args):
+def use_debugger(_args):
     try:
         import pudb as pdb
     except ImportError:
@@ -50,32 +50,17 @@ def parse_args(methods):
                         help='put files in tabs')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
-    parser.add_argument('-U', '--Use_debugger', action='store_true',
+    parser.add_argument('-U', '--use_debugger', action='store_true',
                         help='Run the script with pdb (or pudb if available)')
     args = parser.parse_args()
     run_args(args, methods)
     return args
 
 
-def strip_puv(args):
-    result = []
-    for arg in args:
-        if arg in ['--Use_debugger', '--version', '--tabs']:
-            continue
-        if arg[0] == '-':
-            arg = ''.join([c for c in arg if c not in 'pvU'])
-            if arg == '-':
-                continue
-        result.append(arg)
-    return result
-
-
 def main():
-    """Run the script"""
+    """Run the program"""
     try:
-        parse_args(globals())
-        args = strip_puv(sys.argv[1:])
-        return script(args)
+        return script(parse_args(globals()))
     except BdbQuit:
         pass
     except SystemExit as e:

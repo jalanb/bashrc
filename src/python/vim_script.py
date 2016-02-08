@@ -36,7 +36,7 @@ class VimBashScript(object):
             '#! /bin/bash -x',
             '',
             'VIM_EDITOR="vim"',
-            'source $(dirname $(readlink -f $BASH_SOURCE))/vim_functions.sh',
+            '. $(dirname $(readlink -f $BASH_SOURCE))/vim_functions.sh',
         ]
 
     def add(self, line):
@@ -387,10 +387,7 @@ def recover_old_swaps(text_file, swaps, script):
         print >> sys.stderr, 'Too many swaps: %r' % ','.join(swaps)
         return False
     swap = swaps[0]
-    script.add('echo "A swap file exists: %s"' % swap)
-    if ' ' in text_file:
-        return False
-    script.add('recover %s %s && \\' % (text_file, swap))
+    script.add('pre_vimming "%s" "%s"' % (text_file, swap))
     return True
 
 
@@ -410,7 +407,24 @@ def vimmable_files(text_files, script):
     return result
 
 
-def script(args):
+def strip_puv(args):
+    result = []
+    for arg in args:
+        if arg in ['--use_debugger', '--version', '--tabs']:
+            continue
+        if arg[0] == '-':
+            arg = ''.join([c for c in arg if c not in 'pvU'])
+            if arg == '-':
+                continue
+        result.append(arg)
+    return result
+
+
+def script(args, **kwargs):
+    quit = use_debugger(args) if args.use_debugger else False
+    if quit:
+        return
+    args = strip_puv(sys.argv[1:])
     script = VimBashScript()
     try:
         text_files, options = interpret(args)

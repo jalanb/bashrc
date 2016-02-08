@@ -27,6 +27,13 @@ recover () {
     fi
 }
 
+pre_vimming () {
+	local _file="$1"
+	local _swap_file="$2"
+	echo "A swap file exists: $_swap_file"
+	recover "$_file" "$_swap_file"
+}
+
 post_vimming () {
 #
 # This function is called after editting, arguments are same as vim got
