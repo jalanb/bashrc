@@ -17,12 +17,10 @@ ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     if [[ -z "$*" ]]; then
         echo Nothing specified for add >&2
-        echo 'Did you mean "gal" (add all) ?'
+        echo 'Did you mean "gaa" (add all) ?'
         return 1
     else
-        set -x
         git add "$@"
-        set +x
     fi
 }
 
