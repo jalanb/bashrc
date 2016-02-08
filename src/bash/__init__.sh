@@ -16,4 +16,5 @@ DIR=$JAB/src/bash
 . $DIR/virtualenvwrapper.sh
 . $DIR/github.sh
 . $DIR/hosts.sh
+. $DIR/pym.sh
 . $DIR/git/__init__.sh
