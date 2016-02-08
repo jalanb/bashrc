@@ -33,7 +33,7 @@ c () {
         echo
         show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
         echo
-        git_simple_status $(pwd)
+        git_simple_status $(pwd) || lk
     fi
     return $c_result
 }
