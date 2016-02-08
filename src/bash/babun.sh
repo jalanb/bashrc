@@ -15,10 +15,6 @@ wwts () {
     c $HOME/src/git/parthenonsoftware/git-wwts/wwts-dashboard
 }
     
-_dttc () {
-    python -c "print 'RGlnZ2VyLCBUaHVtYmVyLCBUYXJ6YW4sIENsaW1iZXI='.decode('base64')"
-}
-
 restarts () {
     server=$1
     for name in uwsgi nginx redis mysqld; do
