@@ -655,13 +655,15 @@ hd1 () {
 }
 
 hed () {
-    HEADLINES=${HEADLINES:-(( ${LINES:-$(tput lines)} / 2 ))}
+    SCREEN=$(tput lines)
+    SCREEN=${LINES:-$(tput lines)}
+    HALF_SCREEN=`expr $SCREEN / 2`
+    HEADLINES=${HEADLINES:-$HALF_SCREEN}
     head -n ${1:-$HEADLINES} "$@"
 }
 
 hub () {
     c $HUB "$@"
-    lk
 }
 
 jub () {
@@ -804,49 +806,6 @@ ps3 () {
         ps axf | vim - +
     else ps axf | vim - +/"$*"
     fi
-}
-
-pyi () {
-    cd $HUB/pym/pym
-    add_to_a_path PATH ./bin
-    add_to_a_path PYTHONPATH ./pym
-    source ~/.virtualenvs/pym/bin/activate
-    if [[ -n $* ]]; then
-        if shift_dir "$@"; then
-            shift
-            cd $dir
-        fi
-    fi
-    2
-    pwd
-    local _status=$(git status -s)
-    if [[ -n $_status ]]; then
-        echo -n "\$ git status -s: "
-        git status -s
-    else
-        local has_dirs=
-        for item in $(ls)
-        do
-            if [[ -d "$item" ]]; then
-                has_dirs=1
-                break
-            fi
-        done
-        if [[ $has_dirs == 1 ]]; then
-            3y -L 2 --noreport . | grep -v -e bdist.linux-x86_64 -e " _build$" -e __init__.py -e .egg-info
-        fi
-        echo
-    fi
-    if [[ -n $(ls *.py | grep -v __init__.py 2>/dev/null) ]]; then ly -q
-    elif [[ -n $(ls * | grep -v __init__.py) ]]; then lk
-    fi
-    echo
-    [[ -n $* ]] && "$@"
-}
-
-pym () {
-    hub pym pym "$@"
-    [[ ! $VIRTUAL_ENV =~ /pym$ ]] && workon pym
 }
 
 raj () {
@@ -1132,10 +1091,6 @@ freds () {
 
 LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
-}
-
-hosts () {
-    g -e ^Host -e Host[nN]ame ~/.ssh/config
 }
 
 quack () {
