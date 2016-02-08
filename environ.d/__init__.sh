@@ -6,3 +6,4 @@ DIR=$JAB/environ.d
 . $DIR/environ.sh
 . $DIR/python.sh
 . $DIR/company.sh 2>/dev/null
+. $DIR/ssh_completion.sh
