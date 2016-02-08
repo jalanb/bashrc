@@ -409,10 +409,6 @@ pi () {
 }
 
 
-pt () {
-    bash -x $JAB/bin/pt.sh "$@"
-}
-
 py () {
     if [[ -z "$@" ]]; then
         mython
