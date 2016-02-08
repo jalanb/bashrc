@@ -18,7 +18,7 @@ export HUB
 source $HUB/jab/__init__.sh
 
 
-echo JABm $JAB
+echo JAB is $JAB
 
 export PS1="\$? [\u@\h:\$PWD]\n$ "
 
@@ -30,5 +30,5 @@ export PS1="\$? [\u@\h:\$PWD]\n$ "
 
 # set -x
 jj
-sp
 # set +x
+sp
