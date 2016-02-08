@@ -42,6 +42,10 @@ ry () {
 
 # xxx
 
+rfp () {
+    rf -qpr
+}
+
 rfq () {
     rf -q "$@"
 }
