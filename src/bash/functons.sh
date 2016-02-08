@@ -39,14 +39,17 @@ c () {
 }
 
 f () {
-    shift_dir "$@" && shift
+    local _arg_1=$1
+    if [[ $_arg_1 == "-name" ]]; then
+        echo "Do not use '-name'" >&2
+        shift
+    fi
+    local _argc=${#*}
+    if [[ $_argc > 1 ]]; then
+        shift_dir "$@" && shift
+    fi
     local name=$1
     shift
-    if [[ $name == "-name" ]]; then
-        echo "Do not use '-name'"
-        shift
-        name=$1
-    fi
     local old_ifs=$IFS
     IFS=";"
     for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
