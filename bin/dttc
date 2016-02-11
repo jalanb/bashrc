@@ -6,7 +6,7 @@
 _find_copier () {
     CLI_COPIER=
     for possible in xsel pbcopy; do
-        CLI_COPIER=$(which $possible)
+        CLI_COPIER=$(which $possible 2>/dev/null)
         if [[ -n $CLI_COPIER ]]; then
             return 0
         fi
@@ -18,6 +18,7 @@ main () {
     _find_copier
     if [[ ! -x $CLI_COPIER ]]; then
         echo "No clipboard program available" >&2
+        _dttc
         return 1
     fi
     _dttc | $CLI_COPIER
