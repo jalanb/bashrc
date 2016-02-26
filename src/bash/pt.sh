@@ -18,8 +18,7 @@
 . $HUB/what/what.sh
 . $JAB/local/environ.sh
 
-pt ()
-{
+pt () {
     local __doc__="function to run https://github.com/jonathanslenders/ptpython, if installed"
     local _ptpython=
     what -q ptpython && _ptpython=$(what -f ptpython)
@@ -29,9 +28,11 @@ pt ()
         $_ptpython -h
         return $?
     fi
+    PT_CONFIG_DIR=$HOME/.config/ptpython
+    [[ -d $PT_CONFIG_DIR ]] || mkdir -p $PT_CONFIG_DIR
     $_ptpython \
         --vi \
-        --config-dir=$JAB/etc \
+        --config-dir=$PT_CONFIG_DIR \
         --interactive=$JAB/src/python/ptpython.py \
         -- "$@"
 }
