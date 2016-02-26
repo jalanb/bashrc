@@ -158,20 +158,8 @@ grp () {
     [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpu "$@"
 }
 
-_gp () {
-    local stashed=
-    if git_changed; then
-        stashed=1
-        git stash -q
-    fi
-    git "$@"
-    if [[ $stashed == 1 ]]; then
-        git stash pop -q
-    fi
-}
-
 gpp () {
-    _gp push "$@"
+    _git_stash_and push "$@"
 }
 
 grh () {
@@ -187,7 +175,7 @@ gri () {
 }
 
 grr () {
-    _gp pull --rebase "$@"
+    _git_stash_and pull --rebase "$@"
 }
 
 grs () {
@@ -311,6 +299,18 @@ git_root () {
 }
 
 # xxxxxxxxxx
+
+_git_stash_and () {
+    local stashed=
+    if git_changed; then
+        stashed=1
+        git stash -q
+    fi
+    git "$@"
+    if [[ $stashed == 1 ]]; then
+        git stash pop -q
+    fi
+}
 
 git_branch () {
     git rev-parse --abbrev-ref HEAD
