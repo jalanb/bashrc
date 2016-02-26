@@ -638,7 +638,7 @@ ghv () {
 }
 
 gre () {
-    $(which grep) -h --color=never "$@"
+    [[ -z $* ]] && echo "gre what?" >&2 || $(which grep) -h --color=never "$@"
 }
 
 gv. () {
