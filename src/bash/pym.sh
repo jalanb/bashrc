@@ -77,9 +77,10 @@ pym () {
         python $_pym --help
         return $?
     fi
-    $_pym \
-        --vi \
-        --config-dir=$JAB/etc \
+    PYM_CONFIG_DIR=$HOME/.config/pym
+    [[ -d $PYM_CONFIG_DIR ]] || mkdir -p $PYM_CONFIG_DIR
+    python $_pym \
+        --config-dir=$PYM_CONFIG_DIR \
         --interactive=$JAB/src/python/pym.py \
         -- "$@"
 }
