@@ -20,7 +20,7 @@
 . $JAB/local/environ.sh
 
 workon_pym () {
-    [[ ! $VIRTUAL_ENV =~ /pym$ ]] && workon pym
+    [[ $VIRTUAL_ENV =~ /pym$ ]] || workon pym
     hub pym pym "$@"
 }
 
@@ -62,18 +62,17 @@ pyi () {
     [[ -n $* ]] && "$@"
 }
 
-pym ()
-{
+pym () {
     local __doc__="function to run https://github.com/jalanb/pym, if installed"
     local _pym=
     what -q pym && _pym=$(what -f pym)
     [[ -z $_pym && -e $pym ]] && _pym=$pym
     [[ $1 != hub && -z $_pym && -f $HUB/pym/setup.py ]] && (cd $HUB/pym; python setup.py install)
     if [[ $1 == -h ]]; then
-        $_pym -h
+        python $_pym -h
         return $?
     elif [[ $1 == --help ]]; then
-        $_pym --help
+        python $_pym --help
         return $?
     fi
     $_pym \
