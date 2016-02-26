@@ -64,10 +64,12 @@ pyi () {
 
 pym () {
     local __doc__="function to run https://github.com/jalanb/pym, if installed"
-    local _pym=
-    what -q pym && _pym=$(what -f pym)
-    [[ -z $_pym && -e $pym ]] && _pym=$pym
-    [[ $1 != hub && -z $_pym && -f $HUB/pym/setup.py ]] && (cd $HUB/pym; python setup.py install)
+    [[ $VIRTUAL_ENV =~ /pym$ ]] || workon pym
+    local _pym=$HUB/pym/pym/reply/main.py
+    if [[ ! -f $_pym ]]; then
+        echo $_pym is not a file >&2
+        return 1
+    fi
     if [[ $1 == -h ]]; then
         python $_pym -h
         return $?
