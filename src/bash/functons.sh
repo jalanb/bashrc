@@ -47,6 +47,8 @@ f () {
     local _argc=${#*}
     if [[ $_argc > 1 ]]; then
         shift_dir "$@" && shift
+    elif [[ -z $dir ]]; then
+        dir=$(pwd)
     fi
     local name=$1
     shift
