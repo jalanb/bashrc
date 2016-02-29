@@ -1,11 +1,12 @@
 #! /bin/cat
 
-source_what $JAB/src/bash/repo.sh
+. $JAB/src/bash/repo.sh
 
 _set_jab () {
-    JAB=$(path_to_this_repo)
-    export JAB
-    # echo JAB, from repo $JAB
+    if [[ -z $JAB ]]; then
+        echo \$JAB is not set >&2
+        return 1
+    fi
 }
 
 _set_ssh () {
@@ -33,9 +34,10 @@ _set_ls_options () {
 }
 
 _main () {
-    _set_jab
-    _set_ssh
-    _set_ls_options
+    if _set_jab; then
+        _set_ssh
+        _set_ls_options
+    fi
 }
 
 _main
