@@ -170,7 +170,11 @@ bd () {
 db () {
     ww $1;
     w $1;
-    (set -x; "$@")
+    if what -fq $1; then
+        bash -x "$@"
+    else
+        (set -x; "$@")
+    fi
 }
 
 IP () {
