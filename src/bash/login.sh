@@ -16,6 +16,7 @@ HUB=$GIT/hub
 export HUB
 
 source $HUB/jab/__init__.sh
+export JAB
 
 
 echo JAB is $JAB
