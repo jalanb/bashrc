@@ -170,10 +170,12 @@ bd () {
 db () {
     ww $1;
     w $1;
-    if what -fq $1; then
-        bash -x "$@"
-    else
+    if _is_existing_function $1; then
         (set -x; "$@")
+    elif _is_existing_alias $1; then
+        (set -x; "$@")
+    else
+        bash -x "$@"
     fi
 }
 
