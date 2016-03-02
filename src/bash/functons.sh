@@ -170,9 +170,9 @@ bd () {
 db () {
     ww $1;
     w $1;
-    if _is_existing_function $1; then
+    if is_existing_function $1; then
         (set -x; "$@")
-    elif _is_existing_alias $1; then
+    elif is_existing_alias $1; then
         (set -x; "$@")
     else
         bash -x "$@"
