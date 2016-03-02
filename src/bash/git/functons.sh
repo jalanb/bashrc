@@ -155,7 +155,7 @@ grp () {
     echo "Pull"
     grr "$@"
     read -p "Push? [Y]" reply
-    [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpu "$@"
+    [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpp "$@"
 }
 
 gpp () {
