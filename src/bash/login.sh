@@ -25,6 +25,7 @@ export PS1="\$? [\u@\h:\$PWD]\n$ "
 
 vbb () {
     vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
+    ls -l ~/.bashrc $HUB/jab/__init__.sh
 }
 
 export PS1="\$? [\u@\h:\$PWD]\n$ "
