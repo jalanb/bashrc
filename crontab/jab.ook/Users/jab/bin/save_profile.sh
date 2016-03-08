@@ -1,6 +1,6 @@
 #! /bin/bash
 
-OSX_HOME=/Users/jab
+OSX_HOME=Users/jab
 PROFILE="/$OSX_HOME/Library/Application Support/Firefox/Profiles/0r6wcrwt.default"
 SOURCE="$PROFILE/jetpack/jid1-xUfzOsOFlzSOXg@jetpack/simple-storage/store.json"
 DESTINATION_DIRECTORY=/Volumes/HD/$OSX_HOME/log
