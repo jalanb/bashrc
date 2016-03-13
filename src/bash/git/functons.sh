@@ -151,6 +151,10 @@ glt () {
     _gl lt "$@"
 }
 
+gmm () {
+    git merge master
+}
+
 grp () {
     echo "Pull"
     grr "$@"
@@ -273,6 +277,14 @@ ggai () {
 
 glp1 () {
     glp -n1 "@"
+}
+
+gmmm () {
+    local _branch=$(git_branch)
+    git co master
+    grr
+    git co $_branch
+    gmm
 }
 
 # xxxxx
