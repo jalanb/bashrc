@@ -6,6 +6,7 @@ ScriptError	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^class +Scri
 ScriptError	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^class +ScriptError(/
 ScriptError	/Users/jab/src/git/hub/jab/src/python/freds.py	/^class +ScriptError(/
 ScriptError	/Users/jab/src/git/hub/jab/src/python/main.py	/^class +ScriptError(/
+ScriptError	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^class +ScriptError(/
 ScriptError	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^class +ScriptError(/
 ScriptError	/Users/jab/src/git/hub/jab/src/python/vff.py	/^class +ScriptError(/
 ScriptError	/Users/jab/src/git/hub/jab/src/python/vim.py	/^class +ScriptError(/
@@ -16,10 +17,10 @@ Use_debugger	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +Use_debug
 Use_debugger	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +Use_debugger(/
 Use_debugger	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +Use_debugger(/
 Use_debugger	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +Use_debugger(/
+Use_debugger	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^def +Use_debugger(/
 Use_debugger	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +Use_debugger(/
 Use_debugger	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +Use_debugger(/
 Use_debugger	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +Use_debugger(/
-Use_debugger	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +Use_debugger(/
 VimBashScript	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^class +VimBashScript(/
 _add_symbol_to_paths	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +_add_symbol_to_paths(/
 _extract_all	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +_extract_all(/
@@ -117,6 +118,7 @@ main	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +main(/
 main	/Users/jab/src/git/hub/jab/src/python/ifconfig.py	/^def +main(/
 main	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +main(/
 main	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +main(/
+main	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^def +main(/
 main	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +main(/
 main	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +main(/
 main	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +main(/
@@ -142,6 +144,7 @@ parse_args	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +parse_args(
 parse_args	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +parse_args(/
 parse_args	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +parse_args(/
 parse_args	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +parse_args(/
+parse_args	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^def +parse_args(/
 parse_args	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +parse_args(/
 parse_args	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +parse_args(/
 parse_args	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +parse_args(/
@@ -162,7 +165,9 @@ priority_colour	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +priority_co
 priority_keys_string	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +priority_keys_string(/
 process_cwd	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +process_cwd(/
 ptags	/Users/jab/src/git/hub/jab/src/python/ptags.py	1
+ptpython	/Users/jab/src/git/hub/jab/src/python/ptpython.py	1
 purge_insubstantial	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +purge_insubstantial(/
+pym	/Users/jab/src/git/hub/jab/src/python/pym.py	1
 pythonrc	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	1
 quote	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +quote(/
 quote_finds	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +quote_finds(/
@@ -183,6 +188,7 @@ read_write_dirs	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^def +read_write
 real_path	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +real_path(/
 realify	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +realify(/
 recover_old_swaps	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +recover_old_swaps(/
+relpath	/Users/jab/src/git/hub/jab/src/python/relpath.py	1
 removable_contents	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +removable_contents(/
 remove	/Users/jab/src/git/hub/jab/src/python/remove_tarball.py	/^def +remove(/
 remove_files	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +remove_files(/
@@ -194,6 +200,7 @@ run_args	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +run_args(/
 run_args	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +run_args(/
 run_args	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +run_args(/
 run_args	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +run_args(/
+run_args	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^def +run_args(/
 run_args	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +run_args(/
 run_args	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +run_args(/
 run_args	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +run_args(/
@@ -204,9 +211,12 @@ script	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +script(/
 script	/Users/jab/src/git/hub/jab/src/python/first_num.py	/^def +script(/
 script	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +script(/
 script	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +script(/
 script	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +script(/
 script	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +script(/
 script	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +script(/
+script	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +script(/
 scripts	/Users/jab/src/git/hub/jab/src/python/scripts.py	1
 see	/Users/jab/src/git/hub/jab/src/python/pythonrc.py	/^ +def +see(/
 separate_options	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +separate_options(/
@@ -217,7 +227,7 @@ split_address_pattern	/Users/jab/src/git/hub/jab/src/python/ptags.py	/^ +def +sp
 split_paths	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +split_paths(/
 start_debugging	/Users/jab/src/git/hub/jab/src/python/rf.py	/^def +start_debugging(/
 strings	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^ +def +strings(/
-strip_puv	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +strip_puv(/
+strip_puv	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +strip_puv(/
 substantial	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +substantial(/
 tab_complete	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +tab_complete(/
 tags	/Users/jab/src/git/hub/jab/src/python/y.py	/^def +tags(/
@@ -230,10 +240,12 @@ todo	/Users/jab/src/git/hub/jab/src/python/todo.py	1
 todo_file	/Users/jab/src/git/hub/jab/src/python/todo.py	/^def +todo_file(/
 traceback_to_pudb	/Users/jab/src/git/hub/jab/src/python/traceback_to_pudb.py	1
 update_hosts	/Users/jab/src/git/hub/jab/src/python/update_hosts.py	1
+use_debugger	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +use_debugger(/
 version	/Users/jab/src/git/hub/jab/src/python/add_to_a_path.py	/^def +version(/
 version	/Users/jab/src/git/hub/jab/src/python/checksums.py	/^def +version(/
 version	/Users/jab/src/git/hub/jab/src/python/freds.py	/^def +version(/
 version	/Users/jab/src/git/hub/jab/src/python/main.py	/^def +version(/
+version	/Users/jab/src/git/hub/jab/src/python/relpath.py	/^def +version(/
 version	/Users/jab/src/git/hub/jab/src/python/scripts.py	/^def +version(/
 version	/Users/jab/src/git/hub/jab/src/python/vff.py	/^def +version(/
 version	/Users/jab/src/git/hub/jab/src/python/vfile.py	/^def +version(/
@@ -241,7 +253,6 @@ version	/Users/jab/src/git/hub/jab/src/python/vim.py	/^def +version(/
 vff	/Users/jab/src/git/hub/jab/src/python/vff.py	1
 vfile	/Users/jab/src/git/hub/jab/src/python/vfile.py	1
 vim	/Users/jab/src/git/hub/jab/src/python/vim.py	1
-vim_main	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vim_main(/
 vim_script	/Users/jab/src/git/hub/jab/src/python/vim_script.py	1
 vim_traceback	/Users/jab/src/git/hub/jab/src/python/vim_traceback.py	1
 vimmable_files	/Users/jab/src/git/hub/jab/src/python/vim_script.py	/^def +vimmable_files(/
