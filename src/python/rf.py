@@ -156,6 +156,8 @@ def get_paths_under(directory, glob):
     for name in get_names_in(directory):
         path = os.path.join(directory, name)
         if os.path.isdir(path):
+            if name == '.git':
+                continue
             more = get_paths_under(path, glob)
             result.extend(more)
         if fnmatch.fnmatch(name, glob):
