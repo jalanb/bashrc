@@ -316,6 +316,8 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 " gitgutter {{{2
 " Faster updates (See the readme at https://github.com/airblade/vim-gitgutter)
 set updatetime=500
+" Splice {{{2
+let g:splice_initial_scrollbind_grid=1
 "
 " vimdiff, aka vim -d {{{1
 "
