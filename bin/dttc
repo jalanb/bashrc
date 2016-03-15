@@ -14,15 +14,23 @@ _find_copier () {
     return 1
 }
 
+show_word () {
+    if [[ -z $1 ]]; then
+        _dttc
+    else
+        _mlaw
+    fi
+}
+
 main () {
     _find_copier
     if [[ ! -x $CLI_COPIER ]]; then
         echo "No clipboard program available" >&2
-        _dttc
+        show_word $1
         return 1
     fi
-    _dttc | $CLI_COPIER
+    show_word $1 | $CLI_COPIER
     return 0
 }
 
-main
+main "$@"
