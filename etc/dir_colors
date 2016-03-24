@@ -43,6 +43,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .test         00;35
 .tests        00;35
 .xml          00;35
+.yml          00;35
 *Makefile     00;35
 
 
