@@ -131,7 +131,7 @@ glg () {
         $_dit=$1
         shift
     fi
-    git log -n${1:-$_dit} -p | head -n $(( LINES / 3 ))
+    git log -n${1:-$_dit} --stat --color | head -n $(( LINES / 3 ))
     _gl lg "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
