@@ -125,11 +125,11 @@ cnoremap w!! w !sudo tee %
 "noremap E e
 "noremap F f backwards
 "noremap G goto line (default last)
-"noremap H
+ noremap H ^
 "noremap I - Insert
 "noremap J - Join lines
 nnoremap K <PageUp>zz
-"noremap L - To Line <n> from bottom of window
+     map L $ 
 "noremap M - To Middle of window
  noremap N :cn<cr>zzzv
 "noremap O - Open line above
