@@ -88,7 +88,8 @@ q () {
 
 v () {
     if [[ -z $* ]]; then
-        $EDITOR
+        echo "" > ~/tmp/fred
+        $EDITOR ~/tmp/fred
     else
         script=$(mython $JAB/src/python/vim.py "$@")
         status=$?
