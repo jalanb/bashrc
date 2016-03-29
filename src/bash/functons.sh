@@ -45,6 +45,7 @@ f () {
         shift
     fi
     local _argc=${#*}
+    dir=
     if [[ $_argc > 1 ]]; then
         shift_dir "$@" && shift
     elif [[ -z $dir ]]; then
