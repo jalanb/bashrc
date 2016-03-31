@@ -129,7 +129,7 @@ cnoremap w!! w !sudo tee %
 "noremap I - Insert
 "noremap J - Join lines
 nnoremap K <PageUp>zz
-     map L $ 
+ noremap L $
 "noremap M - To Middle of window
  noremap N :cn<cr>zzzv
 "noremap O - Open line above
