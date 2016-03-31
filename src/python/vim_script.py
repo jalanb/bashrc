@@ -394,6 +394,8 @@ def recover_old_swaps(text_file, swaps, script):
 def vimmable_files(text_files, script):
     result = []
     for text_file in text_files:
+        if text_file in result:
+            continue
         pids = vimming(text_file)
         if pids:
             echo = 'echo "A vim process (%s) is running for %s"'
@@ -421,9 +423,6 @@ def strip_puv(args):
 
 
 def script(args, **kwargs):
-    quit = use_debugger(args) if args.use_debugger else False
-    if quit:
-        return
     args = strip_puv(sys.argv[1:])
     script = VimBashScript()
     try:
