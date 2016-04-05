@@ -13,9 +13,11 @@ gh () {
 vh () {
     local __doc__="edit stuff from history"
     if [[ -n $* ]]; then
-        _strip_history | vim - +/"$@"
+        _strip_history > ~/tmp/fred
+        vim ~/tmp/fred +/"$@"
     else
-        _strip_history | vim - +
+        _strip_history > ~/tmp/fred
+        vim ~/tmp/fred +
     fi
 }
 
