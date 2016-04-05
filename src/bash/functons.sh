@@ -550,7 +550,7 @@ xe () {
 }
 
 sq () {
-    source_path $BITBUCKET/qaz/src/bash/qazrc
+    . $GIT_BUCKET/qaz/src/bash/qazrc
 }
 
 zm () {
