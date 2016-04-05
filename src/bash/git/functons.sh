@@ -126,12 +126,12 @@ gla () {
 }
 
 glg () {
-    local _dit=1
+    local _number_of_commits=1
     if [[ $1 =~ [[:digit:]] ]]; then
-        $_dit=$1
+        $_number_of_commits=$1
         shift
     fi
-    git log -n${1:-$_dit} --stat --color | head -n $(( LINES / 3 ))
+    git log -n${1:-$_number_of_commits} --stat --color | head -n $(( LINES / 3 ))
     _gl lg "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
