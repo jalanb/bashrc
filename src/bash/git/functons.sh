@@ -287,6 +287,11 @@ gmmm () {
     gmm
 }
 
+grmm () {
+    grr
+    gmmm
+}
+
 # xxxxx
 # xxxxxx
 # xxxxxxx
