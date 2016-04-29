@@ -13,6 +13,10 @@ Will display a vim command to open all files mentioned in the traceback
 
 If the code works for you, then take it up a level by running the vim command directly:
     $(python vim_traceback.py /path/to/traceback.log)
+
+If you prefer to use splits instead of tabs, add the option "-s", e.g
+    $(python vim_traceback.py -s /path/to/traceback.log)
+
 """
 
 
@@ -64,9 +68,10 @@ def parse_line(string):
             return spaceless_path_to_python, line_number
 
 
-def as_vim_command(lines):
+def as_vim_command(lines, use_splits):
     first, rest = lines[0], lines[1:]
     command = 'vim %s +%s' % first
+    window = 'sp' if use_splits else 'tabnew'
     args = [str('+"tabnew +%s %s"' % (line, file_)) for file_, line in rest]
     args.insert(0, command)
     return ' '.join(args)
@@ -80,7 +85,7 @@ def main(args):
         return 1
     lines = [parse_line(line.strip()) for line in stream]
     lines = [l for l in lines if l]
-    print as_vim_command(lines)
+    print as_vim_command(lines, '-s' in args)
     return 0
 
 
