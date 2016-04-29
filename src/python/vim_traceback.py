@@ -1,6 +1,18 @@
 """Script to parse a Python traceback
 
 Re-format the file list as suitable for a vim list
+
+Running the script like this
+    python vim_traceback.py /path/to/traceback.log
+Or like this
+    python crappy_program.py | python vim_traceback.py
+
+Will display a vim command to open all files mentioned in the traceback
+    That command will open each file in a new tab on the correct line
+    Note: if the file is mentioned 5 times in the traceback it will be opened in 5 tabs
+
+If the code works for you, then take it up a level by running the vim command directly:
+    $(python vim_traceback.py /path/to/traceback.log)
 """
 
 
