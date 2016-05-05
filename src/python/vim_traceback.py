@@ -23,12 +23,23 @@ If you prefer to use splits instead of tabs, add the option "-s", e.g
 import re
 import os
 import sys
+import subprocess
+from StringIO import StringIO
+
+
+def get_clipboard_data():
+    process = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
+    retcode = process.wait()
+    data = process.stdout.read()
+    return data
 
 
 def get_stream(arguments):
     """Open a stream for the first file in arguments, or stdin"""
     if not arguments:
         return sys.stdin
+    elif arguments[0] == '-c':
+        return StringIO(get_clipboard_data())
     for argument in arguments:
         if os.path.isfile(argument):
             return file(argument, 'r')
