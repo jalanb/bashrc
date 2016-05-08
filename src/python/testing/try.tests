@@ -38,13 +38,13 @@ If that went well we have a hidden variable called test
 
 We also have access to some modules I often use
     without a need for explicit import
-    Which ignores the heuristic that 
+    Which ignores the heuristic that
         "Explicit is better than implicit"
     >>> test.path.name == makepath(sys.argv[0]).name
     True
 
 And we can run bash commands
-    >>> bash('ls ~/.bashrc')
+    >>> bash('/bin/ls ~/.bashrc')
     /.../.bashrc
     True
 
@@ -58,7 +58,7 @@ We know the user who is running the tests
 Edge cases
 ----------
 
-    >>> bash('ls ~/no_such_file')
+    >>> bash('/bin/ls ~/no_such_file')
     FAIL: .../no_such_file: No such file or directory
     False
 

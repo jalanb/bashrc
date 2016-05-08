@@ -22,9 +22,9 @@ The add_to_a_path module
 
     >>> paths = ['/usr/bin', '/usr/local/bin']
     >>> path = '/bin'
-    >>> add_to_a_path.add_path_to_paths(paths, path, False) == ['/usr/bin', '/usr/local/bin', '/bin']
+    >>> add_to_a_path._add_symbol_to_paths(paths, path, False) == ['/usr/bin', '/usr/local/bin', '/bin']
     True
-    >>> add_to_a_path.add_path_to_paths(paths, path, 0) == ['/bin', '/usr/bin', '/usr/local/bin']
+    >>> add_to_a_path._add_symbol_to_paths(paths, path, 0) == ['/bin', '/usr/bin', '/usr/local/bin']
     True
-    >>> add_to_a_path.add_path_to_paths(paths, path, 1) == ['/usr/bin', '/bin', '/usr/local/bin']
+    >>> add_to_a_path._add_symbol_to_paths(paths, path, 1) == ['/usr/bin', '/bin', '/usr/local/bin']
     True

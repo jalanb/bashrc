@@ -3,9 +3,9 @@ Convenience methods for populating an OptionPraser
 
     >>> import argv
     >>> my_opts = ([
-    ...	 ('exit', 'stop this nonsense'),
-    ...	 ('save', 'backups are fun', False),
-    ...	 ('name', 'who am i', 'Fred', 'f'),
+    ...  ('exit', 'stop this nonsense'),
+    ...  ('save', 'backups are fun', False),
+    ...  ('name', 'who am i', 'Fred', 'f'),
     ... ])
 
     >>> my_parser = argv._make_parser(my_opts)
@@ -18,7 +18,7 @@ More commonly:
     >>> argv.add_options(my_opts)
     >>> options, args = argv.parse_args(command_line='-s crash.log')
     >>> print options.__dict__
-    {'save': True, 'exit': '', 'name': 'Fred'}
+    {'save': True, 'exit': '', 'name': 'Fred', 'pdb': False}
     >>> print args
     ['crash.log']
 
@@ -209,7 +209,7 @@ def parse_args(command_line=None):
         try:
             import pudb as pdb
         except ImportError:
-            print 'cannot import pudb'
+            print 'Cannot import pudb, use pdb'
             import pdb
         pdb.set_trace()
     for post_parse in post_parses:

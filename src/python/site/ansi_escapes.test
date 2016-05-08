@@ -3,7 +3,7 @@ The ansi_escapes module
 
     >>> import ansi_escapes
     >>> print ansi_escapes.__doc__
-    This module provides some known ANSI escape codes which may work with terminals
+    This module provides some known ANSI escape codes which work with terminals
     ...
 
 Get a coloured text

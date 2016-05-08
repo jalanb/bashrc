@@ -46,7 +46,7 @@ class Spine(object):
         """Represent the Spine
 
         >>> Spine()
-        <Spine>
+        <Spine ''>
         """
         name = self.class_name()
         try:
@@ -54,4 +54,8 @@ class Spine(object):
             return u'<%s %r>' % (name, string)
         except AttributeError:
             return u'<%s>' % name
+
+    def __str__(self):
+        """A string value for the spine"""
+        return ''
 

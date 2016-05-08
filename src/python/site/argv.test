@@ -37,14 +37,14 @@ Or, you could get it to parse a specific command line
     >>> print ' '.join(args + [ options.welcome ])
     Hello World
 
-The module retains the last options, args which it parsed 
+The module retains the last options, args which it parsed
     >>> args == argv.args and options == argv.options
     True
 
 The module will catch any files or directories in the command line
-    >>> argv.test_args('-w alan $JAB ~/.bashrc $JAB/vim/vimrc fred /usr')
+    >>> argv.test_args('-w alan $JAB /bin/ls $JAB/vim/vimrc fred /usr')
     >>> print argv.files[0], argv.files[1]
-    /.../.bashrc /.../vim/vimrc
+    /bin/ls /.../vim/vimrc
     >>> print argv.directories[0], argv.directories[1]
     /...jab /usr
 
@@ -77,7 +77,7 @@ Add it on to the list of such processors
     >>> argv.post_parses.append( changer )
     >>> argv.post_parses.append( finisher )
 
-These methods will be called from parse_args()  
+These methods will be called from parse_args()
     in the order they were added (so Martin will disappear)
 Test with the same command line as before
     >>> options, args = argv.parse_args('Hello -w World')
@@ -108,12 +108,13 @@ For example to show some help
     options:
       -a ALAN, --alan=ALAN  Default is
       -f FRED, --fred=FRED  Default is Fred
-      -g, --good             Default is True
+      -g, --good            Default is True
       -y, --ok              Default is False
-      -n, --bad              Default is False
+      -n, --bad             Default is False
       -x EXIT, --exit=EXIT  Default is quit
       -w WELCOME, --welcome=WELCOME
                             Default is Fred
+      -U, --pdb             Use a python debugger
       -h, --help            show this help message and exit
 
 Or to parse an argv type list
@@ -127,6 +128,7 @@ Or to parse an argv type list
      'fred': 'Fred',
      'good': True,
      'ok': False,
+     'pdb': False,
      'welcome': 'Fred'}
 
 Flag options
