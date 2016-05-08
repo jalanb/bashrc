@@ -276,7 +276,7 @@ ggai () {
 }
 
 glp1 () {
-    glp -n1 "@"
+    glp -n1 "$@"
 }
 
 gmmm () {
