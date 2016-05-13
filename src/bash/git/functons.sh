@@ -61,6 +61,10 @@ gaa () {
     ga .
 }
 
+gbv () {
+    git blame "$1" | vin
+}
+
 gac () {
     local addable=.
     if [[ -e "$1" ]]; then
