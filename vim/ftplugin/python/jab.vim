@@ -183,7 +183,7 @@ if !exists("Try")
         elseif filereadable($TRY)
             let try_py = $TRY
         else
-            let try_py = '$JAB_PYTHON/testing/try.py'
+            let try_py = '$JAB/src/python/testing/try.py'
         endif
         let command = "! TERM=linux && python " . try_py . " -qa "
         let command_line = command . item_name . " | grep -v DocTestRunner.merge "
