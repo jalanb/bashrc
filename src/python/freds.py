@@ -88,7 +88,7 @@ def files():
 
 
 def substantial():
-    return [_ for _ in files() if _.size]
+    return set(_ for _ in files() if _.size)
 
 
 def insubstantial():
