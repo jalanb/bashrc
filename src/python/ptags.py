@@ -156,6 +156,8 @@ def read_file(path_to_python):
 
 def read_dir(path_to_directory):
     """Read tags for all python files in the given directory"""
+    if not path_to_directory.isdir():
+        return []
     tags = []
     for path_to_python in path_to_directory.files('*.py'):
         for tag in read_file(path_to_python):
