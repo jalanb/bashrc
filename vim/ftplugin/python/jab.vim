@@ -67,6 +67,46 @@ let g:syntastic_auto_jump = 1
 let g:syntastic_stl_format = '%E{%e errors, from line %fe}%B{, }%W{%w warnings from line %fw}'
 
 
+function FindUnitTest()
+    let s:unit_test = substitute(s:file_py,'\.py$','_test.py',"")
+    if ! filereadable(s:unit_test)
+        let s:unit_test = 'test/' . s:unit_test
+        if ! filereadable(s:unit_test)
+            let s:unit_test = 'test/' . substitute(s:file_py,'\.py$','_test.py',"")
+            if ! filereadable(s:unit_test)
+                let s:unit_test = 'test/test_' . s:file_py
+            endif
+        endif
+    endif
+endfunction
+
+function LoadUnitTest()
+    call FindUnitTest()
+    if filereadable(s:unit_test) && s:file_py != s:unit_test && &loadplugins
+        setl autoread
+        exec "tabnew " s:unit_test
+        set filetype=python
+        set foldlevel=1
+    endif
+endfunction
+
+function FindTestUnit()
+    let s:test_unit = substitute(s:file_py,'^','test_',"")
+    if ! filereadable(s:test_unit) 
+        let s:test_unit = substitute(s:file_py,'^','tests/test_',"")
+    endif
+endfunction
+
+function LoadTestUnit()
+    call FindTestUnit()
+    if filereadable(s:test_unit) && s:file_py != s:test_unit && &loadplugins
+        setl autoread
+        exec "tabnew " s:test_unit
+        set filetype=python
+        set foldlevel=1
+    endif
+endfunction
+
 set autowrite
 let s:file_name = expand("%")
 let s:file_stem = fnamemodify(s:file_name,":r")
@@ -88,23 +128,8 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
         exec "tabnew " s:file_grammar
         set filetype=doctest
     endif
-    let s:unit_test = substitute(s:file_py,'\.py$','_test.py',"")
-    if ! filereadable(s:unit_test)
-        let s:unit_test = 'test/' . s:unit_test
-        if ! filereadable(s:unit_test)
-            let s:unit_test = 'test/' . substitute(s:file_py,'\.py$','_test.py',"")
-            if ! filereadable(s:unit_test)
-                let s:unit_test = 'test/test_' . s:file_py
-            endif
-        endif
-    endif
-    if filereadable(s:unit_test) && s:file_py != s:unit_test && &loadplugins
-        setl autoread
-        exec "tabnew " s:unit_test
-        set filetype=python
-        set foldlevel=1
-    endif
-    let s:test_unit = substitute(s:file_py,'^','test_',"")
+    call LoadUnitTest()
+    call LoadTestUnit()
     if filereadable(s:test_unit) && s:file_py != s:test_unit && &loadplugins
         setl autoread
         exec "tabnew " s:test_unit
@@ -150,7 +175,7 @@ if !exists("Try")
     endfunction
     function TryTest(quietly)
         let item_name = s:file_stem . "."
-        if ! filereadable(s:file_test) && ! filereadable(s:file_tests)
+        if ! filereadable(s:file_test) && ! filereadable(s:file_tests) && ! filereadable(s:test_unit) && ! filereadable(s:unit_test)
             call NewTestFile(s:file_test)
         endif
         if filereadable('./try.py')
