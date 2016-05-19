@@ -99,7 +99,7 @@ endfunction
 
 function LoadTestUnit()
     call FindTestUnit()
-    if filereadable(s:test_unit) && s:file_py != s:test_unit && &loadplugins
+    if filereadable(s:test_unit) && s:file_py != s:test_unit && s:unit_test != s:test_unit && &loadplugins
         setl autoread
         exec "tabnew " s:test_unit
         set filetype=python
@@ -130,12 +130,6 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
     endif
     call LoadUnitTest()
     call LoadTestUnit()
-    if filereadable(s:test_unit) && s:file_py != s:test_unit && &loadplugins
-        setl autoread
-        exec "tabnew " s:test_unit
-        set filetype=python
-        set foldlevel=1
-    endif
     let s:file_test = substitute(s:file_py,'\.py$','.test',"")
     if filereadable(s:file_test) && s:file_py != s:file_test && &loadplugins
         setl autoread
