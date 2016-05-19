@@ -537,7 +537,7 @@ vv () {
 }
 
 vy () {
-    v $(lk *.py | grep -v __*.py*)
+    v $(lk *.py | grep -v '__*.py*')
 }
 
 xe () {
