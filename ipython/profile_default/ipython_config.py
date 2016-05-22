@@ -9,13 +9,13 @@ c = get_config()
 #------------------------------------------------------------------------------
 
 # A Mixin for applications that start InteractiveShell instances.
-# 
+#
 # Provides configurables for loading extensions and executing files as part of
 # configuring a Shell environment.
-# 
+#
 # The following methods should be called by the :meth:`initialize` method of the
 # subclass:
-# 
+#
 #   - :meth:`init_path`
 #   - :meth:`init_shell` (to be implemented by the subclass)
 #   - :meth:`init_gui_pylab`
@@ -41,7 +41,7 @@ c = get_config()
 
 # If true, IPython will populate the user namespace with numpy, pylab, etc. and
 # an 'import *' is done from numpy and pylab, when using pylab mode.
-# 
+#
 # When False, pylab mode should not import any names into the user namespace.
 # c.InteractiveShellApp.pylab_import_all = True
 
@@ -97,7 +97,7 @@ c = get_config()
 # c.TerminalIPythonApp.ignore_old_config = False
 
 # Path to an extra config file to load.
-# 
+#
 # If specified, load this config file in addition to any other IPython config.
 # c.TerminalIPythonApp.extra_config_file = u''
 
@@ -118,7 +118,7 @@ c = get_config()
 
 # If true, IPython will populate the user namespace with numpy, pylab, etc. and
 # an 'import *' is done from numpy and pylab, when using pylab mode.
-# 
+#
 # When False, pylab mode should not import any names into the user namespace.
 # c.TerminalIPythonApp.pylab_import_all = True
 
@@ -171,7 +171,7 @@ c.TerminalInteractiveShell.autoedit_syntax = True
 # user input before code is run.
 # c.TerminalInteractiveShell.ast_transformers = []
 
-# 
+#
 # c.TerminalInteractiveShell.history_length = 10000
 
 # Don't call post-execute functions that have failed in the past.
@@ -186,13 +186,13 @@ c.TerminalInteractiveShell.colors = 'Linux'
 # Autoindent IPython code entered interactively.
 # c.TerminalInteractiveShell.autoindent = True
 
-# 
+#
 # c.TerminalInteractiveShell.separate_in = '\n'
 
 # Deprecated, use PromptManager.in2_template
 # c.TerminalInteractiveShell.prompt_in2 = '   .\\D.: '
 
-# 
+#
 # c.TerminalInteractiveShell.separate_out = ''
 
 # Deprecated, use PromptManager.in_template
@@ -225,19 +225,19 @@ c.TerminalInteractiveShell.autocall = 2
 # The part of the banner to be printed before the profile
 # c.TerminalInteractiveShell.banner1 = 'Python 2.7.1 (r271:86832, Aug  2 2012, 13:51:44) \nType "copyright", "credits" or "license" for more information.\n\nIPython 1.0.0 -- An enhanced Interactive Python.\n?         -> Introduction and overview of IPython\'s features.\n%quickref -> Quick reference.\nhelp      -> Python\'s own help system.\nobject?   -> Details about \'object\', use \'object??\' for extra details.\n'
 
-# 
+#
 # c.TerminalInteractiveShell.readline_parse_and_bind = ['tab: complete', '"\\C-l": clear-screen', 'set show-all-if-ambiguous on', '"\\C-o": tab-insert', '"\\C-r": reverse-search-history', '"\\C-s": forward-search-history', '"\\C-p": history-search-backward', '"\\C-n": history-search-forward', '"\\e[A": history-search-backward', '"\\e[B": history-search-forward', '"\\C-k": kill-line', '"\\C-u": unix-line-discard']
 
 # The part of the banner to be printed after the profile
 # c.TerminalInteractiveShell.banner2 = ''
 
-# 
+#
 # c.TerminalInteractiveShell.separate_out2 = ''
 
-# 
+#
 # c.TerminalInteractiveShell.wildcards_case_sensitive = True
 
-# 
+#
 # c.TerminalInteractiveShell.debug = False
 
 # Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
@@ -245,10 +245,10 @@ c.TerminalInteractiveShell.autocall = 2
 # direct exit without any confirmation.
 c.TerminalInteractiveShell.confirm_exit = False
 
-# 
+#
 # c.TerminalInteractiveShell.ipython_dir = ''
 
-# 
+#
 # c.TerminalInteractiveShell.readline_remove_delims = '-/~'
 
 # Start logging to the default log file.
@@ -266,7 +266,7 @@ c.TerminalInteractiveShell.confirm_exit = False
 # Save multi-line entries as one entry in readline history
 # c.TerminalInteractiveShell.multiline_history = True
 
-# 
+#
 # c.TerminalInteractiveShell.readline_use = True
 
 # Enable deep (recursive) reloading by default. IPython can use the deep_reload
@@ -280,16 +280,16 @@ c.TerminalInteractiveShell.confirm_exit = False
 # Start logging to the given file in append mode.
 # c.TerminalInteractiveShell.logappend = ''
 
-# 
+#
 # c.TerminalInteractiveShell.xmode = 'Context'
 
-# 
+#
 # c.TerminalInteractiveShell.quiet = False
 
 # Enable auto setting the terminal title.
 # c.TerminalInteractiveShell.term_title = False
 
-# 
+#
 # c.TerminalInteractiveShell.object_info_string_level = 0
 
 # Deprecated, use PromptManager.out_template
@@ -329,7 +329,7 @@ c.PromptManager.in_template = '{my_prompt}'
 c.PromptManager.in2_template = '... '
 
 
-# 
+#
 # c.PromptManager.color_scheme = 'Linux'
 
 #------------------------------------------------------------------------------
@@ -340,33 +340,33 @@ c.PromptManager.in2_template = '... '
 
 # HistoryManager will inherit config from: HistoryAccessor
 
-# 
+#
 # c.HistoryManager.db_log_output = False
 
-# 
+#
 # c.HistoryManager.db_cache_size = 0
 
 # Path to file to use for SQLite history database.
-# 
+#
 # By default, IPython will put the history database in the IPython profile
 # directory.  If you would rather share one history among profiles, you can set
 # this value in each, so that they are consistent.
-# 
+#
 # Due to an issue with fcntl, SQLite is known to misbehave on some NFS mounts.
 # If you see IPython hanging, try setting this to something on a local disk,
 # e.g::
-# 
+#
 #     ipython --HistoryManager.hist_file=/tmp/ipython_hist.sqlite
 # c.HistoryManager.hist_file = u''
 
 # Options for configuring the SQLite connection
-# 
+#
 # These options are passed as keyword args to sqlite3.connect when establishing
 # database conenctions.
 # c.HistoryManager.connection_options = {}
 
 # enable the SQLite history
-# 
+#
 # set enabled=False to disable the SQLite history, in which case there will be
 # no stored history, no SQLite connection, and no background saving thread.
 # This may be necessary in some threaded environments where IPython is embedded.
@@ -377,10 +377,10 @@ c.PromptManager.in2_template = '... '
 #------------------------------------------------------------------------------
 
 # An object to manage the profile directory and its resources.
-# 
+#
 # The profile directory is used by all IPython applications, to manage
 # configuration, logging and security.
-# 
+#
 # This object knows how to find, create and manage these directories. This
 # should be used by any code that wants to handle profiles.
 
@@ -393,12 +393,12 @@ c.PromptManager.in2_template = '... '
 #------------------------------------------------------------------------------
 
 # The default pretty-printer.
-# 
+#
 # This uses :mod:`IPython.lib.pretty` to compute the format data of the object.
 # If the object cannot be pretty printed, :func:`repr` is used. See the
 # documentation of :mod:`IPython.lib.pretty` for details on how to write pretty
 # printers.  Here is a simple example::
-# 
+#
 #     def dtype_pprinter(obj, p, cycle):
 #         if cycle:
 #             return p.text('dtype(...)')
@@ -416,28 +416,28 @@ c.PromptManager.in2_template = '... '
 
 # PlainTextFormatter will inherit config from: BaseFormatter
 
-# 
+#
 # c.PlainTextFormatter.type_printers = {}
 
-# 
+#
 # c.PlainTextFormatter.newline = '\n'
 
-# 
+#
 # c.PlainTextFormatter.float_precision = ''
 
-# 
+#
 # c.PlainTextFormatter.verbose = False
 
-# 
+#
 # c.PlainTextFormatter.deferred_printers = {}
 
-# 
+#
 # c.PlainTextFormatter.pprint = True
 
-# 
+#
 # c.PlainTextFormatter.max_width = 79
 
-# 
+#
 # c.PlainTextFormatter.singleton_printers = {}
 
 #------------------------------------------------------------------------------
@@ -449,33 +449,33 @@ c.PromptManager.in2_template = '... '
 # IPCompleter will inherit config from: Completer
 
 # Instruct the completer to omit private method names
-# 
+#
 # Specifically, when completing on ``object.<tab>``.
-# 
+#
 # When 2 [default]: all names that start with '_' will be excluded.
-# 
+#
 # When 1: all 'magic' names (``__foo__``) will be excluded.
-# 
+#
 # When 0: nothing will be excluded.
 # c.IPCompleter.omit__names = 2
 
 # Whether to merge completion results into a single list
-# 
+#
 # If False, only the completion results from the first non-empty completer will
 # be returned.
 # c.IPCompleter.merge_completions = True
 
 # Instruct the completer to use __all__ for the completion
-# 
+#
 # Specifically, when completing on ``object.<tab>``.
-# 
+#
 # When True: only those names in obj.__all__ will be included.
-# 
+#
 # When False [default]: the __all__ attribute is ignored
 # c.IPCompleter.limit_to__all__ = False
 
 # Activate greedy completion
-# 
+#
 # This will enable completion on elements of lists, results of function calls,
 # etc., but can be unsafe because the code is actually evaluated on TAB.
 # c.IPCompleter.greedy = False
@@ -485,21 +485,21 @@ c.PromptManager.in2_template = '... '
 #------------------------------------------------------------------------------
 
 # Magics for talking to scripts
-# 
+#
 # This defines a base `%%script` cell magic for running a cell with a program in
 # a subprocess, and registers a few top-level magics that call %%script with
 # common interpreters.
 
 # Extra script cell magics to define
-# 
+#
 # This generates simple wrappers of `%%script foo` as `%%foo`.
-# 
+#
 # If you want to add script magics that aren't on your path, specify them in
 # script_paths
 # c.ScriptMagics.script_magics = []
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
-# 
+#
 # Only necessary for items in script_magics where the default path will not find
 # the right interpreter.
 # c.ScriptMagics.script_paths = {}
