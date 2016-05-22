@@ -32,7 +32,7 @@ def run_args(args, methods):
 
 
 def version(args):
-    print('%s %s' % (args, __version__))
+    print('%s %s' % (os.path.basename(sys.argv[0]), __version__))
     raise SystemExit
 
 
