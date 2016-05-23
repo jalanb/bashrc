@@ -41,5 +41,5 @@ _has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
 _has_py $JAB_PYTHON && add_to_a_path _SRC_PYTHON_PATH $JAB_PYTHON
 export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
 PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
-[[ -f "$PYTHON_HOME/pythonrc.py" ]] && export PYTHONSTARTUP=$PYTHON_HOME/pythonrc.py
+[[ -f "$JAB_PYTHON/pythonrc.py" ]] && export PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
 export PYTHON_HOME

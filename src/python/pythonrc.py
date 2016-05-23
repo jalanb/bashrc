@@ -56,3 +56,6 @@ def complete():
 
 
 complete()
+
+# https://www.reddit.com/r/Python/comments/4ivd2k/what_is_your_favorite_python_error_message/d329j8l
+q = type('', (), {'__repr__': lambda _: exit()})()
