@@ -92,6 +92,10 @@ gcm () {
     git co master
 }
 
+gcp () {
+    git cherry-pick "$@"
+}
+
 gdi () {
     git di "$@"
 }
@@ -273,6 +277,10 @@ gaic () {
 
 gaii () {
     ga --interactive "$@"
+}
+
+gcpe () {
+    git cherry-pick --edit "$@"
 }
 
 ggai () {
