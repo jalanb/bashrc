@@ -279,6 +279,11 @@ gaii () {
     ga --interactive "$@"
 }
 
+gcmr () {
+    gcm
+    git pull --rebase
+}
+
 gcpe () {
     git cherry-pick --edit "$@"
 }
