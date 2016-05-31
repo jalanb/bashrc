@@ -537,7 +537,7 @@ vv () {
 }
 
 vy () {
-    v $(lk *.py | grep -v '__*.py*')
+    v $(ls *.py | grep -v '__*.py*')
 }
 
 xe () {
@@ -554,7 +554,7 @@ sq () {
 }
 
 zm () {
-    du -cms $1 | sort -n | sed -e "s/      / M     /g"
+    du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g" # -e "s/\t/ Mb /"
 }
 
 # xxx
