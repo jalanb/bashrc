@@ -1,0 +1,8 @@
+#! /bin/bash
+
+# This is the script for an iTerm profile: vim fred
+
+SCRATCH=$HOME/tmp/fred
+echo "" > $SCRATCH
+/usr/local/bin/vim $SCRATCH
+/bin/cat $SCRATCH | /usr/bin/pbcopy
