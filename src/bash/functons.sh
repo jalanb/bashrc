@@ -554,7 +554,7 @@ sq () {
 }
 
 zm () {
-    du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g" # -e "s/\t/ Mb /"
+    du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g"
 }
 
 # xxx
