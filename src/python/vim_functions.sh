@@ -1,23 +1,23 @@
 
 recover () {
-    local _swap_file="$2"
-    local _text_file="$1"
-    read -p "Recover $_text_file ? " reply
+    local swap_file="$2"
+    local text_file="$1"
+    read -p "Recover $args ? " reply
     if [[ -z $reply || $reply == "y" || $reply == "Y" ]]; then
-        echo "Recovering $_swap_file"
-        recovered_file="${_text_file}.recovered"
+        echo "Recovering $swap_file"
+        recovered_file="${text_file}.recovered"
         #
         # I use the "g:recovering" variable within vim to
         #   prevent opening of extra tabs, YMMV
         #
         local editor=${VIM:-$EDITOR}
-        $editor -r "$_text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
-        /bin/rm -i "$_swap_file"
+        $editor -r "$text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
+        /bin/rm -i "$swap_file"
         if [[ -f "$recovered_file" ]]
         then
-            if ! diff -q "$_text_file" "$recovered_file"
+            if ! diff -q "$text_file" "$recovered_file"
             then
-                $editor -d "$_text_file" "$recovered_file"
+                $editor -d "$text_file" "$recovered_file"
             fi
             /bin/rm -i "$recovered_file"
         fi
@@ -30,7 +30,7 @@ recover () {
 pre_vimming () {
     local _file="$1"
     local _swap_file="$2"
-    ls -l "$_swap_file"
+    echo "A swap file exists: $_swap_file"
     recover "$_file" "$_swap_file"
 }
 
