@@ -52,7 +52,7 @@ if [[ -z "\$INPUTRC" -a ! -f "\$HOME/.inputrc" ]]; then
     INPUTRC=/etc/inputrc
 fi
 
-export EDITOR=/usr/bin/vim
+export EDITOR="/usr/bin/vim -p "
 add_to_path \$HOME/bin
 add_to_path /usr/local/bin
 add_to_path /usr/bin

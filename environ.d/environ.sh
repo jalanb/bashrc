@@ -65,7 +65,7 @@ _source_jab_environ () {
     else
         export WHICH=/usr/bin/which
     fi
-    export EDITOR=vim
+    export EDITOR="vim -p "
     export EMAIL="dotjab@al-got-rhythm.net"
 
     if [[ -d $JAB ]]; then
