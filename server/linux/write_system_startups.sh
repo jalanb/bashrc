@@ -7,22 +7,22 @@ cat > /etc/profile << EOB
 echo Welcome to /etc/profile
 
 add_to_path () {
-	if ! echo \$PATH | /bin/egrep -q "(^|:)\$1(\$|:)"; then
-		if [[ -z \$PATH ]]; then PATH=\$1
-		elif [[ -n "\$1" && -d "\$1" ]] ;then
-			if [[ "\$2" = "after" ]]; then PATH=\$PATH:\$1
-			else PATH=\$1:\$PATH
-			fi
-		fi
-	fi
+    if ! echo \$PATH | /bin/egrep -q "(^|:)\$1(\$|:)"; then
+        if [[ -z \$PATH ]]; then PATH=\$1
+        elif [[ -n "\$1" && -d "\$1" ]] ;then
+            if [[ "\$2" = "after" ]]; then PATH=\$PATH:\$1
+            else PATH=\$1:\$PATH
+            fi
+        fi
+    fi
 }
 
 
 if [[ -x /usr/bin/id ]]; then
-	[[ -z "\$UID" ]]  && UID=\$(/usr/bin/id -ru)
-	[[ -z "\$EUID" ]]  && EUID=\$(/usr/bin/id -u)
-	[[ -z "\$GID" ]]  && GID=\$(/usr/bin/id -rg)
-	[[ -z "\$EGID" ]]  && EGID=\$(/usr/bin/id -g)
+    [[ -z "\$UID" ]]  && UID=\$(/usr/bin/id -ru)
+    [[ -z "\$EUID" ]]  && EUID=\$(/usr/bin/id -u)
+    [[ -z "\$GID" ]]  && GID=\$(/usr/bin/id -rg)
+    [[ -z "\$EGID" ]]  && EGID=\$(/usr/bin/id -g)
 fi
 
 
@@ -61,23 +61,23 @@ add_to_path /bin
 export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE INPUTRC
 
 if [[ -d /etc/profile.d ]]; then
-	echo Welcome to /etc/profile.d/
-	for i in /etc/profile.d/*.sh
-	do
-		[[ -f "\$i" ]] && source \$i
-	done
-	unset i
-	echo Bye from /etc/profile.d/
+    echo Welcome to /etc/profile.d/
+    for i in /etc/profile.d/*.sh
+    do
+        [[ -f "\$i" ]] && source \$i
+    done
+    unset i
+    echo Bye from /etc/profile.d/
 fi
 
 if [[ \$- == *i* ]]; then
-	if [[ "\$BASH" ]]; then
-		PS1='\u@\h:\w\$ '
-		[[ -f "/etc/bashrc" ]] && source /etc/bashrc
-		[[ -f "/etc/aliases" ]] && source /etc/aliases
-	else
-		[[ "`id -u`" -eq 0 ]] && PS1='# ' || PS1='$ '
-	fi
+    if [[ "\$BASH" ]]; then
+        PS1='\u@\h:\w\$ '
+        [[ -f "/etc/bashrc" ]] && source /etc/bashrc
+        [[ -f "/etc/aliases" ]] && source /etc/aliases
+    else
+        [[ "`id -u`" -eq 0 ]] && PS1='# ' || PS1='$ '
+    fi
 fi
 
 # We want umask to get set, even for non-interactive, non-login shells.
