@@ -3,8 +3,9 @@
 check_jab () {
     if [[ ! -f "$JAB/etc/ackrc" ]]; then
         echo $JAB/etc/ackrc is not a file >&2
-        exit 1
+        return 1
     fi
+    return 0
 }
 
 link () {
@@ -33,5 +34,4 @@ main () {
     link .xonshrc          etc/xonshrc
 }
 
-check_jab
-main
+check_jab && main
