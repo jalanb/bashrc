@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# ssj : run sst using jab's public key
+# ssj : run sst using JAB's public key
 
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
