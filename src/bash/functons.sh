@@ -891,12 +891,17 @@ vat () {
     vimcat "$@"
 }
 
+vbb () {
+    vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
+    ls -l ~/.bashrc $HUB/jab/__init__.sh
+}
+
 vbl () {
     vim $(ls -rt1 $JAB/log/*bashrc*.log | tail -n 1) + +?"^++ "
 }
 
 vib () {
-    $EDITOR ~/.bashrc
+    v ~/.bashrc
 }
 
 vin () {
@@ -1341,7 +1346,7 @@ vim_diff () {
     second_file="$1"
     shift
     third_file=
-    editor_command="$EDITOR -d "
+    editor_command="v -d "
     for arg in "$@"
     do
         [[ $arg =~ -.* ]] && editor_command="$editor_command $arg" && continue
@@ -1488,10 +1493,10 @@ _edit_source () {
     blank_script $filepath
     filedir=$(dirname $filepath)
     if [[ $filedir == "." ]]; then
-        $EDITOR $filepath
+        v $filepath
     else
         pushd $filedir >/dev/null 2>&1
-        $EDITOR $filepath
+        v $filepath
         popd >/dev/null 2>&1
     fi
     if echo $filepath | grep -q alias; then
