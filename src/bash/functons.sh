@@ -731,20 +731,20 @@ lkl () {
 }
 
 lkq () {
-	local _sought=$1
-	if [[ -f $_sought ]]; then
-		lk $_sought
-		return 0
-	fi
-	while [[ -n $_sought ]]; do
-		if lk -d $_sought 2>/dev/null; then
-			break
-		fi
-		_sought=$(dirname $_sought)
-		if [[ $_sought == / ]]; then
-			break
-		fi
-	done
+    local _sought=$1
+    if [[ -f $_sought ]]; then
+        lk $_sought
+        return 0
+    fi
+    while [[ -n $_sought ]]; do
+        if lk -d $_sought 2>/dev/null; then
+            break
+        fi
+        _sought=$(dirname $_sought)
+        if [[ $_sought == / ]]; then
+            break
+        fi
+    done
 }
 
 lkr () {
