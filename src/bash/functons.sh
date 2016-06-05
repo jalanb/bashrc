@@ -103,8 +103,7 @@ v () {
                     echo $script is not a file >&2
                 fi
             else
-                echo No script produced, please try
-                echo mython $JAB/src/python/vim.py -U "$@"
+                mython $JAB/src/python/vim.py -U "$@"
             fi
         else
             echo Python error: $status
