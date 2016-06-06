@@ -25,7 +25,7 @@ jb () {
     ssh jab.ook
 }
 
-jk () {
+jn () {
     ssh jalanb.ook
 }
 
