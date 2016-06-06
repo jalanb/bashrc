@@ -2,29 +2,6 @@
 
 set -e
 
-<<<<<<< HEAD
-SCRATCH=/tmp/Downloads
-
-set_up () {
-    trap tear_down EXIT
-    if [[ -d "${SCRATCH}" ]]; then
-         rm -rf ${SCRATCH}/*
-    else
-         mkdir ${SCRATCH}
-    fi
-    cd ${SCRATCH}
-}
-
-tear_down () {
-    if [[ -d "${SCRATCH}" ]]; then
-        rm -rf ${SCRATCH}
-    fi
-}
-
-. $JAB/src/bash/github.sh
-
-=======
->>>>>>> Extract scratch functions to src/bash
 get_pandemic () {
     wget --no-check-certificate $GITHUB/jwcxz/vim-pandemic/archive/master.zip
     mv master.zip vim-pandemic-master.zip
