@@ -20,6 +20,19 @@ cj () { cd $JAB/$1; }
 # so, I'll use "q*"
 
 qh () { ar; [[ -z $1 ]] || require $HUB/$1; }
+
+jb () {
+    ssh jab.ook
+}
+
+jk () {
+    ssh jalanb.ook
+}
+
+jm () {
+    ssh jalanb.mac
+}
+
 qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require $JAB/$1; }
 
 # xxx
