@@ -22,7 +22,9 @@ _has_py () {
     _has_ext py "$@"
 }
 
+
 JAB_PYTHON=$JAB/src/python
+export JAB_PYTHON
 _try="$JAB_PYTHON/testing/try.py"
 [[ -f "$_try" ]] || _try=no_file_try_py
 export TRY=$_try
