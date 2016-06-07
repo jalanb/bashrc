@@ -312,6 +312,11 @@ grmm () {
 }
 
 # xxxxx
+
+clone () {
+    cd $(git clone $1 2> /tmp/2.log; grep Cloning.into /tmp/2.log | sed -e "s/Cloning into '//" -e "s/'.*//")
+}
+
 # xxxxxx
 # xxxxxxx
 
