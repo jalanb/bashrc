@@ -30,7 +30,7 @@ if [[ $- =~ i ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 
     # set -x
-    jj
+    j
     # set +x
     sp
     clock

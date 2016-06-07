@@ -13,25 +13,10 @@
 
 ar () { acquire_require; }
 
-# "c.*" means "cd ..."
-cj () { cd $JAB/$1; }
-
 # "r*" could mean "require ...", but it already means means "rm ..." 
 # so, I'll use "q*"
 
 qh () { ar; [[ -z $1 ]] || require $HUB/$1; }
-
-jb () {
-    ssh jab.ook
-}
-
-jn () {
-    ssh jalanb.ook
-}
-
-jm () {
-    ssh jalanb.mac
-}
 
 qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require $JAB/$1; }
 

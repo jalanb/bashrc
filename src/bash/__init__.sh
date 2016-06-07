@@ -7,6 +7,7 @@ DIR=$JAB/src/bash
 . $DIR/asserts.sh
 . $DIR/tput.sh
 . $DIR/functons.sh
+. $DIR/jabnet.sh
 . $DIR/history.sh
 . $DIR/prompt.sh
 . $DIR/repo.sh
