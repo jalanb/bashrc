@@ -1,10 +1,10 @@
 import os
 import argv
-import commands
 
 
 import ls_colours
 from dotsite.paths import makepath
+from dotsite.term import screen_width
 
 argv.add_options([
     ('quiet', 'hide directories, blank lines, etc', False),
@@ -15,15 +15,6 @@ argv.add_options([
 def local_rules(*_):
     pass
 lout_rules = local_rules
-
-
-def screen_width():
-    command='tput cols'
-    _status, output = commands.getstatusoutput(command)
-    try:
-        return int(output) - 1
-    except TypeError:
-        return 0
 
 
 def show_dirs(dirs):
