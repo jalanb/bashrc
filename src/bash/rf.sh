@@ -24,11 +24,11 @@ rf () {
     (_re_source; ${PYTHON:-python2.7} $RF_DOT_PY "$@")
 }
 
-rr () {
-    rf -r "$@"
+rq () {
+    rr -ri "$@"
 }
 
-rq () {
+rr () {
     rm -rf "$@"
 }
 
