@@ -10,6 +10,6 @@ rr () {
 }
 
 rrr () {
-    sudo rm -rf "$@"
+    sudo rm -rf "$@" 2> /dev/null
 }
 
