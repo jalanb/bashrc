@@ -260,10 +260,10 @@ fd () {
 }
 
 ff () {
+    local __doc__="ff $dir $filename # finds files with that name in that dir"
     shift_dir "$@" && shift
-    name=$1
-    shift
-    find $dir -type f -name $name "$@"
+    filename=$1; shift
+    find $dir -type f -name $filename "$@"
 }
 
 fl () {
@@ -366,7 +366,7 @@ lk () {
 }
 
 ll () {
-    lk -l  "$@"
+    ll -l  "$@"
 }
 
 lo () {
@@ -610,29 +610,33 @@ dev () {
     lk
 }
 
-fgp () {
-    fgv *.py "$@"
-}
-
-fgt () {
-    fgv *.test *.tests "$@"
-}
-
-fll () {
+fcc () {
     $(freds -l)
 }
 
-fsh () {
+fee () {
+    $(freds -e "$@")
+}
+
+fgg () {
+    fgv *.py "$@"
+}
+
+ftt () {
+    fgv *.test *.tests "$@"
+}
+
+fss () {
 # run fred.sh if it exists here or in ~/tmp
     $(freds -s "$@")
 }
 
-fpu () {
+frd () {
 # debug fred.py if it exists here or in ~/tmp
     $(freds -d "$@")
 }
 
-fpy () {
+frr () {
 # run fred.py if it exists here or in ~/tmp
     $(freds -p "$@")
 }
@@ -900,6 +904,15 @@ vbl () {
     vim $(ls -rt1 $JAB/log/*bashrc*.log | tail -n 1) + +?"^++ "
 }
 
+vfg () {
+    _sought="$1" && shift
+    vf "$@" +/$_sought 
+}
+
+vfr () {
+    mython $JAB/src/python/vim_traceback.py "$@"
+}
+
 vib () {
     v ~/.bashrc
 }
@@ -922,10 +935,6 @@ vlf () {
 
 vlo () {
     v $(locate "$@")
-}
-
-vff () {
-    $(freds -e "$@")
 }
 
 vpe () {
@@ -1152,11 +1161,6 @@ taocl() {
     xmlstarlet fo --html --dropdtd |
     xmlstarlet sel -t -v "(html/body/ul/li[count(p)>0])[$RANDOM mod last()+1]" |
     xmlstarlet unesc | fmt -80
-}
-
-vfile () {
-    echo "I should've used vtr"
-    mython $JAB/src/python/vfile.py "$@"
 }
 
 ylint () {
