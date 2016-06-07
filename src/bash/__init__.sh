@@ -5,6 +5,7 @@ DIR=$JAB/src/bash
 
 . $DIR/aliases.sh
 . $DIR/asserts.sh
+. $DIR/tput.sh
 . $DIR/functons.sh
 . $DIR/history.sh
 . $DIR/prompt.sh
@@ -17,5 +18,6 @@ DIR=$JAB/src/bash
 . $DIR/github.sh
 . $DIR/hosts.sh
 . $DIR/pym.sh
+. $DIR/pt.sh
 . $DIR/pt.sh
 . $DIR/git/__init__.sh

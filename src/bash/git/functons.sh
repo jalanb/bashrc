@@ -123,7 +123,7 @@ gfa () {
 _gl () {
     local cmd=$1
     shift
-    local _vertical_lines=${LINES:-$(tput lines)}
+    local _vertical_lines=${LINES:-$(screen_height)}
     local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
     local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
     git $cmd "$@" | head -n $_lines
@@ -398,7 +398,7 @@ show_git_time () {
     [[ -n $git_dir ]] || return 1
     local _log=
     local period=
-    local lines_left=$(( ${LINES:-$(tput lines)} / 2 ))
+    local lines_left=$(( ${LINES:-$(screen_height)} / 2 ))
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
         regexp=$period.ago

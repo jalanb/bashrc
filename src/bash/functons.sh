@@ -663,8 +663,8 @@ hd1 () {
 }
 
 hed () {
-    SCREEN=$(tput lines)
-    SCREEN=${LINES:-$(tput lines)}
+    SCREEN=$(screen_height)
+    SCREEN=${LINES:-$(screen_height)}
     HALF_SCREEN=`expr $SCREEN / 2`
     HEADLINES=${HEADLINES:-$HALF_SCREEN}
     head -n ${1:-$HEADLINES} "$@"
@@ -854,7 +854,7 @@ sto () {
 tel () {
     # Using "$*" instead of "$@" deliberately here
     # Side effect: args are now text, not args
-    HEADLINES=${HEADLINES:-(( ${LINES:-$(tput lines)} / 2 ))}
+    HEADLINES=${HEADLINES:-(( ${LINES:-$(screen_height)} / 2 ))}
     head -n ${1:-$HEADLINES} "$@"
     lines=$(echo "$*" | sed -e "s/ *-n.\([0-9]\+\)/\1/")
     if [[ -n $lines ]]; then
@@ -862,7 +862,7 @@ tel () {
         echo tel $lines $args
         tail -n $lines $args
     else
-        tail -n $(( ${LINES:-$(tput lines)} / 2 )) "$@"
+        tail -n $(( ${LINES:-$(screen_height)} / 2 )) "$@"
     fi
 }
 
@@ -1087,16 +1087,6 @@ build () {
 
 clean () {
     rfq "$@"
-}
-
-clock () {
-    while sleep 1
-    do
-        tput sc
-        tput cup 0 $(($(tput cols)-29))
-        date
-        tput rc
-    done &
 }
 
 detab () {

@@ -12,13 +12,15 @@ MAXCOLOUR=$(tput colors)
 echo "TERM = $TERM"
 echo "this terminal type supports $MAXCOLOUR colour(s)"
 
+. $(dirname $BASH_SOURCE)/tput.sh
+
 WIDE=0
-LINES=$(tput lines)
+LINES=$(screen_height)
 if [ $MAXCOLOUR -gt $LINES ]; then
         WIDE=1
 fi
 
-MAXCOLS=$(tput cols)
+MAXCOLS=$(screen_width)
 COL=1
 while [ 1 ]; do
         ESC=$(tput setaf $COLOUR 2> /dev/null)

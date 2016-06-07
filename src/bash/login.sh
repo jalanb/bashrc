@@ -33,4 +33,5 @@ if [[ $- =~ i ]]; then
     jj
     # set +x
     sp
+    clock
 fi

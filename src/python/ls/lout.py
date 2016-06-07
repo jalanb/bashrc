@@ -1,5 +1,6 @@
 import os
 import argv
+import commands
 
 
 import ls_colours
@@ -17,9 +18,11 @@ lout_rules = local_rules
 
 
 def screen_width():
+    command='tput cols'
+    _status, output = commands.getstatusoutput(command)
     try:
-        return int(os.environ['COLUMNS']) - 1
-    except KeyError:
+        return int(output) - 1
+    except TypeError:
         return 0
 
 
