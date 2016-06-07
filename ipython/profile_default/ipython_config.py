@@ -124,9 +124,8 @@ c = get_config()
 
 # The name of the IPython directory. This directory is used for logging
 # configuration (through profiles), history storage, etc. The default is usually
-# $HOME/.ipython. This options can also be specified through the environment
+# ~/.ipython. This options can also be specified through the environment
 # variable IPYTHONDIR.
-# c.TerminalIPythonApp.ipython_dir = u'/Users/jab/.ipython'
 
 # Whether to display a banner upon starting IPython.
 c.TerminalIPythonApp.display_banner = False
