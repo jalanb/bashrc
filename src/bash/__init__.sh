@@ -12,6 +12,7 @@ DIR=$JAB/src/bash
 . $DIR/prompt.sh
 . $DIR/repo.sh
 . $DIR/require.sh
+. $DIR/r.sh
 . $DIR/rf.sh
 . $DIR/run_python.sh
 . $DIR/first_num.sh

@@ -98,7 +98,7 @@ v () {
             if [[ -n $script ]]; then
                 if [[ -f "$script" ]]; then
                     bash $script
-                    rq $script
+                    rr $script
                 else
                     echo $script is not a file >&2
                 fi
@@ -395,7 +395,7 @@ ma () {
         mython -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
-        rq $_storage;
+        rr $_storage;
     fi
 }
 

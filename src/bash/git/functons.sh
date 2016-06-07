@@ -368,7 +368,7 @@ _git_modified () {
 
 _run_storage () {
     bash $_storage
-    rq $_storage
+    rr $_storage
 }
 
 # xxxxxxxxxxxxx

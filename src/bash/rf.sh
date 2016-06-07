@@ -8,10 +8,6 @@ _re_source () {
 
 # x
 
-r () {
-    rm -vrf "$@"
-}
-
 # xx
 
 rd () {
@@ -24,10 +20,6 @@ rf () {
 
 rq () {
     rr -ri "$@"
-}
-
-rr () {
-    rm -rf "$@"
 }
 
 rt () {
@@ -46,14 +38,6 @@ rfp () {
 
 rfq () {
     rf -q "$@"
-}
-
-rrr () {
-    rr -fq "$@"
-}
-
-rrq () {
-    sudo rm -rf "$@"
 }
 
 rq. () {
