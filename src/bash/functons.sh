@@ -311,7 +311,7 @@ hv () {
     history | vim - +
 }
 
-jj () {
+j () {
     dir=$JAB
     clear; c $dir "$@"
 }
