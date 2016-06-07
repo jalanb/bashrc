@@ -13,5 +13,8 @@ hosts () {
 # xxxxxx
 
 vhosts () {
-    vim ~/.ssh/config +/Host
+    vim ~/.ssh/config \
+        -p /etc/hosts \
+        +/Host \
+
 }
