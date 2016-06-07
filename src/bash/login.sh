@@ -33,5 +33,5 @@ if [[ $- =~ i ]]; then
     j
     # set +x
     sp
-    clock
+    # clock # fucks with terminal, leave off
 fi
