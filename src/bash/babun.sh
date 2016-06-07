@@ -5,16 +5,18 @@
 export VIP=192.168.111.222
 export HVIP=http://192.168.111.222
 
+. $JAB/src/bash/hub.sh
+
 ssv () {
     ssh vagrant@$VIP "$@"
 }
 
 wwts () {
-    # workon wwts                                                                                                                                                              
+    # workon wwts
     add_to_a_path PATH /cygdrive/c/Users/AB13173/BabunVagrantAnsible/vagrant/bin
-    c $HOME/src/git/parthenonsoftware/git-wwts/wwts-dashboard
+    c $GIT/parthenonsoftware/git-wwts/wwts-dashboard
 }
-    
+
 restarts () {
     server=$1
     for name in uwsgi nginx redis mysqld; do
