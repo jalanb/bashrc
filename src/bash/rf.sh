@@ -19,7 +19,7 @@ rf () {
 }
 
 rq () {
-    rr -i "$@"
+    rm -ri "$@"
 }
 
 rt () {
@@ -40,17 +40,17 @@ rfq () {
     rf -q "$@"
 }
 
-rq. () {
+rr. () {
     /bin/rm -rf ./*
 }
 
-rqa () {
+rra () {
     /bin/rm -rf ./* ./.* 2>&1 | grep -v 'cannot remove directory'
 }
 
 # xxxx
 
-rq.. () {
+rr.. () {
     local directory_here=$(basename "$(pwd)")
     cd ..
     /bin/rm -rf "$directory_here"
