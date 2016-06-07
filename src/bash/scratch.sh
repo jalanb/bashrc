@@ -6,13 +6,13 @@ SCRATCH=/tmp/Downloads
 [[ -d $SCRATCH_DIR ]] && SCRATCH=$SCRATCH_DIR
 
 scratch_up () {
-	trap scratch_down EXIT
-	if [[ -d "${SCRATCH}" ]]; then
-		 rm -rf ${SCRATCH}/*
-	else
-		 mkdir ${SCRATCH}
-	fi
-	cd ${SCRATCH}
+    trap scratch_down EXIT
+    if [[ -d "${SCRATCH}" ]]; then
+         rm -rf ${SCRATCH}/*
+    else
+         mkdir ${SCRATCH}
+    fi
+    cd ${SCRATCH}
 }
 
 scratch_down () {

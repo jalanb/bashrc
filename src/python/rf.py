@@ -1,3 +1,4 @@
+#! /usr/bin/env python2
 """Script to remove temporary files
 
 The script contains a known list of globs for temporary files
