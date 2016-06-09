@@ -9,7 +9,7 @@ if [[ $- =~ i ]]; then
     export PATH=$LOCALS:$BINS:$HOMES
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 
-    SRC=~/src
+    SRC=~/AlanSource
     HG=$SRC/hg
     GIT=$SRC/git
     HUB=$GIT/hub

@@ -1,0 +1,35 @@
++ set -e
++ echo 'require (aliases, )'
+require (aliases, )
++ local _src=.
++ [[ -d aliases ]]
++ [[ ! -d aliases ]]
++ _require_from . aliases
++ set -x
++ set -e
++ echo '_require_from (., aliases)'
+_require_from (., aliases)
++ local _repo=.
+++ _name_dot_sh aliases
+++ set -x
+++ set -e
+++ local _result=aliases.sh
+++ [[ -f aliases ]]
+++ echo aliases.sh
++ local _filename=aliases.sh
+++ basename aliases.sh
++ local _basename=aliases.sh
+++ _find_from . aliases.sh
+++ _counter
+++ wc -l
+++ sed -e 's/ *//'
++ local _count=1
++ local _src=_repo
++ [[ 1 == 0 ]]
++ [[ 1 != 1 ]]
++ local _filename=
++ [[ 1 == 1 ]]
+++ _re_find _repo aliases.sh
+++ find _repo -name aliases.sh
+find: _repo: No such file or directory
++ _filename=
