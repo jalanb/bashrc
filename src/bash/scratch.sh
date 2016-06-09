@@ -31,3 +31,16 @@ clean_scratch () {
     [[ -d "${SCRATCH}" ]] && rm -rf ${SCRATCH}
     mkdir ${SCRATCH}
 }
+
+scratch_copy () {
+    echo "" > $SCRATCH
+    /usr/local/bin/vim $SCRATCH
+    /bin/cat $SCRATCH | /usr/bin/pbcopy
+}
+
+scratch_paste () {
+    SCRATCH=$HOME/tmp/fred
+    /usr/bin/pbpaste > $SCRATCH
+    /usr/local/bin/vim $SCRATCH
+}
+
