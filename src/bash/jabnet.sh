@@ -1,15 +1,21 @@
 #! /bin/cat
 
 jb () {
-    ssh jab.ook
+    jabook
+    _ssh jab.ook
 }
 
 jn () {
-    ssh jalanb.ook
+    _ssh jalanb.ook
 }
 
 jm () {
-    ssh jalanb.mac
+    _ssh jalanbmac.local
 }
 
+
+_ssh () {
+    _server=$1
+    [[ $(hostname) == $_server ]] || ssh $_server
+}
 

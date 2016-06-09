@@ -239,6 +239,10 @@ _gsi_prompt () {
     read -e -n1 -p " " answer
 }
 
+gdsi () {
+    git di "$@"
+}
+
 gsi () {
     shift_dir "$@" || shift
     for f in $(git -C $dir status -s | grep "^\([M ]M\|??\)" | sed -e "s/^...//")
