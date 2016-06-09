@@ -33,7 +33,7 @@ def path_to_etc_hosts():
 
 
 def path_to_jab_hosts():
-    jab = os.environ['JAB']
+    jab = '~/jab'
     return os.path.join(jab, 'etc/hosts')
 
 

@@ -2,11 +2,11 @@
 
 set -e
 
-. ~/jab/jab/binfirst_dir.sh
+. ~/jab/binfirst_dir.sh
 
 main () {
     shift_dir "$@" && shift;
-    [[ -n $* ]] && cp ~/jab/jab/src/python/main.py "$@" || cp ~/jab/jab/src/python/main.py $dir
+    [[ -n $* ]] && cp ~/jab/src/python/main.py "$@" || cp ~/jab/src/python/main.py $dir
 }
 
 main "$@"

@@ -30,8 +30,8 @@ yummy () {
     modprobe fuse
 }
 
-. ~/jab/jab/src/bash/github.sh
-. ~/jab/jab/src/bash/scratch.sh
+. ~/jab/src/bash/github.sh
+. ~/jab/src/bash/scratch.sh
 
 get_autocutsel () {
     wget $GITHUB/sigmike/autocutsel/releases/download/0.10.0/autocutsel-0.10.0.tar.gz

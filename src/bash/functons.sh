@@ -2,7 +2,7 @@
 
 # set -e
 
-. ~/jab/jab/bin/first_dir.sh
+. ~/jab/bin/first_dir.sh
 
 # Called functons.sh because "functions" is ... something else
 
@@ -92,7 +92,7 @@ v () {
         echo "" > ~/tmp/fred
         $EDITOR ~/tmp/fred
     else
-        script=$(mython ~/jab/jab/src/python/vim.py "$@")
+        script=$(mython ~/jab/src/python/vim.py "$@")
         status=$?
         if [[ $status == 0 ]]; then
             if [[ -n $script ]]; then
@@ -103,7 +103,7 @@ v () {
                     echo $script is not a file >&2
                 fi
             else
-                mython ~/jab/jab/src/python/vim.py -U "$@"
+                mython ~/jab/src/python/vim.py -U "$@"
             fi
         else
             echo Python error: $status
@@ -111,10 +111,10 @@ v () {
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
-                echo "  mython ~/jab/jab/src/python/vim.py -U" "$@"
+                echo "  mython ~/jab/src/python/vim.py -U" "$@"
             else
                 echo No script produced please try
-                echo mython ~/jab/jab/src/python/vim.py -U "$@"
+                echo mython ~/jab/src/python/vim.py -U "$@"
             fi
         fi
     fi
@@ -126,7 +126,7 @@ x () {
 
 y () {
     clear
-    mython ~/jab/jab/src/python/y.py "$@"
+    mython ~/jab/src/python/y.py "$@"
 }
 
 # xx
@@ -165,7 +165,7 @@ ag () {
 }
 
 bd () {
-    . ~/jab/jab/src/bash/bd.sh -s "$@"
+    . ~/jab/src/bash/bd.sh -s "$@"
 }
 
 db () {
@@ -187,7 +187,7 @@ IP () {
     fi
     for number in 10 172 193 192 100
     do
-        if python ~/jab/jab/src/python/ifconfig.py $number; then
+        if python ~/jab/src/python/ifconfig.py $number; then
             if [[ $BREAK == yes ]]; then
                 break
             fi
@@ -312,7 +312,7 @@ hv () {
 }
 
 j () {
-    dir=~/jab/jab
+    dir=~/jab
     clear; c $dir "$@"
 }
 
@@ -345,7 +345,7 @@ lf () {
 }
 
 lj () {
-    lk ~/jab/jab "$@"
+    lk ~/jab "$@"
 }
 
 lh () {
@@ -386,7 +386,7 @@ lx () {
 }
 
 ly () {
-    p ~/jab/jab/src/python/ls/ly.py  "$@"
+    p ~/jab/src/python/ls/ly.py  "$@"
 }
 
 ma () {
@@ -431,7 +431,7 @@ py () {
         elif [[ "$all_args" =~ "-U" ]]; then
             mython "$@"
         else
-            script=$(mython ~/jab/jab/src/python/scripts.py -m $args 2>/dev/null)
+            script=$(mython ~/jab/src/python/scripts.py -m $args 2>/dev/null)
             if [[ $? == 0 ]]; then
                 if [[ -z $script ]]; then
                     script=${1/%./.py}
@@ -517,16 +517,16 @@ vi () {
 fi
 
 vj () {
-    (cd ~/jab/jab;
+    (cd ~/jab;
         v.
         gsi)
 }
 
 
 vu () {
-    __doc__="Edit vim files in ~/jab/jab. Add home vim files if different"
-    local _vimrc="~/jab/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
-    local _vim="~/jab/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
+    __doc__="Edit vim files in ~/jab. Add home vim files if different"
+    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
+    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
     vim -p $_vimrc $_vim
 }
 
@@ -567,11 +567,11 @@ cib () {
 }
 
 cjy () {
-    kd ~/jab/jab/src/python "$@"
+    kd ~/jab/src/python "$@"
 }
 
 clf () {
-    cat ~/jab/jab/local/functons.sh
+    cat ~/jab/local/functons.sh
 }
 
 clo () {
@@ -684,7 +684,7 @@ jub () {
 }
 
 jjb () {
-    dir=~/jab/jab/src/bash
+    dir=~/jab/src/bash
     clear; c $dir "$@"
 }
 
@@ -699,7 +699,7 @@ jjj () {
 
 
 jjy () {
-    ky ~/jab/jab/src/python "$@"
+    ky ~/jab/src/python "$@"
 }
 
 jpm () {
@@ -707,7 +707,7 @@ jpm () {
 }
 
 kpj () {
-    rsync -a -e \"ssh -i ~/jab/jab_ID\"
+    rsync -a -e \"ssh -i ~/jab_ID\"
 }
 
 l1d () {
@@ -819,7 +819,7 @@ lyy () {
 }
 
 num () {
-    vim ~/jab/jab/local/numbers.txt
+    vim ~/jab/local/numbers.txt
 }
 
 pi2 () {
@@ -838,7 +838,7 @@ ps3 () {
 }
 
 raj () {
-    pushd ~/jab/jab
+    pushd ~/jab
     range "$@"
     popd >/dev/null 2>&1
 }
@@ -880,15 +880,15 @@ tmp () {
 
 unalias try > /dev/null 2>&1
 try () {
-    TRY=~/jab/jab/src/python/testing/try.py
+    TRY=~/jab/src/python/testing/try.py
     [[ -f "./try.py" ]] && TRY=./try.py
     mython $TRY "$@"
 }
 
 vaf () {
-    vim -p ~/jab/jab/src/bash/aliases.sh ~/jab/jab/src/bash/functons.sh
-    source_path ~/jab/jab/src/bash/aliases.sh
-    source_path ~/jab/jab/src/bash/functons.sh
+    vim -p ~/jab/src/bash/aliases.sh ~/jab/src/bash/functons.sh
+    source_path ~/jab/src/bash/aliases.sh
+    source_path ~/jab/src/bash/functons.sh
 }
 
 vat () {
@@ -901,7 +901,7 @@ vbb () {
 }
 
 vbl () {
-    vim $(ls -rt1 ~/jab/jab/log/*bashrc*.log | tail -n 1) + +?"^++ "
+    vim $(ls -rt1 ~/jab/log/*bashrc*.log | tail -n 1) + +?"^++ "
 }
 
 vfg () {
@@ -910,7 +910,7 @@ vfg () {
 }
 
 vfr () {
-    mython ~/jab/jab/src/python/vim_traceback.py "$@"
+    mython ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vib () {
@@ -942,8 +942,8 @@ vpe () {
 }
 
 vva () {
-    __doc__="Edit all args in ~/jab/jab/vim"
-    (cd ~/jab/jab/vim;
+    __doc__="Edit all args in ~/jab/vim"
+    (cd ~/jab/vim;
     vim -p vimrc "$@")
 }
 
@@ -956,7 +956,7 @@ vvf () {
 }
 
 vvg () {
-    gv ~/jab/jab/vim/gvimrc
+    gv ~/jab/vim/gvimrc
 }
 
 vvp () {
@@ -973,7 +973,7 @@ vvv () {
 }
 
 vtr () {
-    mython ~/jab/jab/src/python/vim_traceback.py "$@"
+    mython ~/jab/src/python/vim_traceback.py "$@"
 }
 
 VIM () {
@@ -1001,9 +1001,9 @@ down () {
 fynd () {
     shift_dir "$@" && shift
     local _level=2
-    . ~/jab/jab/src/bash/functons.sh
+    . ~/jab/src/bash/functons.sh
     #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
-    sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.jab/~/jab/jab/' | g "$@"
+    sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.jab/~/jab/' | g "$@"
 }
 
 lkra () {
@@ -1019,7 +1019,7 @@ left () {
 
 main () {
     shift_dir "$@" && shift
-    [[ -n $* ]] && cp ~/jab/jab/src/python/main.py $1 || cp ~/jab/jab/src/python/main.py $dir
+    [[ -n $* ]] && cp ~/jab/src/python/main.py $1 || cp ~/jab/src/python/main.py $dir
 }
 
 mine () {
@@ -1079,11 +1079,11 @@ Tree () {
 }
 
 vibb () {
-    vim -p ~/.bashrc ~/jab/jab/login.sh
+    vim -p ~/.bashrc ~/jab/login.sh
 }
 
 vini () {
-    vim -p $(find ~/jab/jab -name __init__.sh | tr '\n' ' ')
+    vim -p $(find ~/jab -name __init__.sh | tr '\n' ' ')
 }
 
 # xxxxx
@@ -1115,7 +1115,7 @@ detab () {
 }
 
 freds () {
-    mython ~/jab/jab/src/python/freds.py "$@"
+    mython ~/jab/src/python/freds.py "$@"
 }
 
 LetGo () {
@@ -1231,7 +1231,7 @@ pylinum () {
 }
 
 relpath () {
-    python ~/jab/jab/src/python/relpath.py "$@"
+    python ~/jab/src/python/relpath.py "$@"
 }
 
 # xxxxxxxx
@@ -1257,7 +1257,7 @@ maketest () {
     fi
     local test_dir=$(dirname $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
-    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/jab/src/python/test_.py > $test_file
+    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
 
 thirteen () {
@@ -1266,8 +1266,8 @@ thirteen () {
 }
 
 todo_edit () {
-    local todo_txt="~/jab/jab/todo.txt"
-    local git_options="--git-dir=~/jab/jab/.git --work-tree=$JAB"
+    local todo_txt="~/jab/todo.txt"
+    local git_options="--git-dir=~/jab/.git --work-tree=~/jab"
     if [[ -f todo.txt ]]; then
         todo_txt=todo.txt
         git_options=
@@ -1276,20 +1276,20 @@ todo_edit () {
         git_options=
     fi
     v $todo_txt
-    if git status -s ~/jab/jab/todo.txt 2>&1 | grep -q "M.*$(basename ~/jab/jab/todo.txt)"; then
-        git add ~/jab/jab/todo.txt
-        git commit -m'more or less stuff to be done' ~/jab/jab/todo.txt
-    elif svn stat "~/jab/jab/todo.txt" 2>&1 | grep -q "M .* ~/jab/jab/todo.txt"; then
-        svn ci -m'more or less stuff to be done' "~/jab/jab/todo.txt"
+    if git status -s ~/jab/todo.txt 2>&1 | grep -q "M.*$(basename ~/jab/todo.txt)"; then
+        git add ~/jab/todo.txt
+        git commit -m'more or less stuff to be done' ~/jab/todo.txt
+    elif svn stat "~/jab/todo.txt" 2>&1 | grep -q "M .* ~/jab/todo.txt"; then
+        svn ci -m'more or less stuff to be done' "~/jab/todo.txt"
     fi
 }
 
 todo_show () {
-    local todo_txt="~/jab/jab/todo.txt"
+    local todo_txt="~/jab/todo.txt"
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
-    mython ~/jab/jab/src/python/todo.py $todo_txt
+    mython ~/jab/src/python/todo.py $todo_txt
 }
 
 # xxxxxxxxxx
@@ -1298,7 +1298,7 @@ _like_duck () {
 }
 
 jab_scripts () {
-    mython ~/jab/jab/src/python/scripts.py "$@"
+    mython ~/jab/src/python/scripts.py "$@"
 }
 
 quick_ping () {
@@ -1453,7 +1453,7 @@ console_title_off () {
 # _xxxxxxxxxxxxxxxxxxx
 
 _publish_Localhost () {
-    /bin/bash ~/jab/jab/bin/publish_host.sh $HOME/public_html/index.html
+    /bin/bash ~/jab/bin/publish_host.sh $HOME/public_html/index.html
 }
 
 # functions starting with an underscore are intended for use within this file only
@@ -1501,18 +1501,18 @@ _edit_source () {
 }
 
 _edit_jab () {
-    if [[ -z ~/jab/jab ]]; then
-        echo \~/jab/jab is empty >&2
+    if [[ -z ~/jab ]]; then
+        echo \~/jab is empty >&2
     else
-        [[ -d "~/jab/jab" ]] || mkdir -p $JAB
-        local filepath=~/jab/jab/$1
+        [[ -d "~/jab" ]] || mkdir -p $JAB
+        local filepath=~/jab/$1
         shift
         _edit_source $filepath "$@"
     fi
 }
 
 _edit_locals () {
-    local local_dir=~/jab/jab/local
+    local local_dir=~/jab/local
     [[ -d "$local_dir" ]] || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }

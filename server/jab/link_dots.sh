@@ -2,21 +2,19 @@
 
 set -e
 
-JAB=${JAB:-~/jab/jab}
-
 link_to () {
     [[ -h $2 ]] || ln -s $1 $2
 }
 
 link_to_config () {
-    for source_dir in $(find ~/jab/jab/etc/config -type d)
+    for source_dir in $(find ~/jab/etc/config -type d)
     do
-        dest_dir=$(echo $source_dir | sed -e "s:~/jab/jab/etc/config:$HOME/.config:")
+        dest_dir=$(echo $source_dir | sed -e "s:~/jab/etc/config:$HOME/.config:")
         [[ ! -e "$dest_dir" ]] && mkdir -p $dest_dir
     done
-    for source_file in $(find ~/jab/jab/etc/config -type f)
+    for source_file in $(find ~/jab/etc/config -type f)
     do
-        dest_link=$(echo $source_file | sed -e "s:~/jab/jab/etc/config:$HOME/.config:")
+        dest_link=$(echo $source_file | sed -e "s:~/jab/etc/config:$HOME/.config:")
         if [[ -L $dest_link ]]; then
             source_link=$(readlink -f $dest_link)
             if [[ $source_link != $source_file ]]; then
@@ -36,11 +34,11 @@ link_to_config () {
 link_to_ipython () {
     local parent=$HOME/.ipython
     [[ -d "$parent" ]] || mkdir -p $parent
-    link_to ~/jab/jab/ipython/$1 $parent/$1
+    link_to ~/jab/ipython/$1 $parent/$1
 }
 
 link_to_home () {
-    local from=~/jab/jab/$1
+    local from=~/jab/$1
     local to=$HOME/.$(basename $1)
     [[ -e "$to" ]] && rm -rf $to
     if [[ -e "$from" ]]; then link_to $from $HOME/.$(basename $1)
@@ -49,7 +47,7 @@ link_to_home () {
 }
 
 link_bashrc () {
-    LOGIN=~/jab/jab/src/bash/login.sh
+    LOGIN=~/jab/src/bash/login.sh
     if [[ -f $LOGIN ]]; then
         [[ -d ~/old ]] || mkdir ~/old
         mv ~/.bashrc old

@@ -4,8 +4,8 @@ _source_jab_environ () {
     export EX_OK=0
     export EX_BAD=1
 
-    if [[ ! -d $JAB ]]; then
-        . ~/jab/jab/environ.d/jab.sh
+    if [[ ! -d ~/jab ]]; then
+        . ~/jab/environ.d/jab.sh
     fi
 
     export COLUMNS
@@ -20,7 +20,7 @@ _source_jab_environ () {
     #
     # some interesting paths
     #
-    _far=~/jab/jab/../../..
+    _far=~/jab/../../..
     _far_git=$_far/git
     _far_hg=$_far/hg
     GIT_BUCKET=no_bucket; [[ -d $_far_git/bucket ]] && GIT_BUCKET=$_far_git/bucket; export GIT_BUCKET
@@ -34,12 +34,12 @@ _source_jab_environ () {
     export BUCKET
     [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
     OLD_PATH=$PATH
-    if [[ -d $JAB ]]; then
-        . ~/jab/jab/bin/add_to_a_path.sh
+    if [[ -d ~/jab ]]; then
+        . ~/jab/bin/add_to_a_path.sh
         _find_python
         PATH=
         add_to_a_path PATH $HOME/bin
-        add_to_a_path PATH ~/jab/jab/bin
+        add_to_a_path PATH ~/jab/bin
         add_to_a_path PATH $HOME/.local
         add_to_a_path PATH $HOME/.local/bin
         add_to_a_path PATH /usr/local/gnu
@@ -54,7 +54,7 @@ _source_jab_environ () {
         add_to_a_path PATH /usr/local/go/bin
         export PATH
     else
-        echo JAB is not a directory
+        echo ~/jab is not a directory
     fi
     # show_path
     export PS1
@@ -71,8 +71,8 @@ _source_jab_environ () {
     export EDITOR="vim -p "
     export EMAIL="dotjab@al-got-rhythm.net"
 
-    if [[ -d $JAB ]]; then
-        source_path ~/jab/jab/environ.d/colour.sh
+    if [[ -d ~/jab ]]; then
+        source_path ~/jab/environ.d/colour.sh
     fi
 
     RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"

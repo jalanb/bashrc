@@ -9,10 +9,7 @@ if [[ $- =~ i ]]; then
     export PATH=$LOCALS:$BINS:$HOMES
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 
-    source ~/jab/jab/__init__.sh
-    export JAB
-
-    echo JAB is $JAB
+    source ~/jab/__init__.sh
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 

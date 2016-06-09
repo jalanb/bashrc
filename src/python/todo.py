@@ -22,7 +22,7 @@ def todo_file():
         arg = sys.argv[1]
         if os.path.isfile(arg):
             return arg
-    jab = paths.environ_path('JAB')
+    jab = paths.makepath('~/jab')
     return jab / 'todo.txt'
 
 

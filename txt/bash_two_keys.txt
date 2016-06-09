@@ -32,7 +32,7 @@ gg
 GG 
 hh 
 HH 
-jj cd $JAB (ymmv)
+jj cd ~/jab (ymmv)
 JJ 
 kk 
 KK 

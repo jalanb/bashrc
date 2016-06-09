@@ -1,7 +1,7 @@
 #! /bin/bash
 
-. ~/jab/jab/src/bash/hub.sh
-. ~/jab/jab/src/bash/github.sh
+. ~/jab/src/bash/hub.sh
+. ~/jab/src/bash/github.sh
 
 run_these_before_running_this_script () {
     babun shell /bin/bash
@@ -12,10 +12,6 @@ run_these_before_running_this_script () {
     mkdir -p $HUB
     cd $HUB
     git clone $GITHUB/jalanb/dotjab
-}
-
-setup_symbols () {
-    JAB=$HUB/jab
 }
 
 checkouts () {
@@ -64,12 +60,12 @@ pact_installations () {
 }
 
 server_installations () {
-    bash ~/jab/jab/server/linux/make_which.sh
-    bash ~/jab/jab/server/jab/checkout_jab.sh
+    bash ~/jab/server/linux/make_which.sh
+    bash ~/jab/server/jab/checkout_jab.sh
 }
 
 main () {
-    bash ~/jab/jab/server/jab/clean_directories
+    bash ~/jab/server/jab/clean_directories
     pact_installations
     upgrade_git
     checkouts
@@ -77,5 +73,4 @@ main () {
     server_installations
 }
 
-setup_symbols
 # main

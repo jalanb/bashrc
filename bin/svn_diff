@@ -1,8 +1,8 @@
 #! /bin/bash
 
 set_symbols () {
-    _expected=~/jab/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
-    PYDIFF=~/jab/jab/src/github/pydiff
+    _expected=~/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+    PYDIFF=~/jab/src/github/pydiff
     VIM_EDITOR=vim
     ARGS="$@"
 }
@@ -23,7 +23,7 @@ remove_checkout () {
 IP () {
     for number in 172 192 100
     do
-        mython ~/jab/jab/src/python/ifconfig.py $number && break
+        mython ~/jab/src/python/ifconfig.py $number && break
     done
 }
 

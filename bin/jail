@@ -40,15 +40,15 @@ set_paths () {
     FIGLEAF_DATA=$MAIL_SOURCE_DIRECTORY/.figleaf
     MAIL_PY=$MAIL_SOURCE_DIRECTORY/mail.py
     exit_without_file $MAIL_PY
-    exit_without_directory $JAB
-    exit_without_directory ~/jab/jab/src/python
-    FIGLEAF_DIRECTORY=~/jab/jab/src/python/figleaf-latest
+    exit_without_directory ~/jab
+    exit_without_directory ~/jab/src/python
+    FIGLEAF_DIRECTORY=~/jab/src/python/figleaf-latest
     exit_without_directory $FIGLEAF_DIRECTORY
     FIGLEAF_BINARY=$FIGLEAF_DIRECTORY/bin/figleaf
     exit_without_file $FIGLEAF_BINARY
     FIGLEAF_HTML=$FIGLEAF_DIRECTORY/bin/figleaf2html
     exit_without_file $FIGLEAF_HTML
-    TESTPATH=~/jab/jab/src/python/testing
+    TESTPATH=~/jab/src/python/testing
     exit_without_directory $TESTPATH
     exit_without_directory $PYTHONPATH
 }

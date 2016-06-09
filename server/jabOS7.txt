@@ -2,8 +2,8 @@
 sudo timedatectl set-timezone Europe/Dublin
 # ps -ef | grep yum  .... kill -9
 
-require ~/jab/jab/src/bash/hub.sh
-require ~/jab/jab/src/bash/github.sh
+require ~/jab/src/bash/hub.sh
+require ~/jab/src/bash/github.sh
 
 install_git () {
     sudo yum -y groupinstall "Development Tools"
@@ -33,11 +33,9 @@ git clone $GITHUB/jalanb/kd
 git clone $GITHUB/jalanb/ack2vim
 git clone $GITHUB/jeffkaufman/icdiff.git
 
-# set up JAB
-JAB=$HUB/jab
-cd $JAB
+cd ~/jab
 # cp dotbashrc ~/.bashrc
-# mv dotbashrc ~/jab/jab/src/jab/login.sh ?
+# mv dotbashrc ~/jab/src/jab/login.sh ?
 cd server/linux
 bash make_software.sh
 
@@ -47,20 +45,20 @@ $HOME/bin/python setup.py develop
 
 
 # set up CentOS
-cd ~/jab/jab/server/linux/centos
+cd ~/jab/server/linux/centos
 bash install_software.sh
 
 
 # set up Gnome
 cd ../gnome
 bash make_vim_default_editor.sh
-cd $JAB
+cd ~/jab
 test -d local || mkdir local
 cd local
 
 
 # set up JAb
 
-cd ~/jab/jab/server/jab
+cd ~/jab/server/jab
 bash clean_directories.sh
 bash link_dots.sh

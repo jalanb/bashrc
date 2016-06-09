@@ -1,18 +1,18 @@
 #! /bin/cat
 
-JAB=$(dirname $BASH_SOURCE)
+JAB=$(dirname "$(readlink -f $BASH_SOURCE)")
 export JAB
 
 
-. ~/jab/jab/../what/what.sh
-. ~/jab/jab/src/bash/hub.sh
+. ~/jab/../what/what.sh
+. ~/jab/src/bash/hub.sh
 . $HUB/ack2vim/ack2vim.sh
 . $HUB/ack2vim/grep_vim.sh
 . $HUB/kd/kd.sh
 . $HUB/what/what.sh
 
-. ~/jab/jab/environ.d/__init__.sh
-. ~/jab/jab/src/bash/__init__.sh
-. ~/jab/jab/local/__init__.sh
+. ~/jab/environ.d/__init__.sh
+. ~/jab/src/bash/__init__.sh
+. ~/jab/local/__init__.sh
 
-echo Bye from ~/jab/jab on $(hostname -f)
+echo Bye from ~/jab on $(hostname -f)

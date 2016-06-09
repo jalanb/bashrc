@@ -13,7 +13,7 @@ fi
 #
 # Gonna need python
 #
-. ~/jab/jab/src/bash/run_python.sh
+. ~/jab/src/bash/run_python.sh
 #
 # Once sourced there is one major command:
 #
@@ -22,7 +22,7 @@ add_to_a_path () {
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
-        DOT_PY=~/jab/jab/src/python/add_to_a_path.py
+        DOT_PY=~/jab/src/python/add_to_a_path.py
         local new_paths=$(_run_python $DOT_PY "$@")
         if [[ -n $new_paths ]]; then
             eval $1=$new_paths

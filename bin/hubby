@@ -46,18 +46,18 @@ _show_dirs () {
     for dirname in $(ls)
     do
         local path=$hub/$dirname
-        [[ $(readlink -f $path) == $(readlink -f $JAB) ]] && continue
+        [[ $(readlink -f $path) == $(readlink -f ~/jab) ]] && continue
         [[ -d "$path" ]] && _show_dir $path
     done
 }
 
-require ~/jab/jab/src/bash/hub.sh
+require ~/jab/src/bash/hub.sh
 
 main () {
     if [[ -n $* ]]; then
         _show_dir "$@"
     else
-        _show_status $JAB
+        _show_status ~/jab
         [[ -d $HUB ]] && _show_dirs $HUB
     fi
 }

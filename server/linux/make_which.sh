@@ -4,7 +4,7 @@ set -e
 
 MINIMUM_VERSION=2.21
 
-. ~/jab/jab/src/bash/scratch.sh
+. ~/jab/src/bash/scratch.sh
 
 install_which () {
     clean_scratch

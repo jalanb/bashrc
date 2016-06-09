@@ -32,7 +32,7 @@ main () {
     update_pandemic
 }
 
-. ~/jab/jab/src/bash/scratch.sh
+. ~/jab/src/bash/scratch.sh
 
 scratch_up
 main

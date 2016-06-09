@@ -10,7 +10,7 @@ from dotsite.paths import makepath
 
 def get(strings):
     hub = environ_path('HUB')
-    jab = environ_path('JAB')
+    jab = makepath('~/jab')
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'
     jab_python = jab_src / 'python'

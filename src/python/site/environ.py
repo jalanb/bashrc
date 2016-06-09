@@ -4,7 +4,7 @@ from dotsite.paths import makepath
 
 def read_environ_items():
     from dotsite.path import path
-    jab = path('$JAB').expanduser()
+    jab = path('~/jab').expanduser()
     items = {}
     for environ_file in jab.files('*environ*'):
         lines = [ l.strip() for l in environ_file.lines() ]

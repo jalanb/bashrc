@@ -17,7 +17,7 @@
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
 . $HUB/what/what.sh
-. ~/jab/jab/local/environ.sh
+. ~/jab/local/environ.sh
 
 workon_pym () {
     [[ $VIRTUAL_ENV =~ /pym$ ]] || workon pym
@@ -81,6 +81,6 @@ pym () {
     [[ -d $PYM_CONFIG_DIR ]] || mkdir -p $PYM_CONFIG_DIR
     python $_pym \
         --config-dir=$PYM_CONFIG_DIR \
-        --interactive=~/jab/jab/src/python/pym.py \
+        --interactive=~/jab/src/python/pym.py \
         -- "$@"
 }

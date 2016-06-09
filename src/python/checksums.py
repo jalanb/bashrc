@@ -109,7 +109,7 @@ def pad_keys(items, keys):
 
 def path_to_data():
     """Where we store old values"""
-    return paths.environ_path('JAB') / 'local/login_sums.csv'
+    return os.path.expanduser('~/jab') / 'local/login_sums.csv'
 
 
 def write_files(items, path):

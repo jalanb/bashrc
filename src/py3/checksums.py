@@ -107,7 +107,7 @@ def pad_keys(items, keys):
 
 def path_to_data():
     """Where we store old values"""
-    jab = os.environ['JAB']
+    jab = os.expanduser('~/jab')
     return os.path.join(jab, 'local/login_sums.csv')
 
 

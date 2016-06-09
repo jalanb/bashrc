@@ -1,7 +1,7 @@
 #! /bin/cat
 
 
-DIR=~/jab/jab/src/bash
+DIR=~/jab/src/bash
 
 . $DIR/aliases.sh
 . $DIR/asserts.sh

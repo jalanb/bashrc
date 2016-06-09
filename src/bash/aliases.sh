@@ -68,10 +68,10 @@ alias p-="echo $OLDPWD"
 
 alias r.="rm -rvf *"
 
-alias sa="source_aliases ~/jab/jab/src/bash/aliases.sh"
-alias sb="c ~/jab/jab && source login.sh && -"
-alias se="source ~/jab/jab/environ.d/jab.sh"
-alias sf="source ~/jab/jab/src/bash/functons.sh"
+alias sa="source_aliases ~/jab/src/bash/aliases.sh"
+alias sb="c ~/jab && source login.sh && -"
+alias se="source ~/jab/environ.d/jab.sh"
+alias sf="source ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
 alias yy="y $PYTHON_HOME"
@@ -100,11 +100,11 @@ alias kpp="kp --progress"
 
 alias out="to_release"
 
-alias sla="source ~/jab/jab/local/aliases.sh"
-alias sle="source ~/jab/jab/local/environ.sh"
-alias slf="source ~/jab/jab/local/functons.sh"
-alias slp="source ~/jab/jab/local/prompt"
-alias spe="source ~/jab/jab/environ.d/python.sh"
+alias sla="source ~/jab/local/aliases.sh"
+alias sle="source ~/jab/local/environ.sh"
+alias slf="source ~/jab/local/functons.sh"
+alias slp="source ~/jab/local/prompt"
+alias spe="source ~/jab/environ.d/python.sh"
 
 alias tra="try ~/alans_tests"
 
@@ -112,18 +112,18 @@ alias tra="try ~/alans_tests"
 
 alias ....='c ../../..'
 
-alias comp="source ~/jab/jab/environ.d/company.sh"
+alias comp="source ~/jab/environ.d/company.sh"
 
 alias home="cd; cls"
 
-alias tags="p ~/jab/jab/src/python/ptags.py "
+alias tags="p ~/jab/src/python/ptags.py "
 
 
 # xxxxx
 
 alias .....='c ../../../..'
 
-alias ptags="p ~/jab/jab/src/python/ptags.py "
+alias ptags="p ~/jab/src/python/ptags.py "
 
 # xxxxxx
 
@@ -140,4 +140,4 @@ alias service="sudo /sbin/service "
 
 alias stopwatch="killall -9 watch"
 
-alias update_hosts="sudo python ~/jab/jab/src/python/update_hosts.py"
+alias update_hosts="sudo python ~/jab/src/python/update_hosts.py"

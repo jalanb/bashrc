@@ -1,10 +1,10 @@
 #! /bin/cat
 
-. ~/jab/jab/src/bash/repo.sh
+. ~/jab/src/bash/repo.sh
 
 _set_jab () {
-    if [[ -z $JAB ]]; then
-        echo \$JAB is not set >&2
+    if [[ -z ~/jab ]]; then
+        echo ~/jab is not set >&2
         return 1
     fi
 }

@@ -3,7 +3,7 @@
 find_python () {
     [[ -n $PYTHON && -x "$PYTHON" ]] && return 0
     [[ -n $PYTHON ]] && PYTHON=
-    MY_PATH=~/jab/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
+    MY_PATH=~/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
     [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
     PYTHON=$(PATH=$MY_PATH which python2.7 2>/dev/null)
     [[ -z $PYTHON ]] && PYTHON=$(which python2.7 2>/dev/null)
@@ -23,27 +23,25 @@ _has_py () {
 }
 
 
-JAB_PYTHON=~/jab/jab/src/python
-export JAB_PYTHON
-_try="$JAB_PYTHON/testing/try.py"
+_try="~/jab/src/python/testing/try.py"
 [[ -f "$_try" ]] || _try=no_file_try_py
 export TRY=$_try
 
 _home_src_python_dir=~/src/python
 [[ -d "$_home_src_python_dir" ]] || _home_src_python_dir=no_dir_home_src_python
 
-source_path ~/jab/jab/environ.d/jab.sh
-source_path ~/jab/jab/bin/add_to_a_path.sh
+source_path ~/jab/environ.d/jab.sh
+source_path ~/jab/bin/add_to_a_path.sh
 
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
-export PYTHONPATH=$JAB_PYTHON/site$suffix
+export PYTHONPATH=~/jab/src/python/site$suffix
 
 export HOME_PYTHON=$_home_src_python_dir
 _has_py $HOME_PYTHON && add_to_a_path _SRC_PYTHON_PATH $HOME_PYTHON
-_has_py $JAB_PYTHON && add_to_a_path _SRC_PYTHON_PATH $JAB_PYTHON
-export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
-PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
-[[ -f "$JAB_PYTHON/pythonrc.py" ]] && export PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
+_has_py ~/jab/src/python && add_to_a_path _SRC_PYTHON_PATH ~/jab/src/python
+export PYTHON_SOURCE_PATH=~/jab/src/python:$HOME_PYTHON
+PYTHON_HOME=${HOME_PYTHON:-~/jab/src/python}
+[[ -f "~/jab/src/python/pythonrc.py" ]] && export PYTHONSTARTUP=~/jab/src/python/pythonrc.py
 export PYTHON_HOME
 
 _upgrade_package () {

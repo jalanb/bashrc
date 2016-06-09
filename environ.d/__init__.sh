@@ -1,6 +1,6 @@
 #! /bin/cat
 
-DIR=~/jab/jab/environ.d
+DIR=~/jab/environ.d
 
 . $DIR/jab.sh
 . $DIR/environ.sh
