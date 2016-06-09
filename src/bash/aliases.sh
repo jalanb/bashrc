@@ -68,10 +68,10 @@ alias p-="echo $OLDPWD"
 
 alias r.="rm -rvf *"
 
-alias sa="source_aliases $JAB/src/bash/aliases.sh"
+alias sa="source_aliases $JAB_SRC/bash/aliases.sh"
 alias sb="c $JAB && source login.sh && -"
 alias se="source $JAB/environ.d/jab.sh"
-alias sf="source $JAB/src/bash/functons.sh"
+alias sf="source $JAB_SRC/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
 alias yy="y $PYTHON_HOME"
@@ -116,14 +116,14 @@ alias comp="source $JAB/environ.d/company.sh"
 
 alias home="cd; cls"
 
-alias tags="p $JAB/src/python/ptags.py "
+alias tags="p $JAB_SRC/python/ptags.py "
 
 
 # xxxxx
 
 alias .....='c ../../../..'
 
-alias ptags="p $JAB/src/python/ptags.py "
+alias ptags="p $JAB_SRC/python/ptags.py "
 
 # xxxxxx
 
@@ -140,4 +140,4 @@ alias service="sudo /sbin/service "
 
 alias stopwatch="killall -9 watch"
 
-alias update_hosts="sudo python $JAB/src/python/update_hosts.py"
+alias update_hosts="sudo python $JAB_SRC/python/update_hosts.py"

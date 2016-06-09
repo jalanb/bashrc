@@ -81,6 +81,6 @@ pym () {
     [[ -d $PYM_CONFIG_DIR ]] || mkdir -p $PYM_CONFIG_DIR
     python $_pym \
         --config-dir=$PYM_CONFIG_DIR \
-        --interactive=$JAB/src/python/pym.py \
+        --interactive=$JAB_SRC/python/pym.py \
         -- "$@"
 }

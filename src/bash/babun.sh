@@ -5,7 +5,7 @@
 export VIP=192.168.111.222
 export HVIP=http://192.168.111.222
 
-. $JAB/src/bash/hub.sh
+. $JAB_SRC/bash/hub.sh
 
 ssv () {
     ssh vagrant@$VIP "$@"

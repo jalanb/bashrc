@@ -1,7 +1,7 @@
 #! /bin/cat
 
-. $JAB/src/bash/hub.sh
-. $JAB/src/bash/asserts.sh
+. $JAB_SRC/bash/hub.sh
+. $JAB_SRC/bash/asserts.sh
 
 trap_what () {
     _assert_directory $HUB/what

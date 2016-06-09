@@ -23,7 +23,7 @@ qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require $JAB/$1;
 # xxx
 
 
-cjb () { cd $JAB/src/bash/$1; }
+cjb () { cd $JAB_SRC/bash/$1; }
 
 # "rh." means "require ... in $HUB"
 

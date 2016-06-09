@@ -52,7 +52,7 @@ trace_one_bashrc () {
     verbose_interactive_bashrc | grep $_level
 }
 
-. $JAB/src/bash/hub.sh
+. $JAB_SRC/bash/hub.sh
 
 run_bashrc () {
     echo Welcome to $HOME/.bashrc
@@ -72,7 +72,7 @@ run_bashrc () {
     export TERM="xterm-256color"
     source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
-    mython $/Users/jab/src/git/hub/jab/src/python/checksums.py
+    mython $~/src/git/hub/jab/src/python/checksums.py
     echo Bye from $HOME/.bashrc
 }
 
