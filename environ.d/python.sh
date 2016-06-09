@@ -45,3 +45,14 @@ export PYTHON_SOURCE_PATH=$JAB_PYTHON:$HOME_PYTHON
 PYTHON_HOME=${HOME_PYTHON:-$JAB_PYTHON}
 [[ -f "$JAB_PYTHON/pythonrc.py" ]] && export PYTHONSTARTUP=$JAB_PYTHON/pythonrc.py
 export PYTHON_HOME
+
+_upgrade_package () {
+    pip install --upgrade "$@"
+}
+
+upgrades () {
+    _upgrade_package pip
+    _upgrade_package dotsite
+}
+
+upgrades
