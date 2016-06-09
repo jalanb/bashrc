@@ -22,7 +22,11 @@ def todo_file():
         arg = sys.argv[1]
         if os.path.isfile(arg):
             return arg
+<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
     jab = site.paths.makepath('~/jab')
+=======
+    jab = paths.makepath('~/jab')
+>>>>>>> Prefer links to symbols
     return jab / 'todo.txt'
 
 

@@ -3,7 +3,11 @@ import os
 import dotsite as site
 
 def read_environ_items():
+<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
     from site.path import path
+=======
+    from dotsite.path import path
+>>>>>>> Prefer links to symbols
     jab = path('~/jab').expanduser()
     items = {}
     for environ_file in jab.files('*environ*'):

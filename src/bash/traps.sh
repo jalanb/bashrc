@@ -23,5 +23,9 @@ _trap_python () {
 
 _trap_jab () {
     [[ -d ~/jab ]] || return 1
+<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
+=======
+    [[ ! -d ~/jab_LOCAL ]] && JAB_LOCAL=~/jab/local
+>>>>>>> Prefer links to symbols
 }
 

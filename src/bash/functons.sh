@@ -87,39 +87,6 @@ q () {
     exit 0
 }
 
-v () {
-    if [[ -z $* ]]; then
-        echo "" > ~/tmp/fred
-        $EDITOR ~/tmp/fred
-    else
-        script=$(mython ~/jab/src/python/vim.py "$@")
-        status=$?
-        if [[ $status == 0 ]]; then
-            if [[ -n $script ]]; then
-                if [[ -f "$script" ]]; then
-                    bash $script
-                    #rr $script
-                else
-                    echo $script is not a file >&2
-                fi
-            else
-                mython ~/jab/src/python/vim.py -U "$@"
-            fi
-        else
-            echo Python error: $status
-            if [[ -n $script ]]; then
-                echo Script produced you could run it with
-                echo "  bash $script"
-                echo or debug the problem with
-                echo "  mython ~/jab/src/python/vim.py -U" "$@"
-            else
-                echo No script produced please try
-                echo mython ~/jab/src/python/vim.py -U "$@"
-            fi
-        fi
-    fi
-}
-
 x () {
     exit 1
 }
@@ -529,18 +496,6 @@ vj () {
 }
 
 
-vu () {
-    __doc__="Edit vim files in ~/jab. Add home vim files if different"
-    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
-    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
-    vim -p $_vimrc $_vim
-}
-
-vv () {
-    local __doc__="Edit vim files"
-    [[ -n $* ]] && vu || vva "$@"
-}
-
 vy () {
     v $(ls *.py | grep -v '__*.py*')
 }
@@ -702,9 +657,10 @@ jpm () {
     PYTHONPATH=$PYTHONPATH:~/hub/jpm mython ~/hub/jpm/bin/jpm "$@"
 }
 
-jub () {
-    c ~/hub/../jab "$@"
-    lk
+jvv () {
+    __doc__="Edit all args in ~/jab/vim"
+    (cd ~/jab/vim;
+    vim -p vimrc "$@")
 }
 
 kpj () {
@@ -940,37 +896,6 @@ vlo () {
 
 vpe () {
     _edit_jab environ.d/python
-}
-
-vva () {
-    __doc__="Edit all args in ~/jab/vim"
-    (cd ~/jab/vim;
-    vim -p vimrc "$@")
-}
-
-vvb () {
-    vvf sh.vim
-}
-
-vvf () {
-    vvv ftplugin/$1
-}
-
-vvg () {
-    gv ~/jab/vim/gvimrc
-}
-
-vvp () {
-    vvf python
-}
-
-vvy () {
-    vvf python/jab.vim
-}
-
-
-vvv () {
-    [[ -n $* ]] && vva "$@" || vva .
 }
 
 vtr () {

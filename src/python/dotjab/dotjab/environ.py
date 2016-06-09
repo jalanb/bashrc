@@ -27,7 +27,11 @@ def _load_environment_paths():
     Put them in module globals
     """
     jab_paths = [
+<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
         'HOME', 'PYTHON']
+=======
+        'HOME', 'JAB_HOME', 'PYTHON']
+>>>>>>> Prefer links to symbols
     for _ in jab_paths:
         globals()[_] = _environ_dir(_)
 
