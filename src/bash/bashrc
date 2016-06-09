@@ -14,8 +14,8 @@ if [[ $- =~ i ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 
     vbb () {
-        vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
-        ls -l ~/.bashrc $HUB/jab/__init__.sh
+        vim -p ~/.bashrc ~/hub/jab/__init__.sh "$@" +/bash
+        ls -l ~/.bashrc ~/hub/jab/__init__.sh
     }
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "

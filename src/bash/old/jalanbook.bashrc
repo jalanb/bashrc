@@ -27,8 +27,8 @@ _source_jab_scripts () {
     require "~/jab/src/bash/aliases.sh"
     require "~/jab/src/bash/functons.sh"
     require "~/jab/src/bash/prompt.sh"
-    requite "$HUB/kd/kd.sh"
-    requite "$HUB/ack2vim/ack2vim"
+    requite "~/hub/kd/kd.sh"
+    requite "~/hub/ack2vim/ack2vim"
 }
 
 

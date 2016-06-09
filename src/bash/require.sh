@@ -6,10 +6,10 @@ _require () {
     _source=source
     if [[ -z $WHAT_SOURCED ]]; then
         echo source what
-        if [[ -d $HUB ]]; then
-            $_source $HUB/what/what.sh
+        if [[ -d ~/hub ]]; then
+            $_source ~/hub/what/what.sh
         else
-            echo "HUB is not a directory" >&2
+            echo "~/hub is not a directory" >&2
             return 1
         fi
     fi

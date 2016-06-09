@@ -9,13 +9,13 @@ run_these_before_running_this_script () {
     mkdir -p ~/src/python
     git config --global user.name "J Alan Brogan"
     git config --global user.email github@al-got-rhythm.net
-    mkdir -p $HUB
-    cd $HUB
+    mkdir -p ~/hub
+    cd ~/hub
     git clone $GITHUB/jalanb/dotjab
 }
 
 checkouts () {
-    cd $HUB
+    cd ~/hub
     git clone $GITHUB/jalanb/dotsite
     cd dotsite
     python setup.py develop
@@ -27,7 +27,7 @@ checkouts () {
 }
 
 setup_python () {
-    cd $HUB/dotsite
+    cd ~/hub/dotsite
     python setup.py develop
     cd
     pip install pudb

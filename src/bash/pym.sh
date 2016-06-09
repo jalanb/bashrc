@@ -16,7 +16,7 @@
 # Other environment variables:
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
-. $HUB/what/what.sh
+. ~/hub/what/what.sh
 . ~/jab/local/environ.sh
 
 workon_pym () {
@@ -25,7 +25,7 @@ workon_pym () {
 }
 
 pyi () {
-    cd $HUB/pym/pym
+    cd ~/hub/pym/pym
     add_to_a_path PATH ./bin
     add_to_a_path PYTHONPATH ./pym
     source ~/.virtualenvs/pym/bin/activate
@@ -65,7 +65,7 @@ pyi () {
 pym () {
     local __doc__="function to run https://github.com/jalanb/pym, if installed"
     [[ $VIRTUAL_ENV =~ /pym$ ]] || workon pym
-    local _pym=$HUB/pym/pym/reply/main.py
+    local _pym=~/hub/pym/pym/reply/main.py
     if [[ ! -f $_pym ]]; then
         echo $_pym is not a file >&2
         return 1

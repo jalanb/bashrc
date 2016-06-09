@@ -58,7 +58,7 @@ main () {
         _show_dir "$@"
     else
         _show_status ~/jab
-        [[ -d $HUB ]] && _show_dirs $HUB
+        [[ -d ~/hub ]] && _show_dirs ~/hub
     fi
 }
 

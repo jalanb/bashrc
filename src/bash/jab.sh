@@ -1,7 +1,5 @@
 #! /bin/cat
 
-[[ -z $HUB ]] && (echo "HUB is undefined"; ls -ld ~/src/git/hub) >&2
-
 # x
 
 
@@ -16,7 +14,7 @@ ar () { acquire_require; }
 # "r*" could mean "require ...", but it already means means "rm ..." 
 # so, I'll use "q*"
 
-qh () { ar; [[ -z $1 ]] || require $HUB/$1; }
+qh () { ar; [[ -z $1 ]] || require ~/hub/$1; }
 
 qj () { [[ -z $1 ]] && return; ar; [[ -z $1 ]] || require ~/jab/$1; }
 
@@ -25,13 +23,13 @@ qj () { [[ -z $1 ]] && return; ar; [[ -z $1 ]] || require ~/jab/$1; }
 
 cjb () { cd ~/jab/src/bash/$1; }
 
-# "rh." means "require ... in $HUB"
+# "rh." means "require ... in ~/hub"
 
 qh0 () { . ~/jab/../what/what.sh; }
 qh1 () { . ~/jab/src/bash/hub.sh; }
-qha () { . $HUB/ack2vim/ack2vim.sh; . $HUB/ack2vim/grep_vim.sh; }
-qhk () { . $HUB/kd/kd.sh; }
-qhw () { . $HUB/what/what.sh; }
+qha () { . ~/hub/ack2vim/ack2vim.sh; . ~/hub/ack2vim/grep_vim.sh; }
+qhk () { . ~/hub/kd/kd.sh; }
+qhw () { . ~/hub/what/what.sh; }
 
 
 jjl () { (        set -e;         set -n;         date; cj; "$@") >> ~/jab/log/jjj.log 2>&1;
@@ -77,7 +75,7 @@ REQUIRE_ACQUIRED=
 acquire_require () {
     [[ -n $REQUIRE_ACQUIRED ]] && return;
     REQUIRE_ACQUIRED=$(date)
-    . $HUB/jab/src/bash/require.sh
+    . ~/hub/jab/src/bash/require.sh
 }
 
 # xxxxxxx

@@ -675,11 +675,11 @@ hed () {
 }
 
 hub () {
-    c $HUB "$@"
+    c ~/hub "$@"
 }
 
 jub () {
-    c $HUB/../jab "$@"
+    c ~/hub/../jab "$@"
     lk
 }
 
@@ -703,7 +703,7 @@ jjy () {
 }
 
 jpm () {
-    PYTHONPATH=$PYTHONPATH:$HUB/jpm mython $HUB/jpm/bin/jpm "$@"
+    PYTHONPATH=$PYTHONPATH:~/hub/jpm mython ~/hub/jpm/bin/jpm "$@"
 }
 
 kpj () {
@@ -896,8 +896,8 @@ vat () {
 }
 
 vbb () {
-    vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
-    ls -l ~/.bashrc $HUB/jab/__init__.sh
+    vim -p ~/.bashrc ~/hub/jab/__init__.sh "$@" +/bash
+    ls -l ~/.bashrc ~/hub/jab/__init__.sh
 }
 
 vbl () {

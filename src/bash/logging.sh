@@ -59,10 +59,10 @@ run_bashrc () {
     export PATH=/usr/local/bin:/usr/bin:/bin
     export SHELL=/bin/bash
     # Find my own environment
-    local _what_script=$(readlink -f $HUB/what/what.sh)
+    local _what_script=$(readlink -f ~/hub/what/what.sh)
     _source $_what_script || echo Cannot source $_what_script
     #
-    local _jab=$(readlink -f $HUB/jab)
+    local _jab=$(readlink -f ~/hub/jab)
     builtin cd $_jab && _source $_jab/login.sh && builtin cd >/dev/null 2>&1
     if ! is_running autocutsel
     then

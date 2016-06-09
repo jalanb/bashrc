@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. $HUB/what/what.sh
+. ~/hub/what/what.sh
 . ~/jab/local/functons.sh
 
 _find_copier () {

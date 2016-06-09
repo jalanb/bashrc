@@ -4,12 +4,11 @@
 import itertools
 
 
-from dotsite.paths import environ_path
 from dotsite.paths import makepath
 
 
 def get(strings):
-    hub = environ_path('HUB')
+    hub = makepath('~/hub')
     jab = makepath('~/jab')
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'

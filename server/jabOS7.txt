@@ -24,7 +24,7 @@ sudo rm -rf ~/Downloads/*
 
 # Install dotjab
 
-cd $HUB
+cd ~/hub
 
 # If you are reading this then dotjab ($GITHUB/jalanb/dotjab) is already cloned
 git clone $GITHUB/jalanb/dotsite
@@ -40,7 +40,7 @@ cd server/linux
 bash make_software.sh
 
 # set up python
-cd $HUB/dotsite
+cd ~/hub/dotsite
 $HOME/bin/python setup.py develop
 
 

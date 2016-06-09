@@ -104,10 +104,10 @@ _assert_directory () {
 # _assert_directory /assertions
 
 _assert_github () {
-    _assert_directory $HUB
+    _assert_directory ~/hub
     while [[ -n $1 ]]; do
-        _assert_directory $HUB/$1
-        echo $HUB/$1
+        _assert_directory ~/hub/$1
+        echo ~/hub/$1
         shift
     done
 }
@@ -172,7 +172,7 @@ _assert_source () {
 
 _assert_source_what () {
     local _what=$(_assert_github what)
-    local _what=$HUB/what/what.sh
+    local _what=~/hub/what/what.sh
     _assert_file $_what
     source $_what
     _assert_source $_what
