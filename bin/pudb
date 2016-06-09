@@ -5,7 +5,7 @@
 set -e
 
 _find_python () {
-    MY_PATH=$JAB/bin:$HOME/bin:/usr/local/bin:/usr/bin
+    MY_PATH=~/jab/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
     [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
     PYTHON_TWO_SEVEN=$(PATH=$MY_PATH which python2.7 2>/dev/null)
     [[ -x "$PYTHON_TWO_SEVEN" ]] || exit 1

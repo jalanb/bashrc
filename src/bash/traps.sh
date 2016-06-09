@@ -1,7 +1,7 @@
 #! /bin/cat
 
-. $JAB/src/bash/hub.sh
-. $JAB/src/bash/asserts.sh
+. ~/jab/jab/src/bash/hub.sh
+. ~/jab/jab/src/bash/asserts.sh
 
 trap_what () {
     _assert_directory $HUB/what
@@ -22,8 +22,8 @@ _trap_python () {
 
 
 _trap_jab () {
-    [[ ! -d $JAB && -d $HUB/jab ]] && JAB=$HUB/jab
-    [[ -d $JAB ]] || return 1
-    [[ ! -d $JAB_LOCAL ]] && JAB_LOCAL=$JAB/local
+    [[ ! -d ~/jab/jab && -d $HUB/jab ]] && JAB=$HUB/jab
+    [[ -d ~/jab/jab ]] || return 1
+    [[ ! -d ~/jab/jab_LOCAL ]] && JAB_LOCAL=~/jab/jab/local
 }
 

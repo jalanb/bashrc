@@ -1,7 +1,7 @@
 #! /bin/bash
 
 . $HUB/what/what.sh
-. $JAB/local/functons.sh
+. ~/jab/jab/local/functons.sh
 
 _find_copier () {
     CLI_COPIER=

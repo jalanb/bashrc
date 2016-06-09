@@ -48,7 +48,7 @@ main () {
     fi
 }
 
-. $JAB/src/bash/scratch.sh
+. ~/jab/jab/src/bash/scratch.sh
 
 scratch_up
 main

@@ -1,8 +1,8 @@
 #! /bin/bash
 
 check_jab () {
-    if [[ ! -f "$JAB/etc/ackrc" ]]; then
-        echo $JAB/etc/ackrc is not a file >&2
+    if [[ ! -f "~/jab/jab/etc/ackrc" ]]; then
+        echo ~/jab/jab/etc/ackrc is not a file >&2
         return 1
     fi
     return 0
@@ -12,7 +12,7 @@ link () {
     destination="$1"
     source="$2"
     [[ -e "$destination" ]] && rm -rf "$destination"
-    ln -s $JAB/"$source" $HOME/"$destination"
+    ln -s ~/jab/jab/"$source" $HOME/"$destination"
 }
 
 main () {

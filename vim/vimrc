@@ -488,8 +488,8 @@ function ToggleHighlightSearch()
         set hlsearch
     endif
 endfunction
-set ignorecase      " Ignore case while searching (\C in the regexp to search casefully)
-set smartcase       " Do not ignorecase if the regexp includes capitals
+set noignorecase      " Ignore Case while searching (\C in the regexp to search casefully)
+set nosmartcase       " Do not ignorecase if the regexp includes capitals
 set incsearch       " search as characters are entered
 set hlsearch        " highlight matches
 "

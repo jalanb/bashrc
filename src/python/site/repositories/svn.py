@@ -20,7 +20,7 @@ def _home_subversion_config():
 
 
 def _jab_subversion_config():
-    return '$JAB/etc/subversion/config'
+    return '~/jab/jab/etc/subversion/config'
 
 
 def _get_some_subversion_config_lines(path_to_config, match):

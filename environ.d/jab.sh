@@ -1,6 +1,6 @@
 #! /bin/cat
 
-. $JAB/src/bash/repo.sh
+. ~/jab/jab/src/bash/repo.sh
 
 _set_jab () {
     if [[ -z $JAB ]]; then

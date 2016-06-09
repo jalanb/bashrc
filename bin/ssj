@@ -5,7 +5,7 @@
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
-_expected=$JJAB/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+_expected=$~/jab/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 
 usage () {
     ARGS="$*"

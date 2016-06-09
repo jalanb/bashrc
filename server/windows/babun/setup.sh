@@ -1,7 +1,7 @@
 #! /bin/bash
 
-. $JAB/src/bash/hub.sh
-. $JAB/src/bash/github.sh
+. ~/jab/jab/src/bash/hub.sh
+. ~/jab/jab/src/bash/github.sh
 
 run_these_before_running_this_script () {
     babun shell /bin/bash
@@ -64,12 +64,12 @@ pact_installations () {
 }
 
 server_installations () {
-    bash $JAB/server/linux/make_which.sh
-    bash $JAB/server/jab/checkout_jab.sh
+    bash ~/jab/jab/server/linux/make_which.sh
+    bash ~/jab/jab/server/jab/checkout_jab.sh
 }
 
 main () {
-    bash $JAB/server/jab/clean_directories
+    bash ~/jab/jab/server/jab/clean_directories
     pact_installations
     upgrade_git
     checkouts

@@ -42,7 +42,7 @@ The module retains the last options, args which it parsed
     True
 
 The module will catch any files or directories in the command line
-    >>> argv.test_args('-w alan $JAB /bin/ls $JAB/vim/vimrc fred /usr')
+    >>> argv.test_args('-w alan ~/jab/jab /bin/ls ~/jab/jab/vim/vimrc fred /usr')
     >>> print argv.files[0], argv.files[1]
     /bin/ls /.../vim/vimrc
     >>> print argv.directories[0], argv.directories[1]

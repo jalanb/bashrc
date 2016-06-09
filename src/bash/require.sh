@@ -39,7 +39,7 @@ _require_from () {
     local _src=_repo
     [[ $_count == 0 ]] && continue
     if [[ $_count != 1 ]]; then
-        _src=$JAB/src
+        _src=~/jab/jab/src
         _count=$(_find_from $_src $_basename | _counter)
     fi
     if [[ $_count == 1 ]]; then

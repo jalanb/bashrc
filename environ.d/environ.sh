@@ -5,7 +5,7 @@ _source_jab_environ () {
     export EX_BAD=1
 
     if [[ ! -d $JAB ]]; then
-        . $JAB/environ.d/jab.sh
+        . ~/jab/jab/environ.d/jab.sh
     fi
 
     export COLUMNS
@@ -35,11 +35,11 @@ _source_jab_environ () {
     [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
     OLD_PATH=$PATH
     if [[ -d $JAB ]]; then
-        . $JAB/bin/add_to_a_path.sh
+        . ~/jab/jab/bin/add_to_a_path.sh
         _find_python
         PATH=
         add_to_a_path PATH $HOME/bin
-        add_to_a_path PATH $JAB/bin
+        add_to_a_path PATH ~/jab/jab/bin
         add_to_a_path PATH $HOME/.local
         add_to_a_path PATH $HOME/.local/bin
         add_to_a_path PATH /usr/local/gnu
@@ -72,7 +72,7 @@ _source_jab_environ () {
     export EMAIL="dotjab@al-got-rhythm.net"
 
     if [[ -d $JAB ]]; then
-        source_path $JAB/environ.d/colour.sh
+        source_path ~/jab/jab/environ.d/colour.sh
     fi
 
     RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"

@@ -18,12 +18,12 @@ ar () { acquire_require; }
 
 qh () { ar; [[ -z $1 ]] || require $HUB/$1; }
 
-qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require $JAB/$1; }
+qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require ~/jab/jab/$1; }
 
 # xxx
 
 
-cjb () { cd $JAB/src/bash/$1; }
+cjb () { cd ~/jab/jab/src/bash/$1; }
 
 # "rh." means "require ... in $HUB"
 
@@ -34,10 +34,10 @@ qhk () { . $HUB/kd/kd.sh; }
 qhw () { . $HUB/what/what.sh; }
 
 
-jjl () { (        set -e;         set -n;         date; cj; "$@") >> $JAB/log/jjj.log 2>&1;
-         (set -a; set -e; set -h;         set -x; date; cj; "$@"; echo jjj; date;) >> $JAB/log/jjj.log 2>&1; }
+jjl () { (        set -e;         set -n;         date; cj; "$@") >> ~/jab/jab/log/jjj.log 2>&1;
+         (set -a; set -e; set -h;         set -x; date; cj; "$@"; echo jjj; date;) >> ~/jab/jab/log/jjj.log 2>&1; }
 
-# "rj." means "require ... in $JAB"
+# "rj." means "require ... in ~/jab/jab"
 
 qja () { require_jab_sh aliases; }
 qje () { require_jab_sh environ; }
@@ -92,9 +92,9 @@ JAB_ACQUIRED=
 require_scripts_under_jab () {
 set -x
     require_scripts_under_hub
-    [[ -n $JAB_ACQUIRED ]] && return;
+    [[ -n ~/jab/jab_ACQUIRED ]] && return;
 	JAB_ACQUIRED=$(date)
-    # echo JAB, from HUB $JAB
+    # echo JAB, from HUB ~/jab/jab
     acquire_require;
     qjedc; qjedo; qjedp;
     qja; qje; qjf; qjh; qjt; qjo; qjr; qjx;

@@ -1,43 +1,43 @@
 #! /bin/cat
 
-JAB_SH=$JAB/src/bash
-source $JAB_SH/asserts.sh
+JAB_SH=~/jab/jab/src/bash
+source ~/jab/jab_SH/asserts.sh
 
-_assert_directory $JAB_SH
+_assert_directory ~/jab/jab_SH
 
 _source_jab_environ_d () {
-    for _file in $(find $JAB/environ.d -type f | tr '\n' ' '); do
+    for _file in $(find ~/jab/jab/environ.d -type f | tr '\n' ' '); do
         _assert_source $_file
     done
 }
-_assert_directory $JAB_SH/git
+_assert_directory ~/jab/jab_SH/git
 
-JAB_SH_GIT=$JAB_SH/git
-_assert_directory $JAB_SH_GIT
+JAB_SH_GIT=~/jab/jab_SH/git
+_assert_directory ~/jab/jab_SH_GIT
 
 _source_jab_environ () {
-    _assert_source $JAB/environ.d/jab.sh
+    _assert_source ~/jab/jab/environ.d/jab.sh
     _source_jab_environ_d
 }
 
 _source_jab_scripts () {
-    require "$JAB/environ.d/jab.sh"
-    require "$JAB/environ.d/python.sh"
-    require "$JAB/local/network"
-    require "$JAB/src/bash/aliases.sh"
-    require "$JAB/src/bash/functons.sh"
-    require "$JAB/src/bash/prompt.sh"
+    require "~/jab/jab/environ.d/jab.sh"
+    require "~/jab/jab/environ.d/python.sh"
+    require "~/jab/jab/local/network"
+    require "~/jab/jab/src/bash/aliases.sh"
+    require "~/jab/jab/src/bash/functons.sh"
+    require "~/jab/jab/src/bash/prompt.sh"
     requite "$HUB/kd/kd.sh"
     requite "$HUB/ack2vim/ack2vim"
 }
 
 
 _remove_jab_tmp_files () {
-    /bin/rm -rf "$JAB"/tmp/*
+    /bin/rm -rf "~/jab/jab"/tmp/*
 }
 
 _show_todo () {
-    builtin cd "$JAB/src/python"
+    builtin cd "~/jab/jab/src/python"
     if python2.7 -c"a=0" >/dev/null 2>&1; then
         [[ -f "todo.py" ]] && mython todo.py
     else
@@ -48,14 +48,14 @@ _show_todo () {
 }
 
 _jab_status () {
-    if [[ ! -d "$JAB"/.git ]]; then
-        $(cd $JAB; git init .)
+    if [[ ! -d "~/jab/jab"/.git ]]; then
+        $(cd ~/jab/jab; git init .)
     fi
-    git -C "$JAB" status | \
+    git -C "~/jab/jab" status | \
     grep -v "nothing to commit, working directory clean" | \
-    sed -e s:Your.branch:\$JAB: | \
+    sed -e s:Your.branch:\~/jab/jab: | \
     grep --color 'up-to-date.*'
-    _assert_source $JAB_SH_GIT/source
+    _assert_source ~/jab/jab_SH_GIT/source
 }
 
 _show_welcome () {
@@ -73,15 +73,15 @@ _show_welcome () {
     echo
 }
 
-_assert_file $JAB_SH/assertions.sh
+_assert_file ~/jab/jab_SH/assertions.sh
 
 bashrc_in_jab () {
     _trap_github
     _trap_jab
-    builtin cd $JAB
+    builtin cd ~/jab/jab
     _trap_what
     _assert_is_function source_what
-    source_what $JAB_SH/assertions
+    source_what ~/jab/jab_SH/assertions
     _trap_python
     _show_welcome
 }

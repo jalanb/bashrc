@@ -1,9 +1,9 @@
 #! /bin/bash
 
-. $JAB/src/bash/hub.sh
+. ~/jab/jab/src/bash/hub.sh
 JAB=${HUB/jab}
 
-. $JAB/src/bash/github.sh
+. ~/jab/jab/src/bash/github.sh
 DOTJAB=$GITHUB/jalanb/dotjab
 
 checkout () {

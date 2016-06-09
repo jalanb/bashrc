@@ -6,8 +6,8 @@ PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
 _expected=$HUB/what/what.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
-_expected=$JAB/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
-_expected=$JAB/src/bash/functons.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+_expected=~/jab/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+_expected=~/jab/jab/src/bash/functons.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 
 usage () {
     if [[ $# < 2 ]]; then
@@ -36,7 +36,7 @@ main () {
     local options=$*
 
     local here_name=$(python -c "import socket; print socket.getfqdn()")
-    local here_ip=$(python $JAB/src/python/ifconfig.py 172)
+    local here_ip=$(python ~/jab/jab/src/python/ifconfig.py 172)
     local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
     if [[ $here_ip == $there_ip ]]; then
         if [[ $you == $(whoami) ]]; then

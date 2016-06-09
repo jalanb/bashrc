@@ -1,6 +1,6 @@
 
 first_num () {
-    num=$(mython $JAB/src/python/first_num.py "$@")
-    args=$(mython $JAB/src/python/first_num.py --Invert "$@")
+    num=$(mython ~/jab/jab/src/python/first_num.py "$@")
+    args=$(mython ~/jab/jab/src/python/first_num.py --Invert "$@")
     [[ -n $num ]]
 }

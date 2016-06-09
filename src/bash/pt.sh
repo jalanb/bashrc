@@ -16,7 +16,7 @@
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
 . $HUB/what/what.sh
-. $JAB/local/environ.sh
+. ~/jab/jab/local/environ.sh
 
 pt () {
     local __doc__="function to run https://github.com/jonathanslenders/ptpython, if installed"
@@ -33,6 +33,6 @@ pt () {
     $_ptpython \
         --vi \
         --config-dir=$PT_CONFIG_DIR \
-        --interactive=$JAB/src/python/ptpython.py \
+        --interactive=~/jab/jab/src/python/ptpython.py \
         -- "$@"
 }

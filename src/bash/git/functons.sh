@@ -1,7 +1,7 @@
 #! /bin/cat
 
-. $JAB/bin/first_dir.sh
-. $JAB/environ.d/colour.sh
+. ~/jab/jab/bin/first_dir.sh
+. ~/jab/jab/environ.d/colour.sh
 
 # functons.sh for git
 
@@ -80,7 +80,7 @@ gai () {
 
 gcj () {
     local _storage=/tmp/gcj.sh
-    local JIT="git -C $JAB"
+    local JIT="git -C ~/jab/jab"
     if [[ -z "$@" ]]; then $JIT commit --all --verbose
     else
         python -c "print '$JIT commit -m\"$*\"'" > $_storage

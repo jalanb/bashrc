@@ -1,9 +1,9 @@
 #! /bin/bash
 
-_expected=$JAB/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+_expected=~/jab/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 
 HOME_SSH=~/.ssh
-JAB_SSH=$JAB/etc/ssh
+JAB_SSH=~/jab/jab/etc/ssh
 HOME_ID=$HOME_SSH/id_rsa
 
 authorize_jab () {
