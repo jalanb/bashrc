@@ -20,8 +20,11 @@ _source_jab_environ () {
     #
     # some interesting paths
     #
-    GIT_BUCKET=no_bucket; [[ -d ~/src/git/bucket ]] && GIT_BUCKET=~/src/git/bucket; export GIT_BUCKET
-    HG_BUCKET=no_bucket; [[ -d ~/src/hg/bucket ]] && HG_BUCKET=~/src/hg/bucket; export HG_BUCKET
+    _far=~/jab/jab/../../..
+    _far_git=$_far/git
+    _far_hg=$_far/hg
+    GIT_BUCKET=no_bucket; [[ -d $_far_git/bucket ]] && GIT_BUCKET=$_far_git/bucket; export GIT_BUCKET
+    HG_BUCKET=no_bucket; [[ -d $_far_hg/bucket ]] && HG_BUCKET=$_far_hg/bucket export HG_BUCKET
     BUCKET=no_bucket
     if [[ -d $HG_BUCKET ]]; then
         BUCKET=$HG_BUCKET

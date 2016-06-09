@@ -77,7 +77,7 @@ prompt_command () {
 }
 
 sp () {
-    source $JAB_SRC/bash/prompt.sh
+    source $JAB/src/bash/prompt.sh
 }
 
 vp () {

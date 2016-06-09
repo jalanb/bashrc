@@ -80,10 +80,10 @@ gai () {
 
 gcj () {
     local _storage=/tmp/gcj.sh
-    local GIT="git -C $JAB"
-    if [[ -z "$@" ]]; then $GIT commit --all --verbose
+    local JIT="git -C $JAB"
+    if [[ -z "$@" ]]; then $JIT commit --all --verbose
     else
-        python -c "print '$GIT commit -m\"$*\"'" > $_storage
+        python -c "print '$JIT commit -m\"$*\"'" > $_storage
         _run_storage
     fi
 }

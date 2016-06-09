@@ -92,7 +92,7 @@ v () {
         echo "" > ~/tmp/fred
         $EDITOR ~/tmp/fred
     else
-        script=$(mython $JAB_SRC/python/vim.py "$@")
+        script=$(mython $JAB/src/python/vim.py "$@")
         status=$?
         if [[ $status == 0 ]]; then
             if [[ -n $script ]]; then
@@ -103,7 +103,7 @@ v () {
                     echo $script is not a file >&2
                 fi
             else
-                mython $JAB_SRC/python/vim.py -U "$@"
+                mython $JAB/src/python/vim.py -U "$@"
             fi
         else
             echo Python error: $status
@@ -111,10 +111,10 @@ v () {
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
-                echo "  mython $JAB_SRC/python/vim.py -U" "$@"
+                echo "  mython $JAB/src/python/vim.py -U" "$@"
             else
                 echo No script produced please try
-                echo mython $JAB_SRC/python/vim.py -U "$@"
+                echo mython $JAB/src/python/vim.py -U "$@"
             fi
         fi
     fi
@@ -126,7 +126,7 @@ x () {
 
 y () {
     clear
-    mython $JAB_SRC/python/y.py "$@"
+    mython $JAB/src/python/y.py "$@"
 }
 
 # xx
@@ -165,7 +165,7 @@ ag () {
 }
 
 bd () {
-    . $JAB_SRC/bash/bd.sh -s "$@"
+    . $JAB/src/bash/bd.sh -s "$@"
 }
 
 db () {
@@ -187,7 +187,7 @@ IP () {
     fi
     for number in 10 172 193 192 100
     do
-        if python $JAB_SRC/python/ifconfig.py $number; then
+        if python $JAB/src/python/ifconfig.py $number; then
             if [[ $BREAK == yes ]]; then
                 break
             fi
@@ -386,7 +386,7 @@ lx () {
 }
 
 ly () {
-    p $JAB_SRC/python/ls/ly.py  "$@"
+    p $JAB/src/python/ls/ly.py  "$@"
 }
 
 ma () {
@@ -431,7 +431,7 @@ py () {
         elif [[ "$all_args" =~ "-U" ]]; then
             mython "$@"
         else
-            script=$(mython $JAB_SRC/python/scripts.py -m $args 2>/dev/null)
+            script=$(mython $JAB/src/python/scripts.py -m $args 2>/dev/null)
             if [[ $? == 0 ]]; then
                 if [[ -z $script ]]; then
                     script=${1/%./.py}
@@ -567,7 +567,7 @@ cib () {
 }
 
 cjy () {
-    kd $JAB_SRC/python "$@"
+    kd $JAB/src/python "$@"
 }
 
 clf () {
@@ -684,7 +684,7 @@ jub () {
 }
 
 jjb () {
-    dir=$JAB_SRC/bash
+    dir=$JAB/src/bash
     clear; c $dir "$@"
 }
 
@@ -699,7 +699,7 @@ jjj () {
 
 
 jjy () {
-    ky $JAB_SRC/python "$@"
+    ky $JAB/src/python "$@"
 }
 
 jpm () {
@@ -880,15 +880,15 @@ tmp () {
 
 unalias try > /dev/null 2>&1
 try () {
-    TRY=$JAB_SRC/python/testing/try.py
+    TRY=$JAB/src/python/testing/try.py
     [[ -f "./try.py" ]] && TRY=./try.py
     mython $TRY "$@"
 }
 
 vaf () {
-    vim -p $JAB_SRC/bash/aliases.sh $JAB_SRC/bash/functons.sh
-    source_path $JAB_SRC/bash/aliases.sh
-    source_path $JAB_SRC/bash/functons.sh
+    vim -p $JAB/src/bash/aliases.sh $JAB/src/bash/functons.sh
+    source_path $JAB/src/bash/aliases.sh
+    source_path $JAB/src/bash/functons.sh
 }
 
 vat () {
@@ -910,7 +910,7 @@ vfg () {
 }
 
 vfr () {
-    mython $JAB_SRC/python/vim_traceback.py "$@"
+    mython $JAB/src/python/vim_traceback.py "$@"
 }
 
 vib () {
@@ -973,7 +973,7 @@ vvv () {
 }
 
 vtr () {
-    mython $JAB_SRC/python/vim_traceback.py "$@"
+    mython $JAB/src/python/vim_traceback.py "$@"
 }
 
 VIM () {
@@ -1001,7 +1001,7 @@ down () {
 fynd () {
     shift_dir "$@" && shift
     local _level=2
-    . $JAB_SRC/bash/functons.sh
+    . $JAB/src/bash/functons.sh
     #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
     sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.jab/$JAB/' | g "$@"
 }
@@ -1019,7 +1019,7 @@ left () {
 
 main () {
     shift_dir "$@" && shift
-    [[ -n $* ]] && cp $JAB_SRC/python/main.py $1 || cp $JAB_SRC/python/main.py $dir
+    [[ -n $* ]] && cp $JAB/src/python/main.py $1 || cp $JAB/src/python/main.py $dir
 }
 
 mine () {
@@ -1115,7 +1115,7 @@ detab () {
 }
 
 freds () {
-    mython $JAB_SRC/python/freds.py "$@"
+    mython $JAB/src/python/freds.py "$@"
 }
 
 LetGo () {
@@ -1231,7 +1231,7 @@ pylinum () {
 }
 
 relpath () {
-    python $JAB_SRC/python/relpath.py "$@"
+    python $JAB/src/python/relpath.py "$@"
 }
 
 # xxxxxxxx
@@ -1257,7 +1257,7 @@ maketest () {
     fi
     local test_dir=$(dirname $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
-    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB_SRC/python/test_.py > $test_file
+    sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ $JAB/src/python/test_.py > $test_file
 }
 
 thirteen () {
@@ -1289,7 +1289,7 @@ todo_show () {
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
-    mython $JAB_SRC/python/todo.py $todo_txt
+    mython $JAB/src/python/todo.py $todo_txt
 }
 
 # xxxxxxxxxx
@@ -1298,7 +1298,7 @@ _like_duck () {
 }
 
 jab_scripts () {
-    mython $JAB_SRC/python/scripts.py "$@"
+    mython $JAB/src/python/scripts.py "$@"
 }
 
 quick_ping () {

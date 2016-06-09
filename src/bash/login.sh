@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -x
 
 
 if [[ $- =~ i ]]; then
@@ -9,13 +9,7 @@ if [[ $- =~ i ]]; then
     export PATH=$LOCALS:$BINS:$HOMES
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 
-    SRC=~/AlanSource
-    HG=$SRC/hg
-    GIT=$SRC/git
-    HUB=$GIT/hub
-    export HUB
-
-    source $HUB/jab/__init__.sh
+    source ~/jab/jab/__init__.sh
     export JAB
 
     echo JAB is $JAB

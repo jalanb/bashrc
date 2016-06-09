@@ -23,12 +23,12 @@ qj () { [[ -z $1 ]] && return; JAB=$HUB/jab; ar; [[ -z $1 ]] || require $JAB/$1;
 # xxx
 
 
-cjb () { cd $JAB_SRC/bash/$1; }
+cjb () { cd $JAB/src/bash/$1; }
 
 # "rh." means "require ... in $HUB"
 
-qh0 () { . ~/src/git/hub/what/what.sh; }
-qh1 () { . ~/src/git/hub/jab/src/bash/hub.sh; }
+qh0 () { . ~/jab/jab/../what/what.sh; }
+qh1 () { . ~/jab/jab/src/bash/hub.sh; }
 qha () { . $HUB/ack2vim/ack2vim.sh; . $HUB/ack2vim/grep_vim.sh; }
 qhk () { . $HUB/kd/kd.sh; }
 qhw () { . $HUB/what/what.sh; }

@@ -16,7 +16,7 @@ _source_jab_environ () {
 source_jab () {
     _source_jab_environ
     for script in aliases.sh functons.sh prompt.sh src/bash/git/completion.sh; do
-        source_what "$JAB_SRC/bash/$script" || continue
+        source_what "$JAB/src/bash/$script" || continue
     done
 }
 
@@ -28,7 +28,7 @@ _jab_status () {
     grep -v "nothing to commit, working directory clean" | \
     sed -e s:Your.branch:\$JAB: | \
     grep --color 'up-to-date.*'
-    source_what $JAB_SRC/bash/git/source
+    source_what $JAB/src/bash/git/source
 }
 
 _remove_jab_tmp_files () {

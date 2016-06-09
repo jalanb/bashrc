@@ -1,6 +1,6 @@
 #! /bin/cat
 
-DIR=$JAB_SRC/bash/git
+DIR=$JAB/src/bash/git
 
 . $DIR/completion.sh
 . $DIR/functons.sh
