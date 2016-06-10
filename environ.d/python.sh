@@ -45,7 +45,7 @@ PYTHON_HOME=${HOME_PYTHON:-~/jab/src/python}
 export PYTHON_HOME
 
 _upgrade_package () {
-    pip install --upgrade "$@"
+    pip install --upgrade "$@" 2>&1 | grep -v "Requirement already up-to-date"
 }
 
 upgrades () {
