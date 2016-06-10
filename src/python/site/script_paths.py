@@ -4,21 +4,12 @@
 import itertools
 
 
-<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
 import dotsite as site
 
 
 def get(strings):
     hub = site.paths.path('~/hub')
     jab = site.paths.path('~/jab')
-=======
-from dotsite.paths import makepath
-
-
-def get(strings):
-    hub = makepath('~/hub')
-    jab = makepath('~/jab')
->>>>>>> Prefer links to symbols
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'
     jab_python = jab_src / 'python'

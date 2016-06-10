@@ -45,7 +45,7 @@ alias o="o"
 alias Q="exit 0"
 # r is now a script
 alias s="s"
-alias t="t"
+# t is a function
 alias u="u"
 # v is a function
 # w is a function
