@@ -358,13 +358,13 @@ def separate_options(strings):
 
 def interpret(args):
     """Interpret the args from a command line"""
-    options, args = divide(args, is_option)
-    options = separate_options(options)
-    known_files = script_paths.get(args)
+    # options, args = divide(args, is_option)
+    # options = separate_options(options)
+    known_files = script_paths.get(args.files)
     if known_files:
         return known_files, options
-    files = [tab_complete(a) for a in args]
-    text_files = [textify(f) for f in files]
+    # files = [tab_complete(a) for a in args]
+    text_files = map(textify, map(tab_complete, args.files))
     return text_files, options
 
 
@@ -414,16 +414,20 @@ def strip_puv(args):
     for arg in args:
         if arg in ['--use_debugger', '--version', '--tabs']:
             continue
-        if arg[0] == '-':
-            arg = ''.join([c for c in arg if c not in 'pvU'])
-            if arg == '-':
-                continue
-        result.append(arg)
+        try:
+            dash = arg[0]
+        except IndexError:
+            continue
+        if dash != '-':
+            result.append(arg)
+            continue
+        string = ''.join([_ for _ in arg if _ not in 'pvU'])
+        if string != '-':
+            result.append(string)
     return result
 
 
 def script(args, **kwargs):
-    args = strip_puv(sys.argv[1:])
     script = VimBashScript()
     try:
         text_files, options = interpret(args)
