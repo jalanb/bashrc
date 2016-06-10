@@ -38,7 +38,6 @@ nnoremap <C-F4>     <C-W>c
 "noremap c - start cutting
 "noremap d - delete
 "noremap e - to end of word
-"noremap f - seek key
 "noremap g - many actions
 "noremap h - go left
 "noremap i - insert
@@ -192,6 +191,8 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>b used by plugin/EasyMotion.vim
 "noremap <leader>c 
 "noremap <leader>d 
+ noremap <leader>D ?^\(def \)*[a-z][^ ]* *(.*) *.$
+ noremap <leader>d /^\(def \)*[a-z][^ ]* *(.*) *.$
 "noremap <leader>e used by plugin/EasyMotion.vim
 "noremap <leader>f used by plugin/EasyMotion.vim
 "noremap <leader>g 
