@@ -23,6 +23,7 @@ DIR=~/jab/src/bash
 . $DIR/r.sh
 . $DIR/rf.sh
 . $DIR/run_python.sh
+. $DIR/t.sh
 . $DIR/v.sh
 . $DIR/virtualenvwrapper.sh
 . $DIR/git/__init__.sh
