@@ -98,7 +98,7 @@ v () {
             if [[ -n $script ]]; then
                 if [[ -f "$script" ]]; then
                     bash $script
-                    rr $script
+                    #rr $script
                 else
                     echo $script is not a file >&2
                 fi
@@ -312,8 +312,14 @@ hv () {
 }
 
 j () {
-    dir=~/jab
-    clear; c $dir "$@"
+    (cd ~/jab;
+    "$@")
+}
+
+jj () {
+    (clear;
+    c ~/jab;
+    "$@")
 }
 
 _free_line_here () {
@@ -678,22 +684,27 @@ hub () {
     c ~/hub "$@"
 }
 
-jub () {
-    c ~/hub/../jab "$@"
-    lk
-}
-
 jjb () {
     dir=~/jab/src/bash
     clear; c $dir "$@"
 }
 
+jjj () {
+    (clear;
+    c ~/jab;
+    "$@")
+}
 jjy () {
     ky ~/jab/src/python "$@"
 }
 
 jpm () {
     PYTHONPATH=$PYTHONPATH:~/hub/jpm mython ~/hub/jpm/bin/jpm "$@"
+}
+
+jub () {
+    c ~/hub/../jab "$@"
+    lk
 }
 
 kpj () {
