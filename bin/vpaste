@@ -1,7 +1,5 @@
 #! /bin/bash
 
-# This is the script for an iTerm profile: vim fred
-
 SCRATCH=$HOME/tmp/fred
 /usr/bin/pbpaste > $SCRATCH
 /usr/local/bin/vim $SCRATCH

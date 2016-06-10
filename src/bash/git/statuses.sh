@@ -1,8 +1,8 @@
 #! /bin/bash -x
         
-$_once=1
-$_only_here=0
-$_all_the_way=-1
+_once=1
+_only_here=0
+_all_the_way=-1
 
 _cmd_down () {
     __doc__="Run a \$LEAF_COMMAND down from a dir"

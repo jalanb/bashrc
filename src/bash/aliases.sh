@@ -35,7 +35,7 @@ alias e="ex --noplugin -u ~/.vim/exrc"
 # h is a function
 alias i="i"
 # j is a function
-alias k="k"
+# k is a function
 # l is a function
 alias m="m"
 alias n="n"

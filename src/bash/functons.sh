@@ -70,10 +70,6 @@ h () {
     history | tel "$@"
 }
 
-l () {
-    $LS_PROGRAM
-}
-
 p () {
     local me=$USER
     local here=$(jostname)
@@ -278,16 +274,6 @@ hv () {
     history | vim - +
 }
 
-j () {
-    (cd ~/jab;
-    "$@")
-}
-
-jj () {
-    (clear;
-    c ~/jab;
-    "$@")
-}
 
 _free_line_here () {
     :
@@ -336,10 +322,6 @@ lk () {
     local _header=
     $LS_PROGRAM  --help 2>/dev/null | grep -q -- --group-directories-first && _header=--group-directories-first
     $LS_PROGRAM $_css $_header "$@"
-}
-
-ll () {
-    ls -l  "$@"
 }
 
 lo () {
@@ -489,12 +471,6 @@ vi () {
 
 fi
 
-vj () {
-    (cd ~/jab;
-        v.
-        gsi)
-}
-
 
 vy () {
     v $(ls *.py | grep -v '__*.py*')
@@ -640,22 +616,11 @@ hub () {
 }
 
 jjb () {
-    dir=~/jab/src/bash
-    clear; c $dir "$@"
+    kk ~/jab/src/bash "@"
 }
 
 jjy () {
-    ky ~/jab/src/python "$@"
-}
-
-jpm () {
-    PYTHONPATH=$PYTHONPATH:~/hub/jpm mython ~/hub/jpm/bin/jpm "$@"
-}
-
-jvv () {
-    __doc__="Edit all args in ~/jab/vim"
-    (cd ~/jab/vim;
-    vim -p vimrc "$@")
+    kk ~/jab/src/python "$@"
 }
 
 kpj () {
@@ -705,10 +670,6 @@ lkq () {
 
 lkr () {
     lk -lhtr "$@"
-}
-
-lll () {
-    ll -a "$@"
 }
 
 lib () {
@@ -858,7 +819,7 @@ vbl () {
 
 vfg () {
     _sought="$1" && shift
-    vf "$@" +/$_sought 
+    vf "$@" +/$_sought
 }
 
 vfr () {

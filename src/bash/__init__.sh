@@ -3,23 +3,26 @@
 
 DIR=~/jab/src/bash
 
+. $DIR/tput.sh
 . $DIR/aliases.sh
 . $DIR/asserts.sh
-. $DIR/tput.sh
+. $DIR/first_num.sh
 . $DIR/functons.sh
-. $DIR/jabnet.sh
+. $DIR/github.sh
+. $DIR/hosts.sh
 . $DIR/history.sh
+. $DIR/j.sh
+. $DIR/jabnet.sh
+. $DIR/k.sh
+. $DIR/l.sh
 . $DIR/prompt.sh
+. $DIR/pt.sh
+. $DIR/pym.sh
 . $DIR/repo.sh
 . $DIR/require.sh
 . $DIR/r.sh
 . $DIR/rf.sh
 . $DIR/run_python.sh
-. $DIR/first_num.sh
+. $DIR/v.sh
 . $DIR/virtualenvwrapper.sh
-. $DIR/github.sh
-. $DIR/hosts.sh
-. $DIR/pym.sh
-. $DIR/pt.sh
-. $DIR/pt.sh
 . $DIR/git/__init__.sh
