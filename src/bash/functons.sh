@@ -858,6 +858,12 @@ vtr () {
     mython ~/jab/src/python/vim_traceback.py "$@"
 }
 
+vpr () {
+    _crappy_program_py =$1
+    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
+}
+
+
 VIM () {
     sudo vim "$@"
 }
