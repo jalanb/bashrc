@@ -1,11 +1,6 @@
 #! /bin/cat
 
-<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
 source ~/jab/src/bash/asserts.sh
-=======
-JAB_SH=~/jab/src/bash
-source ~/jab_SH/asserts.sh
->>>>>>> Prefer links to symbols
 
 _assert_directory ~/jab_SH
 
@@ -16,12 +11,7 @@ _source_jab_environ_d () {
 }
 _assert_directory ~/jab_SH/git
 
-<<<<<<< 4e0b7f57388e1a5466d0cbaec1de15a93b0a2d65
 _assert_directory ~/jab/src/dir
-=======
-JAB_SH_GIT=~/jab_SH/git
-_assert_directory ~/jab_SH_GIT
->>>>>>> Prefer links to symbols
 
 _source_jab_environ () {
     _assert_source ~/jab/environ.d/jab.sh

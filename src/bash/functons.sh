@@ -644,11 +644,6 @@ jjb () {
     clear; c $dir "$@"
 }
 
-jjj () {
-    (clear;
-    c ~/jab;
-    "$@")
-}
 jjy () {
     ky ~/jab/src/python "$@"
 }
