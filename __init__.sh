@@ -1,9 +1,5 @@
 #! /bin/cat
 
-JAB=$(dirname "$(readlink -f $BASH_SOURCE)")
-export JAB
-
-
 . ~/hub/what/what.sh
 . ~/jab/src/bash/hub.sh
 . ~/hub/ack2vim/ack2vim.sh

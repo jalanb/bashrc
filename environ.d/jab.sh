@@ -12,8 +12,7 @@ _set_jab () {
 _set_ssh () {
     local home_id=~/.ssh/id_jab
     [[ -f "$home_id" ]] && export JAB_ID=$home_id
-    export JAB_PUB_ID=$JAB_ID.pub
-    export JAB_SSH=$(dirname $JAB_PUB_ID)
+    export JAB_SSH=$(dirname $home_id)
 }
 
 _set_ls_options () {

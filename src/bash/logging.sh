@@ -98,7 +98,7 @@ log_verbose_bashrc () {
         -e up-to-date \
         -e tr.: \
         -e Error..Can.t.open.display \
-        -e sed..e..s.Your.branch..JAB \
+        -e sed..e..s.Your.branch..... \
         -e estimate.py \
         -e ^...-- \
         -e ^..-- \

@@ -5,7 +5,7 @@ Re-format the file list as suitable for a vim list
 Running the script like this
     python vim_traceback.py /path/to/traceback.log
 Or like this
-    python crappy_program.py | python vim_traceback.py
+    python crappy_program.py | python ~/jab/src/python/vim_traceback.py
 
 Will display a vim command to open all files mentioned in the traceback
     That command will open each file in a new tab on the correct line

@@ -11,7 +11,7 @@
 
 ar () { acquire_require; }
 
-# "r*" could mean "require ...", but it already means means "rm ..." 
+# "r*" could mean "require ...", but it already means means "rm ..."
 # so, I'll use "q*"
 
 qh () { ar; [[ -z $1 ]] || require ~/hub/$1; }
@@ -82,16 +82,16 @@ acquire_require () {
 HUB_ACQUIRED=
 require_scripts_under_hub () {
     [[ -n $HUB_ACQUIRED ]] && return;
-	HUB_ACQUIRED=$(date)
-	qh0; qh1; qha; qhk; qhw;
+    HUB_ACQUIRED=$(date)
+    qh0; qh1; qha; qhk; qhw;
 }
 
-JAB_ACQUIRED=
+HAVE_ACQUIRED=
 require_scripts_under_jab () {
 set -x
     require_scripts_under_hub
     [[ -n ~/jab_ACQUIRED ]] && return;
-	JAB_ACQUIRED=$(date)
+    HAVE_ACQUIRED=$(date)
     acquire_require;
     qjedc; qjedo; qjedp;
     qja; qje; qjf; qjh; qjt; qjo; qjr; qjx;
