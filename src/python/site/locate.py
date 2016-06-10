@@ -12,13 +12,12 @@ from fnmatch import fnmatch
 
 
 from repositories import repository
-from dotsite import splits
-from dotsite import paths
+import dotsite as site
 
 
 def _path_to_locate():
     """Location of the locate command on most unixen"""
-    homebrewed_findutils = paths.path('/usr/local/Cellar/findutils/4.4.2/bin/')
+    homebrewed_findutils = site.paths.path('/usr/local/Cellar/findutils/4.4.2/bin/')
     for basename in ('locate', 'glocate'):
         homebrewed_locate = homebrewed_findutils / basename
         if homebrewed_locate.isfile():
@@ -41,7 +40,7 @@ def _locate_regexp_option():
 
 
 def glob_to_regexp(string):
-    parts = splits.split_and_strip_whole(string, '[*?[]')
+    parts = site.splits.split_and_strip_whole(string, '[*?[]')
     if len(parts) == 1:
         if re.match('[*?[]', string[0]):
             parts.insert(0, '')

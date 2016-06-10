@@ -12,6 +12,7 @@ __version__ = '0.1.0'
 
 
 from vim_script import script
+from vim_script import strip_puv
 
 
 class ScriptError(NotImplementedError):
@@ -55,7 +56,7 @@ def parse_args(methods):
     parser.add_argument('-d', '--diff_mode', action='store_true', help='use vimdiff')
     parser.add_argument('-o', '--open', action='store_true', help='Open N windows (default: one for each file)')
     parser.add_argument('-O', '--Orienteering', action='store_true', help='Like -o but split vertically')
-    args = parser.parse_args()
+    args = parser.parse_args(strip_puv(sys.argv))
     run_args(args, methods)
     return args
 

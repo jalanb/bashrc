@@ -5,7 +5,7 @@ import sys
 import tarfile
 
 
-from dotsite.paths import makepath
+import dotsite as site
 
 
 def has_tarball_extension(path):
@@ -34,7 +34,7 @@ def directory_tarballs(paths):
 
 
 def find_tarballs(args):
-    paths = [makepath(a) for a in args]
+    paths = [sites.paths.path(a) for a in args]
     tarballs = [p for p in paths if is_tarball(p)]
     tarballs.extend(directory_tarballs(paths))
     return tarballs
@@ -42,7 +42,7 @@ def find_tarballs(args):
 
 def removable_contents(tarball):
     names = {n.split('/', 1)[0] for n in tarfile.open(tarball).getnames()}
-    paths = [makepath(n) for n in names]
+    paths = [sites.paths.path(n) for n in names]
     return [p for p in paths if p.isfile() or p.isdir()]
 
 

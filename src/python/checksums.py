@@ -13,7 +13,7 @@ import argparse
 from datetime import datetime
 
 from bdb import BdbQuit
-from dotsite import paths
+import dotsite as site
 
 __version__ = '1.0.0'
 
@@ -163,7 +163,7 @@ def new_values(basenames):
     """Get date, size and md5sum for those basenames in $HOME"""
     result = {}
     for basename in basenames:
-        p = paths.home() / basename
+        p = site.paths.home() / basename
         if not p.isfile():
             continue
         size = '%d' % p.size

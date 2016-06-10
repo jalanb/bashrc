@@ -8,8 +8,8 @@
 import os
 import re
 import sys
-from dotsite import paths
-print 'import os, re, sys, paths'
+import dotsite as site
+print 'import os, re, sys, site'
 
 from path import path
 print 'from path import path'

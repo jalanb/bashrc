@@ -8,7 +8,7 @@ import argparse
 from bdb import BdbQuit
 
 
-from dotsite.paths import makepath, pwd
+import dotsite as site
 import freds
 
 
@@ -63,12 +63,12 @@ def get_freds(paths):
     else:
         result = set()
         for path in paths:
-            path = makepath(path)
+            path = sites.paths.path(path)
             if path.isdir():
                 result |= {p for p in path.files('fred*') if p[-1] != '~'}
             elif path.isfile() and path.name.startswith('fred'):
                 result.add(path)
-    return [pwd().relpathto(p) for p in result]
+    return [site.paths.pwd().relpathto(p) for p in result]
 
 
 def script(args):

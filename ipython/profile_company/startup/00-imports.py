@@ -9,10 +9,9 @@ print 'import re'
 import sys
 print 'import sys'
 
-from dotsite.path import path
-print 'from dotsite.path import path'
-from dotsite.paths import makepath
-print 'from dotsite.paths import makepath'
+import dotsite as site
+print 'import dotsite as site'
+
 from see import see
 print 'from see import see'
 from see import see_attributes

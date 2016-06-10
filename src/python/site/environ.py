@@ -1,9 +1,9 @@
 import os
 
-from dotsite.paths import makepath
+import dotsite as site
 
 def read_environ_items():
-    from dotsite.path import path
+    from site.path import path
     jab = path('~/jab').expanduser()
     items = {}
     for environ_file in jab.files('*environ*'):
@@ -60,10 +60,10 @@ def string_to_paths(string):
     for c in ':, ;':
         if c in string:
             return strings_to_paths( string.split(c) )
-    return [ makepath(string) ]
+    return [ sites.paths.path(string) ]
 
 def strings_to_paths(strings):
-    return [ makepath(s) for s in strings ]
+    return [ sites.paths.path(s) for s in strings ]
 
 def split_directories(strings):
     strings = strings_to_paths(strings)

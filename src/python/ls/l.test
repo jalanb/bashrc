@@ -6,12 +6,15 @@ The l module
 More modules for testing
 ========================
     >>> import os
-    >>> from dotsite.path import path
+    >>> import dotsite as site
+    >>> path = site.paths.path
+
 
 Start here
 ==========
 
     >>> os.chdir(path(l.__file__).parent)
+
 
 If that worked, then we can test for these files:
 

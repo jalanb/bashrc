@@ -1,7 +1,7 @@
 """Try to replicate my bash environment"""
 
 
-from dotsite import paths
+import dotsite as site
 
 
 def _environ_dir(name):
@@ -13,7 +13,7 @@ def _environ_dir(name):
     True
     """
     try:
-        result = paths.environ_path(name)
+        result = site.paths.environ_path(name)
     except KeyError:
         return None
     if not (result.isdir() or result.isfile()):
@@ -27,7 +27,7 @@ def _load_environment_paths():
     Put them in module globals
     """
     jab_paths = [
-        'HOME', 'JAB_HOME', 'PYTHON']
+        'HOME', 'PYTHON']
     for _ in jab_paths:
         globals()[_] = _environ_dir(_)
 

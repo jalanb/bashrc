@@ -42,7 +42,8 @@ The l module
     >>> l.remove_ignored(files,sources)
     [<path u'fred.py~'>, <path u'fred.pyc'>, <path u'alan.txt'>]
 
-    >>> from dotsite.path import path
+    >>> import dotsite as site
+    >>> path = site.paths.path
     >>> import  glob_path
     >>> files = l.get_files([glob_path.glob_path('l*.*[yt]')])
 

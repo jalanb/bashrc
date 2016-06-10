@@ -1,6 +1,8 @@
 """A companion module to sys"""
 import sys
-from dotsite.paths import path as Path
+
+
+import dotsite as site
 
 
 paths = []
@@ -10,7 +12,7 @@ def refresh_paths():
     """Refresh the module-level paths"""
     paths[:] = []
     for p in sys.path:
-        paths.append(Path(p))
+        paths.append(site.paths.path(p))
 
 
 def get_refreshed_paths():

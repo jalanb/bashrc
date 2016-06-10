@@ -3,8 +3,8 @@ import argv
 
 
 import ls_colours
-from dotsite.paths import makepath
-from dotsite.term import screen_width
+import dotsite as site
+
 
 argv.add_options([
     ('quiet', 'hide directories, blank lines, etc', False),
@@ -20,7 +20,7 @@ lout_rules = local_rules
 def show_dirs(dirs):
     if argv.options.quiet:
         return
-    here = makepath('.')
+    here = sites.paths.path('.')
     sub_dirs = []
     for Dir in dirs:
         sub_dirs.extend([here.relpathto(p.realpath()) for p in Dir.dirs()])
@@ -29,7 +29,7 @@ def show_dirs(dirs):
 
 
 def pad(out, bands=4):
-    chars_per_band = screen_width() / bands
+    chars_per_band = site.term.screen_width() / bands
     out_chars = len(out)
     out_bands = (out_chars / chars_per_band) + 1
     out_size = out_bands * chars_per_band
@@ -88,6 +88,6 @@ def show(outs):
         column_width = max([len(o) for o in outs]) + 1
     except ValueError:
         return
-    columns_per_line = screen_width() / column_width
+    columns_per_line = site.term.screen_width() / column_width
     padded = ['%-*s' % (column_width, o) for o in outs]
     show_line(padded, columns_per_line)

@@ -5,6 +5,6 @@ import sys
 from pprint import pprint as pp
 
 
-from dotsite import paths
+import dotsite as site
 
 

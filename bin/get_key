@@ -8,7 +8,7 @@ import argparse
 from bdb import BdbQuit
 
 
-from dotsite import getch
+import dotsite as site
 
 
 __version__ = '0.1.0'
@@ -57,10 +57,10 @@ def parse_args(methods):
 
 def script(args):
     if args.codes:
-        print(', '.join(getch.get_codes()))
+        print(', '.join(site.getch.get_codes()))
     else:
         try:
-            print(getch.get_key())
+            print(site.getch.get_key())
         except KeyError as e:
             print(e.message)
     return True

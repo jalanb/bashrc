@@ -4,12 +4,11 @@
 import commands
 
 
-from dotsite.paths import makepath
-from dotsite.paths import PathError
+import dotsite as site
 
 
 def _get_existing_file(path_to_file):
-    result = makepath(path_to_file)
+    result = sites.paths.path(path_to_file)
     if result.isfile():
         return result
     raise ValueError('%s is not a file' % result)
@@ -102,7 +101,7 @@ def _is_working_directory(path):
     try:
         _ = _existing_subversion_sub_directory(path)
         return True
-    except PathError:
+    except site.paths.PathError:
         return False
 
 
@@ -112,7 +111,7 @@ def get_significant_status(path_to_directory):
     Stop if any immediates have a significant status
         otherwise recurse into sub-directories
     """
-    path_to_directory = makepath(path_to_directory)
+    path_to_directory = sites.paths.path(path_to_directory)
     if not path_to_directory.isdir():
         return None
     if not _is_working_directory(path_to_directory):

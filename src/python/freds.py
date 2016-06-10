@@ -10,8 +10,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-
-from dotsite.paths import makepath
+import dotsite as site
 
 
 __version__ = '0.1.0'
@@ -80,7 +79,7 @@ def freds():
 
 
 def paths():
-    return [makepath(_) for _ in freds()]
+    return [sites.paths.path(_) for _ in freds()]
 
 
 def files():

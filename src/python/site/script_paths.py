@@ -4,17 +4,17 @@
 import itertools
 
 
-from dotsite.paths import makepath
+import dotsite as site
 
 
 def get(strings):
-    hub = makepath('~/hub')
-    jab = makepath('~/jab')
+    hub = site.paths.path('~/hub')
+    jab = site.paths.path('~/jab')
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'
     jab_python = jab_src / 'python'
     jab_todo = jab / 'todo.txt'
-    config = makepath('~/.config')
+    config = site.paths.path('~/.config')
     abbreviations = {
         '2': [
             jab_todo,
