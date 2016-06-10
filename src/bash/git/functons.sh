@@ -48,7 +48,7 @@ gs () {
 }
 
 tc () {
-    v ~/.gitconfig +
+    vim ~/.gitconfig +
 }
 
 # xxx
@@ -231,7 +231,7 @@ _gsi_menu () {
 }
 
 _gsi_vim () {
-    _git_modified $f && git dv $f || v $f
+    _git_modified $f && git dv $f || vim $f
 }
 
 _gsi_prompt () {
