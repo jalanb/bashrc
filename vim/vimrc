@@ -241,7 +241,7 @@ set mouse=
 " Screen {{{1
 "
 set background=dark     " My colorscheme works best on a dark background
-colorscheme alan-colour " I have my own colorscheme (usually at ~/.vim/colors/alan-colour.vim
+colorscheme jalanb " I have my own colorscheme (usually at ~/.vim/colors/jalanb.vim
 set title           " the title of the window will be set to filename being edited
 set showmode        " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd         " Show (partial) command in the last line of the screen.
