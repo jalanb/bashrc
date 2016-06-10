@@ -688,16 +688,6 @@ jjb () {
     clear; c $dir "$@"
 }
 
-jjj () {
-# ssh back to the jab.ook (which is my laptop)
-# it goes by different hostnames, try in order of probablity
-    local jjj_host=
-    local jab_ook=${JAB_OOK:-jab.ook}
-    quick_ping jab.ook >/dev/null 2>&1 && jjj_host=jab.ook
-    [[ -z $jjj_host ]] && echo Could not ping jab.ook || ssj jab $jjj_host
-}
-
-
 jjy () {
     ky ~/jab/src/python "$@"
 }

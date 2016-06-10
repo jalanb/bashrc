@@ -23,6 +23,5 @@ _trap_python () {
 
 _trap_jab () {
     [[ -d ~/jab ]] || return 1
-    [[ ! -d ~/jab_LOCAL ]] && JAB_LOCAL=~/jab/local
 }
 

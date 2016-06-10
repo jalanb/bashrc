@@ -1,7 +1,6 @@
 #! /bin/cat
 
-JAB_SH=~/jab/src/bash
-source ~/jab_SH/asserts.sh
+source ~/jab/src/bash/asserts.sh
 
 _assert_directory ~/jab_SH
 
@@ -12,8 +11,7 @@ _source_jab_environ_d () {
 }
 _assert_directory ~/jab_SH/git
 
-JAB_SH_GIT=~/jab_SH/git
-_assert_directory ~/jab_SH_GIT
+_assert_directory ~/jab/src/dir
 
 _source_jab_environ () {
     _assert_source ~/jab/environ.d/jab.sh
