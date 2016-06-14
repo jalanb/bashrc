@@ -850,8 +850,9 @@ xib () {
 
 bump () {
     part=${1:-patch}
-    bumpversion $part
-    git push origin --tags
+    if bumpversion $part; then
+        git push origin --tags
+    fi
     grep current_version .bumpversion.cfg
 }
 
