@@ -9,7 +9,7 @@ set background=dark
 if exists("syntax_on")
   syntax reset
 endif
-let g:colors_name = "alan-colour"
+let g:colors_name = "jalanb"
 
 highlight CursorLine                                      cterm=underline                 guibg=#080808   gui=underline
 highlight StatusLine        ctermfg=Black                 cterm=None       guifg=#000000  guibg=#0000ff   gui=none
