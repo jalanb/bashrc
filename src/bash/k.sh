@@ -1,8 +1,7 @@
 #! /bin/cat
 
 k () {
-    (cd $1; shift
-    "$@")
+    (cd $1; shift; "$@")
 }
 
 kk () {
