@@ -2,6 +2,7 @@
 
 
 DIR=~/jab/src/bash
+[[ -n $WELCOME_BYE ]] && echo Welcome to $DIR
 
 . $DIR/tput.sh
 . $DIR/aliases.sh
@@ -27,3 +28,5 @@ DIR=~/jab/src/bash
 . $DIR/v.sh
 . $DIR/virtualenvwrapper.sh
 . $DIR/git/__init__.sh
+
+[[ -n $WELCOME_BYE ]] && echo Bye from $DIR

@@ -9,6 +9,7 @@ if [[ $- =~ i ]]; then
     export PATH=$LOCALS:$BINS:$HOMES
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 
+    WELCOME_BYE=
     source ~/jab/__init__.sh
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "
