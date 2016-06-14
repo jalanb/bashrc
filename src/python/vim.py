@@ -57,6 +57,7 @@ def parse_args(methods):
     parser.add_argument('-o', '--open', action='store_true', help='Open N windows (default: one for each file)')
     parser.add_argument('-O', '--Orienteering', action='store_true', help='Like -o but split vertically')
     args = parser.parse_args(strip_puv(sys.argv))
+    args.files = set(args.files)
     run_args(args, methods)
     return args
 

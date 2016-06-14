@@ -358,20 +358,21 @@ def separate_options(strings):
 
 def interpret(args):
     """Interpret the args from a command line"""
-    # options, args = divide(args, is_option)
-    # options = separate_options(options)
-    known_files = script_paths.get(args.files)
+    options, not_options = divide(sys.argv, is_option)
+    options = separate_options(options)
+    files = {tab_complete(a) for a in not_options}
+    known_files = script_paths.get(files)
     if known_files:
         return known_files, options
-    # files = [tab_complete(a) for a in args]
-    text_files = map(textify, map(tab_complete, args.files))
+    text_files = map(textify, map(tab_complete, files))
     return text_files, options
 
 
 def _main_options(text_files, options):
-    if len(text_files) > 1 and '-p' not in options:
-        options.insert(0, '-p')
-    return quote_finds(options)
+    dashed = [str('-%s' % _) for _ in options]
+    if len(text_files) > 1 and '-p' not in dashed:
+        dashed.insert(0, '-p')
+    return quote_finds(dashed)
 
 
 def _main_command(executable, text_files, options):
