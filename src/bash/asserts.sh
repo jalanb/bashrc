@@ -113,7 +113,7 @@ _assert_github () {
 }
 
 _assert_what_executable () {
-    what $1
+    what -q $1
 }
 
 _assert_what_executable which
