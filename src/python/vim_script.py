@@ -358,7 +358,7 @@ def separate_options(strings):
 
 def interpret(args):
     """Interpret the args from a command line"""
-    options, not_options = divide(sys.argv, is_option)
+    options, not_options = divide(sys.argv[1:], is_option)
     options = separate_options(options)
     files = {tab_complete(a) for a in not_options}
     known_files = script_paths.get(files)
