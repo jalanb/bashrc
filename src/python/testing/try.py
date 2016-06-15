@@ -54,7 +54,7 @@ def show(thing):
     return pprint(thing)
 
 
-class Test_Being_Run(object):
+class TestBeingRun(object):
     """Encapsulation of the current test"""
     def __init__(self, that):
         self.here = sites.paths.path('.')
@@ -178,7 +178,7 @@ def test_file(test_script, options):
         optionflags=get_doctest_options(options),
         module_relative=False,
         globs = {
-            'test' : Test_Being_Run(test_script),
+            'test' : TestBeingRun(test_script),
             'sys' : sys,
             'see' : see,
             'spread' : spread,
