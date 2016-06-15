@@ -849,8 +849,9 @@ xib () {
 # xxxx
 
 bump () {
-    part=${1:-patch}
-    if bumpversion $part; then
+    local _part=
+    [[ -z $* ]] && part=patch
+    if bumpversion "$@" $part; then
         git push origin --tags
     fi
     grep current_version .bumpversion.cfg
