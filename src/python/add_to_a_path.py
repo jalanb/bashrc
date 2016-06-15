@@ -102,7 +102,6 @@ def _add_symbol_to_paths(paths, symbol, i):
         i = len(paths)
     result = paths[:]
     if symbol:
-        j = lambda x, y: x.index(y) if y in x else -1
         if symbol not in result:
             result.insert(i, symbol)
         else:

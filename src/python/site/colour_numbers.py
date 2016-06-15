@@ -59,7 +59,9 @@ def ansi_to_red_green_blue(ansi):
 
 
 def red_green_blue_to_integer(red, green, blue):
-    assert 0 <= red < 256 and 0 <= blue < 256 and 0 <= green < 256
+    assert 0 <= red < 256
+    assert 0 <= blue < 256
+    assert 0 <= green < 256
     return (red << 16) + (green << 8) + blue
 
 
@@ -163,5 +165,5 @@ def ansi_to_html(ansi):
 
 
 def name_to_number(name):
-    cga_names = dict([(s, i) for i, s in enumerate(colour_names.cga())])
-    return cga_names.get(name, None)
+    cga_names = {s: i for i, s in enumerate(colour_names.cga())}
+    return cga_names.get(name)

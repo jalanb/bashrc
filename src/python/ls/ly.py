@@ -5,9 +5,9 @@ import lout
 
 
 try:
-    Any = any
+    any_ = any
 except NameError:
-    def Any(x):
+    def any_(x):
         return [a for a in x if a]
 
 
@@ -70,7 +70,7 @@ def _filter_names(names):
     remove = []
     for name, files in names.iteritems():
         wanted_files = [f for f in files if _python_wanted(f)]
-        if not Any(wanted_files):
+        if not any_(wanted_files):
             remove.append(name)
         else:
             names[name] = wanted_files

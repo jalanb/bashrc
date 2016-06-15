@@ -25,11 +25,10 @@ def run_args(args, methods):
         method(args)
 
 
-_invert = False
+_invert = [False]
 
 def Invert(_args):
-    global _invert
-    _invert = True
+    _invert[0] = True
 
 
 def Use_debugger(_args):
@@ -82,7 +81,7 @@ def _extract_first_digit(items):
 
 def script(args):
     digit, others = _extract_first_digit(args)
-    if _invert:
+    if _invert[0]:
         print(' '.join(others))
         return True
     if digit is not None:

@@ -104,9 +104,9 @@ class DoctestMagic(Magics):
                 raise AttributeError(str(e).replace(
                     "'module' object", "doctest module"))
         globs = self.shell.user_ns
-        RunnerClass = doctest.DebugRunner if args.stop else \
+        runner_class = doctest.DebugRunner if args.stop else \
                       doctest.DocTestRunner
-        runner = RunnerClass(verbose=verbose, optionflags=optionflags)
+        runner = runner_class(verbose=verbose, optionflags=optionflags)
         if args.file:
             text, filename = _load_testfile(obj)
             parser = doctest.DocTestParser()
@@ -188,9 +188,8 @@ class DoctestMagic(Magics):
 
 def load_ipython_extension(ip):
     """Load the extension in IPython."""
-    global _loaded
-    if not _loaded:
+    if not _loaded[0]:
         ip.register_magics(DoctestMagic)
-        _loaded = True
+        _loaded[0] = True
 
-_loaded = False
+_loaded = [False]

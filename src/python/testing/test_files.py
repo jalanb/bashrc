@@ -98,7 +98,7 @@ def _get_path_stems(strings, recursive):
 
 def add_sub_dirs(paths):
     """Add all sub-directories for the directories of the paths"""
-    dirs = set([p.directory() for p in paths])
+    dirs = {p.directory() for p in paths}
     result = dirs.copy()
     for path_to_dir in dirs:
         for sub_dir in path_to_dir.walkdirs():

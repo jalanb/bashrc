@@ -234,7 +234,7 @@ def read_sys_dirs():
 
 def all_directories_in_a_list_of_tags(tags):
     """Get a sorted list of all the directories mentioned in the given list of tags"""
-    return sorted(list(set([home().relpathto(t.path.parent) for t in tags])))
+    return sorted({home().relpathto(t.path.parent) for t in tags})
 
 
 def main():

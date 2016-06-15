@@ -69,7 +69,7 @@ def is_svn_path(path):
 
 def has_svn_path(paths):
     """Whether one of those paths is to a subversion sub-directory"""
-    return any([is_svn_path(p) for p in paths])
+    return any(is_svn_path(p) for p in paths)
 
 
 def _get_immediately_significant_status(path_to_dir):

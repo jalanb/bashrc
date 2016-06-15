@@ -266,7 +266,7 @@ def main(main_method, ctrl_c = None, no_args = False):
     Set no_args to True to stop parsing of command line args
     """
     if type(main_method) == type(main):
-        Globals = main_method.func_globals
+        globals_ = main_method.func_globals
     else:
         raise RuntimeError('%s is not a method' % main_method)
     if not no_args:
@@ -275,9 +275,9 @@ def main(main_method, ctrl_c = None, no_args = False):
     methods = []
     for name in _ordered_options:
         try:
-            Global = Globals[name]
-            if callable(Global) and getattr(options, name):
-                methods.append(Global)
+            global_ = globals_[name]
+            if callable(global_) and getattr(options, name):
+                methods.append(global_)
         except KeyError:
             pass
     import sys

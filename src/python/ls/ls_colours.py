@@ -58,7 +58,7 @@ def _get_extension_colour(ext):
         return ''
     ext = ext[0] == '.' and ext or str('.%s' % ext)
     ext_colours, _ = load_ls_colours()
-    return ext_colours.get(ext, None)
+    return ext_colours.get(ext)
 
 
 def _colourize(string, getter):

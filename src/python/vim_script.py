@@ -369,10 +369,11 @@ def interpret(args):
 
 
 def _main_options(text_files, options):
-    dashed = [str('-%s' % _) for _ in options]
+    plussed = [_ for _ in options if _[0] == '+']
+    dashed = [str('-%s' % _) for _ in options if _ not in plussed]
     if len(text_files) > 1 and '-p' not in dashed:
         dashed.insert(0, '-p')
-    return quote_finds(dashed)
+    return quote_finds(dashed + plussed)
 
 
 def _main_command(executable, text_files, options):

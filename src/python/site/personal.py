@@ -130,7 +130,7 @@ def path_in_localhost(filename):
     >>> print path_in_localhost('fred.html')
     /.../Sites/mail/fred.html
     """
-    mail_site = os.environ.get('MAIL_SITE_DIRECTORY', None)
+    mail_site = os.environ.get('MAIL_SITE_DIRECTORY')
     if not mail_site:
         sites = os.path.join(os.path.expanduser('~'), 'Sites')
         mail_site = join_mail_site(sites)

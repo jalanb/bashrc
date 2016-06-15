@@ -51,8 +51,7 @@ def read_configuration():
     if not os.path.isfile(path):
         return default_options()
     parser.read(path)
-    options = dict([
-        (key, has_true(value)) for key, value in parser.items('options')])
+    options = {k: has_true(v) for k, v in parser.items('options')}
     globs = dict(parser.items('globs'))
     return options, globs
 

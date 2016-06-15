@@ -114,8 +114,7 @@ def sent_to_address(message, sought):
 
 
 def sent_to_addresses(message, receivers):
-    return any(
-        [sent_to_address(message, receiver) for receiver in receivers])
+    return any(sent_to_address(message, receiver) for receiver in receivers)
 
 
 def sent_to_receivers_at_personal_domain(message, receivers):
@@ -209,7 +208,7 @@ def sent_by_addresses(message, addresses):
 
 def has_email(addresses, regexp):
     for name, address in addresses:
-        if regexp == name or regexp == address:
+        if regexp in (name, address):
             return True
         try:
             if regexp.match(name) or regexp.match(address):
