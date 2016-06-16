@@ -11,9 +11,6 @@ from bdb import BdbQuit
 __version__ = '0.1.0'
 
 
-from dotsite.lists import de_duplicate
-
-
 from vim_script import script
 from vim_script import strip_puv
 
@@ -46,7 +43,12 @@ def use_debugger(_args):
 
 
 def parse_args(methods):
-    """Parse out command line arguments"""
+    """Parse out command line arguments
+
+    The parsed args are not actually used, except for running -U and -v
+    The main script interprets sys.argv itself
+        (Some args for here, some for vim)
+    """
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('files', metavar='files', type=str, nargs='+',
                         help='files to edit')
@@ -59,8 +61,7 @@ def parse_args(methods):
     parser.add_argument('-d', '--diff_mode', action='store_true', help='use vimdiff')
     parser.add_argument('-o', '--open', action='store_true', help='Open N windows (default: one for each file)')
     parser.add_argument('-O', '--Orienteering', action='store_true', help='Like -o but split vertically')
-    args = parser.parse_args(strip_puv(sys.argv))
-    args.files = de_duplicate(args.files)
+    args = parser.parse_args()
     run_args(args, methods)
     return args
 
@@ -68,7 +69,8 @@ def parse_args(methods):
 def main():
     """Run the program"""
     try:
-        return script(parse_args(globals()))
+        _ = parse_args(globals())
+        return script()
     except BdbQuit:
         pass
     except SystemExit as e:

@@ -359,9 +359,9 @@ def separate_options(strings):
     return result
 
 
-def interpret(args):
+def interpret_sys_argv():
     """Interpret the args from a command line"""
-    options, not_options = divide(sys.argv[1:], is_option)
+    options, not_options = divide(strip_puv(sys.argv[1:]), is_option)
     options = separate_options(options)
     files = de_duplicate([tab_complete(a) for a in not_options])
     known_files = script_paths.get(files)
@@ -432,10 +432,10 @@ def strip_puv(args):
     return result
 
 
-def script(args, **kwargs):
+def script():
     script = VimBashScript()
     try:
-        text_files, options = interpret(args)
+        text_files, options = interpret_sys_argv()
         if not text_files and not options:
             script.add('$VIM_EDITOR')
             print script.write()
