@@ -11,6 +11,9 @@ from bdb import BdbQuit
 __version__ = '0.1.0'
 
 
+from dotsite.lists import de_duplicate
+
+
 from vim_script import script
 from vim_script import strip_puv
 
@@ -57,7 +60,7 @@ def parse_args(methods):
     parser.add_argument('-o', '--open', action='store_true', help='Open N windows (default: one for each file)')
     parser.add_argument('-O', '--Orienteering', action='store_true', help='Like -o but split vertically')
     args = parser.parse_args(strip_puv(sys.argv))
-    args.files = set(args.files)
+    args.files = de_duplicate(args.files)
     run_args(args, methods)
     return args
 

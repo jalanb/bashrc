@@ -9,6 +9,9 @@ import commands
 import tempfile
 
 
+from dotsite.lists import de_duplicate
+
+
 import script_paths
 
 
@@ -360,7 +363,7 @@ def interpret(args):
     """Interpret the args from a command line"""
     options, not_options = divide(sys.argv[1:], is_option)
     options = separate_options(options)
-    files = {tab_complete(a) for a in not_options}
+    files = de_duplicate([tab_complete(a) for a in not_options])
     known_files = script_paths.get(files)
     if known_files:
         return known_files, options
