@@ -324,6 +324,10 @@ lk () {
     $LS_PROGRAM $_css $_header "$@"
 }
 
+ll () {
+    ls -l  "$@"
+}
+
 lo () {
     locate "$@"
 }
