@@ -20,7 +20,7 @@ lout_rules = local_rules
 def show_dirs(dirs):
     if argv.options.quiet:
         return
-    here = sites.paths.path('.')
+    here = site.paths.path('.')
     sub_dirs = []
     for Dir in dirs:
         sub_dirs.extend([here.relpathto(p.realpath()) for p in Dir.dirs()])
