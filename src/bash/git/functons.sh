@@ -42,6 +42,10 @@ gi () {
     git "$@"
 }
 
+gp () {
+    git push "$@"
+}
+
 gs () {
     shift_dir "$@" && shift
     _do_git_status $dir "$@"
