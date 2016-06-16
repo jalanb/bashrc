@@ -74,8 +74,6 @@ alias se="source ~/jab/environ.d/jab.sh"
 alias sf="source ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
-alias yy="y $PYTHON_HOME"
-
 alias z.="zm \*"
 
 # xxx

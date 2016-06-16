@@ -176,7 +176,7 @@ cv () {
 }
 
 cy () {
-    [[ -n $PYTHON_HOME ]] && c $PYTHON_HOME || echo "\$PYTHON_HOME not set"
+    c ~/jab/src/python
 }
 
 gf () {
@@ -281,7 +281,7 @@ _free_line_here () {
 
 ky () {
     shift_dir "$@" && shift
-    dir=${dir:-$PYTHON_HOME}
+    dir=${dir:-~/jab/src/python}
     kd $dir "$@"
     y .
 }
@@ -461,6 +461,10 @@ xe () {
 
 sq () {
     . $GIT_BUCKET/qaz/src/bash/qazrc
+}
+
+yy () {
+    y ~/jab/src/python
 }
 
 zm () {

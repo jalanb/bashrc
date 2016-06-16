@@ -23,7 +23,7 @@ if [[ $- =~ i ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 
     # set -x
-    j
+    c jab
     # set +x
     sp
     # clock # fucks with terminal, leave off

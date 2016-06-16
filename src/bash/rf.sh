@@ -3,7 +3,6 @@
 _re_source () {
     SRC_BASH=$(dirname $(readlink -f $BASH_SOURCE)) && export SRC_BASH  # ; echo "SRC_BASH = $SRC_BASH"
     BASH_DIR=$(dirname $SRC_BASH) && export BASH_DIR # ; echo "BASH_DIR = $BASH_DIR"
-    SRC_PYTHON=$BASH_DIR/python && export SRC_PYTHON # ; echo "SRC_PYTHON = $SRC_PYTHON"
 }
 
 # x
@@ -15,7 +14,7 @@ rd () {
 }
 
 rf () {
-    $SRC_PYTHON/rf.py "$@"
+    ~/jab/src/python/rf.py "$@"
 }
 
 rq () {
