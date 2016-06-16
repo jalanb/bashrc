@@ -33,8 +33,6 @@ source_path ~/jab/bin/add_to_a_path.sh
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
 export PYTHONPATH=~/jab/src/python/site$suffix
 
-_has_py ~/src/python && add_to_a_path _SRC_PYTHON_PATH ~/src/python
-_has_py ~/jab/src/python && add_to_a_path _SRC_PYTHON_PATH ~/jab/src/python
 export PYTHON_SOURCE_PATH=~/jab/src/python:~/src/python
 [[ -f "~/jab/src/python/pythonrc.py" ]] && export PYTHONSTARTUP=~/jab/src/python/pythonrc.py
 
