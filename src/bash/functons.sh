@@ -852,6 +852,10 @@ xib () {
 
 # xxxx
 
+brew () {
+    GIT= /usr/local/bin/brew "$@"
+}
+
 bump () {
     local _part=
     [[ -z $* ]] && part=patch
