@@ -87,7 +87,7 @@ v () {
 # xx
 
 vv () {
-    [[ -n $* ]] && vvu || vvv "$@"
+    [[ -z $* ]] && vvu || vvv "$@"
 }
 
 # xxx
@@ -115,8 +115,8 @@ vvy () {
 
 vvu () {
     __doc__="Edit ~/jab/vim files and ~/vim files if different"
-    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
-    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
+    local _vimrc="$HOME/jab/vim/vimrc"; diff -q $HOME/.vimrc $_vimrc || _vimrc="$HOME/.vimrc $_vimrc"
+    local _vim="$HOME/jab/vim"; diff -qr $HOME/.vim $_vim >/dev/null || _vim="$HOME/.vim $_vim"
     vvv $_vimrc $_vim "$@"
 }
 
