@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-
+(set -x
 if [[ $- =~ i ]]; then
     LOCAL=/usr/local
     [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCAL/bin" || LOCALS="$LOCAL/bin"
@@ -28,3 +28,4 @@ if [[ $- =~ i ]]; then
     sp
     # clock # fucks with terminal, leave off
 fi
+) > /Users/jab/bashrc.log 2>&1
