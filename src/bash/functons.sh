@@ -12,7 +12,7 @@
 
 
 /. () {
-    c . "$@"
+    cc "$@"
 }
 
 b () {
@@ -24,18 +24,14 @@ b () {
 }
 
 c () {
-    kd "$@"
-    local c_result="$?"
-    if [[ $c_result == "0" ]]; then
-        _show_todo_here
-        echo
-        echo
-        echo
-        show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
-        echo
-        git_simple_status $(pwd) || lk
-    fi
-    return $c_result
+    kd "$@" || return 1
+    _show_todo_here
+    echo
+    echo
+    echo
+    show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
+    echo
+    git_simple_status $(pwd) || lk
 }
 
 f () {
@@ -68,6 +64,10 @@ g () {
 
 h () {
     history | tel "$@"
+}
+
+l () {
+    $LS_PROGRAM
 }
 
 p () {
@@ -131,16 +131,8 @@ bd () {
     . ~/jab/src/bash/bd.sh -s "$@"
 }
 
-db () {
-    ww $1;
-    w $1;
-    if is_existing_function $1; then
-        (set -x; "$@")
-    elif is_existing_alias $1; then
-        (set -x; "$@")
-    else
-        bash -x "$@"
-    fi
+dp () {
+    PYTHON_DEBUGGING=1 db "$@"
 }
 
 IP () {
@@ -158,16 +150,25 @@ IP () {
     done
 }
 
-c. () {
+cc () {
+    local __doc__="There's always gcc, on the off chance it's needed"
     c . "$@"
+}
+
+cb () {
+    c ~/bash/
+}
+
+ch () {
+    c ~/hub/
+}
+
+cj () {
+    c ~/jab/
 }
 
 cl () {
     c "$@" && lk
-}
-
-cn () {
-    cat -n "$@"
 }
 
 cv () {
@@ -176,7 +177,7 @@ cv () {
 }
 
 cy () {
-    c ~/jab/src/python
+    c ~/python/
 }
 
 gf () {
@@ -325,7 +326,7 @@ lk () {
 }
 
 ll () {
-    ls -l  "$@"
+    lk -l  "$@"
 }
 
 lo () {
@@ -449,6 +450,24 @@ vi () {
 
 fi
 
+vj () {
+    (cd ~/jab;
+        v.
+        gsi)
+}
+
+
+vu () {
+    __doc__="Edit vim files in ~/jab. Add home vim files if different"
+    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
+    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
+    vim -p $_vimrc $_vim
+}
+
+vv () {
+    local __doc__="Edit vim files"
+    [[ -n $* ]] && vu || vva "$@"
+}
 
 vy () {
     v $(ls *.py | grep -v '__*.py*')
@@ -1378,9 +1397,135 @@ _edit_source () {
 
 _edit_jab () {
     if [[ -z ~/jab ]]; then
-        echo \~/jab is empty >&2
+        echo ~/jab is empty >&2
     else
-        [[ -d "~/jab" ]] || mkdir -p $JAB
+        [[ -d "~/jab" ]] || mkdir -p ~/jab
+        local filepath=~/jab/$1
+        shift
+        _edit_source $filepath "$@"
+    fi
+}
+
+_edit_locals () {
+    local local_dir=~/jab/local
+    [[ -d "$local_dir" ]] || mkdir -p $local_dir
+    _edit_source $local_dir/$1
+}
+
+_divv_get_difference () {
+    local source_gitignore=
+    [[ -f "$source_dir/.gitignore" ]] && source_gitignore="--exclude-from=$source_dir/.gitignore"
+    local destination_gitignore=
+    [[ -f "$destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
+    diff -q -r \
+        --exclude=.svn \
+        --exclude=.git \
+        --exclude=.DS_Store \
+        --exclude="*.fail" \
+        --exclude="*.py[co]" \
+        --exclude=tags \
+        --exclude=".*sw[po]" \
+        --exclude=tmp \
+        --exclude="*~" \
+        --exclude="*.beam" \
+        --exclude="*.a" \
+        --exclude="*.o" \
+        --exclude=.gitignore \
+        $source_gitignore \
+        $destination_gitignore \
+    "$source_dir" "$destination_dir" 2>/dev/null
+}
+#! /bin/cat
+
+# set -e
+
+. ~/jab/bin/first_dir.sh
+
+# Called functons.sh because "functions" is ... something else
+
+# sorted by strcmp of function name
+
+# x
+
+
+/. () {
+    c . "$@"
+}
+
+b () {
+    if [[ -f ./build.sh ]]; then
+        bash ./build.sh
+    elif [[ -f Makefile ]]; then
+        make
+    fi
+}
+
+c () {
+    kd "$@"
+    local c_result="$?"
+    if [[ $c_result == "0" ]]; then
+        _show_todo_here
+        echo
+        echo
+        echo
+        show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
+        echo
+        git_simple_status $(pwd) || lk
+    fi
+    return $c_result
+}
+
+f () {
+    local _arg_1=$1
+    if [[ $_arg_1 == "-name" ]]; then
+        echo "Do not use '-name'" >&2
+        shift
+    fi
+    local _argc=${#*}
+    dir=
+    if [[ $_argc > 1 ]]; then
+        shift_dir "$@" && shift
+    elif [[ -z $dir ]]; then
+        dir=$(pwd)
+    fi
+    local name=$1
+    shift
+    local old_ifs=$IFS
+    IFS=";"
+    for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
+    do
+        relpath -s $FOUND
+    done
+    IFS=$old_ifs
+}
+
+g () {
+    $(which grep) --color "$@"
+}
+
+h () {
+    shift
+    blank_script $filepath
+    filedir=$(dirname $filepath)
+    if [[ $filedir == "." ]]; then
+        v $filepath
+    else
+        pushd $filedir >/dev/null 2>&1
+        v $filepath
+        popd >/dev/null 2>&1
+    fi
+    if echo $filepath | grep -q alias; then
+        source_aliases $filepath
+    else
+        source_path $filepath "$@"
+    fi
+}
+
+_edit_jab () {
+    if [[ ! -d ~/jab ]]; then
+        echo ~/jab is not a dir >&2
+    else
+        [[ -d ~/jab ]] || mkdir -p ~/jab
         local filepath=~/jab/$1
         shift
         _edit_source $filepath "$@"
