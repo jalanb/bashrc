@@ -500,6 +500,10 @@ add () {
     echo $(($1 + $2))
 }
 
+can () {
+    cat -n "$@"
+}
+
 cib () {
     cn ~/.bashrc
 }
@@ -522,30 +526,14 @@ cls () {
     clear
     if [[ -n "$@" ]]; then
         lk "$@"
-        return 0
+    else
+        ld $(pwd)
+        echo
     fi
-    ld $(pwd)
-    echo
 }
 
 ddg () {
     firefox "https://next.duckduckgo.com/?q=$*"
-}
-
-dev () {
-    if [[ -d "~/dev" ]]; then
-        echo ~/dev exists
-        echo
-        here=$PWD
-        cd ~/dev
-        lk
-        cd $here
-        echo You may wish to try
-        echo "    mv ~/dev/* ~/src; rm -rf ~/dev"
-    fi
-    [[ ! -d "~/src" ]] && mkdir ~/src
-    c ~/src "$@"
-    lk
 }
 
 fcc () {
@@ -560,13 +548,10 @@ fgg () {
     fgv *.py "$@"
 }
 
-ftt () {
+fgt () {
     fgv *.test *.tests "$@"
 }
 
-fss () {
-# run fred.sh if it exists here or in ~/tmp
-    $(freds -s "$@")
 }
 
 frd () {
@@ -888,17 +873,13 @@ bump () {
     grep current_version .bumpversion.cfg
 }
 
+calf () {
+    cat ~/jab/local/functons.sh
+}
+
 down () {
     c ~/Download* "$@"
     lr -a
-}
-
-fynd () {
-    shift_dir "$@" && shift
-    local _level=2
-    . ~/jab/src/bash/functons.sh
-    #sudo find $dir -maxdepth $_level -type f -exec $(which grep) -nH --color "$@" {} \; 2>&1 | sed -e /Binary.file/d -e /YouCompleteMe/d -e /.git/d 2>/dev/null
-    sudo find $dir -maxdepth 2 -name .git -prune -o -type f -exec /bin/grep -nH --color "$@" {} \; | sed -e 's/.home.alanb.src.git.hub.jab/~/jab/' | g "$@"
 }
 
 lkra () {

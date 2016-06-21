@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-(set -x
+set -x
 if [[ $- =~ i ]]; then
     LOCAL=/usr/local
     [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCAL/bin" || LOCALS="$LOCAL/bin"
@@ -16,8 +16,8 @@ if [[ $- =~ i ]]; then
 
     vbb () {
         (cd ~/jab
-        vim -p ~/.bashrc ~/hub/jab/__init__.sh "$@" +/bash
-        ls -l ~/.bashrc ~/hub/jab/__init__.sh)
+        vim -p ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log "$@" +/bash
+        ls -l ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log)
     }
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "
@@ -27,5 +27,5 @@ if [[ $- =~ i ]]; then
     # set +x
     sp
     # clock # fucks with terminal, leave off
-fi
-) > /Users/jab/bashrc.log 2>&1
+fi > ~/bashrc.log 2>&1
+set +x
