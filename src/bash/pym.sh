@@ -16,7 +16,6 @@
 # Other environment variables:
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
-. ~/hub/what/what.sh
 . ~/jab/local/environ.sh
 
 workon_pym () {
