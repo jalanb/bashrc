@@ -288,6 +288,10 @@ ky () {
 }
 
 
+lo () {
+    locate "$@"
+}
+
 l1 () {
     lk -1tr "$@"
 }
@@ -416,6 +420,32 @@ ru () {
     else
         sudo "$@"
     fi
+}
+
+tm () {
+    if [[ -z $1 ]]; then SESSION=$(jostname)
+    else
+        SESSION=$1
+        shift
+    fi
+    ! tmux attach-session -t $SESSION "$@" && tmux new-session -s $SESSION "$@"
+}
+
+tf () {
+    [[ $? -eq 0 ]] && echo "true" || echo "false"
+}
+
+tt () {
+    if echo $1 | grep -q "gz$"; then
+        contents=tz
+        extract=xz
+    else
+        contents=t
+        extract=x
+    fi
+    tar ${extract}f $1
+    c $(tar ${contents}f $1 | hd1)
+    ra
 }
 
 v. () {
@@ -548,10 +578,26 @@ fgg () {
     fgv *.py "$@"
 }
 
+fgp () {
+    fgv *.py "$@"
+}
+
 fgt () {
     fgv *.test *.tests "$@"
 }
 
+fll () {
+    $(freds -l)
+}
+
+fpu () {
+# debug fred.py if it exists here or in ~/tmp
+    $(freds -d "$@")
+}
+
+fpy () {
+# run fred.py if it exists here or in ~/tmp
+    $(freds -p "$@")
 }
 
 frd () {
@@ -564,6 +610,19 @@ frr () {
     $(freds -p "$@")
 }
 
+fsh () {
+# run fred.sh if it exists here or in ~/tmp
+    $(freds -s "$@")
+}
+
+fss () {
+# run fred.sh if it exists here or in ~/tmp
+    $(freds -s "$@")
+}
+
+ftt () {
+    fgv *.test *.tests "$@"
+}
 ght () {
     gh "$@" | tel
 }
@@ -610,7 +669,7 @@ jjy () {
 }
 
 kpj () {
-    rsync -a -e \"ssh -i ~/jab_ID\"
+    rsync -a -e \"ssh -i ~/.ssh/jab_id\"
 }
 
 l1d () {
@@ -836,6 +895,10 @@ vlo () {
     v $(locate "$@")
 }
 
+vff () {
+    $(freds -e "$@")
+}
+
 vpe () {
     _edit_jab environ.d/python
 }
@@ -849,6 +912,9 @@ vpr () {
     python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
+vtr () {
+    mython ~/jab/src/python/vim_traceback.py "$@"
+}
 
 VIM () {
     sudo vim "$@"
