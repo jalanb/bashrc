@@ -931,12 +931,19 @@ brew () {
 }
 
 bump () {
-    local _part=
-    [[ -z $* ]] && part=patch
-    if bumpversion "$@" $part; then
-        git push origin --tags
+    local _part=${1:-patch}
+    if [[ $_part != show ]]; then
+        if bumpversion "$@" $_part; then
+            git push origin --tags
+        fi
     fi
-    grep current_version .bumpversion.cfg
+    local _config=.bumpversion.cfg 
+    local _sought=current_version
+    if [[ $_part == show ]]; then
+        grep $_sought $_config
+    else
+        grep $_sought $_config 2>/dev/null
+    fi
 }
 
 calf () {
