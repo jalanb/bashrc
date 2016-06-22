@@ -132,7 +132,7 @@ bd () {
 }
 
 dp () {
-    PYTHON_DEBUGGING=1 db "$@"
+    (PYTHON_DEBUGGING=-U db "$@")
 }
 
 IP () {

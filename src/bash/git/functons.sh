@@ -101,7 +101,7 @@ gcp () {
 }
 
 gdi () {
-    git di "$@"
+    git di "$@" | lesser
 }
 
 gdh () {
