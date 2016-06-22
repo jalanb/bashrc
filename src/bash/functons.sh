@@ -17,6 +17,10 @@
 # x
 
 
+,. () {
+    c . "$@"
+}
+
 b () {
     if [[ -f ./build.sh ]]; then
         bash ./build.sh
