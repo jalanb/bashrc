@@ -70,15 +70,6 @@ l () {
     $LS_PROGRAM
 }
 
-p () {
-    local me=$USER
-    local here=$(jostname)
-    export PYTHON=${PYTHON:-mython}
-    console_title_on "mython@${here}" && \
-        $PYTHON "$@" && \
-        console_title_off "${me}@${here}"
-}
-
 q () {
     exit 0
 }
@@ -1318,6 +1309,15 @@ blank_script () {
 }
 
 # xxxxxxxxxxxxx
+
+console_hello () {
+    local me=$USER
+    local here=$(jostname)
+    export PYTHON=${PYTHON:-mython}
+    console_title_on "mython@${here}" && \
+        $PYTHON "$@" && \
+        console_title_off "${me}@${here}"
+}
 
 one_two_three () {
     clear

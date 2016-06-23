@@ -36,18 +36,29 @@ what_ww () {
 }
 
 
+what_wwm () {
+    [[ $_type == python ]] && pudb "$@"
+    [[ $_type == shell ]] && bash -x "$@"
+}
+
 what_www () {
 . ~/hub/what/what.sh
     (DEBUGGING=www
     ww $1;
     w $1;
+    local _type=
+    [[ $* =~ \.py ]] && _type=python
+    file "$@" | grep -q [pP]ython && _type=python
+    [[ $* =~ \.sh ]] && _type=shell
+    file "$@" | grep -q [sS]hell && _type=python
     if is_existing_function $1; then
         (set -x; "$@")
     elif is_existing_alias $1; then
         (set -x; "$@")
+    elif file $(!!)  | grep -q -e script -e text; then
+        what_wwm "$@"
     else
-        [[ $* =~ \.py ]] && PYTHON_DEBUGGING=-U
-        bash -x "$@"
+        echo 0
     fi)
 }
 
@@ -64,20 +75,15 @@ ws () {
 }
 
 ww () {
-    w "$@"
-    what_w "$@"
+    what_ww "$@"
+    what_w "$1"
 }
 
 # xxx
 
 . ~/hub/what/wat.sh
 
-wwm () {
-    :
-}
-
 www () {
-    ww "$@"
-    what_www "$@"
+    what_www "$1"
 }
 
