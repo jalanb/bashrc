@@ -82,6 +82,14 @@ gai () {
     ga --patch "$@"
 }
 
+gba () {
+    if [[ -z "$*" ]]; then
+        git branch -a 2&>1 | grep -v warning
+    else
+        git branch -a 2>&1 | grep -v warning | grep --color "$@";
+    fi
+}
+
 gcj () {
     local _storage=/tmp/gcj.sh
     local JIT="git -C ~/jab"
