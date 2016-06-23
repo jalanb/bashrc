@@ -88,7 +88,31 @@ v () {
 
 # xx
 
+v. () {
+    v .
+}
+
+vb () {
+    vim -p "$@"
+}
+
+vc () {
+    vim -p $("$@" | grep -v "##########")
+}
+
+vd () {
+    vim_diff "$1" "$2" "$3" -O
+}
+
+vu () {
+    __doc__="Edit vim files in ~/jab. Add home vim files if different"
+    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
+    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
+    vim -p $_vimrc $_vim
+}
+
 vv () {
+    local __doc__="Edit vim files"
     [[ -z $* ]] && vvu || vvv "$@"
 }
 

@@ -439,20 +439,8 @@ tt () {
     ra
 }
 
-v. () {
-    v .
-}
-
 va () {
     _edit_jab src/bash/aliases.sh
-}
-
-vb () {
-    _edit_jab login.sh
-}
-
-vd () {
-    vim_diff "$1" "$2" "$3" -O
 }
 
 ve () {
@@ -477,19 +465,6 @@ vj () {
         gsi)
 }
 
-
-vu () {
-    __doc__="Edit vim files in ~/jab. Add home vim files if different"
-    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
-    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
-    vim -p $_vimrc $_vim
-}
-
-vv () {
-    local __doc__="Edit vim files"
-    [[ -n $* ]] && vu || vva "$@"
-}
-
 vy () {
     v $(ls *.py | grep -v '__*.py*')
 }
@@ -505,10 +480,6 @@ xe () {
 
 sq () {
     . $GIT_BUCKET/qaz/src/bash/qazrc
-}
-
-yy () {
-    y ~/jab/src/python
 }
 
 zm () {
