@@ -1200,6 +1200,11 @@ maketest () {
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
 
+sudo_ssh () {
+    local _host=$1; shift
+    ssh -t -q $_host "sudo ""$@"
+}
+
 thirteen () {
     cd_one
     3d "$@"
@@ -1329,6 +1334,10 @@ one_two_three () {
         3d 1 --noreport "$@"
     fi
     lk $(ls1 -p | g -v "\(pyc\|/\)$")
+}
+
+sudo_default () {
+    sudo_ssh default "$@"
 }
 
 three_two_one () {
