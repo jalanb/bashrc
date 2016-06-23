@@ -108,8 +108,16 @@ gcp () {
     git cherry-pick "$@"
 }
 
+gdd () {
+    gdi .
+}
+
 gdi () {
-    git di "$@" | lesser
+    git di "$@" | lessen
+}
+
+gdis () {
+    git di --staged "$@" | lessen
 }
 
 gdh () {
@@ -120,7 +128,11 @@ gdl () {
     git diff --color=always "$@"| less -r
 }
 
-gds () {
+gdv () {
+    git dv "$@"
+}
+
+gdvs () {
     git dv --staged "$@"
 }
 
