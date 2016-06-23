@@ -922,16 +922,18 @@ brew () {
 }
 
 bump () {
+    local _bump_dir=.
+    if [[ -d "$1" ]] ; then _bump_dir="$1"; shift; fi
     local _part=${1:-patch}
     if [[ $_part != show ]]; then
         if bumpversion "$@" $_part; then
             git push origin --tags
         fi
     fi
-    local _config=.bumpversion.cfg 
-    local _sought=current_version
+    local _config=$(git_root $_bump_dir)/.bumpversion.cfg 
+    local _sought=^current_version
     if [[ $_part == show ]]; then
-        grep $_sought $_config
+        grep $_sought $_config | grep --colour " [^ ]\+$"
     else
         grep $_sought $_config 2>/dev/null
     fi
