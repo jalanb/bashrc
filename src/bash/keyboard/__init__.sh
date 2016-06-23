@@ -1,8 +1,8 @@
 #! /bin/cat
 
-DIR=~/jab/src/bash/keyboard
-[[ -n $WELCOME_BYE ]] && echo Welcome to $DIR
+_DIR=$(dirname $(readlink -f $BASH_SOURCE))
+[[ -n $WELCOME_BYE ]] && echo Welcome to $_DIR
 
-for script in ?.sh; do . $DIR/$SCRIPT; done
+for script in ?.sh; do . $_DIR/$SCRIPT; done
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $DIR
+[[ -n $WELCOME_BYE ]] && echo Bye from $_DIR
