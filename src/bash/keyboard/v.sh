@@ -51,6 +51,8 @@ old_v () {
 # 
 # >>>>>>> l and v join the initially elusive scripts
 
+# x
+
 v () {
     if [[ -z $* ]]; then
         echo "" > ~/tmp/fred

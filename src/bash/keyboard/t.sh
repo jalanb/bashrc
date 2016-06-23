@@ -1,8 +1,12 @@
 #! /bin/cat
 
+# x
+
 t () {
     wwts "$@"
 }
+
+# xx
 
 tf () {
     [[ $? -eq 0 ]] && echo "true" || echo "false"
@@ -20,6 +24,8 @@ tt () {
     cd $(tar ${contents}f $1 | hd1)
     ra
 }
+
+# xxx
 
 ttt () {
     wwts tool

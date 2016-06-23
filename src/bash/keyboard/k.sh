@@ -1,5 +1,7 @@
 #! /bin/cat
 
+# x
+
 k () {
     if [[ -d "$1" ]]; then
         local _dir="$1"
@@ -14,6 +16,8 @@ k () {
         "$@"
     fi
 }
+
+# xx
 
 kk () {
     (clear;
@@ -31,6 +35,8 @@ kv () {
     vim -p "$@"
     gsi)
 }
+
+# xxx
 
 kkk () {
     (clear;
