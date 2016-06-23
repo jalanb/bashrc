@@ -9,7 +9,7 @@ ll () {
 }
 
 lll () {
-    ll -a "$@"
+    ll -lahtr "$@"
 }
 
 
