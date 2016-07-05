@@ -53,7 +53,7 @@ class VimBashScript(object):
             delete=False)
 
     def write(self):
-        # self.add('rm -f $(readlink -f $0)')
+        self.add('rm -f $(readlink -f $0)')
         with self._script_stream() as stream:
             print >> stream, '\n'.join(self.lines)
             return stream.name
