@@ -1,8 +1,7 @@
 #! /bin/cat
 
-DIR=~/jab/src/bash/git
+_GIT_DIR=~/jab/src/bash/git
 
-. $DIR/completion.sh
-. $DIR/functons.sh
-. $DIR/statuses.sh
-
+. $_GIT_DIR/completion.sh
+. $_GIT_DIR/functons.sh
+. $_GIT_DIR/statuses.sh

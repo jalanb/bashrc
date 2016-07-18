@@ -1,27 +1,26 @@
 #! /bin/cat
 
+_BASH_DIR=~/jab/src/bash
+[[ -n $WELCOME_BYE ]] && echo Welcome to $_BASH_DIR
 
-DIR=~/jab/src/bash
-[[ -n $WELCOME_BYE ]] && echo Welcome to $DIR
+. $_BASH_DIR/tput.sh
+. $_BASH_DIR/aliases.sh
+. $_BASH_DIR/asserts.sh
+. $_BASH_DIR/first_num.sh
+. $_BASH_DIR/functons.sh
+. $_BASH_DIR/github.sh
+. $_BASH_DIR/hosts.sh
+. $_BASH_DIR/history.sh
+. $_BASH_DIR/jabnet.sh
+. $_BASH_DIR/prompt.sh
+. $_BASH_DIR/pt.sh
+. $_BASH_DIR/pym.sh
+. $_BASH_DIR/repo.sh
+. $_BASH_DIR/require.sh
+. $_BASH_DIR/rf.sh
+. $_BASH_DIR/run_python.sh
+. $_BASH_DIR/virtualenvwrapper.sh
+. $_BASH_DIR/keyboard/__init__.sh
+. $_BASH_DIR/git/__init__.sh
 
-. $DIR/tput.sh
-. $DIR/aliases.sh
-. $DIR/asserts.sh
-. $DIR/first_num.sh
-. $DIR/functons.sh
-. $DIR/github.sh
-. $DIR/hosts.sh
-. $DIR/history.sh
-. $DIR/jabnet.sh
-. $DIR/prompt.sh
-. $DIR/pt.sh
-. $DIR/pym.sh
-. $DIR/repo.sh
-. $DIR/require.sh
-. $DIR/rf.sh
-. $DIR/run_python.sh
-. $DIR/virtualenvwrapper.sh
-. $DIR/keyboard/__init__.sh
-. $DIR/git/__init__.sh
-
-[[ -n $WELCOME_BYE ]] && echo Bye from $DIR
+[[ -n $WELCOME_BYE ]] && echo Bye from $_BASH_DIR
