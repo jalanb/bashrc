@@ -357,7 +357,7 @@ _show_git_here () {
 
 # xxxxxxxx
 
-git_kd () {
+_git_kd () {
     kd $_there "$@" >/dev/null 2>&1
 }
 
@@ -365,13 +365,13 @@ git_root () {
     _there="$1"; shift
     [[ -f "$_there" ]] && _there=$(dirname $_there)
     [[ -d "$_there" ]] || return 1
-    (git_kd "$@"; git rev-parse --git-dir) >/dev/null || return 1
-    root=$(git_kd "$@"; git rev-parse --git-dir 2>/dev/null)
-    root=${root%%.git}
-    if [[ -z $root ]]; then
-        echo $1;
+    (_git_kd "$@"; git rev-parse --git-dir) >/dev/null || return 1
+    local _root=$(_git_kd "$@"; git rev-parse --git-dir 2>/dev/null)
+    _root=${_root%%.git}
+    if [[ -z $_root ]]; then
+        echo $(readlink -f $_there);
     else
-        echo $root;
+        echo $(readlink -f $_root);
     fi
 }
 
