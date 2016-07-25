@@ -1,7 +1,7 @@
 #! /bin/bash -x
 
-set -x
 if [[ $- =~ i ]]; then
+    # set +x
     LOCAL=/usr/local
     [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCAL/bin" || LOCALS="$LOCAL/bin"
     BINS=/usr/bin:/bin:/usr/sbin:/sbin
@@ -22,10 +22,7 @@ if [[ $- =~ i ]]; then
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 
-    # set -x
-    c jab
-    # set +x
+    c ~/jab
     sp
-    # clock # fucks with terminal, leave off
-fi > ~/bashrc.log 2>&1
-set +x
+    # set +x
+fi # > ~/bashrc.log 2>&1
