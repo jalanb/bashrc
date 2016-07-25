@@ -64,21 +64,17 @@ what_w () {
 # xxxxxxxx
 
 what_www () {
-. ~/hub/what/what.sh
-    (DEBUGGING=www
-    ww $1;
-    w $1;
-    local _type=
-    [[ $* =~ \.py ]] && _type=python
-    file "$@" | grep -q [pP]ython && _type=python
-    [[ $* =~ \.sh ]] && _type=shell
-    file "$@" | grep -q [sS]hell && _type=python
-    if is_existing_function $1; then
-        (set -x; "$@")
-    elif is_existing_alias $1; then
-        (set -x; "$@")
-    elif file $(!!)  | grep -q -e script -e text; then
-        what_wwm "$@"
+    . ~/hub/what/what.sh
+    (DEBUGGING=www;
+    local _command=$1; shift
+    ww $_command;
+    w $_command;
+    if is_existing_function $_command; then
+        (set -x; $_command "$@")
+    elif is_existing_alias $_command; then
+        (set -x; $_command "$@")
+    elif file $_command  | grep -q -e script -e text; then
+        what_wwm $_command "$@"
     else
         echo 0
     fi)
