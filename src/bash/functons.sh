@@ -1216,7 +1216,7 @@ jab_scripts () {
 }
 
 quick_ping () {
-    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | /bin/grep -q illegal; then
+    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | grep -q illegal; then
         # looks like OS X
         ping -c 1 -t 1 -W 1 "$@"
     else
