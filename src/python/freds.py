@@ -79,7 +79,7 @@ def freds():
 
 
 def paths():
-    return [sites.paths.path(_) for _ in freds()]
+    return [site.paths.path(_) for _ in freds()]
 
 
 def files():
