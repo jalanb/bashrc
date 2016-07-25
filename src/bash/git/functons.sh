@@ -113,7 +113,7 @@ gdd () {
 }
 
 gdi () {
-    git di "$@" | lessen
+    git di "$@" | lesser
 }
 
 gdis () {
@@ -158,13 +158,13 @@ gla () {
 }
 
 glg () {
-    local _number_of_commits=1
+    local _number_of_commits=7
     if [[ $1 =~ [[:digit:]] ]]; then
-        $_number_of_commits=$1
+        _number_of_commits=$1
         shift
     fi
-    git log -n${1:-$_number_of_commits} --stat --color | head -n $(( LINES / 3 ))
-    _gl lg "$@" | _call_me_alan | sed -e "s/ ago//"
+    git log -n$_number_of_commits --stat --color "$@"| head -n $(( $LINES / 3 ))
+    _gl lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
 gln () {
@@ -272,7 +272,7 @@ gsi () {
     for f in $(git -C $dir status -s | grep "^\([M ]M\|??\)" | sed -e "s/^...//")
     do
         [[ -z $f ]] && continue
-        _git_modified $f && git di $f || (_git_untracked $f && cat $f || continue)
+        _git_modified $f && git di $f || (_git_untracked $f && cat $f || continue )
         _gsi_prompt $f
         if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt $f; fi
         [[ $answer =~ [qQ] ]] && break
