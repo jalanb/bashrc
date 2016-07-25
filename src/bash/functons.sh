@@ -891,9 +891,9 @@ brew () {
 bump () {
     local _bump_dir=.
     if [[ -d "$1" ]] ; then _bump_dir="$1"; shift; fi
-    local _part=${1:-patch}
+    local _part=${1:-patch}; shift
     if [[ $_part != show ]]; then
-        if bumpversion "$@" $_part; then
+        if bumpversion $_part "$@"; then
             git push origin --tags
         fi
     fi
@@ -1503,6 +1503,7 @@ c () {
         show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
         echo
         git_simple_status $(pwd) || lk
+        [[ -f .bumpversion.cfg ]] && grep --color [0-9].[0-9].[0-9] .bumpversion.cfg
     fi
     return $c_result
 }
