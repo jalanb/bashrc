@@ -833,10 +833,6 @@ vfr () {
     mython ~/jab/src/python/vim_traceback.py "$@"
 }
 
-vib () {
-    v ~/.bashrc
-}
-
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
 }
