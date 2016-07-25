@@ -1,6 +1,30 @@
 #! /bin/cat
 
-what_w () {
+[[ -n $WELCOME_BYE ]] && echo Welcome to w.sh
+
+# x
+
+w () {
+    what_w "$@"
+}
+
+# xx
+
+ww () {
+    what_ww "$@"
+}
+
+# xxx
+
+www () {
+    what_www "$@"
+}
+
+# xxxx
+# xxxxx
+# xxxxxx
+
+what_ww () {
 . ~/hub/what/what.sh
     local __doc__='what(all arguments (whether they like it or not))'
     PASS=0
@@ -13,11 +37,13 @@ what_w () {
     fi
     what -v "$@" && return $PASS
     echo $1 not found
-    w ${1:0:${#1}-1} && return $PASS
+    what_ww ${1:0:${#1}-1} && return $PASS
     return $FAIL
 }
 
-what_ww () {
+# xxxxxxx
+
+what_w () {
 . ~/hub/what/what.sh
     local __doc__='Show whether the first argument is a text file, alias or function'
     if is_existing_alias $1; then
@@ -35,11 +61,7 @@ what_ww () {
     fi
 }
 
-
-what_wwm () {
-    [[ $_type == python ]] && pudb "$@"
-    [[ $_type == shell ]] && bash -x "$@"
-}
+# xxxxxxxx
 
 what_www () {
 . ~/hub/what/what.sh
@@ -62,28 +84,4 @@ what_www () {
     fi)
 }
 
-# x
-
-w () {
-    what_ww "$@"
-}
-
-# xx
-
-ws () {
-    . "$@"
-}
-
-ww () {
-    what_ww "$@"
-    what_w "$1"
-}
-
-# xxx
-
-. ~/hub/what/wat.sh
-
-www () {
-    what_www "$1"
-}
-
+[[ -n $WELCOME_BYE ]] && echo Bye from w.sh
