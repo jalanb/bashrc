@@ -341,7 +341,7 @@ lx () {
 }
 
 ly () {
-    p ~/jab/src/python/ls/ly.py  "$@"
+    python ~/jab/src/python/ls/ly.py  "$@"
 }
 
 ma () {
