@@ -1,7 +1,9 @@
 #! /bin/cat
 
+# x
+# xx
+
 jb () {
-    jabook
     _ssh jab.ook
 }
 
@@ -13,6 +15,8 @@ jm () {
     _ssh jalanbmac.local
 }
 
+# xxx
+# xxxx
 
 _ssh () {
     _server=$1
