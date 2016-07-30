@@ -1,6 +1,6 @@
 #! /bin/bash
 
 SCRATCH=$HOME/tmp/fred
-    echo "" > $SCRATCH
+    /usr/bin/pbpaste  > $SCRATCH
     /usr/local/bin/vim $SCRATCH
-    /bin/cat $SCRATCH | /usr/bin/pbcopy
+    /bin/cat $SCRATCH | /usr/bin/pbcopy 

@@ -1,0 +1,7 @@
+    #! /bin/bash
+
+    SCRATCH=$HOME/tmp/fred
+        echo "" > $SCRATCH
+        /usr/local/bin/vim $SCRATCH
+        /bin/cat $SCRATCH | /usr/bin/pbcopy
+
