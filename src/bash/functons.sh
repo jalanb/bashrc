@@ -767,6 +767,10 @@ rff () {
     $(freds -r "$@")
 }
 
+rlf () {
+    readlink -f "$@"
+}
+
 sib () {
     source_path ~/.bashrc
 }
