@@ -1,0 +1,66 @@
+Host eos70D
+    Hostname 192.168.130.102
+
+Host jalanb.ook
+    Hostname jalanbook.local
+    Hostname 192.168.130.104
+    User jab
+    IdentityFile ~/.ssh/id_jab
+
+Host jab.ook
+    Hostname jab-ook.local
+    Hostname 192.168.130.105
+    User jab
+    IdentityFile ~/.ssh/id_jab
+
+Host jalanb.mac
+    Hostname jalanbook.local
+    Hostname 192.168.130.108
+    User jab
+    IdentityFile ~/.ssh/id_jab
+
+Host wwts
+    Hostname 192.168.130.119
+    User jalanb
+    IdentityFile ~/.ssh/id_jab
+
+Host gitlab twkgit20
+    Hostname 172.25.1.219
+    User ab13173
+
+Host wwits
+    Hostname 172.25.3.126
+    User ab13173
+    Port 22
+
+Host twkwbe34 wmptrain
+    Hostname 172.25.32.147
+    User ab13173
+
+Host twkwbe35 wmpprod
+    Hostname 172.25.32.149
+    User ab13173
+
+Host pwkwbe95
+    Hostname 172.25.32.95
+    User production
+    IdentityFile ~/.ssh/id_rsa
+
+Host twkwbe95 wmptest wwts-staging
+    Hostname 172.25.32.95
+    User ab13173
+
+Host twkwbe96 wmpdev
+    Hostname 172.25.32.96
+    User ab13173
+
+Host twkdbs98.ad.wwts.com
+    HostName 172.25.1.128
+
+Host default
+  HostName 192.168.111.222
+  User vagrant
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  IdentityFile ~/.ssh/id_rsa
+
