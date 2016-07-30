@@ -3,25 +3,14 @@
 # x
 
 k () {
-    if [[ -d "$1" ]]; then
-        local _dir="$1"
-        shift
-        if [[ -z "$*" ]]; then
-            c $_dir
-        else
-            (cd $_dir
-            k "$@")
-        fi
-    else
-        "$@"
-    fi
+    local _dir="$1"; shift
+    [[ -z "$*" ]] && c $_dir || (cd $_dir; k "$@")
 }
 
 # xx
 
 kk () {
-    (clear;
-    cd $1; shift
+    (cd $1; shift
     "$@")
 }
 
@@ -39,8 +28,8 @@ kv () {
 # xxx
 
 kkk () {
-    (clear;
-    c $1; shift
+    clear
+    (c $1; shift
     "$@")
 }
 
