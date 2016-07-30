@@ -1101,7 +1101,9 @@ lesser () {
 }
 
 online () {
-    quick_ping www.google.com >/dev/null 2>&1 && echo online || echo offline
+    local _dest="$1"; shift
+    [[ -z $_dest ]] && _dest=www.google.com
+    quick_ping $_dest "$@" >/dev/null 2>&1 && echo $_dest online || echo $_dest offline
 }
 
 please () {
