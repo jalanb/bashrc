@@ -365,7 +365,7 @@ git_root () {
     _there="$1"; shift
     [[ -f "$_there" ]] && _there=$(dirname $_there)
     [[ -d "$_there" ]] || return 1
-    (_git_kd "$@"; git rev-parse --git-dir) >/dev/null || return 1
+    (_git_kd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
     local _root=$(_git_kd "$@"; git rev-parse --git-dir 2>/dev/null)
     _root=${_root%%.git}
     if [[ -z $_root ]]; then
