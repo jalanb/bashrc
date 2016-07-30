@@ -7,14 +7,13 @@
 # xxxxx
 
 hosts () {
-    g -e ^Host -e Host[nN]ame ~/.ssh/config
+    g -e ^Host -e Host[nN]ame ~/jab/hss/hosts
 }
 
 # xxxxxx
 
 vhosts () {
-    vim ~/.ssh/config \
+    vim ~/jab/hss/hosts \
         -p /etc/hosts \
-        +/Host \
-
+        +/'Host[a-z]*' \
 }
