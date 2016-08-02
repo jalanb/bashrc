@@ -2,6 +2,8 @@
 
 [[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
+__version__=0.3.6
+
 _BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/tput.sh
 . $_BASH_DIR/aliases.sh

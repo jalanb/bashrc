@@ -1171,7 +1171,7 @@ vim_diff () {
     second_file="$1"
     shift
     third_file=
-    editor_command="v -d "
+    editor_command="vim -d "
     for arg in "$@"
     do
         [[ $arg =~ -.* ]] && editor_command="$editor_command $arg" && continue

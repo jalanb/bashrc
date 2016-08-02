@@ -150,7 +150,7 @@ _gl () {
     local cmd=$1
     shift
     local _vertical_lines=${LINES:-$(screen_height)}
-    local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
+    local _one_third_of_vertical=$(( $_vertical_lines / 4 ))
     local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
     git $cmd "$@" | head -n $_lines
 }
@@ -165,8 +165,8 @@ glg () {
         _number_of_commits=$1
         shift
     fi
-    git log -n$_number_of_commits --stat --color "$@" | head -n $(( $LINES / 3 ))
-    _gl lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+    git log -n${1:-$_number_of_commits} --stat --color | head -n $(( LINES / 4 ))
+    _gl lg -n${1:-$_number_of_commits} "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
 gln () {
