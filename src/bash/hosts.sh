@@ -16,4 +16,5 @@ vhosts () {
     vim ~/jab/hss/hosts \
         -p /etc/hosts \
         +/'Host[a-z]*' \
+
 }
