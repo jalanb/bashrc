@@ -302,6 +302,10 @@ pi () {
 }
 
 
+pt () {
+    ptpython "$@"
+}
+
 py () {
     if [[ -z "$@" ]]; then
         mython
