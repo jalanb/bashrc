@@ -4,11 +4,11 @@
 # xx
 
 jb () {
-    _ssh jab.ook
+    _ssh jabook.local
 }
 
 jn () {
-    _ssh jalanb.ook
+    _ssh jalanbook.local
 }
 
 jm () {
