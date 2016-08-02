@@ -163,7 +163,7 @@ glg () {
         _number_of_commits=$1
         shift
     fi
-    git log -n$_number_of_commits --stat --color "$@"| head -n $(( $LINES / 3 ))
+    git log -n$_number_of_commits --stat --color "$@" | head -n $(( $LINES / 3 ))
     _gl lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
