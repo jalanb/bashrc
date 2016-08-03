@@ -1,28 +1,33 @@
 #! /bin/bash -x
 
-if [[ $- =~ i ]]; then
-    # set +x
+_set_path () {
     LOCAL=/usr/local
     [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCAL/bin" || LOCALS="$LOCAL/bin"
     BINS=/usr/bin:/bin:/usr/sbin:/sbin
     HOMES=$HOME/bin:$HOME/.local
     export PATH=$LOCALS:$BINS:$HOMES
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
+}
 
+_bashrc () {
     WELCOME_BYE=
-    source ~/jab/__init__.sh
-
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
-
-    vbb () {
-        (cd ~/jab
-        vim -p ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log "$@" +/bash
-        ls -l ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log)
-    }
-
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
-
     c ~/jab
+    source ~/jab/__init__.sh
+    export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
-    # set +x
-fi # > ~/bashrc.log 2>&1
+}
+
+vbb () {
+    (cd ~/jab
+    vim -p ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log "$@" +/bash
+    ls -l ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log)
+}
+
+main () {
+    _set_path
+    _bashrc 
+}
+
+# set -x
+[[ $- =~ i ]] && main
+# set +x

@@ -1,0 +1,3 @@
+#! /bin/bash -x
+
+sudo rm -ri /Users/jab/AlanSource/git/hub/jab/src/python/tmp*-vim.sh
