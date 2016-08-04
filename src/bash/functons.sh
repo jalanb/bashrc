@@ -28,41 +28,6 @@ b () {
     fi
 }
 
-c () {
-    kd "$@" || return 1
-    _show_todo_here
-    echo
-    echo
-    echo
-    show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
-    echo
-    git_simple_status $(pwd) || lk
-}
-
-f () {
-    local _arg_1=$1
-    if [[ $_arg_1 == "-name" ]]; then
-        echo "Do not use '-name'" >&2
-        shift
-    fi
-    local _argc=${#*}
-    dir=
-    if [[ $_argc > 1 ]]; then
-        shift_dir "$@" && shift
-    elif [[ -z $dir ]]; then
-        dir=$(pwd)
-    fi
-    local name=$1
-    shift
-    local old_ifs=$IFS
-    IFS=";"
-    for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
-    do
-        relpath -s $FOUND
-    done
-    IFS=$old_ifs
-}
-
 g () {
     $(which grep) --color "$@"
 }
