@@ -37,10 +37,6 @@ l () {
     $LS_PROGRAM
 }
 
-q () {
-    exit 0
-}
-
 x () {
     exit 1
 }
