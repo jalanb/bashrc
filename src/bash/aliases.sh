@@ -8,55 +8,50 @@
 
 # This list is quite long enough, we accept no other aliases
 #   Thanks anyway
-DOT_ALIAS=$(alias . | sed -e "s/.*=//" -e "s/'//g")
+
+_keep_dot=$(alias . | sed -e "s/.*=//" -e "s/'//g")
 unalias -a
-alias .=$DOT_ALIAS
+alias .=$_keep_dot
 
 # The wee x headings are counts
 #   all the wee aliases in this wee section have only one character, oui,
 #       Awwww.
 #   There is an alias for every letter
 #       albeit most are unused
+# Search for .= from here
 
 # x
 
-alias -- -="cd -"
-alias 1=cd_one
-alias 2=todo_show
-alias 3=3l
-alias 4=todo_edit
-# a is a function
-# b is a function
-# c is a function
+# 0= is an alias in ./digits.sh
+# a= function
+# b= function
+# c= function
 alias d="d"
 alias e="ex --noplugin -u ~/.vim/exrc"
-# f is a function
-# g is a function
-# h is a function
+# f= function
+# g= function
+# h= function
 alias i="i"
-# j is a function
-# k is a function
-# l is a function
+# j= function
+# k= function
+# l= function
 alias m="m"
 alias n="n"
 alias o="o"
-# p is a function
-# q is a function
-alias Q="exit 0"
-# r is now a script
+# p= function
+# q= function
+# Q= function
+# r= script
 alias s="s"
-# t is a function
+# t= function
 alias u="u"
-# v is a function
-# w is a function
-# x is a function
-# y is a function
-alias z="du -sh"
+# v= function
+# w= function
+# x= function
+# y= function
+# z= function
 
 # xx
-
-alias 13="thirteen"
-alias 32="thirty_two "
 
 alias ..='c ..'
 
@@ -77,9 +72,6 @@ alias sr="sudo rm -vrf "
 alias z.="zm \*"
 
 # xxx
-
-alias 123="one_two_three"
-alias 321="three_two_one"
 
 alias ..l='cl ..'
 alias ...='c ../..'
