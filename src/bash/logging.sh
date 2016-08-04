@@ -55,7 +55,7 @@ trace_one_bashrc () {
 . ~/jab/src/bash/hub.sh
 
 run_bashrc () {
-    echo Welcome to $HOME/.bashrc
+    [[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
     export PATH=/usr/local/bin:/usr/bin:/bin
     export SHELL=/bin/bash
     . ~/hub/what/what.sh
@@ -69,7 +69,7 @@ run_bashrc () {
     source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
     mython ~/jab/src/python/checksums.py
-    echo Bye from $HOME/.bashrc
+    [[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 }
 
 concise_interactive_bashrc () {

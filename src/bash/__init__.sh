@@ -1,8 +1,8 @@
 #! /bin/cat
 
-_BASH_DIR=~/jab/src/bash
-[[ -n $WELCOME_BYE ]] && echo Welcome to $_BASH_DIR
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
+_BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/tput.sh
 . $_BASH_DIR/aliases.sh
 . $_BASH_DIR/asserts.sh
@@ -23,4 +23,4 @@ _BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/keyboard/__init__.sh
 . $_BASH_DIR/git/__init__.sh
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $_BASH_DIR
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)

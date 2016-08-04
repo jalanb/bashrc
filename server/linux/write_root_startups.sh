@@ -3,7 +3,7 @@
 cat > /root/.bash_profile << EOB
 # .bash_profile
 
-echo Welcome to ~/.bash_profile
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
 # Get the aliases and functions
 [[ -f "~/.bashrc" ]] && source ~/.bashrc
@@ -17,6 +17,7 @@ add_to_path /usr/local/sbin after
 unset USERNAME
 
 echo Bye from ~/.bash_profile
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /root/.bashrc << EOB
@@ -25,7 +26,7 @@ cat > /root/.bashrc << EOB
 # If not running interactively, don't do anything
 [[ \$- != *i* ]] || return
 
-echo Welcome to ~/.bashrc
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
 [[ -f "~/jab/environ.d/colour.sh"" ]] && source ~/jab/environ.d/colour.sh"
 [[ -f "~/jab/src/bash/prompt.sh" ]] && source ~/jab/src/bash/prompt.sh red
@@ -37,6 +38,7 @@ echo Welcome to ~/.bashrc
 [[ -f "/root/.bash_aliases" ]] && source  /root/.bash_aliases
 
 echo Bye from  ~/.bashrc
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /root/.bash_aliases << EOB

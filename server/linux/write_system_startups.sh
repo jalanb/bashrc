@@ -4,7 +4,7 @@
 cat > /etc/profile << EOB
 # /etc/profile: system-wide profile file for the Bourne shell (sh(1))
 # and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
-echo Welcome to /etc/profile
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
 add_to_path () {
     if ! echo \$PATH | /bin/egrep -q "(^|:)\$1(\$|:)"; then
@@ -61,13 +61,14 @@ add_to_path /bin
 export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE INPUTRC
 
 if [[ -d /etc/profile.d ]]; then
-    echo Welcome to /etc/profile.d/
+    [[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
     for i in /etc/profile.d/*.sh
     do
         [[ -f "\$i" ]] && source \$i
     done
     unset i
     echo Bye from /etc/profile.d/
+    [[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 fi
 
 if [[ \$- == *i* ]]; then
@@ -87,13 +88,13 @@ else
         umask 022
 fi
 
-echo Bye from /etc/profile
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /etc/bashrc << EOB
 # System-wide bashrc file for interactive bash(1) shells.
 
-echo Welcome to /etc/bashrc
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
 # If not running interactively, don't do anything
 [[ \$- != *i* ]] || return
@@ -102,7 +103,7 @@ echo Welcome to /etc/bashrc
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-echo "Bye from /etc/bashrc"
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /etc/aliases << EOB
