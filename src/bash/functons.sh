@@ -104,36 +104,6 @@ IP () {
     done
 }
 
-cc () {
-    local __doc__="There's always gcc, on the off chance it's needed"
-    c . "$@"
-}
-
-cb () {
-    c ~/bash/
-}
-
-ch () {
-    c ~/hub/
-}
-
-cj () {
-    c ~/jab/
-}
-
-cl () {
-    c "$@" && lk
-}
-
-cv () {
-    kd $1
-    v $(basename $1)
-}
-
-cy () {
-    c ~/python/
-}
-
 gf () {
     local __doc__="grep in any file args for other args"
     shift_dir "$@" && shift
@@ -873,9 +843,6 @@ bump () {
     fi
 }
 
-calf () {
-    cat ~/jab/local/functons.sh
-}
 
 down () {
     c ~/Download* "$@"
@@ -968,10 +935,6 @@ build () {
     if [[ -f build.sh ]]; then bash build.sh "$@"
     elif [[ -f Makefile ]]; then make "$@"
     fi
-}
-
-clean () {
-    rfq "$@"
 }
 
 detab () {
@@ -1459,22 +1422,6 @@ b () {
     elif [[ -f Makefile ]]; then
         make
     fi
-}
-
-c () {
-    kd "$@"
-    local c_result="$?"
-    if [[ $c_result == "0" ]]; then
-        _show_todo_here
-        echo
-        echo
-        echo
-        show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
-        echo
-        git_simple_status $(pwd) || lk
-        [[ -f .bumpversion.cfg ]] && grep --color [0-9].[0-9].[0-9] .bumpversion.cfg
-    fi
-    return $c_result
 }
 
 f () {
