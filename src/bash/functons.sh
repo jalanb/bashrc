@@ -6,10 +6,15 @@
 
 # Called functons.sh because "functions" is ... something else
 
-# sorted by strcmp of function name
+# sorted by strcmp of function name, underscores following
+# x
+# _
+# xx
+# _x
+# xxx
+# _xx
 
 # x
-
 
 /. () {
     cc "$@"
