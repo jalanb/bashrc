@@ -16,9 +16,6 @@
 
 # x
 
-/. () {
-    cc "$@"
-}
 
 b () {
     if [[ -f ./build.sh ]]; then
