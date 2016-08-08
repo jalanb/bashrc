@@ -1,39 +1,6 @@
 #! /bin/cat
 
 
-old_v () {
-    if [[ -z $* ]]; then
-        echo "" > ~/tmp/fred
-        $EDITOR ~/tmp/fred
-    else
-        script=$(mython ~/jab/src/python/vim.py "$@")
-        status=$?
-        if [[ $status == 0 ]]; then
-            if [[ -n $script ]]; then
-                if [[ -f "$script" ]]; then
-                    bash $script
-                    #rr $script
-                else
-                    echo $script is not a file >&2
-                fi
-            else
-                mython ~/jab/src/python/vim.py -U "$@"
-            fi
-        else
-            echo Python error: $status
-            if [[ -n $script ]]; then
-                echo Script produced you could run it with
-                echo "  bash $script"
-                echo or debug the problem with
-                echo "  mython ~/jab/src/python/vim.py -U" "$@"
-            else
-                echo No script produced please try
-                echo mython ~/jab/src/python/vim.py -U "$@"
-            fi
-        fi
-    fi
-}
-
 # =======
 # v () {
 #     vim -p "$@"
@@ -54,36 +21,7 @@ old_v () {
 # x
 
 v () {
-    if [[ -z $* ]]; then
-        echo "" > ~/tmp/fred
-        $EDITOR ~/tmp/fred
-    else
-        script=$(mython ~/jab/src/python/vim.py "$@")
-        status=$?
-        if [[ $status == 0 ]]; then
-            if [[ -n $script ]]; then
-                if [[ -f "$script" ]]; then
-                    bash $script
-                    #rr $script
-                else
-                    echo $script is not a file >&2
-                fi
-            else
-                mython ~/jab/src/python/vim.py -U "$@"
-            fi
-        else
-            echo Python error: $status
-            if [[ -n $script ]]; then
-                echo Script produced you could run it with
-                echo "  bash $script"
-                echo or debug the problem with
-                echo "  mython ~/jab/src/python/vim.py -U" "$@"
-            else
-                echo No script produced please try
-                echo mython ~/jab/src/python/vim.py -U "$@"
-            fi
-        fi
-    fi
+    [[ -z $1 ]] && vim_none || vim_some "$@"
 }
 
 # xx
@@ -118,6 +56,10 @@ vv () {
 
 # xxx
 
+vin () {
+    vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
+}
+
 vvb () {
     vvf sh.vim
 }
@@ -150,4 +92,75 @@ vvv () {
     (cd ~/jab/vim
     vim -p "$@"
     gsi)
+}
+# xxxx
+# xxxxx
+
+old_v () {
+    if [[ -z $* ]]; then
+        echo "" > ~/tmp/fred
+        $EDITOR ~/tmp/fred
+    else
+        script=$(mython ~/jab/src/python/vim.py "$@")
+        status=$?
+        if [[ $status == 0 ]]; then
+            if [[ -n $script ]]; then
+                if [[ -f "$script" ]]; then
+                    bash $script
+                    #rr $script
+                else
+                    echo $script is not a file >&2
+                fi
+            else
+                mython ~/jab/src/python/vim.py -U "$@"
+            fi
+        else
+            echo Python error: $status
+            if [[ -n $script ]]; then
+                echo Script produced you could run it with
+                echo "  bash $script"
+                echo or debug the problem with
+                echo "  mython ~/jab/src/python/vim.py -U" "$@"
+            else
+                echo No script produced please try
+                echo mython ~/jab/src/python/vim.py -U "$@"
+            fi
+        fi
+    fi
+}
+# xxxxxx
+# xxxxxxx
+# xxxxxxxx
+
+vim_none () {
+    (echo "" > ~/tmp/fred
+    $EDITOR ~/tmp/fred)
+}
+
+vim_some () {
+    script=$(mython ~/jab/src/python/vim.py "$@")
+    status=$?
+    if [[ $status == 0 ]]; then
+        if [[ -n $script ]]; then
+            if [[ -f "$script" ]]; then
+                bash $script
+                #rr $script
+            else
+                echo $script is not a file >&2
+            fi
+        else
+            mython ~/jab/src/python/vim.py -U "$@"
+        fi
+    else
+        echo Python error: $status
+        if [[ -n $script ]]; then
+            echo Script produced you could run it with
+            echo "  bash $script"
+            echo or debug the problem with
+            echo "  mython ~/jab/src/python/vim.py -U" "$@"
+        else
+            echo No script produced please try
+            echo mython ~/jab/src/python/vim.py -U "$@"
+        fi
+    fi
 }
