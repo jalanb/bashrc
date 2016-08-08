@@ -15,18 +15,46 @@ alias ff=ffind
 fl () {
     freds | tr ' ' '\n'
 }
+
 # _x
 # xxx
 
-fdd () { $(freds -d "$@") } 
-fee () { $(freds -e "$@") } 
-fff () { freds | tr ' ' '\n' }
-fll () { $(freds -l) } 
-frr () { $(freds -r "$@") } 
-fpp () { $(freds -p "$@") } 
-fss () { $(freds -s "$@") } 
-fuu () { $(freds -U "$@") } 
-vff () { $(freds -e "$@") }
+fdd () {
+    $(freds -d "$@")
+}
+
+fee () {
+    $(freds -e "$@")
+}
+
+fff () {
+    freds | tr ' ' '\n'
+}
+
+fll () {
+    $(freds -l)
+}
+
+frr () {
+    $(freds -r "$@")
+}
+
+fpp () {
+    $(freds -p "$@")
+}
+
+fss () {
+    $(freds -s "$@")
+}
+
+fuu () {
+    $(freds -U "$@")
+}
+
+vff () {
+    $(freds -e "$@")
+}
+
 # _xx
 # xxxx
 

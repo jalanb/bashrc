@@ -12,31 +12,69 @@ alias c=cde
 
 alias cc=ccde
 
-cb () { c ~/bash/ }
-ch () { c ~/hub/ }
-cj () { c ~/jab/ }
-cl () { c "$@" && lk }
-cv () { kd $1; v $(basename $1) }
-cy () { c ~/python/ }
+cb () {
+    c ~/bash/
+}
+
+ch () {
+    c ~/hub/
+}
+
+cj () {
+    c ~/jab/
+}
+
+cl () {
+    c "$@" && lk
+}
+
+cv () {
+    kd $1; v $(basename $1)
+}
+
+cy () {
+    c ~/python/
+}
+
 # _x
 # xxx
 # _xx
 
-can () { cat -n "$@" }
+can () {
+    cat -n "$@"
+}
 
 ccc () {
     cccde "$@"
 }
-cib () { cn ~/.bashrc }
-cjy () { kd ~/jab/src/python "$@" }
-clf () { cat ~/jab/local/functons.sh }
-clo () { c $(locate "$@") }
+
+ib () { cn ~/.bashrc
+}
+
+cjy () {
+    kd ~/jab/src/python "$@"
+}
+
+clf () {
+    cat ~/jab/local/functons.sh
+}
+
+clo () {
+    c $(locate "$@")
+}
+
 # xxxx
-calf () { cat ~/jab/local/functons.sh }
+calf () {
+    cat ~/jab/local/functons.sh
+}
+
 # _xxx
 # xxxxx
 
-clean () { rfq "$@" }
+clean () {
+    rfq "$@"
+}
+
 # _xxxx
 # xxxxxx
 # _xxxxx

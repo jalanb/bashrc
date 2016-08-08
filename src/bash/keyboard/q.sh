@@ -6,7 +6,9 @@
 # x
 # _
 
-q () { quit }
+q () {
+    quit
+}
 
 alias Q="exit 0"
 
