@@ -414,38 +414,6 @@ add () {
     echo $(($1 + $2))
 }
 
-can () {
-    cat -n "$@"
-}
-
-cib () {
-    cn ~/.bashrc
-}
-
-cjy () {
-    kd ~/jab/src/python "$@"
-}
-
-clf () {
-    cat ~/jab/local/functons.sh
-}
-
-clo () {
-    c $(locate "$@")
-}
-
-cls () {
-    local __doc__="clean, clear, ls"
-    clean
-    clear
-    if [[ -n "$@" ]]; then
-        lk "$@"
-    else
-        ld $(pwd)
-        echo
-    fi
-}
-
 ddg () {
     firefox "https://next.duckduckgo.com/?q=$*"
 }
@@ -711,10 +679,6 @@ vfg () {
 
 vfr () {
     mython ~/jab/src/python/vim_traceback.py "$@"
-}
-
-vin () {
-    vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
 }
 
 vla () {
@@ -1299,14 +1263,10 @@ _edit_source () {
 }
 
 _edit_jab () {
-    if [[ -z ~/jab ]]; then
-        echo ~/jab is empty >&2
-    else
-        [[ -d "~/jab" ]] || mkdir -p ~/jab
-        local filepath=~/jab/$1
-        shift
-        _edit_source $filepath "$@"
-    fi
+    [[ -d "~/jab" ]] || mkdir -p ~/jab
+    local filepath=~/jab/$1
+    shift
+    _edit_source $filepath "$@"
 }
 
 _edit_locals () {
@@ -1338,60 +1298,8 @@ _divv_get_difference () {
         $destination_gitignore \
     "$source_dir" "$destination_dir" 2>/dev/null
 }
-#! /bin/cat
 
-# set -e
-
-. ~/jab/bin/first_dir.sh
-
-# Called functons.sh because "functions" is ... something else
-
-# sorted by strcmp of function name
-
-# x
-
-
-/. () {
-    c . "$@"
-}
-
-b () {
-    if [[ -f ./build.sh ]]; then
-        bash ./build.sh
-    elif [[ -f Makefile ]]; then
-        make
-    fi
-}
-
-f () {
-    local _arg_1=$1
-    if [[ $_arg_1 == "-name" ]]; then
-        echo "Do not use '-name'" >&2
-        shift
-    fi
-    local _argc=${#*}
-    dir=
-    if [[ $_argc > 1 ]]; then
-        shift_dir "$@" && shift
-    elif [[ -z $dir ]]; then
-        dir=$(pwd)
-    fi
-    local name=$1
-    shift
-    local old_ifs=$IFS
-    IFS=";"
-    for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
-    do
-        relpath -s $FOUND
-    done
-    IFS=$old_ifs
-}
-
-g () {
-    $(which grep) --color "$@"
-}
-
-h () {
+unremembered () {
     shift
     blank_script $filepath
     filedir=$(dirname $filepath)
@@ -1409,43 +1317,3 @@ h () {
     fi
 }
 
-_edit_jab () {
-    if [[ ! -d ~/jab ]]; then
-        echo ~/jab is not a dir >&2
-    else
-        [[ -d ~/jab ]] || mkdir -p ~/jab
-        local filepath=~/jab/$1
-        shift
-        _edit_source $filepath "$@"
-    fi
-}
-
-_edit_locals () {
-    local local_dir=~/jab/local
-    [[ -d "$local_dir" ]] || mkdir -p $local_dir
-    _edit_source $local_dir/$1
-}
-
-_divv_get_difference () {
-    local source_gitignore=
-    [[ -f "$source_dir/.gitignore" ]] && source_gitignore="--exclude-from=$source_dir/.gitignore"
-    local destination_gitignore=
-    [[ -f "$destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
-    diff -q -r \
-        --exclude=.svn \
-        --exclude=.git \
-        --exclude=.DS_Store \
-        --exclude="*.fail" \
-        --exclude="*.py[co]" \
-        --exclude=tags \
-        --exclude=".*sw[po]" \
-        --exclude=tmp \
-        --exclude="*~" \
-        --exclude="*.beam" \
-        --exclude="*.a" \
-        --exclude="*.o" \
-        --exclude=.gitignore \
-        $source_gitignore \
-        $destination_gitignore \
-    "$source_dir" "$destination_dir" 2>/dev/null
-}
