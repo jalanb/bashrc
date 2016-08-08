@@ -11,7 +11,7 @@
 
 _keep_dot=$(alias . | sed -e "s/.*=//" -e "s/'//g")
 unalias -a
-alias .=$_keep_dot
+[[ -n "$_keep_dot" ]] && alias .=$_keep_dot
 
 # The wee x headings are counts
 #   all the wee aliases in this wee section have only one character, oui,
