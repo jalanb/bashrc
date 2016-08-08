@@ -650,7 +650,7 @@ unalias try > /dev/null 2>&1
 try () {
     TRY=~/jab/src/python/testing/try.py
     [[ -f "./try.py" ]] && TRY=./try.py
-    mython $TRY "$@"
+    python $TRY "$@"
 }
 
 vaf () {
@@ -706,16 +706,80 @@ vtr () {
 }
 
 vpr () {
-    _crappy_program_py =$1
+    local _crappy_program_py=$1
     python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
 vtr () {
-    mython ~/jab/src/python/vim_traceback.py "$@"
+    python ~/jab/src/python/vim_traceback.py "$@"
 }
 
 VIM () {
     sudo vim "$@"
+}
+
+wtX () {
+    . ~/hub/SH.sh
+}
+
+wvX () {
+    vim -p ~/hub/SH.sh "$@"
+}
+
+wta () {
+    . ~/hub/ack2vim/ack2vim.sh
+}
+
+wva () {
+    vim -p ~/hub/ack2vim/ack2vim.sh "$@"
+}
+
+wtb () {
+    . ~/bash/__init__.sh
+}
+
+wvb () {
+    vim -p ~/bash "$@"
+}
+
+wtd () {
+    python3 ~/hub/dotsite/setup.py develop
+}
+
+wvd () {
+    vim -p ~/hub/dotsite/dotsite/ "$@"
+}
+
+wtj () {
+    WELCOME_BYE=$1 . ~/jab/__init__.sh
+}
+
+wvj () {
+    vim -p ~/jab/__init__.sh "$@"
+}
+
+wtk () {
+    . ~/hub/kd.sh
+}
+
+wvk () {
+    vim -p ~/hub/kd.sh "$@"
+}
+
+wtp () {
+    python3 ~/hub/pym/setup.py develop
+}
+
+wvp () {
+    vim -p ~/hub/pym/pym/edit/ "$@"
+}
+
+wtw () {
+    WELCOME_BYE=$1 . ~/hub/what/what.sh
+}
+
+wvw () {
+    vim -p ~/hub/what/what.sh "$@"
 }
 
 xib () {
