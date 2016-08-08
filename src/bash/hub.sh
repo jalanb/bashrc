@@ -1,6 +1,4 @@
 #! /bin/cat
 
-SRC=; [[ -d $HOME/AlanSource ]] && SRC=$HOME/AlanSource; export SRC
-      [[ -n $SRC && -d $HOME/src ]] && SRC=$HOME/src; export SRC
- HG=; [[ -d $SRC/hg   ]] &&  HG=$SRC/hg;   export HG
-GIT=; [[ -d $SRC/git  ]] && GIT=$SRC/git;  export GIT
+ HG=; [[ -d ~/src/hg   ]] &&  HG=~/src/hg;   export HG
+GIT=; [[ -d ~/src/git  ]] && GIT=~/src/git;  export GIT

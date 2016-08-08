@@ -1,19 +1,33 @@
 #! /bin/cat
 
+# x
+# _
+# xx
 # _x
+# xxx
 # _xx
+
+# . ~/jab/src/bash/all_abored.sh
+
+# aaa may be defined in all_abored.sh
+
+#! /bin/cat
+
+# x
+# _
+. ~/hub/ack2vim/ack2vim.sh
+
+# a is defined in ack2vim.sh
+
+# xx
+# _x
+
+# aa is defined in ack2vim.sh
+
 
 _av () {
     (cd $1; vack "$@")
 }
-# x
-
-# a is defined in ack2vim.sh
-. ~/hub/ack2vim/ack2vim.sh
-
-# xx
-
-# aa is defined in ack2vim.sh
 
 # xxx
 
@@ -50,8 +64,8 @@ avp () {
 }
 
 avs () {
-    __doc__="vack all args in $SRC";
-    _av $SRC "$@"
+    __doc__="vack all args in ~/src";
+    _av ~/src "$@"
 }
 
 avu () {
