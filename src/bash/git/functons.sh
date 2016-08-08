@@ -501,3 +501,13 @@ _call_me_alan () {
         -e "s/J Alan Brogan/Alan/"
 }
 
+grep_git_log_for_python_test_file ()
+{
+    local _number=$1; shift;
+    git log --stat -n $_number | grep test_[a-z_]*.py | sed -e "s/\.py .*/.py/"
+}
+
+log_test_file ()
+{
+	grep_git_log_for_python_test_file 3
+}
