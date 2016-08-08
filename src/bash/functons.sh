@@ -147,17 +147,6 @@ fd () {
     find $dir -type d -name $name "$@"
 }
 
-ff () {
-    local __doc__="ff $dir $filename # finds files with that name in that dir"
-    shift_dir "$@" && shift
-    filename=$1; shift
-    find $dir -type f -name $filename "$@"
-}
-
-fl () {
-    freds | tr ' ' '\n'
-}
-
 fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then
@@ -461,14 +450,6 @@ ddg () {
     firefox "https://next.duckduckgo.com/?q=$*"
 }
 
-fcc () {
-    $(freds -l)
-}
-
-fee () {
-    $(freds -e "$@")
-}
-
 fgg () {
     fgv *.py "$@"
 }
@@ -479,40 +460,6 @@ fgp () {
 
 fgt () {
     fgv *.test *.tests "$@"
-}
-
-fll () {
-    $(freds -l)
-}
-
-fpu () {
-# debug fred.py if it exists here or in ~/tmp
-    $(freds -d "$@")
-}
-
-fpy () {
-# run fred.py if it exists here or in ~/tmp
-    $(freds -p "$@")
-}
-
-frd () {
-# debug fred.py if it exists here or in ~/tmp
-    $(freds -d "$@")
-}
-
-frr () {
-# run fred.py if it exists here or in ~/tmp
-    $(freds -p "$@")
-}
-
-fsh () {
-# run fred.sh if it exists here or in ~/tmp
-    $(freds -s "$@")
-}
-
-fss () {
-# run fred.sh if it exists here or in ~/tmp
-    $(freds -s "$@")
 }
 
 ftt () {
@@ -696,10 +643,6 @@ raj () {
     popd >/dev/null 2>&1
 }
 
-rff () {
-    $(freds -r "$@")
-}
-
 rlf () {
     readlink -f "$@"
 }
@@ -788,10 +731,6 @@ vlf () {
 
 vlo () {
     v $(locate "$@")
-}
-
-vff () {
-    $(freds -e "$@")
 }
 
 vpe () {
