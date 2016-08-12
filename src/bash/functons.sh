@@ -797,7 +797,9 @@ bump () {
     if [[ -d "$1" ]] ; then _bump_dir="$1"; shift; fi
     local _part=${1:-patch}; shift
     if [[ $_part != show ]]; then
+        git pull --rebase
         if bumpversion $_part "$@"; then
+            git push
             git push origin --tags
         fi
     fi
