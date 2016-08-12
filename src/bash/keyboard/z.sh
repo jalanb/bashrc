@@ -17,7 +17,7 @@ zz () {
 # _xx
 # xxx
 
-. ~/jab/src/bash/zed.sh
+# . ~/jab/src/bash/zoo.sh
 
 zzz () {
     df -h
