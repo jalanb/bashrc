@@ -43,7 +43,9 @@ gi () {
 }
 
 gp () {
-    git push "$@"
+    if ! git push 2>/dev/null; then
+        $(git push 2>&1 | grep set-upstream)
+    fi
 }
 
 gs () {
@@ -84,7 +86,7 @@ gai () {
 
 gba () {
     if [[ -z "$*" ]]; then
-        git branch -a 2&>1 | grep -v warning
+        git branch -a 2>&1 | grep -v warning
     else
         git branch -a 2>&1 | grep -v warning | grep --color "$@";
     fi
