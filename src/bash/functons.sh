@@ -977,6 +977,18 @@ ylint () {
 
 # xxxxxx
 
+bumper () {
+    if [[ -z $1 ]]; then
+        echo Please specify branch to bump >&2
+        return 1
+    fi
+    local _branch=$1; shift
+    git co $_branch
+    git pull --rebase
+    bump "$@"
+    git push
+}
+
 cd_one () {
     clear
     shift_dir "$@" && shift
