@@ -49,6 +49,8 @@ alias 35="cd ~/jab/log"
 alias 36="cd ~/jab/txt"
 
 alias 40="cd ~/wwts/.."
+alias 41="cd ~/wwts/dashboard.1"
+alias 43="cd ~/wwts/tools"
 alias 44="cd ~/wwts/dashboard"
 
 alias 50="cd ~/src/.."
