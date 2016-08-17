@@ -271,7 +271,7 @@ gdsi () {
 
 gsi () {
     shift_dir "$@" || shift
-    for f in $(git -C $dir status -s | grep "^\([M ]M\|??\)" | sed -e "s/^...//")
+    for f in $(git -C $dir status -s | grep "^\([MDU ][MU]\|??\)" | sed -e "s/^...//")
     do
         [[ -z $f ]] && continue
         _git_modified $f && git di $f || (_git_untracked $f && cat $f || continue )
