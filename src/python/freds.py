@@ -75,7 +75,7 @@ def dirs():
 
 def freds():
     exts = ('', '.py', '.sh', '.txt', '.now')
-    return [str('%s/fred%s' % (d,e)) for d in dirs() for e in exts]
+    return [str('%s/fred%s' % (d, e)) for d in dirs() for e in exts]
 
 
 def paths():
@@ -100,25 +100,25 @@ def purge_insubstantial():
 
 def as_path(fred):
     string = str(fred)
-    if not ' ' in string:
+    if ' ' not in string:
         return string
     return '"%s"' % string
 
 
-def as_paths(freds):
-    return [as_path(_) for _ in freds]
+def as_paths(strings):
+    return [as_path(_) for _ in strings]
 
 
 def script(args):
     purge_insubstantial()
     command = 'ls'
     if args.directories:
-        global dirs
-        dirs = lambda : args.directories
-    freds = substantial()
+        global dirs # pylint: disable=global-variable-undefined
+        dirs = lambda: args.directories
+    fred_files = substantial()
     if args.debug:
-        freds = [_ for _ in freds if _.ext == '.py'][:1]
-        if not freds:
+        fred_files = [_ for _ in fred_files if _.ext == '.py'][:1]
+        if not fred_files:
             raise ScriptError('No pythonic freds found')
         command = 'pudb'
     elif args.list:
@@ -128,21 +128,21 @@ def script(args):
     elif args.remove:
         command = 'rm -vrf'
     elif args.python:
-        freds = [_ for _ in freds if _.ext == '.py'][:1]
-        if not freds:
+        fred_files = [_ for _ in fred_files if _.ext == '.py'][:1]
+        if not fred_files:
             raise ScriptError('No pythonic freds found')
         command = 'mython'
     elif args.shell:
-        freds = [_ for _ in freds if _.ext == '.sh'][:1]
-        if not freds:
+        fred_files = [_ for _ in fred_files if _.ext == '.sh'][:1]
+        if not fred_files:
             raise ScriptError('No bashable freds found')
         command = 'bash -x'
     else:
-        print(' '.join(freds))
+        print(' '.join(fred_files))
         return True
-    if not freds:
+    if not fred_files:
         raise ScriptError('No freds found')
-    print('%s %s' % (command, ' '.join(as_paths(freds))))
+    print('%s %s' % (command, ' '.join(as_paths(fred_files))))
     return True
 
 
