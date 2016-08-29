@@ -314,6 +314,7 @@ gaii () {
 gcmr () {
     gcm
     git pull --rebase
+    bump show
 }
 
 gcpe () {
