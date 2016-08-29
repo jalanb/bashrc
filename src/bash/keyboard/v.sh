@@ -94,6 +94,10 @@ vvv () {
     gsi)
 }
 # xxxx
+
+vd12 () {
+    vd ~/tmp/one ~/tmp/two
+}
 # xxxxx
 
 old_v () {
