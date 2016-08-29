@@ -33,6 +33,6 @@ pt () {
     $_ptpython \
         --vi \
         --config-dir=$PT_CONFIG_DIR \
-        --interactive=~/jab/src/python/ptpython.py \
+        --interactive=$HOME/jab/src/python/ptpython.py \
         -- "$@"
 }
