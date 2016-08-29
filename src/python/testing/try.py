@@ -57,8 +57,8 @@ def show(thing):
 class TestBeingRun(object):
     """Encapsulation of the current test"""
     def __init__(self, that):
-        self.here = sites.paths.path('.')
-        self.home = sites.paths.path('~')
+        self.here = site.paths.path('.')
+        self.home = site.paths.path('~')
         self.username = os.environ['USER']
         try:
             self.host = os.environ['HOST']
@@ -82,7 +82,7 @@ class TestBeingRun(object):
         name = 'path_to_%s' % ext
         if hasattr(self, name):
             return
-        path_to_ext = sites.paths.path('%s.%s' % (base, ext))
+        path_to_ext = site.paths.path('%s.%s' % (base, ext))
         if path_to_ext.isfile() or ext == 'fail':
             setattr(self, name, path_to_ext)
 
@@ -118,7 +118,7 @@ class Sys_Path_Handler(object):
 
     def add(self, item):
         """Add the item to sys.path"""
-        directory = sites.paths.path(item).directory()
+        directory = site.paths.path(item).directory()
         if directory not in self.paths:
             self.paths.insert(0, directory)
             if directory not in sys.path:
@@ -126,7 +126,7 @@ class Sys_Path_Handler(object):
 
     def remove(self, item):
         """Remove the item from sys.path"""
-        directory = sites.paths.path(item).directory()
+        directory = site.paths.path(item).directory()
         if directory in self.paths:
             self.paths.remove(directory)
             if directory in sys.path:
@@ -184,7 +184,7 @@ def test_file(test_script, options):
             'spread' : spread,
             'see_methods' : see_methods,
             'see_attributes' : see_attributes,
-            'makepath' : sites.paths.path,
+            'makepath' : site.paths.path,
             'show' : show,
             'bash' : run_command,
             'DoctestInterrupt' : DoctestInterrupt,
