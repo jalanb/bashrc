@@ -99,7 +99,7 @@ def main(args):
 
     digit_args = [_ for _ in args if digit_option(_)]
     non_digit_args = [_ for _ in args if digit_option(_)]
-    args = [_ for _ in args if _[:2] !=
+    args = [_ for _ in args if _[:2] != '--']
     stream = get_stream(args)
     if not stream:
         print >> sys.stderr, 'No file specified'
