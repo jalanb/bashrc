@@ -1,3 +1,6 @@
 #! /bin/bash -x
 
-sudo rm -ri /Users/jab/AlanSource/git/hub/jab/src/python/tmp*-vim.sh
+(
+cd /Users/jab/AlanSource/git/hub/jab/src/python/
+compgen -G "tmp*-vim.sh" >/dev/null && sudo rm -ri tmp*-vim.sh
+)
