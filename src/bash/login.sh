@@ -16,9 +16,6 @@ if [[ $- =~ i ]]; then
     export HUB
 
     source $HUB/jab/__init__.sh
-    export JAB
-
-    echo JAB is $JAB
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 

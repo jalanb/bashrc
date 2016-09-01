@@ -34,8 +34,8 @@ _av () {
 # aaa is defined in ack2vim.sh
 
 avb () {
-    __doc__="vack all args in $JAB/src/bash";
-    _av $JAB/src/bash "$@"
+    __doc__="vack all args in ~/jab/src/bash";
+    _av ~/jab/src/bash "$@"
 }
 
 avd () {
@@ -54,13 +54,13 @@ avh () {
 }
 
 avj () {
-    __doc__="vack all args in $JAB";
-    _av $JAB "$@"
+    __doc__="vack all args in ~/jab";
+    _av ~/jab "$@"
 }
 
 avp () {
-    __doc__="vack all args in $JAB/src/python";
-    _av $JAB/src/python "$@"
+    __doc__="vack all args in ~/jab/src/python";
+    _av ~/jab/src/python "$@"
 }
 
 avs () {
@@ -74,7 +74,7 @@ avu () {
 }
 
 avv () {
-    __doc__="vack all args in $JAB/vim";
-    _av $JAB/vim "$@"
+    __doc__="vack all args in ~/jab/vim";
+    _av ~/jab/vim "$@"
 }
 
