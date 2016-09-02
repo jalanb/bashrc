@@ -15,9 +15,9 @@ def parse_args():
                         help='files to edit')
     parser.add_argument('-c', '--clipboard', action='store_true',
                         help='Get lines from clipboard')
-    parser.add_argument('-f', '--first', type=int, default=1,
+    parser.add_argument('-f', '--first', type=int, default=0,
                         help='number of first line to show')
-    parser.add_argument('-l', '--last', type=int, default=-1,
+    parser.add_argument('-l', '--last', type=int, default=0,
                         help=' number of last line to show')
     parser.add_argument('-n', '--numbers', action='store_true',
                         help='Show line numbers')
@@ -25,13 +25,12 @@ def parse_args():
 
 
 def show_stream(stream, args):
-    for i, line in enumerate(stream.readlines(), 1):
-        if args.first > 0 and i < args.first:
-            continue
-        if args.last > 0 and i >= args.last:
-            break
+    all_lines = stream.readlines()
+    start = args.first if args.first == 0 else args.first - 1
+    lines = all_lines[start:args.last] if args.last else all_lines[start:]
+    for i, line in enumerate(lines, start if start > -1 else len(all_lines) + start):
         if args.numbers:
-            print '%d: ' % i,
+            print '%d: ' % (i + 1),
         print line.rstrip()
 
 
