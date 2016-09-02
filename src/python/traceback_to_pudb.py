@@ -88,19 +88,13 @@ def parse_traceback_lines(lines):
 
 
 def main(args):
-    """Run the program
-
-    If there are command line arguments
-        use them as files containing the tracebacks
-    Else
-        read the traceback from stdin
-    """
-    if args:
-        list_of_lines = [file(arg).readlines() for arg in args]
-    else:
-        list_of_lines = [sys.stdin.readlines()]
-    for lines in list_of_lines:
-        for line in parse_traceback_lines(lines):
+    """Use command line args as files containing tracebacks"""
+    streams = text_streams.argvs('-c')
+    if not streams:
+        print >> sys.stderr, 'No traceback file specified'
+        return not os.EX_OK
+    for stream in streams:
+        for line in parse_traceback_lines(text_streams.full_lines(stream)):
             print 'b', ':'.join(line)
     return os.EX_OK
 

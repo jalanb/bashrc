@@ -23,28 +23,9 @@ If you prefer to use splits instead of tabs, add the option "-s", e.g
 import re
 import os
 import sys
-import subprocess
 from StringIO import StringIO
 
-
-def get_clipboard_data():
-    process = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
-    retcode = process.wait()
-    data = process.stdout.read()
-    return data
-
-
-def get_stream(arguments):
-    """Open a stream for the first file in arguments, or stdin"""
-    if not arguments:
-        return sys.stdin
-    elif arguments[0] == '-c':
-        return StringIO(get_clipboard_data())
-    for argument in arguments:
-        if os.path.isfile(argument):
-            return file(argument, 'r')
-    return None
-
+import text_streams
 
 def line_regexp():
     """Regular expression to match a traceback file line"""
@@ -100,14 +81,14 @@ def main(args):
     digit_args = [_ for _ in args if digit_option(_)]
     non_digit_args = [_ for _ in args if digit_option(_)]
     args = [_ for _ in args if _[:2] != '--']
-    stream = get_stream(args)
+    stream = text_streams.first_argv('-c')
     if not stream:
         print >> sys.stderr, 'No file specified'
-        return 1
-    lines = [parse_line(line.strip()) for line in stream]
+        return not os.EX_OK
+    lines = [parse_line(l) for l in text_streams.full_lines(stream)]
     lines = [l for l in lines if l]
     print as_vim_command(lines, '-s' in args)
-    return 0
+    return os.EX_OK
 
 
 if __name__ == '__main__':
