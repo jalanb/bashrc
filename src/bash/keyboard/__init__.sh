@@ -8,7 +8,7 @@ _NAME=$(basename $BASH_SOURCE)
 pushd $_KEYBOARD_DIR >/dev/null 2>&1
 for _script in $(ls *.sh); do
     [[ $_NAME == "$_script" ]] && continue
-    . $_script
+    . $_KEYBOARD_DIR/$_script
 done
 popd >/dev/null 2>&1
 
