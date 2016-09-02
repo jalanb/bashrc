@@ -1,0 +1,47 @@
+#! /usr/bin/env python2
+"""Show some lines from files"""
+
+import os
+import sys
+import argparse
+
+import text_streams
+
+
+def parse_args():
+    """Parse out command line arguments"""
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument('files', metavar='files', type=str, nargs='*',
+                        help='files to edit')
+    parser.add_argument('-c', '--clipboard', action='store_true',
+                        help='Get lines from clipboard')
+    parser.add_argument('-f', '--first', type=int, default=1,
+                        help='number of first line to show')
+    parser.add_argument('-l', '--last', type=int, default=-1,
+                        help=' number of last line to show')
+    parser.add_argument('-n', '--numbers', action='store_true',
+                        help='Show line numbers')
+    return parser.parse_args()
+
+
+def show_stream(stream, args):
+    for i, line in enumerate(stream.readlines(), 1):
+        if args.first > 0 and i < args.first:
+            continue
+        if args.last > 0 and i >= args.last:
+            break
+        if args.numbers:
+            print '%d: ' % i,
+        print line.rstrip()
+
+
+def main():
+    """Run the script"""
+    args = parse_args()
+    for stream in text_streams.argvs(args.clipboard):
+        show_stream(stream, args)
+    return os.EX_OK
+
+
+if __name__ == '__main__':
+    sys.exit(main())
