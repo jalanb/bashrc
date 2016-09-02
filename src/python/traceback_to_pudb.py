@@ -4,6 +4,7 @@
 import os
 import sys
 
+from site import text_streams
 
 def de_quote(string):
     """Remove leading/trailing double quotes

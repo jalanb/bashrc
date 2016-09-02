@@ -25,7 +25,7 @@ import os
 import sys
 from StringIO import StringIO
 
-import text_streams
+from site import text_streams
 
 def line_regexp():
     """Regular expression to match a traceback file line"""
