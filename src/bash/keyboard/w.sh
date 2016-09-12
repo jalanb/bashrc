@@ -49,8 +49,8 @@ what_w () {
     if is_existing_alias $1; then
         alias $1
     elif is_existing_function $1; then
-        _de_declare_function $1
-        echo vim $path_to_file +$line_number +/$1
+        _parse_function $1
+        echo vim $path_to_file +$line_number "+/\"^$1 \""
     elif which $1 > /dev/null 2>&1; then
         real_file=$(readlink -f $(which $1))
         if [[ $real_file != $1 ]]; then
