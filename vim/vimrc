@@ -8,17 +8,17 @@
 "
  noremap  <F1>      :help<cr>
  noremap  <F2>      :ls<CR>:b<Space>
- noremap  <F3>      :map <F3> 
+ noremap  <F3>      :map <F3>
  noremap  <F4>      <c-w>w
  noremap  <F5>      <C-W>_
- noremap  <F6>      :map <F6> 
+ noremap  <F6>      :map <F6>
  noremap  <F7>      :set list!<CR>
  noremap  <F8>      O<esc>:w!<CR>:Limelight<cr>
  noremap  <F9>      :w!<CR>:Limelight<cr>
 inoremap  <F9>      <esc>:w!<CR>
- noremap <F10>      :map <F10> 
- noremap <F11>      :map <F11> 
- noremap <F12>      :map <F12> 
+ noremap <F10>      :map <F10>
+ noremap <F11>      :map <F11>
+ noremap <F12>      :map <F12>
 
  noremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
@@ -58,7 +58,7 @@ noremap tn :tabnew<Space>
 "noremap v - start visual
 "noremap w - forword
 " Next one is from http://vi.stackexchange.com/a/479/182
-cnoremap w!! w !sudo tee % 
+cnoremap w!! w !sudo tee %
 "noremap x - remove char
 "noremap y - yank
  noremap yb byw
@@ -98,18 +98,18 @@ cnoremap w!! w !sudo tee %
 "noremap : - command line
 "noremap "
 "noremap |
-"noremap < - 
-"noremap > - 
-"noremap ? - 
-"noremap ~ - 
+"noremap < -
+"noremap > -
+"noremap ? -
+"noremap ~ -
 "noremap !
 "noremap @
 "noremap L
-"noremap $ - 
+"noremap $ -
 "noremap %
 "noremap ^
 "noremap &
-"noremap * - 
+"noremap * -
 "noremap (
 "noremap )
 "noremap _
@@ -189,26 +189,24 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "
  noremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
-"noremap <leader>c 
-"noremap <leader>d 
- noremap <leader>D ?^\(def \)*[a-z][^ ]* *(.*) *.$
- noremap <leader>d /^\(def \)*[a-z][^ ]* *(.*) *.$
+"noremap <leader>c used by ftplugin/jab/python
+"noremap <leader>d used by ftplugin/jab/python
 "noremap <leader>e used by plugin/EasyMotion.vim
 "noremap <leader>f used by plugin/EasyMotion.vim
-"noremap <leader>g 
+"noremap <leader>g
 "noremap <leader>h
 "noremap <leader>i
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
 "noremap <leader>l
-"noremap <leader>m
+ noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(>\{2,}\)\)<cr>
  noremap <leader>n :call ChangeNumber()<cr>
-"noremap <leader>o
+"noremap <leader>o used by ftplugin/jab/python
  noremap <leader>p :set paste<cr>
  noremap <leader>q :qa!<cr>
  noremap <leader>r :set wrap!<cr>
 "noremap <leader>s
- noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR> 
+ noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
  noremap <leader>u :GundoToggle<CR>
  noremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
  noremap <leader>w :w<cr>
@@ -246,7 +244,7 @@ colorscheme jalanb " I have my own colorscheme (usually at ~/.vim/colors/jalanb.
 set title           " the title of the window will be set to filename being edited
 set showmode        " If in Insert, Replace or Visual mode put a message on the last line.
 set showcmd         " Show (partial) command in the last line of the screen.
-set showmatch		" Show matching brackets.
+set showmatch       " Show matching brackets.
 set nowrap          " Do not wrap lines (initially)
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
@@ -256,7 +254,7 @@ set smarttab        " When on, a <Tab> in front of a line inserts blanks accordi
 set tabpagemax=1000 " Maximum number of tab pages to be opened by the -p command line argument
                     " I set it very high as I use -p by default
 set nospell         " Turn off spell checking
-" 
+"
 " Back in the day I used to use the SeeTab plugin
 " let g:SeeTabGuiFG="Cyan"
 " See http://www.vim.org/scripts/script.php?script_id=628 for more
@@ -288,7 +286,7 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)
 "
-call pathogen#infect() 
+call pathogen#infect()
 call pathogen#helptags()
 filetype on
 filetype plugin on
@@ -305,7 +303,7 @@ let g:easytags_auto_highlight = 0
 "
 " pylint {{{2
 "
-let g:pylint_show_rate = 0                                                                                                     
+let g:pylint_show_rate = 0
 "
 " Limelight {{{2
 "
@@ -475,7 +473,7 @@ endfunction
 set nonumber    " Start without line numbers
 "
 " Search {{{2
-" 
+"
 " Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci
 :set grepprg=grep\ -nH
 "
@@ -496,7 +494,7 @@ set hlsearch        " highlight matches
 "
 " seek.vim is a plugin for 'in current line' searching
 "
-let g:SeekKey = 'f' 
+let g:SeekKey = 'f'
 let g:SeekBackKey = 'F'
 "
 " This looks like one of mine
