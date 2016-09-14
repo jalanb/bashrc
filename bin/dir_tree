@@ -1,0 +1,32 @@
+#! /usr/bin/env python2
+"""Take lines from stdin and show them as a dir tree"""
+
+import os
+import sys
+import itertools
+
+
+def common_path(p, q, sep):
+    return sep.join([
+        _[0] for _ in itertools.takewhile(
+            lambda x: x[0] == x[1],
+            itertools.izip(p.split(sep), q.split(sep))
+        )
+    ])
+
+
+def main():
+    p = ''
+    for line in sys.stdin.readlines():
+        q = line.strip()
+        common = common_path(p, q, os.path.sep)
+        i = len(common)
+        if i > 1:
+            print '%s%s' % (str(' ' * (i + 1)), q[i+1:])
+        else:
+            print q
+        p = q
+    return os.EX_OK
+
+if __name__ == '__main__':
+    sys.exit(main())
