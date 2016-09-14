@@ -52,6 +52,7 @@ alias 40="cd ~/wwts/.."
 alias 41="cd ~/wwts/dashboard.1"
 alias 43="cd ~/wwts/tools"
 alias 44="cd ~/wwts/dashboard"
+alias 45="cd ~/wwts/dashboard.dev"
 
 alias 50="cd ~/src/.."
 alias 51="cd ~/src/experiments"
