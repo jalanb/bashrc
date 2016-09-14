@@ -14,6 +14,7 @@ _set_path () {
 _bashrc () {
     WELCOME_BYE=
     source ~/jab/__init__.sh
+    WELCOME_BYE=
     cd ~/jab
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
