@@ -601,6 +601,7 @@ num () {
 pi2 () {
     IPYTHON=ipython2; pi "$@"
 }
+alias pi1=pi2 # I keept typo-ing on that
 
 pi3 () {
     IPYTHON=ipython3; pi "$@"

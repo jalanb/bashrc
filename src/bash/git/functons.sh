@@ -317,6 +317,10 @@ gcmr () {
     bump show
 }
 
+gcpc () {
+    git cherry-pick --continue
+}
+
 gcpe () {
     git cherry-pick --edit "$@"
 }

@@ -35,7 +35,8 @@ vb () {
 }
 
 vc () {
-    vim -p $("$@" | grep -v "##########")
+    # https://www.reddit.com/r/vim/comments/53mhut/using_vim_like_awk/d7ude9m
+    vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
 }
 
 vd () {
