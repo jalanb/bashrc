@@ -333,6 +333,10 @@ glp1 () {
     glp -n1 "$@"
 }
 
+gls1 () {
+    gls -n1 "$@"
+}
+
 gmmm () {
     local _branch=$(git_branch)
     git co master
