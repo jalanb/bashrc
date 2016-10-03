@@ -220,7 +220,8 @@ def main():
     """Run the program"""
     try:
         options, args, globs = parse_options()
-    except NotImplementedError:
+    except NotImplementedError as e:
+        print >> sys.stderr, e
         return os.EX_USAGE
     return script(options, args, globs)
 
