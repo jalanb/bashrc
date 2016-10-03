@@ -89,7 +89,7 @@ in which case it falls back to type(obj).
     elif callable(obj):
         return 'XXX'  # pylint: disable=fixme
     try:
-        return run_with_timeout("str(obj)", 5, {'obj': obj})
+        return run_with_timeout("str(obj)", 30, {'obj': obj})
     except TimeOutError:
         return (type(obj), "(str too slow to compute)")
 
