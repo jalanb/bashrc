@@ -14,7 +14,7 @@ rd () {
 }
 
 rf () {
-    ~/jab/src/python/rf.py "$@"
+    python2 ~/jab/src/python/rf.py "$@"
 }
 
 rq () {
