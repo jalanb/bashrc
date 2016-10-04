@@ -37,7 +37,7 @@ export PYTHON_SOURCE_PATH=~/jab/src/python:~/src/python
 [[ -f "~/jab/src/python/pythonrc.py" ]] && export PYTHONSTARTUP=~/jab/src/python/pythonrc.py
 
 _upgrade_package () {
-    pip install --upgrade "$@" 2>&1 | grep -v "Requirement already up-to-date"
+    pip2 install --upgrade "$@" 2>&1 | grep -v "Requirement already up-to-date"
 }
 
 upgrades () {
