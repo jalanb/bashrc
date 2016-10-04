@@ -156,7 +156,7 @@ fv () {
     if [[ -z "$@" ]]; then
         echo Nothing to find
     else
-        files=$(find $dir -name "$@")
+        files=$(find $(readlink -f $dir) -name "$@")
         if [[ -z $files ]]; then
             echo "$@" not found
         else

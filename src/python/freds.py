@@ -70,6 +70,7 @@ def parse_args(methods):
 
 
 class Freds(object):
+    """Handle fred.* as strings, paths, files, ..."""
     def __init__(self, dirs):
         self._dirs = dirs
 
