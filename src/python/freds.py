@@ -69,33 +69,28 @@ def parse_args(methods):
     return args
 
 
-def dirs():
-    return ('.', '~/tmp', '/tmp')
+class Freds(object):
+    def __init__(self, dirs):
+        self._dirs = dirs
 
+    def _strings(self):
+        exts = ('', '.py', '.sh', '.txt', '.now')
+        return [str('%s/fred%s' % (d, e)) for d in self._dirs for e in exts]
 
-def freds():
-    exts = ('', '.py', '.sh', '.txt', '.now')
-    return [str('%s/fred%s' % (d, e)) for d in dirs() for e in exts]
+    def _paths(self):
+        return [site.paths.path(_) for _ in self._strings()]
 
+    def _files(self):
+        return [_ for _ in self._paths() if _.isfile()]
 
-def paths():
-    return [site.paths.path(_) for _ in freds()]
+    def substantial(self):
+        return set(_ for _ in self._files() if _.size)
 
+    def _insubstantial(self):
+        return [_ for _ in self._files() if not _.size]
 
-def files():
-    return [_ for _ in paths() if _.isfile()]
-
-
-def substantial():
-    return set(_ for _ in files() if _.size)
-
-
-def insubstantial():
-    return [_ for _ in files() if not _.size]
-
-
-def purge_insubstantial():
-    [_.remove() for _ in insubstantial()]
+    def purge_insubstantial(self):
+        [_.remove() for _ in self._insubstantial()]
 
 
 def as_path(fred):
@@ -110,12 +105,10 @@ def as_paths(strings):
 
 
 def script(args):
-    purge_insubstantial()
     command = 'ls'
-    if args.directories:
-        global dirs # pylint: disable=global-variable-undefined
-        dirs = lambda: args.directories
-    fred_files = substantial()
+    freds = Freds(args.directories or ['.', '~/tmp', '/tmp'])
+    freds.purge_insubstantial()
+    fred_files = freds.substantial()
     if args.debug:
         fred_files = [_ for _ in fred_files if _.ext == '.py'][:1]
         if not fred_files:
