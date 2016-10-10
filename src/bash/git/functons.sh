@@ -24,6 +24,14 @@ ga () {
     fi
 }
 
+gb () {
+    if [[ -z "$*" ]]; then
+        git branch 2>&1 | grep -v warning
+    else
+        git branch 2>&1 | grep -v warning | grep --color "$@";
+    fi
+}
+
 gc () {
     local _storage=/tmp/gc.sh
     if [[ -z "$@" ]]; then git commit --verbose
@@ -153,6 +161,10 @@ _gl () {
     local _one_third_of_vertical=$(( $_vertical_lines / 4 ))
     local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
     git $cmd "$@" | head -n $_lines
+}
+
+gl1 () {
+    git log -n1 "$@"
 }
 
 gla () {
@@ -353,7 +365,14 @@ grmm () {
 # xxxxx
 
 clone () {
-    cd $(git clone $1 2> /tmp/2.log; grep Cloning.into /tmp/2.log | sed -e "s/Cloning into '//" -e "s/'.*//")
+    local _clone_log=/tmp/_clone.log
+    echo "" > $_clone_log
+    git clone "$1" 2>&1 > $_clone_log
+    if grep -q fatal $_clone_log; then
+        cat $_clone_log
+    else
+        cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
+    fi
 }
 
 # xxxxxx
