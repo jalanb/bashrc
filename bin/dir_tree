@@ -15,9 +15,19 @@ def common_path(p, q, sep):
     ])
 
 
+def dir_sort(lines):
+    """Sort the lines by directory, then basename"""
+    def compare(a, b):
+        diff = cmp(os.path.dirname(a), os.path.dirname(b))
+        if diff:
+            return diff
+        return cmp(os.path.basename(a), os.path.basename(b))
+    return sorted(lines, cmp=compare)
+
+
 def main():
     p = ''
-    for line in sys.stdin.readlines():
+    for line in dir_sort(sys.stdin.readlines()):
         q = line.strip()
         common = common_path(p, q, os.path.sep)
         i = len(common)

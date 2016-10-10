@@ -1,5 +1,5 @@
 #! /usr/bin/env python2.7
-"""Script to """
+"""Script to get a key from the keyboard"""
 
 from __future__ import print_function
 import os
