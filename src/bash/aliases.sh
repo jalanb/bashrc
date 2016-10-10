@@ -113,6 +113,8 @@ alias tags="p ~/jab/src/python/ptags.py "
 
 alias .....='c ../../../..'
 
+alias mkenv=mkvirtualenv
+
 alias ptags="p ~/jab/src/python/ptags.py "
 
 # xxxxxx
