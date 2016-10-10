@@ -877,13 +877,11 @@ SUDO () {
 }
 
 dicp () {
-    COMMAND_FOR_SAME_FILES=cp
-    _dixx "$1" "$2"
+    COMMAND_FOR_SAME_FILES=cp _dixx "$1" "$2"
 }
 
 dihh () {
-    COMMAND_FOR_SAME_FILES=hd
-    _dixx "$@"
+    COMMAND_FOR_SAME_FILES=hd _dixx "$@"
 }
 
 divv () {
@@ -1308,25 +1306,25 @@ _publish_Localhost () {
 # functions starting with an underscore are intended for use within this file only
 
 _dixx () {
-    source_dir="$1"
-    destination_dir="$2"
-    local number_in_both=$(_divv_get_difference | grep Files | wc -l)
+    local _source_dir="$1"
+    local _destination_dir="$2"
+    local number_in_both=$(_divv_get_difference "$1" "$2" | grep Files | wc -l)
     if [[ $number_in_both -gt 0 ]]; then
         echo
         echo "# Files 1 and 2 differ"
-        _divv_get_difference | grep Files | sed -e 's/Files /'$COMMAND_FOR_SAME_FILES' "/' -e 's/ and /" "/' -e 's/ differ/"/'
+        _divv_get_difference "$1" "$2" | grep Files | sed -e 's/Files /'$COMMAND_FOR_SAME_FILES' "/' -e 's/ and /" "/' -e 's/ differ/"/'
     fi
-    local number_in_source=$(_divv_get_difference | grep "Only in $source_dir" | wc -l)
+    local number_in_source=$(_divv_get_difference "$1" "$2" | grep "Only in $_source_dir" | wc -l)
     if [[ $number_in_source -gt 0 ]]; then
         echo
-        echo "Only in $source_dir"
-        _divv_get_difference | grep "Only in $source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+        echo "Only in $_source_dir"
+        _divv_get_difference "$1" "$2" | grep "Only in $_source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
     fi
-    local number_in_destination=$(_divv_get_difference | grep "Only in $destination_dir" | wc -l)
+    local number_in_destination=$(_divv_get_difference "$1" "$2" | grep "Only in $_destination_dir" | wc -l)
     if [[ $number_in_destination -gt 0 ]]; then
         echo
-        echo "Only in $destination_dir"
-        _divv_get_difference | grep "Only in $destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+        echo "Only in $_destination_dir"
+        _divv_get_difference "$1" "$2" | grep "Only in $_destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
     fi
 }
 
@@ -1363,10 +1361,12 @@ _edit_locals () {
 }
 
 _divv_get_difference () {
-    local source_gitignore=
-    [[ -f "$source_dir/.gitignore" ]] && source_gitignore="--exclude-from=$source_dir/.gitignore"
+    local _source_dir="$1"
+    local _destination_dir="$2"
+    local _source_gitignore=
+    [[ -f "$_source_dir/.gitignore" ]] && _source_gitignore="--exclude-from=$_source_dir/.gitignore"
     local destination_gitignore=
-    [[ -f "$destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$destination_dir/.gitignore"
+    [[ -f "$_destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$_destination_dir/.gitignore"
     diff -q -r \
         --exclude=.svn \
         --exclude=.git \
@@ -1381,9 +1381,9 @@ _divv_get_difference () {
         --exclude="*.a" \
         --exclude="*.o" \
         --exclude=.gitignore \
-        $source_gitignore \
+        $_source_gitignore \
         $destination_gitignore \
-    "$source_dir" "$destination_dir" 2>/dev/null
+    "$_source_dir" "$_destination_dir" 2>/dev/null
 }
 
 unremembered () {
