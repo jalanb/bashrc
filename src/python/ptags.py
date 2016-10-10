@@ -21,19 +21,19 @@ I am targeting vim, so
 import sys
 import re
 
+from dotsite.paths import makepath, pwd, home
+from repositories import svn
+
 import argv
 argv.add_options([
     ('verbose', 'Report disk changes', False),
     ('recursive', 'Recurse into sub-directories', False)
 ])
 
-from dotsite.paths import makepath, pwd, home
-from repositories import svn
-
 
 def def_or_class_regexp():
-    """A regular expression to recognise a def/class statement in a Python line"""
-    return re.compile('''
+    """A regular expression to match a def/class statement in a Python line"""
+    return re.compile(r'''
         (?P<address>
             ^[ \t]*
             (?P<type>def|class)
@@ -83,6 +83,7 @@ class Tag(object):
         pattern = self.address_pattern()
         return pattern[:2], pattern[2:]
 
+
 class FileTag(Tag):
     """A tag which include a file path"""
     # pylint: disable-msg=R0903
@@ -92,7 +93,7 @@ class FileTag(Tag):
             self.name = path.namebase
         except AttributeError:
             path = makepath(path)
-        Tag.__init__(self, path, {'address':'1'})
+        Tag.__init__(self, path, {'address': '1'})
         self.name = path.namebase
         self.address = '1'
 
@@ -113,17 +114,17 @@ def more_likely_of(old, new):
         if old.split_address_pattern() == (' +', new.address_pattern()):
             old.name = '.%s' % old.name
             return old, new
-        if ('+class' in new.address and '+def' in old.address) or ('+class' in old.address and '+def' in new.address):
+        if ('+class' in new.address and '+def' in old.address) or \
+           ('+class' in old.address and '+def' in new.address):
             return old, new
         return old, new
-        #raise ValueError('%s\n%s\n\t"%s" != "%s"' % (old.path, new.path, old.address , new.address))
     raise NotImplementedError('\n\t%r\n\t%r' % (old.path, new.path))
 
 
 def read_file(path_to_python):
     """Read a python file and generate tags thence"""
     previous_tag = FileTag(path_to_python)
-    tags = [ previous_tag ]
+    tags = [previous_tag]
     problems = []
     try:
         lines = previous_tag.path.lines()
@@ -141,14 +142,14 @@ def read_file(path_to_python):
                 try:
                     want_t, tag = more_likely_of(previous_tag, tag)
                 except ValueError, e:
-                    problems.append( str(e) )
+                    problems.append(str(e))
                 break
         else:
-            tags.append( tag )
+            tags.append(tag)
             continue
         if not want_t:
             tags.remove(previous_tag)
-        tags.append( tag )
+        tags.append(tag)
     if problems:
         raise ValueError('\n'.join(problems))
     return tags
@@ -161,25 +162,25 @@ def read_dir(path_to_directory):
     tags = []
     for path_to_python in path_to_directory.files('*.py'):
         for tag in read_file(path_to_python):
-            tags.append( tag )
+            tags.append(tag)
     return tags
 
 
 def read_dirs(path_to_directory=None):
-    """Read tags for all python files in the given directory, and recursively under it"""
+    """Read tags for directory/*.py, and recursively under it"""
     if not path_to_directory:
         path_to_directory = pwd()
     tags = read_dir(path_to_directory)
     for path_to_sub_directory in path_to_directory.walkdirs():
         if svn.is_svn_path(path_to_sub_directory):
             continue
-        tags += read_dir(path_to_sub_directory)
+        tags.append(read_dir(path_to_sub_directory))
     return tags
 
 
 def tags_to_text(tags):
     """Return a text of sorted tags"""
-    str_tags = [ str(t) for t in tags ]
+    str_tags = [str(t) for t in tags]
     sorted_tags = sorted(str_tags)
     return '\n'.join(sorted_tags)
 
@@ -198,7 +199,7 @@ def write_dir(path_to_directory, tags):
 
 
 def read_write_dir(path_to_directory=None):
-    """Read tags from the files in the given directory, and write a tags file"""
+    """Read tags from the files in the directory, and write a tags file"""
     if not path_to_directory:
         if argv.directories:
             [read_write_dir(d) for d in argv.directories]
@@ -209,7 +210,7 @@ def read_write_dir(path_to_directory=None):
 
 
 def read_write_dirs(path_to_directory=None):
-    """Read tags from the files in the given directory (and recursively under it), and write a tags file"""
+    """Write tags from the files in/under the directory"""
     if not path_to_directory:
         if argv.directories:
             [read_write_dirs(d) for d in argv.directories]
@@ -228,12 +229,12 @@ def read_sys_dirs():
     """Read tags for each path in sys.path"""
     tags = []
     for path_to_system in sys.path:
-        tags += read_dir(makepath(path_to_system))
+        tags.append(read_dir(makepath(path_to_system)))
     return tags
 
 
 def all_directories_in_a_list_of_tags(tags):
-    """Get a sorted list of all the directories mentioned in the given list of tags"""
+    """Get a sorted list of all the directories mentioned in the given tags"""
     return sorted({home().relpathto(t.path.parent) for t in tags})
 
 
