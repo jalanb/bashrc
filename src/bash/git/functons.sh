@@ -173,12 +173,15 @@ gla () {
 
 glg () {
     local _number_of_commits=7
-    if [[ $1 =~ [[:digit:]] ]]; then
+    #if [[ $1 =~ [[:digit:]] && $1 !~ [[:alpha:]] ]]; then
+    if [[ $1 =~ ^-?[0-9]+$ ]]; then
         _number_of_commits=$1
         shift
     fi
-    git log -n${1:-$_number_of_commits} --stat --color | head -n $(( LINES / 4 ))
-    _gl lg -n${1:-$_number_of_commits} "$@" | _call_me_alan | sed -e "s/ ago//"
+    # Show full log for quarter of screen
+    git log -n$_number_of_commits --stat --color "$@" | head -n $(( LINES / 4 ))
+    # Show one line per commit
+    GIT_LOG_LINES=$_number_of_commits _gl lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
 gln () {
