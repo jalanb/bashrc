@@ -1,0 +1,52 @@
+#! /usr/bin/env python2
+"""Find imports in python files"""
+
+from __future__ import print_function
+
+import linecache
+from collections import defaultdict
+
+import dotsite as site
+
+__version__ = '0.1.0'
+
+
+def add_args(parser):
+    """Parse out command line arguments"""
+    parser.add_argument('source',
+                        help='path to source(s) to be checked')
+    parser.add_argument('-e', '--edit', action='store_true',
+                        help='Show a command for editting')
+    parser.add_argument('-u', '--unused', action='store_true',
+                        help='Show unused imports')
+
+
+def show_unused(source, editting):
+    visitor = site.imports.extract_imports(source)
+    ordered_lines = defaultdict(set)
+    for name, lines in visitor.unused().items():
+        for line in lines:
+            ordered_lines[line].add(name)
+    if not ordered_lines:
+        return False
+    for line in sorted(ordered_lines):
+        names = ordered_lines[line]
+        print('%s\n% 4d: %s' % (
+            ','.join(names),
+            line,
+            linecache.getline(source, line).rstrip()))
+    if editting:
+        print(r'\nvim %s +/"\(%s\)"' % (
+            source,
+            r'\)\|\('.join(visitor.unused().keys())))
+    return True
+
+
+def script(args):
+    if args.unused:
+        show_unused(args.source, args.edit)
+    return True
+
+
+if __name__ == '__main__':
+    site.scripts.main(script, add_args, __version__)
