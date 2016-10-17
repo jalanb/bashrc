@@ -822,6 +822,10 @@ bump () {
 }
 
 
+dots () {
+    c ~/hub/dotsite/dotsite
+}
+
 down () {
     c ~/Download* "$@"
     lr -a
@@ -1061,6 +1065,11 @@ pylinum () {
 
 relpath () {
     python ~/jab/src/python/relpath.py "$@"
+}
+
+umports () {
+    reorder-python-imports "$@"
+    ~/jab/bin/imports -u "$@"
 }
 
 # xxxxxxxx

@@ -284,20 +284,30 @@ gdsi () {
     git di "$@"
 }
 
+_gsi_show_file () {
+    local _filename=$1
+    local _lines=$(wc -l "$_filename" | cut -d ' ' -f1)
+    if [[ $_lines < $LINES ]]; then
+        git di "$_filename"
+    else
+        gdi "$_filename"  # | lesser
+    fi
+}
+
 gsi () {
     shift_dir "$@" || shift
     for f in $(git -C $dir status -s | grep "^\([MDU ][MU]\|??\)" | sed -e "s/^...//")
     do
-        [[ -z $f ]] && continue
-        _git_modified $f && git di $f || (_git_untracked $f && cat $f || continue )
-        _gsi_prompt $f
-        if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt $f; fi
+        [[ -z "$f" ]] && continue
+        _git_modified "$f" && _gsi_show_file "$f" || (_git_untracked "$f" && less "$f" || continue )
+        _gsi_prompt "$f"
+        if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt "$f"; fi
         [[ $answer =~ [qQ] ]] && break
-        [[ $answer =~ [aA] ]] && ga $f
-        [[ $answer =~ [iI] ]] && (_git_modified $f && gai $f || (_git_untracked $f && echo Cannot split untracked file))
-        [[ $answer =~ [pP] ]] && (_git_modified $f && gap $f || (_git_untracked $f && echo Cannot split untracked file))
-        [[ $answer =~ [dD] ]] && (_git_modified $f && git co $f || (_git_untracked $f && rm -i $f))
-        [[ $answer =~ [vV] ]] && _gsi_vim $f
+        [[ $answer =~ [aA] ]] && ga "$f"
+        [[ $answer =~ [iI] ]] && (_git_modified "$f" && gai "$f" || (_git_untracked "$f" && echo Cannot split untracked file))
+        [[ $answer =~ [pP] ]] && (_git_modified "$f" && gap "$f" || (_git_untracked "$f" && echo Cannot split untracked file))
+        [[ $answer =~ [dD] ]] && (_git_modified "$f" && git co "$f" || (_git_untracked "$f" && rm -i "$f"))
+        [[ $answer =~ [vV] ]] && _gsi_vim "$f"
         [[ $answer =~ [cC] ]] && git commit
     done
     gc

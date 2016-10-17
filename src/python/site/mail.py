@@ -1,4 +1,4 @@
-# pylint: disable=too-many-lines
+#pylint: disable=too-many-lines
 """This program should handle mail
 
 It is not a full mail reader,
