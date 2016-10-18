@@ -14,7 +14,7 @@ import sys
 from optparse import OptionParser
 
 
-import dotsite as site
+from dotsite.paths import path
 
 
 class UserMessage(Exception):
@@ -29,13 +29,13 @@ def _get_path_to_test_directory(strings):
         or the directory of the first file in strings
     """
     for string in strings:
-        path_to_string = site.paths.path(string)
+        path_to_string = path(string)
         if path_to_string.isdir():
             result = path_to_string
             break
     else:
         for string in strings:
-            path_to_string = site.paths.path(string)
+            path_to_string = path(string)
             if path_to_string.parent and path_to_string.isfile():
                 result = path_to_string.parent
                 break
@@ -54,11 +54,11 @@ def _existing_test_files(path_to_stem):
         or otherwise looking the current directory
 
     Not expecting any test scripts in the root directory
-    >>> _existing_test_files(site.paths.path('/test_files.txt')) == []
+    >>> _existing_test_files(path('/test_files.txt')) == []
     True
 
     But we should expect them for this script
-    >>> __file__ in _existing_test_files(site.paths.path(__file__))
+    >>> __file__ in _existing_test_files(path(__file__))
     True
     """
     if path_to_stem.isfile():
@@ -89,8 +89,8 @@ def _get_path_stems(strings, recursive):
     """
     if not strings:
         strings = []
-    here = site.paths.path('.')
-    paths = ['/' in string and site.paths.path(string) or here / string for string in strings]
+    here = path('.')
+    paths = ['/' in string and path(string) or here / string for string in strings]
     if recursive:
         return add_sub_dirs(paths)
     return paths
@@ -212,7 +212,7 @@ def all_possible_test_files_in(path_to_root, recursive):
 
 def _get_scripts_here(recursive):
     """Find all test scripts in the current working directory"""
-    here = site.paths.path('.')
+    here = path('.')
     result = []
     for python_file in all_possible_test_files_in(here, recursive):
         if has_python_source_extension(python_file):

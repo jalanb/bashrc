@@ -12,12 +12,13 @@ from fnmatch import fnmatch
 
 
 from repositories import repository
-import dotsite as site
+from dotsite.paths import path as makepath
+from dotsite import splits
 
 
 def _path_to_locate():
     """Location of the locate command on most unixen"""
-    homebrewed_findutils = site.paths.path('/usr/local/Cellar/findutils/4.4.2/bin/')
+    homebrewed_findutils = makepath('/usr/local/Cellar/findutils/4.4.2/bin/')
     for basename in ('locate', 'glocate'):
         homebrewed_locate = homebrewed_findutils / basename
         if homebrewed_locate.isfile():
@@ -40,7 +41,7 @@ def _locate_regexp_option():
 
 
 def glob_to_regexp(string):
-    parts = site.splits.split_and_strip_whole(string, '[*?[]')
+    parts = splits.split_and_strip_whole(string, '[*?[]')
     if len(parts) == 1:
         if re.match('[*?[]', string[0]):
             parts.insert(0, '')
@@ -197,12 +198,12 @@ def main(args):
     options, args = _handle_command_line(args)
     result = not os.EX_OK
     for arg in args:
-        paths = _locate(arg, options)
-        if paths:
+        arg_paths = _locate(arg, options)
+        if arg_paths:
             if options.lsld:
-                ls_commands = [str('ls -ld %r' % str(_)) for _ in paths]
+                ls_commands = [str('ls -ld %r' % str(_)) for _ in arg_paths]
                 __ = [print(commands.getoutput(_)) for _ in ls_commands]
             else:
-                print('\n'.join(paths))
+                print('\n'.join(arg_paths))
             result = os.EX_OK
     return result

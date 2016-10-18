@@ -2,7 +2,7 @@
 import sys
 
 
-import dotsite as site
+from dotsite.paths import path
 
 
 paths = []
@@ -12,7 +12,7 @@ def refresh_paths():
     """Refresh the module-level paths"""
     paths[:] = []
     for p in sys.path:
-        paths.append(site.paths.path(p))
+        paths.append(path(p))
 
 
 def get_refreshed_paths():

@@ -9,8 +9,8 @@ print 'import re'
 import sys
 print 'import sys'
 
-import dotsite as site
-print 'import dotsite as site'
+import dotsite
+print 'import dotsite'
 
 from see import see
 print 'from see import see'

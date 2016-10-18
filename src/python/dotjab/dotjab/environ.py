@@ -1,7 +1,7 @@
 """Try to replicate my bash environment"""
 
 
-import dotsite as site
+from dotsite.paths import environ_path
 
 
 def _environ_dir(name):
@@ -13,7 +13,7 @@ def _environ_dir(name):
     True
     """
     try:
-        result = site.paths.environ_path(name)
+        result = environ_path(name)
     except KeyError:
         return None
     if not (result.isdir() or result.isfile()):

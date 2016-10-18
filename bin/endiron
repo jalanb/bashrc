@@ -8,7 +8,7 @@ import argparse
 from bdb import BdbQuit
 
 
-import dotsite as site
+from dotsite.paths import path
 
 
 __version__ = '0.1.0'
@@ -58,7 +58,7 @@ def parse_args(methods):
 
 
 def directory_parts(directory):
-    parts = site.paths.path(directory).splitall()
+    parts = path(directory).splitall()
     try:
         parts.remove('/')
     except ValueError:

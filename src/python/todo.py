@@ -10,7 +10,7 @@ except ImportError:
     from collections import namedtuple
 
 
-import dotsite as site
+from dotsite.paths import path
 import colours
 
 
@@ -22,7 +22,7 @@ def todo_file():
         arg = sys.argv[1]
         if os.path.isfile(arg):
             return arg
-    jab = site.paths.path('~/jab')
+    jab = path('~/jab')
     return jab / 'todo.txt'
 
 

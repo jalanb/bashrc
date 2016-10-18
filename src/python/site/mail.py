@@ -24,7 +24,7 @@ try:
     import pudb
 except ImportError:
     pass
-import dotsite as site
+from dotsite import getch
 import personal
 import mail_accounts
 
@@ -432,7 +432,7 @@ def get_reply(keys):
 
 
 def get_a_key():
-    key = ' ' if testing() else site.getch.getch().lower()
+    key = ' ' if testing() else getch.getch().lower()
     if ord(key) == 3:
         raise KeyboardInterrupt
     if key in 'qQ':

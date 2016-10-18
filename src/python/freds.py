@@ -10,7 +10,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-import dotsite as site
+from dotsite.paths import path
 
 
 __version__ = '0.1.0'
@@ -79,7 +79,7 @@ class Freds(object):
         return [str('%s/fred%s' % (d, e)) for d in self._dirs for e in exts]
 
     def _paths(self):
-        return [site.paths.path(_) for _ in self._strings()]
+        return [path(_) for _ in self._strings()]
 
     def _files(self):
         return [_ for _ in self._paths() if _.isfile()]

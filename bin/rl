@@ -6,8 +6,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-
-import dotsite as site
+from dotsite.paths import path
 
 
 def start_debugging():
@@ -36,7 +35,7 @@ def parse_args():
 
 
 def recursively_list(args):
-    here = sites.paths.path('.')
+    here = path('.')
     for f in here.walkfiles(pattern=args.glob[0], ignores=args.ignores):
         if args.relative:
             print f.short_relative_path_from_here()

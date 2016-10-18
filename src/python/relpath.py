@@ -7,7 +7,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-import dotsite as site
+from dotsite.paths import pwd
 
 
 __version__ = '0.1.0'
@@ -57,7 +57,7 @@ def parse_args(methods):
 
 
 def script(args):
-    p = site.paths.pwd()
+    p = pwd()
     method = p.short_relative_path_to if args.short else p.relpathto
     print(method(' '.join(args.items)))
     return True

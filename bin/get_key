@@ -5,7 +5,8 @@ from __future__ import print_function
 import sys
 
 
-import dotsite as site
+from dotsite import getch
+from dotsite import scripts
 
 
 __version__ = '0.1.1'
@@ -36,14 +37,14 @@ def script(args):
     if args.default:
         print(args.default, end=' ')
     if args.codes:
-        print(', '.join(site.getch.get_codes()))
+        print(', '.join(getch.get_codes()))
     else:
         try:
-            print(site.getch.get_key())
+            print(getch.get_key())
         except KeyError as e:
             print(e.message)
     return True
 
 
 if __name__ == '__main__':
-    sys.exit(site.scripts.main(script, add_args, __version__))
+    sys.exit(scripts.main(script, add_args, __version__))

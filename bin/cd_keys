@@ -7,7 +7,7 @@ from collections import deque
 from dotsite import debuggers
 from dotsite import dictionaries
 from dotsite import getch
-from dotsite import paths
+from dotsite.paths import path as makepath
 from dotsite import scripts
 
 __version__ = '0.1.0'
@@ -78,7 +78,7 @@ def script(args):
 
     queues = dictionaries.LazyDefaultDict(cd)
     motions = queue_motions(queues)
-    current = paths.makepath(args.path)
+    current = makepath(args.path)
     for action in input_():
         changed = motions.get(action, cd)(current)
         if not changed:

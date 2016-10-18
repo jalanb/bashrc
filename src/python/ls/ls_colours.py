@@ -5,7 +5,7 @@ import os
 import re
 from fnmatch import fnmatch
 
-import dotsite as site
+from dotsite import decorators
 import ansi_escapes
 
 
@@ -19,7 +19,7 @@ def _is_extension_glob(string):
         raise TypeError(repr(string))
 
 
-@site.decorators.memoize
+@decorators.memoize
 def load_ls_colours():
     """Load values from env's $LS_COLORS"""
     ls_colors = os.environ.get('LS_COLORS', '')

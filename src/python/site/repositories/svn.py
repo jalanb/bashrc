@@ -4,11 +4,12 @@
 import commands
 
 
-import dotsite as site
+from dotsite.paths import path
+from dotsite.paths import PathError
 
 
 def _get_existing_file(path_to_file):
-    result = sites.paths.path(path_to_file)
+    result = path(path_to_file)
     if result.isfile():
         return result
     raise ValueError('%s is not a file' % result)
@@ -35,7 +36,7 @@ def _get_svn_global_ignores():
     def _match(line):
         return line.startswith('global-ignores')
     path_to_home_config = _home_subversion_config()
-    lines = False
+    lines = []
     if path_to_home_config:
         lines = _get_some_subversion_config_lines(path_to_home_config, _match)
     if not lines:
@@ -58,13 +59,13 @@ def global_ignores():
     return set(value.split())
 
 
-def is_svn_path(path):
+def is_svn_path(path_):
     """Whether the path is to a subversion sub-directory
 
     >>> is_svn_path('/path/to/.svn/file')
     True
     """
-    return '/.svn' in path
+    return '/.svn' in path_
 
 
 def has_svn_path(paths):
@@ -97,11 +98,11 @@ def _existing_subversion_sub_directory(path_to_directory):
     return path_to_svn
 
 
-def _is_working_directory(path):
+def _is_working_directory(path_):
     try:
-        _ = _existing_subversion_sub_directory(path)
+        _ = _existing_subversion_sub_directory(path_)
         return True
-    except site.paths.PathError:
+    except PathError:
         return False
 
 
@@ -111,7 +112,7 @@ def get_significant_status(path_to_directory):
     Stop if any immediates have a significant status
         otherwise recurse into sub-directories
     """
-    path_to_directory = sites.paths.path(path_to_directory)
+    path_to_directory = path(path_to_directory)
     if not path_to_directory.isdir():
         return None
     if not _is_working_directory(path_to_directory):
@@ -128,9 +129,9 @@ def get_significant_status(path_to_directory):
     return None
 
 
-def show_stat(path):
-    if not _is_working_directory(path):
+def show_stat(path_):
+    if not _is_working_directory(path_):
         return
-    command = 'svn stat %r' % path
+    command = 'svn stat %r' % path_
     _, output = commands.getstatusoutput(command)
     print output

@@ -6,7 +6,8 @@ from __future__ import print_function
 import linecache
 from collections import defaultdict
 
-import dotsite as site
+from dotsite import scripts
+from dotsite import imports
 
 __version__ = '0.1.0'
 
@@ -22,7 +23,7 @@ def add_args(parser):
 
 
 def show_unused(source, editting):
-    visitor = site.imports.extract_imports(source)
+    visitor = imports.extract_imports(source)
     ordered_lines = defaultdict(set)
     for name, lines in visitor.unused().items():
         for line in lines:
@@ -49,4 +50,4 @@ def script(args):
 
 
 if __name__ == '__main__':
-    site.scripts.main(script, add_args, __version__)
+    scripts.main(script, add_args, __version__)

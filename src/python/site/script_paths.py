@@ -4,17 +4,17 @@
 import itertools
 
 
-import dotsite as site
+from dotsite.paths import path
 
 
 def get(strings):
-    hub = site.paths.path('~/hub')
-    jab = site.paths.path('~/jab')
+    hub = path('~/hub')
+    jab = path('~/jab')
     jab_bin = jab / 'bin'
     jab_src = jab / 'src'
     jab_python = jab_src / 'python'
     jab_todo = jab / 'todo.txt'
-    config = site.paths.path('~/.config')
+    config = path('~/.config')
     abbreviations = {
         '2': [
             jab_todo,
@@ -42,7 +42,7 @@ def get(strings):
         ], 'main': [
             hub / 'main.py',
         ], 'paths': [
-            hub / 'dotsite/dotsite/paths.py',
+            hub / 'dotsite/dotpaths.py',
         ], 'whap': [
             hub / 'what/whap.py',
         ], 'what': [
@@ -54,8 +54,9 @@ def get(strings):
         # ],
     }
     if strings:
-        lists_of_paths = [abbreviations[s] for s in strings if s in abbreviations]
+        lists_of_paths = [abbreviations[s] for s in strings
+                          if s in abbreviations]
     else:
-        lists_of_paths = [v for k, v in abbreviations.items()]
-    paths = list(itertools.chain(*lists_of_paths))
-    return [_ for _ in paths if _.isfile()]
+        lists_of_paths = abbreviations.values()
+    paths_ = list(itertools.chain(*lists_of_paths))
+    return [_ for _ in paths_ if _.isfile()]
