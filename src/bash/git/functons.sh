@@ -220,13 +220,11 @@ grh () {
 }
 
 gri () {
-    git stash
     if [[ -n $1 ]]; then
         git rebase --interactive "$@"
     else
         git rebase --interactive HEAD~2
     fi
-    git stash pop
 }
 
 grr () {
