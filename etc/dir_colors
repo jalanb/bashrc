@@ -39,6 +39,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .ini          00;35
 .in           00;35
 .pth          00;35
+.py3          00;35
 .spec         00;35
 .test         00;35
 .tests        00;35
