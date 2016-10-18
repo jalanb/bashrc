@@ -123,11 +123,11 @@ gdd () {
 }
 
 gdi () {
-    git di "$@" | lesser
+    git di "$@"
 }
 
 gdis () {
-    git di --staged "$@" | lessen
+    git di --staged "$@"
 }
 
 gdh () {
@@ -288,7 +288,7 @@ _gsi_show_file () {
     if [[ $_lines < $LINES ]]; then
         git di "$_filename"
     else
-        gdi "$_filename"  # | lesser
+        gdi "$_filename"
     fi
 }
 

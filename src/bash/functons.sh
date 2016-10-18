@@ -267,7 +267,7 @@ lx () {
 }
 
 ly () {
-    python ~/jab/src/python/ls/ly.py  "$@"
+    lx *.py
 }
 
 ma () {
