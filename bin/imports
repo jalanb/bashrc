@@ -50,4 +50,4 @@ def script(args):
 
 
 if __name__ == '__main__':
-    scripts.main(script, add_args, __version__)
+    scripts.main(script, add_args, __version__, __doc__)
