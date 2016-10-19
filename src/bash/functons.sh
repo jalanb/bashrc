@@ -615,9 +615,9 @@ ps3 () {
 }
 
 raj () {
-    pushd ~/jab
+    pushq ~/jab
     range "$@"
-    popd >/dev/null 2>&1
+    popq
 }
 
 rlf () {
@@ -652,7 +652,7 @@ tma () {
 }
 
 tmp () {
-    pushd $(mython $KD_DIR/kd.py ~/tmp "$@")
+    pushq $(mython $KD_DIR/kd.py ~/tmp "$@")
 }
 
 unalias try > /dev/null 2>&1
@@ -893,6 +893,10 @@ divv () {
     _dixx "$@"
 }
 
+popq () {
+    popd >/dev/null 2>&1
+}
+
 this () {
     python -c "import this"
 }
@@ -941,6 +945,10 @@ LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }
 
+pushq () {
+    pushd "$@" 
+}
+
 quack () {
     local _result=1
     for $item in "$@"; do
@@ -968,7 +976,7 @@ range () {
     elif [[ $destination != $1 && $1 != "-" ]]; then
         echo "ranger $destination"
     fi
-    pushd "$destination"
+    pushq "$destination"
     source $(which ranger) $(which ranger)
     console_whoami
     return 0
@@ -1345,9 +1353,9 @@ _edit_source () {
     if [[ $filedir == "." ]]; then
         v $filepath
     else
-        pushd $filedir >/dev/null 2>&1
+        pushq $filedir
         v $filepath
-        popd >/dev/null 2>&1
+        popq
     fi
     if echo $filepath | grep -q alias; then
         source_aliases $filepath
@@ -1402,9 +1410,9 @@ unremembered () {
     if [[ $filedir == "." ]]; then
         v $filepath
     else
-        pushd $filedir >/dev/null 2>&1
+        pushq $filedir
         v $filepath
-        popd >/dev/null 2>&1
+        popq
     fi
     if echo $filepath | grep -q alias; then
         source_aliases $filepath

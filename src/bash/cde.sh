@@ -31,6 +31,7 @@ cde () {
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
     echo
     git_simple_status $(pwd) || lk
+    activate_virtualenv "$(pwd)"
 }
 # _xx
 # xxxx
@@ -49,3 +50,15 @@ cccde () {
 # _xxxxx
 # xxxxxx
 
+# xxxxxxxxxxxxxxxxxxx
+
+activate_virtualenv () {
+    [[ -d $HOME/.virtualenvs ]] || return 1
+    pushq .; cd $HOME/.virtualenvs/
+    local _name=$(basename "$1")
+    if [[ -d "$_name" ]]; then
+        cd "$_name"
+        . bin/activate
+    fi
+    popq
+}
