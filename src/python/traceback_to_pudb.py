@@ -4,7 +4,8 @@
 import os
 import sys
 
-from site import text_streams
+from dotsite import text_streams
+
 
 def de_quote(string):
     """Remove leading/trailing double quotes
@@ -85,10 +86,11 @@ def parse_traceback_lines(lines):
     """
     lines = lines_of_words(lines)
     file_lines = filter_by_word(lines, 0, 'File')
-    return [(de_punctuate_word(l, 1), de_punctuate_word(l, 3)) for l in file_lines]
+    return [(de_punctuate_word(l, 1), de_punctuate_word(l, 3))
+            for l in file_lines]
 
 
-def main(args):
+def main(_args):
     """Use command line args as files containing tracebacks"""
     streams = text_streams.argvs('-c')
     if not streams:
