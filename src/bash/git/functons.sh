@@ -135,7 +135,7 @@ gdh () {
 }
 
 gdl () {
-    git diff --color=always "$@"| less -r
+    git diff --color=always "$@"| fewer
 }
 
 gdv () {
@@ -297,7 +297,7 @@ gsi () {
     for f in $(git -C $dir status -s | grep "^\([MDU ][MU]\|??\)" | sed -e "s/^...//")
     do
         [[ -z "$f" ]] && continue
-        _git_modified "$f" && _gsi_show_file "$f" || (_git_untracked "$f" && less "$f" || continue )
+        _git_modified "$f" && _gsi_show_file "$f" || (_git_untracked "$f" && fewer "$f" || continue )
         _gsi_prompt "$f"
         if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt "$f"; fi
         [[ $answer =~ [qQ] ]] && break

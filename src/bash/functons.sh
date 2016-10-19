@@ -210,7 +210,7 @@ lo () {
 }
 
 l1 () {
-    lk -1tr "$@"
+    lk -1tr "$@" | fewer
 }
 
 la () {
@@ -937,6 +937,13 @@ detab () {
     fi
 }
 
+fewer () {
+    local _lines=0
+    [[ -n "$@" && -f "$1" ]] && _lines=$(wc -l "$1")
+    [[ $_lines < ${LINES:-$(screen_height)} ]] \
+        && cat -n || _lessern
+}
+
 freds () {
     mython ~/jab/src/python/freds.py "$@"
 }
@@ -1024,12 +1031,12 @@ has_py () {
     has_ext py "$@"
 }
 
-lessen () {
-    less -NR "$@"
+_lesser () {
+    less -R "$@"
 }
 
-lesser () {
-    less -R "$@"
+_lessern () {
+    less -NR "$@"
 }
 
 online () {
@@ -1297,7 +1304,7 @@ console_title_on () {
 show_functons_in ()
 {
     for f in $(grep "^[a-z][a-z_]\+ .. .$" $1  | sed -e "s: .. .$::"); do
-        what -v $f; done | lesser
+        what -v $f; done | fewer
 }
 
 # xxxxxxxxxxxxxxxxx
