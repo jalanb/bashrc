@@ -945,6 +945,12 @@ LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }
 
+ptags () {
+    local _source="$1"
+    [[ -n $_source ]] || _source="."
+    python ~/jab/src/python/ptags.py $_source
+}
+
 pushq () {
     pushd "$@" 
 }

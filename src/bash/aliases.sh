@@ -115,8 +115,6 @@ alias .....='c ../../../..'
 
 alias mkenv=mkvirtualenv
 
-alias ptags="p ~/jab/src/python/ptags.py "
-
 # xxxxxx
 
 alias ......='c ../../../../..'
