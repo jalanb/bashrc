@@ -18,7 +18,7 @@ noremap <leader>;   :s/:$//<cr>
 noremap <leader>:   :s/$/:/<cr>
 noremap <leader>8   b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
 noremap <leader>c   ?^\s*class \zs\i<cr>*
-noremap <leader>d   ?^\s*def \zs\i<cr>*zv
+noremap <leader>d   ?^\s*def \i\+\zs.*<cr>*zv
 noremap <leader>o   O<esc>
 noremap <leader>e   ?^\s*def \zs\i<cr>*#zv
 
