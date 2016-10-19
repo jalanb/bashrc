@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-
 """
 ptags
 
@@ -17,18 +16,24 @@ I am targeting vim, so
     the tags file format to use is specified here:
     http://ctags.sourceforge.net/ctags.html#TAG%20FILE%20FORMAT
 """
-
-import sys
 import re
+import sys
 
-from dotsite.paths import makepath, pwd, home
+from dotsite import scripts
+from dotsite.paths import home
+from dotsite.paths import makepath
+from dotsite.paths import pwd
 from repositories import svn
 
-import argv
-argv.add_options([
-    ('verbose', 'Report disk changes', False),
-    ('recursive', 'Recurse into sub-directories', False)
-])
+
+def add_args(parser):
+    """Parse out command line arguments"""
+    parser.add_argument('source',
+                        help='path to source(s) to be checked')
+    parser.add_argument('-r', '--recursive', action='store_true',
+                        help='Recurse into sub-directories')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='Report disk changes')
 
 
 def def_or_class_regexp():
@@ -194,15 +199,15 @@ def write_dir(path_to_directory, tags):
         text = tags_to_text(tags)
         out.write_text(text)
         message = 'Wrote tags to %s' % out
-    if argv.options.verbose:
+    if scripts.args.verbose:
         print message
 
 
 def read_write_dir(path_to_directory=None):
     """Read tags from the files in the directory, and write a tags file"""
     if not path_to_directory:
-        if argv.directories:
-            [read_write_dir(d) for d in argv.directories]
+        if scripts.args.directories:
+            [read_write_dir(d) for d in scripts.args.directories]
         else:
             path_to_directory = pwd()
     tags = read_dir(path_to_directory)
@@ -212,8 +217,8 @@ def read_write_dir(path_to_directory=None):
 def read_write_dirs(path_to_directory=None):
     """Write tags from the files in/under the directory"""
     if not path_to_directory:
-        if argv.directories:
-            [read_write_dirs(d) for d in argv.directories]
+        if scripts.args.directories:
+            [read_write_dirs(d) for d in scripts.args.directories]
         else:
             path_to_directory = pwd()
     tags = read_dirs(path_to_directory)
@@ -238,14 +243,15 @@ def all_directories_in_a_list_of_tags(tags):
     return sorted({home().relpathto(t.path.parent) for t in tags})
 
 
-def main():
+def script(args):
     """Run the program"""
-    argv.parse_args()
-    if argv.options.recursive:
+    if args.recursive:
         read_write_dirs()
     else:
         read_write_dir()
 
 
 if __name__ == '__main__':
-    argv.main(main, ctrl_c=True)
+    scripts.main(
+        script, add_args,
+        help_='Create a tags file for Python programs, usable with vi.')
