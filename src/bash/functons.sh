@@ -959,7 +959,7 @@ ptags () {
 }
 
 pushq () {
-    pushd "$@" 
+    pushd "$@"  > /dev/null 2>&1
 }
 
 quack () {

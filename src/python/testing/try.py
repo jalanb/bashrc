@@ -140,8 +140,6 @@ def make_module(path_to_python):
         return sys.modules[name]
     except KeyError:
         pass
-    # If any of the following calls raises an exception,
-    # there's a problem we can't handle -- let the caller handle it.
     try:
         fp, pathname, description = imp.find_module(name, [path_to_python.parent])
     except ImportError:
@@ -149,6 +147,8 @@ def make_module(path_to_python):
             fp, pathname, description = file(name), path_to_python, ('', 'r', imp.PY_SOURCE)
         except IOError:
             raise ImportError('Could not find a module for %r' % str(path_to_python))
+    # If any of the following calls raises an exception,
+    # there's a problem we can't handle -- let the caller handle it.
     try:
         x = imp.load_module(name, fp, pathname, description)
         return x

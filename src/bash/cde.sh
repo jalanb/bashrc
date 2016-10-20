@@ -23,7 +23,7 @@ cls () {
 }
 
 cde () {
-    kd "$@" || return 1
+    KD_QUIET=1 kd "$@" || return 1
     _show_todo_here
     echo
     echo
@@ -54,8 +54,9 @@ cccde () {
 
 activate_virtualenv () {
     [[ -d $HOME/.virtualenvs ]] || return 1
-    pushq .; cd $HOME/.virtualenvs/
-    local _name=$(basename "$1")
+    pushq .
+    cd $HOME/.virtualenvs/
+    local _name=$(basename $(readlink -f "$1"))
     if [[ -d "$_name" ]]; then
         cd "$_name"
         . bin/activate
