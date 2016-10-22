@@ -1,37 +1,37 @@
 #! /bin/bash
 
-check_jab () {
-    if [[ ! -f "~/jab/etc/ackrc" ]]; then
+_check_jab () {
+    if [[ ! -f ~/jab/etc/ackrc ]]; then
         echo ~/jab/etc/ackrc is not a file >&2
         return 1
     fi
     return 0
 }
 
-link () {
-    destination="$1"
-    source="$2"
-    [[ -e "$destination" ]] && rm -rf "$destination"
-    ln -s ~/jab/"$source" $HOME/"$destination"
+_link () {
+    source=$1
+    destination=$2
+    [[ -e $destination || -L $destination ]] && rm -rf $destination
+    ln -s ~/jab/$source $HOME/$destination
 }
 
 main () {
     cd $HOME
-    link .ackrc            etc/ackrc
-    link .dir_colors       etc/dir_colors
-    link .editrc           etc/editrc
-    link .gitignore_global etc/gitignore_global
-    link .gvimrc           vim/gvimrc
-    link .inputrc          etc/inputrc
-    link .ipython          ipython/
-    link .pylintrc         etc/pylintrc
-    link .pythonrc.py      src/python/pythonrc.py
-    link .sackrc           etc/sackrc
-    link .tmux.conf        etc/tmux
-    link .vim              vim
-    link .vimpagerrc       vim/vimpagerrc
-    link .vimrc            vim/vimrc
-    link .xonshrc          etc/xonshrc
+    _link etc/ackrc			.ackrc
+    _link etc/dir_colors			.dir_colors
+    _link etc/editrc			.editrc
+    _link etc/gitignore_global		.gitignore_global
+    _link vim/gvimrc			.gvimrc
+    _link etc/inputrc			.inputrc
+    _link ipython/			.ipython
+    _link etc/pylintrc			.pylintrc
+    _link src/python/pythonrc.py		.pythonrc.py
+    _link etc/sackrc			.sackrc
+    _link etc/tmux			.tmux.conf
+    _link vim				.vim
+    _link vim/vimpagerrc 		.vimpagerrc
+    _link vim/vimrc	  		.vimrc
+    _link etc/xonshrc			.xonshrc
 }
 
-check_jab && main
+_check_jab && main
