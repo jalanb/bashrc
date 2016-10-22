@@ -245,6 +245,12 @@ gsd () {
     [[ -n $STATUS_QUESTIONS ]] && v $STATUS_QUESTIONS
 }
 
+gris () {
+    git stash
+    gri "$@"
+    git stash pop
+}
+
 _gsi_opt () {
     local red='\[\033[0;31m\]'
     red="\033[0;31m"
