@@ -41,7 +41,6 @@ def enqueue(first, get_parent, get_queue):
 
 
 def queue_motions(queues):
-
     # pylint: disable=unused-variable
 
     def up(path):
@@ -61,11 +60,17 @@ def queue_motions(queues):
     return locals()
 
 
-def script(args):
+def show(string):
+    if not string:
+        return
+    print(string)
 
+
+def script(args):
     def input_():
+        show(current)
         action = getch.get_menu(
-            current, quit='[q]?', down='j', up='k', left='l', right=';')
+            quit='[q]?', down='j', up='k', left='l', right=';')
         if action == 'quit':
             raise StopIteration
 
