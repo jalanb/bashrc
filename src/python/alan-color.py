@@ -8,6 +8,7 @@
 from pygments.style import Style
 from pygments.token import Token, Comment, Name, Keyword, Generic, Number, Operator, String
 
+
 class Alan_ColourStyle(Style):
 
     background_color = '#000000'
