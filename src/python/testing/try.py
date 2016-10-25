@@ -6,11 +6,10 @@ import os
 import imp
 import sys
 import doctest
-import fnmatch
 import commands
 import datetime
 import cStringIO
-from pprint import pprint, pformat
+from pprint import pprint
 
 
 from dotsite.paths import path
@@ -21,7 +20,7 @@ import try_plugins
 
 class DoctestInterrupt(KeyboardInterrupt):
     """This exception is for better naming of the only thing to stop doctest"""
-    pass
+
 
 def no_print(method, *args, **kwargs):
     """Discard all writes to stdout"""
@@ -72,7 +71,7 @@ class TestBeingRun(object):
         self.user = '%s@%s' % (self.username, self.host)
         self.path = self.here.relpathto(that)
         base, ext = self.path.splitext()
-        _ = [self.add_path(base, ext) for ext in ['py', 'test', 'tests', 'fail']]
+        [self.add_path(base, ext) for ext in ['py', 'test', 'tests', 'fail']]
 
     def __repr__(self):
         return '<%s %r>' % (self.__class__.__name__, str(self.path.short_relative_path_from_here()))
@@ -177,18 +176,18 @@ def test_file(test_script, options):
         test_script,
         optionflags=get_doctest_options(options),
         module_relative=False,
-        globs = {
-            'test' : TestBeingRun(test_script),
-            'sys' : sys,
-            'see' : see,
-            'spread' : spread,
-            'see_methods' : see_methods,
-            'see_attributes' : see_attributes,
-            'makepath' : path,
-            'show' : show,
-            'bash' : run_command,
-            'DoctestInterrupt' : DoctestInterrupt,
-            'no_print' : no_print,
+        globs={
+            'test': TestBeingRun(test_script),
+            'sys': sys,
+            'see': see,
+            'spread': spread,
+            'see_methods': see_methods,
+            'see_attributes': see_attributes,
+            'makepath': path,
+            'show': show,
+            'bash': run_command,
+            'DoctestInterrupt': DoctestInterrupt,
+            'no_print': no_print,
         },
         verbose=options.verbose,
     )
