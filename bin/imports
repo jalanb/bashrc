@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import sys
 import linecache
 from collections import defaultdict
 
@@ -50,4 +51,4 @@ def script(args):
 
 
 if __name__ == '__main__':
-    scripts.main(script, add_args, __version__, __doc__)
+    sys.exit(scripts.main(script, add_args, __version__, __doc__))

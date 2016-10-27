@@ -47,4 +47,4 @@ def script(args):
 
 
 if __name__ == '__main__':
-    sys.exit(scripts.main(script, add_args, __version__))
+    sys.exit(scripts.main(script, add_args, __version__, __doc__))

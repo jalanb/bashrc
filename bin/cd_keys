@@ -2,6 +2,7 @@
 """Change a directory with the keyboard"""
 
 from __future__ import print_function
+import sys
 from collections import deque
 
 from dotsite import debuggers
@@ -93,4 +94,4 @@ def script(args):
 
 
 if __name__ == '__main__':
-    scripts.main(script, add_args, __version__)
+    sys.exit(scripts.main(script, add_args, __version__, __doc__))
