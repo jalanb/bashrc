@@ -5,6 +5,7 @@ The script contains a known list of globs for temporary files
 """
 
 
+from __future__ import print_function
 import os
 import sys
 import optparse
@@ -41,6 +42,7 @@ def default_options():
         'python': '*.pyc *.pyo *.fail *$py.class *.profile',
         'temporary':
         '*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two',
+        'vim': '*.sw[opqrs]',
     }
     return options, globs
 
@@ -76,7 +78,7 @@ def compare_options(a, b):
         return +1
     if a[0][0].islower() and b[0][0].isupper():
         return -1
-    return cmp(a[0], b[0])
+    return cmp(a[0], b[0])  # pylint: disable=undefined-variable
 
 
 def get_help_text(configured_globs):
@@ -119,12 +121,12 @@ def wanted_globs(options, configured_globs):
             for glob in value.split()]
 
 
-def parse_options(arg_list=None):
+def parse_options():
     """Find out what user wants at command line"""
     configured_options, configured_globs = read_configuration()
-    parser = optparse.OptionParser(usage = "rf [options]")
+    parser = optparse.OptionParser(usage="rf [options]")
     add_options(parser, configured_options, configured_globs)
-    options, args = parser.parse_args(arg_list)
+    options, args = parser.parse_args(None)
     if options.Use_Debugger:
         start_debugging()
     if options.all:
@@ -198,9 +200,9 @@ def remove_files(files, quiet, trial_run):
             if not trial_run:
                 os.remove(a_file)
             if not quiet:
-                print a_file
-        except (IOError, OSError), e:
-            print e
+                print(a_file)
+        except (IOError, OSError) as e:
+            print(e)
             result = os.EX_IOERR
     return result
 
@@ -221,7 +223,7 @@ def main():
     try:
         options, args, globs = parse_options()
     except NotImplementedError as e:
-        print >> sys.stderr, e
+        print(e, file=sys.stderr)
         return os.EX_USAGE
     return script(options, args, globs)
 
