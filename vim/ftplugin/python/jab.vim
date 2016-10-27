@@ -217,26 +217,6 @@ if !exists("Try")
         exec "tablast"
         exec "tabnew! " . s:file_fail
     endfunction
-    function TryFix(quietly)
-        let item_name = expand("%:~:r")
-        let path_to_fails = expand(s:file_fail)
-        let z = getfsize(path_to_fails)
-        if ! z
-            return
-        endif
-        let command_line = "! python $JAB_PYTHON/fix_failures.py "
-        if a:quietly
-            let quiet_line = command_line . s:file_fail . " 2>&1 || true"
-        else
-            let quiet_line = command_line . s:file_fail
-        endif
-        try
-            exec quiet_line
-            redraw!
-        catch /.*/
-            " echo fred
-        endtry
-    endfunction
     function Vim_Difference_Between_Expected_And_Got()
         if bufloaded(s:file_expected)
             exec "bunload " . s:file_expected
@@ -276,7 +256,6 @@ if !exists("Try")
         endif
     endfunction
     command -nargs=0 Try :call Try(1)
-    command -nargs=0 Fix :call TryFix(0)
 endif
 if !exists("Mash")
     function Mash()
