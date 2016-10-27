@@ -74,6 +74,7 @@ def script(args):
             quit='[q]?', down='j', up='k', left='l', right=';')
         if action == 'quit':
             raise StopIteration
+        yield action
 
     def output(path):
         print(path)
