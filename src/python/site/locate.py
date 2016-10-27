@@ -35,7 +35,7 @@ def _add_option(path_to_locate, option):
 
 
 def _locate_regexp_option():
-    command = '%s --help'
+    command = '%s --help' % _path_to_locate()
     _status, output = commands.getstatusoutput(command)
     return '--regexp' if '--regexp' in output else '--regex'
 
