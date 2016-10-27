@@ -297,10 +297,17 @@ function WritePython()
     call ReSpacePython()
 endfunction
 
+" function LintPython()
+"     let command = "! TERM=linux && pylint " 
+"     exec command_line
+"     redraw!
+" endfunction
+
 
 " From http://www.vex.net/~x/python_and_vim.html
   " Remove trailing space when writing the file
   autocmd BufWritePre * call WritePython()
+" autocmd InsertLeave * call LintPython()
 
 if !exists("PPP")
     function WritePEP()
