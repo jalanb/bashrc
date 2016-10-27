@@ -384,7 +384,7 @@ grmm () {
 clone () {
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
-    git clone "$1" 2>&1 > $_clone_log
+    git clone "$1"> $_clone_log 2>&1 
     if grep -q fatal $_clone_log; then
         cat $_clone_log
     else
