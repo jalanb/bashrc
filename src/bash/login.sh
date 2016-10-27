@@ -15,13 +15,13 @@ if [[ $- =~ i ]]; then
     HUB=$GIT/hub
     export HUB
 
-    source $HUB/jab/__init__.sh
+    source ~/jab/__init__.sh
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 
     vbb () {
-        vim -p ~/.bashrc $HUB/jab/__init__.sh "$@" +/bash
-        ls -l ~/.bashrc $HUB/jab/__init__.sh
+        vim -p ~/.bashrc ~/jab/__init__.sh "$@" +/bash
+        ls -l ~/.bashrc ~/jab/__init__.sh
     }
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "

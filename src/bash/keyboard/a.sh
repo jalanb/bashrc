@@ -49,8 +49,8 @@ avg () {
 }
 
 avh () {
-    __doc__="vack all args in $HUB";
-    _av $HUB "$@"
+    __doc__="vack all args in ~/hub";
+    _av ~/hub "$@"
 }
 
 avj () {
