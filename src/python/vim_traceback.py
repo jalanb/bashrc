@@ -1,4 +1,4 @@
-"""Script to parse a Python traceback
+"""Script to edit a Python traceback
 
 Re-format the file list as suitable for a vim list
 
@@ -25,39 +25,7 @@ import os
 import sys
 
 from dotsite import text_streams
-
-
-def line_regexp():
-    """Regular expression to match a traceback file line"""
-    return re.compile(r'''\s*
-        File\s
-        (
-            (
-                ["']
-                (?P<path_to_python>[^"']+)
-                ["']
-            ) | (
-                (?P<spaceless_path_to_python>[^ ]+)
-            )
-        )
-        ,\sline\s
-        (?P<line_number>[0-9]+)
-        ,.in..*
-    ''', re.VERBOSE)
-
-
-def parse_line(string):
-    """Parse a single string as traceback line"""
-    match = line_regexp().match(string)
-    if match:
-        matches = match.groupdict()
-        line_number = matches['line_number']
-        path_to_python = matches['path_to_python']
-        spaceless_path_to_python = matches['spaceless_path_to_python']
-        if path_to_python:
-            return path_to_python, line_number
-        elif spaceless_path_to_python:
-            return spaceless_path_to_python, line_number
+from dotsite import tracebacks
 
 
 def as_vim_command(lines, use_splits):
@@ -77,8 +45,7 @@ def main(args):
     if not stream:
         print >> sys.stderr, 'No file specified'
         return not os.EX_OK
-    lines = [parse_line(l) for l in text_streams.full_lines(stream)]
-    lines = [l for l in lines if l]
+    lines = map(tracebacks.parse_line, text_streams.full_lines(stream))
     print as_vim_command(lines, '-s' in args)
     return os.EX_OK
 

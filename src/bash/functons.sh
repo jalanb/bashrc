@@ -710,17 +710,13 @@ vpe () {
     _edit_jab environ.d/python
 }
 
-vtr () {
-    mython ~/jab/src/python/vim_traceback.py "$@"
-}
-
 vpr () {
     local _crappy_program_py=$1
     python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
 vtr () {
-    python ~/jab/src/python/vim_traceback.py "$@"
+    python ~/jab/src/python/tracebacks.py -e "$@"
 }
 
 VIM () {
