@@ -56,6 +56,10 @@ gp () {
     fi
 }
 
+gr () {
+    git pull --rebase "$@"
+}
+
 gs () {
     shift_dir "$@" && shift
     _do_git_status $dir "$@"
@@ -229,10 +233,6 @@ gri () {
 
 grr () {
     _git_stash_and pull --rebase "$@"
-}
-
-grs () {
-    git rerere status
 }
 
 gsd () {

@@ -123,10 +123,6 @@ gf () {
     done
 }
 
-gr () {
-    g -nH "$@" 2> /dev/null
-}
-
 fa () {
     fv "$@"
 }
