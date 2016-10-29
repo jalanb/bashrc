@@ -5,6 +5,7 @@ from __future__ import print_function
 
 import sys
 import linecache
+import sys
 from collections import defaultdict
 
 from dotsite import scripts
@@ -21,9 +22,11 @@ def add_args(parser):
                         help='Show a command for editting')
     parser.add_argument('-u', '--unused', action='store_true',
                         help='Show unused imports')
+    parser.add_argument('-t', '--tmp', action='store_true',
+                        help='Write to /tmp/imports.txt (not stdout)')
 
 
-def show_unused(source, editting):
+def show_unused(source, editting, stream):
     visitor = imports.extract_imports(source)
     ordered_lines = defaultdict(set)
     for name, lines in visitor.unused().items():
@@ -33,20 +36,25 @@ def show_unused(source, editting):
         return False
     for line in sorted(ordered_lines):
         names = ordered_lines[line]
-        print('%s\n% 4d: %s' % (
-            ','.join(names),
-            line,
-            linecache.getline(source, line).rstrip()))
+        print(
+            '%s\n% 4d: %s' % (
+                ','.join(names),
+                line,
+                linecache.getline(source, line).rstrip()),
+            stream)
     if editting:
-        print(r'\nvim %s +/"\(%s\)"' % (
-            source,
+        vim = 'vim -p /tmp/imports.txt' if editting == 2 else 'vim'
+        print(r'\n%s %s +/"\(%s\)"' % (
+            vim, source,
             r'\)\|\('.join(visitor.unused().keys())))
     return True
 
 
 def script(args):
     if args.unused:
-        show_unused(args.source, args.edit)
+        stream = open('/tmp/imports.txt', 'w') if args.tmp else sys.stdout
+        editting = 2 if args.edit and args.tmp else args.edit
+        return show_unused(args.source, editting, stream)
     return True
 
 
