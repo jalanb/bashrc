@@ -1,0 +1,7 @@
+dotsite
+ipython
+nose
+nose-progressive
+nose-pudb
+path.py
+pudb
