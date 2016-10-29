@@ -799,19 +799,27 @@ brew () {
 
 bump () {
     local _bump_dir=.
-    if [[ -d "$1" ]] ; then _bump_dir="$1"; shift; fi
+    local _show=
+    if [[ $1 == show ]]; then
+        _show=1
+        shift
+    fi
+    if [[ -d "$1" ]]; then
+        bump_dir="$1"
+        shift
+    fi
     local _part=${1:-patch}; shift
-    if [[ $_part != show ]]; then
+    if [[ -z $_show ]]; then
         git pull --rebase
         if bumpversion $_part "$@"; then
             git push
             git push origin --tags
         fi
     fi
-    local _config=$(git_root $_bump_dir)/.bumpversion.cfg 
+    local _config=$(git_root $_bump_dir)/.bumpversion.cfg
     local _sought=^current_version
-    if [[ $_part == show ]]; then
-        grep $_sought $_config | grep --colour " [^ ]\+$"
+    if [[ -n $_show ]]; then
+        grep $_sought $_config | grep --colour '\d[0-9.]\+$'
     else
         grep $_sought $_config 2>/dev/null
     fi
