@@ -945,7 +945,7 @@ fewer () {
     local _lines=0
     [[ -n "$@" && -f "$1" ]] && _lines=$(wc -l "$1")
     [[ $_lines < ${LINES:-$(screen_height)} ]] \
-        && cat -n || _lessern
+        && cat -n "$1" || _lessern "$1"
 }
 
 freds () {
