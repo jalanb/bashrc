@@ -4,9 +4,9 @@
 
 c = get_config()
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # InteractiveShellApp configuration
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 # A Mixin for applications that start InteractiveShell instances.
 #
@@ -159,7 +159,7 @@ c.TerminalIPythonApp.display_banner = False
 # TerminalInteractiveShell will inherit config from: InteractiveShell
 
 # auto editing of files with syntax errors.
-c.TerminalInteractiveShell.autoedit_syntax = True
+# c.TerminalInteractiveShell.autoedit_syntax = True
 
 # Use colors for displaying information about objects. Because this information
 # is passed through a pager (like 'less'), and some pagers get confused with
@@ -216,7 +216,10 @@ c.TerminalInteractiveShell.autocall = 2
 # c.TerminalInteractiveShell.screen_length = 0
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
-# c.TerminalInteractiveShell.editor = '/usr/bin/vim'
+c.TerminalInteractiveShell.editor = '/usr/local/bin/vim'
+
+# Shortcut style to use at the prompt
+c.TerminalInteractiveShell.editing_mode = 'vi'
 
 # Deprecated, use PromptManager.justify
 # c.TerminalInteractiveShell.prompts_pad_left = True
