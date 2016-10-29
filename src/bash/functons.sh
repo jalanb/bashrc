@@ -1093,8 +1093,8 @@ relpath () {
 }
 
 umports () {
-    reorder-python-imports "$@"
-    ~/jab/bin/imports -u "$@"
+    reorder-python-imports "$1"
+    ~/jab/bin/imports -u "$1"
 }
 
 # xxxxxxxx
@@ -1158,6 +1158,27 @@ todo_show () {
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
     mython ~/jab/src/python/todo.py $todo_txt
+}
+
+# xxxxxxxxx
+
+viewstyle () {
+    git status --porcelain "$1" | grep -q .  || return 1
+    git dv "$1"
+    git add "$1"
+    git commit
+}
+
+autostyle () {
+    reorder-python-imports "$1"
+    viewstyle "$1"
+    autoflake -i --remove-all-unused-imports "$1"
+    viewstyle "$1"
+    ~/jab/bin/imports --tmp --unused "$1";
+    viewstyle "$1"
+    autopep8 -a -a -a -i "$1"
+    viewstyle "$1"
+    vim "$1"; git add "$1"; git commit
 }
 
 # xxxxxxxxxx
@@ -1437,4 +1458,3 @@ unremembered () {
         source_path $filepath "$@"
     fi
 }
-
