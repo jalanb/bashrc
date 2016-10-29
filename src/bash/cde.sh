@@ -31,7 +31,7 @@ cde () {
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
     echo
     git_simple_status $(pwd) || lk
-    activate_virtualenv "$(pwd)"
+    activate_ancestor_virtualenv_hence
 }
 # _xx
 # xxxx
@@ -52,14 +52,18 @@ cccde () {
 
 # xxxxxxxxxxxxxxxxxxx
 
-activate_virtualenv () {
-    [[ -d $HOME/.virtualenvs ]] || return 1
-    pushq .
-    cd $HOME/.virtualenvs/
-    local _name=$(basename $(readlink -f "$1"))
-    if [[ -d "$_name" ]]; then
-        cd "$_name"
-        . bin/activate
-    fi
-    popq
+activate_ancestor_virtualenv_hence () {
+    local _venvs=$HOME/.virtualenvs
+    [[ -d $_venvs ]] || return 1
+    local _here=$(readlink -f $(pwd))
+    local _venvs_path=$_venvs/$(basename $_here)
+    local _path=$_here
+    while [[ ! -d "$_venvs_path" ]]; do
+        [[ -z $_path || $_path == "/" || $_path == $HOME ]] && return 1
+        _path=$(dirname $_path)
+        _venvs_path=$_venvs/$(basename $_path)
+    done
+    local _venv_activate="$_venvs_path/bin/activate"
+    [[ -f $_venv_activate ]] || return 1
+    . $_venv_activate 
 }
