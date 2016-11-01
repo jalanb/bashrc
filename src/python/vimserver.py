@@ -36,7 +36,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         print("=== socket opened ===")
-        global thesocket
+        global thesocket  # pylint: disable=global-statement
         thesocket = self.request
         while True:
             try:
@@ -44,7 +44,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             except socket.error:
                 print("=== socket error ===")
                 break
-            except IOError:
+            except IOError:  # pylint: disable=duplicate-except
                 print("=== socket closed ===")
                 break
             if data == '':
