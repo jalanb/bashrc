@@ -4,7 +4,11 @@
 
 k () {
     local _dir="$1"; shift
-    [[ -z "$*" ]] && c $_dir || (cd $_dir; k "$@")
+    [[ -z "$*" ]] && _dir=.
+    if [[ -d "$_dir" ]]; then
+        (c $_dir; 
+        "$@")
+    fi
 }
 
 # xx
