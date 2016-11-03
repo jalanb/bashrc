@@ -3,14 +3,14 @@
 # x
 
 j () {
-    KCD=cde k ~/jab "$@"
+    k ~/jab "$@"
 }
 
 
 # xx
 
 jj () {
-    KCD=cde kk ~/jab "$@"
+    KCD=cde k ~/jab "$@"
 }
 
 jv () {
@@ -20,7 +20,7 @@ jv () {
 # xxx
 
 jjj () {
-    :  # Name reserved
+    KCD=cde kk ~/jab "$@"
 }
 
 jvb () {
