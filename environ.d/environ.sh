@@ -32,6 +32,7 @@ _source_jab_environ () {
         BUCKET=$GIT_BUCKET
     fi
     export BUCKET
+    DIRCOLORS=$(readlink -f $(which dircolors))
     [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then

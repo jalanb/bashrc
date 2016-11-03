@@ -17,7 +17,6 @@ _set_ssh () {
 
 _set_ls_options () {
     export LS_PROGRAM=$(readlink -f $(which ls))
-    export DIRCOLORS=$(readlink -f $(which dircolors))
     if $LS_PROGRAM -@ >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='-@'
     elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
