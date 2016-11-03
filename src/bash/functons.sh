@@ -201,16 +201,8 @@ ky () {
 }
 
 
-lo () {
-    locate "$@"
-}
-
 l1 () {
     lk -1tr "$@" | fewer
-}
-
-la () {
-    lk -a "$@"
 }
 
 ld () {
@@ -240,14 +232,6 @@ lk () {
     local _header=
     $LS_PROGRAM  --help 2>/dev/null | grep -q -- --group-directories-first && _header=--group-directories-first
     $LS_PROGRAM $_css $_header "$@"
-}
-
-ll () {
-    lk -l  "$@"
-}
-
-lo () {
-    locate "$@"
 }
 
 lr () {
@@ -549,6 +533,10 @@ lly () {
 
 lr2 () {
     lra "$@" | grep --color -- "->"
+}
+
+loc () {
+    locate "$@"
 }
 
 lr1 () {

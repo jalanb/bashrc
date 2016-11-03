@@ -2,15 +2,33 @@
 
 # x
 
+if [[ -f /usr/local/bin/gls ]]; then
+	l () {
+	    /usr/local/bin/gls --group-directories-first --color "$@"
+	}
+else
+	l () {
+	    ls "$@"
+	}
+fi
 
-l () {
-    $LS_PROGRAM "$@"
-}
 
 # xx
 
+la () {
+    l -a "$@"
+}
+
+li () {
+    l -g "$@"
+}
+
 ll () {
-    ls -l  "$@"
+    l -l "$@"
+}
+
+lo () {
+    ll -htr "$@"
 }
 
 # xxx
