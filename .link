@@ -6,27 +6,80 @@
 # Link this script's directory into $HOME
 #     for example, if repo was cloned to ~/src/git/hub/repo then
 #         cd $HOME; ln -s ~/src/git/hub/repo .
-# Link a list of known config files and dirs, mostly to hidden links
+#     Todo: option to use repo name instead of directory name
 #
+# Link a list of known config files and dirs, mostly to dot (hidden) links
+#     hence the name of this file
+# TODO: Generalise (currently based on layout of this repo)
 #
 # See also https://github.com/jalanb/dotjab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec 
 
-_check_jab () {
+vim_into_home () {
+    source="$clone_link"/$1
+    destination="$HOME"/$2
+    test -f "$destination" && vim -d "$source" "$destination"
+    link_into_home "$@"
+}
+
+link_into_home () {
+    source="$clone_link"/$1
+    destination="$HOME"/$2
+    [[ -e "$destination" || -L "$destination" ]] && rm -rf "$destination"
+    ln -s "$source" "$destination")
+}
+
+back_into_home () {
+    local _path="$HOME"/$1
+    local _file=
+    if [[ -f "$_path" ]]; then
+        _file="$_path"
+    elif [[ -d "$_path" ]]; then
+        _file="$_path/$clone_name.bak"
+    fi
+    echo "#" >> "$_file"
+    echo "# $BASH_SOURCE was here" >> "$_file"
+    local _backup="$_path.$clone_name.bak"
+    cp -r "$_path" "$backup"
+    link_into_home "$@"
+}
+
+links_into_home () {
+    vim_into_home etc/gitconfig			.gitconfig
+    vim_into_home etc/gitignore_global		.gitignore_global
+    vim_into_home src/bash/bashrc		.bashrc
+    vim_into_home src/python/pythonrc.py	.pythonrc.py
+    vim_into_home vim/vimrc  			.vimrc
+    link_into_home etc/ackrc			.ackrc
+    link_into_home etc/dir_colors		.dir_colors
+    link_into_home etc/editrc			.editrc
+    link_into_home etc/inputrc			.inputrc
+    link_into_home etc/pylintrc			.pylintrc
+    link_into_home etc/sackrc			.sackrc
+    link_into_home etc/tmux			.tmux.conf
+    link_into_home etc/xonshrc			.xonshrc
+    link_into_home ipython/			.ipython
+    link_into_home vim				.vim
+    link_into_home vim/gvimrc			.gvimrc
+    link_into_home vim/vimpagerrc 		.vimpagerrc
+}
+
+renew_clone_link () {
     local script_file=$(readlink -f $BASH_SOURCE)
     local script_name=$(basename $script_file)
-    local script_dir=$(dirname $script_file)
-    local script_dir_name=$(basename $script_dir)
-    local linked_dir=~/$script_dir_name
-    local linked_script=$linked_dir/$script_name
-    [[ -f $linked_script ]] && return 0
-    [[ -f $linked_dir ]] && rm -f $linked_dir
-    [[ -h $linked_dir ]] && rm -f $linked_dir
-    [[ -d $linked_dir ]] && mv $linked_dir ${linked_dir}~
-    if [[ ! -d $script_dir/.git ]]; then
-        echo $script_dir/.git is not a directory
+    local clone_dir=$(dirname $script_file)
+          clone_name=$(basename $clone_dir)
+          clone_link=~/$clone_name
+    local linked_script=$clone_link/$script_name
+    if [[ ! -d $clone_dir/.git ]]; then
+        echo $clone_dir/.git is not a directory
+        ech This script assumed that $clone_dir is root of a clone
         return 2
     fi
-    ln -s $script_dir $script_dir_name
+    [[ -f $linked_script ]] && return 0
+    [[ -f $clone_link ]] && rm -f $clone_link
+    [[ -h $clone_link ]] && rm -f $clone_link
+    [[ -d $clone_link ]] && mv $clone_link ${clone_link}~
+    ln -s $clone_dir $clone_name
     if [[ ! -f $linked_script ]]; then
         echo $linked_script is not a file >&2
         return 1
@@ -34,46 +87,5 @@ _check_jab () {
     return 0
 }
 
-_link_jab_to_home () {
-    source=$1
-    destination=$2
-    [[ -e $destination || -L $destination ]] && rm -rf $destination
-    ln -s ~/jab/$source $HOME/$destination)
-}
-
-_bak_link_to_home () {
-    local _path="$1"
-    local _file=
-    if [[ -f "$_path" ]]; then
-        _file="$_path"
-    elif [[ -d "$_path" ]]; then
-        _file="$_path/jab.bak"
-    fi
-    echo "#" >> "$_file"
-    echo "# $BASH_SOURCE was here" >> "$_file"
-    local _backup="$_path.jab.bak"
-    cp -r "$_path" "$backup"
-    _link_jab_to_home "$@"
-}
-
-main () {
-    cd $HOME
-    _bak_link_to_home src/bash/bashrc		.bashrc
-    _bak_link_to_home src/python/pythonrc.py	.pythonrc.py
-    _bak_link_to_home vim			.vim
-    _bak_link_to_home vim/vimrc  		.vimrc
-    _link_jab_to_home etc/ackrc			.ackrc
-    _link_jab_to_home etc/dir_colors		.dir_colors
-    _link_jab_to_home etc/editrc		.editrc
-    _link_jab_to_home etc/gitignore_global	.gitignore_global
-    _link_jab_to_home vim/gvimrc		.gvimrc
-    _link_jab_to_home etc/inputrc		.inputrc
-    _link_jab_to_home ipython/			.ipython
-    _link_jab_to_home etc/pylintrc		.pylintrc
-    _link_jab_to_home etc/sackrc		.sackrc
-    _link_jab_to_home etc/tmux			.tmux.conf
-    _link_jab_to_home vim/vimpagerrc 		.vimpagerrc
-    _link_jab_to_home etc/xonshrc		.xonshrc
-}
-
-_check_jab && main
+cd $HOME
+renew_clone_link && links_into_home
