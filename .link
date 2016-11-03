@@ -1,0 +1,79 @@
+#! /bin/bash
+#
+# Link this project into home
+# 
+# This script must be in a git repo
+# Link this script's directory into $HOME
+#     for example, if repo was cloned to ~/src/git/hub/repo then
+#         cd $HOME; ln -s ~/src/git/hub/repo .
+# Link a list of known config files and dirs, mostly to hidden links
+#
+#
+# See also https://github.com/jalanb/dotjab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec 
+
+_check_jab () {
+    local script_file=$(readlink -f $BASH_SOURCE)
+    local script_name=$(basename $script_file)
+    local script_dir=$(dirname $script_file)
+    local script_dir_name=$(basename $script_dir)
+    local linked_dir=~/$script_dir_name
+    local linked_script=$linked_dir/$script_name
+    [[ -f $linked_script ]] && return 0
+    [[ -f $linked_dir ]] && rm -f $linked_dir
+    [[ -h $linked_dir ]] && rm -f $linked_dir
+    [[ -d $linked_dir ]] && mv $linked_dir ${linked_dir}~
+    if [[ ! -d $script_dir/.git ]]; then
+        echo $script_dir/.git is not a directory
+        return 2
+    fi
+    ln -s $script_dir $script_dir_name
+    if [[ ! -f $linked_script ]]; then
+        echo $linked_script is not a file >&2
+        return 1
+    fi
+    return 0
+}
+
+_link_jab_to_home () {
+    source=$1
+    destination=$2
+    [[ -e $destination || -L $destination ]] && rm -rf $destination
+    ln -s ~/jab/$source $HOME/$destination)
+}
+
+_bak_link_to_home () {
+    local _path="$1"
+    local _file=
+    if [[ -f "$_path" ]]; then
+        _file="$_path"
+    elif [[ -d "$_path" ]]; then
+        _file="$_path/jab.bak"
+    fi
+    echo "#" >> "$_file"
+    echo "# $BASH_SOURCE was here" >> "$_file"
+    local _backup="$_path.jab.bak"
+    cp -r "$_path" "$backup"
+    _link_jab_to_home "$@"
+}
+
+main () {
+    cd $HOME
+    _bak_link_to_home src/bash/bashrc		.bashrc
+    _bak_link_to_home src/python/pythonrc.py	.pythonrc.py
+    _bak_link_to_home vim			.vim
+    _bak_link_to_home vim/vimrc  		.vimrc
+    _link_jab_to_home etc/ackrc			.ackrc
+    _link_jab_to_home etc/dir_colors		.dir_colors
+    _link_jab_to_home etc/editrc		.editrc
+    _link_jab_to_home etc/gitignore_global	.gitignore_global
+    _link_jab_to_home vim/gvimrc		.gvimrc
+    _link_jab_to_home etc/inputrc		.inputrc
+    _link_jab_to_home ipython/			.ipython
+    _link_jab_to_home etc/pylintrc		.pylintrc
+    _link_jab_to_home etc/sackrc		.sackrc
+    _link_jab_to_home etc/tmux			.tmux.conf
+    _link_jab_to_home vim/vimpagerrc 		.vimpagerrc
+    _link_jab_to_home etc/xonshrc		.xonshrc
+}
+
+_check_jab && main
