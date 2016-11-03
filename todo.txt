@@ -7,3 +7,6 @@ Live, 0
 https://github.com/asottile/reorder_python_imports
 vs
 https://github.com/timothycrosley/isort
+
+http://albertz.github.io/music-player/
+http://thesis.flyingpudding.com/
