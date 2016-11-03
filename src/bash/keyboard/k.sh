@@ -6,7 +6,7 @@ k () {
     local _dir="$1"; shift
     [[ -z "$*" ]] && _dir=.
     if [[ -d "$_dir" ]]; then
-        (c $_dir; 
+        (${KCD:-cd} $_dir; 
         "$@")
     fi
 }
@@ -14,8 +14,8 @@ k () {
 # xx
 
 kk () {
-    (cd $1; shift
-    "$@")
+    clear
+    k "$@"
 }
 
 kl () {
@@ -32,9 +32,7 @@ kv () {
 # xxx
 
 kkk () {
-    clear
-    (c $1; shift
-    "$@")
+    :  # Name reserved
 }
 
 
