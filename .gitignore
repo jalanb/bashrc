@@ -1,3 +1,6 @@
+# OSX junk
+.DS_Store
+
 # Editor files
 .*.sw[po]
 
