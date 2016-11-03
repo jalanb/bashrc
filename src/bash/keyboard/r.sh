@@ -28,6 +28,7 @@ rr () {
 # xxx
 
 rrr () {
+    # Scalp Hans too
     sudo rm -rf "$@" 2> /dev/null
 }
 
