@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to ~/jab on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Welcome to ~ on $(hostname -f)
 
 _set_path () {
     LOCAL=/usr/local
@@ -22,8 +22,8 @@ _bashrc () {
 
 vbb () {
     (cd ~/jab
-    vim -p ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log "$@" +/bash
-    ls -l ~/.bashrc ~/hub/jab/__init__.sh ~/bashrc.log)
+    vim -p ~/.bashrc ~/jab/__init__.sh ~/bashrc.log "$@" +/bash
+    ls -l ~/.bashrc ~/jab/__init__.sh ~/bashrc.log)
 }
 
 main () {
@@ -35,4 +35,4 @@ main () {
 # set -x
 [[ $- =~ i ]] && main
 # set +x
-[[ -n $WELCOME_BYE ]] && echo Bye from "$BASH_SOURCE"
+[[ -n $WELCOME_BYE ]] && echo Bye from ~

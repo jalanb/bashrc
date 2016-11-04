@@ -14,18 +14,22 @@
 #
 # See also https://github.com/jalanb/dotjab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec 
 
-vim_into_home () {
+vim_clone_to_home () {
     source="$clone_link"/$1
     destination="$HOME"/$2
     test -f "$destination" && vim -d "$source" "$destination"
-    link_into_home "$@"
+    link_clone_to_home "$@"
+}
+
+link_clone_to_home () {
+    link_into_home "$clone_link"/$1 $2
 }
 
 link_into_home () {
-    source="$clone_link"/$1
+    source="$1"
     destination="$HOME"/$2
     [[ -e "$destination" || -L "$destination" ]] && rm -rf "$destination"
-    ln -s "$source" "$destination")
+    ln -s "$source" "$destination"
 }
 
 back_into_home () {
@@ -40,27 +44,32 @@ back_into_home () {
     echo "# $BASH_SOURCE was here" >> "$_file"
     local _backup="$_path.$clone_name.bak"
     cp -r "$_path" "$backup"
-    link_into_home "$@"
+    link_clone_to_home "$@"
 }
 
 links_into_home () {
-    vim_into_home etc/gitconfig			.gitconfig
-    vim_into_home etc/gitignore_global		.gitignore_global
-    vim_into_home src/bash/bashrc		.bashrc
-    vim_into_home src/python/pythonrc.py	.pythonrc.py
-    vim_into_home vim/vimrc  			.vimrc
-    link_into_home etc/ackrc			.ackrc
-    link_into_home etc/dir_colors		.dir_colors
-    link_into_home etc/editrc			.editrc
-    link_into_home etc/inputrc			.inputrc
-    link_into_home etc/pylintrc			.pylintrc
-    link_into_home etc/sackrc			.sackrc
-    link_into_home etc/tmux			.tmux.conf
-    link_into_home etc/xonshrc			.xonshrc
-    link_into_home ipython/			.ipython
-    link_into_home vim				.vim
-    link_into_home vim/gvimrc			.gvimrc
-    link_into_home vim/vimpagerrc 		.vimpagerrc
+    cd $HOME
+    vim_clone_to_home etc/gitconfig			.gitconfig
+    vim_clone_to_home etc/gitignore_global		.gitignore_global
+    vim_clone_to_home src/bash/bashrc		.bashrc
+    vim_clone_to_home src/python/pythonrc.py	.pythonrc.py
+    vim_clone_to_home vim/vimrc  			.vimrc
+    link_clone_to_home etc/ackrc			.ackrc
+    link_clone_to_home etc/dir_colors		.dir_colors
+    link_clone_to_home etc/editrc			.editrc
+    link_clone_to_home etc/inputrc			.inputrc
+    link_clone_to_home etc/pylintrc			.pylintrc
+    link_clone_to_home etc/sackrc			.sackrc
+    link_clone_to_home etc/tmux			    .tmux.conf
+    link_clone_to_home etc/xonshrc			.xonshrc
+    link_clone_to_home ipython/			    .ipython
+    link_clone_to_home vim				    .vim
+    link_clone_to_home vim/gvimrc			.gvimrc
+    link_clone_to_home vim/vimpagerrc 		.vimpagerrc
+    
+    link_into_home ~/src/git/hub        hub
+    link_into_home ~/jab/src/bash       bash
+    link_into_home ~/jab/src/python     python
 }
 
 renew_clone_link () {
@@ -72,14 +81,14 @@ renew_clone_link () {
     local linked_script=$clone_link/$script_name
     if [[ ! -d $clone_dir/.git ]]; then
         echo $clone_dir/.git is not a directory
-        ech This script assumed that $clone_dir is root of a clone
+        echo This script assumed that $clone_dir is root of a clone
         return 2
     fi
     [[ -f $linked_script ]] && return 0
     [[ -f $clone_link ]] && rm -f $clone_link
     [[ -h $clone_link ]] && rm -f $clone_link
     [[ -d $clone_link ]] && mv $clone_link ${clone_link}~
-    ln -s $clone_dir $clone_name
+    ln -s $clone_dir $clone_link
     if [[ ! -f $linked_script ]]; then
         echo $linked_script is not a file >&2
         return 1
@@ -87,5 +96,4 @@ renew_clone_link () {
     return 0
 }
 
-cd $HOME
 renew_clone_link && links_into_home
