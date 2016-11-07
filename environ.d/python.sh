@@ -47,7 +47,7 @@ export PYTHON_SOURCE_PATH=~/jab/src/python:~/src/python
 # [[ -n $WELCOME_BYE ]] && echo 8
 _upgrade_package () {
     [[ -n $WELCOME_BYE ]] && echo Welcome to _upgrade_package "$@"
-    pip2 install --upgrade "$@" 2>&1 | grep -v "Requirement already up-to-date"
+    pip2 install --upgrade --retries=1 "$@" 2>&1 | grep -v -e "Requirement already up-to-date" -e NewConnectionError
     [[ -n $WELCOME_BYE ]] && echo Bye from _upgrade_package "$@"
 }
 
