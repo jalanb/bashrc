@@ -130,10 +130,6 @@ gdi () {
     git di "$@"
 }
 
-gdis () {
-    git di --staged "$@"
-}
-
 gdh () {
     git dh "$@"
 }
@@ -144,10 +140,6 @@ gdl () {
 
 gdv () {
     git dv "$@"
-}
-
-gdvs () {
-    git dv --staged "$@"
 }
 
 gdv () {
@@ -245,6 +237,11 @@ gsd () {
     [[ -n $STATUS_QUESTIONS ]] && v $STATUS_QUESTIONS
 }
 
+gds () {
+    local diff_=${1:-diff}
+    git $diff_ --staged "$@"
+}
+
 gris () {
     git stash
     gri "$@"
@@ -282,10 +279,6 @@ _gsi_vim () {
 _gsi_prompt () {
     _gsi_menu $1
     read -e -n1 -p " " answer
-}
-
-gdsi () {
-    git di "$@"
 }
 
 _gsi_show_file () {
@@ -352,6 +345,14 @@ gcpc () {
 
 gcpe () {
     git cherry-pick --edit "$@"
+}
+
+gdsi () {
+    gds di "$@"
+}
+
+gdsv () {
+    gds dv "$@"
 }
 
 ggai () {
