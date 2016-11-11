@@ -83,7 +83,7 @@ nnoremap = ?<cr>
  noremap ] <C-]>   " do this on bufenter
  noremap [ <C-T>   " do this on bufenter
  noremap ; q:
- noremap ' `' " goto mark '
+ noremap ' :nohl<cr>
  noremap " m'
 "noremap \ - leader
  noremap , `
