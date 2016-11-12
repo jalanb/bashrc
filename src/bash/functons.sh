@@ -37,10 +37,6 @@ h () {
     history | tel "$@"
 }
 
-l () {
-    $LS_PROGRAM
-}
-
 x () {
     exit 1
 }
