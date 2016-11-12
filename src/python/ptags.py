@@ -30,7 +30,7 @@ def add_args(parser):
                         help='path to source(s) to be checked')
     parser.add_argument('-r', '--recursive', action='store_true',
                         help='Recurse into sub-directories')
-    parser.add_argument('-v', '--verbose', action='store_true',
+    parser.add_argument('-V', '--Verbose', action='store_true',
                         help='Report disk changes')
 
 
@@ -144,7 +144,7 @@ def read_file(path_to_python):
             if previous_tag.name == tag.name:
                 try:
                     want_t, tag = more_likely_of(previous_tag, tag)
-                except ValueError, e:
+                except ValueError as e:
                     problems.append(str(e))
                 break
         else:
