@@ -32,6 +32,7 @@ cde () {
     echo
     git_simple_status $(pwd) || lk
     activate_ancestor_virtualenv_hence
+    show_version_here
 }
 # _xx
 # xxxx
@@ -49,6 +50,12 @@ cccde () {
 }
 # _xxxxx
 # xxxxxx
+
+# xxxxxxxxxxxxxxxxx
+
+show_version_here () {
+    test -f ./.bumpversion.cfg && bump show
+}
 
 # xxxxxxxxxxxxxxxxxxx
 
