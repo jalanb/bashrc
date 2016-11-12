@@ -30,8 +30,32 @@ pp () {
     _python pudb "$@"
 }
 
+pi () {
+    pip install "$@"
+}
+
+pu () {
+    pip uninstall "$@"
+}
+
 # xxx
+
+pir () {
+    pip install -r requirements.txt 2>&1 | grep 'pip install --upgrade pip' && pip install --upgrade pip
+}
+
+piu () {
+    pip install --upgrade "$@"
+}
 
 ppp () {
     _python pym "$@"
+}
+pir () 
+{ 
+    pip install -r requirements.txt 2>&1 | grep 'pip install --upgrade pip' && pip install --upgrade pip
+}
+pir () 
+{ 
+    pip install -r requirements.txt 2>&1 | grep 'pip install --upgrade pip' && pip install --upgrade pip
 }
