@@ -389,6 +389,7 @@ clone () {
         cat $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
+        ranger .
     fi
 }
 
