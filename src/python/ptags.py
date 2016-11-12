@@ -20,10 +20,8 @@ import re
 import sys
 
 from dotsite import scripts
-from dotsite.paths import home
-from dotsite.paths import makepath
-from dotsite.paths import pwd
-from repositories import svn
+from dotsite import paths
+from repositories import repository
 
 
 def add_args(parser):
@@ -97,7 +95,7 @@ class FileTag(Tag):
         try:
             self.name = path.namebase
         except AttributeError:
-            path = makepath(path)
+            path = paths.path(path)
         Tag.__init__(self, path, {'address': '1'})
         self.name = path.namebase
         self.address = '1'
@@ -174,10 +172,10 @@ def read_dir(path_to_directory):
 def read_dirs(path_to_directory=None):
     """Read tags for directory/*.py, and recursively under it"""
     if not path_to_directory:
-        path_to_directory = pwd()
+        path_to_directory = paths.pwd()
     tags = read_dir(path_to_directory)
     for path_to_sub_directory in path_to_directory.walkdirs():
-        if svn.is_svn_path(path_to_sub_directory):
+        if repository.is_repository_path(path_to_sub_directory):
             continue
         tags.append(read_dir(path_to_sub_directory))
     return tags
@@ -192,15 +190,15 @@ def tags_to_text(tags):
 
 def write_dir(path_to_directory, tags):
     """Write the given tags to a tags file in the given directory"""
-    out = makepath('%s/tags' % path_to_directory)
+    out = paths.path('%s/tags' % path_to_directory)
     if out.isdir():
         message = 'Wrote no tags to %s' % out
     else:
         text = tags_to_text(tags)
         out.write_text(text)
         message = 'Wrote tags to %s' % out
-    if scripts.args.verbose:
-        print message
+    if scripts.args.Verbose:
+        print(message)
 
 
 def read_write_dir(path_to_directory=None):
@@ -209,22 +207,23 @@ def read_write_dir(path_to_directory=None):
         if scripts.args.directories:
             [read_write_dir(d) for d in scripts.args.directories]
         else:
-            path_to_directory = pwd()
+            path_to_directory = paths.pwd()
     tags = read_dir(path_to_directory)
     write_dir(path_to_directory, tags)
 
 
-def read_write_dirs(path_to_directory=None):
+def read_write_dirs(source=None):
     """Write tags from the files in/under the directory"""
-    if not path_to_directory:
+    if not source:
         if scripts.args.directories:
             [read_write_dirs(d) for d in scripts.args.directories]
         else:
-            path_to_directory = pwd()
+            source = paths.pwd()
+    path_to_directory = paths.path(source)
     tags = read_dirs(path_to_directory)
     write_dir(path_to_directory, tags)
     for path_to_sub_directory in path_to_directory.walkdirs():
-        if svn.is_svn_path(path_to_sub_directory):
+        if repository.is_repository_path(path_to_sub_directory):
             continue
         tags = read_dirs(path_to_sub_directory)
         write_dir(path_to_sub_directory, tags)
@@ -234,19 +233,19 @@ def read_sys_dirs():
     """Read tags for each path in sys.path"""
     tags = []
     for path_to_system in sys.path:
-        tags.append(read_dir(makepath(path_to_system)))
+        tags.append(read_dir(paths.path(path_to_system)))
     return tags
 
 
 def all_directories_in_a_list_of_tags(tags):
     """Get a sorted list of all the directories mentioned in the given tags"""
-    return sorted({home().relpathto(t.path.parent) for t in tags})
+    return sorted({paths.home().relpathto(t.path.parent) for t in tags})
 
 
 def script(args):
     """Run the program"""
     if args.recursive:
-        read_write_dirs()
+        read_write_dirs(args.source)
     else:
         read_write_dir()
 
