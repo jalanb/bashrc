@@ -180,10 +180,6 @@ hd () {
     vim_diff "$1" "$2" "$3" -o
 }
 
-hv () {
-    history | vim - +
-}
-
 
 _free_line_here () {
     :

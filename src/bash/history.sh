@@ -10,6 +10,22 @@ gh () {
     _strip_history | grep --color "$@"
 }
 
+hh () {
+    _strip_history | head
+}
+
+hl () {
+    _strip_history | less
+}
+
+ht () {
+    _strip_history | tail
+}
+
+hv () {
+    history | vim - +
+}
+
 vh () {
     local __doc__="edit stuff from history"
     if [[ -n $* ]]; then
