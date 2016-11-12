@@ -785,7 +785,7 @@ bump () {
         shift
     fi
     local _part=${1:-patch}; shift
-    if [[ -z $_show ]]; then
+    if [[ -z $_part ]]; then
         git pull --rebase
         if bumpversion $_part "$@"; then
             git push

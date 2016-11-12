@@ -31,10 +31,12 @@ lo () {
     ll -htr "$@"
 }
 
+lp () {
+    l "$@" *.py
+}
+
 # xxx
 
 lll () {
-    ll -lahtr "$@"
+    lo -a "$@"
 }
-
-
