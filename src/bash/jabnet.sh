@@ -20,6 +20,5 @@ jm () {
 
 _ssh () {
     _server=$1
-    [[ $(hostname) == $_server ]] || ssh -i ~/.ssh/id_jab $_server
+    [[ $(hostname) == $_server ]] || ssh -q -i ~/.ssh/id_jab $_server
 }
-
