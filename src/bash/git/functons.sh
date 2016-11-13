@@ -233,11 +233,11 @@ grr () {
 
 gsd () {
     shift_dir "$@" && shift
-    for f in $(git -C $dir status -s | grep "^ M" | cut -dM -f2)
+    for f in $(gssd $dir | grep "^ M" | cut -dM -f2)
     do
         git dv $f
     done
-    STATUS_QUESTIONS=$(git -C $dir status -s | grep "??" | cut -d' ' -f2)
+    STATUS_QUESTIONS=$(gssd $dir | grep "??" | cut -d' ' -f2)
     [[ -n $STATUS_QUESTIONS ]] && v $STATUS_QUESTIONS
 }
 
@@ -297,7 +297,7 @@ _gsi_show_file () {
 
 gsi () {
     shift_dir "$@" || shift
-    for f in $(git -C $dir status -s | grep "^\([MDU ][MU]\|??\)" | sed -e "s/^...//")
+    for f in $(gssd $dir | grep "^\([MDU ][MU]\|??\)" | sed -e "s/^...//")
     do
         [[ -z "$f" ]] && continue
         _git_modified "$f" && _gsi_show_file "$f" || (_git_untracked "$f" && fewer "$f" || continue )
@@ -315,9 +315,17 @@ gsi () {
     [[ -n $STATUS_QUESTIONS ]] && vimcat $STATUS_QUESTIONS
 }
 
+gss () {
+    if [[ -n "$*" ]]; then
+        git status -s .
+    else
+        git status -s "$@"
+    fi
+}
+
 gsv () {
     shift_dir "$@" || shift
-    for f in $(git -C $dir status -s)
+    for f in $(gssd $dir)
     do
         if echo $f | grep -q "^ M" ;then
             git dv $(echo $f | cut -dM -f2)
@@ -382,6 +390,11 @@ gmmm () {
 grmm () {
     grr
     gmmm
+}
+
+gssd () {
+    local _dir="$1"; shift
+    gss -C $_dir "$@"
 }
 
 # xxxxx
@@ -472,7 +485,7 @@ _git_untracked () {
 }
 
 _status_chars () {
-    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+    gssd $dir -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
 _do_git_status () {
@@ -529,7 +542,7 @@ git_simple_status () {
     local arg_dir=${1:-$PWD}
     _has_git_changes $arg_dir || return
     local git_dir=$(git_root $arg_dir)
-    [[ -n $git_dir ]] && git -C "$git_dir" status -s 2>/dev/null | grep "$_git_status_regexp"
+    [[ -n $git_dir ]] && gssd "$git_dir" 2>/dev/null | grep "$_git_status_regexp"
 }
 
 _show_git_time_log () {
