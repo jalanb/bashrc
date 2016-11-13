@@ -200,6 +200,10 @@ gmm () {
     git merge master
 }
 
+grc () {
+    git rebase --continue
+}
+
 grp () {
     echo "Pull"
     grr "$@"
