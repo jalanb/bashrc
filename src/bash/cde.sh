@@ -32,7 +32,7 @@ cde () {
     echo
     git_simple_status $(pwd) || lk
     activate_ancestor_virtualenv_hence
-    [[ -d .git ]] || return 0
+    [[ -d ./.git ]] || return 0
     show_version_here
 }
 # _xx
