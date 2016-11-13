@@ -219,6 +219,10 @@ grh () {
     git reset HEAD "$@"
 }
 
+grc () {
+    git rebase --continue
+}
+
 gri () {
     if [[ -n $1 ]]; then
         git rebase --interactive "$@"
