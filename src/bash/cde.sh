@@ -54,18 +54,19 @@ cccde () {
 # xxxxxxxxxxxxxxxxx
 
 show_version_here () {
+    [[ -d .git ]] || return 0
     local config=./.bumpversion.cfg
     if [[ -f $config ]]; then
         bump show
-    else
-        echo "[bumpversion]" > $config
-        echo "commit = True" >> $config
-        echo "tag = True" >> $config
-        echo "current_version = 0.0.0" >> $config
-        git add $config
-        echo "git commit -m\"v0.0.0\""
-        echo bump 
+        return
     fi
+    echo "[bumpversion]" > $config
+    echo "commit = True" >> $config
+    echo "tag = True" >> $config
+    echo "current_version = 0.0.0" >> $config
+    git add $config
+    echo "git commit -m\"v0.0.0\""
+    echo bump 
 }
 
 # xxxxxxxxxxxxxxxxxxx
