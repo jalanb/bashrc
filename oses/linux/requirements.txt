@@ -1,5 +1,10 @@
+nose==1.3.7
+nose-progressive
+nose-pudb
 ipython
 pudb
+pprintpp
+dotsite
 virtualenv
 virtualenvwrapper
 ansible

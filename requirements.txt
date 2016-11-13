@@ -4,4 +4,4 @@ nose-pudb
 ipython
 pudb
 pprintpp
-dotsite
+path.py==7.7.1
