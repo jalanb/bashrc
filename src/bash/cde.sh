@@ -36,8 +36,8 @@ cde () {
 
 cde_git () {
     [[ -d ./.git ]] || return 1
-    git_simple_status $(pwd) || lk
     show_version_here
+    git_simple_status $(pwd) || lk
 }
 # _xx
 # xxxx
