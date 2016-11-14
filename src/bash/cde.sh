@@ -30,13 +30,29 @@ cde () {
     echo
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
     echo
-    git_simple_status $(pwd) || lk
     activate_ancestor_virtualenv_hence
-    [[ -d ./.git ]] || return 0
+    cde_git  && cde_python
+}
+
+cde_git () {
+    [[ -d ./.git ]] || return 1
+    git_simple_status $(pwd) || lk
     show_version_here
 }
 # _xx
 # xxxx
+
+cde_python () {
+    local _dir=$(dirname $(readlink -f .))
+    local _dir_name=$(basename $_dir)
+    [[ -f setup.py || -d ./$_dir_name ]] || return 1
+    find . -type f -name "*.py" || return 0
+    local _dir_name=$1
+    local egg_info=${_dir_name}.egg-info
+    if [[ -d $egg_info ]]; then
+        rri $egg_info
+    fi
+}
 
 ccde () {
     local __doc__="There's always gcc, on the off chance it's needed"
