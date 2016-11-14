@@ -17,7 +17,7 @@ cls () {
     if [[ -n "$@" ]]; then
         lk "$@"
     else
-        ld $(pwd)
+        l .
         echo
     fi
 }
