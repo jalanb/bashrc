@@ -42,12 +42,16 @@ cde_git () {
 # _xx
 # xxxx
 
+any_python_scripts_here () {
+    local _found=$(find . -type f -name "*.py" -exec echo 1 \; -quit)
+    [[ $_found == 1 ]]
+}
+
 cde_python () {
     local _dir=$(dirname $(readlink -f .))
     local _dir_name=$(basename $_dir)
+    any_python_scripts_here || return 0
     [[ -f setup.py || -d ./$_dir_name ]] || return 1
-    find . -type f -name "*.py" || return 0
-    local _dir_name=$1
     local egg_info=${_dir_name}.egg-info
     if [[ -d $egg_info ]]; then
         rri $egg_info
