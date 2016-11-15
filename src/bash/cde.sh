@@ -23,6 +23,7 @@ cls () {
 }
 
 cde () {
+    local __doc__="cd to a dir, show the dir"
     KD_QUIET=1 kd "$@" || return 1
     _show_todo_here
     echo
