@@ -29,10 +29,12 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 
 # Support for code - configurations, outputs, tests, ... - MAGENTA
 .app          00;35
+.bnf          00;35
 .cfg          00;35
 .conf         00;35
 .config       00;35
 .css          00;35
+.ebnf         00;35
 .g            00;35
 .parsley      00;35
 .html         00;35
