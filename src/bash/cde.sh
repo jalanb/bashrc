@@ -47,11 +47,15 @@ any_python_scripts_here () {
     [[ $_found == 1 ]]
 }
 
+python_project_here () {
+    [[ -f setup.py || -d ./$_dir_name ]]
+}
+
 cde_python () {
+    any_python_scripts_here || return 0
+    python_project_here || return 0
     local _dir=$(dirname $(readlink -f .))
     local _dir_name=$(basename $_dir)
-    any_python_scripts_here || return 0
-    [[ -f setup.py || -d ./$_dir_name ]] || return 1
     local egg_info=${_dir_name}.egg-info
     if [[ -d $egg_info ]]; then
         rri $egg_info
