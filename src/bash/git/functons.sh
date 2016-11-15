@@ -37,7 +37,7 @@ gc () {
     if [[ -z "$@" ]]; then git commit --verbose
     else
         python -c "print 'git commit -m\"$*\"'" > $_storage
-        (set -x; _show_run_storage)
+        _show_run_storage
     fi
     GIT_ADDED=
 }
@@ -110,7 +110,7 @@ gcj () {
     if [[ -z "$@" ]]; then $JIT commit --all --verbose
     else
         python -c "print '$JIT commit -m\"$*\"'" > $_storage
-        (set -x; _run_storage)
+        _run_storage
     fi
 }
 
