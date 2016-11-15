@@ -10,7 +10,11 @@ j () {
 # xx
 
 jj () {
-    KCD=cde k ~/jab "$@"
+    if [[ -z "$*" ]]; then
+        cde ~/jab
+    else
+        KCD=cde k ~/jab "$@"
+    fi
 }
 
 jv () {
