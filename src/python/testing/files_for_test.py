@@ -146,7 +146,7 @@ def is_possible_test_extension(string):
 
 
 def is_positive_test_extension(string):
-    """Whether the string is a possible test extension"""
+    """Whether the string is a positive test extension"""
     return string in positive_test_extensions()
 
 

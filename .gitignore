@@ -21,6 +21,7 @@ etc/history
 tags
 *.fail
 *.pyc
+.noseids
 
 # root-level directories
 /include/
@@ -35,7 +36,3 @@ tags
 /ipython/README
 /ipython/profile_default/static/
 /ipython/profile_default/security/
-
-# work in progress
-/bin/hubby.py
-/bin/hubby.test

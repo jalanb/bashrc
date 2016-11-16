@@ -1,6 +1,8 @@
 """Script to handle running of doctests"""
 
 
+from __future__ import print_function
+
 import re
 import os
 import imp
@@ -14,7 +16,7 @@ from pprint import pprint
 
 from dotsite.paths import path
 from see import see, see_methods, see_attributes, spread
-import test_files
+import files_for_test
 import try_plugins
 
 
@@ -297,7 +299,7 @@ def test():
     failures_all = 0
     sys_paths.add('.')
     try:
-        for test_script in test_files.paths_to_doctests(
+        for test_script in files_for_test.paths_to_doctests(
                 args, options.recursive):
             failures, tests_run, message = 0, 0, ''
             os.chdir(pwd)
@@ -333,7 +335,7 @@ def main():
     """Run the program"""
     try:
         return test()
-    except test_files.UserMessage as e:
+    except files_for_test.UserMessage as e:
         print(e, file=sys.stderr)
     except KeyboardInterrupt as e:
         print('^c ^C ^c ^C ^c ^C ^c ^C ^c ^C ^c ', file=sys.stderr)
