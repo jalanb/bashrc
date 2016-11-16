@@ -1,5 +1,5 @@
     >>> import ptags
-    >>> ptags_dir = ptags.makepath(ptags.__file__).parent
+    >>> ptags_dir = ptags.paths.path(ptags.__file__).parent
     >>> tags = ptags.read_dirs(ptags_dir)
 
     >>> print ptags.tags_to_text([ t for t in tags if 'read_dir' in t.address ])

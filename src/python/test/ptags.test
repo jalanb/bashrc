@@ -5,8 +5,8 @@ ptags is a module
     >>> import ptags
 
 which resides in this directory
-    >>> from dotsite.paths import makepath
-    >>> ptags_directory = makepath(ptags.__file__).parent
+    >>> from dotsite.paths import path
+    >>> ptags_directory = path(ptags.__file__).parent
 
 and has this source file
     >>> ptags_file = ptags_directory / str('%s.py' % ptags.__name__)
