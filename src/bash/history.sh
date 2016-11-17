@@ -11,7 +11,7 @@ gh () {
 }
 
 hh () {
-    _strip_history | head
+    _strip_history | head "$@"
 }
 
 hl () {
@@ -19,7 +19,7 @@ hl () {
 }
 
 ht () {
-    _strip_history | tail
+    _strip_history | tail "$@"
 }
 
 hv () {
