@@ -68,8 +68,8 @@ fynd () {
     dir=
     if [[ $_argc > 1 ]]; then
         shift_dir "$@" && shift
-    elif [[ -z $dir ]]; then
-        dir=$(pwd)
+    else
+        [[ -n $dir ]] || dir=$(pwd)
     fi
     local name=$1
     shift
