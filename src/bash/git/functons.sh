@@ -489,7 +489,7 @@ _git_untracked () {
 }
 
 _status_chars () {
-    gssd $dir -- $1 | sed -e "s/\(..\).*/\1/"
+    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
 _do_git_status () {
