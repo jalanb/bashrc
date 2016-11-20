@@ -1,0 +1,26 @@
+#! /bin/bash
+
+. ~/jab/src/bash/git/functons.sh
+
+up_dir () {
+    cd $1
+    if [[ -n $(git status -s) ]]; then
+        git status
+        return 1 
+    fi
+    grp
+}
+
+main () {
+    up_dir ~/hub/ack2vim
+    up_dir ~/hub/dotsite
+    up_dir ~/hub/jalanb.github.io
+    up_dir ~/hub/kd
+    up_dir ~/hub/pym
+    up_dir ~/hub/vimcat
+    up_dir ~/hub/what
+    up_dir ~/jab
+}
+
+main
+
