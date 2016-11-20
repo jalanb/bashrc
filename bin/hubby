@@ -33,19 +33,20 @@ _show_status () {
 }
 
 _show_dir () {
-    path=$1
-    if [[ -d "$path/.git" ]]; then
-        [[ ! -f "$path/.hubignore" ]] && _show_status $path
-    else echo Path has no git repo: $path >&2
+    local _path="$1"
+    if [[ -d "$_path/.git" ]]; then
+        [[ ! -f "$_path/.hubignore" ]] && _show_status "$_path"
+    else
+        echo Path has no git repo: $_path >&2
     fi
 }
 
 _show_dirs () {
-    local hub=$1
-    cd $hub
+    local _hub="$1"
+    cd "$_hub"
     for dirname in $(ls)
     do
-        local path=$hub/$dirname
+        local path="$_hub"/$dirname
         [[ $(readlink -f $path) == $(readlink -f ~/jab) ]] && continue
         [[ -d "$path" ]] && _show_dir $path
     done
