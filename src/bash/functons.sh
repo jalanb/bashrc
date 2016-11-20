@@ -892,14 +892,7 @@ vibb () {
 }
 
 vims () {
-    local _which=$(which vim)
-    for Vim in $(locate -f vim); do
-        echo
-        if $Vim --version >/dev/null 2>&1; then
-            $Vim --version | grep --color ' [0,7,8]\.[0-9]'
-            ll $Vim | grep --color $_which || ll $Vim
-        fi
-    done
+    whiches vim
 }
 
 vini () {
@@ -1079,6 +1072,18 @@ pylinum () {
 
 relpath () {
     python ~/jab/src/python/relpath.py "$@"
+}
+
+whiches () {
+    local _which=$(which $1)
+    local _located=
+    for _located in $(locate -f $1); do
+        echo
+        if $_located --version >/dev/null 2>&1; then
+            $_located --version | grep --color ' [0,7,8]\.[0-9]'
+            ll $_located | grep --color $_which || ll $_located
+        fi
+    done
 }
 
 umports () {
