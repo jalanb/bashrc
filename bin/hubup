@@ -2,7 +2,17 @@
 
 . ~/jab/src/bash/git/functons.sh
 
-up_dir () {
+clone_dir () {
+    echo clone $1
+    local _dir=$1
+    local _name=${_dir##[/a-zA-Z]*/}
+    cd ~/hub
+    rm -rf $_name
+    git clone https://github.com/jalanb/${_name}.git
+}
+
+update_dir () {
+    echo update $1
     cd $1
     if [[ -n $(git status -s) ]]; then
         git status
@@ -11,11 +21,23 @@ up_dir () {
     grp
 }
 
+up_dir () {
+    [[ -d $1 ]] || clone_dir $1
+    [[ -d $1 ]] && update_dir $1
+}
+
 main () {
     up_dir ~/hub/ack2vim
+    up_dir ~/hub/al_got_rhythm.net
+    up_dir ~/hub/autopep8
+    up_dir ~/hub/ciss
+    up_dir ~/hub/co.py.cat
+    up_dir ~/hub/crass
     up_dir ~/hub/dotsite
+    up_dir ~/hub/jail
     up_dir ~/hub/jalanb.github.io
     up_dir ~/hub/kd
+    up_dir ~/hub/pss
     up_dir ~/hub/pym
     up_dir ~/hub/vimcat
     up_dir ~/hub/what
