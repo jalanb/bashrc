@@ -51,8 +51,8 @@ show_value () {
 }
 
 show_a_path () {
-    local setter=${2-bash}
-    local name=${1-PATH}
+    local setter=${2:-bash}
+    local name=${1:-PATH}
     echo "$setter has set \$$name to:"
     local old_ifs=$IFS
     IFS=":"
@@ -61,7 +61,7 @@ show_a_path () {
     for path in $paths
     do
         echo "  $path"
-    done | sort
+    done
     IFS=$old_ifs
 }
 

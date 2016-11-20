@@ -1,7 +1,5 @@
 #! /bin/bash
 
-# export PATH=$PATH:
-
 export VIP=192.168.111.222
 export HVIP=http://192.168.111.222
 
