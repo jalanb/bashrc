@@ -468,7 +468,7 @@ git_branch () {
 git_changed () {
     local git_dir=$(git_root ${1:-$PWD})
     [[ -n $git_dir ]] || return 1
-    git -C $git_dir status --porcelain | gre -q "$_git_status_regexp"
+    git -C $git_dir status --porcelain | grep -q "$_git_status_regexp"
 }
 
 # xxxxxxxxxxxx
