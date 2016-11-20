@@ -891,6 +891,18 @@ vibb () {
     vim -p ~/.bashrc ~/jab/login.sh
 }
 
+vims () {
+    for Vim in $(locate -f vim); do
+        ll $Vim
+        echo
+        if $Vim --version >/dev/null 2>&1; then
+            $Vim --version 
+        else
+            echo 0.0
+        fi | grep --color ' [0,7,8]\.[0-9]'
+    done
+}
+
 vini () {
     vim -p $(find ~/jab -name __init__.sh | tr '\n' ' ')
 }
