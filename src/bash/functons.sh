@@ -892,14 +892,13 @@ vibb () {
 }
 
 vims () {
+    local _which=$(which vim)
     for Vim in $(locate -f vim); do
-        ll $Vim
         echo
         if $Vim --version >/dev/null 2>&1; then
-            $Vim --version 
-        else
-            echo 0.0
-        fi | grep --color ' [0,7,8]\.[0-9]'
+            $Vim --version | grep --color ' [0,7,8]\.[0-9]'
+            ll $Vim | grep --color $_which || ll $Vim
+        fi
     done
 }
 
