@@ -3,6 +3,7 @@ recover () {
     local swap_file="$2"
     local text_file="$1"
     read -p "Recover $args ? " reply
+    [[ $reply =~ [qQ] && return 0
     if [[ -z $reply || $reply == "y" || $reply == "Y" ]]; then
         echo "Recovering $swap_file"
         recovered_file="${text_file}.recovered"
