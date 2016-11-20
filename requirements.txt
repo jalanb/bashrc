@@ -2,6 +2,8 @@ nose==1.3.7
 nose-progressive
 nose-pudb
 ipython
+2to3
 pudb
 pprintpp
-path.py==7.7.1
+dotsite
+pym
