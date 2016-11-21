@@ -1,21 +1,21 @@
 Host eos70D
     Hostname 192.168.130.102
 
-Host jalanb.ook
-    Hostname jalanbook.local
+Host jalan.book
+    Hostname jalan-book.local
     Hostname 192.168.130.104
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.ook
-    Hostname jab-ook.local
-    Hostname 192.168.130.105
+Host jalan.mac
+    Hostname jalan-mac.local
+    Hostname 192.168.130.108
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jalanb.mac
-    Hostname jalanbook.local
-    Hostname 192.168.130.108
+Host ja.book
+    Hostname ja-book.local
+    Hostname 192.168.130.105
     User jab
     IdentityFile ~/.ssh/id_jab
 
