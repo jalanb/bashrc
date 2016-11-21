@@ -75,7 +75,7 @@ fynd () {
     shift
     local old_ifs=$IFS
     IFS=";"
-    for FOUND in $(find "$dir" -name "$name" -print "$@" | tr '\n' ';')
+    for FOUND in $(find $(readlink -f "$dir") -name "$name" -print "$@" | tr '\n' ';')
     do
         relpath -s $FOUND
     done
