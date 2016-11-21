@@ -649,7 +649,7 @@ vat () {
 }
 
 vbb () {
-    vim -p ~/.bashrc ~/hub/jab/__init__.sh "$@" +/bash
+    vim -p ~/.bashrc ~/hub/jab/__init__.sh ~/.bash_profile "$@" +/bash
     ls -l ~/.bashrc ~/hub/jab/__init__.sh
 }
 
