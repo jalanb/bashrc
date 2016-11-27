@@ -3,6 +3,15 @@
     email = github@al-got-rhythm.net
 [credential]
     helper = store
+[github]
+    user = jalanb
+    token = 112879b850edd91a06ef96bf6e990ced
+[pager]
+    diff =
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore_global
+    trustctime = false
 [alias]
     br = branch
     cb = rev-parse --abbrev-ref HEAD
@@ -10,14 +19,16 @@
     co = checkout
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
-    di = difftool -y --extcmd=\"~/hub/icdiff/icdiff --line-numbers\"
+    di = difftool -y --extcmd=\"icdiff\"
     dv = difftool -y --extcmd=\"vim -d -O\"
+    dy = difftool -y --extcmd=\"pydiff\"
     dw = diff --word-diff
     dr = rerere diff
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
     lg = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' --abbrev-commit --date=relative
+    lh = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
     lt = log --oneline --graph --decorate --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --abbrev-commit --date=relative --tags
     mo = merge origin/master
     pr = pull --rebase
@@ -35,19 +46,6 @@
     ui = auto
 [help]
     autocorrect = 1
-[github]
-    user = jalanb
-[pager]
-    diff =
-[core]
-    editor = vim
-    excludesfile = ~/.gitignore_global
-    trustctime = false
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
     enabled = true
-#[https]
-    #proxy = http://$proxy_url:$proxy_port/
-#[http]
-    #proxy = http://$proxy_url:$proxy_port/
-
