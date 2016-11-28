@@ -691,6 +691,10 @@ vpr () {
     python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
+vtc () {
+    vtr -c
+}
+
 vtr () {
     python ~/jab/src/python/tracebacks.py -e "$@"
 }
@@ -1242,6 +1246,10 @@ vim_diff () {
 # xxxxxxxxxx
 
 # xxxxxxxxxxx
+
+space_lines () {
+    tr '\n' ' '
+}
 
 # xxxxxxxxxxxx
 
