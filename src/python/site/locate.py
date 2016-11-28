@@ -76,7 +76,9 @@ def _run_locate(string, options):
     command = _make_locate_command(string, options)
     status, output = commands.getstatusoutput(command)
     if status and output:
-        raise ValueError('command: %s\n output: %s' % (command, output))
+        old = re.search('is more than .* days old', output)
+        if not old:
+            raise ValueError('command: %s\n output: %s' % (command, output))
     elif not output:
         return []
     locatable = [l for l in output.split('\n') if _locatable(l)]
