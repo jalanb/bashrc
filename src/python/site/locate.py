@@ -108,7 +108,6 @@ def _make_check_method(method, options):
 
 def _locate(string, options):
     """Locate some files called string, restricted by the given options"""
-    lines = _run_locate(string, options)
 
     def _compare(one, two):
         if options.ignore_case:
@@ -122,11 +121,6 @@ def _locate(string, options):
     def _has_basename(path):
         return _compare(os.path.basename(path), string)
 
-    check = _make_check_method(_has_basename, options)
-    result = [l for l in lines if check(l)]
-    if result or options.basename:
-        return result
-
     def _directory_in_path(path):
         test_string = string
         parts = path.split(os.path.sep)
@@ -137,6 +131,7 @@ def _locate(string, options):
                 return True
         return False
 
+    lines = _run_locate(string, options)
     check = _make_check_method(_directory_in_path, options)
     result = [l for l in lines if check(l)]
     if result:
