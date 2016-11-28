@@ -6,7 +6,7 @@ from __future__ import print_function
 import re
 import os
 import shlex
-import commands
+import commands  # Eh? pylint: disable=import-error
 import optparse
 from fnmatch import fnmatch
 
@@ -114,6 +114,7 @@ def _locate(string, options):
             two = two.upper()
         if options.globs:
             return fnmatch(one, two)
+        # cmp? pylint: disable=undefined-variable
         return cmp(one, two) == 0
 
     def _has_basename(path):
