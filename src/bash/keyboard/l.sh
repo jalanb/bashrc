@@ -4,11 +4,11 @@
 
 if [[ -f /usr/local/bin/gls ]]; then
 	l () {
-	    /usr/local/bin/gls --group-directories-first --color "$@"
+	    /usr/local/bin/gls --group-directories-first --color -htr "$@"
 	}
 else
 	l () {
-	    ls "$@"
+	    ls -htr "$@"
 	}
 fi
 
@@ -19,7 +19,7 @@ la () {
     l -a "$@"
 }
 
-li () {
+lg () {
     l -g "$@"
 }
 
@@ -27,16 +27,12 @@ ll () {
     l -l "$@"
 }
 
-lo () {
-    ll -htr "$@"
-}
-
-lp () {
-    l "$@" *.py
-}
-
 # xxx
 
+lal () {
+    l -a -l "$@"
+}
+
 lll () {
-    lo -a "$@"
+    ll -a "$@"
 }
