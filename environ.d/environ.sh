@@ -1,39 +1,8 @@
 #! /bin/bash
 
-_source_jab_environ () {
-    export EX_OK=0
-    export EX_BAD=1
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
-    if [[ ! -d ~/jab ]]; then
-        . ~/jab/environ.d/jab.sh
-    fi
-
-    export COLUMNS
-
-    export EXITSTATUS="$?"
-    export FIGNORE=.pyc:.swp:~:.o
-
-    #export DISPLAY=:0
-
-    # correct minor spelling errors for cd
-    shopt -s cdspell
-    #
-    # some interesting paths
-    #
-    _far=~/jab/../../..
-    _far_git=$_far/git
-    _far_hg=$_far/hg
-    GIT_BUCKET=no_bucket; [[ -d $_far_git/bucket ]] && GIT_BUCKET=$_far_git/bucket; export GIT_BUCKET
-    HG_BUCKET=no_bucket; [[ -d $_far_hg/bucket ]] && HG_BUCKET=$_far_hg/bucket export HG_BUCKET
-    BUCKET=no_bucket
-    if [[ -d $HG_BUCKET ]]; then
-        BUCKET=$HG_BUCKET
-    elif [[ -d $GIT_BUCKET ]]; then
-        BUCKET=$GIT_BUCKET
-    fi
-    export BUCKET
-    DIRCOLORS=$(readlink -f $(which dircolors))
-    [[ -n $DIRCOLORS ]] && eval $($DIRCOLORS ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
+set_paths () {
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then
         . ~/jab/bin/add_to_a_path.sh
@@ -56,29 +25,59 @@ _source_jab_environ () {
     else
         echo ~/jab is not a directory
     fi
-    # show_path
-    export PS1
+}
 
-    #
-    # Path dependencies
-    #
+set_bucket () {
+    _far=~/jab/../../..
+    _far_git=$_far/git
+    _far_hg=$_far/hg
+    GIT_BUCKET=no_bucket; [[ -d $_far_git/bucket ]] && GIT_BUCKET=$_far_git/bucket; export GIT_BUCKET
+    HG_BUCKET=no_bucket; [[ -d $_far_hg/bucket ]] && HG_BUCKET=$_far_hg/bucket export HG_BUCKET
+    BUCKET=no_bucket
+    if [[ -d $HG_BUCKET ]]; then
+        BUCKET=$HG_BUCKET
+    elif [[ -d $GIT_BUCKET ]]; then
+        BUCKET=$GIT_BUCKET
+    fi
+    export BUCKET
+}
 
+show_dir_colors () {
+    local _dircolors=$(which dircolors 2>/dev/null)
+    [[ -n $_dircolors ]] || return 1
+    local _dircolours=$(readlink -f $_dircolors)
+    [[ -n $_dircolours ]] || return 1
+    eval $($_dircolours ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
+}
+
+export_symbols () {
+    export EX_OK=0
+    export EX_BAD=1
+    export EXITSTATUS="$?"
+    export FIGNORE=.pyc:.swp:~:.o
+    export EMAIL="dotjab@al-got-rhythm.net"
+    export RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
+    export LOG_LINES_ON_CD_GIT_DIR=7
     if [[ -x /usr/local/bin/which ]]; then
         export WHICH=/usr/local/bin/which
     else
         export WHICH=/usr/bin/which
     fi
     export EDITOR=vim
-    export EMAIL="dotjab@al-got-rhythm.net"
+}
 
-    if [[ -d ~/jab ]]; then
-        source_path ~/jab/environ.d/colour.sh
-    fi
+_source_jab_environ () {
+    [[ -f ~/jab/environ.d/jab.sh ]] && . ~/jab/environ.d/jab.sh
 
-    RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
-    export LOG_LINES_ON_CD_GIT_DIR=7
+    export_symbols
+    set_bucket
+    show_dir_colors
+    set_paths
 
+    shopt -s cdspell
     set -o vi
 }
 
 _source_jab_environ
+
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)

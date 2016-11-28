@@ -1,5 +1,7 @@
 #! /bin/cat
 
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+
 . ~/jab/src/bash/repo.sh
 
 _set_jab () {
@@ -39,3 +41,5 @@ _main () {
 }
 
 _main
+
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
