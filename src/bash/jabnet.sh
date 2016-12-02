@@ -4,15 +4,15 @@
 # xx
 
 jb () {
-    _ssh jabook.local
+    _ssh ja-book.local
 }
 
 jn () {
-    _ssh jalanbook.local
+    _ssh jalan-book.local
 }
 
 jm () {
-    _ssh jalanbmac.local
+    _ssh jalan-mac.local
 }
 
 # xxx
