@@ -260,7 +260,7 @@ pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
-pi () {
+pii () {
     local me=$USER
     local here=$(jostname)
     local options=-noconfirm_exit
@@ -575,12 +575,12 @@ num () {
 }
 
 pi2 () {
-    IPYTHON=ipython2; pi "$@"
+    IPYTHON=ipython2; pii "$@"
 }
 alias pi1=pi2 # I keept typo-ing on that
 
 pi3 () {
-    IPYTHON=ipython3; pi "$@"
+    IPYTHON=ipython3; pii "$@"
 }
 
 ps3 () {
