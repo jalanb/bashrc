@@ -58,8 +58,7 @@ def add_args(parser):
 
 
 def show(lines, args):
-    import ipdb
-    ipdb.set_trace()
+    debuggers.break_ere()
     if args.edit:
         print as_vim_command(lines, '-s' in args)
         return
