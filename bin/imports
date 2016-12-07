@@ -41,7 +41,7 @@ def show_unused(source, editting, stream):
                 ','.join(names),
                 line,
                 linecache.getline(source, line).rstrip()),
-            stream)
+            file=stream)
     if editting:
         vim = 'vim -p /tmp/imports.txt' if editting == 2 else 'vim'
         print(r'\n%s %s +/"\(%s\)"' % (
