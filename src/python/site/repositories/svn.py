@@ -1,6 +1,7 @@
 """This module provides subversion handling"""
 
 
+from __future__ import print_function
 import commands
 
 
@@ -134,4 +135,4 @@ def show_stat(path_):
         return
     command = 'svn stat %r' % path_
     _, output = commands.getstatusoutput(command)
-    print output
+    print(output)

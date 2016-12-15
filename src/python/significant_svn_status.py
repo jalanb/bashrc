@@ -3,6 +3,7 @@
 Stop on first changed item
 """
 
+from __future__ import print_function
 import os
 import sys
 
@@ -19,8 +20,8 @@ def main(args):
         try:
             if get_significant_status(arg):
                 return os.EX_OK
-        except Exception, e:
-            print "Error for %r:\n\t%r" % (arg, str(e))
+        except Exception as e:
+            print("Error for %r:\n\t%r" % (arg, str(e)))
             return not os.EX_OK
     return not os.EX_OK
 
