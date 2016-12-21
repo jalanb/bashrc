@@ -75,7 +75,7 @@ class Freds(object):
         self._dirs = dirs
 
     def _strings(self):
-        exts = ('', '.py', '.sh', '.txt', '.now')
+        exts = ('', '.py', '.sh', '.txt', '.now', '.html')
         return [str('%s/fred%s' % (d, e)) for d in self._dirs for e in exts]
 
     def _paths(self):
