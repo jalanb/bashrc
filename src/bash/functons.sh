@@ -1032,7 +1032,13 @@ _lessern () {
 online () {
     local _dest="$1"; shift
     [[ -z $_dest ]] && _dest=www.google.com
-    quick_ping $_dest "$@" >/dev/null 2>&1 && echo $_dest online || echo $_dest offline
+    if quick_ping $_dest "$@" >/dev/null 2>&1; then
+        echo $_dest online
+        return 0
+    else
+        echo $_dest offline
+        return 1
+    fi
 }
 
 please () {
