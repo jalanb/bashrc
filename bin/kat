@@ -5,7 +5,7 @@ import os
 import sys
 import argparse
 
-import text_streams
+from dotsite import text_streams
 
 
 def parse_args():
@@ -28,7 +28,8 @@ def show_stream(stream, args):
     all_lines = stream.readlines()
     start = args.first if args.first == 0 else args.first - 1
     lines = all_lines[start:args.last] if args.last else all_lines[start:]
-    for i, line in enumerate(lines, start if start > -1 else len(all_lines) + start):
+    safe_start = start if start > -1 else len(all_lines) + start
+    for i, line in enumerate(lines, safe_start):
         if args.numbers:
             print '%d: ' % (i + 1),
         print line.rstrip()
