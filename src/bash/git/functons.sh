@@ -104,6 +104,14 @@ gba () {
     fi
 }
 
+gbd () {
+    git branch -d "$@"
+}
+
+gbD () {
+    git branch -D "$@"
+}
+
 gcj () {
     local _storage=/tmp/gcj.sh
     local JIT="git -C ~/jab"
