@@ -788,17 +788,19 @@ bump () {
         bump_dir="$1"
         shift
     fi
+    local _bump_root=$(git_root $_bump_dir)
     local _part=${1:-patch}; shift
     if [[ -z $_show ]]; then
         if [[ -n $_part ]]; then
             git pull --rebase
+            cd "$_bump_root"
             if bumpversion $_part "$@"; then
                 git push
                 git push origin --tags
             fi
         fi
     fi
-    local _config=$(git_root $_bump_dir)/.bumpversion.cfg
+    local _config="$_bump_root/.bumpversion.cfg"
     local _sought=^current_version
     if [[ -n $_show ]]; then
         grep $_sought $_config | grep --colour '\d[0-9.]\+$'
