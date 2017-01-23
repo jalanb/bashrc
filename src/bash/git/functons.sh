@@ -363,6 +363,10 @@ gcmr () {
     bump show
 }
 
+gcpa () {
+    git cherry-pick --abort
+}
+
 gcpc () {
     git cherry-pick --continue
 }
