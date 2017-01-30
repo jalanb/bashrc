@@ -79,10 +79,6 @@ gaa () {
     ga .
 }
 
-gbv () {
-    git blame "$1" | vin
-}
-
 gac () {
     local addable=.
     if [[ -e "$1" ]]; then
@@ -110,6 +106,10 @@ gbd () {
 
 gbD () {
     git branch -D "$@"
+}
+
+gbv () {
+    git blame "$1" | vin
 }
 
 gcj () {
