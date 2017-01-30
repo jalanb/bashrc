@@ -784,6 +784,11 @@ bump () {
         _show=1
         shift
     fi
+    local _pulled=
+    if [[ $1 == pulled ]]; then
+        _pulled=1
+        shift
+    fi
     if [[ -d "$1" ]]; then
         bump_dir="$1"
         shift
@@ -792,7 +797,7 @@ bump () {
     local _part=${1:-patch}; shift
     if [[ -z $_show ]]; then
         if [[ -n $_part ]]; then
-            git pull --rebase
+            [[ $_pulled == 1 ]] || git pull --rebase
             cd "$_bump_root"
             if bumpversion $_part "$@"; then
                 git push
@@ -1007,9 +1012,9 @@ bumper () {
         return 1
     fi
     local _branch=$1; shift
-    git co $_branch
+    [[ $(git rev-parse --abbrev-ref HEAD) == $_branch ]] || git co $_branch
     git pull --rebase
-    bump "$@"
+    bump pulled "$@"
     git push
 }
 
