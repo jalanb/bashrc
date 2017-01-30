@@ -100,6 +100,10 @@ gba () {
     fi
 }
 
+gbb () {
+    git_branch "$@"
+}
+
 gbd () {
     git branch -d "$@"
 }
