@@ -1,6 +1,7 @@
 """Module to handle source codes"""
 
 
+from __future__ import print_function
 import os
 import re
 import linecache
@@ -12,7 +13,7 @@ class NoCode(ValueError):
 
 def indent_line(filename, line_number):
     line = linecache.getline(filename, line_number)
-    match = re.match('(\s*)', line)
+    match = re.match(r'(\s*)', line)
     return line.rstrip(), match.groups()[0]
 
 
@@ -72,7 +73,7 @@ def highlight_method(method):
 
 def code_of_module(module):
     filename = re.sub('.py[co]$', '.py', module.__file__)
-    return file(filename).read()
+    return open(filename).read()
 
 
 def highlight_module(module):
@@ -93,8 +94,8 @@ def code(instance):
 
 
 def see_code(instance):
-    print code(instance)
+    print(code(instance))
 
 
 def see_highlight(instance):
-    print highlight(instance)
+    print(highlight(instance))
