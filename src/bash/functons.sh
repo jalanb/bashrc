@@ -447,7 +447,7 @@ hed () {
 }
 
 hub () {
-    c ~/hub "$@"
+    cde ~/hub "$@"
 }
 
 jjb () {
