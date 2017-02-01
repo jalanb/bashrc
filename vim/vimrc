@@ -79,7 +79,7 @@ cnoremap w!! w !sudo tee %
 "
 " Punctuation {{{3
 "
- noremap § <esc>
+inoremap § <esc>
 nnoremap = ?<cr>
  noremap ] <C-]>   " do this on bufenter
  noremap [ <C-T>   " do this on bufenter
