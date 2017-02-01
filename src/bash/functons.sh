@@ -18,7 +18,7 @@
 
 
 ,. () {
-    c . "$@"
+    cde . "$@"
 }
 
 b () {
@@ -337,7 +337,7 @@ tt () {
         extract=x
     fi
     tar ${extract}f $1
-    c $(tar ${contents}f $1 | hd1)
+    cd $(tar ${contents}f $1 | hd1)
     ra
 }
 
@@ -816,11 +816,11 @@ bump () {
 
 
 dots () {
-    c ~/hub/dotsite/dotsite
+    cde ~/hub/dotsite/dotsite
 }
 
 down () {
-    c ~/Download* "$@"
+    cde ~/Download* "$@"
     lr -a
 }
 
@@ -1021,7 +1021,7 @@ bumper () {
 cd_one () {
     clear
     shift_dir "$@" && shift
-    c $dir
+    cde $dir
 }
 
 has_py () {

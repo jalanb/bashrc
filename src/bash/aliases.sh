@@ -53,7 +53,7 @@ alias u="u"
 
 # xx
 
-alias ..='c ..'
+alias ..='cde ..'
 
 alias eg="env | g "
 
@@ -64,7 +64,7 @@ alias p-="echo $OLDPWD"
 alias r.="rm -rvf *"
 
 alias sa="source_aliases ~/jab/src/bash/aliases.sh"
-alias sb="c ~/jab && source login.sh && -"
+alias sb="cde ~/jab && source login.sh && -"
 alias se="source ~/jab/environ.d/jab.sh"
 alias sf="source ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
@@ -74,9 +74,9 @@ alias z.="zm \*"
 # xxx
 
 alias ..l='cl ..'
-alias ...='c ../..'
+alias ...='cde ../..'
 
-alias doc="c ~/Documents"
+alias doc="cde ~/Documents"
 
 alias clx="cl; lx "
 alias cly="cl; ly "
@@ -100,7 +100,7 @@ alias tra="try ~/alans_tests"
 
 # xxxx
 
-alias ....='c ../../..'
+alias ....='cde ../../..'
 
 alias comp="source ~/jab/environ.d/company.sh"
 
@@ -111,17 +111,17 @@ alias tags="p ~/jab/src/python/ptags.py "
 
 # xxxxx
 
-alias .....='c ../../../..'
+alias .....='cde ../../../..'
 
 alias mkenv=mkvirtualenv
 
 # xxxxxx
 
-alias ......='c ../../../../..'
+alias ......='cde ../../../../..'
 
 # xxxxxxx
 
-alias .......='c ../../../../../..'
+alias .......='cde ../../../../../..'
 alias service="sudo /sbin/service "
 
 # xxxxxxxx

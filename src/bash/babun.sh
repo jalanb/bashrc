@@ -12,7 +12,7 @@ ssv () {
 wwts () {
     # workon wwts
     add_to_a_path PATH /cygdrive/c/Users/AB13173/BabunVagrantAnsible/vagrant/bin
-    c $GIT/parthenonsoftware/git-wwts/wwts-dashboard
+    cde $GIT/parthenonsoftware/git-wwts/wwts-dashboard
 }
 
 restarts () {

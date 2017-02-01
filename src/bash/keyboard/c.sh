@@ -7,25 +7,26 @@
 # x
 
 alias c=cde
+
 # _
 # xx
 
 alias cc=ccde
 
 cb () {
-    c ~/bash/
+    cde ~/bash/
 }
 
 ch () {
-    c ~/hub/
+    cde ~/hub/
 }
 
 cj () {
-    c ~/jab/
+    cde ~/jab/
 }
 
 cl () {
-    c "$@" && lk
+    cde "$@" && lk
 }
 
 cv () {
@@ -33,7 +34,7 @@ cv () {
 }
 
 cy () {
-    c ~/python/
+    cde ~/python/
 }
 
 # _x
@@ -60,7 +61,7 @@ clf () {
 }
 
 clo () {
-    c $(locate "$@")
+    cde $(locate "$@")
 }
 
 # xxxx

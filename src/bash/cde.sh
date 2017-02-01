@@ -65,7 +65,7 @@ cde_python () {
 
 ccde () {
     local __doc__="There's always gcc, on the off chance it's needed"
-    c . "$@"
+    cde . "$@"
 }
 # _xxxx
 # xxxxx
