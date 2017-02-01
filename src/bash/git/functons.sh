@@ -51,8 +51,13 @@ gi () {
 }
 
 gp () {
-    if ! git push 2>/dev/null; then
-        $(git push 2>&1 | grep set-upstream)
+    if ! MSG=$(git push 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            $(echo "$MSG" | grep set-upstream)
+        else
+            echo "$MSG" >&2
+            return 1
+        fi
     fi
 }
 
