@@ -194,6 +194,7 @@ htmlcov/
 .tox/
 .coverage
 .cache
+.nose-stopwatch-times
 nosetests.xml
 coverage.xml
 
