@@ -17,8 +17,10 @@ _find_copier () {
 show_word () {
     if [[ -z $1 ]]; then
         _dttc
-    else
+    elif [[ $1 == 1 ]]; then
         _mlaw
+    elif [[ $1 == 2 ]]; then
+        _lism
     fi
 }
 
