@@ -511,6 +511,10 @@ lib () {
     lr ~/.bashrc
 }
 
+lla () {
+    ll -a "$@"
+}
+
 lly () {
     shift_dir "$@" && shift
     reset=$(shopt -p dotglob)
