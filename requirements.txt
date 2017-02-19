@@ -5,7 +5,7 @@ ipython
 2to3
 pudb
 pprintpp
-dotsite>=0.2.4
+dotsite>=0.3.7
 pym
 coverage>=4.3.4
 nose-progressive>=1.5.0

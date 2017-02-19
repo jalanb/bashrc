@@ -1117,7 +1117,7 @@ whiches () {
 
 umports () {
     reorder-python-imports "$1"
-    ~/jab/bin/imports -u "$1"
+    ~/jab/bin/imports -ume "$1"
 }
 
 # xxxxxxxx

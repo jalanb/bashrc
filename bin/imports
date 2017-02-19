@@ -3,7 +3,6 @@
 
 from __future__ import print_function
 
-import sys
 import linecache
 import sys
 from collections import defaultdict
@@ -11,7 +10,7 @@ from collections import defaultdict
 from dotsite import scripts
 from dotsite import imports
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 
 def add_args(parser):
@@ -19,43 +18,67 @@ def add_args(parser):
     parser.add_argument('source',
                         help='path to source(s) to be checked')
     parser.add_argument('-e', '--edit', action='store_true',
-                        help='Show a command for editting')
+                        help='Show a command for editing')
+    parser.add_argument('-m', '--multiple', action='store_true',
+                        help='Show multiple imports')
     parser.add_argument('-u', '--unused', action='store_true',
                         help='Show unused imports')
     parser.add_argument('-t', '--tmp', action='store_true',
                         help='Write to /tmp/imports.txt (not stdout)')
 
 
-def show_unused(source, editting, stream):
-    visitor = imports.extract_imports(source)
-    ordered_lines = defaultdict(set)
-    for name, lines in visitor.unused().items():
+def gather_lines(method):
+    result = defaultdict(set)
+    for name, lines in method().items():
         for line in lines:
-            ordered_lines[line].add(name)
-    if not ordered_lines:
-        return False
-    for line in sorted(ordered_lines):
-        names = ordered_lines[line]
+            result[line].add(name)
+    return result
+
+
+def texter(visitor):
+
+    def text(line):
+        return '% 4d: %s' % (line, linecache.getline(path, line).rstrip())
+
+    path = visitor.path
+    return text
+
+
+def show_unused(visitor, stream):
+    lines = gather_lines(visitor.unused)
+    if not lines:
+        return []
+    text = texter(visitor)
+    for line in sorted(lines):
+        names = lines[line]
         print(
-            '%s\n% 4d: %s' % (
-                ','.join(names),
-                line,
-                linecache.getline(source, line).rstrip()),
+            '%s\n%s' % (','.join(names), text(line)),
             file=stream)
-    if editting:
-        vim = 'vim -p /tmp/imports.txt' if editting == 2 else 'vim'
-        print(r'\n%s %s +/"\(%s\)"' % (
-            vim, source,
-            r'\)\|\('.join(visitor.unused().keys())))
-    return True
+    return visitor.unused().keys()
+
+
+def show_multiple(visitor, stream):
+    text = texter(visitor)
+    multiples = visitor.multiples()
+    for name, lines in multiples.items():
+        instances = [text(_) for _ in lines]
+        print('%s\n%s' % (name, '\n'.join(instances)), file=stream)
+    return multiples.keys()
 
 
 def script(args):
+    visitor = imports.extract_imports(args.source)
+    stream = open('/tmp/imports.txt', 'w') if args.tmp else sys.stdout
+    modules = []
+    if args.multiple:
+        modules.extend(show_multiple(visitor, stream))
     if args.unused:
-        stream = open('/tmp/imports.txt', 'w') if args.tmp else sys.stdout
-        editting = 2 if args.edit and args.tmp else args.edit
-        return show_unused(args.source, editting, stream)
-    return True
+        modules.extend(show_unused(visitor, stream))
+    if args.edit and modules:
+        vim = 'vim -p /tmp/imports.txt' if args.tmp else 'vim'
+        print('\n%s %s +/"\(%s\)"' % (
+            vim, visitor.path, r'\)\|\('.join(modules)))
+    return bool(modules)
 
 
 if __name__ == '__main__':
