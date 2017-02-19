@@ -43,7 +43,7 @@ load-plugins=
 # C0103 is "Invalid name"
 # R0903 is "Too few public methods"
 # W0232 is Class has no __init__ method
-# W0406 is Module import itself 
+# W0406 is Module import itself
 #
 # PyLint's module importation is unreliable
 #
