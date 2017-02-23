@@ -21,6 +21,8 @@ noremap <leader>c   ?^\s*class \zs\i<cr>*
 noremap <leader>d   ?^\s*def \i\+\zs.*<cr>*zv
 noremap <leader>o   O<esc>
 noremap <leader>e   ?^\s*def \zs\i<cr>*#zv
+noremap <leader>k   $%a<cr><esc
+noremap <leader>8   call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
@@ -92,7 +94,7 @@ endfunction
 
 function FindTestUnit()
     let s:test_unit = substitute(s:file_py,'^','test_',"")
-    if ! filereadable(s:test_unit) 
+    if ! filereadable(s:test_unit)
         let s:test_unit = substitute(s:file_py,'^','tests/test_',"")
     endif
 endfunction
@@ -298,7 +300,7 @@ function WritePython()
 endfunction
 
 " function LintPython()
-"     let command = "! TERM=linux && pylint " 
+"     let command = "! TERM=linux && pylint "
 "     exec command_line
 "     redraw!
 " endfunction
