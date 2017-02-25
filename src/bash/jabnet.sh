@@ -12,7 +12,7 @@ jn () {
 }
 
 jm () {
-    _ssh jalan-mac.local
+    _ssh jalan.mac
 }
 
 # xxx
