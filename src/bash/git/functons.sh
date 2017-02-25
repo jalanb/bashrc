@@ -267,12 +267,6 @@ gds () {
     git $diff_ --staged "$@"
 }
 
-gris () {
-    git stash
-    gri "$@"
-    git stash pop
-}
-
 _gsi_opt () {
     local red='\[\033[0;31m\]'
     red="\033[0;31m"
@@ -396,6 +390,10 @@ ggai () {
     g -q $1 $2 && gai $2 || echo fuck off
 }
 
+gffa () {
+    gfa; grup
+}
+
 glp1 () {
     glp -n1 "$@"
 }
@@ -412,9 +410,19 @@ gmmm () {
     gmm
 }
 
+gris () {
+    git stash
+    gri "$@"
+    git stash pop
+}
+
 grmm () {
     grr
     gmmm
+}
+
+grup () {
+    git remote update origin --prune
 }
 
 gssd () {
