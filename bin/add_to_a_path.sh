@@ -34,11 +34,6 @@ add_to_a_path () {
     fi
 }
 
-_git_root () {
-    local __doc__="Find root od git repo a file is in"
-    (cd $(dirname $1); git rev-parse --show-toplevel)
-}
-
 show_value () {
     local name=${1-SHELL}
     local value=${!name}
