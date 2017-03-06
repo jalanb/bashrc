@@ -11,10 +11,16 @@ alias c=cde
 # _
 # xx
 
-alias cc=ccde
 
 cb () {
     cde ~/bash/
+}
+
+cc () {
+    # gcc has my back
+    local _where=.
+    [[ -n "$*" ]] && _where="$@"
+    c $(dirname $(git rev-parse --show-toplevel $_where ))
 }
 
 ch () {
