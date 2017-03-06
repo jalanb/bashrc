@@ -459,7 +459,7 @@ jjy () {
 }
 
 kpj () {
-    rsync -a -e \"ssh -i ~/.ssh/jab_id\"
+    rsync -a -e "ssh -i $HOME/.ssh/id_jab" "$@"
 }
 
 l1d () {
@@ -950,7 +950,7 @@ fewer () {
     local _lines=0
     [[ -n "$@" && -f "$1" ]] && _lines=$(wc -l "$1")
     [[ $_lines < ${LINES:-$(screen_height)} ]] \
-        && cat -n "$1" || _lessern "$1"
+        && cat -n "$1" || lesen "$1"
 }
 
 freds () {
@@ -1044,7 +1044,7 @@ _lesser () {
     less -R "$@"
 }
 
-_lessern () {
+lesen () {
     less -NR "$@"
 }
 
