@@ -6,7 +6,7 @@
 # functons.sh for git
 
 _git_status_char_regexp="[ MADRCU]"
-_git_status_regexp="^$_git_status_char_regexp$_git_status_char_regexp"
+_git_status_regexp="^${_git_status_char_regexp}${_git_status_char_regexp}"
 # sorted by strcmp of function name
 
 # x
@@ -159,10 +159,6 @@ gdv () {
     git dv "$@"
 }
 
-gdv () {
-    git dv "$@"
-}
-
 gfa () {
     git fetch --all
 }
@@ -258,8 +254,8 @@ gsd () {
     do
         git dv $f
     done
-    STATUS_QUESTIONS=$(gssd $dir | grep "??" | cut -d' ' -f2)
-    [[ -n $STATUS_QUESTIONS ]] && v $STATUS_QUESTIONS
+    QUESTIONS=$(untracked $dir)
+    [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
 gds () {
@@ -267,32 +263,68 @@ gds () {
     git $diff_ --staged "$@"
 }
 
-_gsi_opt () {
-    local red='\[\033[0;31m\]'
-    red="\033[0;31m"
-    local no_colour='\[\033[0m\]'
-    no_colour="\033[0m"
+red_one () {
+    local red="\033[0;31m"
+    local no_colour="\033[0m"
     GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
+}
+
+red_two () {
+    local red="\033[0;31m"
+    local no_colour="\033[0m"
+    GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
+}
+
+_status_line () {
+    [[ -n "$*" ]] && git status -s . || git status -s "$@"
+}
+
+_status_chars () {
+    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+}
+
+_git_modified () {
+    [[ $(_status_chars $1) == " M" ]]
+}
+
+_git_added () {
+    [[ $(_status_chars $1) == " A" ]]
+}
+
+_git_untracked () {
+    [[ $(_status_chars $1) == "??" ]]
 }
 
 _gsi_menu () {
     GSI_MENU=
     suffix=", "
-    _gsi_opt q uit
-    _gsi_opt a dd
-    _gsi_opt c ommit
-    _git_modified $1 && _gsi_opt i nteractive
-    _git_modified $1 && _gsi_opt p atch
-    _gsi_opt d rop
-    [[ -n $GIT_ADDED ]] &&_gsi_opt f asten
-    _gsi_opt v im
+    red_one q uit
+    red_one a dd
+    red_one c ommit
+    _git_modified $1 && red_one d iff
+    _git_modified $1 && red_one i nteractive
+    _git_modified $1 && red_one p atch
+    red_two d r op
+    [[ -n $GIT_ADDED ]] && red_one f asten
+    red_one v im
     suffix=";"
-    _gsi_opt hjkl " move"
+    red_one hjkl " move"
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
 }
 
+gvs () {
+    if _git_untracked "$1"; then
+        v $(_status_line "$1" | grep "??" | cut -d' ' -f2)
+    elif _git_modified "$1"; then
+        git dv $(echo "$1" | cut -dM -f2)
+    elif _git_added "$1"; then
+        vim  $(echo "$1" | cut -dA -f2)
+    fi
+    _status_line "$1"
+}
+
 _gsi_vim () {
-    _git_modified $f && git dv $f || vim $f
+    _git_modified $f && git dv $f || git diff $f | vin
 }
 
 _gsi_prompt () {
@@ -320,33 +352,72 @@ gsi () {
         if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt "$f"; fi
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [aA] ]] && ga "$f"
-        [[ $answer =~ [iI] ]] && (_git_modified "$f" && gai "$f" || (_git_untracked "$f" && echo Cannot split untracked file))
-        [[ $answer =~ [pP] ]] && (_git_modified "$f" && gap "$f" || (_git_untracked "$f" && echo Cannot split untracked file))
-        [[ $answer =~ [dD] ]] && (_git_modified "$f" && git co "$f" || (_git_untracked "$f" && rm -i "$f"))
+        if git_modified "$f" ; then
+            [[ $answer =~ [dD] ]] && git di "$f"
+            [[ $answer =~ [iI] ]] && gai "$f"
+            [[ $answer =~ [rR] ]] && git co "$f"
+        elif _git_untracked "$f"; then
+            [[ $answer =~ [rR] ]] && rm -i "$f"
+        fi
         [[ $answer =~ [vV] ]] && _gsi_vim "$f"
         [[ $answer =~ [cC] ]] && git commit
     done
     gc
-    [[ -n $STATUS_QUESTIONS ]] && vimcat $STATUS_QUESTIONS
+    [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
-gss () {
-    if [[ -n "$*" ]]; then
-        git status -s .
-    else
-        git status -s "$@"
-    fi
-}
-
-gsv () {
+gvsd () {
     shift_dir "$@" || shift
-    for f in $(gssd $dir)
-    do
-        if echo $f | grep -q "^ M" ;then
-            git dv $(echo $f | cut -dM -f2)
-        elif echo $f | grep -q "^ A"; then
-            vim  $(echo $f | cut -dM -f2)
-        fi
+    for f in $(gssd $dir); do
+        gvs "$f"
+    done
+}
+
+_gvi_request () {
+    GSI_MENU=
+    suffix=", "
+    red_one q uit
+    red_one a dd
+    red_one c ommit
+    _git_modified $1 && red_one d iff
+    _git_modified $1 && red_one i nteractive
+    _git_modified $1 && red_one p atch
+    red_two d r op
+    [[ -n $GIT_ADDED ]] &&red_one f asten
+    suffix=";"
+    red_one hjkl " move"
+    echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
+    read -e -n1 -p " " answer
+}
+
+
+_gvi_response () {
+    if [[ $answer =~ [fF] ]]; then gc; _gvi_request "$1"; fi
+    [[ $answer =~ [qQ] ]] && break
+    [[ $answer =~ [aA] ]] && ga "$1"
+    [[ $answer =~ [dD] ]] && (_git_modified "$1" && git diff "$1" | vin)
+    [[ $answer =~ [iI] ]] && _git_modified "$1" && gai "$1"
+    [[ $answer =~ [pP] ]] && _git_modified "$1" && gap "$1"
+    [[ $answer =~ [rR] ]] && _git_modified "$1" && git co "$1"
+    [[ $answer =~ [rR] ]] && _git_untracked "$1" && rm -i "$1"
+    [[ $answer =~ [vV] ]] && gvs "$1"
+    [[ $answer =~ [cC] ]] && git commit
+}
+
+gvi () {
+    shift_dir "$@" || shift
+    while git status -s .; do
+        for f in $(gssd $dir | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"); do
+            [[ -n "$f" ]] || continue
+            _git_modified "$f" && git diff "$f"
+            git status -s $f
+            _gvi_request "$f"
+            _gvi_response "$f"
+        done
+        [[ $answer =~ [qQ] ]] && break
+        git status -v | g -q "working directory clean" && break
+        [[ -n $QUESTIONS ]] && v $QUESTIONS
+        gc
     done
 }
 
@@ -427,7 +498,7 @@ grup () {
 
 gssd () {
     local _dir="$1"; shift
-    gss -C $_dir "$@"
+    _status_line -C $_dir "$@"
 }
 
 # xxxxx
@@ -435,7 +506,7 @@ gssd () {
 clone () {
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
-    git clone "$1"> $_clone_log 2>&1 
+    git clone "$1"> $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
         cat $_clone_log
     else
@@ -457,7 +528,7 @@ _show_git_here () {
 # xxxxxxxx
 
 _git_kd () {
-    kd $_there "$@" >/dev/null 2>&1
+    kd "$@" >/dev/null 2>&1
 }
 
 git_root () {
@@ -502,10 +573,6 @@ git_changed () {
 
 # xxxxxxxxxxxx
 
-_git_modified () {
-    [[ $(_status_chars $1) == " M" ]]
-}
-
 _run_storage () {
     bash $_storage
     rr $_storage
@@ -513,12 +580,8 @@ _run_storage () {
 
 # xxxxxxxxxxxxx
 
-_git_untracked () {
-    [[ $(_status_chars $1) == "??" ]]
-}
-
-_status_chars () {
-    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+untracked () {
+    (-d "$1" && gssd "$1" || _status_line "$1") | grep "??" | cut -d' ' -f2
 }
 
 _do_git_status () {
@@ -608,5 +671,5 @@ grep_git_log_for_python_test_file ()
 
 log_test_file ()
 {
-	grep_git_log_for_python_test_file 3
+    grep_git_log_for_python_test_file 3
 }
