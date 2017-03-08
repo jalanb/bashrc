@@ -352,7 +352,7 @@ gsi () {
         if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt "$f"; fi
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [aA] ]] && ga "$f"
-        if git_modified "$f" ; then
+        if _git_modified "$f" ; then
             [[ $answer =~ [dD] ]] && git di "$f"
             [[ $answer =~ [iI] ]] && gai "$f"
             [[ $answer =~ [rR] ]] && git co "$f"
@@ -463,6 +463,10 @@ ggai () {
 
 gffa () {
     gfa; grup
+}
+
+gffr () {
+    gfa; grup; gr
 }
 
 glp1 () {

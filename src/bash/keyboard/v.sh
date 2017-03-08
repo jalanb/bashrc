@@ -96,6 +96,10 @@ vvv () {
 }
 # xxxx
 
+hd12 () {
+    hd ~/tmp/one ~/tmp/two
+}
+
 vd12 () {
     vd ~/tmp/one ~/tmp/two
 }
