@@ -864,9 +864,9 @@ nose () {
     local _coverage=
     nosetests -h | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
     if nosetests -h | g -q stopwatch; then
-        nosetests -A "speed!='slow'" $_coverage $_progress "$@"
+        NOSE_COVER_TESTS= nosetests -A "speed!='slow'" $_coverage $_progress "$@"
     else
-        nosetests $_coverage $_progress "$@"
+        NOSE_COVER_TESTS= nosetests $_coverage $_progress "$@"
     fi
 }
 
