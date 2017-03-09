@@ -87,7 +87,7 @@ nnoremap = ?<cr>
  noremap ' :nohl<cr>
  noremap " m'
 "noremap \ - leader
- noremap , `
+ noremap , .n
 "noremap . - repeat
 "noremap / - search
 "noremap `
