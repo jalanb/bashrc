@@ -784,8 +784,13 @@ brew () {
 bump () {
     local _bump_dir=.
     local _show=
+    local _get=
     if [[ $1 == show ]]; then
         _show=1
+        shift
+    fi
+    if [[ $1 == get ]]; then
+        _get=1
         shift
     fi
     local _pulled=
@@ -799,13 +804,13 @@ bump () {
     fi
     local _bump_root=$(git_root $_bump_dir)
     local _part=${1:-patch}; shift
-    if [[ -z $_show ]]; then
+    if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
             [[ $_pulled == 1 ]] || git pull --rebase
             cd "$_bump_root"
             if bumpversion $_part "$@"; then
                 git push
-                git push origin --tags
+                git push origin --tag v$(bump get)
             fi
         fi
     fi
@@ -813,6 +818,8 @@ bump () {
     local _sought=^current_version
     if [[ -n $_show ]]; then
         grep $_sought $_config | grep --colour '\d[0-9.]\+$'
+    elif [[ -n $_get ]]; then
+        grep $_sought $_config | sed -e 's/.*= //'
     else
         grep $_sought $_config 2>/dev/null
     fi
