@@ -1,3 +1,8 @@
+Host my_jira
+    Hostname ec2-54-187-200-63.us-west-2.compute.amazonaws.com
+    User ec2-user
+    IdentityFile ~/.ssh/MyJIRAInstance.pem
+
 Host eos70D
     Hostname 192.168.130.102
 
