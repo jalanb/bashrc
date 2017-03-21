@@ -136,7 +136,7 @@ gcm () {
 }
 
 gcp () {
-    git cherry-pick "$@"
+    git cherry-pick -x --allow-empty "$@"
 }
 
 gdd () {
