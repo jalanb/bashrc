@@ -42,7 +42,7 @@ Host twkwbe34 wmptrain
     Hostname 172.25.32.147
     User ab13173
 
-Host twkwbe35 wmpprod
+Host twkwbe35 wmp
     Hostname 172.25.32.149
     User ab13173
 
