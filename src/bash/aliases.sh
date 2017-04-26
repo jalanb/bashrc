@@ -82,6 +82,7 @@ alias clx="cl; lx "
 alias cly="cl; ly "
 
 alias got=git
+alias gti=git
 
 alias jlf="sst jlfieblu jlf.ie"
 
