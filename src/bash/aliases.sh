@@ -57,8 +57,6 @@ alias ..='cde ..'
 
 alias eg="env | g "
 
-alias kp="rsync -a"
-
 alias p-="echo $OLDPWD"
 
 alias r.="rm -rvf *"
@@ -85,8 +83,6 @@ alias got=git
 alias gti=git
 
 alias jlf="sst jlfieblu jlf.ie"
-
-alias kpp="kp --progress"
 
 
 alias out="to_release"

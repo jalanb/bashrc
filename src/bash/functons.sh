@@ -303,7 +303,7 @@ py () {
 }
 
 ra () {
-    [[ -f $1 ]] && ranger $(dirname $1) || ranger "$@"
+    ranger $(kpp "$@")
 }
 
 ru () {
