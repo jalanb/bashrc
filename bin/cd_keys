@@ -34,10 +34,9 @@ def spin_to(queue, first):
     return queue
 
 
-def enqueue(first, get_parent, get_queue):
+def enqueue(first, get_queue):
     debuggers.debug_here()
-    parent = get_parent()
-    queue = enqueue(parent) if parent else deque(get_queue())
+    queue = deque(get_queue())
     return spin_to(queue, first)
 
 
@@ -81,13 +80,15 @@ def script(args):
         return path
 
     def cd(path):
-        return enqueue(path, path.parent_directory, path.parent.list_dirsfiles)
+        return enqueue(path, path.parent.list_dirsfiles)
 
     queues = dictionaries.LazyDefaultDict(cd)
     motions = queue_motions(queues)
     current = makepath(args.path)
+    queues[current] = cd(current)
     for action in input_():
-        changed = motions.get(action, cd)(current)
+        motion = motions.get(action, cd)
+        changed = motion(current)
         if not changed:
             continue
         current = output(changed)
