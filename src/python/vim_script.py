@@ -450,7 +450,6 @@ def script():
             print script.write()
         else:
             print script.write()
-            return os.EX_OK
     except (OSError, IOError), e:
         print >> sys.stderr, e
         return os.EX_IOERR
