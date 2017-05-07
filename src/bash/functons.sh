@@ -33,6 +33,11 @@ g () {
     $(which grep) --color "$@"
 }
 
+t () {
+    c "$@"
+    tig -- .
+}
+
 h () {
     history | tel "$@"
 }
@@ -447,7 +452,12 @@ hed () {
 }
 
 hub () {
-    cde ~/hub "$@"
+    cde ~/hub 
+    if [[ -d "$1" ]]; then
+        cde "$1"
+        shift
+    fi
+    "$@"
 }
 
 jjb () {
@@ -810,7 +820,7 @@ bump () {
             cd "$_bump_root"
             if bumpversion $_part "$@"; then
                 git push
-                git push origin --tag v$(bump get)
+                git push origin v$(bump get)
             fi
         fi
     fi
