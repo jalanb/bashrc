@@ -1036,8 +1036,13 @@ bumper () {
         echo Please specify branch to bump >&2
         return 1
     fi
-    local _branch=$1; shift
-    [[ $(git rev-parse --abbrev-ref HEAD) == $_branch ]] || git co $_branch
+    local _bump_branch=$1; shift
+    local _current_branch=$(git rev-parse --abbrev-ref HEAD)
+    if [[ $_current_branch != $_bump_branch ]]; then
+        if git co $_bump_branch; then
+            return
+        fi
+    fi
     git pull --rebase
     bump pulled "$@"
     git push
