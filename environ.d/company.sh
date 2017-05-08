@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/cat
 
 [[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 # Load employer's environment
