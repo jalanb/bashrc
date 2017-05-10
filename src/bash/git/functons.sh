@@ -370,7 +370,7 @@ gxi () {
     local _gxi_response=$1; shift
     shift_dir "$@" || shift
     while git status -s "$dir"; do
-        for f in $(gssd_changes) "$dir"; do
+        for f in $(gssd_changes "$dir"); do
             [[ -n "$f" ]] || continue
             $_gxi_show_file "$f"
             _gxi_request "$f"
@@ -477,8 +477,16 @@ gffa () {
     gfa; grup
 }
 
+gfmr () {
+    gffr gcm
+}
+
+gfdr () {
+    gffr gcd
+}
+
 gffr () {
-    gfa; grup; gr
+    gfa; grup; $1; gr
 }
 
 glp1 () {
