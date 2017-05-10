@@ -607,7 +607,7 @@ raj () {
 }
 
 rlf () {
-    readlink -f "$@"
+    [[ -z $1 ]] && readlink -f . || readlink -f "$@"
 }
 
 sib () {
