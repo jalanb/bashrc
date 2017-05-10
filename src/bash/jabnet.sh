@@ -7,6 +7,10 @@ jb () {
     _ssh ja-book.local
 }
 
+ji () {
+    _ssh jalanmini.local
+}
+
 jn () {
     _ssh jalan-book.local
 }
