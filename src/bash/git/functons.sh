@@ -489,6 +489,10 @@ gffr () {
     gfa; grup; $1; gr
 }
 
+gl11 () {
+    gl1 --oneline "$@"
+}
+
 glp1 () {
     glp -n1 "$@"
 }
