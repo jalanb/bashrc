@@ -34,7 +34,10 @@ rr () {
         shift
     fi
     local _path=$(readlink -f "$@")
-    [[ "$_path" == "/" ]] && return 1
+    if [[ "$_path" == "/" ]];  then
+        echo "I been chewed out before"
+        return 1
+    fi
     if [[ "$_path" == $(readlink -f $HOME) || "$@" == "$HOME" ]]; then
         _shoot=1
         echo "Scalp Herman"
@@ -47,7 +50,6 @@ rr () {
         echo "Nah, I don't think so, more like chewed out. I been chewed out before"
     else
         rm -rf "$@"
-        echo "You'll be shot for this"
     fi
 }
 
