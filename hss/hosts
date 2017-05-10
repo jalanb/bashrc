@@ -6,11 +6,15 @@ Host my_jira
 Host eos70D
     Hostname 192.168.130.102
 
-Host ja.book
-    Hostname 192.168.130.105
+Host jab.ook
     Hostname ja-book.local
     User jab
     IdentityFile ~/.ssh/id_jab
+
+Host jalan.mini
+    Hostname 192.168.130.101
+    Hostname jalanmini.local
+    User jab
 
 Host jalan.book
     Hostname 192.168.130.104
@@ -46,10 +50,14 @@ Host twkwbe35 wmp
     Hostname 172.25.32.149
     User ab13173
 
+Host atlwbe35 atlwmp
+    Hostname 172.25.232.149
+    User ab13173
+
 Host pwkwbe95
     Hostname 172.25.32.95
     User production
-    IdentityFile ~/.ssh/id_rsa
+    IdentityFile /Users/jab/src/git/wwts/dashboard/deployment/keys/cwilson.key.pub
 
 Host twkwbe95 wmptest wwts-staging
     Hostname 172.25.32.95

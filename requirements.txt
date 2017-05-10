@@ -1,12 +1,12 @@
 nose==1.3.7
-nose-progressive
 nose-pudb
-ipython
-2to3
+nose-progressive>=1.5.0
+ipython==5.3.0
 pudb
 pprintpp
 dotsite>=0.3.7
 pym
 coverage>=4.3.4
-nose-progressive>=1.5.0
 pinocchio>=0.1
+virtualenv
+virtualenvwrapper

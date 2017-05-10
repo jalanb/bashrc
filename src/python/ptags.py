@@ -16,6 +16,7 @@ I am targeting vim, so
     the tags file format to use is specified here:
     http://ctags.sourceforge.net/ctags.html#TAG%20FILE%20FORMAT
 """
+from __future__ import print_function
 import re
 import sys
 
@@ -251,6 +252,4 @@ def script(args):
 
 
 if __name__ == '__main__':
-    scripts.main(
-        script, add_args,
-        help_='Create a tags file for Python programs, usable with vi.')
+    scripts.main(script, add_args, docstring=__doc__)

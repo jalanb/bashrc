@@ -31,7 +31,7 @@ git clone $GITHUB/jalanb/dotsite
 git clone $GITHUB/jalanb/what
 git clone $GITHUB/jalanb/kd
 git clone $GITHUB/jalanb/ack2vim
-git clone $GITHUB/jeffkaufman/icdiff.git
+pip install git+https://github.com/jeffkaufman/icdiff.git
 
 cd ~/jab
 # cp dotbashrc ~/.bashrc

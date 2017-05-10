@@ -2,7 +2,7 @@
 
 [[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
-__version__=0.4.6
+__version__=0.5.0
 
 _BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/tput.sh
@@ -22,6 +22,7 @@ _BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/rf.sh
 . $_BASH_DIR/run_python.sh
 . $_BASH_DIR/virtualenvwrapper.sh
+. $_BASH_DIR/wwts.sh
 . $_BASH_DIR/keyboard/__init__.sh
 . $_BASH_DIR/git/__init__.sh
 

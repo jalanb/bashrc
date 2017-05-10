@@ -23,7 +23,6 @@ checkouts () {
     git clone $GITHUB/jalanb/what
     git clone $GITHUB/jalanb/kd
     git clone $GITHUB/jalanb/ack2vim
-    git clone $GITHUB/jeffkaufman/icdiff.git
 }
 
 setup_python () {
@@ -34,6 +33,7 @@ setup_python () {
     pip install ipython
     pip install virtualenv
     pip install virtualenvwrapper
+    pip install git+https://github.com/jeffkaufman/icdiff.git
 }
 
 upgrade_git () {

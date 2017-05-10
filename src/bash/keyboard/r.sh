@@ -42,12 +42,12 @@ rr () {
         echo "Yeah, they made that deal, but they don't give a fuck about him. They need you"
     fi
     if [[ -n $_shoot ]]; then
-        shoot
         echo "You'll be shot for this"
-        echo "Nah, I don't think so, more like chewed out. I been chewed out before"
         rm -rfi "$@"
+        echo "Nah, I don't think so, more like chewed out. I been chewed out before"
     else
         rm -rf "$@"
+        echo "You'll be shot for this"
     fi
 }
 

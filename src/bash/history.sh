@@ -18,7 +18,7 @@ hl () {
     _strip_history | less
 }
 
-ht () {
+th () {
     _strip_history | tail "$@"
 }
 

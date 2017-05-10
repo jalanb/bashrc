@@ -80,6 +80,18 @@ aga () {
     git reset HEAD "$@"
 }
 
+gcg () {
+    gc; glg
+}
+
+gcr () {
+    gc; gr
+}
+
+grg () {
+    gr; glg
+}
+
 gaa () {
     ga .
 }
@@ -115,6 +127,16 @@ gbd () {
 
 gbD () {
     git branch -D "$@"
+}
+
+gbo () {
+    local _origin=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
+    if [[ -n $_origin ]]; then
+        echo $_origin
+        return 0
+    fi
+    echo No origin >&2
+    return 1
 }
 
 gbv () {
@@ -295,30 +317,38 @@ _git_untracked () {
     [[ $(_status_chars $1) == "??" ]]
 }
 
-_gsi_menu () {
-    GSI_MENU=
-    suffix=", "
-    red_one q uit
-    red_one a dd
-    red_one c ommit
-    _git_modified $1 && red_one d iff
-    _git_modified $1 && red_one i nteractive
-    _git_modified $1 && red_one p atch
-    red_two d r op
-    [[ -n $GIT_ADDED ]] && red_one f asten
-    red_one v im
-    suffix=";"
-    red_one hjkl " move"
-    echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
+_gsi_drop () {
+    if [[ $answer =~ [rR] ]]; then
+        _git_modified "$1" && git co "$1"
+        _git_untracked "$1" && rm -i "$1"
+    fi
 }
 
-gvs () {
+_gvi_drop () {
+    if [[ $answer =~ [rR] ]]; then
+        _git_modified "$1" && git co "$1"
+        _git_untracked "$1" && rm -f "$1"
+    fi
+}
+
+_gvi_git_dv () {
+    local _one="$1"
+    shift
+    _gvi_other_vim 
+    if _git_modified "$1"; then
+        git dv $(echo "$1" | cut -dM -f2)
+    else
+        _gvi_vim "$1"
+    fi
+}
+
+_gvi_vim () {
     if _git_untracked "$1"; then
         v $(_status_line "$1" | grep "??" | cut -d' ' -f2)
     elif _git_modified "$1"; then
-        git dv $(echo "$1" | cut -dM -f2)
+        v $(echo "$1" | cut -dM -f2)
     elif _git_added "$1"; then
-        vim  $(echo "$1" | cut -dA -f2)
+        v  $(echo "$1" | cut -dA -f2)
     fi
     _status_line "$1"
 }
@@ -327,98 +357,67 @@ _gsi_vim () {
     _git_modified $f && git dv $f || git diff $f | vin
 }
 
-_gsi_prompt () {
-    _gsi_menu $1
-    read -e -n1 -p " " answer
-}
-
-_gsi_show_file () {
-    local _filename=$1
-    local _lines=$(wc -l "$_filename" | cut -d ' ' -f1)
-    if [[ $_lines < $LINES ]]; then
-        git di "$_filename"
-    else
-        gdi "$_filename"
-    fi
-}
-
 gsi () {
+    gxi _gsi_show_file _gsi_response "$@"
+}
+
+gvi () {
+    gxi _gvi_show_file _gvi_response "$@"
+}
+
+gxi () {
+    local _gxi_show_file=$1; shift
+    local _gxi_response=$1; shift
     shift_dir "$@" || shift
-    for f in $(gssd $dir | grep "^\([MDU ][MU]\|??\)" | sed -e "s/^...//")
-    do
-        [[ -z "$f" ]] && continue
-        _git_modified "$f" && _gsi_show_file "$f" || (_git_untracked "$f" && fewer "$f" || continue )
-        _gsi_prompt "$f"
-        if [[ $answer =~ [fF] ]]; then gc; _gsi_prompt "$f"; fi
+    while git status -s "$dir"; do
+        for f in $(gssd_changes "$dir"); do
+            [[ -n "$f" ]] || continue
+            $_gxi_show_file "$f"
+            _gxi_request "$f"
+            $_gxi_response "$f"
+        done
         [[ $answer =~ [qQ] ]] && break
-        [[ $answer =~ [aA] ]] && ga "$f"
-        if _git_modified "$f" ; then
-            [[ $answer =~ [dD] ]] && git di "$f"
-            [[ $answer =~ [iI] ]] && gai "$f"
-            [[ $answer =~ [rR] ]] && git co "$f"
-        elif _git_untracked "$f"; then
-            [[ $answer =~ [rR] ]] && rm -i "$f"
-        fi
-        [[ $answer =~ [vV] ]] && _gsi_vim "$f"
-        [[ $answer =~ [cC] ]] && git commit
+        gc
+        git status -v | g -q "working directory clean" && break
+        [[ -n $QUESTIONS ]] && v $QUESTIONS
     done
-    gc
-    [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
 gvsd () {
     shift_dir "$@" || shift
     for f in $(gssd $dir); do
-        gvs "$f"
+        _gvi_vim "$f"
     done
 }
 
-_gvi_request () {
-    GSI_MENU=
-    suffix=", "
-    red_one q uit
-    red_one a dd
-    red_one c ommit
-    _git_modified $1 && red_one d iff
-    _git_modified $1 && red_one i nteractive
-    _git_modified $1 && red_one p atch
-    red_two d r op
-    [[ -n $GIT_ADDED ]] &&red_one f asten
-    suffix=";"
-    red_one hjkl " move"
-    echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
-    read -e -n1 -p " " answer
+_gsi_response () {
+    if [[ $answer =~ [fF] ]]; then gc; _gxi_request "$1"; fi
+    [[ $answer =~ [aA] ]] && ga "$1"
+    [[ $answer =~ [cC] ]] && git commit
+    [[ $answer =~ [rR] ]] && _gsi_drop "$1"
+    if _git_modified "$1" ; then
+        [[ $answer =~ [dD] ]] && git di "$1"
+        [[ $answer =~ [iI] ]] && gai "$1"
+    fi
+    [[ $answer =~ [vV] ]] && _gsi_vim "$1"
 }
-
 
 _gvi_response () {
-    if [[ $answer =~ [fF] ]]; then gc; _gvi_request "$1"; fi
-    [[ $answer =~ [qQ] ]] && break
-    [[ $answer =~ [aA] ]] && ga "$1"
-    [[ $answer =~ [dD] ]] && (_git_modified "$1" && git diff "$1" | vin)
-    [[ $answer =~ [iI] ]] && _git_modified "$1" && gai "$1"
-    [[ $answer =~ [pP] ]] && _git_modified "$1" && gap "$1"
-    [[ $answer =~ [rR] ]] && _git_modified "$1" && git co "$1"
-    [[ $answer =~ [rR] ]] && _git_untracked "$1" && rm -i "$1"
-    [[ $answer =~ [vV] ]] && gvs "$1"
-    [[ $answer =~ [cC] ]] && git commit
-}
-
-gvi () {
-    shift_dir "$@" || shift
-    while git status -s .; do
-        for f in $(gssd $dir | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"); do
-            [[ -n "$f" ]] || continue
-            _git_modified "$f" && git diff "$f"
-            git status -s $f
-            _gvi_request "$f"
-            _gvi_response "$f"
-        done
-        [[ $answer =~ [qQ] ]] && break
-        git status -v | g -q "working directory clean" && break
-        [[ -n $QUESTIONS ]] && v $QUESTIONS
+    if [[ $answer =~ [fF] ]]; then 
         gc
-    done
+        _gxi_request "$1"
+    else
+        [[ $answer =~ [aA] ]] && ga "$1"
+        [[ $answer =~ [cC] ]] && git commit
+        [[ $answer =~ [rR] ]] && _gvi_drop "$1"
+        if _git_modified "$1" ; then
+            [[ $answer =~ [dD] ]] && git diff "$1" | vin
+            [[ $answer =~ [iI] ]] && gai "$1"
+            [[ $answer =~ [pP] ]] && gap "$1"
+        fi
+        [[ $answer =~ [vV] ]] && _gvi_vim "$1"
+        [[ $answer =~ [wW] ]] && _gvi_git_dv "$1"
+    fi
 }
 
 # xxxx
@@ -429,6 +428,15 @@ gaic () {
 
 gaii () {
     ga --interactive "$@"
+}
+
+gbdr () {
+    git push origin --delete $1
+}
+
+gcac () {
+    ga .
+    gcpc
 }
 
 gcmr () {
@@ -449,6 +457,10 @@ gcpe () {
     git cherry-pick --edit "$@"
 }
 
+gcrg () {
+    gc; gr; glg
+}
+
 gdsi () {
     gds di "$@"
 }
@@ -465,8 +477,16 @@ gffa () {
     gfa; grup
 }
 
+gfmr () {
+    gffr gcm
+}
+
+gfdr () {
+    gffr gcd
+}
+
 gffr () {
-    gfa; grup; gr
+    gfa; grup; $1; gr
 }
 
 glp1 () {
@@ -540,7 +560,7 @@ git_root () {
     [[ -f "$_there" ]] && _there=$(dirname $_there)
     [[ -d "$_there" ]] || return 1
     (_git_kd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
-    local _root=$(_git_kd "$@"; git rev-parse --git-dir 2>/dev/null)
+    local _root=$(_git_kd "$_there"; git rev-parse --git-dir 2>/dev/null)
     _root=${_root%%.git}
     if [[ -z $_root ]]; then
         echo $(readlink -f $_there);
@@ -563,6 +583,23 @@ _git_stash_and () {
     fi
 }
 
+_gxi_menu () {
+    GSI_MENU=
+    suffix=", "
+    red_one q uit
+    red_one a dd
+    red_one c ommit
+    _git_modified $1 && red_one d iff
+    _git_modified $1 && red_one i nteractive
+    _git_modified $1 && red_one p atch
+    red_two d r op
+    [[ -n $GIT_ADDED ]] && red_one f asten
+    red_one v im
+    suffix=";"
+    red_one hjkl " move"
+    echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
+}
+
 git_branch () {
     git rev-parse --abbrev-ref HEAD
 }
@@ -576,6 +613,16 @@ git_changed () {
 }
 
 # xxxxxxxxxxxx
+
+_gxi_request () {
+    _gxi_menu $1
+    read -e -n1 -p " " answer
+    [[ $answer =~ [qQ] ]] && break
+}
+
+gssd_changes () {
+    gssd "$1" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
+}
 
 _run_storage () {
     bash $_storage
@@ -597,6 +644,27 @@ _do_git_status () {
 }
 
 # xxxxxxxxxxxxxx
+
+_gsi_show_file () {
+    if _git_untracked "$1"; then
+        fewer "$f"
+        return 0
+    fi
+    if _git_modified "$1"; then
+        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $_lines < $LINES ]]; then
+            git di "$1"
+        else
+            gdi "$1"
+        fi
+    fi
+    git status -s $f
+}
+
+_gvi_show_file () {
+    git diff "$1"
+    git status -s $f
+}
 
 show_git_time () {
     local _arg_dir="${1:-$PWD}"
