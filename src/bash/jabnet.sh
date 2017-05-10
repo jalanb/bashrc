@@ -3,10 +3,6 @@
 # x
 # xx
 
-jb () {
-    _ssh ja-book.local
-}
-
 ji () {
     _ssh jalanmini.local
 }

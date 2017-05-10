@@ -6,8 +6,7 @@ Host my_jira
 Host eos70D
     Hostname 192.168.130.102
 
-Host ja.book
-    Hostname 192.168.130.105
+Host jab.ook
     Hostname ja-book.local
     User jab
     IdentityFile ~/.ssh/id_jab
