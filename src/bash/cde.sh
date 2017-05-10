@@ -22,9 +22,18 @@ cls () {
     fi
 }
 
+_pre_cde () {
+    :
+}
+
 cde () {
     local __doc__="cd to a dir, show the dir"
+    _pre_cde
     KD_QUIET=1 kd "$@" || return 1
+    _post_cde
+}
+
+_post_cde () {
     _show_todo_here
     echo
     echo
