@@ -80,6 +80,14 @@ aga () {
     git reset HEAD "$@"
 }
 
+gcg () {
+    gc; glg
+}
+
+gcr () {
+    gc; gr
+}
+
 gaa () {
     ga .
 }
@@ -443,6 +451,10 @@ gcpc () {
 
 gcpe () {
     git cherry-pick --edit "$@"
+}
+
+gcrg () {
+    gc; gr; glg
 }
 
 gdsi () {
