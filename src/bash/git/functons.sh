@@ -88,6 +88,10 @@ gcr () {
     gc; gr
 }
 
+grg () {
+    gr; glg
+}
+
 gaa () {
     ga .
 }
