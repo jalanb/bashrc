@@ -430,6 +430,11 @@ gbdr () {
     git push origin --delete $1
 }
 
+gcac () {
+    ga .
+    gcpc
+}
+
 gcmr () {
     gcm
     git pull --rebase
@@ -438,11 +443,6 @@ gcmr () {
 
 gcpa () {
     git cherry-pick --abort
-}
-
-gcac () {
-    ga .
-    gcpc
 }
 
 gcpc () {
