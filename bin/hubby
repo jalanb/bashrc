@@ -52,7 +52,7 @@ _show_dirs () {
     done
 }
 
-require ~/jab/src/bash/hub.sh
+. ~/jab/src/bash/hub.sh
 
 main () {
     if [[ -n $* ]]; then
