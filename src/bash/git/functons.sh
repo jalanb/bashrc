@@ -32,6 +32,10 @@ gb () {
     fi
 }
 
+gd () {
+    git diff "$@"
+}
+
 gc () {
     local _storage=/tmp/gc.sh
     if [[ -z "$@" ]]; then git commit --verbose
@@ -42,12 +46,9 @@ gc () {
     GIT_ADDED=
 }
 
-gd () {
-    git diff "$@"
-}
-
-gi () {
-    git "$@"
+go () {
+    local __doc__="git out""
+    git checkout "$@"
 }
 
 gp () {
