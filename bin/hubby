@@ -2,18 +2,18 @@
 
 _show_status () {
     dir=$1
-    local GIT="git -C $dir"
-    owner=$($GIT remote show origin | grep Fetch.URL | cut -d\/ -f 4)
-    local local_changes=$($GIT status -s)
+    local _git="git -C $dir"
+    owner=$($_git remote show origin | grep Fetch.URL | cut -d\/ -f 4)
+    local local_changes=$($_git status -s)
     local dir_shown=
     if [[ -n $local_changes ]]; then
         echo -e ${PROMPT_LIGHT_GREEN}${dir}${PROMPT_NO_COLOUR}
         dir_shown=1
-        $GIT status -s
+        $_git status -s
     fi
-    local remote_changes=$($GIT log --no-color --oneline origin/master --ancestry-path HEAD..origin/master)
+    local remote_changes=$($_git log --no-color --oneline origin/master --ancestry-path HEAD..origin/master)
     if [[ -z $remote_changes ]]; then
-        remote_changes=$($GIT fetch --dry-run 2>&1)
+        remote_changes=$($_git fetch --dry-run 2>&1)
     fi
     if [[ -n $remote_changes ]]; then
         if [[ -z $dir_shown ]]; then
@@ -23,10 +23,10 @@ _show_status () {
             echo
         fi
         if [[ $owner == "jalanb" ]]; then
-            $GIT fetch -q --all
-            $GIT lg origin/master --ancestry-path HEAD..origin/master
+            $_git fetch -q --all
+            $_git lg origin/master --ancestry-path HEAD..origin/master
         fi
-        $GIT pull --rebase
+        $_git pull --rebase
     fi
     [[ -z $dir_shown ]] || echo
     [[ -n $dir_shown ]] && echo
