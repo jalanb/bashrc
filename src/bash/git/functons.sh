@@ -36,8 +36,9 @@ gd () {
     git diff "$@"
 }
 
-gc () {
-    local _storage=/tmp/gc.sh
+gi () {
+    local __doc__="git in"
+    local _storage=/tmp/gi.sh
     if [[ -z "$@" ]]; then git commit --verbose
     else
         python -c "print 'git commit -m\"$*\"'" > $_storage
@@ -81,12 +82,16 @@ aga () {
     git reset HEAD "$@"
 }
 
-gcg () {
-    gc; glg
+gob () {
+    go -b "$@"
 }
 
-gcr () {
-    gc; gr
+gog () {
+    go "$@"; glg
+}
+
+gor () {
+    go "$@"; gr
 }
 
 grg () {
@@ -103,7 +108,7 @@ gac () {
         addable=$1
         shift
     fi
-    ga $addable && gc "$@"
+    ga $addable && gi "$@"
 }
 
 gai () {
@@ -144,18 +149,14 @@ gbv () {
     git blame "$1" | vin
 }
 
-gcj () {
-    local _storage=/tmp/gcj.sh
+gij () {
+    local _storage=/tmp/gij.sh
     local JIT="git -C ~/jab"
     if [[ -z "$@" ]]; then $JIT commit --all --verbose
     else
         python -c "print '$JIT commit -m\"$*\"'" > $_storage
         _run_storage
     fi
-}
-
-gcm () {
-    git co master
 }
 
 gcp () {
@@ -234,6 +235,14 @@ glt () {
 
 gmm () {
     git merge master
+}
+
+god () {
+    go development
+}
+
+gom () {
+    go master
 }
 
 grc () {
@@ -320,14 +329,14 @@ _git_untracked () {
 
 _gsi_drop () {
     if [[ $answer =~ [rR] ]]; then
-        _git_modified "$1" && git co "$1"
+        _git_modified "$1" && go "$1"
         _git_untracked "$1" && rm -i "$1"
     fi
 }
 
 _gvi_drop () {
     if [[ $answer =~ [rR] ]]; then
-        _git_modified "$1" && git co "$1"
+        _git_modified "$1" && go "$1"
         _git_untracked "$1" && rm -f "$1"
     fi
 }
@@ -378,7 +387,7 @@ gxi () {
             $_gxi_response "$f"
         done
         [[ $answer =~ [qQ] ]] && break
-        gc
+        gi
         git status -v | g -q "working directory clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
     done
@@ -392,9 +401,9 @@ gvsd () {
 }
 
 _gsi_response () {
-    if [[ $answer =~ [fF] ]]; then gc; _gxi_request "$1"; fi
+    if [[ $answer =~ [fF] ]]; then gi; _gxi_request "$1"; fi
     [[ $answer =~ [aA] ]] && ga "$1"
-    [[ $answer =~ [cC] ]] && git commit
+    [[ $answer =~ [cC] ]] && gi
     [[ $answer =~ [rR] ]] && _gsi_drop "$1"
     if _git_modified "$1" ; then
         [[ $answer =~ [dD] ]] && git di "$1"
@@ -405,11 +414,11 @@ _gsi_response () {
 
 _gvi_response () {
     if [[ $answer =~ [fF] ]]; then 
-        gc
+        gi
         _gxi_request "$1"
     else
         [[ $answer =~ [aA] ]] && ga "$1"
-        [[ $answer =~ [cC] ]] && git commit
+        [[ $answer =~ [cC] ]] && gi
         [[ $answer =~ [rR] ]] && _gvi_drop "$1"
         if _git_modified "$1" ; then
             [[ $answer =~ [dD] ]] && git diff "$1" | vin
@@ -423,14 +432,6 @@ _gvi_response () {
 
 # xxxx
 
-gaic () {
-    gaii .; gc "$@"
-}
-
-gaii () {
-    ga --interactive "$@"
-}
-
 gbdr () {
     git push origin --delete $1
 }
@@ -440,9 +441,13 @@ gcac () {
     gcpc
 }
 
-gcmr () {
-    gcm
-    git pull --rebase
+godr () {
+    gor god
+    bump show
+}
+
+gomr () {
+    gor master
     bump show
 }
 
@@ -456,10 +461,6 @@ gcpc () {
 
 gcpe () {
     git cherry-pick --edit "$@"
-}
-
-gcrg () {
-    gc; gr; glg
 }
 
 gdsi () {
@@ -479,11 +480,11 @@ gffa () {
 }
 
 gfmr () {
-    gffr gcm
+    gffr gom
 }
 
 gfdr () {
-    gffr gcd
+    gffr god
 }
 
 gffr () {
@@ -504,9 +505,9 @@ gls1 () {
 
 gmmm () {
     local _branch=$(git_branch)
-    git co master
+    go master
     grr
-    git co $_branch
+    go $_branch
     gmm
 }
 
