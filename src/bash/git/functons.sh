@@ -258,7 +258,7 @@ grp () {
 }
 
 gpp () {
-    _git_stash_and push "$@"
+    git_stash_and git push "$@"
 }
 
 grh () {
@@ -278,7 +278,7 @@ gri () {
 }
 
 grr () {
-    _git_stash_and pull --rebase "$@"
+    git_stash_and git pull --rebase "$@"
 }
 
 gsd () {
@@ -513,9 +513,7 @@ gmmm () {
 }
 
 gris () {
-    git stash
-    gri "$@"
-    git stash pop
+    git_stash_and gri "$@"
 }
 
 grmm () {
@@ -578,13 +576,13 @@ git_root () {
 
 # xxxxxxxxxx
 
-_git_stash_and () {
+git_stash_and () {
     local stashed=
     if git_changed; then
         stashed=1
         git stash -q
     fi
-    git "$@"
+    "$@"
     if [[ $stashed == 1 ]]; then
         git stash pop -q
     fi
