@@ -676,6 +676,10 @@ vfr () {
     mython ~/jab/src/python/vim_traceback.py "$@"
 }
 
+vgf () {
+    _edit_jab src/bash/git/functons.sh "$@"
+}
+
 vla () {
     _edit_locals aliases.sh
 }

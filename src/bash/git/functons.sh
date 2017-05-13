@@ -48,7 +48,7 @@ gi () {
 }
 
 go () {
-    local __doc__="git out""
+    local __doc__="git out"
     git checkout "$@"
 }
 
@@ -195,6 +195,7 @@ _gl () {
     local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
     git $cmd "$@" | head -n $_lines
 }
+
 
 gl1 () {
     git log -n1 "$@"
