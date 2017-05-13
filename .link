@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Link this project into home
-# 
+#
 # This script must be in a git repo
 # Link this script's directory into $HOME
 #     for example, if repo was cloned to ~/src/git/hub/repo then
@@ -12,7 +12,7 @@
 #     hence the name of this file
 # TODO: Generalise (currently based on layout of this repo)
 #
-# See also https://github.com/jalanb/dotjab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec 
+# See also https://github.com/jalanb/dotjab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec
 
 vim_clone_to_home () {
     source="$clone_link"/$1
@@ -49,25 +49,25 @@ back_into_home () {
 
 links_into_home () {
     cd $HOME
-    vim_clone_to_home etc/gitconfig			.gitconfig
-    vim_clone_to_home etc/gitignore_global		.gitignore_global
-    vim_clone_to_home src/bash/bashrc		.bashrc
-    vim_clone_to_home src/bash/bash_profile		.bash_profile
-    vim_clone_to_home src/python/pythonrc.py	.pythonrc.py
-    vim_clone_to_home vim/vimrc  			.vimrc
-    link_clone_to_home etc/ackrc			.ackrc
-    link_clone_to_home etc/dir_colors		.dir_colors
-    link_clone_to_home etc/editrc			.editrc
-    link_clone_to_home etc/inputrc			.inputrc
-    link_clone_to_home etc/pylintrc			.pylintrc
-    link_clone_to_home etc/sackrc			.sackrc
-    link_clone_to_home etc/tmux			    .tmux.conf
-    link_clone_to_home etc/xonshrc			.xonshrc
-    link_clone_to_home ipython/			    .ipython
-    link_clone_to_home vim				    .vim
-    link_clone_to_home vim/gvimrc			.gvimrc
-    link_clone_to_home vim/vimpagerrc 		.vimpagerrc
-    
+    vim_clone_to_home etc/gitconfig             .gitconfig
+    vim_clone_to_home etc/gitignore_global      .gitignore_global
+    vim_clone_to_home src/bash/bashrc           .bashrc
+    vim_clone_to_home src/bash/bash_profile     .bash_profile
+    vim_clone_to_home src/python/pythonrc.py    .pythonrc.py
+    vim_clone_to_home vim/vimrc                 .vimrc
+    link_clone_to_home etc/ackrc                .ackrc
+    link_clone_to_home etc/dir_colors           .dir_colors
+    link_clone_to_home etc/editrc               .editrc
+    link_clone_to_home etc/inputrc              .inputrc
+    link_clone_to_home etc/pylintrc             .pylintrc
+    link_clone_to_home etc/sackrc               .sackrc
+    link_clone_to_home etc/tmux                 .tmux.conf
+    link_clone_to_home etc/xonshrc              .xonshrc
+    link_clone_to_home ipython/                 .ipython
+    link_clone_to_home vim                      .vim
+    link_clone_to_home vim/gvimrc               .gvimrc
+    link_clone_to_home vim/vimpagerrc           .vimpagerrc
+
     link_into_home ~/src/git/hub        hub
     link_into_home ~/jab/src/bash       bash
     link_into_home ~/jab/src/python     python
