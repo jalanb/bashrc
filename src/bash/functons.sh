@@ -1507,3 +1507,14 @@ unremembered () {
         source_path $filepath "$@"
     fi
 }
+
+copy_from_wwts_server () {
+    local _server_name=$1
+    local _source="$2"
+    local _source_dir=$(dirname "$_source")
+    local _here_root=~/wwts/$_server_name
+    [[ -d $_here_root ]] || mkdir -p $_here_root
+    local _here_path=$_here_root/"$_source_dir"
+    [[ -d "$_here_path" ]] || mkdir -p "$_here_path"
+    rsync -av $_server_name:"$_source" "$_here_path"
+}
