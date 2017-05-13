@@ -6,14 +6,31 @@ export DASHBOARD=~/src/git/wwts/dashboard
 
 . $DASHBOARD/deployment/bin/deploying.sh
 
+cd_deployment () {
+    [[ $(basename $(readlink -f .)) == deployment ]] && return
+    local _dest=~/wwts/dashboard/deployment
+    [[ -d deployment ]] && _dest=deployment
+    cd $dest
+}
+
 ans () {
-    (cd ~/wwts/dashboard/deployment
+    (cd_deployment
     ansible --inventory-file=inventory "$@")
 }
 
+anp () {
+    (cd_deployment
+    ansible-playbook site.yml --inventory-file=inventory "$@")
+}
+
 ansd () {
-    (cd ~/wwts/dashboard/deployment
+    (cd_deployment
     ansible --inventory-file=dev "$@")
+}
+
+anpd () {
+    (cd_deployment
+    ansible-playbook site.yml --inventory-file=dev --limit default "$@")
 }
 
 reo () {
