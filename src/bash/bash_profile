@@ -3,3 +3,4 @@
 [[ -e ~/.bashrc ]] && source ~/.bashrc
 
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
