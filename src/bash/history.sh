@@ -19,7 +19,14 @@ hl () {
 }
 
 th () {
-    _strip_history | tail "$@"
+    local _options=
+        echo $LINES
+    if [[ $1 =~ [0-9] ]]; then
+        _options=-n
+    else
+        _options="-n $LINES"
+    fi
+    _strip_history | tail $_options "$@"
 }
 
 hv () {
