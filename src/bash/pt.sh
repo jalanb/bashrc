@@ -16,7 +16,7 @@
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
 . ~/hub/what/what.sh
-. ~/jab/local/environ.sh
+. ~/jab/local/environ.sh optional
 
 pt () {
     local __doc__="function to run https://github.com/jonathanslenders/ptpython, if installed"

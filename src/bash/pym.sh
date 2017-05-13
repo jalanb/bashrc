@@ -16,7 +16,7 @@
 # Other environment variables:
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
-. ~/jab/local/environ.sh
+. ~/jab/local/environ.sh optional
 
 workon_pym () {
     [[ $VIRTUAL_ENV =~ /pym$ ]] || workon pym

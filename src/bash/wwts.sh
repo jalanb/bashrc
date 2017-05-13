@@ -4,7 +4,7 @@
 
 export DASHBOARD=~/src/git/wwts/dashboard
 
-. $DASHBOARD/deployment/bin/deploying.sh
+. $DASHBOARD/deployment/bin/deploying.sh optional
 
 cd_deployment () {
     [[ $(basename $(readlink -f .)) == deployment ]] && return

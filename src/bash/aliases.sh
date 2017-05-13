@@ -62,9 +62,9 @@ alias p-="echo $OLDPWD"
 alias r.="rm -rvf *"
 
 alias sa="source_aliases ~/jab/src/bash/aliases.sh"
-alias sb="cde ~/jab && source login.sh && -"
-alias se="source ~/jab/environ.d/jab.sh"
-alias sf="source ~/jab/src/bash/functons.sh"
+alias sb="cde ~/jab && . login.sh && -"
+alias se=". ~/jab/environ.d/jab.sh"
+alias sf=". ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
 alias z.="zm \*"
@@ -87,11 +87,11 @@ alias jlf="sst jlfieblu jlf.ie"
 
 alias out="to_release"
 
-alias sla="source ~/jab/local/aliases.sh"
-alias sle="source ~/jab/local/environ.sh"
-alias slf="source ~/jab/local/functons.sh"
-alias slp="source ~/jab/local/prompt"
-alias spe="source ~/jab/environ.d/python.sh"
+alias sla=". ~/jab/local/aliases.sh optional"
+alias sle=". ~/jab/local/environ.sh optional"
+alias slf=". ~/jab/local/functons.sh optional"
+alias slp=". ~/jab/local/prompt optional"
+alias spe=". ~/jab/environ.d/python.sh"
 
 alias tra="try ~/alans_tests"
 
@@ -99,7 +99,7 @@ alias tra="try ~/alans_tests"
 
 alias ....='cde ../../..'
 
-alias comp="source ~/jab/environ.d/company.sh"
+alias comp=". ~/jab/environ.d/company.sh"
 
 alias home="cd; cls"
 
