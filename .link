@@ -52,6 +52,7 @@ links_into_home () {
     vim_clone_to_home etc/gitconfig			.gitconfig
     vim_clone_to_home etc/gitignore_global		.gitignore_global
     vim_clone_to_home src/bash/bashrc		.bashrc
+    vim_clone_to_home src/bash/bash_profile		.bash_profile
     vim_clone_to_home src/python/pythonrc.py	.pythonrc.py
     vim_clone_to_home vim/vimrc  			.vimrc
     link_clone_to_home etc/ackrc			.ackrc
