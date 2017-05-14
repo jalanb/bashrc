@@ -10,3 +10,4 @@ coverage>=4.3.4
 pinocchio>=0.1
 virtualenv
 virtualenvwrapper
+bumpversion
