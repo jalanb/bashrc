@@ -46,6 +46,8 @@ def parse_args(methods):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('directory',
                         help='path to be abbreviated')
+    parser.add_argument('-o', '--only_home', action='store_true',
+                        help='only replace $HOME with ~')
     parser.add_argument('-x', '--exclude', type=str, nargs='*',
                         help='exclude environment symbol')
     parser.add_argument('-v', '--version', action='store_true',
@@ -106,6 +108,9 @@ def replace_home(directory):
 
 
 def script(args):
+    if args.only_home:
+        print(replace_home(args.directory))
+        return True
     replacements = replace(args.directory, args.exclude or [])
     try:
         print(replace_home(shortest(replacements)))

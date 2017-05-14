@@ -58,10 +58,10 @@ prompt_command () {
         export STATUS="${RED}$1${NO_COLOUR}"
     fi
     changes=0
-    local endir="$(mython ~/jab/bin/endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
-    local Dir="${endir/\$/\\$}"
-    [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${endir/\$/\\$}${PROMPT_COLOUR}"
-    local endir="$PWD"
+    local _endir="$(mython ~/jab/bin/endiron -o -x OLDPWD PWD JAB_SSH -- "${PWD}")"
+    local Dir="${_endir/\$/\\$}"
+    [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_endir/\$/\\$}${PROMPT_COLOUR}"
+    #local _endir="$PWD"
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
     Dir="${Dir}${GIT_BRANCH}"
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -70,7 +70,14 @@ prompt_command () {
     (what -q kd && kd --add . >/dev/null 2>&1)
     history -a
     local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)
-    [[ -n "$VIRTUAL_ENV" ]] && python_version=${python_version}.$(basename $VIRTUAL_ENV)
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        python_version=${python_version}.$(basename $VIRTUAL_ENV)
+    elif pyenv version >/dev/null 2>&1; then
+        local _pyenv_version=$(pyenv version | cut -d' ' -f1)
+        if [[ $_pyenv_version != "system" ]]; then
+            python_version=$_pyenv_version
+        fi
+    fi
     export PS1="$STATUS ${PROMPT_COLOUR}\
 [\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]\
         ${NO_COLOUR}\n$ "
