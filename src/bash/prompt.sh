@@ -58,7 +58,7 @@ prompt_command () {
         export STATUS="${RED}$1${NO_COLOUR}"
     fi
     changes=0
-    local _endir="$(mython ~/jab/bin/endiron -o -x OLDPWD PWD JAB_SSH -- "${PWD}")"
+    local _endir="$(mython ~/jab/bin/endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
     local Dir="${_endir/\$/\\$}"
     [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_endir/\$/\\$}${PROMPT_COLOUR}"
     #local _endir="$PWD"

@@ -9,6 +9,7 @@ from bdb import BdbQuit
 
 
 from dotsite.paths import path
+from dotsite.paths import home
 
 
 __version__ = '0.1.0'
@@ -69,7 +70,6 @@ def directory_parts(directory):
 
 
 def matches(directory, exclude):
-    parts = directory_parts(directory)
     result = {}
     for key, value in os.environ.items():
         if key in exclude:
@@ -81,43 +81,82 @@ def matches(directory, exclude):
                 continue
             if value in directory:
                 result[key] = value
-        elif value in parts:
-            result[key] = value
     return result.items()
 
 
-def replace(directory, exclude):
+def replace_from_environment(directory, exclude):
     result = []
-    for key, value in matches(directory, exclude):
+    environ_matches = matches(directory, exclude)
+    for key, value in environ_matches:
         replacement = '$' + key
         result.append(directory.replace(value, replacement))
     return result
 
 
+def replace_links(directory, links):
+    result = []
+    for source, destination in links:
+        if directory.startswith(source):
+            result.append(directory.replace(source, destination))
+        elif directory.startswith(destination):
+            result.append(directory.replace(destination, source))
+    return result
+
+
+def split_all(p):
+    first, rest = os.path.split(p)
+    if not first or first in '/~':
+        return [first, rest]
+    return split_all(first) + [rest]
+
 def shortest(items):
-    lengths = [(len(_), _) for _ in items]
-    return sorted(lengths)[0][1]
+    lengths = [(len(split_all(replace_home(_))), len(_), _) for _ in items]
+    return sorted(lengths)[0][2]
 
 
 def replace_home(directory):
     homes = [os.environ['HOME'], '$HOME']
-    for home in homes:
-        if directory.startswith(home):
-            return directory.replace(home, '~', 1)
+    for home_ in homes:
+        if directory.startswith(home_):
+            return directory.replace(home_, '~', 1)
     return directory
 
 
-def script(args):
+def real_path(p):
+    return os.path.realpath(os.path.expanduser(p))
+
+
+def abs_path(p):
+    return os.path.abspath(os.path.expanduser(p))
+
+
+def home_links():
+    links = [(str(x), str(x.realpath())) for x in home().listdir() if x.islink() and x.isdir()]
+    return sorted(links)
+
+
+def sub_script(directory, args):
     if args.only_home:
-        print(replace_home(args.directory))
-        return True
-    replacements = replace(args.directory, args.exclude or [])
+        return directory
+    replacements = []
+    replacements += replace_from_environment(directory, args.exclude or [])
+    links = home_links()
+    replacements += replace_links(directory, links or [])
     try:
-        print(replace_home(shortest(replacements)))
-        return True
+        replacer = shortest(replacements)
+        result = replace_home(replacer)
+        return result
     except IndexError:
-        print(replace_home(args.directory))
+        return None
+
+
+def script(args):
+    directory = real_path(args.directory)
+    new_directory = sub_script(directory, args)
+    if not new_directory:
         return False
+    print(replace_home(new_directory))
+    return True
 
 
 def main():
