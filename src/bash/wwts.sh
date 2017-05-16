@@ -10,7 +10,7 @@ cd_deployment () {
     [[ $(basename $(readlink -f .)) == deployment ]] && return
     local _dest=~/wwts/dashboard/deployment
     [[ -d deployment ]] && _dest=deployment
-    cd $dest
+    cd $_dest
 }
 
 ans () {
