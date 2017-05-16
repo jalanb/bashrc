@@ -49,7 +49,7 @@ alias 35="cde ~/jab/log"
 alias 36="cde ~/jab/txt"
 
 alias 40="cd ~/wwts/.."
-alias 41="cde ~/wwts/dashboard.1"
+alias 41="cde ~/wwts/dashboard.master"
 alias 43="cde ~/wwts/tools"
 alias 44="cde ~/wwts/dashboard"
 alias 45="cde ~/wwts/dashboard.dev"
