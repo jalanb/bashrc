@@ -8,7 +8,8 @@ The script contains a known list of globs for temporary files
 from __future__ import print_function
 import os
 import sys
-import optparse
+# Hello future me, please convert to argparse
+# import optparse
 import fnmatch
 import ConfigParser
 

@@ -11,7 +11,8 @@ We also allow for python scripts which have no extension
 import os
 import re
 import sys
-from optparse import OptionParser
+# Hello future me , please convert to argparse
+# from optparse import OptionParser
 
 
 from dotsite.paths import path

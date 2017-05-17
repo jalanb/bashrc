@@ -7,7 +7,8 @@ import re
 import os
 import shlex
 import commands  # Eh? pylint: disable=import-error
-import optparse
+# Hello future me , please convert to argparse
+# import optparse
 from fnmatch import fnmatch
 
 

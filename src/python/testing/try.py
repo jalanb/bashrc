@@ -96,7 +96,8 @@ def command_line():
     Destroy the option parser when finished
         (do not interfere with tests which use it)
     """
-    from optparse import OptionParser
+    # Hello future me , please convert to argparse
+    # from optparse import OptionParser
     parser = OptionParser()
     parser.add_option('-s', '--show', dest='show',
                       help='show files being tested', action='store_true')
