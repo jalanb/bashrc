@@ -16,14 +16,6 @@ class ScriptError(NotImplementedError):
     pass
 
 
-def Use_debugger(_args):
-    try:
-        import pudb as pdb
-    except ImportError:
-        import pdb
-    pdb.set_trace()
-
-
 def add_args(parser):
     parser.add_argument('-p', '--prompt', action='store_true', default='',
                         help='Prompt to show before getting keys '

@@ -35,14 +35,6 @@ def version(_):
     raise SystemExit
 
 
-def Use_debugger(_args):
-    try:
-        import pudb as pdb
-    except ImportError:
-        import pdb
-    pdb.set_trace()
-
-
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -62,8 +54,6 @@ def parse_args(methods):
                         help='Run the first fred.sh script')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
-    parser.add_argument('-U', '--Use_debugger', action='store_true',
-                        help='Run this script with pdb (or pudb if available)')
     args = parser.parse_args()
     run_args(args, methods)
     return args

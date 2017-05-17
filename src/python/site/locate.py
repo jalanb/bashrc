@@ -160,12 +160,7 @@ def _handle_command_line(args):
                       help='run "ls -ld" on locations')
     parser.add_option('-x', '--exclude', type='str', action='append',
                       help='exclude paths which match regexp(s)')
-    parser.add_option('-U', '--Use_debugger', action='store_true',
-                      help='debug with pudb')
     options, args = parser.parse_args(args)
-    if options.Use_debugger:
-        import pudb
-        pudb.set_trace()
     return options, args
 
 

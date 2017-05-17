@@ -31,14 +31,6 @@ def Invert(_args):
     _invert[0] = True
 
 
-def Use_debugger(_args):
-    try:
-        import pudb as pdb
-    except ImportError:
-        import pdb
-    pdb.set_trace()
-
-
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -46,11 +38,8 @@ def parse_args(methods):
                         help='some items')
     parser.add_argument('-I', '--Invert', action='store_true',
                         help='Show all args except the first number')
-    parser.add_argument('-U', '--Use_debugger', action='store_true',
-                        help='Run the script with pdb (or pudb if available)')
-
     def my_arg(string):
-        return string in ['-I', '-U', '--Invert', '--Use_debugger']
+        return string in ['-I', '-U', '--Invert']
 
     my_args = [a for a in sys.argv[1:] if my_arg(a)]
     args = parser.parse_args(my_args)
@@ -58,13 +47,13 @@ def parse_args(methods):
     return [a for a in sys.argv[1:] if not my_arg(a)]
 
 
-def _globalize(items, predicate, name):
+def _globalize(items, _predicate, _name):
     from pprint import pprint
     pprint(items)
 
 def _extract_first(predicate, items):
     result = items[:]
-    first = None
+    _first = None
     for item in items:
         if predicate(item):
             result.remove(item)
@@ -72,7 +61,7 @@ def _extract_first(predicate, items):
     return None, items
 
 def _extract_all(predicate, items):
-    found = bool([_ for _ in items if predicate(_)])
+    _found = bool([_ for _ in items if predicate(_)])
     return
 
 def _extract_first_digit(items):

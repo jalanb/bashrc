@@ -7,7 +7,6 @@ Usage:
 Options:
     -h, --help               Show this help and exit
     -v, --version            Show version number and exit
-    -U, --Use_debugger       Run the script with pudb debugger
     -s, --start              Add the path at start of list of paths
     -i INDEX, --index=INDEX  The index at which the path will be inserted
 
@@ -35,7 +34,6 @@ from __future__ import print_function
 import os
 import sys
 import argparse
-from pprint import pprint
 from bdb import BdbQuit
 
 
@@ -61,19 +59,6 @@ def version(args):
     raise SystemExit
 
 
-def _use_debugger(args):
-    if not args.Use_debugger:
-        return
-    try:
-        import pudb as pdb
-    except ImportError:
-        import pdb
-    pprint(args)
-    pdb.set_trace()
-    import inspect
-    inspect.currentframe().f_back.f_locals
-
-
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -85,8 +70,6 @@ def parse_args(methods):
                         help='The index at which the path will be inserted')
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
-    parser.add_argument('-U', '--Use_debugger', action='store_true',
-                        help='Run the script with pdb (or pudb if available)')
     args = parser.parse_args()
     if not args.index:
         if args.start:
@@ -140,7 +123,6 @@ def get_paths(args):
 
 
 def script(args):
-    _use_debugger(args)
     path_symbol = arg_path(args)
     paths = get_paths(args)
     if not path_symbol:
