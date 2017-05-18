@@ -144,6 +144,7 @@ def script(args):
     directory = real_path(args.directory)
     new_directory = sub_script(directory, args)
     if not new_directory:
+        print(replace_home(directory))
         return False
     print(replace_home(new_directory))
     return True
