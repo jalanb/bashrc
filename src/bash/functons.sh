@@ -964,10 +964,16 @@ detab () {
 }
 
 fewer () {
-    local _lines=0
-    [[ -n "$@" && -f "$1" ]] && _lines=$(wc -l "$1")
-    [[ $_lines < ${LINES:-$(screen_height)} ]] \
-        && cat -n  || lesen
+    if [[ -n "$@" && -f "$1" ]]; then
+        local _lines=$(wc -l "$1" | cut -d' ' -f1)
+        if [[ $_lines -lt ${LINES:-$(screen_height)} ]]; then
+            cat -n "$1"
+        else
+            lesen "$1"
+        fi
+    else
+        cat -n
+    fi
 }
 
 freds () {
