@@ -447,7 +447,7 @@ gcac () {
 }
 
 godr () {
-    gor god
+    gor development
     bump show
 }
 
