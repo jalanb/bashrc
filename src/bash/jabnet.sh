@@ -16,6 +16,11 @@ jm () {
 }
 
 # xxx
+
+ssu () {
+    ssh -tq "$@" "sudo su -"
+}
+
 # xxxx
 
 _ssh () {

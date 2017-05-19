@@ -103,6 +103,10 @@ hd12 () {
 vd12 () {
     vd ~/tmp/one ~/tmp/two
 }
+
+vd23 () {
+    vd ~/tmp/two ~/tmp/three
+}
 # xxxxx
 
 old_v () {
