@@ -16,7 +16,7 @@ link_to_config () {
     do
         dest_link=$(echo $source_file | sed -e "s:~/jab/etc/config:$HOME/.config:")
         if [[ -L $dest_link ]]; then
-            source_link=$(readlink -f $dest_link)
+            source_link=$(realpath $dest_link)
             if [[ $source_link != $source_file ]]; then
                 "$dest_link is linked to $source_link (not $source_file)" >&2
             fi

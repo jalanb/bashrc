@@ -1,13 +1,13 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Welcome_to $BASH_SOURCE
 
 export DASHBOARD=~/src/git/wwts/dashboard
 
 . $DASHBOARD/deployment/bin/deploying.sh optional
 
 cd_deployment () {
-    [[ $(basename $(readlink -f .)) == deployment ]] && return
+    [[ $(basename $(realpath .)) == deployment ]] && return
     local _dest=~/wwts/dashboard/deployment
     [[ -d deployment ]] && _dest=deployment
     cd $_dest
@@ -57,4 +57,4 @@ https://www.python.org/dev/peps/pep-0008/#id19"
 
 }
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)

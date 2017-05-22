@@ -1,6 +1,6 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Welcome_to $BASH_SOURCE
 
 _KEYBOARD_DIR=~/jab/src/bash/keyboard
 _NAME=$(basename $BASH_SOURCE)
@@ -12,4 +12,4 @@ for _script in $(ls *.sh); do
 done
 popd >/dev/null 2>&1
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)

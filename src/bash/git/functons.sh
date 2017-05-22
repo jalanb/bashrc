@@ -41,7 +41,7 @@ gi () {
     local _storage=/tmp/gi.sh
     if [[ -z "$@" ]]; then git commit --verbose
     else
-        python -c "print 'git commit -m\"$*\"'" > $_storage
+        python -c "print('git commit -m\"$*\"')" > $_storage
         _show_run_storage
     fi
     GIT_ADDED=
@@ -572,9 +572,9 @@ git_root () {
     local _root=$(_git_kd "$_there"; git rev-parse --git-dir 2>/dev/null)
     _root=${_root%%.git}
     if [[ -z $_root ]]; then
-        echo $(readlink -f $_there);
+        echo $(realpath $_there);
     else
-        echo $(readlink -f $_root);
+        echo $(realpath $_root);
     fi
 }
 

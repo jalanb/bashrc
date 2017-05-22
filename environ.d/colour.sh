@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Welcome_to $BASH_SOURCE
 #
 # colours
 #
@@ -41,4 +41,4 @@ export          LIGHT_GRAY="\033[0;37m"
 export                GRAY="\033[1;38m"
 export            GRAY_TOO="\033[0;38m"
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)

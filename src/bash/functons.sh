@@ -153,7 +153,7 @@ fv () {
     if [[ -z "$@" ]]; then
         echo Nothing to find
     else
-        files=$(find $(readlink -f $dir) -name "$@")
+        files=$(find $(realpath $dir) -name "$@")
         if [[ -z $files ]]; then
             echo "$@" not found
         else
@@ -428,7 +428,7 @@ gre () {
 }
 
 gv. () {
-    PYTHONPATH=$(readlink -f .) gv .
+    PYTHONPATH=$(realpath .) gv .
 }
 
 gvd () {
@@ -607,7 +607,7 @@ raj () {
 }
 
 rlf () {
-    [[ -z $1 ]] && readlink -f . || readlink -f "$@"
+    [[ -z $1 ]] && realpath . || realpath "$@"
 }
 
 sib () {

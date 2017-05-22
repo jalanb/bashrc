@@ -17,7 +17,7 @@ from () {
 	# gits $TO_LEAF 0 "$@"
     # permissions=git
     set -x
-    [[ -z $permissions ]] && return set__x $(readlink -f .)
+    [[ -z $permissions ]] && return set__x $(realpath .)
     _further=$1; shift
     _level=$1; shift
     # _further=-2; _level=0

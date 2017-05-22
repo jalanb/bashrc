@@ -33,12 +33,12 @@ rr () {
         _shoot=2
         shift
     fi
-    local _path=$(readlink -f "$@")
+    local _path=$(realpath "$@")
     if [[ "$_path" == "/" ]];  then
         echo "I been chewed out before"
         return 1
     fi
-    if [[ "$_path" == $(readlink -f $HOME) || "$@" == "$HOME" ]]; then
+    if [[ "$_path" == $(realpath $HOME) || "$@" == "$HOME" ]]; then
         _shoot=1
         echo "Scalp Herman"
         echo "Are you mad? What have you done? I made a deal with your general for that man's life!"

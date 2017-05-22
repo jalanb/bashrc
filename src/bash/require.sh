@@ -1,6 +1,6 @@
 #! /bin/cat -n
 
-export REQUIRE_SH=$(readlink -f $BASH_SOURCE)
+export REQUIRE_SH=$(realpath $BASH_SOURCE)
 
 _require () {
     _source=source

@@ -1,6 +1,6 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Welcome_to $BASH_SOURCE
 
 # x
 
@@ -52,11 +52,11 @@ what_w () {
         _parse_function $1
         echo vim $path_to_file +$line_number "+/\"^$1 \""
     elif which $1 > /dev/null 2>&1; then
-        real_file=$(readlink -f $(which $1))
+        real_file=$(realpath $(which $1))
         if [[ $real_file != $1 ]]; then
             echo "$1 -> $real_file"
         fi
-        ls -l $(readlink -f $(which $1))
+        ls -l $(realpath $(which $1))
     else type $1
     fi
 }
@@ -80,4 +80,4 @@ what_www () {
     fi)
 }
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)

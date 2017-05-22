@@ -12,7 +12,7 @@ checkout () {
 
 main () {
     if checkout; then
-        SCRIPT_DIR=$(dirname $(readlink -f $BASH_SOURCE))
+        SCRIPT_DIR=$(realdir $BASH_SOURCE)
         bash $SCRIPT_DIR/link_dots.sh
     fi
 }

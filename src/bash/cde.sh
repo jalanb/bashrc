@@ -64,7 +64,7 @@ python_project_here () {
 cde_python () {
     any_python_scripts_here || return 0
     python_project_here || return 0
-    local _dir=$(readlink -f .)
+    local _dir=$(realpath .)
     local _dir_name=$(basename $_dir)
     local egg_info=${_dir_name}.egg-info
     if [[ -d $egg_info ]]; then
@@ -104,7 +104,7 @@ show_version_here () {
 activate_ancestor_virtualenv_hence () {
     local _venvs=$HOME/.virtualenvs
     [[ -d $_venvs ]] || return 1
-    local _here=$(readlink -f $(pwd))
+    local _here=$(realpath $(pwd))
     local _venvs_path=$_venvs/$(basename $_here)
     local _path=$_here
     while [[ ! -d "$_venvs_path" ]]; do

@@ -69,13 +69,13 @@ fynd () {
     if [[ $_argc > 1 ]]; then
         shift_dir "$@" && shift
     elif [[ -z $dir ]]; then
-        dir=$(readlink -f $(pwd))
+        dir=$(realpath $(pwd))
     fi
     local name=$1
     shift
     local old_ifs=$IFS
     IFS=";"
-    for FOUND in $(find $(readlink -f "$dir") -name "$name" -print "$@" | tr '\n' ';')
+    for FOUND in $(find $(realpath "$dir") -name "$name" -print "$@" | tr '\n' ';')
     do
         relpath -s $FOUND
     done

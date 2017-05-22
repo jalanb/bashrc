@@ -1,0 +1,11 @@
+#! /usr/local/bin/python3
+
+import os
+import sys
+
+for arg in sys.argv:
+    try:
+        print(os.path.realpath(arg))
+    except:
+        print('# ! %s' % arg)
+sys.exit(os.EX_OK)

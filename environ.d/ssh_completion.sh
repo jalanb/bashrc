@@ -1,6 +1,6 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Welcome_to $BASH_SOURCE
 
 # Based on an answer in StackOverflow:
 #   http://apple.stackexchange.com/a/168168/4180
@@ -22,4 +22,4 @@ _complete_ssh_hosts () {
 
 complete -F _complete_ssh_hosts ssh
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)

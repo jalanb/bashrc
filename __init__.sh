@@ -1,6 +1,26 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to ~/jab on $(hostname -f)
+realpath () {
+    [[ -f ~/jab/bin/realpath ]] && ~/jab/bin/realpath "$@"
+}
+
+realdir () {
+    for $f in $(realpath "$@"); do
+        dirname "$f"
+    done
+}
+
+Welcome_to () {
+    [[ -z $WELCOME_BYE ]] && return
+    echo Welcomexto ~/jab on $(hostname -f)
+}
+
+Bye_from () {
+    [[ -z $WELCOME_BYE ]] && return
+    echo Byexfrom ~/jab on $(hostname -f)
+}
+
+Welcome_to $BASH_SOURCE
 
 . ~/hub/what/what.sh
 . ~/jab/src/bash/hub.sh
@@ -12,4 +32,4 @@
 . ~/jab/src/bash/__init__.sh
 . ~/jab/local/__init__.sh
 
-[[ -n $WELCOME_BYE ]] && echo Bye from ~/jab on $(hostname -f)
+Bye_from $BASH_SOURCE

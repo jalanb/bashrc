@@ -1,6 +1,6 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Welcome_to $BASH_SOURCE
 
 . ~/jab/src/bash/repo.sh
 
@@ -18,7 +18,7 @@ _set_ssh () {
 }
 
 _set_ls_options () {
-    export LS_PROGRAM=$(readlink -f $(which ls))
+    export LS_PROGRAM=$(realpath $(which ls))
     if $LS_PROGRAM -@ >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='-@'
     elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
@@ -42,4 +42,4 @@ _main () {
 
 _main
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)

@@ -37,7 +37,7 @@ _git_down () {
 }
 
 _default_dir () {
-    echo $(dirname $(readlink -f $BASH_SOURCE))
+    echo $(realdir $BASH_SOURCE)
 }
 
 rebase_all () {
