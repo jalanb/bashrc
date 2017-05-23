@@ -393,7 +393,7 @@ gxi () {
         done
         [[ $answer =~ [qQ] ]] && break
         gi
-        git status -v | g -q "working directory clean" && break
+        git status -v | g -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
     done
 }
