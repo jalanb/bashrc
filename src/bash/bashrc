@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-[[ -n $WELCOME_BYE ]] && echo Welcomexto ~ on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Welcome to ~ on $(hostname -f)
 
 _set_path () {
     LOCAL=/usr/local
