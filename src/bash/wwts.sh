@@ -2,9 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-export DASHBOARD=~/src/git/wwts/dashboard
-
-. $DASHBOARD/deployment/bin/deploying.sh optional
+. ~/wwts/dashboard.master/deployment/bin/deploying.sh optional
 
 cd_deployment () {
     [[ $(basename $(realpath .)) == deployment ]] && return

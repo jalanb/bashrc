@@ -39,8 +39,8 @@ avb () {
 }
 
 avd () {
-    __doc__="vack all args in $DASHBOARD";
-    _av $DASHBOARD "$@"
+    __doc__="vack all args in ~/wwts/dashboard";
+    _av ~/wwts/dashboard "$@"
 }
 
 avg () {
