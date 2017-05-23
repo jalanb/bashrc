@@ -448,12 +448,13 @@ hed () {
 }
 
 hub () {
-    cde ~/hub 
-    if [[ -d "$1" ]]; then
-        cde "$1"
-        shift
+    local _dest=$(kp ~/hub "$@")
+    if [[ -d "$_dest" ]]; then
+        echo cde "$_dest"
+        cde "$_dest"
+    else
+        "$@"
     fi
-    "$@"
 }
 
 jjb () {
@@ -1257,10 +1258,6 @@ thirty_two () {
 }
 
 # _______________
-
-_show_todo_here () {
-    [[ -f todo.txt ]] && todo_show
-}
 
 _diff_two_files () {
     ! diff -q $1 $2 >/dev/null 2>&1

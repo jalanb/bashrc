@@ -34,12 +34,10 @@ cde () {
 }
 
 _post_cde () {
-    _show_todo_here
-    echo
-    echo
-    echo
+    _show_todo_here && echo
+    # set -x
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
-    echo
+    # set +x
     activate_ancestor_virtualenv_hence
     cde_git  && cde_python
 }
@@ -81,6 +79,16 @@ cccde () {
 }
 # _xxxxx
 # xxxxxx
+
+# xxxxxxxxxxxxxxx
+
+_show_todo_here () {
+    if [[ -f todo.txt ]]; then
+        todo_show
+        return 0
+    fi
+    return 1
+}
 
 # xxxxxxxxxxxxxxxxx
 
