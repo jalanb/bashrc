@@ -541,7 +541,7 @@ clone () {
     echo "" > $_clone_log
     git clone "$1"> $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
-        cat $_clone_log
+        kat -n $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
         ranger .
@@ -656,7 +656,7 @@ _do_git_status () {
 
 _gsi_show_file () {
     if _git_untracked "$1"; then
-        fewer "$f"
+        kat -n "$f"
         return 0
     fi
     if _git_modified "$1"; then
