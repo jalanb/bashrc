@@ -18,7 +18,13 @@ jm () {
 # xxx
 
 ssu () {
-    ssh -tq "$@" "sudo su -"
+    local _server=$1
+    shift
+    if [[ -z "$@" ]]; then
+        ssh -tq $_server "sudo su -" 
+    else
+        ssh -tq $_server "sudo $@"
+    fi
 }
 
 # xxxx
