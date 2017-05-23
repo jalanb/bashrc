@@ -3,9 +3,9 @@
 import os
 import sys
 
-for arg in sys.argv:
+for arg in sys.argv[1:]:
     try:
         print(os.path.realpath(arg))
-    except:
+    except:  # pylint: disable=bare-except
         print('# ! %s' % arg)
 sys.exit(os.EX_OK)
