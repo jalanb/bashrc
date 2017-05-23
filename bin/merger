@@ -1,0 +1,125 @@
+#! /usr/bin/env python2.7
+"""Script to merge two branches at a path"""
+
+from __future__ import print_function
+import os
+import re
+import sys
+import argparse
+from bdb import BdbQuit
+from commands import getstatusoutput
+
+
+__version__ = '0.1.0'
+
+
+def version():
+    print(__version__)
+    sys.exit(os.EX_OK)
+
+
+class ScriptError(NotImplementedError):
+    pass
+
+
+def parse_args():
+    """Parse out command line arguments"""
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument('first', help='first branch')
+    parser.add_argument('second', help='second branch')
+    parser.add_argument('path', default='.', help='path [.]')
+    parser.add_argument('-v', '--version', action='store_true',
+                        help='Show version')
+    args = parser.parse_args()
+    if args.version:
+        version()
+    return args
+
+
+def git(command):
+    status, output = getstatusoutput('git %s' % command)
+    if status:
+        raise ValueError(output)
+    return output.splitlines()
+
+
+def git_log(suffix):
+    return git('log --oneline --graph --no-abbrev-commit --color=never %s' % suffix)
+
+def log_from_base(base, branch):
+    log = git_log(branch)
+    result = []
+    for line in log:
+        result.append(line)
+        if base in line:
+            return result
+    return []
+
+
+def extract_commit(log_line):
+    match = re.search('([0-9a-f]{40})', log_line)
+    if not match:
+        return None
+    return match.group(0)
+
+
+# pylint: disable=too-many-locals
+def script(args):
+    branch_one = args.first
+    branch_two = args.second
+    # base = git('merge-base %s %s' % (branch_one, branch_two))[0]
+    # log_branch_one = log_from_base(base, branch_one)
+    # log_branch_two = log_from_base(base, branch_two)
+    log_path_one = git_log('%s -- %s' % (branch_one, args.path))
+    log_path_two = git_log('%s -- %s' % (branch_two, args.path))
+    commits_path_one = [extract_commit(l) for l in log_path_one]
+    commits_path_one = [l for l in commits_path_one if l]
+    commits_path_two = [extract_commit(l) for l in log_path_two]
+    commits_path_two = [l for l in commits_path_two if l]
+    common_from_one = []
+    missing_from_one = []
+    for commit in reversed(commits_path_one):
+        if commit in commits_path_two:
+            common_from_one.append(commit)
+        else:
+            missing_from_one.append(commit)
+    common_from_two = []
+    missing_from_two = []
+    for commit in reversed(commits_path_two):
+        if commit in commits_path_one:
+            common_from_two.append(commit)
+        else:
+            missing_from_two.append(commit)
+    print('Missing from %s:' % branch_one)
+    for commit in missing_from_one:
+        for line in log_path_one:
+            if commit in line:
+                print('\t%s' % line)
+                break
+    print('Missing from %s:' % branch_two)
+    for commit in missing_from_two:
+        for line in log_path_two:
+            if commit in line:
+                print('\t%s' % line)
+                break
+
+
+def main():
+    """Run the script"""
+    try:
+        args = parse_args()
+        return os.EX_OK if script(args) else not os.EX_OK
+    except BdbQuit:
+        pass
+    except SystemExit as e:
+        return e.code
+    except Exception, e:  # pylint: disable=broad-except
+        if __version__[0] < '1':
+            raise
+        print(e, file=sys.stderr)
+        return not os.EX_OK
+    return os.EX_OK
+
+
+if __name__ == '__main__':
+    sys.exit(main())
