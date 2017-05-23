@@ -44,9 +44,9 @@ set_bucket () {
 
 show_dir_colors () {
     local _dircolors=$(which dircolors 2>/dev/null)
-    [[ -n $_dircolors ]] || return 1
+    [[ -z $_dircolors ]] && return 1
     local _dircolours=$(realpath $_dircolors)
-    [[ -n $_dircolours ]] || return 1
+    [[ -z $_dircolours ]] && return 1
     eval $($_dircolours ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 }
 
@@ -71,7 +71,9 @@ _source_jab_environ () {
 
     export_symbols
     set_bucket
+    # set -x
     show_dir_colors
+    # set +x
     set_paths
 
     shopt -s cdspell
@@ -80,4 +82,4 @@ _source_jab_environ () {
 
 _source_jab_environ
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+Bye_from $BASH_SOURCE

@@ -5,8 +5,9 @@ realpath () {
 }
 
 realdir () {
-    for $f in $(realpath "$@"); do
-        dirname "$f"
+    local _p=
+    for _p in $(realpath "$@"); do
+        dirname "$_p"
     done
 }
 

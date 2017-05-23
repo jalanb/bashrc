@@ -11,4 +11,4 @@ ENVIRON_DIR=~/jab/environ.d
 . $ENVIRON_DIR/ssh_completion.sh
 . $ENVIRON_DIR/travis.sh
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+Bye_from $BASH_SOURCE
