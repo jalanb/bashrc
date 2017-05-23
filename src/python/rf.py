@@ -8,8 +8,7 @@ The script contains a known list of globs for temporary files
 from __future__ import print_function
 import os
 import sys
-# Hello future me, please convert to argparse
-# import optparse
+import argparse
 import fnmatch
 import ConfigParser
 
@@ -59,17 +58,6 @@ def read_configuration():
     return options, globs
 
 
-def add_option(parser, name, default, explanation):
-    letter = '-%s' % name[0]
-    word = '--%s' % name
-    action = 'store_true'
-    if default:
-        explanation = 'do not %s' % explanation
-        action = 'store_false'
-    parser.add_option(
-        letter, word, action=action, default=default, help=explanation)
-
-
 def as_configuration_name(name):
     return '-'.join([s.lower() for s in name.split('-')])
 
@@ -89,7 +77,6 @@ def get_help_text(configured_globs):
         ('recursive', 'remove from subdirectories too'),
         ('quiet', 'do not show files being removed'),
         ('Trial-Run', 'show which files would be removed, but do nothing'),
-        ('Use-Debugger', 'run the program in a debugger'),
     ]
     explanation_names = [a for a, _ in explanations]
     glob_explations = [(name, 'remove "%s"' % value)
@@ -98,20 +85,23 @@ def get_help_text(configured_globs):
     return sorted(explanations + glob_explations, cmp=compare_options)
 
 
-def add_options(parser, configured_options, configured_globs):
+def add_argument(parser, name, default, explanation):
+    letter = '-%s' % name[0]
+    word = '--%s' % name
+    action = 'store_true'
+    if default:
+        explanation = 'do not %s' % explanation
+        action = 'store_false'
+    parser.add_argument(
+        letter, word, action=action, default=default, help=explanation)
+
+
+def add_arguments(parser, configured_options, configured_globs):
     explanations = get_help_text(configured_globs)
     for name, explanation in explanations:
         configuration_name = as_configuration_name(name)
         default = configured_options.get(configuration_name, False)
-        add_option(parser, name, default, explanation)
-
-
-def start_debugging():
-    try:
-        import pudb as pdb
-    except ImportError:
-        import pdb
-    pdb.set_trace()
+        add_argument(parser, name, default, explanation)
 
 
 def wanted_globs(options, configured_globs):
@@ -125,17 +115,18 @@ def wanted_globs(options, configured_globs):
 def parse_options():
     """Find out what user wants at command line"""
     configured_options, configured_globs = read_configuration()
-    parser = optparse.OptionParser(usage="rf [options]")
-    add_options(parser, configured_options, configured_globs)
-    options, args = parser.parse_args(None)
-    if options.Use_Debugger:
-        start_debugging()
-    if options.all:
-        _ = [setattr(options, name, True) for name in configured_globs.keys()]
-    if options.quiet and options.Trial_Run:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    add_arguments(parser, configured_options, configured_globs)
+    parser.add_argument('paths', default=['.'], nargs='*',
+                        help='paths to clean (default .)')
+    args = parser.parse_args(None)
+    paths = args.paths
+    delattr(args, 'paths')
+    if args.all:
+        _ = [setattr(args, name, True) for name in configured_globs.keys()]
+    if args.quiet and args.Trial_Run:
         raise NotImplementedError('Using --quiet and --Trial-Run: Do nothing')
-    args = args if args else ['.']
-    return options, args, wanted_globs(options, configured_globs)
+    return paths, args, wanted_globs(args, configured_globs)
 
 
 def get_names_in(directory):
@@ -208,12 +199,12 @@ def remove_files(files, quiet, trial_run):
     return result
 
 
-def script(options, args, globs):
+def script(paths, args, globs):
     """Run the script"""
     result = os.EX_OK
-    for arg in args:
-        files = get_files(arg, globs, options.recursive)
-        file_result = remove_files(files, options.quiet, options.Trial_Run)
+    for path in paths:
+        files = get_files(path, globs, args.recursive)
+        file_result = remove_files(files, args.quiet, args.Trial_Run)
         if file_result != os.EX_OK:
             result = file_result
     return result
@@ -222,11 +213,11 @@ def script(options, args, globs):
 def main():
     """Run the program"""
     try:
-        options, args, globs = parse_options()
+        paths, args, globs = parse_options()
     except NotImplementedError as e:
         print(e, file=sys.stderr)
         return os.EX_USAGE
-    return script(options, args, globs)
+    return script(paths, args, globs)
 
 if __name__ == '__main__':
     sys.exit(main())
