@@ -13,12 +13,12 @@ realdir () {
 
 Welcome_to () {
     [[ -z $WELCOME_BYE ]] && return
-    echo Welcomexto ~/jab on $(hostname -f)
+    echo Welcome to $1 on $(hostname -f)
 }
 
 Bye_from () {
     [[ -z $WELCOME_BYE ]] && return
-    echo Byexfrom ~/jab on $(hostname -f)
+    echo Byexfrom $1 on $(hostname -f)
 }
 
 Welcome_to $BASH_SOURCE
