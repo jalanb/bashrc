@@ -13,6 +13,7 @@ _show_home () {
 
 _osx_home=$(_show_home /Users/jab)
 PROFILE="$HOME/Library/Application Support/Firefox/Profiles/0r6wcrwt.default"
+. ~/jab/local/profile.sh optional
 SOURCE="$PROFILE/jetpack/jid1-xUfzOsOFlzSOXg@jetpack/simple-storage/store.json"
 DESTINATION_DIRECTORY=/Volumes/HD$_osx_home/log
 DESTINATION=$DESTINATION_DIRECTORY/store.json.$(/bin/date +%Y%m%d)
