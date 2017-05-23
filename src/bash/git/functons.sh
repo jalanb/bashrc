@@ -679,7 +679,10 @@ show_git_time () {
     local _arg_dir="${1:-$PWD}"
     git_dir=$(git_root "$_arg_dir")
     [[ $git_dir == $_arg_dir ]] && _arg_dir=
-    [[ -n $git_dir ]] || return 1
+    if [[ -n $git_dir ]]; then
+        echo
+        return 1
+    fi
     local _log=
     local period=
     local lines_left=$(( ${LINES:-$(screen_height)} / 2 ))
@@ -694,6 +697,7 @@ show_git_time () {
             lines_left=$(( lines_left - $period_lines ))
         fi
     done
+    echo
 }
 
 # xxxxxxxxxxxxxxx
