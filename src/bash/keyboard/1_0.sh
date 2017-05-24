@@ -2,6 +2,8 @@
 
 # x
 
+. ~/bash/keyboard/1_1.sh
+
 alias §="cd ~"
 alias 0="cd /"
 alias 1="cd ~/hub"
@@ -49,8 +51,8 @@ alias 35="cde ~/jab/log"
 alias 36="cde ~/jab/txt"
 
 alias 40="cd ~/wwts/.."
-alias 43="cde ~/wwts/tools"
-alias 44="cde ~/wwts/dashboard"
+alias 43="head_43"
+alias 44="head_44"
 alias 46="cde /tmp/deploying"
 
 alias 50="cd ~/src/.."

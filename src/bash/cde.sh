@@ -23,7 +23,8 @@ cls () {
 }
 
 _pre_cde () {
-    :
+    [[ -z $CDE_header ]] && return
+    echo $CDE_header
 }
 
 cde () {
