@@ -14,9 +14,11 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('files', metavar='files', type=str, nargs='*',
                         help='files to edit')
+    parser.add_argument('-a', '--at', type=int, default=None,
+                        help='Show line at the line number')
     parser.add_argument('-c', '--clipboard', action='store_true',
                         help='Get lines from clipboard')
-    parser.add_argument('-f', '--first', type=int, default=0,
+    parser.add_argument('-f', '--first', type=int, default=1,
                         help='number of first line to show')
     parser.add_argument('-l', '--last', type=int, default=0,
                         help=' number of last line to show')
@@ -25,19 +27,40 @@ def parse_args():
     return parser.parse_args()
 
 
-def show_stream(stream, args):
-    all_lines = stream.readlines()
-    start = args.first if args.first == 0 else args.first - 1
-    last_line_number = args.last or len(all_lines)
+def parse_lines(args, lines_read):
+
+    def _line(i):
+        line = i if i >= 0 else length_read + i
+        if line >= length_read:
+            return length_read - 1
+        return 0 if line < 1 else line
+
+    def _boundaries():
+        if not args.at:
+            return _line(args.first - 1), _line(args.last or -1)
+        at = _line(args.at)
+        return at, at + 1
+
+    length_read = len(lines_read)
+    first, last = _boundaries()
+    lines = [] if first > length_read else lines_read[first:last]
+    return lines, first
+
+
+def line_format(lines):
+    last_line_number = len(lines)
     digits = len(str(last_line_number))
-    line_format = '%%%dd: ' % digits
-    lines = all_lines[start:args.last] if args.last else all_lines[start:]
-    safe_start = start if start > -1 else len(all_lines) + start
-    for i, line in enumerate(lines, safe_start):
-        out = ''
+    return '%%%dd: ' % digits
+
+
+def show_stream(stream, args):
+    lines, first = parse_lines(args, stream.readlines())
+    line_format_ = line_format(lines)
+    for i, line in enumerate(lines, first):
+        prefix = ''
         if args.numbers:
-            out = line_format % (i + 1)
-        out += line.rstrip()
+            prefix = line_format_ % (i + 1)
+        out = ' '.join((prefix, line.rstrip()))
         print(out)
 
 
