@@ -139,6 +139,14 @@ gbo () {
     gba "$@" | grep origin
 }
 
+gbm () {
+    git branch -m "$@"
+}
+
+gff () {
+    gfa; grup
+}
+
 gro () {
     local _origin=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
     if [[ -n $_origin ]]; then
@@ -480,10 +488,6 @@ ggai () {
     g -q $1 $2 && gai $2 || echo fuck off
 }
 
-gffa () {
-    gfa; grup
-}
-
 gfmr () {
     gffr gom
 }
@@ -493,7 +497,7 @@ gfdr () {
 }
 
 gffr () {
-    gfa; grup; $1; gr
+    gff; $1; gr
 }
 
 gl11 () {
