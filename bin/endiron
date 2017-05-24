@@ -83,13 +83,23 @@ def replace_from_environment(directory, exclude):
     return result
 
 
+def trail_dir(string):
+    if os.path.isdir(string):
+        return string.rstrip('/') + '/'
+    return ''
+
+
 def replace_links(directory, links):
     result = []
     for source, destination in links:
-        if directory.startswith(source):
-            result.append(directory.replace(source, destination))
-        elif directory.startswith(destination):
-            result.append(directory.replace(destination, source))
+        source_ = trail_dir(source)
+        destination_ = trail_dir(destination)
+        if not (source_ and destination_):
+            continue
+        if directory.startswith(source_):
+            result.append(directory.replace(source_, destination_))
+        elif directory.startswith(destination_):
+            result.append(directory.replace(destination_, source_))
     return result
 
 
@@ -98,6 +108,7 @@ def split_all(p):
     if not first or first in '/~':
         return [first, rest]
     return split_all(first) + [rest]
+
 
 def shortest(items):
     lengths = [(len(split_all(replace_home(_))), len(_), _) for _ in items]
@@ -121,7 +132,10 @@ def abs_path(p):
 
 
 def home_links():
-    links = [(str(x), str(x.realpath())) for x in home().listdir() if x.islink() and x.isdir()]
+    links = [(
+        str(x),
+        str(x.realpath())
+    ) for x in home().listdir() if x.islink() and x.isdir()]
     return sorted(links)
 
 
