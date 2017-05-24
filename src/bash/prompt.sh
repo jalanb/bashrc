@@ -58,12 +58,14 @@ prompt_command () {
         export STATUS="${RED}$1${NO_COLOUR}"
     fi
     changes=0
+    # set -x
     local _endir="$(mython ~/jab/bin/endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
     local Dir="${_endir/\$/\\$}"
     [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_endir/\$/\\$}${PROMPT_COLOUR}"
     #local _endir="$PWD"
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
     Dir="${Dir}${GIT_BRANCH}"
+    # set +x
     local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     console_whoami
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${NO_COLOUR}\n$ "
