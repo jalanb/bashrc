@@ -11,3 +11,4 @@ pinocchio>=0.1
 virtualenv
 virtualenvwrapper
 bumpversion
+pathlib2
