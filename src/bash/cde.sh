@@ -39,7 +39,8 @@ _post_cde () {
     # set -x
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
     # set +x
-    activate_ancestor_virtualenv_hence
+    # Try pyenv instead
+    # activate_ancestor_virtualenv_hence
     cde_git  && cde_python
 }
 
