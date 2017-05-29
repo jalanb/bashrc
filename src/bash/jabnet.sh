@@ -2,20 +2,19 @@
 
 # x
 # xx
+# xxx
 
-ji () {
+jai () {
     _ssh jalanmini.local
 }
 
-jn () {
+jab () {
     _ssh jalan-book.local
 }
 
-jm () {
+jam () {
     _ssh jalan.mac
 }
-
-# xxx
 
 ssu () {
     local _server=$1
