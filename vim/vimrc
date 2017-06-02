@@ -31,6 +31,41 @@ nnoremap <C-F4>     <C-W>c
 "
 "noremap / - search
 "
+" number row {{{3
+"
+nnoremap <bs> /
+nnoremap = /<cr>zzzv
+nnoremap - ?<cr>zzzv
+"noremap 0 
+"noremap 9 
+nnoremap 8 *
+"noremap 7 
+"noremap 6 
+"noremap 5 
+"noremap 4 
+"noremap 3 
+"noremap 2 
+nnoremap 1 #
+nnoremap § ?
+inoremap § <esc>
+"
+" shifted number row {{{3
+"
+"noremap <S-bs> doesn't work
+nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx
+nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx 
+nnoremap ) ^
+nnoremap ( %
+"noremap * 
+nnoremap & g_    
+nnoremap ^
+"noremap % goto matching bracket
+"noremap $ goto EOL
+nnoremap £ :map £ 
+"noremap @ execute contents of register
+"noremap ! shell
+"noremap ± 
+"
 " letters {{{3
 "
 "noremap a - append
@@ -44,7 +79,7 @@ nnoremap <C-F4>     <C-W>c
  noremap j jzz
  noremap k kzz
 "noremap l - go right
-"noremap m - mark
+ noremap m :map m 
 nnoremap n nzzzv
 "noremap o - open new line
 "noremap p - paste
@@ -79,10 +114,8 @@ cnoremap w!! w !sudo tee %
 "
 " Punctuation {{{3
 "
-inoremap § <esc>
-nnoremap = ?<cr>
- noremap ] <C-]>   " do this on bufenter
- noremap [ <C-T>   " do this on bufenter
+ noremap ] <C-]>
+ noremap [ <C-T>
  noremap ; q:
  noremap ' :nohl<cr>
  noremap " m'
@@ -148,7 +181,6 @@ nnoremap L <C-F>zz
 " ordinary keys for movement {{{2
 "
  noremap <Space><Space>  <PageDown>zz
- noremap <BS>     <PageUp>zz
  noremap t<left>  :tabprev<cr>
  noremap t<right> :tabnext<cr>
  noremap th       :tabprev<cr>
