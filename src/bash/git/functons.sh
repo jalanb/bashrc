@@ -457,6 +457,11 @@ gbdr () {
     git push origin --delete $1
 }
 
+gbta () {
+    gba "$@"
+    gta "$@"
+}
+
 gcac () {
     ga .
     gcpc
