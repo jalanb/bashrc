@@ -20,6 +20,7 @@
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
     di = difftool -y --extcmd=\"icdiff --line-numbers\"
+    dn = diff --name-only
     dv = difftool -y --extcmd=\"vim -d -O\"
     dy = difftool -y --extcmd=\"pydiff\"
     dw = diff --word-diff

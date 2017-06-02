@@ -47,6 +47,10 @@ gi () {
     GIT_ADDED=
 }
 
+gl () {
+    gl11 "$@"
+}
+
 go () {
     local __doc__="git out"
     git checkout "$@"
