@@ -310,7 +310,7 @@ def main():
     options, args = handle_command_line()
     try:
         scripts = paths_to_doctests(args, options.recursive)
-    except UserMessage, e:
+    except UserMessage as e:
         print >> sys.stderr, e
         return 1
     print '\n'.join(scripts)

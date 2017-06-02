@@ -142,7 +142,7 @@ def main():
     except ScriptError as e:
         print(e, file=sys.stderr)
         return not os.EX_OK
-    except Exception, e:  # pylint: disable=broad-except
+    except Exception as e:  # pylint: disable=broad-except
         if __version__[0] < '1':
             raise
         print(e, file=sys.stderr)

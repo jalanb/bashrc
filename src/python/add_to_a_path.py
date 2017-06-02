@@ -143,7 +143,7 @@ def main():
         return os.EX_OK if script(args) else not os.EX_OK
     except (SystemExit, BdbQuit):
         pass
-    except Exception, e:  # pylint: disable=broad-except
+    except Exception as e:  # pylint: disable=broad-except
         if __version__[0] < '1':
             raise
         print(e, file=sys.stderr)

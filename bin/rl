@@ -40,7 +40,7 @@ def main():
         pass
     except SystemExit as e:
         return e.code
-    except Exception, e:  # pylint: disable=broad-except
+    except Exception as e:  # pylint: disable=broad-except
         print >> sys.stderr, e
         return not os.EX_OK
     return os.EX_OK

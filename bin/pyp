@@ -1035,7 +1035,7 @@ class Pyp(object):
                     except KeyboardInterrupt:
                         print Colors.RED + "killed by user" + Colors.OFF
                         sys.exit()
-                    except Exception, err:
+                    except Exception as err:
                         self.history[self.n]['error'] = Colors.RED + 'error: ' + str(err) + Colors.OFF, Colors.RED + cmd + Colors.OFF
                         break
                     #totals output for each cm
@@ -1183,7 +1183,7 @@ class Pyp(object):
         except KeyboardInterrupt:
             print Colors.RED + "killed by user" + Colors.OFF
             sys.exit()
-        except Exception, err:
+        except Exception as err:
             print Colors.RED + 'error: ' + str(err) + Colors.OFF, Colors.RED + cmd + Colors.OFF
             sys.exit()
 
@@ -2165,7 +2165,7 @@ if __name__ == '__main__':
 
     try:
         pyp = Pyp().main()
-    except Exception, err:
+    except Exception as err:
         print Colors.RED + str(err) + Colors.OFF
 
 

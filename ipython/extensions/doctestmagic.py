@@ -99,7 +99,7 @@ class DoctestMagic(Magics):
         name = args.name
         try:
             optionflags = eval(args.options)  # pylint: disable=eval-used
-        except AttributeError, e:
+        except AttributeError as e:
             if args.options.startswith('doctest.'):
                 raise AttributeError(str(e).replace(
                     "'module' object", "doctest module"))
