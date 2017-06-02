@@ -24,14 +24,11 @@ hl () {
 }
 
 th () {
-    local _options=
-        echo $LINES
+    local _lines=$LINES
     if [[ $1 =~ [0-9] ]]; then
-        _options=-n
-    else
-        _options="-n $LINES"
+        _lines="$1"
     fi
-    _strip_history | tail $_options "$@"
+    _strip_history $_lines 
 }
 
 hv () {
@@ -68,7 +65,7 @@ vhist () {
 # xxxxxxxxxxxxx
 
 _tease_history () {
-    history | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
+    history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
 }
 
 _strip_history () {
