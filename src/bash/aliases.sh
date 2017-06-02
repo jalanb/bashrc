@@ -63,7 +63,6 @@ alias r.="rm -rvf *"
 
 alias sa="source_aliases ~/jab/src/bash/aliases.sh"
 alias sb="cde ~/jab && . login.sh && -"
-alias se=". ~/jab/environ.d/jab.sh"
 alias sf=". ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
