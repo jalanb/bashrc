@@ -11,6 +11,10 @@ gh () {
     _strip_history | grep --color "$@"
 }
 
+h1 () {
+    th 2 | head -n1
+}
+
 hh () {
     _strip_history | head "$@"
 }

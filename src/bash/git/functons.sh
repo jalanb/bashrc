@@ -120,6 +120,11 @@ gbt () {
     gt "$@"
 }
 
+gta () {
+    [[ -z $1 ]] && return ValueError
+    git tag --list | g "$@"
+}
+
 gbb () {
     git_branch "$@"
 }
