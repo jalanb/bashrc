@@ -61,6 +61,7 @@ links_into_home () {
     link_clone_to_home etc/inputrc              .inputrc
     link_clone_to_home etc/pylintrc             .pylintrc
     link_clone_to_home etc/sackrc               .sackrc
+    link_clone_to_home etc/tigrc                .tigrc
     link_clone_to_home etc/tmux                 .tmux.conf
     link_clone_to_home etc/xonshrc              .xonshrc
     link_clone_to_home ipython/                 .ipython
