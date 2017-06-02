@@ -127,6 +127,10 @@ gba () {
     fi
 }
 
+gta () {
+    git tag --list | g "$@"
+}
+
 gbb () {
     git_branch "$@"
 }
