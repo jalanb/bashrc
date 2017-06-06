@@ -76,6 +76,10 @@ gs () {
     _do_git_status $dir "$@"
 }
 
+gt () {
+    git tag --list | g "$@"
+}
+
 tc () {
     vim ~/.gitconfig +
 }
@@ -127,8 +131,9 @@ gba () {
     fi
 }
 
-gta () {
-    git tag --list | g "$@"
+gbt () {
+    gb "$@"
+    gt "$@"
 }
 
 gbb () {
@@ -390,6 +395,10 @@ _gsi_vim () {
 
 gsi () {
     gxi _gsi_show_file _gsi_response "$@"
+}
+
+gta () {
+    gt "$@"
 }
 
 gvi () {
