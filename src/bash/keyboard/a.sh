@@ -44,8 +44,8 @@ avd () {
 }
 
 avg () {
-    __doc__="vack all args in $GIT";
-    _av $GIT "$@"
+    __doc__="vack all args in ~/src/git";
+    _av ~/src/git "$@"
 }
 
 avh () {

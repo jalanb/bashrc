@@ -9,12 +9,6 @@ if [[ $- =~ i ]]; then
     export PATH=$LOCALS:$BINS:$HOMES
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 
-    SRC=~/src
-    HG=$SRC/hg
-    GIT=$SRC/git
-    HUB=$GIT/hub
-    export HUB
-
     source ~/jab/__init__.sh
 
     export PS1="\$? [\u@\h:\$PWD]\n$ "

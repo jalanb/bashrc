@@ -382,7 +382,7 @@ xe () {
 }
 
 sq () {
-    . $GIT_BUCKET/qaz/src/bash/qazrc
+    . ~/src/git/bucket/qaz/src/bash/qazrc
 }
 
 zm () {
