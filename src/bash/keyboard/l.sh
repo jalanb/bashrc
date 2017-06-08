@@ -4,11 +4,11 @@
 
 if [[ -f /usr/local/bin/gls ]]; then
 	l () {
-	    /usr/local/bin/gls --group-directories-first --color -htr "$@"
+	    /usr/local/bin/gls --group-directories-first --color -h "$@"
 	}
 else
 	l () {
-	    ls -htr "$@"
+	    ls -h "$@"
 	}
 fi
 
@@ -31,6 +31,10 @@ ll () {
     l -l "$@"
 }
 
+lt () {
+    l -t "$@"
+}
+
 # xxx
 
 lal () {
@@ -39,4 +43,8 @@ lal () {
 
 lll () {
     ll -a "$@"
+}
+
+ltr () {
+    lt -r "$@"
 }
