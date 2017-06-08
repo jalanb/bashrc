@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python
 """Show some lines from files"""
 
 from __future__ import print_function
@@ -67,7 +67,7 @@ def show_stream(stream, args):
 def main():
     """Run the script"""
     args = parse_args()
-    for stream in text_streams.file_streams(args.files, args.clipboard):
+    for stream in text_streams.argvs(args.files, args.clipboard):
         show_stream(stream, args)
     return os.EX_OK
 

@@ -1,6 +1,7 @@
 """Script to display a todo list"""
 
 
+from __future__ import print_function
 import re
 import os
 import sys
@@ -28,7 +29,7 @@ def todo_file():
 
 def read_todo(path_to_todo):
     result = []
-    for line in file(path_to_todo):
+    for line in open(path_to_todo):
         line = line.rstrip()
         if not line:
             continue
@@ -89,7 +90,7 @@ def parse_todo_line(line):
 def show_todo_item(item):
     """Show the item on screen, coloured by it's priority"""
     colour = priority_colour(item.priority)
-    print colours.colour_text(item.text, colour)
+    print(colours.colour_text(item.text, colour))
 
 
 def main():
