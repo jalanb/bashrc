@@ -15,6 +15,7 @@ Host jalan.mini
     Hostname 192.168.130.101
     Hostname jalanmini.local
     User jab
+    IdentityFile ~/.ssh/id_jab
 
 Host jalan.book
     Hostname 192.168.130.104
