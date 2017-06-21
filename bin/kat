@@ -30,16 +30,18 @@ def parse_args():
 def parse_lines(args, lines_read):
 
     def _line(i):
-        line = i if i >= 0 else length_read + i
+        line = i if i >= 0 else length_read + 1 + i
         if line >= length_read:
-            return length_read - 1
+            return length_read
         return 0 if line < 1 else line
 
     def _boundaries():
         if not args.at:
-            return _line(args.first - 1), _line(args.last or -1)
-        at = _line(args.at)
-        return at, at + 1
+            last = _line(args.last or -1)
+            first = _line(args.first - 1)
+            return first, last
+        first = _line(args.at)
+        return first, first + 1
 
     length_read = len(lines_read)
     first, last = _boundaries()
@@ -54,7 +56,9 @@ def line_format(lines):
 
 
 def show_stream(stream, args):
-    lines, first = parse_lines(args, stream.readlines())
+    text = stream.read()
+    lines_in = text.splitlines()
+    lines, first = parse_lines(args, lines_in)
     line_format_ = line_format(lines)
     for i, line in enumerate(lines, first):
         prefix = ''
@@ -67,7 +71,7 @@ def show_stream(stream, args):
 def main():
     """Run the script"""
     args = parse_args()
-    for stream in text_streams.argvs(args.files, args.clipboard):
+    for stream in text_streams.any():
         show_stream(stream, args)
     return os.EX_OK
 
