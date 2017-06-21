@@ -101,3 +101,7 @@ elif [[ "$PROMPT_COLOUR" == "none" ]]; then
 else
     export PROMPT_COMMAND='prompt_command $?'
 fi
+export PS2="... "  # Continuation line
+export PS3="#?"    # Prompt for select command
+export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
+                                                # Thanks to pyenv for the (ahem) prompt
