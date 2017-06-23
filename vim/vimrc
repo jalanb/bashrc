@@ -58,7 +58,7 @@ nnoremap ) ^
 nnoremap ( %
 "noremap * 
 nnoremap & g_    
-nnoremap ^
+"nnoremap ^
 "noremap % goto matching bracket
 "noremap $ goto EOL
 nnoremap £ :map £ 
@@ -232,7 +232,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
 "noremap <leader>l
- noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(>\{2,}\)\)<cr>
+ noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(|\{2,}\)\\|\(>\{2,}\)\)<cr>
  noremap <leader>n :call ChangeNumber()<cr>
 "noremap <leader>o used by ftplugin/jab/python
  noremap <leader>p :set paste<cr>
