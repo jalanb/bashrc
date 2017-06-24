@@ -36,9 +36,9 @@ nnoremap <C-F4>     <C-W>c
 nnoremap <bs> /
 nnoremap = /<cr>zzzv
 nnoremap - ?<cr>zzzv
-"noremap 0 
+nnoremap 0 *
 "noremap 9 
-nnoremap 8 *
+"noremap 8 
 "noremap 7 
 "noremap 6 
 "noremap 5 
@@ -54,10 +54,10 @@ inoremap § <esc>
 "noremap <S-bs> doesn't work
 nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx
 nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx 
-nnoremap ) ^
-nnoremap ( %
+nnoremap ) %
+"noremap ( 
 "noremap * 
-nnoremap & g_    
+nnoremap & J
 "nnoremap ^
 "noremap % goto matching bracket
 "noremap $ goto EOL
@@ -155,13 +155,13 @@ cnoremap w!! w !sudo tee %
 "noremap B - WORDS backwards
 "noremap C c$
 "noremap D d$
-"noremap E e
+nnoremap E WQ
 "noremap F f backwards
 "noremap G goto line (default last)
 nnoremap H <C-B>zz
 "noremap I - Insert
-"noremap J - Join lines
-nnoremap K <PageUp>zz
+nnoremap J <PageUp>zz
+nnoremap K <PageDown>zz
 nnoremap L <C-F>zz
 "noremap M - To Middle of window
  noremap N :cn<cr>zzzv
@@ -172,11 +172,11 @@ nnoremap L <C-F>zz
  noremap S :%s:::<Left><Left>
  noremap T :!tags
  noremap U :redo<cr>
-"noremap V
+"noremap V - linewise visual
  noremap W :wa!<CR>
  noremap X :x!<CR>
 "noremap Y - aka yy
- noremap Z :q!<cr>
+ noremap Z zR
 "
 " ordinary keys for movement {{{2
 "
@@ -232,7 +232,7 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
 "noremap <leader>l
- noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(|\{2,}\)\\|\(>\{2,}\)\)<cr>
+ noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>
  noremap <leader>n :call ChangeNumber()<cr>
 "noremap <leader>o used by ftplugin/jab/python
  noremap <leader>p :set paste<cr>
