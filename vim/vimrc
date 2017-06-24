@@ -34,8 +34,8 @@ nnoremap <C-F4>     <C-W>c
 " number row {{{3
 "
 nnoremap <bs> /
-nnoremap = /<cr>zzzv
-nnoremap - ?<cr>zzzv
+nnoremap = /<cr>zMzvzz
+nnoremap - ?<cr>zMzvzz
 nnoremap 0 *
 "noremap 9 
 "noremap 8 
@@ -80,7 +80,7 @@ nnoremap £ :map £
  noremap k kzz
 "noremap l - go right
  noremap m :map m 
-nnoremap n nzzzv
+nnoremap n nzMzvzz
 "noremap o - open new line
 "noremap p - paste
  noremap q :q<CR>
@@ -106,10 +106,10 @@ cnoremap w!! w !sudo tee %
  noremap z= zo
  noremap z- zc
  noremap z_ zC
- noremap zn nzMzv
- noremap zN NzMzv
- noremap z/ /<cr>zMzv
- noremap z? ?<cr>zMzv
+ noremap zn nzMzvzz
+ noremap zN NzMzvzz
+ noremap z/ /<cr>zMzvzz
+ noremap z? ?<cr>zMzvzz
  noremap zx jzO
 "
 " Punctuation {{{3
@@ -155,7 +155,7 @@ cnoremap w!! w !sudo tee %
 "noremap B - WORDS backwards
 "noremap C c$
 "noremap D d$
-nnoremap E WQ
+    nmap E WQ
 "noremap F f backwards
 "noremap G goto line (default last)
 nnoremap H <C-B>zz
@@ -164,7 +164,7 @@ nnoremap J <PageUp>zz
 nnoremap K <PageDown>zz
 nnoremap L <C-F>zz
 "noremap M - To Middle of window
- noremap N :cn<cr>zzzv
+ noremap N :cn<cr>zMzvzz
 "noremap O - Open line above
 "noremap P - paste forward
  noremap Q <esc>:qa!<CR>
@@ -250,8 +250,8 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>P :set ft=python<cr>
  noremap <leader>W :w !sudo tee % >/dev/null<cr>
 
- noremap <leader>] :cn<cr>zzzv
- noremap <leader>[ :cp<cr>zzzv
+ noremap <leader>] :cn<cr>zMzvzz
+ noremap <leader>[ :cp<cr>zMzvzz
  noremap <leader>: q:
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
  noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
@@ -534,8 +534,8 @@ let g:SeekBackKey = 'F'
 "
 function! ReadTraceback(filename)
     :set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
-    :map <F11> :cn<cr>zzzv
-    :map <F10> :cp<cr>zvzz
+    :map <F11> :cn<cr>zMzvzz
+    :map <F10> :cp<cr>zMzvzz
     exec "cf " . a:filename
     exec "clast"
     normal zv
