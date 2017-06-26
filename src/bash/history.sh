@@ -26,9 +26,15 @@ hl () {
 th () {
     local _lines=$LINES
     if [[ $1 =~ [0-9] ]]; then
-        _lines="$1"
+        _lines="$1"; shift
     fi
-    _strip_history $_lines 
+    local _sought=
+    if [[ $1 == "?" ]]; then
+        _sought="$1"; shift
+        _strip_history | grep -A $_lines "$@"
+    else
+        _strip_history $_lines 
+    fi
 }
 
 hv () {
