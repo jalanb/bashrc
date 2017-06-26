@@ -36,8 +36,8 @@ nnoremap <C-F4>     <C-W>c
 nnoremap <bs> /
 nnoremap = /<cr>zMzvzz
 nnoremap - ?<cr>zMzvzz
-nnoremap 0 *
-"noremap 9 
+"noremap 0 *
+nnoremap 9 *
 "noremap 8 
 "noremap 7 
 "noremap 6 
@@ -61,7 +61,7 @@ nnoremap & J
 "nnoremap ^
 "noremap % goto matching bracket
 "noremap $ goto EOL
-nnoremap £ :map £ 
+nnoremap £ :nnoremap £ 
 "noremap @ execute contents of register
 "noremap ! shell
 "noremap ± 
