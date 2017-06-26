@@ -356,14 +356,6 @@ vf () {
     _edit_jab src/bash/functons.sh "$@"
 }
 
-if ! what -q vi; then
-
-vi () {
-    vim ~/.inputrc +/Key.bindings
-}
-
-fi
-
 vj () {
     (cd ~/jab;
         v.
@@ -460,7 +452,7 @@ hub () {
 }
 
 jjb () {
-    kk ~/jab/src/bash "@"
+    kk ~/jab/src/bash "$@"
 }
 
 jjy () {

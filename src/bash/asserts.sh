@@ -118,8 +118,6 @@ _assert_what_executable () {
     what -q $1
 }
 
-_assert_what_executable which
-
 _assert_which_executable () {
     test -x which $1
 }
