@@ -37,7 +37,7 @@ nnoremap <bs> /
 nnoremap = /<cr>zMzvzz
 nnoremap - ?<cr>zMzvzz
 "noremap 0 *
-nnoremap 9 *
+nnoremap 9 *zMzvzz
 "noremap 8 
 "noremap 7 
 "noremap 6 
@@ -45,7 +45,7 @@ nnoremap 9 *
 "noremap 4 
 "noremap 3 
 "noremap 2 
-nnoremap 1 #
+nnoremap 1 #zMzvzz
 nnoremap § ?
 inoremap § <esc>
 "
