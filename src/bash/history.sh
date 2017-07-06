@@ -45,7 +45,9 @@ vh () {
     local __doc__="edit stuff from history"
     if [[ -n $* ]]; then
         _strip_history > ~/tmp/fred
-        vim ~/tmp/fred +/"$@"
+        local _search=+/"$@"
+        [[ "$@" =~ ^+ ]] && _search="$@"
+        vim ~/tmp/fred $_search
     else
         _strip_history > ~/tmp/fred
         vim ~/tmp/fred +

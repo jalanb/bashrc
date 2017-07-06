@@ -104,6 +104,10 @@ vd12 () {
     vd ~/tmp/one ~/tmp/two
 }
 
+vd13 () {
+    vd ~/tmp/one ~/tmp/three
+}
+
 vd23 () {
     vd ~/tmp/two ~/tmp/three
 }
@@ -145,6 +149,11 @@ old_v () {
 # xxxxxxx
 # xxxxxxxx
 
+vd123 () {
+    vd ~/tmp/one ~/tmp/two ~/tmp/three
+}
+
+# xxxxx
 vim_none () {
     (echo "" > ~/tmp/fred
     $EDITOR ~/tmp/fred)

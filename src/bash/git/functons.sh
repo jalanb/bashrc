@@ -146,7 +146,8 @@ gbm () {
 }
 
 gff () {
-    gfa; grup
+    gfa
+    grup
 }
 
 gro () {
