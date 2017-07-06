@@ -17,24 +17,24 @@ class ScriptError(NotImplementedError):
 
 
 def add_args(parser):
-    parser.add_argument('-p', '--prompt', action='store_true', default='',
-                        help='Prompt to show before getting keys '
-                        '(default: none)')
-    parser.add_argument('-c', '--codes', action='store_true',
-                        help='Show raw codes')
+    pa = parser.add_argument
+    pa('-c', '--codes', action='store_true', help='Show raw codes')
+    pa('-p', '--prompt', action='store_true', default='',
+       help='Prompt to show before getting keys ' '(default: none)')
+    pa('-s', '--string', action='store_true', help='Show string')
     return parser
 
 
 def script(args):
-    if args.default:
-        print(args.default, end=' ')
-    if args.codes:
-        print(', '.join(getch.get_codes()))
-    else:
-        try:
+    try:
+        if args.codes:
+            print(', '.join(getch.get_codes()))
+        elif args.string:
+            print(getch.get_string())
+        else:
             print(getch.get_key())
-        except KeyError as e:
-            print(e.message)
+    except KeyError as e:
+        print(e.message)
     return True
 
 
