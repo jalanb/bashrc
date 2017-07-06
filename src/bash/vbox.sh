@@ -1,12 +1,16 @@
 #! /bin/cat
 
 
-v_up () {
+_vm_name () {
     VM_NAME=$(VBoxManage list runningvms | cut -d'"' -f2)
     if [[ -z $VM_NAME ]]; then
         vagrant up
         VM_NAME=$(VBoxManage list runningvms | cut -d'"' -f2)
     fi
+}
+
+v_up () {
+    _vm_name
     vagrant halt
     VBoxManage modifyvm $VM_NAME --natdnshostresolver1 on
     vagrant up
@@ -14,7 +18,8 @@ v_up () {
 }
 
 v_net () {
-    VBoxManage modifyvm dashboard_default_1455031800759_50753 --natdnshostresolver1 on
+    _vm_name
+    VBoxManage modifyvm $VM_NAME --natdnshostresolver1 on
 }
 
 
