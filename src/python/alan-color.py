@@ -6,10 +6,10 @@
     Converted by Vim Colorscheme Converter
 """
 from pygments.style import Style
-from pygments.token import Token, Comment, Name, Keyword, Generic, Number, Operator, String
+from pygments.token import Token, Comment, Name, Keyword, Generic, String
 
 
-class Alan_ColourStyle(Style):
+class AlanColourStyle(Style):
 
     background_color = '#000000'
     styles = {

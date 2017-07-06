@@ -8,6 +8,7 @@ It is not a full mail reader,
 # TODO: "Too many lines in buffer"
 # pylint: disable-msg=C0302
 
+from __future__ import print_statement
 import re
 import sys
 import time
@@ -77,14 +78,14 @@ def peek_body(connection, message_id, header):
         text, extra_text = get_new_payload(part, 'text/plain', text)
         attachments = attachments or extra_html or extra_text
     if html:
-        file(personal.path_in_localhost(mail_html()), 'w').write(html)
+        open(personal.path_in_localhost(mail_html()), 'w').write(html)
     if text:
         return text, bool(html), attachments
     elif html:
         return 'No plain text in message', True, attachments
     else:
         return 'No plain text nor html in message', True, attachments
-    print header
+    print(header)
     pudb.set_trace()
     raise ValueError('No plain text in message')
 
@@ -194,7 +195,7 @@ def sent_by_name(message, name):
 
 
 def sent_by_names(message, names):
-    return any([sent_by_name(message, name) for name in names])
+    return any(sent_by_name(message, name) for name in names)
 
 
 def sent_by_address(message, address):
@@ -203,7 +204,7 @@ def sent_by_address(message, address):
 
 
 def sent_by_addresses(message, addresses):
-    return any([sent_by_address(message, address) for address in addresses])
+    return any(sent_by_address(message, address) for address in addresses)
 
 
 def has_email(addresses, regexp):
@@ -265,20 +266,20 @@ def coloured_text(key, value):
 
 
 def show_heading(value):
-    print coloured_text(heading_prefix(), value)
+    print(coloured_text(heading_prefix(), value))
 
 
 def show_subject(message):
     subject = strip_subject(message)
-    print coloured_text('Subject', subject)
+    print(coloured_text('Subject', subject))
 
 
 def show_from_name(message):
-    print coloured_text('From', first_sender_name(message))
+    print(coloured_text('From', first_sender_name(message)))
 
 
 def show_from_address(message):
-    print coloured_text('From', first_sender_address(message))
+    print(coloured_text('From', first_sender_address(message)))
 
 
 def show_to(message):
@@ -287,21 +288,21 @@ def show_to(message):
         if not addresses:
             continue
         email_addresses = [email_address for _name, email_address in addresses]
-        print coloured_text(address_name.title(), ', '.join(email_addresses))
+        print(coloured_text(address_name.title(), ', '.join(email_addresses)))
 
 
 def show_date(message):
-    print coloured_text('Date', message['date'])
+    print(coloured_text('Date', message['date']))
 
 
 def confirm_reading():
-    print colours.colour_text('Have you read this?', 'red')
+    print(colours.colour_text('Have you read this?', 'red'))
     if get_yes():
         return 'read'
 
 
 def confirm_boring():
-    print colours.colour_text('Have you read this?', 'red')
+    print(colours.colour_text('Have you read this?', 'red'))
     reply = get_reply(' yb')
     if not reply:
         return None
@@ -312,12 +313,12 @@ def confirm_boring():
 
 
 def confirm_forwarding():
-    print colours.colour_text('Forward it?', 'red')
+    print(colours.colour_text('Forward it?', 'red'))
     return get_yes()
 
 
 def ask_about_reading(responses):
-    print colours.colour_text('Have you read this?', 'red')
+    print(colours.colour_text('Have you read this?', 'red'))
     key = get_a_key()
     if key in ' yY':
         return 'read'
@@ -443,7 +444,7 @@ def get_a_key():
 def assigned_to_someone_else(text):
     assign_regexp = re.compile('[aA]ssign(ed|ing) to (?P<assignee>[^ ]+)')
     match = assign_regexp.search(text)
-    return match and 'Alan' != match.groupdict()['assignee'] or False
+    return match and match.groupdict()['assignee'] != 'Alan' or False
 
 
 shown_issues = set()
@@ -454,7 +455,7 @@ def boring_issues_filename():
 
 
 def boring_issues_file(mode='r'):
-    return file(boring_issues_filename(), mode)
+    return open(boring_issues_filename(), mode)
 
 
 def add_boring_issue(issue_id):
@@ -463,7 +464,7 @@ def add_boring_issue(issue_id):
     output = None
     try:
         output = boring_issues_file('a')
-        print >> output, issue_id
+        print(issue_id, file=output)
     finally:
         if output:
             output.close()
@@ -493,7 +494,7 @@ def handle_issue(header, text, issue_id):
         issue = parse_issue(output)
         if personal.personal_name() in issue['assigned to']:
             show_heading('Assigned to me')
-            print output
+            print(output)
             show_date(header)
             show_some(text)
             return confirm_reading()
@@ -503,7 +504,7 @@ def handle_issue(header, text, issue_id):
         return 'Handled: Issue assigned to someone else %s' % issue_id
     if issue_id not in shown_issues:
         if output:
-            print output
+            print(output)
         else:
             show_heading('Issue email')
         shown_issues.add(issue_id)
@@ -603,7 +604,7 @@ def spam_messages():
         if sent_by_addresses(header, senders_of_spam()):
             return True
         spams = [' [fF]ree ', ' career ', ' degree ', ]
-        if any([has_subject_with(header, re.compile(_)) for _ in spams]):
+        if any(has_subject_with(header, re.compile(_)) for _ in spams):
             if sent_to_address(header, personal.employer_email('webmaster')):
                 return True
             if only_sent_to_address(header, personal.spam_recipient()):
@@ -687,9 +688,9 @@ def connect(account):
     server, username, password = credentials()
     try:
         connection = imaplib.IMAP4_SSL(server)
-    except socket.gaierror, e:
-        print >> sys.stderr, e
-        print 'connection unavailable to', server
+    except socket.gaierror as e:
+        print(e, file=sys.stderr)
+        print('connection unavailable to %s' % server)
         sys.exit(2)
     connection.login(username, password)
     return connection, message_functions, read_folder, unread_folder
@@ -706,9 +707,9 @@ def get_method_arguments(method, values):
 
 
 def show_unknown_message(message, text, html):
-    print
+    print()
     show_heading('Unknown message')
-    print
+    print()
     show_message_keys(message)
     show_html(html)
     show_some(text)
@@ -733,10 +734,10 @@ def show_message_keys(message):
     for key in message.keys():
         if key in boring_keys:
             continue
-        if any([key.startswith(s) for s in boring_start_keys]):
+        if any(key.startswith(s) for s in boring_start_keys):
             continue
-        print coloured_text(key, message[key])
-    print
+        print(coloured_text(key, message[key]))
+    print()
 
 
 def is_signature(line):
@@ -766,8 +767,8 @@ def is_signature(line):
 def show_html(html):
     if html:
         message = '    See also %s' % personal.url_in_localhost(mail_html())
-        print colours.colour_text(message, 'cyan')
-        print
+        print(colours.colour_text(message, 'cyan'))
+        print()
 
 
 def show_some(text):
@@ -776,24 +777,24 @@ def show_some(text):
     max_shown_lines = 24
     for line in lines:
         if is_signature(line) or shown_lines > max_shown_lines:
-            print colours.colour_text('-- (strip signature)', 'gray')
+            print(colours.colour_text('-- (strip signature)', 'gray'))
             break
         if line.strip():
-            print line
+            print(line)
             shown_lines += 1
-    print
+    print()
 
 
 def show_all(text):
     for line in text.splitlines():
         if is_signature(line):
             break
-        print line
-    print
+        print(line)
+    print()
 
 
 def clear_screen():
-    print '%s[2J' % chr(27)
+    print('%s[2J' % chr(27))
 
 
 def copy_to_folder(connection, ids, folder):
@@ -845,7 +846,7 @@ def handle_messages(connection, message_functions, wanted_functions):
                     if 'read' == handled:
                         connection.store(message_id, r'+FLAGS', '\\Seen')
                     elif handled.startswith('Handled:'):
-                        print handled
+                        print(handled)
                     read_ids.add(message_id)
                 else:
                     unread_ids.add(message_id)
@@ -867,8 +868,9 @@ def handle_messages(connection, message_functions, wanted_functions):
 def check_family():
 
     def check(header):
-        return any([sent_by(header, family_email)
-                    for family_email in personal.family_emails()])
+        return any(
+            sent_by(header, family_email)
+            for family_email in personal.family_emails())
 
     def handle(header, text, html):
         show_heading(personal.family_name())
@@ -936,7 +938,7 @@ def interesting_lists():
         show_date(header)
         show_html(html)
         if html_viewing_needed(header):
-            print 'View the html'
+            print('View the html')
         else:
             show_all(text)
         return confirm_reading()
@@ -988,7 +990,7 @@ def i_have_logged_in():
         show_date(header)
         show_html(html)
         if html_viewing_needed(header):
-            print 'View the html'
+            print('View the html')
         else:
             show_all(text)
         return confirm_reading()
@@ -1182,9 +1184,9 @@ def read_account(account_method, args):
 
 def show_account_header(account_name):
     clear_screen()
-    print '*' * 80
-    print colours.colour_text('Account:', 'red'), account_name
-    print
+    print('*' * 80)
+    print(colours.colour_text('Account:', 'red'), account_name)
+    print()
 
 
 def main(args):
@@ -1200,7 +1202,7 @@ def main(args):
                 return 0
         if not args:
             show_account_header(account_method.func_name)
-            print colours.colour_text('Read?', 'red')
+            print(colours.colour_text('Read?', 'red'))
             if not get_yes():
                 continue
             read_account(account_method, args)

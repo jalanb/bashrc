@@ -45,7 +45,8 @@ class VimBashScript(object):
     def add(self, line):
         self.lines.append(line)
 
-    def _script_stream(self):
+    @staticmethod
+    def _script_stream():
         #  pylint: disable=no-self-use
         return tempfile.NamedTemporaryFile(
             suffix='-vim.sh',
@@ -294,11 +295,11 @@ def find_vimming_process_command(path_to_file):
         remove_knowns.append(main_script)
     if path_to_file != this_script:
         remove_knowns.append(this_script)
-    remove_knowns = ' -e '.join(remove_knowns)
+    string_knowns = ' -e '.join(remove_knowns)
     find_file = 'grep "vim.*\\s.*%s"' % os.path.basename(path_to_file)
     pipe = ' | '
     get_pids = 'ps -e -o pid,comm,args'
-    return pipe.join([get_pids, remove_knowns, find_file])
+    return pipe.join([get_pids, string_knowns, find_file])
 
 
 def vimming_process(path_to_file):
@@ -371,7 +372,8 @@ def interpret_sys_argv():
     return text_files, options
 
 
-def _main_options(text_files, options):
+def _vim_options(text_files, options):
+    """Get vim's options"""
     plussed = [_ for _ in options if _[0] == '+']
     dashed = [str('-%s' % _) for _ in options if _ not in plussed]
     if len(text_files) > 1 and '-p' not in dashed:
@@ -387,16 +389,17 @@ def _main_command(executable, text_files, options):
     return ' '.join(command_words)
 
 
-def recover_old_swaps(text_file, swaps, script):
+def recover_old_swaps(text_file, swaps, source):
+    """Add commands to recover old vim swap files"""
     if len(swaps) > 1:
-        print >> sys.stderr, 'Too many swaps: %r' % ','.join(swaps)
+        print('Too many swaps: %r' % ','.join(swaps), file=sys.stderr)
         return False
     swap = swaps[0]
-    script.add('pre_vimming "%s" "%s"' % (text_file, swap))
+    source.add('pre_vimming "%s" "%s"' % (text_file, swap))
     return True
 
 
-def vimmable_files(text_files, script):
+def vimmable_files(text_files, source):
     result = []
     for text_file in text_files:
         if text_file in result:
@@ -404,12 +407,11 @@ def vimmable_files(text_files, script):
         pids = vimming(text_file)
         if pids:
             echo = 'echo "A vim process (%s) is running for %s"'
-            _ = [script.add(echo % (pid, text_file)) for pid in pids]
+            _ = [source.add(echo % (pid, text_file)) for pid in pids]
             continue
         swaps = get_swap_files(text_file)
-        if any(swaps):
-            if not recover_old_swaps(text_file, swaps, script):
-                continue
+        if any(swaps) and not recover_old_swaps(text_file, swaps, source):
+            continue
         result.append(text_file)
     return result
 
@@ -433,24 +435,24 @@ def strip_puv(args):
 
 
 def script():
-    script = VimBashScript()
+    source = VimBashScript()
     try:
         text_files, options = interpret_sys_argv()
         if not text_files and not options:
-            script.add('$VIM_EDITOR')
-            print script.write()
+            source.add('$VIM_EDITOR')
+            print(source.write())
             return os.EX_OK
-        vim_files = vimmable_files(text_files, script)
+        vim_files = vimmable_files(text_files, source)
         if vim_files:
-            vim_options = _main_options(text_files, options)
+            vim_options = _vim_options(text_files, options)
             command = _main_command('$VIM_EDITOR', vim_files, vim_options)
-            script.add(command)
+            source.add(command)
             command = _main_command('post_vimming', vim_files, [])
-            script.add(command)
-            print script.write()
+            source.add(command)
+            print(source.write())
         else:
-            print script.write()
-    except (OSError, IOError), e:
-        print >> sys.stderr, e
+            print(source.write())
+    except (OSError, IOError) as e:
+        print(e, file=sys.stderr)
         return os.EX_IOERR
     return os.EX_OK

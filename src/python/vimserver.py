@@ -30,14 +30,16 @@ except ImportError:
     # Python 2
     import SocketServer as socketserver
 
-thesocket = None
+class NameSpace(object):
+    thesocket = None
+
+name_space = NameSpace()
 
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         print("=== socket opened ===")
-        global thesocket  # pylint: disable=global-statement
-        thesocket = self.request
+        name_space.thesocket = self.request
         while True:
             try:
                 data = self.request.recv(4096).decode('utf-8')
@@ -67,7 +69,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                 encoded = json.dumps([decoded[0], response])
                 print("sending {0}".format(encoded))
                 self.request.sendall(encoded.encode('utf-8'))
-        thesocket = None
+        name_space.thesocket = None
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
@@ -93,11 +95,11 @@ if __name__ == "__main__":
         if "quit" in typed:
             print("Goodbye!")
             break
-        if thesocket is None:
+        if name_space.thesocket is None:
             print("No socket yet")
         else:
             print("sending {0}".format(typed))
-            thesocket.sendall(typed.encode('utf-8'))
+            name_space.thesocket.sendall(typed.encode('utf-8'))
 
     server.shutdown()
     server.server_close()

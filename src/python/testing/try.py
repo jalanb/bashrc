@@ -131,7 +131,7 @@ def command_line():
     return options, args
 
 
-class Sys_Path_Handler(object):
+class SysPathHandler(object):
 
     def __init__(self):
         self.paths = []
@@ -291,7 +291,7 @@ def show_interruption(test_script, interruption):
 
 def test():
     """Run all tests"""
-    sys_paths = Sys_Path_Handler()
+    sys_paths = SysPathHandler()
     options, args = command_line()
     messages = ['']
     pwd = os.getcwd()

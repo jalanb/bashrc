@@ -115,8 +115,8 @@ class DoctestMagic(Magics):
             self._test_tries = runner.tries
             self._test_failures = runner.failures
         else:
-            FinderClass = doctest.DocTestFinder
-            finder = FinderClass(verbose=verbose, recurse=False)
+            finder_class = doctest.DocTestFinder
+            finder = finder_class(verbose=verbose, recurse=False)
             for test in finder.find(obj, name, globs=globs):
                 runner.run(test, compileflags=None)
                 self._test_tries += runner.tries
