@@ -59,23 +59,28 @@ vff () {
 # xxxx
 
 fynd () {
-    local _arg_1=$1
-    if [[ $_arg_1 == "-name" ]]; then
+    if [[ "$@" =~ -name ]]; then
         echo "Do not use '-name'" >&2
         shift
     fi
-    local _argc=${#*}
     dir=
+    local _argc=${#*}
     if [[ $_argc > 1 ]]; then
         shift_dir "$@" && shift
     elif [[ -z $dir ]]; then
         dir=$(realpath $(pwd))
     fi
-    local name=$1
-    shift
+    local _debug=$dir
+    local _arg=$1; shift
+    local _type=
+    if [[ $_arg == "-type" ]]; then
+        local _type_type=$1; shift
+        _type="-type $_type_type"
+        _arg=$1; shift
+    fi
     local old_ifs=$IFS
     IFS=";"
-    for FOUND in $(find $(realpath "$dir") -name "$name" -print "$@" | tr '\n' ';')
+    for FOUND in $(find $(realpath "$dir") -name "$_arg" -print "$@" | tr '\n' ';')
     do
         relpath -s $FOUND
     done
