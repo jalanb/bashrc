@@ -237,8 +237,6 @@ glg () {
         _number_of_commits=$1
         shift
     fi
-    # Show full log for quarter of screen
-    git log -n$_number_of_commits --stat --color "$@" | head -n $(( LINES / 4 ))
     # Show one line per commit
     GIT_LOG_LINES=$_number_of_commits _gl lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
 }
