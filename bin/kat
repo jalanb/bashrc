@@ -3,31 +3,40 @@
 
 from __future__ import print_function
 import os
+import re
 import sys
 import argparse
+from functools import partial
 
+from dotsite import args
 from dotsite import text_streams
 
 
 def parse_args():
     """Parse out command line arguments"""
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('files', metavar='files', type=str, nargs='*',
-                        help='files to edit')
-    parser.add_argument('-a', '--at', type=int, default=None,
-                        help='Show line at the line number')
-    parser.add_argument('-c', '--clipboard', action='store_true',
-                        help='Get lines from clipboard')
-    parser.add_argument('-f', '--first', type=int, default=1,
-                        help='number of first line to show')
-    parser.add_argument('-l', '--last', type=int, default=0,
-                        help=' number of last line to show')
-    parser.add_argument('-n', '--numbers', action='store_true',
-                        help='Show line numbers')
-    return parser.parse_args()
+    parser = args.parser(__doc__)
+    parser.strings('files', help='files to edit')
+    parser.num('-a', '--at', default=None, help='Show line at the line number')
+    parser.true('-c', '--clipboard', help='Get lines from clipboard')
+    parser.add('-f', '--first', default="1",
+               help='number/regexp of first line to show')
+    parser.add('-l', '--last', default="0",
+               help='number/regexp of last line to show')
+    parser.true('-n', '--numbers', help='Show line numbers')
+    return parser.parse()
 
 
 def parse_lines(args, lines_read):
+
+    def as_int(string):
+        try:
+            return int(string)
+        except (ValueError, TypeError):
+            matcher = re.compile(string)
+            for i, line in enumerate(lines_read, 1):
+                if matcher.search(line):
+                    return i
+        return 0
 
     def _line(i):
         line = i if i >= 0 else length_read + 1 + i
@@ -37,8 +46,8 @@ def parse_lines(args, lines_read):
 
     def _boundaries():
         if not args.at:
-            last = _line(args.last or -1)
-            first = _line(args.first - 1)
+            last = _line(as_int(args.last) or -1)
+            first = _line(as_int(args.first) - 1)
             return first, last
         first = _line(args.at)
         return first, first + 1
