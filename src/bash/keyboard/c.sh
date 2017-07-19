@@ -35,6 +35,11 @@ cl () {
     cde "$@" && lk
 }
 
+cr () {
+    cde "$@"
+    ranger
+}
+
 cv () {
     kd $1; v $(basename $1)
 }
