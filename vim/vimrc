@@ -79,8 +79,8 @@ nnoremap £ :nnoremap £
  noremap j jzz
  noremap k kzz
 "noremap l - go right
-nnoremap n nzMzvzz
 "noremap m
+nnoremap n nzMzvzz
 "noremap o - open new line
 "noremap p - paste
  noremap q :q<CR>
