@@ -28,6 +28,10 @@ ssu () {
     fi
 }
 
+ssw () {
+    ssu ab13173@$1.wwts.com
+}
+
 # xxxx
 
 _ssh () {
