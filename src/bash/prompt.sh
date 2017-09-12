@@ -29,10 +29,10 @@ get_repo_status () {
             local modified=$(git status --porcelain | wc -l | tr -d ' ')
             local remote="$(\git config --get branch.${branch}.remote 2>/dev/null)"
             local remote_branch="$(\git config --get branch.${branch}.merge)"
-            local pushes=$(git rev-list --count ${remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD)
-            [[ -z $pushes ]] && pushes=0
-            local pulls=$(git rev-list --count HEAD..${remote_branch/refs\/heads/refs\/remotes\/$remote})
-            [[ -z $pulls ]] && pulls=0
+            local pushes=$(git rev-list --count ${remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
+            [[ -z $pushes ]] && pushes=?
+            local pulls=$(git rev-list --count HEAD..${remote_branch/refs\/heads/refs\/remotes\/$remote} 2>/dev/null)
+            [[ -z $pulls ]] && pulls=?
             if [[ $modified == 0 && $pushes == 0 && $pulls == 0 ]]; then
                 GIT_BRANCH=" (${branch})"
             else
