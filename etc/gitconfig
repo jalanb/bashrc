@@ -19,12 +19,14 @@
     co = checkout
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
-    di = difftool -y --extcmd=\"icdiff --line-numbers\"
+    di = difftool -y --extcmd=\"~/hub/icdiff/icdiff --line-numbers\"
+    dm = difftool -y --extcmd=\"~/bin/meld  \"
     dn = diff --name-only
     dv = difftool -y --extcmd=\"vim -d -O\"
     dy = difftool -y --extcmd=\"pydiff\"
     dw = diff --word-diff
     dr = rerere diff
+    ds = diff -b -w --ignore-space-at-eol --ignore-blank-lines
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
@@ -41,9 +43,13 @@
 [push]
     default = simple
 [merge]
-    tool = splice
+    tool = kdiff3
+    conflictstyle = diff3
 [mergetool "splice"]
     cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
+    trustExitCode = true
+[mergetool "kdiff3"]
+    path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
     trustExitCode = true
 [color]
     ui = auto
