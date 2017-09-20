@@ -1,5 +1,6 @@
 " vim:fdm=marker
 
+scriptencoding 'utf-8'
 " My stuff
 "
 " Keyboard {{{1
@@ -297,7 +298,7 @@ set nospell         " Turn off spell checking
 " Enable screen swapping {{{3
 " which seems missing in the linux terminfo entry
 " help xterm-screens for more info
-if &term == "linux"
+if &term ==? 'linux'
     set t_ti=[?1049h
     set t_te=[?1049l
 endif
@@ -375,11 +376,11 @@ function EnterBuffer ()
         " noremap [ <C-T>
         syntax on
     endif
-    let &titlestring = $HOSTNAME . ":vim " . expand("%:p:~")
+    let &titlestring = $HOSTNAME . ':vim ' . expand('%:p:~')
 endfunction
 
 function! LeaveBuffer ()
-    let &titlestring = $HOSTNAME . ":not " . expand("%:p:~")
+    let &titlestring = $HOSTNAME . ':not ' . expand('%:p:~')
 endfunction
 
 autocmd BufEnter * call EnterBuffer()
@@ -388,7 +389,7 @@ autocmd BufLeave * call LeaveBuffer()
 "
 " diff to when I started editting
 "
-if !exists(":DiffOrig")
+if !exists(':DiffOrig')
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 "
@@ -437,7 +438,7 @@ autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= noba
 " From vim help
 set backupdir=~/old
 " Add a date to backup file extension
-:au BufWritePre * let &bex = '-' . strftime("%F.%T") . '~'
+:au BufWritePre * let &bex = '-' . strftime('%F.%T') . '~'
 
 " Unset an option which babun (?) has set
 set noundofile
@@ -536,8 +537,8 @@ function! ReadTraceback(filename)
     :set efm=%E\ \ File\ \"%f\"\\,\ line\ %l%.%#,%C\ \ \ \ %m,%Z
     :map <F11> :cn<cr>zMzvzz
     :map <F10> :cp<cr>zMzvzz
-    exec "cf " . a:filename
-    exec "clast"
+    exec 'cf ' . a:filename
+    exec 'clast'
     normal zv
 endfunction
 "
@@ -548,7 +549,7 @@ set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
 "
 " Make Vim jump to the last position when reopening a file
 "
-    if has("autocmd")
+    if has('autocmd')
       au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
       autocmd FileType text nnoremap s :%s:\$JAB:\~/jab:gc<cr>
     endif
@@ -581,7 +582,7 @@ let g:is_posix = 1
 " Use ranger as a file explorer {{2
 " From http://www.everythingcli.org/use-ranger-as-a-file-explorer-in-vim/
 function RangerExplorer()
-    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+    exec 'silent !ranger --choosefile=/tmp/vim_ranger_current_file ' . expand('%:p:h')
     if filereadable('/tmp/vim_ranger_current_file')
         exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
         call system('rm /tmp/vim_ranger_current_file')
