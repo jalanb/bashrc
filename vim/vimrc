@@ -551,7 +551,6 @@ set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
 "
     if has('autocmd')
       au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-      autocmd FileType text nnoremap s :%s:\$JAB:\~/jab:gc<cr>
     endif
 
 "
