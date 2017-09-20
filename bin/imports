@@ -74,8 +74,8 @@ def script(args):
         modules.extend(show_unused(visitor, stream))
     if args.edit and modules:
         vim = 'vim -p /tmp/imports.txt' if args.tmp else 'vim'
-        print('\n%s %s +/"\(%s\)"' % (
-            vim, visitor.path, r'\)\|\('.join(modules)))
+        print('\n%s %s +/"\<%s\>"' % (
+            vim, visitor.path, r'\>\|\<'.join(modules)))
     return bool(modules)
 
 
