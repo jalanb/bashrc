@@ -1,5 +1,7 @@
 #! /bin/cat -n
 
+Welcome_to $BASH_SOURCE
+
 # all alan"s aliases
 #   as ordered by strcmp()
 
@@ -127,3 +129,5 @@ alias service="sudo /sbin/service "
 alias stopwatch="killall -9 watch"
 
 alias update_hosts="sudo python ~/jab/src/python/update_hosts.py"
+
+Bye_from $BASH_SOURCE

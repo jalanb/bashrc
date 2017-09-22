@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 _trapped="$BASH_SOURCE"
 
 _trace () {
@@ -179,3 +181,5 @@ _assert_source_what () {
     _assert_is_function what
 }
 
+
+Bye_from $BASH_SOURCE

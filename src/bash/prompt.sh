@@ -1,5 +1,7 @@
 #! /bin/cat -n
 
+Welcome_to $BASH_SOURCE
+
 
 export PROMPT_COLOUR=none
 if [[ "$1" == "green" ]]; then
@@ -105,3 +107,4 @@ export PS2="... "  # Continuation line
 export PS3="#?"    # Prompt for select command
 export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
                                                 # Thanks to pyenv for the (ahem) prompt
+Bye_from $BASH_SOURCE

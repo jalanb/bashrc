@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 
 _find_python () {
     [[ -e $PYTHON ]] && return 0
@@ -23,4 +25,6 @@ _run_python () {
         echo $script is not a file >&2
     fi
 }
+
+Bye_from $BASH_SOURCE
 

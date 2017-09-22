@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 clock () {
     while sleep 1
     do
@@ -17,3 +19,5 @@ screen_height () {
 screen_width () {
     tput cols
 }
+
+Bye_from $BASH_SOURCE

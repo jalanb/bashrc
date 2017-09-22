@@ -80,4 +80,4 @@ what_www () {
     fi)
 }
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+Bye_from  $BASH_SOURCE

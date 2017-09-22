@@ -1,4 +1,6 @@
 #! env cat
+
+Welcome_to $BASH_SOURCE
 #
 # $ /Users/jab/Library/Python/2.7/bin/ptpython --help
 # pym: Interactive Python shell.
@@ -83,3 +85,5 @@ pym () {
         --interactive=~/jab/src/python/pym.py \
         -- "$@"
 }
+
+Bye_from $BASH_SOURCE

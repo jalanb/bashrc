@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to ~ on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Welcome to ~/.bashrc on $(hostname -f)
 
 _set_path () {
     LOCAL=/usr/local
@@ -35,4 +35,4 @@ main () {
 # set -x
 [[ $- =~ i ]] && main
 # set +x
-[[ -n $WELCOME_BYE ]] && echo Bye from ~
+[[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)

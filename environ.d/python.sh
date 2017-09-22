@@ -46,7 +46,7 @@ export PYTHON_SOURCE_PATH=~/jab/src/python:~/src/python
 
 # [[ -n $WELCOME_BYE ]] && echo 8
 _upgrade_package () {
-Welcome_to $BASH_SOURCE
+    [[ -n $WELCOME_BYE ]] && echo Welcome to _upgrade_package "$@"
     bg pip2 install --upgrade --retries=1 "$@" 2>&1 >/dev/null 2>&1
     [[ -n $WELCOME_BYE ]] && echo Bye from _upgrade_package "$@"
 }
@@ -63,4 +63,4 @@ upgrades () {
 # [[ -n $WELCOME_BYE ]] && echo 0
 upgrades
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+Bye_from $BASH_SOURCE

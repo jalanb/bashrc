@@ -1,5 +1,7 @@
 #! /bin/bash
 
+Welcome_to $BASH_SOURCE
+
 reuse_path () {
     [[ -n $path && -d "$path" ]] && return 0
     shift_path "$@"
@@ -37,3 +39,5 @@ shift_dir () {
     done
     return 1
 }
+
+Bye_from $BASH_SOURCE

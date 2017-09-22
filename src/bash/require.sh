@@ -1,5 +1,7 @@
 #! /bin/cat -n
 
+Welcome_to $BASH_SOURCE
+
 export REQUIRE_SH=$(realpath $BASH_SOURCE)
 
 _require () {
@@ -90,3 +92,4 @@ require_sh () {
     _require $(_ls_dot_sh $1)
 }
 
+Bye_from $BASH_SOURCE

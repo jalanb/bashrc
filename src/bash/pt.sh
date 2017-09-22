@@ -1,4 +1,7 @@
 #! env cat
+
+Welcome_to $BASH_SOURCE
+
 # $ /Users/jab/Library/Python/2.7/bin/ptpython --help
 # ptpython: Interactive Python shell.
 # Usage:
@@ -36,3 +39,5 @@ pt () {
         --interactive=$HOME/jab/src/python/ptpython.py \
         -- "$@"
 }
+
+Bye_from $BASH_SOURCE

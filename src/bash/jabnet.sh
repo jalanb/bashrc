@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 # x
 # xx
 # xxx
@@ -32,3 +34,5 @@ _ssh () {
     _server=$1
     [[ $(hostname) == $_server ]] || ssh -q -i ~/.ssh/id_jab $_server
 }
+
+Bye_from $BASH_SOURCE

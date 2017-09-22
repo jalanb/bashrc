@@ -26,4 +26,4 @@ _BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/keyboard/__init__.sh
 . $_BASH_DIR/git/__init__.sh
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+Bye_from $BASH_SOURCE

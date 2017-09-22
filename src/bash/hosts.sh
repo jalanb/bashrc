@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 # x
 # xx
 # xxx
@@ -18,3 +20,5 @@ vhosts () {
         +/'Host[a-z]*' \
 
 }
+
+Bye_from $BASH_SOURCE

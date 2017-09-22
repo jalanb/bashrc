@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 _re_source () {
     SRC_BASH=$(realdir $BASH_SOURCE) && export SRC_BASH  # ; echo "SRC_BASH = $SRC_BASH"
     BASH_DIR=$(dirname $SRC_BASH) && export BASH_DIR # ; echo "BASH_DIR = $BASH_DIR"
@@ -54,3 +56,5 @@ rr.. () {
     cd ..
     /bin/rm -rf "$directory_here"
 }
+
+Bye_from $BASH_SOURCE

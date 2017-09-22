@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 # set -e
 
 . ~/jab/bin/first_dir.sh
@@ -1521,3 +1523,5 @@ copy_from_wwts_server () {
     [[ -d "$_here_path" ]] || mkdir -p "$_here_path"
     rsync -av $_server_name:"$_source" "$_here_path"
 }
+
+Bye_from $BASH_SOURCE

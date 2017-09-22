@@ -12,4 +12,5 @@ for _script in $(ls *.sh); do
 done
 popd >/dev/null 2>&1
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+
+Bye_from $BASH_SOURCE
