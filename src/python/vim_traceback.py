@@ -20,6 +20,7 @@ If you prefer to use splits instead of tabs, add the option "-s", e.g
 """
 
 
+from __future__ import print_function
 import re
 import os
 import sys
@@ -43,16 +44,12 @@ def main(args):
     args = [_ for _ in args if _[:2] != '--']
     stream = text_streams.first_argv('-c')
     if not stream:
-        print >> sys.stderr, 'No file specified'
+        print('No file specified', file=sys.stderr)
         return not os.EX_OK
     lines = map(tracebacks.parse_line, text_streams.full_lines(stream))
-    print as_vim_command(lines, '-s' in args)
+    print(as_vim_command(lines, '-s' in args))
     return os.EX_OK
 
 
 if __name__ == '__main__':
-    # try:
     sys.exit(main(sys.argv[1:]))
-    # except (IndexError, AttributeError):
-    #    import pudb
-    #    pudb.post_mortem()

@@ -18,6 +18,7 @@ If you prefer to use splits instead of tabs, add the option "-s", e.g
 """
 
 
+from __future__ import print_function
 import os
 import sys
 
@@ -60,7 +61,7 @@ def add_args(parser):
 def show(lines, args):
     debuggers.break_ere()
     if args.edit:
-        print as_vim_command(lines, '-s' in args)
+        print(as_vim_command(lines, '-s' in args))
         return
     if args.pudb:
         debugger = debuggers.PudbDebugger()
@@ -75,7 +76,7 @@ def script(args):
     """Run the script"""
     stream = text_streams.first_argv('-c')
     if not stream:
-        print >> sys.stderr, 'No file specified'
+        print('No file specified', file=sys.stderr)
         return not os.EX_OK
     lines = map(tracebacks.parse_line, text_streams.full_lines(stream))
     show([_ for _ in lines if _], args)

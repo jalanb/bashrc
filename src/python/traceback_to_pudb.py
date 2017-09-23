@@ -1,6 +1,7 @@
 """Convert a traceback to breakpoint lines for use with pudb"""
 
 
+from __future__ import print_function
 import os
 import sys
 
@@ -94,11 +95,11 @@ def main(_args):
     """Use command line args as files containing tracebacks"""
     streams = text_streams.argvs('-c')
     if not streams:
-        print >> sys.stderr, 'No traceback file specified'
+        print('No traceback file specified', file=sys.stderr)
         return not os.EX_OK
     for stream in streams:
         for line in parse_traceback_lines(text_streams.full_lines(stream)):
-            print 'b', ':'.join(line)
+            print('b', ':'.join(line))
     return os.EX_OK
 
 

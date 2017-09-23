@@ -8,6 +8,7 @@ We also allow for python scripts which have no extension
 """
 
 
+from __future__ import print_function
 import os
 import re
 import sys
@@ -313,7 +314,7 @@ def main():
     except UserMessage as e:
         print >> sys.stderr, e
         return 1
-    print '\n'.join(scripts)
+    print('\n'.join(scripts))
     return 0
 
 

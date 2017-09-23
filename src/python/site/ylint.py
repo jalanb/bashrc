@@ -1,6 +1,7 @@
 """Facilities for handling pylint"""
 
 
+from __future__ import print_function
 import os
 import sys
 
@@ -29,11 +30,11 @@ def disable(number):
 
 def main(args):
     if len(args) == 1:
-        print disable(args[0])
+        print(disable(args[0]))
     else:
         for arg in args:
-            print arg
-            print disable(arg)
+            print(arg)
+            print(disable(arg))
     return os.EX_OK
 
 

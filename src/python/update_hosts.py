@@ -1,5 +1,6 @@
 """A program to update /etc/hosts from our defintions"""
 
+from __future__ import print_function
 import os
 import sys
 
@@ -92,11 +93,11 @@ def write_hosts(lines, path_to_hosts):
     try:
         output = file(path_to_hosts, 'w')
         for line in lines:
-            print >> output, line
+            print(line, file=output)
         output.close()
         return os.EX_OK
     except IOError:
-        print '\n'.join(lines)
+        print('\n'.join(lines))
         return os.EX_NOPERM
 
 

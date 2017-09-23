@@ -1,4 +1,5 @@
 """Methods to handle text files"""
+from __future__ import print_function
 
 
 def backup_with_suffix(filename, suffix):
@@ -13,9 +14,9 @@ def looks_like_this(filename, limits=None, numbers=True, space=' ', tab='\t',
     lines = _look_like_that(lines, limits, count_from, numbers, space, tab, sol)
     for line in lines:
         if eol:
-            print line.replace('\n', eol)
+            print(line.replace('\n', eol))
         else:
-            print line,
+            print(line,)
 
 
 def _limits_to_lines(limits, max_end):

@@ -6,8 +6,11 @@ import os
 import re
 import sys
 from fnmatch import fnmatch
-import commands
 import tempfile
+try:
+    from subprocess import getoutput
+except ImportError:
+    from commands import getoutput
 
 
 from dotsite.lists import de_duplicate
@@ -50,6 +53,7 @@ class VimBashScript(object):
     def _script_stream():
         #  pylint: disable=no-self-use
         return tempfile.NamedTemporaryFile(
+            mode='w',
             suffix='-vim.sh',
             dir=os.path.dirname(os.path.realpath(__file__)),
             delete=False)
@@ -57,7 +61,7 @@ class VimBashScript(object):
     def write(self):
         self.add('rm -f $(readlink -f $0)')
         with self._script_stream() as stream:
-            print >> stream, '\n'.join(self.lines)
+            print('\n'.join(self.lines), file=stream)
             return stream.name
 
 
@@ -250,7 +254,7 @@ def process_cwd(pid):
     True
     """
     command = '/usr/sbin/lsof -a -p %s -d cwd -Fn | grep "^n"' % pid
-    output = commands.getoutput(command)
+    output = getoutput(command)
     directory = output[1:]
     return directory
 
@@ -296,11 +300,11 @@ def find_vimming_process_command(path_to_file):
         remove_knowns.append(main_script)
     if path_to_file != this_script:
         remove_knowns.append(this_script)
-    string_knowns = ' -e '.join(remove_knowns)
+    remove_string = ' -e '.join(remove_knowns)
     find_file = 'grep "vim.*\\s.*%s"' % os.path.basename(path_to_file)
     pipe = ' | '
     get_pids = 'ps -e -o pid,comm,args'
-    return pipe.join([get_pids, string_knowns, find_file])
+    return pipe.join([get_pids, remove_string, find_file])
 
 
 def vimming_process(path_to_file):
@@ -309,7 +313,7 @@ def vimming_process(path_to_file):
     if not filename:
         return []
     command = find_vimming_process_command(path_to_file)
-    output = commands.getoutput(command)
+    output = getoutput(command)
     if not output:
         return []
     result = []

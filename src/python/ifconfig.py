@@ -1,6 +1,7 @@
 """A script to run ifconfig, extract IP addresses"""
 
 
+from __future__ import print_function
 import os
 import re
 import sys
@@ -38,7 +39,7 @@ def main(args):
     lines = run_ifconfig()
     for ip_address in get_ip_addresses(lines):
         if choose(ip_address):
-            print ip_address
+            print(ip_address)
             result = os.EX_OK
     return result
 

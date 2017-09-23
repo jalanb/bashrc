@@ -1,5 +1,6 @@
 """Script to act as a template"""
 
+from __future__ import print_function
 import os
 import sys
 import tarfile
@@ -50,10 +51,10 @@ def remove(tarballs):
     for tarball in tarballs:
         for path in removable_contents(tarball):
             if path.isdir():
-                print 'rm -rf', path
+                print('rm -rf', path)
             else:
-                print 'rm -f', path
-        print 'rm -vf', tarball
+                print('rm -f', path)
+        print('rm -vf', tarball)
 
 
 def main(args):

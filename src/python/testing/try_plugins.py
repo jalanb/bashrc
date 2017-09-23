@@ -1,5 +1,6 @@
 """This module holds plugins for try.py"""
 
+from __future__ import print_function
 
 def pre_test(_path_to_test_file):
     """This method is called before each test has been run
@@ -22,5 +23,5 @@ def check_bash():
         return
     shown = bash.BashOptions.verbosity.shown()
     if shown:
-        print 'bash', ','.join(shown)
+        print('bash', ','.join(shown))
     del bash
