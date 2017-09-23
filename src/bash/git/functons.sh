@@ -260,12 +260,12 @@ gor () {
     go "$@"; gr
 }
 
-god () {
-    go development
-}
-
 gom () {
     go master
+}
+
+gop () {
+    go python3
 }
 
 grc () {
@@ -860,4 +860,8 @@ grep_git_log_for_python_test_file ()
 log_test_file ()
 {
     grep_git_log_for_python_test_file 3
+}
+god () 
+{ 
+    go development
 }
