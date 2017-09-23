@@ -12,7 +12,6 @@ __version__ = '0.1.0'
 
 
 from vim_script import script
-from vim_script import strip_puv
 
 
 class ScriptError(NotImplementedError):
@@ -75,11 +74,6 @@ def main():
         pass
     except SystemExit as e:
         return e.code
-    except Exception as e:  # pylint: disable=broad-except
-        if __version__[0] < '1':
-            raise
-        print(e, sys.stderr)
-        return not os.EX_OK
     return os.EX_OK
 
 

@@ -17,12 +17,8 @@ except ImportError:
 
 def main(args):
     for arg in args:
-        try:
-            if get_significant_status(arg):
-                return os.EX_OK
-        except Exception as e:
-            print("Error for %r:\n\t%r" % (arg, str(e)))
-            return not os.EX_OK
+        if get_significant_status(arg):
+            return os.EX_OK
     return not os.EX_OK
 
 
