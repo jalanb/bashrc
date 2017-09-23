@@ -1,6 +1,23 @@
 #! /usr/bin/env python2.7
-#version 2.11
+#version 2.12
 #author tobyrosen@gmail.com
+"""
+Copyright (c) 2011, Sony Pictures Imageworks
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+OF THE POSSIBILITY OF SUCH DAMAGE.
+"""
+
+
+
 import optparse
 import sys
 import os
@@ -356,10 +373,6 @@ class PypList(list,PypListCustom):
             PypListCustom.__init__(self)
         except AttributeError:
             pass
-
-def _make_rerun_path(pid):
-    return os.path.join('/', tempfile.gettempdir(), 'pyp_rerun_%d.txt' % pid)
-
 class Pyp(object):
     '''
     pyp engine. manipulates input stream using python methods
@@ -1035,7 +1048,7 @@ class Pyp(object):
                     except KeyboardInterrupt:
                         print Colors.RED + "killed by user" + Colors.OFF
                         sys.exit()
-                    except Exception as err:
+                    except Exception, err:
                         self.history[self.n]['error'] = Colors.RED + 'error: ' + str(err) + Colors.OFF, Colors.RED + cmd + Colors.OFF
                         break
                     #totals output for each cm
@@ -1183,7 +1196,7 @@ class Pyp(object):
         except KeyboardInterrupt:
             print Colors.RED + "killed by user" + Colors.OFF
             sys.exit()
-        except Exception as err:
+        except Exception, err:
             print Colors.RED + 'error: ' + str(err) + Colors.OFF, Colors.RED + cmd + Colors.OFF
             sys.exit()
 
@@ -1384,12 +1397,12 @@ class Pyp(object):
             print Docs.unmodified_config
             sys.exit()
 
-        rerun_path = _make_rerun_path(os.getppid())
+        rerun_path = '/%s/pyp_rerun_%d.txt' %(tempfile.gettempdir(),os.getppid())
 
         if options.rerun: #deals with rerunning script with -r flag
             if not os.path.exists(rerun_path):
                 gpid = int(os.popen("ps -p %d -oppid=" % os.getppid()).read().strip())
-                rerun_gpid_path = _make_rerun_path(gpid)
+                rerun_gpid_path = '/%s/pyp_rerun_%d.txt' %(tempfile.gettempdir() ,gpid)
                 if os.path.exists(rerun_gpid_path):
                     rerun_path = rerun_gpid_path
                 else:
@@ -2165,7 +2178,7 @@ if __name__ == '__main__':
 
     try:
         pyp = Pyp().main()
-    except Exception as err:
+    except Exception, err:
         print Colors.RED + str(err) + Colors.OFF
 
 
