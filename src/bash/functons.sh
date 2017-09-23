@@ -159,7 +159,7 @@ fv () {
         if [[ -z $files ]]; then
             echo "$@" not found
         else
-            echo $files | tr ' ' '\n' | sed -e "s:^\./::"
+            echo $files | lines_to_spaces | sed -e "s:^\./::"
             vim -p $files
         fi
     fi
@@ -376,7 +376,7 @@ xe () {
 }
 
 sq () {
-    . ~/src/git/bucket/qaz/src/bash/qazrc
+    . $GIT_BUCKET/qaz/src/bash/qazrc
 }
 
 zm () {
@@ -667,6 +667,10 @@ vfg () {
     vf "$@" +/$_sought
 }
 
+vfh () {
+    vim -p $( $( h1 ) | space_lines ) "$@"
+}
+
 vfr () {
     mython ~/jab/src/python/vim_traceback.py "$@"
 }
@@ -768,10 +772,6 @@ wvp () {
     vim -p ~/hub/pym/pym/edit/ "$@"
 }
 
-wtw () {
-    WELCOME_BYE=$1 . ~/hub/what/what.sh
-}
-
 wvw () {
     vim -p ~/hub/what/what.sh "$@"
 }
@@ -781,6 +781,10 @@ xib () {
 }
 
 # xxxx
+
+bool () {
+    "$@" && echo True || echo False
+}
 
 brew () {
     GIT= /usr/local/bin/brew "$@"
@@ -822,7 +826,7 @@ bump () {
     local _config="$_bump_root/.bumpversion.cfg"
     local _sought=^current_version
     if [[ -n $_show ]]; then
-        grep $_sought $_config | grep --colour '\d[0-9.]\+$'
+        grep $_sought $_config | grep --colour '\d[0-9a-z.]\+$'
     elif [[ -n $_get ]]; then
         grep $_sought $_config | sed -e 's/.*= //'
     else
@@ -872,10 +876,10 @@ mkcd () {
 
 nose () {
     local _progress=
-    nosetests -h | g -q progressive && _progress="--with-progressive"
+    nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
     local _coverage=
-    nosetests -h | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
-    if nosetests -h | g -q stopwatch; then
+    nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
+    if nosetests -h 2>&1 | g -q stopwatch; then
         NOSE_COVER_TESTS= nosetests -A "speed!='slow'" $_coverage $_progress "$@"
     else
         NOSE_COVER_TESTS= nosetests $_coverage $_progress "$@"
@@ -931,7 +935,7 @@ vims () {
 }
 
 vini () {
-    vim -p $(find ~/jab -name __init__.sh | tr '\n' ' ')
+    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
 }
 
 # xxxxx
@@ -1139,8 +1143,10 @@ whiches () {
 }
 
 umports () {
-    reorder-python-imports "$1"
-    ~/jab/bin/imports -ume "$1"
+    for file in "$@"; do
+        reorder-python-imports "$file"
+        python ~/jab/bin/imports -ume "$file"
+    done
 }
 
 # xxxxxxxx
@@ -1274,7 +1280,7 @@ vim_diff () {
     editor_command="vim -d "
     for arg in "$@"
     do
-        [[ $arg =~ -.* ]] && editor_command="$editor_command $arg" && continue
+        [[ $arg =~ ^-.* ]] && editor_command="$editor_command $arg" && continue
         [[ -z $third_file ]] && third_file=$arg
     done
     if ! _any_diff "$first_file" "$second_file" "$third_file"; then
@@ -1291,7 +1297,7 @@ vim_diff () {
 
 # xxxxxxxxxxx
 
-space_lines () {
+lines_to_spaces () {
     tr '\n' ' '
 }
 
@@ -1375,7 +1381,8 @@ console_title_on () {
 show_functons_in ()
 {
     for f in $(grep "^[a-z][a-z_]\+ .. .$" $1  | sed -e "s: .. .$::"); do
-        what -v $f; done | fewer
+        what -v $f
+    done | fewer
 }
 
 # xxxxxxxxxxxxxxxxx
