@@ -2,7 +2,7 @@
 
 set -e
 
-. ~/jab/binfirst_dir.sh
+. ~/jab/bin/first_dir.sh
 
 main () {
     shift_dir "$@" && shift;
