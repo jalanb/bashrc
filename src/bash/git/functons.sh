@@ -94,15 +94,6 @@ gaa () {
     ga .
 }
 
-gac () {
-    local addable=.
-    if [[ -e "$1" ]]; then
-        addable=$1
-        shift
-    fi
-    ga $addable && gi "$@"
-}
-
 gai () {
     ga --patch "$@"
 }
@@ -250,6 +241,10 @@ gmm () {
 
 gob () {
     go -b "$@"
+}
+
+god () {
+    go development
 }
 
 gog () {
@@ -503,6 +498,15 @@ _gbd () {
         return 0
     fi
     git branch "$@"
+}
+
+gaai () {
+    local addable=.
+    if [[ -e "$1" ]]; then
+        addable=$1
+        shift
+    fi
+    ga $addable && gi "$@"
 }
 
 gbdr () {
@@ -860,8 +864,4 @@ grep_git_log_for_python_test_file ()
 log_test_file ()
 {
     grep_git_log_for_python_test_file 3
-}
-god () 
-{ 
-    go development
 }
