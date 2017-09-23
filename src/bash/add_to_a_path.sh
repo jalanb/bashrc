@@ -4,12 +4,6 @@
 # See also ./add_to_path.py and ./add_to_path.test
 #
 
-if [[ $0 == $BASH_SOURCE ]]; then
-    echo "This file should be run as"
-    echo "  source $0"
-    echo "and should not be run as"
-    echo "  sh $0"
-fi
 #
 # Gonna need python
 #
@@ -61,23 +55,9 @@ show_a_path () {
 }
 
 show_path () {
-    show_a_path PATH $*
+    show_a_path PATH "$@"
 }
 
 show_ppath () {
-    show_a_path PYTHONPATH $*
-}
-
-debug_show_a_path () {
-    if [[ $DEBUG_PATHS == "yes" ]]; then
-        show_a_path $*
-    fi
-}
-
-debug_show_path () {
-    debug_show_a_path PATH $*
-}
-
-debug_show_ppath () {
-    debug_show_a_path PYTHONPATH $*
+    show_a_path PYTHONPATH "$@"
 }

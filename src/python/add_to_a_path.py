@@ -44,22 +44,12 @@ class ScriptError(NotImplementedError):
     pass
 
 
-def run_args(args, methods):
-    """Run any methods eponymous with args"""
-    if not args:
-        return False
-    valuable_args = {k for k, v in args.__dict__.items() if v}
-    arg_methods = {methods[a] for a in valuable_args if a in methods}
-    for method in arg_methods:
-        method(args)
-
-
-def version(args):
+def version():
     print('%s %s' % (args, __version__))
     raise SystemExit
 
 
-def parse_args(methods):
+def parse_args():
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('symbol', help='The bash symbol to be changed')
@@ -71,12 +61,13 @@ def parse_args(methods):
     parser.add_argument('-v', '--version', action='store_true',
                         help='Show version')
     args = parser.parse_args()
+    if args.version:
+        version()
     if not args.index:
         if args.start:
             args.index = 0
         else:
             args.index = False
-    run_args(args, methods)
     return args
 
 
@@ -139,7 +130,7 @@ def script(args):
 def main():
     """Run the script"""
     try:
-        args = parse_args(globals())
+        args = parse_args()
         return os.EX_OK if script(args) else not os.EX_OK
     except (SystemExit, BdbQuit):
         pass

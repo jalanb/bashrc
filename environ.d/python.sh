@@ -35,7 +35,7 @@ export TRY=$_try
 
 # [[ -n $WELCOME_BYE ]] && echo 6
 source_path ~/jab/environ.d/jab.sh
-source_path ~/jab/bin/add_to_a_path.sh
+source_path ~/jab/src/bash/add_to_a_path.sh
 
 # [[ -n $WELCOME_BYE ]] && echo 7
 [[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
