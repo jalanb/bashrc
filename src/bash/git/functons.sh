@@ -48,12 +48,12 @@ gi () {
 }
 
 gl () {
-    gl11 "$@"
+    git log "$@"
 }
 
 go () {
     local __doc__="git out"
-    git checkout "$@"
+    git checkout -q "$@"
 }
 
 gp () {
@@ -88,22 +88,6 @@ tc () {
 
 aga () {
     git reset HEAD "$@"
-}
-
-gob () {
-    go -b "$@"
-}
-
-gog () {
-    go "$@"; glg
-}
-
-gor () {
-    go "$@"; gr
-}
-
-grg () {
-    gr; glg
 }
 
 gaa () {
@@ -141,11 +125,11 @@ gbb () {
 }
 
 gbd () {
-    git branch -d "$@"
+    _gbd -d "$@"
 }
 
 gbD () {
-    git branch -D "$@"
+    _gbd -D "$@"
 }
 
 gbo () {
@@ -212,53 +196,62 @@ gfa () {
     git fetch --all
 }
 
-_gl () {
-    local cmd=$1
-    shift
-    local _vertical_lines=${LINES:-$(screen_height)}
-    local _one_third_of_vertical=$(( $_vertical_lines / 4 ))
-    local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
-    git $cmd "$@" | head -n $_lines
+gff () {
+    gfa
+    grup
 }
 
-
 gl1 () {
-    git log -n1 "$@"
+    gl -n1 "$@"
 }
 
 gla () {
-    _gl lg --author=Alan.Brogan "$@"
+    git_on_screen lg --author=Alan.Brogan "$@"
 }
 
 glg () {
     local _number_of_commits=7
-    #if [[ $1 =~ [[:digit:]] && $1 !~ [[:alpha:]] ]]; then
     if [[ $1 =~ ^-?[0-9]+$ ]]; then
         _number_of_commits=$1
         shift
     fi
-    # Show one line per commit
-    GIT_LOG_LINES=$_number_of_commits _gl lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+    GIT_LOG_LINES=$_number_of_commits git_on_screen lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 
 gln () {
-    _gl lg --name-only "$@"
+    git_on_screen lg --name-only "$@"
 }
 
 glp () {
-    git log -p "$@"
+    gl -p "$@"
 }
 
 gls () {
-    _gl log --stat "$@"
+    git_on_screen log --stat "$@"
 }
 
 glt () {
-    _gl lt "$@"
+    git_on_screen lt "$@"
+}
+
+gma () {
+    git merge --abort
 }
 
 gmm () {
     git merge master
+}
+
+gob () {
+    go -b "$@"
+}
+
+gog () {
+    go "$@"; glg; bump show
+}
+
+gor () {
+    go "$@"; gr
 }
 
 god () {
@@ -273,11 +266,29 @@ grc () {
     git rebase --continue
 }
 
+grg () {
+    gr; glg
+}
+
+gro () {
+    local _origin=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
+    if [[ -n $_origin ]]; then
+        echo $_origin
+        return 0
+    fi
+    echo No origin >&2
+    return 1
+}
+
 grp () {
     echo "Pull"
     grr "$@"
     read -p "Push? [Y]" reply
     [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpp "$@"
+}
+
+gpf () {
+    gp --force "$@"
 }
 
 gpp () {
@@ -396,6 +407,7 @@ gsi () {
 }
 
 gta () {
+    [[ -z $1 ]] && return ValueError
     gt "$@"
 }
 
@@ -460,6 +472,33 @@ _gvi_response () {
 
 # xxxx
 
+_gbd () {
+    local _current_branch=$(git_branch)
+    if [[ "$@" =~ $_current_branch ]]; then
+        if [[ "$@" =~ "master" ]]; then
+            echo Please checkout another branch before deleting master >&2
+            return 1
+        else
+            gom
+        fi
+    elif [[ "$@" =~ ^-[dD]$ ]]; then
+        if [[ $_current_branch == "master" ]]; then
+            echo Please checkout another branch before deleting master >&2
+            return 1
+        fi
+        read -p "OK to remove $_current_branch [y]? " -n1 answer
+        if [[ -z $answer || $answer =~ [yY] ]]; then
+            if git status 2>&1 | grep -q git.merge...abort; then
+                git merge --abort
+            fi
+            git checkout -q master
+            git branch "$@" $_current_branch
+        fi
+        return 0
+    fi
+    git branch "$@"
+}
+
 gbdr () {
     git push origin --delete $1
 }
@@ -486,6 +525,10 @@ gomr () {
 
 gcpa () {
     git cherry-pick --abort
+}
+
+gcpe () {
+    git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
 }
 
 gcpc () {
@@ -521,7 +564,24 @@ gffr () {
 }
 
 gl11 () {
-    gl1 --oneline "$@"
+    if [[ -n $1 ]]; then
+        for commit in "$@"; do
+            gl1 --oneline $commit
+        done
+    else
+        gl1 --oneline
+    fi
+}
+
+glgs () {
+    local _number_of_commits=7
+    if [[ $1 =~ ^-?[0-9]+$ ]]; then
+        _number_of_commits=$1
+        shift
+    fi
+    for branch in "$@"; do
+        glg $_number_of_commits $branch
+    done
 }
 
 glp1 () {
@@ -529,7 +589,7 @@ glp1 () {
 }
 
 gls1 () {
-    gls -n1 "$@"
+    GIT_LOG_LINES=31 gls -n1 "$@"
 }
 
 gmmm () {
@@ -570,6 +630,11 @@ clone () {
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
         ranger .
     fi
+}
+
+glone () {
+    local __doc__="""pronounced 'g l one', because 'gl1' was taken"""
+    gl --oneline "$@"
 }
 
 # xxxxxx
@@ -663,6 +728,14 @@ _run_storage () {
 }
 
 # xxxxxxxxxxxxx
+
+git_on_screen () {
+    local cmd=$1; shift
+    local _vertical_lines=${LINES:-$(screen_height)}
+    local _one_third_of_vertical=$(( $_vertical_lines / 4 ))
+    local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
+    git $cmd --color "$@" | head -n $_lines
+}
 
 untracked () {
     (-d "$1" && gssd "$1" || _status_line "$1") | grep "??" | cut -d' ' -f2
@@ -768,14 +841,14 @@ _show_run_storage () {
 _call_me_alan () {
     sed \
         -e "s/.*al-got-rhythm.net/jalanb/" \
-        -e "s/.*wwts.com/Alan Brogan/" \
+        -e "s/.*@wwts.com/Alan Brogan/" \
         -e "s/J Alan Brogan/Alan/"
 }
 
 grep_git_log_for_python_test_file ()
 {
     local _number=$1; shift;
-    git log --stat -n $_number | grep test_[a-z_]*.py | sed -e "s/\.py .*/.py/"
+    gl --stat -n $_number | grep test_[a-z_]*.py | sed -e "s/\.py .*/.py/"
 }
 
 log_test_file ()
