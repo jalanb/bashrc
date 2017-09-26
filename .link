@@ -49,37 +49,36 @@ back_into_home () {
 
 links_into_home () {
     cd $HOME
-    vim_clone_to_home etc/gitconfig             .gitconfig
-    vim_clone_to_home etc/gitignore_global      .gitignore_global
-    vim_clone_to_home src/bash/bashrc           .bashrc
-    vim_clone_to_home src/bash/bash_profile     .bash_profile
-    vim_clone_to_home src/python/pythonrc.py    .pythonrc.py
-    vim_clone_to_home vim/vimrc                 .vimrc
-    link_clone_to_home etc/ackrc                .ackrc
-    link_clone_to_home etc/dir_colors           .dir_colors
-    link_clone_to_home etc/editrc               .editrc
-    link_clone_to_home etc/inputrc              .inputrc
-    link_clone_to_home etc/pylintrc             .pylintrc
-    link_clone_to_home etc/sackrc               .sackrc
-    link_clone_to_home etc/tigrc                .tigrc
-    link_clone_to_home etc/tmux                 .tmux.conf
-    link_clone_to_home etc/xonshrc              .xonshrc
-    link_clone_to_home ipython/                 .ipython
-    link_clone_to_home vim                      .vim
-    link_clone_to_home vim/gvimrc               .gvimrc
-    link_clone_to_home vim/vimpagerrc           .vimpagerrc
+    vim_clone_to_home home/gitconfig             .gitconfig
+    vim_clone_to_home home/gitignore_global      .gitignore_global
+    vim_clone_to_home home/bashprofile           .bash_profile
+    vim_clone_to_home home/bashrc                .bashrc
+    vim_clone_to_home home/vimrc                 .vimrc
+    link_clone_to_home home/ackrc                .ackrc
+    link_clone_to_home home/editrc               .editrc
+    link_clone_to_home home/inputrc              .inputrc
+    link_clone_to_home home/sackrc               .sackrc
+    link_clone_to_home home/tmuxrc               .tmux.conf
+    link_clone_to_home home/xonshrc              .xonshrc
+    link_clone_to_home home/gvimrc               .gvimrc
+    link_clone_to_home home/dir_colors           .dir_colors
+    link_clone_to_home home/vim                  .vim
 
     link_into_home ~/src/git/hub        hub
     link_into_home ~/jab/src/bash       bash
+
+    vim_clone_to_home home/pythonrc.py           .pythonrc.py
+    link_clone_to_home home/pylintrc             .pylintrc
+    link_clone_to_home home/ipython              .ipython
     link_into_home ~/jab/src/python     python
 }
 
 renew_clone_link () {
     local script_file=$(readlink -f $BASH_SOURCE)
-    local script_name=$(basename $script_file)
     local clone_dir=$(dirname $script_file)
           clone_name=$(basename $clone_dir)
           clone_link=~/$clone_name
+    local script_name=$(basename $script_file)
     local linked_script=$clone_link/$script_name
     if [[ ! -d $clone_dir/.git ]]; then
         echo $clone_dir/.git is not a directory

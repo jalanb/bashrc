@@ -1332,6 +1332,11 @@ one_two_three () {
     lk $(ls1 -p | g -v "\(pyc\|/\)$")
 }
 
+insert_commas () {
+    # From http://shallowsky.com/blog/linux/cmdline/sed-improve-comma-insertion.html
+    sed ':a;s/\b\([0-9]\+\)\([0-9]\{3\}\)\b/\1,\2/;ta'
+}
+
 sudo_default () {
     sudo_ssh default "$@"
 }
