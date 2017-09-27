@@ -61,10 +61,9 @@ prompt_command () {
     fi
     changes=0
     # set -x
-    local _endir="$(mython ~/jab/bin/endiron -x OLDPWD PWD JAB_SSH -- "${PWD}")"
-    local Dir="${_endir/\$/\\$}"
-    [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_endir/\$/\\$}${PROMPT_COLOUR}"
-    #local _endir="$PWD"
+    local _short_dir="$(mython ~/jab/bin/short_dir "${PWD}")"
+    local Dir="${_short_dir}"
+    [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_short_dir}${PROMPT_COLOUR}"
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
     Dir="${Dir}${GIT_BRANCH}"
     # set +x
@@ -76,11 +75,6 @@ prompt_command () {
     local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)
     if [[ -n "$VIRTUAL_ENV" ]]; then
         python_version=${python_version}.$(basename $VIRTUAL_ENV)
-    elif pyenv version >/dev/null 2>&1; then
-        local _pyenv_version=$(pyenv version | cut -d' ' -f1)
-        if [[ $_pyenv_version != "system" ]]; then
-            python_version=$_pyenv_version
-        fi
     fi
     export PS1="$STATUS ${PROMPT_COLOUR}\
 [\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]\
