@@ -363,6 +363,13 @@ _git_untracked () {
     [[ $(_status_chars $1) == "??" ]]
 }
 
+_gxi_stash () {
+    if [[ -z $_stashed ]]; then
+        _stashed=gxi
+        git stash
+    fi
+}
+
 _gsi_drop () {
     if [[ $answer =~ [rR] ]]; then
         _git_modified "$1" && go "$1"
@@ -419,6 +426,7 @@ gvi () {
 gxi () {
     local _gxi_show_file=$1; shift
     local _gxi_response=$1; shift
+    _stashed=
     shift_dir "$@" || shift
     while git status -s "$dir"; do
         for f in $(gssd_changes "$dir"); do
@@ -428,10 +436,12 @@ gxi () {
             $_gxi_response "$f"
         done
         [[ $answer =~ [qQ] ]] && break
+        [[ $answer =~ [sS] ]] && _gxi_stash
         gi
         git status -v | g -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
     done
+    [[ -n $_stashed ]] && git stash pop
 }
 
 gvsd () {
@@ -696,13 +706,14 @@ _gxi_menu () {
     suffix=", "
     red_one q uit
     red_one a dd
-    red_one c ommit
+    red_one s tash
     _git_modified $1 && red_one d iff
-    _git_modified $1 && red_one i nteractive
-    _git_modified $1 && red_one p atch
     red_two d r op
     [[ -n $GIT_ADDED ]] && red_one f asten
+    red_one c ommit
     red_one v im
+    _git_modified $1 && red_one i nteractive
+    _git_modified $1 && red_one p atch
     suffix=";"
     red_one hjkl " move"
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
