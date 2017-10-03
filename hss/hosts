@@ -38,6 +38,12 @@ Host gitlab twkgit20
     Hostname 172.25.1.219
     User ab13173
 
+Host builder
+    Hostname 172.25.1.219
+    User builder
+    IdentityFile ~/.ssh/builder.key
+    
+
 Host wwits
     Hostname 172.25.3.126
     User ab13173
