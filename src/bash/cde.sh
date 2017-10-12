@@ -54,7 +54,7 @@ cde_git () {
 
 any_python_scripts_here () {
     local _found=$(find . -type f -name "*.py" -exec echo 1 \; -quit)
-    [[ $_found == 1 ]]
+    [[ $_found == 1 ]] && rf -qpr
 }
 
 python_project_here () {
