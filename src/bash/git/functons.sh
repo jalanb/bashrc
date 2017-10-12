@@ -191,6 +191,7 @@ gdv () {
 
 gfa () {
     git fetch --all
+    git fetch --tags
 }
 
 gff () {
