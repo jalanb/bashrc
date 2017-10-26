@@ -21,6 +21,7 @@ def parse_args():
     parser.add('-l', '--last', default="0",
                help='number/regexp of last line to show')
     parser.true('-n', '--numbers', help='Show line numbers')
+    parser.num('-w', '--width', help='Max width of shown line')
     return parser.parse_args()
 
 
@@ -72,6 +73,8 @@ def show_stream(stream, args):
         if args.numbers:
             prefix = line_format_ % (i + 1)
         out = ' '.join((prefix, line.rstrip()))
+        if args.width:
+            out = out[:args.width]
         print(out)
 
 
