@@ -22,19 +22,19 @@ cls () {
     fi
 }
 
-_pre_cde () {
+_pre_kd () {
     [[ -z $CDE_header ]] && return
     echo $CDE_header
 }
 
 cde () {
     local __doc__="cd to a dir, show the dir"
-    _pre_cde
+    _pre_kd
     KD_QUIET=1 kd "$@" || return 1
-    _post_cde
+    _post_kd
 }
 
-_post_cde () {
+_post_kd () {
     _show_todo_here && echo
     # set -x
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
@@ -44,7 +44,9 @@ _post_cde () {
     cde_git  && cde_python
 }
 
-cde_git () {
+# xxxxxxxxxxxx
+
+_post_kd_git () {
     [[ -d ./.git ]] || return 1
     show_version_here
     git_simple_status $(pwd) || lk
