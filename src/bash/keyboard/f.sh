@@ -2,7 +2,6 @@
 
 # . ~/jab/src/bash/f.sh
 
-# ffff may be defined in f.sh
 
 # x
 

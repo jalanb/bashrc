@@ -2,7 +2,6 @@
 
 . ~/jab/src/bash/cde.sh
 
-# cccc may be defined in cde.sh
 
 # x
 

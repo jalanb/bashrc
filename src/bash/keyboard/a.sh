@@ -1,29 +1,22 @@
 #! /bin/cat
 
-# x
 # _
-# xx
+# x
 # _x
-# xxx
-# _xx
-
-# . ~/jab/src/bash/all_abored.sh
-
-# aaa may be defined in all_abored.sh
+# xx
 
 #! /bin/cat
 
-# x
-# _
 . ~/hub/ack2vim/ack2vim.sh
 
 # a is defined in ack2vim.sh
 
-# xx
 # _x
+# xx
 
-# aa is defined in ack2vim.sh
+# aa is in ack2vim.sh
 
+# _xx
 
 _av () {
     (cd $1; vack "$@")
@@ -31,7 +24,7 @@ _av () {
 
 # xxx
 
-# aaa is defined in ack2vim.sh
+# aaa also ack2vim.sh
 
 avb () {
     __doc__="vack all args in ~/jab/src/bash";
