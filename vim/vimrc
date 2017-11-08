@@ -111,6 +111,7 @@ cnoremap w!! w !sudo tee %
  noremap zN NzMzvzz
  noremap z/ /<cr>zMzvzz
  noremap z? ?<cr>zMzvzz
+ noremap zs jzck
  noremap zx jzO
 "
 " Punctuation {{{3
