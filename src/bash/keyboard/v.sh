@@ -1,28 +1,15 @@
 #! /bin/cat
 
 
-# =======
-# v () {
-#     vim -p "$@"
-# }
-# 
-# 
-# vv () {
-#     local __doc__="Edit vim files"
-#     [[ -n $* ]] && vu || vva "$@"
-# }
-# 
-# vvv () {
-#     [[ -n $* ]] && vva "$@" || vva .
-# }
-# 
-# >>>>>>> l and v join the initially elusive scripts
-
 # x
 
 v () {
     [[ -z $1 ]] && vim_none || vim_some "$@"
 }
+# v () {
+#     vim -p "$@"
+# }
+# 
 
 # xx
 
@@ -54,6 +41,11 @@ vv () {
     local __doc__="Edit vim files"
     [[ -z $* ]] && vvu || vvv "$@"
 }
+# vv () {
+#     local __doc__="Edit vim files"
+#     [[ -n $* ]] && vu || vva "$@"
+# }
+# 
 
 # xxx
 
@@ -94,6 +86,7 @@ vvv () {
     vim -p "$@"
     gsi)
 }
+
 # xxxx
 
 hd12 () {
