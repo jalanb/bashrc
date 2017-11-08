@@ -290,7 +290,7 @@ grp () {
 }
 
 gpf () {
-    gp --force "$@"
+    git push --force "$@"
 }
 
 gpp () {
