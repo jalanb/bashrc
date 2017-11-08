@@ -306,7 +306,9 @@ py () {
 }
 
 ra () {
-    ranger $(kpp "$@")
+    local _path=$(kpp "$@")
+    cde $_path
+    ranger $_path
 }
 
 ru () {
