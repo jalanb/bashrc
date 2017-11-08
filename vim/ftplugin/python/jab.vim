@@ -6,7 +6,7 @@ let g:loaded_jab_python = "v001"
 noremap } :cn<cr>
 noremap { :cp<cr>
 
-noremap D Oimport pudb; pudb.set_trace()<esc>j
+noremap D Oimport pudb; pudb.set_trace()  # pylint: disable=multiple-statements<esc>j
 noremap tf :Fix<cr>
 noremap tm :Mash<cr>
 noremap tt :MashTry<cr>
