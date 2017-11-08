@@ -448,6 +448,8 @@ hub () {
     if [[ -d "$_dest" ]]; then
         echo cde "$_dest"
         cde "$_dest"
+        local _clipboard=$( pbpaste )
+        [[ $_clipboard =~ http ]] && clone $_clipboard
     else
         "$@"
     fi
@@ -836,6 +838,10 @@ bump () {
     fi
 }
 
+copy () {
+    pbcopy
+    echo "# $(pbpaste)"
+}
 
 dots () {
     cde ~/hub/dotsite/dotsite
@@ -994,6 +1000,15 @@ LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }
 
+paste () {
+    if [[ -z "$*" ]]; then
+        echo "$ $(pbpaste)"
+        $(pbpaste)
+    else
+        echo "# $(pbpaste)"
+    fi
+}
+
 ptags () {
     local _source="$1"
     [[ -n $_source ]] || _source="."
@@ -1130,7 +1145,6 @@ run_as () {
 has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | hd1) ]]
 }
-
 
 pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
