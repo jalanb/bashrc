@@ -39,13 +39,13 @@ nnoremap = /<cr>zvzz
 nnoremap - ?<cr>zvzz
 "noremap 0 *
 nnoremap 9 *zvzz
-"noremap 8 
-"noremap 7 
-"noremap 6 
-"noremap 5 
-"noremap 4 
-"noremap 3 
-"noremap 2 
+"noremap 8
+"noremap 7
+"noremap 6
+"noremap 5
+"noremap 4
+"noremap 3
+"noremap 2
 nnoremap 1 #zvzz
 nnoremap § ?
 inoremap § <esc>
@@ -54,18 +54,18 @@ inoremap § <esc>
 "
 "noremap <S-bs> doesn't work
 nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx
-nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx 
+nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx
 nnoremap ) %
-"noremap ( 
-"noremap * 
+"noremap (
+"noremap *
 nnoremap & J
 "nnoremap ^
 "noremap % goto matching bracket
 "noremap $ goto EOL
-nnoremap £ :nnoremap £ 
+nnoremap £ :nnoremap £
 "noremap @ execute contents of register
 "noremap ! shell
-"noremap ± 
+"noremap ±
 "
 " letters {{{3
 "
