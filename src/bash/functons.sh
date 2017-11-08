@@ -368,15 +368,6 @@ vy () {
     v $(ls *.py | grep -v '__*.py*')
 }
 
-xe () {
-    local amount=$1
-    local from=USD
-    [[ -n $2 ]] && from=$2
-    local to=EUR
-    [[ -n $3 ]] && to=$3
-    curl "http://www.xe.com/wap/2co/convert.cgi?Amount=$amount&From=$from&To=$to" -A "Mozilla" -s | sed -n "s/.*>\(.*\) $to<.*/\1/p";
-}
-
 sq () {
     . $GIT_BUCKET/qaz/src/bash/qazrc
 }
