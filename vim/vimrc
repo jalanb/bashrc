@@ -35,8 +35,8 @@ nnoremap <C-F4>     <C-W>c
 " number row {{{3
 "
 nnoremap <bs> /
-nnoremap = /<cr>zvzz
-nnoremap - ?<cr>zvzz
+nnoremap = /<cr>zvzzzx
+nnoremap - ?<cr>zvzzzx
 "noremap 0 *
 nnoremap 9 *zvzz
 "noremap 8
