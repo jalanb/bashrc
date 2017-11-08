@@ -37,22 +37,54 @@ cde () {
 _post_kd () {
     _show_todo_here && echo
     # set -x
-    show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
+    _post_kd_bash
+    _post_kd_git  && _post_kd_python && _post_kd_venv
+    _post_kd_show  # see also _post_kd_git
     # set +x
-    # Try pyenv instead
-    activate_ancestor_virtualenv_hence
-    cde_git  && cde_python
 }
 
 # xxxxxxxxxxxx
 
 _post_kd_git () {
     [[ -d ./.git ]] || return 1
+    show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
+    local _branch=$(git rev-parse --abbrev-ref HEAD)
+    echo $_branch
+    git_simple_status .
     show_version_here
-    git_simple_status $(pwd) || lk
 }
-# _xx
-# xxxx
+
+# xxxxxxxxxxxxx
+
+_post_kd_bash () {
+    local __doc__="""LOok for __init__.sh here or below and source it if found"""
+    local _init=./__init__.sh
+    [[ -f $_init ]] || _init=bash/__init__.sh
+    [[ -f $_init ]] || _init=src/bash/__init__.sh
+    [[ -f $_init ]] && . $_init
+}
+
+_post_kd_show () {
+    l
+}
+
+_post_kd_venv () {
+    # set -x
+    local _venvs=$HOME/.virtualenvs
+    [[ -d $_venvs ]] || return 1
+    local _here=$(realpath $(pwd))
+    local _venvs_path=$_venvs/$(basename $_here)
+    local _path=$_here
+    while [[ ! -d "$_venvs_path" ]]; do
+        [[ -z $_path || $_path == "/" || $_path == $HOME ]] && return 1
+        _path=$(dirname $_path)
+        _venvs_path=$_venvs/$(basename $_path)
+    done
+    local _venv_activate="$_venvs_path/bin/activate"
+    [[ -f $_venv_activate ]] || return 1
+    . $_venv_activate 
+    # set +x
+}
 
 any_python_scripts_here () {
     local _found=$(find . -type f -name "*.py" -exec echo 1 \; -quit)
@@ -61,17 +93,6 @@ any_python_scripts_here () {
 
 python_project_here () {
     [[ -f setup.py || -d ./$_dir_name ]]
-}
-
-cde_python () {
-    any_python_scripts_here || return 0
-    python_project_here || return 0
-    local _dir=$(realpath .)
-    local _dir_name=$(basename $_dir)
-    local egg_info=${_dir_name}.egg-info
-    if [[ -d $egg_info ]]; then
-        ri $egg_info
-    fi
 }
 
 # _xxxx
@@ -86,6 +107,17 @@ cccde () {
 
 # xxxxxxxxxxxxxxx
 
+_post_kd_python () {
+    any_python_scripts_here || return 0
+    python_project_here || return 0
+    local _dir=$(realpath .)
+    local _dir_name=$(basename $_dir)
+    local egg_info=${_dir_name}.egg-info
+    if [[ -d $egg_info ]]; then
+        ri $egg_info
+    fi
+}
+
 _show_todo_here () {
     if [[ -f todo.txt ]]; then
         todo_show
@@ -93,7 +125,6 @@ _show_todo_here () {
     fi
     return 1
 }
-
 # xxxxxxxxxxxxxxxxx
 
 show_version_here () {
@@ -112,19 +143,3 @@ show_version_here () {
 }
 
 # xxxxxxxxxxxxxxxxxxx
-
-activate_ancestor_virtualenv_hence () {
-    local _venvs=$HOME/.virtualenvs
-    [[ -d $_venvs ]] || return 1
-    local _here=$(realpath $(pwd))
-    local _venvs_path=$_venvs/$(basename $_here)
-    local _path=$_here
-    while [[ ! -d "$_venvs_path" ]]; do
-        [[ -z $_path || $_path == "/" || $_path == $HOME ]] && return 1
-        _path=$(dirname $_path)
-        _venvs_path=$_venvs/$(basename $_path)
-    done
-    local _venv_activate="$_venvs_path/bin/activate"
-    [[ -f $_venv_activate ]] || return 1
-    . $_venv_activate 
-}
