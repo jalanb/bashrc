@@ -10,14 +10,17 @@ scriptencoding 'utf-8'
  noremap  <F1>      :help<cr>
  noremap  <F2>      :ls<CR>:b<Space>
  noremap  <F3>      :map <F3>
+inoremap  <F3>      <esc>:w!<CR>
  noremap  <F4>      <c-w>w
  noremap  <F5>      <C-W>_
  noremap  <F6>      :map <F6>
  noremap  <F7>      :set list!<CR>
  noremap  <F8>      O<esc>:w!<CR>:Limelight<cr>
  noremap  <F9>      :w!<CR>:Limelight<cr>
+ noremap  <F9>      :map <F9>
 inoremap  <F9>      <esc>:w!<CR>
  noremap <F10>      :map <F10>
+ noremap <F10>      k\mdndnddn.
  noremap <F11>      :map <F11>
  noremap <F12>      :map <F12>
 
