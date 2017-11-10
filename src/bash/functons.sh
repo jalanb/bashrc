@@ -435,15 +435,21 @@ hed () {
 }
 
 hub () {
-    local _dest=$(kp ~/hub "$@")
-    if [[ -d "$_dest" ]]; then
-        echo cde "$_dest"
-        cde "$_dest"
-        local _clipboard=$( pbpaste )
-        [[ $_clipboard =~ http ]] && clone $_clipboard
-    else
-        "$@"
+    local _remote=
+    local _clipboard=$( pbpaste ); [[ $_clipboard =~ http ]] && _remote=$_clipboard
+    [[ $1 =~ http ]] && _remote="$1" && shift
+    local _destination=~/hub
+    if [[ -n $1 ]]; then
+        _destination=$(kp $_destination "$@")
+        if [[ -d "$_destination" ]]; then
+            local _directory=$_destination
+            cde "$_directory"
+            _directory=
+        fi
     fi
+    [[ $_remote =~ http ]] && _directory=$(clone -r $_remote)
+    [[ -d $_directory ]] && cde $_directory
+    ranger 
 }
 
 jjb () {
@@ -886,7 +892,7 @@ nose () {
     local _progress=
     nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
     local _coverage=
-    nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
+    nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=.coverage --cover-package=."
     if nosetests -h 2>&1 | g -q stopwatch; then
         NOSE_COVER_TESTS= nosetests -A "speed!='slow'" $_coverage $_progress "$@"
     else

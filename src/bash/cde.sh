@@ -52,6 +52,7 @@ _post_kd_git () {
     echo $_branch
     git_simple_status .
     show_version_here
+    gl11
 }
 
 # xxxxxxxxxxxxx

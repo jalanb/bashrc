@@ -81,7 +81,7 @@ gt () {
 }
 
 tc () {
-    vim ~/.gitconfig +
+    vim -p ~/.gitconfig ~/.gitignore_global +
 }
 
 # xxx
@@ -192,6 +192,10 @@ gdv () {
 gfa () {
     git fetch --all
     git fetch --tags
+}
+
+ggi () {
+    gxi _ggi_show_diff _ggi_response "$@"
 }
 
 gff () {
@@ -412,7 +416,7 @@ _gsi_vim () {
 }
 
 gsi () {
-    gxi _gsi_show_file _gsi_response "$@"
+    gxi _gsi_show_diff _gsi_response "$@"
 }
 
 gta () {
@@ -421,18 +425,18 @@ gta () {
 }
 
 gvi () {
-    gxi _gvi_show_file _gvi_response "$@"
+    gxi _gvi_show_diff _gvi_response "$@"
 }
 
 gxi () {
-    local _gxi_show_file=$1; shift
+    local _gxi_show_diff=$1; shift
     local _gxi_response=$1; shift
     _stashed=
     shift_dir "$@" || shift
     while git status -s "$dir"; do
         for f in $(gssd_changes "$dir"); do
             [[ -n "$f" ]] || continue
-            $_gxi_show_file "$f"
+            $_gxi_show_diff "$f"
             _gxi_request "$f"
             $_gxi_response "$f"
         done
@@ -445,11 +449,48 @@ gxi () {
     [[ -n $_stashed ]] && git stash pop
 }
 
-gvsd () {
-    shift_dir "$@" || shift
-    for f in $(gssd $dir); do
-        _gvi_vim "$f"
-    done
+_ggi_show_diff () {
+    if _git_untracked "$1"; then
+        kat -n "$f"
+        return 0
+    fi
+    if _git_modified "$1"; then
+        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $_lines < $LINES ]]; then
+            git di "$1"
+        else
+            gdi "$1"
+        fi
+    fi
+    git status -s $f
+}
+
+_ggi_response () {
+    if [[ $answer =~ [fF] ]]; then gi; _gxi_request "$1"; fi
+    [[ $answer =~ [aA] ]] && ga "$1"
+    [[ $answer =~ [cC] ]] && gi
+    [[ $answer =~ [rR] ]] && _gsi_drop "$1"
+    if _git_modified "$1" ; then
+        [[ $answer =~ [dD] ]] && git di "$1"
+        [[ $answer =~ [iI] ]] && gai "$1"
+    fi
+    [[ $answer =~ [vV] ]] && _gsi_vim "$1"
+}
+
+_gsi_show_diff () {
+    if _git_untracked "$1"; then
+        kat -n "$f"
+        return 0
+    fi
+    if _git_modified "$1"; then
+        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $_lines < $LINES ]]; then
+            git di "$1"
+        else
+            gdi "$1"
+        fi
+    fi
+    git status -s $f
 }
 
 _gsi_response () {
@@ -462,6 +503,11 @@ _gsi_response () {
         [[ $answer =~ [iI] ]] && gai "$1"
     fi
     [[ $answer =~ [vV] ]] && _gsi_vim "$1"
+}
+
+_gvi_show_diff () {
+    git diff "$1"
+    git status -s $f
 }
 
 _gvi_response () {
@@ -639,9 +685,18 @@ gssd () {
     _status_line -C $_dir "$@"
 }
 
+gvsd () {
+    shift_dir "$@" || shift
+    for f in $(gssd $dir); do
+        _gvi_vim "$f"
+    done
+}
+
 # xxxxx
 
 clone () {
+    local _range=yes
+    [[ "$1" == "-r" ]] && _range= 
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
     git clone "$1"> $_clone_log 2>&1
@@ -649,7 +704,7 @@ clone () {
         kat -n $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
-        ranger .
+        [[ -n $_range ]] && ranger .
     fi
 }
 
@@ -772,27 +827,6 @@ _do_git_status () {
 }
 
 # xxxxxxxxxxxxxx
-
-_gsi_show_file () {
-    if _git_untracked "$1"; then
-        kat -n "$f"
-        return 0
-    fi
-    if _git_modified "$1"; then
-        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $_lines < $LINES ]]; then
-            git di "$1"
-        else
-            gdi "$1"
-        fi
-    fi
-    git status -s $f
-}
-
-_gvi_show_file () {
-    git diff "$1"
-    git status -s $f
-}
 
 show_git_time () {
     local _arg_dir="${1:-$PWD}"
