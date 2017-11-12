@@ -13,7 +13,7 @@ jj () {
     if [[ -z "$*" ]]; then
         cde ~/jab
     else
-        KCD=cde k ~/jab "$@"
+        XKCD=cde k ~/jab "$@"
     fi
 }
 
@@ -24,7 +24,7 @@ jv () {
 # xxx
 
 jjj () {
-    KCD=cde kk ~/jab "$@"
+    XKCD=cde kk ~/jab "$@"
 }
 
 jvb () {

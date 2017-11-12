@@ -6,7 +6,7 @@ k () {
     local _dir="$1"; shift
     [[ -z "$*" ]] && _dir=.
     if [[ -d "$_dir" ]]; then
-        (${KCD:-cd} $_dir; 
+        (${XKCD:-cd} $_dir; 
         "$@")
     fi
 }
