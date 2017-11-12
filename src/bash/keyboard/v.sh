@@ -3,13 +3,13 @@
 
 # x
 
-v () {
-    [[ -z $1 ]] && vim_none || vim_some "$@"
-}
 # v () {
-#     vim -p "$@"
+#     [[ -z $1 ]] && vim_none || vim_some "$@"
 # }
-# 
+v () {
+    vim -p "$@"
+}
+
 
 # xx
 
@@ -37,15 +37,15 @@ vu () {
     vim -p $_vimrc $_vim
 }
 
-vv () {
-    local __doc__="Edit vim files"
-    [[ -z $* ]] && vvu || vvv "$@"
-}
 # vv () {
 #     local __doc__="Edit vim files"
-#     [[ -n $* ]] && vu || vva "$@"
+#     [[ -z $* ]] && vvu || vvv "$@"
 # }
-# 
+vv () {
+    local __doc__="Edit vim files"
+    [[ -n $* ]] && vu || vva "$@"
+}
+
 
 # xxx
 
