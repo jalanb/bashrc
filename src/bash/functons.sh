@@ -308,7 +308,13 @@ py () {
 ra () {
     local _path=$(kpp "$@")
     cde $_path
-    ranger $_path
+    ranger --choosedir=$HOME/.local/ranger.txt
+    local _ranged=$( cat $HOME/.local/ranger.txt)
+    for word in "$@"; do
+        if [[ $word =~ "[-]*cd" ]]; then
+            cd $(cat $_ranged)
+        fi
+    done
 }
 
 ru () {
