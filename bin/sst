@@ -1,9 +1,9 @@
 #! /bin/bash
 
-# sst - run ssh from a terminal, and set titles to and fro
+# sst - run ssh from a terminal, and set titles to and from
+
 
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
-PATH_TO_SCRIPTS=$(dirname $PATH_TO_SCRIPT)
 
 _expected=~/hub/what/what.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 _expected=~/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
@@ -12,8 +12,8 @@ _expected=~/jab/src/bash/functons.sh; _actual="No $(basename $_expected)."; [[ -
 usage () {
     if [[ $# < 2 ]]; then
         if [[ $# == 1 ]]; then
-            parts=$(echo $1 | tr '@' '\n' | wc -l)
-            if [[ $parts -ne 2 ]]; then
+            local _parts=$(echo $1 | tr '@' '\n' | wc -l)
+            if [[ $_parts -ne 2 ]]; then
                 echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
                 exit 1
             fi
@@ -22,39 +22,40 @@ usage () {
 }
 
 main () {
-    parts=$(echo $1 | tr '@' '\n' | wc -l)
-    if [[ $parts -eq 2 ]]; then
-        you=$(echo $1 | cut -d\@ -f 1)
-        there_name=$(echo $1 | cut -d\@ -f 2)
+    local _parts=$(echo $1 | tr '@' '\n' | wc -l)
+    local _remote_user=
+    local _remote_server=
+    if [[ $_parts -eq 2 ]]; then
+        _remote_user=$(echo $1 | cut -d\@ -f 1)
+        _remote_server=$(echo $1 | cut -d\@ -f 2)
         shift
     else
-        local you=$1
+        local _remote_user=$1
         shift
-        local there_name=$1
+        local _remote_server=$1
         shift
     fi
-    local options=$*
+    local _options="$@"
 
-    local here_name=$(python -c "import socket; print socket.getfqdn()")
-    local here_ip=$(python ~/jab/src/python/ifconfig.py 172)
-    local there_ip=$(python -c "import socket; print socket.gethostbyname('$there_name')")
-    if [[ $here_ip == $there_ip ]]; then
-        if [[ $you == $(whoami) ]]; then
-            echo "Here I am: $you@$there_name ($there_ip)" 2>&1
+    local _local_user=$USER
+    local _local_server=`hostname -s`
+    local _local_ip=$(python ~/jab/src/python/ifconfig.py 10 172 193 192 100)
+    local _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')")
+    if [[ $_local_ip == $_remote_ip ]]; then
+        _local_user=$_remote_user
+        if [[ $_remote_user == $(whoami) ]]; then
+            echo "Here I am: $_remote_user@$_remote_server ($_remote_ip)" 2>&1
         else
-            echo "Here is: $there_name ($there_ip)" >&2
-            echo "  Perhaps you meant to use su?" >&2
+            echo "Here is: $_remote_server ($_remote_ip)" >&2
+            echo '  Perhaps you meant to use "$ su -u '$_local_user'"' >&2
         fi
         return
     fi
-    local there_small=${there_name/.$EMPLOYER_DOMAIN/}
-    local me=$USER
-    local here=`hostname -s`
-    console_title_on ${you}@${there_small} && \
-        ssh -t -o ConnectTimeout=5 $options $you@$there_name && \
-        console_title_off ${me}@${here}
+    local there_small=${_remote_server/.$EMPLOYER_DOMAIN/}
+    console_title_on ${_remote_user}@${there_small} && \
+        ssh -t -o ConnectTimeout=5 $_options $_remote_user@$_remote_server && \
+        console_title_off ${_local_user}@${_local_server}
 }
 
-usage $*
+usage $*m
 main $*
-
