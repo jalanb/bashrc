@@ -26,9 +26,9 @@ ga () {
 
 gb () {
     if [[ -z "$*" ]]; then
-        git branch 2>&1 | grep -v warning
+        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v warning
     else
-        git branch 2>&1 | grep -v warning | grep --color "$@";
+        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v warning | grep --color "$@";
     fi
 }
 
@@ -99,11 +99,7 @@ gai () {
 }
 
 gba () {
-    if [[ -z "$*" ]]; then
-        git branch -a 2>&1 | grep -v warning
-    else
-        git branch -a 2>&1 | grep -v warning | grep --color "$@";
-    fi
+    GIT_BRANCH_OPTION=-a gb "$@"
 }
 
 gbt () {
