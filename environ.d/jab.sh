@@ -1,8 +1,8 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
+. ~/jab/src/bash/welcome.sh
 
-. ~/jab/src/bash/repo.sh
+Welcome_to $BASH_SOURCE
 
 _set_jab () {
     if [[ -z ~/jab ]]; then
