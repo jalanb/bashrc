@@ -97,14 +97,14 @@ dp () {
 }
 
 IP () {
-    local BREAK=yes
+    local _break=yes
     if [[ $1 == all ]]; then
-        BREAK=no
+        _break=no
     fi
     for number in 10 172 193 192 100
     do
         if python ~/jab/src/python/ifconfig.py $number; then
-            if [[ $BREAK == yes ]]; then
+            if [[ $_break == yes ]]; then
                 break
             fi
         fi
