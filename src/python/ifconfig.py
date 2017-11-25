@@ -21,24 +21,19 @@ def get_ip_addresses(lines):
     return sorted(ip_addresses)
 
 
-def make_chooser(args):
-    """Make a method to choose one of the args, or anything if args are empty"""
-    if not args:
-        return lambda x: True
-    def choose(string):
-        for arg in args:
-            if re.search(arg, string):
-                return True
-    return choose
+def choose(string, args):
+    for arg in args:
+        if re.search(arg, string):
+            return True
+    return False
 
 
 def main(args):
     """Run the program"""
     result = os.EX_UNAVAILABLE
-    choose = make_chooser(args)
     lines = run_ifconfig()
     for ip_address in get_ip_addresses(lines):
-        if choose(ip_address):
+        if choose(ip_address, args):
             print(ip_address)
             result = os.EX_OK
     return result
