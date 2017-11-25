@@ -1049,12 +1049,20 @@ range () {
     return 0
 }
 
-taocl() {
+taocl () {
     curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md |
     pandoc -f markdown -t html |
     xmlstarlet fo --html --dropdtd |
     xmlstarlet sel -t -v "(html/body/ul/li[count(p)>0])[$RANDOM mod last()+1]" |
     xmlstarlet unesc | fmt -80
+}
+
+tools () {
+    (cd ~/wwts/tools/bin
+    PATH=~/wwts/tools/bin:$PATH
+    [[ -f ~/.virtualenvs/tools/bin/activate ]] && . ~/.virtualenvs/tools/bin/activate
+    "$@"
+    )
 }
 
 ylint () {
