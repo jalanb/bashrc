@@ -190,6 +190,7 @@ if !exists("Try")
             let tmpfile = 'none'
             let quiet_line = command_line
         endif
+        let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
         try
             exec quiet_line
             if tmpfile != 'none'
