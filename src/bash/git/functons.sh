@@ -77,7 +77,10 @@ gs () {
 }
 
 gt () {
-    git tag --list | g "$@"
+    local _tag=
+    for _tag in "$@"; do
+        git tag "$_tag"
+    done
 }
 
 tc () {
@@ -109,7 +112,11 @@ gbt () {
 
 gta () {
     [[ -z $1 ]] && return ValueError
-    git tag --list | g "$@"
+    gtlg "$@"
+}
+
+gtl () {
+    gt --list "$@"
 }
 
 gbb () {
@@ -290,11 +297,24 @@ grp () {
 }
 
 gpf () {
-    git push --force "$@"
+    gp --force "$@"
+}
+
+gpo () {
+    git push origin "$@"
 }
 
 gpp () {
-    git_stash_and git push "$@"
+    gpf "$@"
+    gpt
+}
+
+gps () {
+    git_stash_and gp "$@"
+}
+
+gpt () {
+    gpo --tags
 }
 
 grh () {
@@ -563,7 +583,7 @@ gaai () {
 }
 
 gbdr () {
-    git push origin --delete $1
+    gpo --delete $1
 }
 
 gbta () {
@@ -679,6 +699,10 @@ grup () {
 gssd () {
     local _dir="$1"; shift
     _status_line -C $_dir "$@"
+}
+
+gtlg () {
+    gtl | g "$@"
 }
 
 gvsd () {
