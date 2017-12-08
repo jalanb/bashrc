@@ -1,30 +1,21 @@
-Host my_jira
-    Hostname ec2-54-187-200-63.us-west-2.compute.amazonaws.com
-    User ec2-user
-    IdentityFile ~/.ssh/MyJIRAInstance.pem
-
 Host eos70D
     Hostname 192.168.130.102
 
 Host jab.ook
-    Hostname ja-book.local
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jalan.mini
-    Hostname 192.168.130.101
+Host jab.mini 
     Hostname jalanmini.local
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jalan.book
-    Hostname 192.168.130.104
-    Hostname jalan-book.local
+Host jab.book
+    Hostname jalan-book.local 
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jalan.mac
-    Hostname 192.168.130.108
+Host jab.mac
     Hostname jalan-mac.local
     User jab
     IdentityFile ~/.ssh/id_jab
@@ -42,12 +33,7 @@ Host builder
 Host gitlab twkgit20
     Hostname 172.25.1.219
     User ab13173
-
-Host builder
-    Hostname 172.25.1.219
-    User builder
-    IdentityFile ~/.ssh/builder.key
-    
+    IdentityFile ~/.ssh/alan.brogan-rsa
 
 Host wwits
     Hostname 172.25.3.126
@@ -56,37 +42,37 @@ Host wwits
 
 
 Host twkdbs98.ad.wwts.com
-    HostName 172.25.1.128
+    Hostname 172.25.1.128
 
 Host default
-  HostName 192.168.111.222
+  Hostname 192.168.111.222
   User vagrant
+  IdentityFile ~/.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
-  IdentityFile ~/.ssh/id_rsa
 
 Host twkwbe96 wmpdev
+    Hostname 172.25.32.96
     User production
     IdentityFile ~/.ssh/production.key
-    Hostname 172.25.32.96
 
 Host twkwbe95 wmptest 
+    Hostname 172.25.32.95
     User production
     IdentityFile ~/.ssh/production.key
-    Hostname 172.25.32.95
 
 Host twkwbe34 wmptrain
+    Hostname 172.25.32.147
     User production
     IdentityFile ~/.ssh/production.key
-    Hostname 172.25.32.147
 
 Host atlwbe35
+    Hostname 172.25.232.149
     User production
     IdentityFile ~/.ssh/production.key
-    Hostname 172.25.232.149
 
 Host twkwbe35 wmp
+    Hostname 172.25.32.149
     User production
     IdentityFile ~/.ssh/production.key
-    Hostname 172.25.32.149
 

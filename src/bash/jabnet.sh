@@ -1,10 +1,18 @@
 #! /bin/cat
 
+cat << EOF
+Hosts edited
+EOF
+
 Welcome_to $BASH_SOURCE
 
 # x
 # xx
 # xxx
+
+ssa () {
+    ssh ab13173@"$@"
+}
 
 ssi () {
     _ssj jalanmini.local
@@ -26,6 +34,14 @@ ssu () {
     else
         ssh -tq $_server "sudo $@"
     fi
+}
+
+ssga () {
+    ssa twkgit20.wwts.com
+}
+
+ssgb () {
+    ssh builder
 }
 
 ssw () {

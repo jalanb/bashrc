@@ -15,10 +15,14 @@ hosts () {
 # xxxxxx
 
 vhosts () {
-    vim ~/jab/hss/hosts \
-        -p /etc/hosts \
+    vim -p \
+        ~/jab/src/bash/jabnet.sh \
+        ~/jab/hss/hosts \
+        /etc/hosts \
+        "$@" \
         +/'Host[a-z]*' \
-
+        ;
+    . ~/jab/src/bash/jabnet.sh
 }
 
 Bye_from $BASH_SOURCE
