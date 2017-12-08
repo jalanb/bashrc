@@ -36,3 +36,6 @@ tags
 /ipython/README
 /ipython/profile_default/static/
 /ipython/profile_default/security/
+
+# for python virtualenvs
+bin/activate
