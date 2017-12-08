@@ -1131,6 +1131,24 @@ lesen () {
     less -NR "$@"
 }
 
+mkenv2 () {
+    _mkenv python2
+}
+
+mkenv3 () {
+    _mkenv python3
+}
+
+_mkenv () {
+    local _python=$1; shift
+    local _pager=vin
+    local _file=/tmp/mager
+    mkvirtualenv -v -r pai/requirements.txt -p $_python --clear --always-copy --download "$@" 2>&1 > $_file
+    [[ $(wc -l $_file) < 39 ]] && _pager="kat -n"
+    $_pager $_file
+    rr $_file
+}
+
 online () {
     local _dest="$1"; shift
     [[ -z $_dest ]] && _dest=www.google.com
