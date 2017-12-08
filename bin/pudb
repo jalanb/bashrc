@@ -14,9 +14,7 @@ _find_python () {
 main () {
     local _pudb=$(PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin which pudb)
     export TERM=xterm-256color
-    # Wonder why setting PATH was needed?
-    # PATH=/usr/sbin $PYTHON_TWO_SEVEN $_pudb "$@"
-                     $PYTHON_TWO_SEVEN $_pudb "$@"
+    $PYTHON_TWO_SEVEN $_pudb "$@"
 }
 
 _find_python
