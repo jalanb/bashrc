@@ -90,45 +90,44 @@ class TestBeingRun(object):
             setattr(self, name, path_to_ext)
 
 
-def command_line():
-    """Handle options on the command line
+def parse_args():
+    """Handle args on the command line
 
     Destroy the option parser when finished
         (do not interfere with tests which use it)
     """
     # Hello future me , please convert to argparse
-    # from optparse import OptionParser
-    parser = OptionParser()
-    parser.add_option('-s', '--show', dest='show',
-                      help='show files being tested', action='store_true')
-    parser.add_option('-v', '--verbose', dest='verbose',
-                      help='Hello World', action='store_true')
-    parser.add_option('-r', '--recursive', dest='recursive',
-                      help='recurse into any sub-directories found',
-                      action='store_true', default=False)
-    parser.add_option('-a', '--all', dest='all',
-                      help="run all tests (don't stop on first FAIL)",
-                      action='store_true', default=False)
-    parser.add_option('-d', '--directory_all', dest='directory_all',
-                      help='run all test scripts in a directory'
-                      '(do not stop on first FAILing script)',
-                      action='store_true', default=False)
-    parser.add_option('-q', '--quiet_on_success', dest='quiet_on_success',
-                      help='no output if all tests pass',
-                      action='store_true', default=False)
-    parser.add_option('-p', '--persist', dest='persist',
-                      help='do not stop on DoctestInterrupts',
-                      action='store_true', default=False)
-    options, args = parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    pa = parser.add_argument
+    pa('stems', metavar='stems', type=str, nargs='*',
+       help='stems to be tested (e.g "try.py" or "try.*" or "try." or "try/"')
+    pa('-s', '--show', help='show files being tested', action='store_true')
+    pa('-v', '--verbose', help='Hello World', action='store_true')
+    pa('-r', '--recursive', action='store_true',
+       help='recurse into any sub-directories found',)
+    pa('-a', '--all', action='store_true',
+       help="run all tests (don't stop on first FAIL)",)
+    pa('-d', '--directory_all', action='store_true',
+       help='run all test scripts in a directory'
+       '(do not stop on first FAILing script)',)
+    pa('-q', '--quiet_on_success', action='store_true',
+       help='no output if all tests pass',)
+    pa('-p', '--persist', action='store_true',
+       help='do not stop on DoctestInterrupts',)
+    args = parser.parse_args()
+    # Try not to interfere with any ArgumentParser used in script under test
     if hasattr(parser, 'destroy'):
         parser.destroy()
     del parser
-    if options.recursive:
-        for arg in args:
-            if os.path.isfile(arg):
-                raise ValueError(
-                    'Do not use --recursive with files (%s)' % arg)
-    return options, args
+    if args.recursive:
+        stems = [_ for _ in args.stems if os.path.isfile(_)]
+        if not stems:
+            return args
+        raise ValueError(
+            'Do not use --recursive with stems ("%s")' % (
+            '"%s", '.join(stems)))
+    return args
 
 
 class SysPathHandler(object):
@@ -180,25 +179,25 @@ def make_module(path_to_python):
             fp.close()
 
 
-def test_source(source_script, options):
+def test_source(source_script):
     """Run tests in the given source"""
     message = 'py %s;' % source_script
     module = make_module(source_script)
     failures, tests_run = doctest.testmod(
         module,
-        optionflags=get_doctest_options(options),
-        verbose=options.verbose,
+        optionflags=get_doctest_options(),
+        verbose=args.verbose,
     )
     del module
     return failures, tests_run, message
 
 
-def test_file(test_script, options):
+def test_file(test_script):
     """Run tests in a doctest script"""
     message = 'try %s;' % test_script
     failures, tests_run = doctest.testfile(
         test_script,
-        optionflags=get_doctest_options(options),
+        optionflags=get_doctest_options(),
         module_relative=False,
         globs={
             'test': TestBeingRun(test_script),
@@ -213,39 +212,39 @@ def test_file(test_script, options):
             'DoctestInterrupt': DoctestInterrupt,
             'no_print': no_print,
         },
-        verbose=options.verbose,
+        verbose=args.verbose,
     )
     return failures, tests_run, message
 
 
-def run_doctest(test_script, options):
+def run_doctest(test_script):
     """Call the relevant doctest method for the given script"""
     if test_script.ext in ['', '.py']:
         try:
-            return test_source(test_script, options)
+            return test_source(test_script)
         except ImportError:
             if test_script.ext:
                 raise
             return 0, 0, ''
-    return test_file(test_script, options)
+    return test_file(test_script)
 
 
-def show_running_doctest(test_script, options):
+def show_running_doctest(test_script):
     """Run a doctest for that script, showing progress on stdout/stderr"""
     old_argv = sys.argv[:]
     try:
         sys.argv = [test_script]
         try:
-            if options.verbose or options.show:
+            if args.verbose or args.show:
                 print('Test', test_script)
-            return run_doctest(test_script, options)
+            return run_doctest(test_script)
         except DoctestInterrupt as e:
-            if options.directory_all or options.persist:
+            if args.directory_all or args.persist:
                 show_interruption(test_script, e)
                 return 0, 0, ''
             raise
         except SyntaxError as e:
-            if options.directory_all or options.persist:
+            if args.directory_all or args.persist:
                 show_syntax(test_script, e)
                 return 0, 0, ''
             raise
@@ -253,10 +252,10 @@ def show_running_doctest(test_script, options):
         sys.argv[:] = old_argv
 
 
-def get_doctest_options(options):
-    """Convert the command line options to Doctest options"""
+def get_doctest_options():
+    """Convert the command line args to Doctest flags"""
     result = doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE
-    if not options.all:
+    if not args.all:
         result |= doctest.REPORT_ONLY_FIRST_FAILURE
     return result
 
@@ -289,10 +288,13 @@ def show_interruption(test_script, interruption):
     print('Because:', interruption, file=sys.stderr)
 
 
+args = None
+
 def test():
     """Run all tests"""
     sys_paths = SysPathHandler()
-    options, args = command_line()
+    global args
+    args = parse_args()
     messages = ['']
     pwd = os.getcwd()
     end = start_all = datetime.datetime.now()
@@ -301,7 +303,7 @@ def test():
     sys_paths.add('.')
     try:
         for test_script in files_for_test.paths_to_doctests(
-                args, options.recursive):
+                args.stems, args.recursive):
             failures, tests_run, message = 0, 0, ''
             os.chdir(pwd)
             start = datetime.datetime.now()
@@ -309,7 +311,7 @@ def test():
                 sys_paths.add(test_script)
                 if try_plugins.pre_test(test_script):
                     failures, tests_run, message = show_running_doctest(
-                        test_script, options)
+                        test_script)
                     try_plugins.post_test(test_script, failures, tests_run)
             finally:
                 sys_paths.remove(test_script)
@@ -320,14 +322,14 @@ def test():
                 show_time_taken(start, messages, message, tests_run)
             if failures:
                 failures_all += failures
-                if not options.directory_all:
+                if not args.directory_all:
                     return failures
     finally:
         time_taken = end - start_all
         messages.append('%s tests passed, %d failed, in %s seconds' %
                         (run_all, failures_all, time_taken.seconds))
         messages.append('')
-    if failures_all or not options.quiet_on_success:
+    if failures_all or not args.quiet_on_success:
         print('\n'.join(messages))
     return failures_all
 

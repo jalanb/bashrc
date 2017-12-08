@@ -24,24 +24,25 @@ class UserMessage(Exception):
     pass
 
 
+def first_thing_that(things, predicate):
+    for thing in things:
+        if predicate(thing):
+            return thing
+    return None
+
+
 def _get_path_to_test_directory(strings):
     """Get a path to the root directory that we'll be testing in
 
     We will test in the first directory in strings
         or the directory of the first file in strings
     """
-    for string in strings:
-        path_to_string = path(string)
-        if path_to_string.isdir():
-            result = path_to_string
-            break
-    else:
-        for string in strings:
-            path_to_string = path(string)
-            if path_to_string.parent and path_to_string.isfile():
-                result = path_to_string.parent
-                break
-        else:
+    paths = [path(s) for s in strings]
+    result = first_thing_that(paths, lambda p: p.isdir())
+    if not result:
+        try:
+            result = first_thing_that(paths, lambda p: p.parent and p.isfile()).parent
+        except AttributeError:
             raise UserMessage('No doctests found in %r' % strings)
     if not result.files('*.test*') and not result.files('*.py'):
         raise UserMessage('No doctests found in %r' % strings)
@@ -89,13 +90,12 @@ def _get_path_stems(strings, recursive):
     If there is a "/" in the strings then it is used in the list
     Otherwise it is appended to the current working directory
     """
-    if not strings:
-        strings = []
+    strings = strings or []
     here = path('.')
-    paths = ['/' in string and path(string) or here / string for string in strings]
-    if recursive:
-        return add_sub_dirs(paths)
-    return paths
+    paths = ['/' in s and path(s) or here / s for s in strings]
+    if not recursive:
+        return paths
+    return add_sub_dirs(paths)
 
 
 def add_sub_dirs(paths):
@@ -241,13 +241,13 @@ def _expand_stems(path_stems):
     return result
 
 
-def _get_files_from_stems(args, recursive):
-    """Get a list of test scripts from the given args
+def _get_files_from_stems(strings, recursive):
+    """Get a list of test scripts from the given strings
 
     Only known extensions are included
     If recursive is true then include sub_directories
     """
-    path_stems = _get_path_stems(args, recursive)
+    path_stems = _get_path_stems(strings, recursive)
     if path_stems:
         return _expand_stems(path_stems)
     return _get_scripts_here(recursive)
@@ -277,15 +277,15 @@ def _re_order_scripts(paths_to_scripts):
     return result
 
 
-def paths_to_doctests(args, recursive):
-    """Get paths to all doctest files for the given args
+def paths_to_doctests(strings, recursive):
+    """Get paths to all doctest files for the given strings
 
-    args should be a list of stems - possibly empty
+    strings should be a list of stems - possibly empty
         A "stem" is the start of a path, e.g. "test_files."
 
     If recursive is True then include sub_directories
     """
-    paths_to_files = _get_files_from_stems(args, recursive)
+    paths_to_files = _get_files_from_stems(strings, recursive)
     paths_to_positive_scripts = [p for p in paths_to_files if p.ext in positive_test_extensions()]
     for path_to_script in paths_to_files:
         if path_to_script.ext:
