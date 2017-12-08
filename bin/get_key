@@ -5,8 +5,8 @@ from __future__ import print_function
 import sys
 
 
-from dotsite import getch
-from dotsite import scripts
+from pysyte import getch
+from pysyte import scripts
 
 
 __version__ = '0.1.1'

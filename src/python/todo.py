@@ -11,8 +11,8 @@ except ImportError:
     from collections import namedtuple
 
 
-from dotsite.paths import path
-import colours
+from pysyte.paths import path
+from pysyte.colours import texts
 
 
 def todo_file():
@@ -90,7 +90,7 @@ def parse_todo_line(line):
 def show_todo_item(item):
     """Show the item on screen, coloured by it's priority"""
     colour = priority_colour(item.priority)
-    print(colours.colour_text(item.text, colour))
+    print(texts.colour_text(item.text, colour))
 
 
 def main():

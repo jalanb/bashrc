@@ -6,28 +6,28 @@ import os
 import re
 import sys
 
-from dotsite import args as arguments
-from dotsite import text_streams
+from pysyte import args as arguments
+from pysyte import text_streams
 
 
 def parse_args():
     """Parse out command line arguments"""
     parser = arguments.parser(__doc__)
     parser.strings('files', help='files to edit')
-    parser.num('-a', '--at', default=None, help='Show line at the line number')
+    parser.int('-a', '--at', default=None, help='Show line at the line number')
     parser.true('-c', '--clipboard', help='Get lines from clipboard')
-    parser.add('-f', '--first', default="1",
+    parser.arg('-f', '--first', default="1",
                help='number/regexp of first line to show')
-    parser.add('-l', '--last', default="0",
+    parser.arg('-l', '--last', default="0",
                help='number/regexp of last line to show')
     parser.true('-n', '--numbers', help='Show line numbers')
-    parser.num('-w', '--width', help='Max width of shown line')
+    parser.int('-w', '--width', help='Max width of shown line')
     return parser.parse_args()
 
 
 def parse_lines(args, lines_read):
 
-    def as_int(string):
+    def as_int(string, start):
         try:
             return int(string)
         except (ValueError, TypeError):

@@ -6,7 +6,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-from dotsite.paths import path
+from pysyte.paths import path
 
 
 def parse_args():
