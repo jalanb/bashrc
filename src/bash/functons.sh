@@ -306,15 +306,11 @@ py () {
 }
 
 ra () {
-    local _path=$(kpp "$@")
-    cde $_path
-    ranger --choosedir=$HOME/.local/ranger.txt
-    local _ranged=$( cat $HOME/.local/ranger.txt)
-    for word in "$@"; do
-        if [[ $word =~ "[-]*cd" ]]; then
-            cd $(cat $_ranged)
-        fi
-    done
+    rara cde "$@"
+}
+
+raa () {
+    rara no ~
 }
 
 ru () {
@@ -843,6 +839,9 @@ bump () {
     fi
 }
 
+cdra () {
+    rara cd "$@"
+}
 
 dots () {
     cde ~/hub/dotsite/dotsite
@@ -934,6 +933,19 @@ divv () {
 
 popq () {
     popd >/dev/null 2>&1
+}
+
+rara () {
+    local _cd=$1; shift
+    local _path=$(kpp "$@")
+    [[ $_cd != "no" ]] && $_cd $_path
+    ranger --choosedir=$HOME/.local/ranger.txt
+    local _ranged=$( cat $HOME/.local/ranger.txt)
+    for word in "$@"; do
+        if [[ $word =~ "[-]*cd" ]]; then
+            cd $(cat $_ranged)
+        fi
+    done
 }
 
 this () {

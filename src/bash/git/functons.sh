@@ -72,7 +72,7 @@ gr () {
 }
 
 gs () {
-    shift_dir "$@" && shift
+    first_arg_dir_or_here "$@" && shift
     _do_git_status $dir "$@"
 }
 
