@@ -33,6 +33,8 @@ def parse_lines(args, lines_read):
         except (ValueError, TypeError):
             matcher = re.compile(string)
             for i, line in enumerate(lines_read, 1):
+                if i <= start:
+                    continue
                 if matcher.search(line):
                     return i
         return 0
@@ -45,8 +47,8 @@ def parse_lines(args, lines_read):
 
     def _boundaries():
         if not args.at:
-            last = _line(as_int(args.last) or -1)
-            first = _line(as_int(args.first) - 1)
+            first = _line(as_int(args.first, 0) - 1)
+            last = _line(as_int(args.last, first) or -1)
             return first, last
         first = _line(args.at)
         return first, first + 1
