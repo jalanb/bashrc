@@ -268,7 +268,7 @@ pii () {
     local here=$(jostname)
     local options=-noconfirm_exit
     local _ipython=${IPYTHON:-ipython}
-    if [[ $(ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
+    if [[ $($_ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
         options=--no-confirm-exit
     fi
     console_title_on "ipython@${here}" && \
@@ -585,7 +585,7 @@ num () {
 }
 
 pi2 () {
-    IPYTHON=ipython2; pii "$@"
+    IPYTHON="/usr/local/bin/python2 /usr/local/bin/ipython2"; pii "$@"
 }
 alias pi1=pi2 # I keept typo-ing on that
 
@@ -1288,7 +1288,7 @@ todo_show () {
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
-    mython ~/jab/src/python/todo.py $todo_txt
+    python ~/jab/src/python/todo.py $todo_txt
 }
 
 # xxxxxxxxx
