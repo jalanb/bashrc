@@ -23,6 +23,6 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/environ.d/__init__.sh
 . ~/jab/src/bash/__init__.sh
-. ~/jab/local/__init__.sh
+. ~/jab/local/__init__.sh optional
 
 Bye_from $BASH_SOURCE
