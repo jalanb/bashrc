@@ -57,7 +57,7 @@ go () {
 }
 
 gp () {
-    if ! MSG=$(git push 2>&1); then
+    if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             $(echo "$MSG" | grep set-upstream)
         else
@@ -511,7 +511,7 @@ _gsi_show_diff () {
 
 _gsi_response () {
     if [[ $answer =~ [fF] ]]; then gi; _gxi_request "$1"; fi
-    [[ $answer =~ [aA] ]] && ga "$1"
+    [[ $answer =~ [aAyY] ]] && ga "$1"
     [[ $answer =~ [cC] ]] && gi
     [[ $answer =~ [rR] ]] && _gsi_drop "$1"
     if _git_modified "$1" ; then
@@ -716,15 +716,19 @@ gvsd () {
 
 clone () {
     local _range=yes
-    [[ "$1" == "-r" ]] && _range= 
+    [[ "$1" == "-n" ]] && _range= && shift
+    [[ "$1" == "-y" ]] && _range=ranger
+    local _remote=
+    [[ -n "$1" ]] && _remote="$1" && shift
+
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
-    git clone "$1"> $_clone_log 2>&1
+    git clone "$_remote" > $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
         kat -n $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
-        [[ -n $_range ]] && ranger .
+        [[ -n $_range ]] && ranger
     fi
 }
 
