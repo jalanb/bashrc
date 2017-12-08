@@ -318,7 +318,7 @@ grr () {
 }
 
 gsd () {
-    shift_dir "$@" && shift
+    first_arg_dir_or_here "$@" && shift
     for f in $(gssd $dir | grep "^ M" | cut -dM -f2)
     do
         git dv $f
@@ -428,7 +428,7 @@ gxi () {
     local _gxi_show_diff=$1; shift
     local _gxi_response=$1; shift
     _stashed=
-    shift_dir "$@" || shift
+    first_arg_dir_or_here "$@" && shift
     while git status -s "$dir"; do
         for f in $(gssd_changes "$dir"); do
             [[ -n "$f" ]] || continue
@@ -682,7 +682,7 @@ gssd () {
 }
 
 gvsd () {
-    shift_dir "$@" || shift
+    first_arg_dir_or_here "$@" && shift
     for f in $(gssd $dir); do
         _gvi_vim "$f"
     done
