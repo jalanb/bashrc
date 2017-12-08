@@ -788,7 +788,13 @@ xib () {
 # xxxx
 
 bool () {
-    "$@" && echo True || echo False
+    [[ -z $* || $1 =~ ^0*$ ]] && echo False && return 1
+    if what -q "$1"; then
+        "$@" 2>/dev/null && echo True && return 0
+        echo False; return 1
+    fi
+    [[ $1 =~ ^0*$ ]] && echo False || echo True
+    return 0
 }
 
 brew () {
