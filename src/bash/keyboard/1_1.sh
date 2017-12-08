@@ -13,17 +13,35 @@ first_dir () {
     echo "$dir"
 }
 
+wwts_path () {
+    readlink -f ~/wwts/"$1"
+}
+
 head_4 () {
-    local _name="$1"; shift
-    local _dir=$(first_dir ~/wwts/$_name)
-    CDE_header=$( (cd $_dir; l -d "$@") ) cde $_dir
+    _name="$1"; shift
+    local _default="$1"; shift
+    local _dir=$(first_dir $( wwts_path $_default ))
+    [[ -d $_dir ]] || _dir=$(first_dir $( wwts_path $_name ))
+    # Args should overwrite defaults
+    local _wwts_paths=$( (
+        cd ~/wwts
+        for _arg_path in "$@"; do
+            if [[ -d $( wwts_path $_arg_path ) ]]; then
+                wwts_path $_arg_path
+            fi
+        done | sort | uniq | tr '\n' ' '
+    ) )
+    local _wwts_dir=$(first_dir $_wwts_paths)
+    [[ -d "$_wwts_dir" ]] && _dir="$_wwts_dir"
+    [[ -d "$_dir" ]] || return 1
+    CDE_header=$( (cd $_dir; l -d ${_name}* 2>/dev/null ) ) cde $_dir
 }
 
 head_43 () {
-    head_4 tools ../tools*
+    head_4 tools tools.release "$@"
 }
 
 head_44 () {
-    head_4 dashboard ../dash*
+    head_4 dashboard dashboard.2.7 "$@"
 }
 
