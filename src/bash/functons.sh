@@ -441,21 +441,23 @@ hed () {
 }
 
 hub () {
+    local _directory=~/hub
     local _remote=
-    local _clipboard=$( pbpaste ); [[ $_clipboard =~ http ]] && _remote=$_clipboard
+    [[ $( clipout ) =~ http ]] && _remote=$( clipout )
     [[ $1 =~ http ]] && _remote="$1" && shift
-    local _destination=~/hub
+    local _destination=
     if [[ -n $1 ]]; then
-        _destination=$(kp $_destination "$@")
+        _destination=$(kp "$1" "$@")
+        shift
         if [[ -d "$_destination" ]]; then
-            local _directory=$_destination
+            _directory=$_destination
             cde "$_directory"
             _directory=
         fi
     fi
-    [[ $_remote =~ http ]] && _directory=$(clone -r $_remote)
+    [[ $_remote =~ http ]] && _directory=$(clone -n $_remote)
     [[ -d $_directory ]] && cde $_directory
-    ranger 
+    ranger
 }
 
 jjb () {
@@ -841,10 +843,6 @@ bump () {
     fi
 }
 
-copy () {
-    pbcopy
-    echo "# $(pbpaste)"
-}
 
 dots () {
     cde ~/hub/dotsite/dotsite
@@ -1010,6 +1008,15 @@ paste () {
     else
         echo "# $(pbpaste)"
     fi
+}
+
+clip_in () {
+    pbcopy
+    echo "# $(clipout)"
+}
+
+clipout () {
+    echo "$(pbpaste)"
 }
 
 ptags () {
