@@ -215,6 +215,7 @@ gla () {
 }
 
 glg () {
+    gs
     local _number_of_commits=7
     if [[ $1 =~ ^-?[0-9]+$ ]]; then
         _number_of_commits=$1
@@ -822,7 +823,8 @@ _gxi_request () {
 }
 
 gssd_changes () {
-    gssd "$1" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
+    local _dir="$1"; shift
+    gssd "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
 }
 
 _run_storage () {
