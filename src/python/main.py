@@ -33,10 +33,9 @@ def version(args):
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('items', metavar='items', type=str, nargs='+',
-                        help='some items')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
+    pa = parser.add_argument
+    pa('items', metavar='items', type=str, nargs='+', help='some items')
+    pa('-v', '--version', action='store_true', help='Show version')
     args = parser.parse_args()
     run_args(args, methods)
     return args
