@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-__version__=0.5.2
+__version__=0.5.3
 
 _BASH_DIR=~/jab/src/bash
 . $_BASH_DIR/tput.sh
