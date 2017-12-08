@@ -741,7 +741,7 @@ glone () {
 # xxxxxxx
 
 _show_git_here () {
-    [[ -d "$PWD/.git" ]] || return
+    git_root -q . || return
     local days=${1:-5}
     local _log=$(git -C $PWD log -n 1)
     [[ $? ]] && git -C $PWD lg --since="$days days ago"
@@ -754,6 +754,8 @@ _git_kd () {
 }
 
 git_root () {
+    local _quiet=
+    if [[ $1 == '-q' ]]; then _quiet=True; shift; fi
     _there="$1"; shift
     [[ -f "$_there" ]] && _there=$(dirname $_there)
     [[ -d "$_there" ]] || return 1
@@ -839,14 +841,15 @@ git_on_screen () {
 }
 
 untracked () {
-    (-d "$1" && gssd "$1" || _status_line "$1") | grep "??" | cut -d' ' -f2
+    local _path="$1"; shift
+    ( test -d "$_path" && gssd "$_path" || _status_line "$_path" ) | grep "??" | cut -d' ' -f2
 }
 
 _do_git_status () {
     local __doc__="get the status from git"
     dir=$1; shift
     [[ -z $dir ]] && dir=$PWD
-    # [[ -d "${dir}/.git" ]] || return
+    git_root -q $dir || return 1
     git -C $dir status "$@"
 }
 
@@ -899,8 +902,8 @@ _has_git_changes () {
 git_simple_status () {
     local arg_dir=${1:-$PWD}
     _has_git_changes $arg_dir || return
-    local git_dir=$(git_root $arg_dir)
-    [[ -n $git_dir ]] && gssd "$git_dir" 2>/dev/null | grep "$_git_status_regexp"
+    local _git_dir=$(git_root $arg_dir)
+    [[ -d $_git_dir ]] && gssd "$_git_dir" 2>/dev/null | grep "$_git_status_regexp"
 }
 
 _show_git_time_log () {
