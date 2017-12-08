@@ -1,0 +1,21 @@
+#! /bin/bash
+
+# Script exists to specify a TERM setting for PUDB
+
+set -e
+
+_find_python () {
+    MY_PATH=~/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
+    [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
+    PYTHON_THREE=$(PATH=$MY_PATH which python3 2>/dev/null)
+    [[ -x "$PYTHON_THREE" ]] || exit 1
+}
+
+main () {
+    local _pudb=$(PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin which pudb)
+    export TERM=xterm-256color
+    $PYTHON_THREE $_pudb "$@"
+}
+
+_find_python
+main "$@"
