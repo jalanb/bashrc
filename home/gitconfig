@@ -51,6 +51,9 @@
 [mergetool "kdiff3"]
     path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
     trustExitCode = true
+[difftool "kdiff3"]
+    path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
+    trustExitCode = true
 [color]
     ui = auto
 [help]
