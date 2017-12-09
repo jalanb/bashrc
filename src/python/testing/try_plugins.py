@@ -19,9 +19,9 @@ def post_test(_path_to_test_file, _failures, _tests_run):
 def check_bash():
     try:
         import bash
-    except ImportError:
-        return
-    shown = bash.BashOptions.verbosity.shown()
-    if shown:
-        print('bash', ','.join(shown))
-    del bash
+        shown = bash.BashOptions.verbosity.shown()
+        if shown:
+            print('bash', ','.join(shown))
+        del bash
+    except (ImportError, AttributeError):
+        pass
