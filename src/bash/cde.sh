@@ -162,5 +162,3 @@ show_version_here () {
     echo "git commit -m\"v0.0.0\""
     echo bump
 }
-
-# xxxxxxxxxxxxxxxxxxx
