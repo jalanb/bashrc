@@ -306,7 +306,7 @@ py () {
 }
 
 ra () {
-    rara cde "$@"
+    cdra "$@"
 }
 
 raa () {
