@@ -111,6 +111,15 @@ any_python_scripts_here () {
     [[ $_found == 1 ]] && rf -qpr
 }
 
+activate_python () {
+    . ./activate optional
+    . bin/activate optional
+}
+
+python_activate_here () {
+    test -f ./activate -o -f bin/activate
+}
+
 python_project_here () {
     [[ -f setup.py || -f requirements.txt || -d ./$_dir_name ]]
 }
@@ -130,6 +139,7 @@ cccde () {
 _post_kd_python () {
     any_python_scripts_here || return 0
     python_project_here || return 0
+    python_activate_here && activate_python
     local _dir=$(realpath .)
     local _dir_name=$(basename $_dir)
     local egg_info=${_dir_name}.egg-info
