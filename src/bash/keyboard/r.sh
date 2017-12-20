@@ -18,19 +18,35 @@ ri () {
     fi
 }
 
+_chewed="I been chewed out before"
+
+chew () {
+    echo "Landa: You'll be shot for this"
+    echo "Aldo: Nah, I don't think so, more like chewed out. $_chewed"
+}
+
 chewed_rri () {
     [[ -d "$2" || -d "$1" ]] && (
-        echo "You'll be shot for this"
-        echo "Nah, I don't think so, more like chewed out. I been chewed out before"
+        chew
     )
     rri "$@"
 }
 
 
 scalp_hermann () {
-    echo "Are you mad? What have you done? I made a deal with your general for that man's life!"
+    echo "Landa: Are you mad? What have you done? I made a deal with your general for that man's life!"
     echo ""
-    echo "Yeah, they made that deal, but they don't give a fuck about him. They need you"
+    echo "Aldo: Yeah, they made that deal, but they don't give a fuck about him. They need you"
+}
+
+stash_herman () {
+    read -p "Stash? [Y]" reply
+    [[ -z $reply || $reply =~ "[yY]" ]] || return 1
+    echo "Aldo: Stash Herman"
+    git stash
+    chew
+    echo "Cairo: git stash pop" # https://www.reddit.com/r/ProgrammerHumor/comments/2nvs4c/how_to_hunt_elephants/
+    # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
 }
 
 rr () {
@@ -49,7 +65,7 @@ rr () {
     local _sep=
     for p in "$@"; do
         if [[ "$p" == "/" ]];  then
-            _punchline="I been chewed out before"
+            _punchline=$_chewed
             continue
         fi
         if [[ -e $p ]]; then

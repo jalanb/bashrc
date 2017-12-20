@@ -2,6 +2,7 @@
 
 . ~/jab/bin/first_dir.sh
 . ~/jab/environ.d/colour.sh
+. ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
 
@@ -53,7 +54,13 @@ gl () {
 
 go () {
     local __doc__="git out"
-    git checkout -q "$@"
+    if git checkout -q "$@" 2>&1 | grep -q fred; then
+        stash_herman || return 1
+        git checkout -q "$@"
+        # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
+        echo "Cairo: git stash pop"
+    fi
+    return 0
 }
 
 gp () {
@@ -84,7 +91,12 @@ gt () {
 }
 
 tc () {
-    vim -p ~/.gitconfig ~/.gitignore_global +
+    local _global_config=; test -f ~/.gitconfig && _global_config=~/.gitconfig
+    local _global_ignore=; test -f ~/.gitignore_global && _global_ignore=~/.gitignore_global
+    local _local_config=; test -f .git/config && _local_config=.git/config
+    local _local_ignore=; test -f .gitignore && _local_ignore=.gitignore
+    local _local_creds=; test -f ~/.git-credentials && _local_creds=~/.git-credentials
+    vim -p $_global_config $_global_ignore $_local_ignore $_local_config $_local_creds
 }
 
 # xxx
@@ -108,6 +120,14 @@ gba () {
 gbt () {
     gb "$@"
     gt "$@"
+}
+
+gst () {
+    git stash "$@"
+}
+
+gsp () {
+    gs --porcelain
 }
 
 gta () {
@@ -166,6 +186,10 @@ gij () {
         python -c "print '$JIT commit -m\"$*\"'" > $_storage
         _run_storage
     fi
+}
+
+gca () {
+    git commit --amend
 }
 
 gcp () {
@@ -583,10 +607,6 @@ gaai () {
     ga $addable && gi "$@"
 }
 
-gbdr () {
-    gpo --delete $1
-}
-
 gbta () {
     gba "$@"
     gta "$@"
@@ -684,8 +704,8 @@ gmmm () {
     gmm
 }
 
-gris () {
-    git_stash_and gri "$@"
+gpod () {
+    gpo --delete $1
 }
 
 grmm () {
@@ -695,6 +715,18 @@ grmm () {
 
 grup () {
     git remote update origin --prune
+}
+
+gstl () {
+    gst --list
+}
+
+gstp () {
+    gst pop
+}
+
+gsri () {
+    git_stash_and gri "$@"
 }
 
 gssd () {
