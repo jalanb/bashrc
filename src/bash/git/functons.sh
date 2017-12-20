@@ -296,8 +296,16 @@ gop () {
     go python3
 }
 
+gra () {
+    git rebase --abort
+}
+
 grc () {
     git rebase --continue
+}
+
+grs () {
+    git rebase --skip
 }
 
 grg () {

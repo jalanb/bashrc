@@ -18,8 +18,8 @@ wwts_path () {
 }
 
 head_4 () {
-    _name="$1"; shift
     local _default="$1"; shift
+    _name="$1"; shift
     local _dir=$(first_dir $( wwts_path $_default ))
     [[ -d $_dir ]] || _dir=$(first_dir $( wwts_path $_name ))
     # Args should overwrite defaults
