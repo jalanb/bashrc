@@ -27,6 +27,8 @@ _pre_kd () {
     echo $CDE_header
 }
 
+# rule 1: Always leave system commands alone
+# So this is calle "cde", not "cd"
 cde () {
     local __doc__="cd to a dir, show the dir"
     _pre_kd

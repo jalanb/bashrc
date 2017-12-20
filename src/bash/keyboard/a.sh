@@ -5,7 +5,6 @@
 # _x
 # xx
 
-#! /bin/cat
 
 . ~/hub/ack2vim/ack2vim.sh
 

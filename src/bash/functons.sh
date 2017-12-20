@@ -35,15 +35,6 @@ g () {
     $(which grep) --color "$@"
 }
 
-t () {
-    c "$@"
-    tig -- .
-}
-
-h () {
-    history | tel "$@"
-}
-
 x () {
     exit 1
 }

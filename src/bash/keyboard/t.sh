@@ -3,16 +3,17 @@
 # x
 
 t () {
-    wwts "$@"
+    c "$@"
+    tig -- .
 }
 
 # xx
 
-tf () {
-    [[ $? -eq 0 ]] && echo "true" || echo "false"
+tt () {
+    try .
 }
 
-tt () {
+tx () {
     if echo $1 | grep -q "gz$"; then
         contents=tz
         extract=xz
