@@ -1,0 +1,13 @@
+#! /bin/bash
+
+main () {
+    /Applications/kdiff3.app/Contents/MacOS/kdiff3 "$@"
+    trustExitCode = true
+    result=?$
+	for glob in .orig _BACKUP_ _BASE_ _LOCAL_ _REMOTE_; do
+		find . -name "*${gob}*" -delete
+	done
+    return $result
+}
+
+main

@@ -26,7 +26,7 @@
     dy = difftool -y --extcmd=\"pydiff\"
     dw = diff --word-diff
     dr = rerere diff
-    ds = diff -b -w --ignore-space-at-eol --ignore-blank-lines
+    ds = diff --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
@@ -43,16 +43,19 @@
 [push]
     default = simple
 [merge]
-    tool = kdiff3
+	tool = diffconflicts
     conflictstyle = diff3
 [mergetool "splice"]
     cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
     trustExitCode = true
 [mergetool "kdiff3"]
-    path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
+    path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3 "
+    trustExitCode = true
+[mergetool "kdiffjab"]
+    path = "~/jab/bin/mergetool"
     trustExitCode = true
 [difftool "kdiff3"]
-    path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
+    path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3 "
     trustExitCode = true
 [color]
     ui = auto
@@ -61,3 +64,5 @@
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
     enabled = true
+[mergetool "diffconflicts"]
+	keepBackup = false

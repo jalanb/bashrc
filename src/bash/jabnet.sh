@@ -1,7 +1,7 @@
 #! /bin/cat
 
 cat << EOF
-Hosts edited
+Hosts loaded
 EOF
 
 Welcome_to $BASH_SOURCE
