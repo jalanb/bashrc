@@ -420,7 +420,7 @@ _git_untracked () {
 _gxi_stash () {
     if [[ -z $_stashed ]]; then
         _stashed=gxi
-        git stash
+        gst
     fi
 }
 
@@ -495,7 +495,7 @@ gxi () {
         git status -v | g -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
     done
-    [[ -n $_stashed ]] && git stash pop
+    [[ -n $_stashed ]] && gstp
 }
 
 _ggi_show_diff () {
@@ -729,10 +729,6 @@ gstl () {
     gst --list
 }
 
-gstp () {
-    gst pop
-}
-
 gsri () {
     git_stash_and gri "$@"
 }
@@ -816,11 +812,11 @@ git_stash_and () {
     local stashed=
     if git_changed; then
         stashed=1
-        git stash -q
+        gst -q
     fi
     "$@"
     if [[ $stashed == 1 ]]; then
-        git stash pop -q
+        gstp -q
     fi
 }
 
