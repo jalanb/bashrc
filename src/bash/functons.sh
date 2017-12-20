@@ -384,6 +384,12 @@ add () {
     echo $(($1 + $2))
 }
 
+ask () {
+    local _answer=
+    read -e -n1 -p "$1 " _answer
+    echo $_answer
+}
+
 ddg () {
     firefox "https://next.duckduckgo.com/?q=$*"
 }
@@ -1315,6 +1321,11 @@ autostyle () {
 # xxxxxxxxxx
 _like_duck () {
     has_py "$*"
+}
+
+continuing () {
+    local _answer=$(ask "Continue ?")
+    [[ $_answer =~ [yY] ]]
 }
 
 jab_scripts () {
