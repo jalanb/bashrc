@@ -17,10 +17,12 @@ _find_copier () {
 show_word () {
     if [[ -z $1 ]]; then
         _dttc
-    elif [[ $1 == 1 ]]; then
-        _mlaw
-    elif [[ $1 == 2 ]]; then
-        _lism
+    else
+        case "$1" in 
+            "1") _mlaw;;
+            "2") _lism;;
+            "g") _gttc;;
+        esac
     fi
 }
 
@@ -35,4 +37,6 @@ main () {
     return 0
 }
 
+set -x
 main "$@"
+set +x
