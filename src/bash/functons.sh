@@ -894,6 +894,11 @@ mkcd () {
     cd "$@"
 }
 
+mkv3 () {
+    mkvirtualenv -v --clear --system-site-packages --relocatable --python=python3.7 $1
+    virtualenv --python=python3.7 /Users/jab/.virtualenvs/$1
+}
+    
 nose () {
     local _progress=
     nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
