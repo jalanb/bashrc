@@ -2,8 +2,6 @@
 
 # . ~/jab/src/bash/cde.sh
 
-# cccc may be defined in cde.sh
-
 # x
 # _
 # xx
@@ -22,31 +20,36 @@ cls () {
     fi
 }
 
-_pre_kd () {
+_cde_there () {
     [[ -z $CDE_header ]] && return
     echo $CDE_header
+}
+
+_cde_here () {
+    _here_show_todo && echo
+    # set -x
+    _here_bash
+    _here_git
+    # set -x
+    _here_python && _here_venv
+    # set +x
+    _here_ls && _here_range && _here_clean
+    # set +x
 }
 
 # rule 1: Always leave system commands alone
 # So this is calle "cde", not "cd"
 cde () {
     local __doc__="cd to a dir, show the dir"
-    _pre_kd
+    _cde_there
     KD_QUIET=1 kd "$@" || return 1
-    _post_kd
-}
-
-_post_kd () {
-    _show_todo_here && echo
-    # set -x
-    _post_kd_bash;  _post_kd_git;  _post_kd_python;  _post_kd_venv; 
-    _post_kd_show && _post_kd_run
-    # set +x
+    [[ -d . ]] || return 1
+    _cde_here
 }
 
 # xxxxxxxxxxxx
 
-_post_kd_git () {
+_here_git () {
     [[ -d ./.git ]] || return 0
     show_git_time . | head -n $LOG_LINES_ON_CD_GIT_DIR
     local _branch=$(git rev-parse --abbrev-ref HEAD)
@@ -57,14 +60,13 @@ _post_kd_git () {
     return 0
 }
 
-_post_kd_run () {
-    [[ -d . ]] || return 1
+_here_range () {
     cdra .
 }
 
 # xxxxxxxxxxxxx
 
-_post_kd_bash () {
+_here_bash () {
     local __doc__="""LOok for __init__.sh here or below and source it if found"""
     local _init=./__init__.sh
     [[ -f $_init ]] || _init=bash/__init__.sh
@@ -73,20 +75,20 @@ _post_kd_bash () {
     return 0
 }
 
-_post_kd_show () {
+_here_clean () {
     for path in $(find . -type f -name '*.sw*'); do
         ls -l $path 2> /dev/null
         rri $path && continue
         [[ $? == 1 ]] && break
     done
+}
+
+_here_ls () {
     l 2> /dev/null
 }
 
-_post_kd_venv () {
-    if [[ -e bin/activate ]]; then
-        . bin/activate
-        return 0
-    fi
+_here_venv () {
+    activate_python_here && return 0
     # set -x
     local _venvs=$HOME/.virtualenvs
     [[ -d $_venvs ]] || return 0
@@ -113,13 +115,25 @@ any_python_scripts_here () {
     [[ $_found == 1 ]] && rf -qpr
 }
 
-activate_python () {
-    . ./activate optional
-    . bin/activate optional
+_activate_python () {
+    . ./activate optional || . bin/activate optional
 }
 
-python_activate_here () {
+_python_activate_here () {
     test -f ./activate -o -f bin/activate
+}
+
+_python_activated_here () {
+    [[ \
+        (( -f activate && $(dirname $( readlink -f activate )) == $(dirname $(which python)) )) || \
+        (( -f bin/activate && $(dirname $( readlink -f bin/activate )) == $(dirname $(which python)) )) \
+    ]]
+}
+
+activate_python_here () {
+    _python_activate_here || return 1
+    _python_activated_here && return 0
+    _activate_python
 }
 
 python_project_here () {
@@ -138,10 +152,10 @@ cccde () {
 
 # xxxxxxxxxxxxxxx
 
-_post_kd_python () {
+_here_python () {
     any_python_scripts_here || return 0
     python_project_here || return 0
-    python_activate_here && activate_python
+    activate_python_here
     local _dir=$(realpath .)
     local _dir_name=$(basename $_dir)
     local egg_info=${_dir_name}.egg-info
@@ -151,7 +165,7 @@ _post_kd_python () {
     return 0
 }
 
-_show_todo_here () {
+_here_show_todo () {
     if [[ -f todo.txt ]]; then
         todo_show
         return 0
