@@ -26,14 +26,19 @@ vbb () {
     ls -l ~/.bashrc ~/jab/__init__.sh ~/bashrc.log)
 }
 
+log_main () {
+    set -x
+    [[ $- =~ i ]] && main > ~/login.log 2>&1
+    set +x
+    vim ~/login.log +/environ.d.jab.sh
+}
+
 main () {
     _set_path
     _bashrc
 }
 
 # echo bashrc
-# set -x
-[[ $- =~ i ]] && main > ~/login.log 2>&1
-# vim ~/login.log +/^PATH.IS
-# set +x
+main 
+# log_main
 [[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)

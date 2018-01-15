@@ -45,4 +45,5 @@ if [[ -z $JAB_ENVIRON_JAB_SH ]]; then
     Bye_from $BASH_SOURCE
 
     JAB_ENVIRON_JAB_SH=here
+
 fi
