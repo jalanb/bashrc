@@ -7,7 +7,6 @@
 #
 # Gonna need python
 #
-. ~/jab/src/bash/run_python.sh
 #
 # Once sourced there is one major command:
 #
@@ -17,7 +16,7 @@ add_to_a_path () {
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
         DOT_PY=~/jab/src/python/add_to_a_path.py
-        local new_paths=$(pypath python $DOT_PY "$@")
+        local new_paths=$(python $DOT_PY "$@")
         if [[ -n $new_paths ]]; then
             eval $1=$new_paths
             export $1

@@ -5,7 +5,7 @@ Welcome_to () {
 
 Bye_from () {
     [[ -z $WELCOME_BYE ]] && return
-    echo "Bye  from  $1 on $(hostname -f)"
+    echo "Bye from  $1 on $(hostname -f)"
 }
 
 

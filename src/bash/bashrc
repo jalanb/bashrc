@@ -33,6 +33,7 @@ main () {
 
 # echo bashrc
 # set -x
-[[ $- =~ i ]] && main
+[[ $- =~ i ]] && main > ~/login.log 2>&1
+# vim ~/login.log +/^PATH.IS
 # set +x
 [[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)

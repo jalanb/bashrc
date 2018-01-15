@@ -11,6 +11,7 @@ set_paths () {
         add_to_a_path PATH ~/jab/bin
         add_to_a_path PATH $HOME/.local
         add_to_a_path PATH $HOME/.local/bin
+        [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path PATH ${VIRTUAL_ENV}/bin
         add_to_a_path PATH /usr/local/gnu
         add_to_a_path PATH /bin
         add_to_a_path PATH /usr/local/bin
@@ -28,11 +29,9 @@ set_paths () {
 }
 
 set_bucket () {
-    _far=~/jab/../../..
-    _far_git=$_far/git
-    _far_hg=$_far/hg
-    GIT_BUCKET=no_bucket; [[ -d $_far_git/bucket ]] && GIT_BUCKET=$_far_git/bucket; export GIT_BUCKET
-    HG_BUCKET=no_bucket; [[ -d $_far_hg/bucket ]] && HG_BUCKET=$_far_hg/bucket export HG_BUCKET
+    local _src=~/src
+    GIT_BUCKET=no_bucket; [[ -d $_src/git/bucket ]] && GIT_BUCKET=$( readlink -f $_src/git/bucket); export GIT_BUCKET
+    HG_BUCKET=no_bucket; [[ -d $_src/hg/bucket ]] && HG_BUCKET=$( readlink -f $_src/hg/bucket); export HG_BUCKET
     BUCKET=no_bucket
     if [[ -d $HG_BUCKET ]]; then
         BUCKET=$HG_BUCKET
