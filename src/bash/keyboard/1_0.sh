@@ -53,6 +53,7 @@ alias 36="cde ~/jab/txt"
 alias 40="cd ~/wwts/.."
 alias 43="head_43"
 alias 44="head_44"
+alias 45="head_45"
 alias 46="cde /tmp/deploying"
 
 alias 50="cd ~/src/.."

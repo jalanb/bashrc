@@ -45,3 +45,7 @@ head_44 () {
     head_4 dashboard dashboard.2.7 "$@"
 }
 
+head_45 () {
+    head_4 waas waas "$@"
+}
+
