@@ -11,8 +11,12 @@ except ImportError:
     from collections import namedtuple
 
 
-from pysyte.paths import path
-from pysyte.colours import texts
+try:
+    from pysyte.paths import path
+    from pysyte.colours import texts
+except ImportError:
+    from dotsite.paths import path
+    from dotsite.colours import texts
 
 
 def todo_file():
