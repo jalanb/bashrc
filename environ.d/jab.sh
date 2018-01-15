@@ -1,45 +1,48 @@
 #! /bin/cat
 
-. ~/jab/src/bash/welcome.sh
+if [[ -z $JAB_ENVIRON_JAB_SH ]]; then
 
-Welcome_to $BASH_SOURCE
+    . ~/jab/src/bash/welcome.sh
 
-_set_jab () {
-    if [[ -z ~/jab ]]; then
-        echo ~/jab is not set >&2
-        return 1
-    fi
-}
+    Welcome_to $BASH_SOURCE
 
-_set_ssh () {
-    local home_id=~/.ssh/id_jab
-    [[ -f "$home_id" ]] && export JAB_ID=$home_id
-    export JAB_SSH=$(dirname $home_id)
-}
+    _jab_dir () {
+        [[ -d ~/jab ]] || echo ~/jab is not a directory >&2
+        [[ -d ~/jab ]] 
+    }
 
-_set_ls_options () {
-    export LS_PROGRAM=$(realpath $(which ls))
-    if $LS_PROGRAM -@ >/dev/null 2>&1; then
-        export LS_COLOUR_OPTION='-@'
-    elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
-        export LS_COLOUR_OPTION='--color=auto'
-    else
-        export LS_COLOUR_OPTION=
-    fi
-    if $LS_PROGRAM --group-directories-first >/dev/null 2>&1; then
-        export LS_DIRS_OPTION='--group-directories-first'
-    else
-        export LS_DIRS_OPTION=
-    fi
-}
+    _set_ssh () {
+        local home_id=~/.ssh/id_jab
+        [[ -f "$home_id" ]] && export JAB_ID=$home_id
+        export JAB_SSH=$(dirname $home_id)
+    }
 
-_main () {
-    if _set_jab; then
-        _set_ssh
-        _set_ls_options
-    fi
-}
+    _set_ls_options () {
+        export LS_PROGRAM=$(realpath $(which ls))
+        if $LS_PROGRAM -@ >/dev/null 2>&1; then
+            export LS_COLOUR_OPTION='-@'
+        elif $LS_PROGRAM --color=auto >/dev/null 2>&1; then
+            export LS_COLOUR_OPTION='--color=auto'
+        else
+            export LS_COLOUR_OPTION=
+        fi
+        if $LS_PROGRAM --group-directories-first >/dev/null 2>&1; then
+            export LS_DIRS_OPTION='--group-directories-first'
+        else
+            export LS_DIRS_OPTION=
+        fi
+    }
 
-_main
+    _main () {
+        if _jab_dir; then
+            _set_ssh
+            _set_ls_options
+        fi
+    }
 
-Bye_from $BASH_SOURCE
+    _main
+
+    Bye_from $BASH_SOURCE
+
+    JAB_ENVIRON_JAB_SH=here
+fi
