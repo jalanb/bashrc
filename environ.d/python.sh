@@ -2,21 +2,9 @@
 
 Welcome_to $BASH_SOURCE
 
-# [[ -n $WELCOME_BYE ]] && echo 1
-find_python () {
-    [[ -n $PYTHON && -x "$PYTHON" ]] && return 0
-    [[ -n $PYTHON ]] && PYTHON=
-    MY_PATH=~/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
-    [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
-    PYTHON=$(PATH=$MY_PATH which python2.7 2>/dev/null)
-    [[ -z $PYTHON ]] && PYTHON=$(which python2.7 2>/dev/null)
-    [[ -z $PYTHON ]] && PYTHON=no_python
-    export PYTHON
-    [[ $PYTHON != no_python ]]
-}
+. ~/jab/src/bash/run_python.sh
 
-# [[ -n $WELCOME_BYE ]] && echo 2
-find_python
+PYTHON=${PYTHON:-$(pypath which python 2>/dev/null)}
 
 # [[ -n $WELCOME_BYE ]] && echo 3
 _has_ext () {

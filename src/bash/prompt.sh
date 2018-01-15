@@ -21,7 +21,7 @@ fi
 changes=0
 
 get_repo_status () {
-    PYTHON=${PYTHON:-mython}
+    MYTHON=${PYTHON:-mython}
     GIT_BRANCH=
     if git branch > /dev/null 2>&1; then
         if git status >/dev/null 2>&1; then
@@ -72,7 +72,7 @@ prompt_command () {
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${NO_COLOUR}\n$ "
     (what -q kd && kd --add . >/dev/null 2>&1)
     history -a
-    local python_version=$($PYTHON --version 2>&1 | cut -d' ' -f2)
+    local python_version=$($MYTHON --version 2>&1 | cut -d' ' -f2)
     if [[ -n "$VIRTUAL_ENV" ]]; then
         python_version=${python_version}.$(basename $VIRTUAL_ENV)
     fi

@@ -17,7 +17,7 @@ add_to_a_path () {
         echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
     else
         DOT_PY=~/jab/src/python/add_to_a_path.py
-        local new_paths=$(_run_python $DOT_PY "$@")
+        local new_paths=$(pypath python $DOT_PY "$@")
         if [[ -n $new_paths ]]; then
             eval $1=$new_paths
             export $1

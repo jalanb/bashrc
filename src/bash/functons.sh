@@ -5,6 +5,7 @@ Welcome_to $BASH_SOURCE
 # set -e
 
 . ~/jab/bin/first_dir.sh
+. ~/jab/src/bash/run_python.sh
 
 # Called functons.sh because "functions" is ... something else
 
@@ -898,7 +899,7 @@ mkv3 () {
     mkvirtualenv -v --clear --system-site-packages --relocatable --python=python3.7 $1
     virtualenv --python=python3.7 /Users/jab/.virtualenvs/$1
 }
-    
+
 nose () {
     local _progress=
     nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
@@ -1176,7 +1177,7 @@ please () {
 }
 
 mython () {
-    PATH=$HOME/bin:/usr/local/bin:/usr/bin python2.7 "$@"
+    pypath python "$@"
 }
 
 qwerty  () {

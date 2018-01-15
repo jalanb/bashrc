@@ -3,27 +3,11 @@
 Welcome_to $BASH_SOURCE
 
 
-_find_python () {
-    [[ -e $PYTHON ]] && return 0
-    MY_PATH=$jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
-    PYTHON=$(PATH=$MY_PATH which python2.7 2>/dev/null)
-    [[ -z $PYTHON ]] && PYTHON=$(which python2.7 2>/dev/null)
-    export PYTHON
-    [[ -n $PYTHON ]]
-}
-
-_run_python () {
-    local script=$1; shift
-    if [[ -f "$script" ]]; then
-        if _find_python; then
-            $PYTHON $script "$@"
-        else
-            echo "Could not find python" >&2
-            return 1
-        fi
-    else
-        echo $script is not a file >&2
-    fi
+pypath () {
+    local _my_path="$HOME/bin:/usr/local/bin:/usr/bin"
+    local _venv_bin="${VIRTUAL_ENV:-xxx}"/bin
+    [[ -d $_venv_bin ]] && _my_path="$_venv_bin:$_my_path"
+    PATH=$_my_path "$@"
 }
 
 Bye_from $BASH_SOURCE
