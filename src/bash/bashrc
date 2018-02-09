@@ -33,9 +33,14 @@ log_main () {
     vim ~/login.log +/environ.d.jab.sh
 }
 
+_local () {
+    . ~/jab/local/bashrc optional
+}
+
 main () {
     _set_path
     _bashrc
+    _local
 }
 
 # echo bashrc
