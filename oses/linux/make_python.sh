@@ -37,7 +37,7 @@ pip_install_modules () {
         return 1
     fi
     $PIP install setuptools
-    $PIP install -r $BASH_DIR/requirements.txt
+    [[ -f $BASH_DIR/requirements.txt ]] && $PIP install -r $BASH_DIR/requirements.txt
 }
 
 main () {
