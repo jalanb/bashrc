@@ -75,16 +75,26 @@ links_into_home () {
 
 renew_clone_link () {
     local script_file=$(readlink -f $BASH_SOURCE)
-    local clone_dir=$(dirname $script_file)
-          clone_name=$(basename $clone_dir)
-          clone_link=~/$clone_name
-    local script_name=$(basename $script_file)
-    local linked_script=$clone_link/$script_name
-    if [[ ! -d $clone_dir/.git ]]; then
-        echo $clone_dir/.git is not a directory
-        echo This script assumed that $clone_dir is root of a clone
+    local script_dir=$(dirname $script_file)
+    local script_parent=$(readlink -f $script_dir/..)
+    local clone_dir=
+    local sub_dir=
+    if [[ -d $script_parent/.git ]]; then
+        clone_dir=$script_parent
+        sub_dir=$(basename $script_dir)
+    elif [[ -d $script_dir/.git ]]; then
+        clone_dir=$script_dir
+    else
+        echo $script_file assumes it is in a git clone
+        echo $script_parent/.git is not a directory
+        echo $script_dir/.git is not a directory
         return 2
     fi
+          
+    # clone_dir == ~/.../jab
+          clone_link=~/$(basename $clone_dir)       # ~/jab
+    local script_name=$(basename $script_file)      # .link
+    local linked_script=$clone_link/$sub_dir/$script_name    # ~/jab/home/.link
     [[ -f $linked_script ]] && return 0
     [[ -f $clone_link ]] && rm -f $clone_link
     [[ -h $clone_link ]] && rm -f $clone_link

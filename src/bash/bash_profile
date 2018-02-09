@@ -1,3 +1,5 @@
+# .bash_profile
+
 # echo "Welcome to ~/.bash_profile"
 
 [[ -e ~/.bashrc ]] && source ~/.bashrc
