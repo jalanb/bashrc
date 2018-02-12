@@ -949,10 +949,12 @@ rara () {
     local _path=$(kpp "$@")
     [[ $_cd != "no" ]] && $_cd $_path
     ranger --choosedir=$HOME/.local/ranger.txt
-    local _ranged=$( cat $HOME/.local/ranger.txt)
+    local _ranged=
+    [[ -f $HOME/.local/ranger.txt ]] && _ranged=$(cat $HOME/.local/ranger.txt)
+    [[ -z $_ranged ]] && return
     for word in "$@"; do
         if [[ $word =~ "[-]*cd" ]]; then
-            cd $(cat $_ranged)
+            cd $_ranged
         fi
     done
 }
