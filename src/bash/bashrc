@@ -34,7 +34,7 @@ log_main () {
 }
 
 _local () {
-    . ~/jab/local/bashrc optional
+    source_what ~/jab/local/bashrc optional
 }
 
 main () {
