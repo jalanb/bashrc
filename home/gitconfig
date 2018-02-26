@@ -20,6 +20,7 @@
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
     di = difftool -y --extcmd=\"~/hub/icdiff/icdiff --line-numbers\"
+    dk = difftool -y -t Kaleidoscope
     dm = difftool -y --extcmd=\"~/bin/meld  \"
     dn = diff --name-only
     dv = difftool -y --extcmd=\"vim -d -O\"
@@ -42,6 +43,8 @@
     st = status
 [push]
     default = simple
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
 	tool = diffconflicts
     conflictstyle = diff3
@@ -57,6 +60,8 @@
 [difftool "kdiff3"]
     path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3 "
     trustExitCode = true
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
 [color]
     ui = auto
 [help]
