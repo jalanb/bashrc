@@ -1,6 +1,7 @@
 #! /bin/bash
 
 . ~/jab/src/bash/git/functons.sh
+. ~/jab/environ.d/colour.sh
 
 clone_dir () {
     echo clone $1

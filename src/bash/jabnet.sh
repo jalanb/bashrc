@@ -23,7 +23,7 @@ ssb () {
 }
 
 ssm () {
-    _ssj jalan.mac
+    _ssj jalan-mac.local
 }
 
 ssu () {

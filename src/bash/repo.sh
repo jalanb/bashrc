@@ -1,5 +1,7 @@
 #! /bin/cat
 
+. ~/bash/welcome.sh
+
 Welcome_to $BASH_SOURCE
 
 path_to_this_repo () {
