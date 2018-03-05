@@ -23,6 +23,10 @@ update_dir () {
 }
 
 up_dir () {
+    printf "$LIGHT_GREEN================================================\n"
+    printf "      $GREEN                  $1\n"
+    printf "$LIGHT_GREEN================================================\n"
+    printf "$NO_COLOUR\n"
     [[ -d $1 ]] || clone_dir $1
     [[ -d $1 ]] && update_dir $1
 }
