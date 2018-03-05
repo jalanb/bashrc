@@ -5,9 +5,9 @@
 
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 
-_expected=~/hub/what/what.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
-_expected=~/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
-_expected=~/jab/src/bash/functons.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+. ~/hub/what/what.sh
+. ~/jab/environ.d/jab.sh
+. ~/jab/src/bash/functons.sh
 
 usage () {
     if [[ $# < 2 ]]; then
