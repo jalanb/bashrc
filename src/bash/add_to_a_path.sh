@@ -39,9 +39,18 @@ show_value () {
 }
 
 show_a_path () {
-    local setter=${2:-bash}
-    local name=${1:-PATH}
-    echo "$setter has set \$$name to:"
+    local _quiet=
+    [[ -z $1 ]] && return 1
+    if [[ $1 == "-q" ]]; then _quiet=1; shift; fi
+    local name=$1 && shift
+    if [[ $1 == "-q" ]]; then _quiet=1; shift; fi
+    local setter=bash
+    if [[ -n $1 ]]; then 
+        setter=$1
+        shift
+    fi
+    [[ $1 == "-q" ]] && _quiet=1
+    [[ -n $_quiet ]] || echo "$setter has set \$$name to:"
     local old_ifs=$IFS
     IFS=":"
     local path=
@@ -58,7 +67,7 @@ show_path () {
 }
 
 path () {
-    show_path "$@"
+    show_path "$@" -q
 }
 
 phow_ppath () {
