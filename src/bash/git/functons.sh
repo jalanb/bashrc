@@ -225,6 +225,10 @@ gfa () {
     git fetch --tags
 }
 
+ggi () {
+    gxi _ggi_show_diff _ggi_response "$@"
+}
+
 gff () {
     gfa
     grup
@@ -800,20 +804,30 @@ _git_kd () {
     kd "$@" >/dev/null 2>&1
 }
 
+verbosity () {
+    local _verbose=1
+    for word in "$@"; do
+        [[ $word =~ -[qv] ]] || continue
+        [[ $word =~ .q ]] && _verbose=
+        [[ $word =~ .v ]] && _verbose=1
+    done
+    echo $_verbose
+}
+
 git_root () {
-    local _quiet=
-    if [[ $1 == '-q' ]]; then _quiet=True; shift; fi
+    local _verbose=$(verbosity $1 )
+    [[ $1 =~ -[qv] ]] && shift
     _there="$1"; shift
     [[ -f "$_there" ]] && _there=$(dirname $_there)
     [[ -d "$_there" ]] || return 1
-    (_git_kd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
-    local _root=$(_git_kd "$_there"; git rev-parse --git-dir 2>/dev/null)
+    (cd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
+    local _root=$(cd "$_there"; git rev-parse --git-dir 2>/dev/null)
     _root=${_root%%.git}
-    if [[ -z $_root ]]; then
-        echo $(realpath $_there);
-    else
-        echo $(realpath $_root);
-    fi
+    local _root_dir=$(readlink -f $_root)
+    [[ -d $_root_dir ]] || echo "$_root_dir not a dir" >&2
+    [[ -d $_root_dir ]] || return 1
+    [[ $_verbose == "1" ]] && echo $_root_dir
+    return 0
 }
 
 # xxxxxxxxxx
