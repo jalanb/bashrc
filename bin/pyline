@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+# http://code.activestate.com/recipes/437932-pyline-a-grep-like-sed-like-command-line-tool/
+
+# updated 2005.07.21, thanks to Jacob Oscarson
+# updated 2006.03.30, thanks to Mark Eichin
+
+
+import sys
+import getopt
+
+# parse options for module imports
+options, args = getopt.getopt(sys.argv[1:], 'm:')
+options = dict(options)
+if '-m' in options:
+    for imp in options['-m'].split(','):
+        locals()[imp] = __import__(imp.strip())
+
+
+cmd = ' '.join(args)
+if not cmd.strip():
+    cmd = 'line'                        # no-op
+
+
+codeobj = compile(cmd, 'command', 'eval')
+write = sys.stdout.write
+
+
+for numz, line in enumerate(sys.stdin):
+    line = line[:-1]
+    num = numz + 1
+    words = [w for w in line.strip().split(' ') if len(w)]
+    result = eval(codeobj, globals(), locals())
+    if result is None or result is False:
+        continue
+    if isinstance(result, list) or isinstance(result, tuple):
+        result = ' '.join([str(r) for r in result])
+    else:
+        result = str(result)
+    write(result)
+    if not result.endswith('\n'):
+        write('\n')

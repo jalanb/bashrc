@@ -60,7 +60,7 @@ prompt_command () {
     fi
     changes=0
     # set -x
-    local _short_dir="$(mython ~/jab/bin/short_dir "${PWD}")"
+    local _short_dir="$(pyth ~/jab/bin/short_dir "${PWD}")"
     local Dir="${_short_dir}"
     [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_short_dir}${PROMPT_COLOUR}"
     [[ -n $IGNORE_CHANGES ]] || get_repo_status
@@ -71,10 +71,9 @@ prompt_command () {
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${NO_COLOUR}\n$ "
     (what -q kd && kd --add . >/dev/null 2>&1)
     history -a
-    local python_version=$(python --version 2>&1 | cut -d' ' -f2)
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        python_version=${python_version}.$(basename $VIRTUAL_ENV)
-    fi
+    local _pyv=$(python --version 2>&1 | head -n 1 | cut -d' ' -f2)
+    local python_version=$(python --version 2>&1 | head -n 1 | cut -d' ' -f2)
+    [[ -n "$VIRTUAL_ENV" ]] && python_version=${python_version}.$(basename $VIRTUAL_ENV)
     export PS1="$STATUS ${PROMPT_COLOUR}\
 [\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]\
         ${NO_COLOUR}\n$ "

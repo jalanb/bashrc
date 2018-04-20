@@ -1,0 +1,3 @@
+#! bash4
+
+/Users/jab/src/git/hub/vimcat/vimcat "$@"
