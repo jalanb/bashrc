@@ -728,11 +728,11 @@ wvX () {
 }
 
 wta () {
-    . ~/hub/ack2vim/ack2vim.sh
+    . ~/hub/ackvim/ack2vim.sh
 }
 
 wva () {
-    vim -p ~/hub/ack2vim/ack2vim.sh "$@"
+    vim -p ~/hub/ackvim/ack2vim.sh "$@"
 }
 
 wtb () {
