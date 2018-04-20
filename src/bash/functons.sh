@@ -863,8 +863,8 @@ dots () {
 }
 
 down () {
-    cde ~/Download* "$@"
-    lr -a
+    cd ~/down "$@"
+    l1 -tr . | tail
 }
 
 init () {
