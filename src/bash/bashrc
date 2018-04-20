@@ -8,6 +8,9 @@ _set_path () {
     BINS=/usr/bin:/bin:/usr/sbin:/sbin
     HOMES=$HOME/bin:$HOME/.local
     export PATH=$LOCALS:$BINS:$HOMES
+    export STDOUT=on
+    export STDERR=on
+
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 }
 
