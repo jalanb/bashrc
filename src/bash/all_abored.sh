@@ -2,7 +2,7 @@
 
 # . ~/jab/src/bash/all_abored.sh
 
-# aaaa may be defined in all_abored.sh
+# aaa may be defined in all_abored.sh
 
 # x
 

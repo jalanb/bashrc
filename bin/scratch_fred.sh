@@ -1,5 +1,7 @@
 #! /bin/bash
 
+PATH=/usr/local/bin:/usr/bin
+
 pbpaste > ~/tmp/fred
-/usr/local/bin/vim ~/tmp/fred
+vim ~/tmp/fred
 cat ~/tmp/fred | pbcopy
