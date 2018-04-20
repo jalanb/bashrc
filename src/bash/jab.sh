@@ -27,6 +27,7 @@ cjb () { cd ~/jab/src/bash/$1; }
 
 qh0 () { . ~/jab/../what/what.sh; }
 qh1 () { . ~/jab/src/bash/hub.sh; }
+qha () { . ~/hub/ackvim/ack2vim.sh; . ~/hub/ackvim/grep_vim.sh optional; }
 qhk () { . ~/hub/kd/kd.sh; }
 qhw () { . ~/hub/what/what.sh; }
 
