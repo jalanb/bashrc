@@ -115,7 +115,7 @@ def script(args):
         fred_files = [_ for _ in fred_files if _.ext == '.py'][:1]
         if not fred_files:
             raise ScriptError('No pythonic freds found')
-        command = 'mython'
+        command = 'pyth'
     elif args.shell:
         fred_files = [_ for _ in fred_files if _.ext == '.sh'][:1]
         if not fred_files:

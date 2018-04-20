@@ -42,7 +42,7 @@ x () {
 
 y () {
     clear
-    mython ~/jab/src/python/y.py "$@"
+    pyth ~/jab/src/python/y.py "$@"
 }
 
 # xx
@@ -240,7 +240,7 @@ ly () {
 ma () {
     local _storage=/tmp/fred.sh;
     if [[ -z "$@" ]]; then
-        mython -c "print 'memo -a\"$*\"'" > $_storage;
+        pyth -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
         rr $_storage;

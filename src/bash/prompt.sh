@@ -60,7 +60,7 @@ prompt_command () {
     fi
     changes=0
     # set -x
-    local _short_dir="$(mython ~/jab/bin/short_dir "${PWD}")"
+    local _short_dir="$(pyth ~/jab/bin/short_dir "${PWD}")"
     local Dir="${_short_dir}"
     [[ $? == 2 ]] && Dir="${PROMPT_OPPOSITE_COLOUR}${_short_dir}${PROMPT_COLOUR}"
     [[ -n $IGNORE_CHANGES ]] || get_repo_status

@@ -113,7 +113,7 @@ old_v () {
         echo "" > ~/tmp/fred
         $EDITOR ~/tmp/fred
     else
-        script=$(mython ~/jab/src/python/vim.py "$@")
+        script=$(pyth ~/jab/src/python/vim.py "$@")
         status=$?
         if [[ $status == 0 ]]; then
             if [[ -n $script ]]; then
@@ -124,7 +124,7 @@ old_v () {
                     echo $script is not a file >&2
                 fi
             else
-                mython ~/jab/src/python/vim.py -U "$@"
+                pyth ~/jab/src/python/vim.py -U "$@"
             fi
         else
             echo Python error: $status
@@ -132,10 +132,10 @@ old_v () {
                 echo Script produced you could run it with
                 echo "  bash $script"
                 echo or debug the problem with
-                echo "  mython ~/jab/src/python/vim.py -U" "$@"
+                echo "  pyth ~/jab/src/python/vim.py -U" "$@"
             else
                 echo No script produced please try
-                echo mython ~/jab/src/python/vim.py -U "$@"
+                echo pyth ~/jab/src/python/vim.py -U "$@"
             fi
         fi
     fi
@@ -155,7 +155,7 @@ vim_none () {
 }
 
 vim_some () {
-    script=$(mython ~/jab/src/python/vim.py "$@")
+    script=$(pyth ~/jab/src/python/vim.py "$@")
     status=$?
     if [[ $status == 0 ]]; then
         if [[ -n $script ]]; then
@@ -166,7 +166,7 @@ vim_some () {
                 echo $script is not a file >&2
             fi
         else
-            mython ~/jab/src/python/vim.py -U "$@"
+            pyth ~/jab/src/python/vim.py -U "$@"
         fi
     else
         echo Python error: $status
@@ -174,10 +174,10 @@ vim_some () {
             echo Script produced you could run it with
             echo "  bash $script"
             echo or debug the problem with
-            echo "  mython ~/jab/src/python/vim.py -U" "$@"
+            echo "  pyth ~/jab/src/python/vim.py -U" "$@"
         else
             echo No script produced please try
-            echo mython ~/jab/src/python/vim.py -U "$@"
+            echo pyth ~/jab/src/python/vim.py -U "$@"
         fi
     fi
 }

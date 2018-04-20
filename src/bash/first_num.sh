@@ -3,8 +3,8 @@
 Welcome_to $BASH_SOURCE
 
 first_num () {
-    num=$(mython ~/jab/src/python/first_num.py "$@")
-    args=$(mython ~/jab/src/python/first_num.py --Invert "$@")
+    num=$(pyth ~/jab/src/python/first_num.py "$@")
+    args=$(pyth ~/jab/src/python/first_num.py --Invert "$@")
     [[ -n $num ]]
 }
 
