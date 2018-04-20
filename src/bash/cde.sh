@@ -8,6 +8,10 @@
 # _x
 # xxx
 
+c1 () {
+    cde "$@"
+}
+
 cls () {
     local __doc__="clean, clear, ls"
     clean
@@ -33,6 +37,7 @@ _cde_here () {
     # set -x
     _here_python && _here_venv
     # set +x
+    [[ -n $1 ]] && 
     _here_ls && _here_range && _here_clean
     # set +x
 }
@@ -81,6 +86,10 @@ _here_clean () {
         rri $path && continue
         [[ $? == 1 ]] && break
     done
+}
+
+_here_l1 () {
+    l -1 2> /dev/null
 }
 
 _here_ls () {

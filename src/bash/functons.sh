@@ -370,6 +370,14 @@ sq () {
     . $GIT_BUCKET/qaz/src/bash/qazrc
 }
 
+sx () {
+    set -x
+}
+
+sz () {
+    set +x
+}
+
 zm () {
     du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g"
 }
