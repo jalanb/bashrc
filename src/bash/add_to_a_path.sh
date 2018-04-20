@@ -57,6 +57,10 @@ show_path () {
     show_a_path PATH "$@"
 }
 
-show_ppath () {
+path () {
+    show_path "$@"
+}
+
+phow_ppath () {
     show_a_path PYTHONPATH "$@"
 }
