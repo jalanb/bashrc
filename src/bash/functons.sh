@@ -1176,7 +1176,7 @@ lesen () {
 }
 
 mkenv2 () {
-    _mkenv python2
+    _mkenv python
 }
 
 mkenv3 () {

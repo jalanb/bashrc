@@ -36,7 +36,7 @@ _remove_jab_tmp_files () {
 
 _show_todo () {
     builtin cd "~/jab/src/python"
-    if python2.7 -c"a=0" >/dev/null 2>&1; then
+    if python -c"a=0" >/dev/null 2>&1; then
         [[ -f "todo.py" ]] && pyth todo.py
     else
         local version=$(pyth -V 2>&1)

@@ -12,7 +12,7 @@ get_pandemic () {
 make_pandemic () {
     cd vim-pandemic-master
     sed -i -e "s|vim/bundle.remote|vim/bundle|" bin/pandemic
-    python2.7 setup.py install --prefix=$HOME
+    python setup.py install --prefix=$HOME
     PANDEMIC=bin/pandemic
     if [[ ! -f "$PANDEMIC" ]]; then
         echo Installation of $PANDEMIC failed >&2

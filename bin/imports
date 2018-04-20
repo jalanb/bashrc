@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python
 """Find imports in python files"""
 from __future__ import print_function
 
