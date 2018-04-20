@@ -22,7 +22,7 @@ checkouts () {
     cd ..
     git clone $GITHUB/jalanb/what
     git clone $GITHUB/jalanb/kd
-    git clone $GITHUB/jalanb/ack2vim
+    git clone $GITHUB/jalanb/ackvim
 }
 
 setup_python () {

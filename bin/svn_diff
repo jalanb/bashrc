@@ -29,8 +29,8 @@ IP () {
 
 show_python_diff () {
     if [[ -d "$PYDIFF" ]]; then
-        python2.7 $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
-        local pydiff_output=$(python2.7 -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
+        python $PYDIFF/psydiff.py "$PATH_TO_FILE" "$COPY_OF_CHECKOUT"
+        local pydiff_output=$(python -c "import os; stem = lambda x : os.path.basename(x).split('.')[0]; print stem('$PATH_TO_FILE') + '-' + stem('$COPY_OF_CHECKOUT') + '.html'")
         if [[ -f "$pydiff_output" ]]; then
             if [[ -d  $WWW_ROOT/pydiff ]]; then
                 cp $pydiff_output $WWW_ROOT/pydiff/index.html

@@ -30,7 +30,7 @@ cd ~/hub
 git clone $GITHUB/jalanb/dotsite
 git clone $GITHUB/jalanb/what
 git clone $GITHUB/jalanb/kd
-git clone $GITHUB/jalanb/ack2vim
+git clone $GITHUB/jalanb/ackvim
 pip install git+https://github.com/jeffkaufman/icdiff.git
 
 cd ~/jab

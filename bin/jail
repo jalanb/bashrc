@@ -29,7 +29,7 @@ set_paths () {
     [[ ! -d "$COVERAGE_DIRECTORY" ]] && mkdir -p $COVERAGE_DIRECTORY
 
     PYTHON=python
-    ! $PYTHON -c "all([])" 2> /dev/null && PYTHON=python2.7
+    ! $PYTHON -c "all([])" 2> /dev/null && PYTHON=python
     if ! $PYTHON -c "all([])" 2> /dev/null; then
         echo "No suitable python available" >&2
         exit 2

@@ -251,7 +251,9 @@ gxi () {
     _stashed=
     first_arg_dir_or_here "$@" && shift
     GXI_QUERY=
+    gbr
     while git status -s "$dir"; do
+        gb
         git diff --staged
         for f in $(gssd_changes "$dir"); do
             [[ -n "$f" ]] || continue
@@ -728,17 +730,23 @@ _git_kd () {
 }
 
 verbosity () {
-    local _verbose=1
-    for word in "$@"; do
-        [[ $word =~ -[qv] ]] || continue
-        [[ $word =~ .q ]] && _verbose=
-        [[ $word =~ .v ]] && _verbose=1
+    set -x
+    [[ $2 =~ off ]] && STDOUT=off
+    [[ $2 =~ on ]] && STDOUT=on
+    [[ -n $STDOUT ]] || for word in "$@"; do
+        [[ $word =~ -[qQvV] ]] || continue
+        [[ $word =~ .q ]] && STDOUT=off
+        [[ $word =~ .Q ]] && STDERR=off
+        [[ $word =~ .v ]] && STDOUT=on
+        [[ $word =~ .V ]] && STDERR=on
     done
-    echo $_verbose
+    echo $STDOUT
+    set +x
+    true
 }
 
 git_root () {
-    local _verbose=$(verbosity $1 )
+    STDOUT=$(verbosity $1 on)
     _there=
     for word in $*; do
         [[ $word =~ -[qv] ]] && continue
@@ -750,12 +758,14 @@ git_root () {
     [[ -d "$_there" ]] || echo "Not a dir '$_there'"
     [[ -d "$_there" ]] || return 1
     (cd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
-    local _root=$(cd "$_there"; git rev-parse --git-dir 2>/dev/null)
-    _root=${_root%%.git}
-    local _root_dir=$(readlink -f $_root)
+    local _git_dir=$(cd "$_there"; git rev-parse --git-dir . 2>/dev/null)
+    local _project_dir=$( dirname _git_dir)
+    [[ -z $_project_dir ]] && _project_dir=.
+    [[ -d $_project_dir ]] || echo "Not a dir: $_project_dir"
+    local _root_dir=$(readlink -f $_project_dir)
     [[ -d $_root_dir ]] || echo "$_root_dir not a dir" >&2
     [[ -d $_root_dir ]] || return 1
-    [[ $_verbose == "1" ]] && echo $_root_dir
+    [[ -z $_verbose ]] || echo $_root_dir
     return 0
 }
 
@@ -843,12 +853,14 @@ _do_git_status () {
     [[ -z $dir || $(readlink -f $dir) == $(readlink -f .) ]] && dir=$PWD
     local _msg=
     [[ -d $dir ]] || _msg="Not a dir: $dir"
-    local _verbose=1
-    [[ -n "$@" && "$@" =~ -q ]] && _verbose=
-    [[ -n "$@" && "$@" =~ -v ]] && _verbose=1
-    [[ -z $_verbose ]] && _msg=
-    [[ -n $_msg ]] && echo $_msg >&2
-    # [[ -n $_msg ]] && set +x
+    STDOUT=off
+    STDERR=on
+    [[ -n "$@" && "$@" =~ -q ]] && STDOUT=off
+    [[ -n "$@" && "$@" =~ -Q ]] && STDERR=off
+    [[ -n "$@" && "$@" =~ -[vV] ]] && STDOUT=on
+    if [[ -n $_msg ]]; then
+        [[ $STDERR == "on" ]] && echo $_msg >&2
+    fi
     # set -x
     # set -e
     [[ -n $_msg ]] && return 1

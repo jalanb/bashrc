@@ -1,4 +1,4 @@
-#! /usr/bin/env python2.7
+#! /usr/bin/env python
 """Script to provide entry to the vim script"""
 
 from __future__ import print_function
