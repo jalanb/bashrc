@@ -15,7 +15,13 @@ _bashrc () {
     WELCOME_BYE=
     source ~/jab/__init__.sh
     WELCOME_BYE=
-    cd ~/jab
+    local _start_dir=$1; shift
+    local _jab_dir=~/jab/start_dir
+    if [[ -f $_jab_dir ]]; then
+        _start_dir=$(cat $_jab_dir)
+        rm -f $_jab_dir
+    fi
+    cd $_start_dir
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
 }
@@ -39,11 +45,11 @@ _local () {
 
 main () {
     _set_path
-    _bashrc
+    _bashrc ~/jab
     _local
 }
 
 # echo bashrc
-main 
+main  "$@"
 # log_main
 [[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)
