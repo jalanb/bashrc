@@ -71,10 +71,9 @@ prompt_command () {
     export PS1="$STATUS ${PROMPT_COLOUR}[\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]${NO_COLOUR}\n$ "
     (what -q kd && kd --add . >/dev/null 2>&1)
     history -a
-    local python_version=$(python --version 2>&1 | cut -d' ' -f2)
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        python_version=${python_version}.$(basename $VIRTUAL_ENV)
-    fi
+    local _pyv=$(python --version 2>&1 | head -n 1 | cut -d' ' -f2)
+    local python_version=$(python --version 2>&1 | head -n 1 | cut -d' ' -f2)
+    [[ -n "$VIRTUAL_ENV" ]] && python_version=${python_version}.$(basename $VIRTUAL_ENV)
     export PS1="$STATUS ${PROMPT_COLOUR}\
 [\D{%A %Y-%m-%d.%T} $python_version \u@${HOSTNAME:-$(hostname -s)}:$Dir]\
         ${NO_COLOUR}\n$ "

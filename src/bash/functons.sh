@@ -273,25 +273,29 @@ pt () {
     ptpython "$@"
 }
 
+pyth () {
+    pypath python "$@"
+}
+
 py () {
     if [[ -z "$@" ]]; then
-        mython
+        pyth
     else
         all_args="$*"
         if [[ "$all_args" =~ "--help" || "$all_args" =~ "-h" ]]; then
-            mython "$@"
+            pyth "$@"
         elif [[ "$all_args" =~ "-U" ]]; then
-            mython "$@"
+            pyth "$@"
         else
-            script=$(mython ~/jab/src/python/scripts.py -m $args 2>/dev/null)
+            script=$(pyth ~/jab/src/python/scripts.py -m $args 2>/dev/null)
             if [[ $? == 0 ]]; then
                 if [[ -z $script ]]; then
                     script=${1/%./.py}
                     shift
                 fi
-                mython $script $*
+                pyth $script $*
             else
-                mython "$@"
+                pyth "$@"
             fi
         fi
     fi
@@ -636,7 +640,7 @@ tma () {
 }
 
 tmp () {
-    pushq $(mython $KD_DIR/kd.py ~/tmp "$@")
+    pushq $(pyth $KD_DIR/kd.py ~/tmp "$@")
 }
 
 unalias try > /dev/null 2>&1
@@ -675,7 +679,7 @@ vfh () {
 }
 
 vfr () {
-    mython ~/jab/src/python/vim_traceback.py "$@"
+    pyth ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vgf () {
@@ -727,14 +731,6 @@ wvX () {
     vim -p ~/hub/SH.sh "$@"
 }
 
-wta () {
-    . ~/hub/ack2vim/ack2vim.sh
-}
-
-wva () {
-    vim -p ~/hub/ack2vim/ack2vim.sh "$@"
-}
-
 wtb () {
     . ~/bash/__init__.sh
 }
@@ -784,6 +780,21 @@ xib () {
 }
 
 # xxxx
+
+bins () {
+    local _name="$1"; shift
+    [[ -z $_name ]] && return 1
+    while [[ -n $_name ]]; do
+        for root in $HOME /bin /usr; do
+            find $root -wholename "bin/*$_name*" -print 2> /dev/null
+        done | grep -e $_name | sort | uniq | g $_name 2> /dev/null
+        _name="$1"; shift
+    done
+}
+
+bash4 () {
+    /usr/local/bin/bash4 "$@"
+}
 
 bool () {
     [[ -z $* || $1 =~ ^0*$ ]] && echo False && return 1
@@ -982,7 +993,13 @@ vini () {
 # xxxxx
 
 build () {
-    if [[ -f build.sh ]]; then bash build.sh "$@"
+    if [[ -x bin/make ]]; then
+        [[ -f bin/made ]] || bin/make "$@"
+        if [[ -x bin/deploy ]]; then
+            [[ -e bin/deployed ]] || bin/deploy "$0"
+            [[ -e bin/deployed ]] && return 0
+        fi
+    elif [[ -f build.sh ]]; then bash build.sh "$@"
     elif [[ -f Makefile ]]; then make "$@"
     fi
 }
@@ -1017,7 +1034,7 @@ fewer () {
 }
 
 freds () {
-    mython ~/jab/src/python/freds.py "$@"
+    pyth ~/jab/src/python/freds.py "$@"
 }
 
 LetGo () {
@@ -1067,7 +1084,7 @@ range () {
     local destination=.
     if [[ -n "$*" ]]; then
         local kd_script=$KD_DIR/kd.py
-        if ! destination=$(PYTHONPATH=$python_directory mython $kd_script "$@" 2>&1); then
+        if ! destination=$(PYTHONPATH=$python_directory pyth $kd_script "$@" 2>&1); then
             echo "$destination"
             return 1
         fi
@@ -1102,7 +1119,7 @@ tools () {
 }
 
 ylint () {
-    mython /home/alanb/.jab/src/python/site/ylint.py "$@"
+    pyth /home/alanb/.jab/src/python/site/ylint.py "$@"
 }
 
 # xxxxxx
@@ -1178,7 +1195,7 @@ please () {
     sudo $last
 }
 
-mython () {
+pyth () {
     pypath python "$@"
 }
 
@@ -1247,9 +1264,9 @@ maketest () {
     fi
     local filename=$(basename $path)
     local stem=${filename%.*}
-    local classname=$(mython -c "print 'Test%s' % '$stem'.title()")
+    local classname=$(pyth -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
-    local test_file=$(mython -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
+    local test_file=$(pyth -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
     if [[ -f "$test_file" ]]; then
         echo $test_file is already a file >&2
         return 1
@@ -1328,7 +1345,7 @@ continuing () {
 }
 
 jab_scripts () {
-    mython ~/jab/src/python/scripts.py "$@"
+    pyth ~/jab/src/python/scripts.py "$@"
 }
 
 quick_ping () {
@@ -1403,8 +1420,8 @@ blank_script () {
 console_hello () {
     local me=$USER
     local here=$(jostname)
-    export PYTHON=${PYTHON:-mython}
-    console_title_on "mython@${here}" && \
+    export PYTHON=${PYTHON:-pyth}
+    console_title_on "pyth@${here}" && \
         $PYTHON "$@" && \
         console_title_off "${me}@${here}"
 }
