@@ -17,7 +17,6 @@ Welcome_to $BASH_SOURCE
 
 . ~/hub/what/what.sh
 . ~/jab/src/bash/hub.sh
-. ~/hub/ack2vim/ack2vim.sh
 . ~/hub/kd/kd.sh
 . ~/hub/what/what.sh
 
