@@ -25,6 +25,11 @@ Host wwts
     User jalanb
     IdentityFile ~/.ssh/id_jab
 
+Host build
+    Hostname 172.25.1.219
+    User ab13173
+    IdentityFile ~/.ssh/alan.brogan-rsa
+
 Host builder
     Hostname 172.25.1.219
     User builder
