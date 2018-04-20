@@ -117,5 +117,5 @@ rrr () {
 }
 
 real_path () {
-    python3 -c "from os import path; print(path.realpath(path.expanduser('"$1"')))"
+    python -c "from os import path; print(path.realpath(path.expanduser('"$1"')))"
 }

@@ -340,7 +340,7 @@ gom () {
 }
 
 gop () {
-    go python3
+    go python
 }
 
 gra () {
