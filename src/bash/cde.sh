@@ -115,25 +115,27 @@ any_python_scripts_here () {
     [[ $_found == 1 ]] && rf -qpr
 }
 
-_activate_python () {
-    . ./activate optional || . bin/activate optional
+_activate () {
+    . $ACTIVE
 }
 
-_python_activate_here () {
-    test -f ./activate -o -f bin/activate
+_local_activate () {
+    for _active in bin/activate ./activate; do
+        [[ -f $_active ]] || continue
+        [[ "$@" =~ -v ]] && readlink -f $_active
+        return 0
+    done
+    return 1
 }
 
-_python_activated_here () {
-    [[ \
-        (( -f activate && $(dirname $( readlink -f activate )) == $(dirname $(which python)) )) || \
-        (( -f bin/activate && $(dirname $( readlink -f bin/activate )) == $(dirname $(which python)) )) \
-    ]]
+_active () {
+    (( $(dirname $( readlink -f $ACTIVE )) == $(dirname $(readlink -f $(which python))) ))
 }
 
 activate_python_here () {
-    _python_activate_here || return 1
-    _python_activated_here && return 0
-    _activate_python
+    ACTIVE=$(_local_activate -v) || return 1
+    _active || _activate
+    PYTHON_VERSION=$(python --version 2>&1 | head -n 1 | cut -d' ' -f 2)
 }
 
 python_project_here () {
