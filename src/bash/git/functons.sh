@@ -109,6 +109,11 @@ gaa () {
     ga .
 }
 
+gac () {
+    ga "$@"
+    gcpc
+}
+
 gai () {
     ga --patch "$@"
 }
@@ -135,8 +140,11 @@ gsp () {
 }
 
 gta () {
-    [[ -z $1 ]] && return ValueError
-    gtlg "$@"
+    gt "$@"
+}
+
+gtl () {
+    gt "$@"
 }
 
 gtl () {
@@ -192,8 +200,8 @@ gij () {
     fi
 }
 
-gca () {
-    git commit --amend
+gcm () {
+    git commit --amend "$@"
 }
 
 gcp () {
@@ -227,6 +235,39 @@ gfa () {
 
 ggi () {
     gxi _ggi_show_diff _ggi_response "$@"
+}
+
+gsi () {
+    gxi _gsi_show_diff _gsi_response "$@"
+}
+
+gvi () {
+    gxi _gvi_show_diff _gvi_response "$@"
+}
+
+gxi () {
+    local _show_diff=$1; shift
+    local _response=$1; shift
+    _stashed=
+    first_arg_dir_or_here "$@" && shift
+    GXI_QUERY=
+    while git status -s "$dir"; do
+        git diff --staged
+        for f in $(gssd_changes "$dir"); do
+            [[ -n "$f" ]] || continue
+            _gxi_grep $f $GXI_QUERY || continue
+            $_show_diff "$f"
+            _gxi_request "$f"
+            $_response "$f"
+        done
+        [[ $answer =~ [qQ] ]] && break
+        [[ $answer =~ [sS] ]] && _gxi_stash
+        gi
+        git status -v | g -q "working [a-z][a-z]* clean" && break
+        [[ -n $QUESTIONS ]] && v $QUESTIONS
+    done
+    [[ -n $_stashed ]] && gstp
+    git dn --staged
 }
 
 gff () {
@@ -474,123 +515,6 @@ _gsi_vim () {
     _git_modified $f && git dv $f || git diff $f | vin
 }
 
-ggi () {
-    gxi _ggi_show_diff _ggi_response "$@"
-}
-
-gsi () {
-    gxi _gsi_show_diff _gsi_response "$@"
-}
-
-gvi () {
-    gxi _gvi_show_diff _gvi_response "$@"
-}
-
-gta () {
-    [[ -z $1 ]] && return ValueError
-    gt "$@"
-}
-
-gxi () {
-    local _show_diff=$1; shift
-    local _response=$1; shift
-    _stashed=
-    first_arg_dir_or_here "$@" && shift
-    GXI_QUERY=
-    while git status -s "$dir"; do
-        git diff --staged
-        for f in $(gssd_changes "$dir"); do
-            [[ -n "$f" ]] || continue
-            _gxi_grep $f $GXI_QUERY || continue
-            $_show_diff "$f"
-            _gxi_request "$f"
-            $_response "$f"
-        done
-        [[ $answer =~ [qQ] ]] && break
-        [[ $answer =~ [sS] ]] && _gxi_stash
-        gi
-        git status -v | g -q "working [a-z][a-z]* clean" && break
-        [[ -n $QUESTIONS ]] && v $QUESTIONS
-    done
-    [[ -n $_stashed ]] && gstp
-    git dn --staged
-}
-
-_ggi_show_diff () {
-    if _git_untracked "$1"; then
-        kat -n "$f"
-        return 0
-    fi
-    if _git_modified "$1"; then
-        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $_lines < $LINES ]]; then
-            git di "$1"
-        else
-            gdi "$1"
-        fi
-    fi
-    git status -s $f
-}
-
-_gsi_show_diff () {
-    if _git_untracked "$1"; then
-        kat -n "$f"
-        return 0
-    fi
-    if _git_modified "$1"; then
-        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $_lines < $LINES ]]; then
-            git di "$1"
-        else
-            gdi "$1"
-        fi
-    fi
-    git status -s $f
-}
-
-_gvi_show_diff () {
-    git diff "$1"
-    git status -s $f
-}
-
-_ggi_response () {
-    [[ $answer =~ [rR] ]] && _gsi_drop "$1" && return 0
-    [[ $answer =~ [vV] ]] && _gsi_vim "$1" && return 0
-    _gxi_response "$@"
-}
-
-_gsi_response () {
-    [[ $answer =~ [yY] ]] && ga "$1" && return 0
-    _ggi_response "$@"
-}
-
-_gvi_response () {
-    [[ $answer =~ [rR] ]] && _gvi_drop "$1" && return 0
-    [[ $answer =~ [vV] ]] && _gvi_vim "$1"
-    [[ $answer =~ [wW] ]] && _gvi_git_dv "$1"
-    _gxi_response "$@" 
-}
-
-_gxi_response () {
-    if [[ $answer =~ [fF] ]]; then
-        gi
-        _gxi_request "$1"
-        return 0
-    fi
-    [[ $answer =~ [aA] ]] && ga "$1" && return 0
-    [[ $answer =~ [cC] ]] && gi && return 0
-    if _git_modified "$1" ; then
-        [[ $answer =~ [dD] ]] && git di "$1" && return 0
-        [[ $answer =~ [iI] ]] && gai "$1" && return 0
-        [[ $answer =~ [pP] ]] && gap "$1"
-    fi
-    if [[ $answer == "/" ]]; then
-        read -p "/ " GXI_QUERY
-        return 0
-    fi
-    return 1
-}
-
 # xxxx
 
 _gbd () {
@@ -634,9 +558,8 @@ gbta () {
     gta "$@"
 }
 
-gcac () {
-    ga .
-    gcpc
+gcme () {
+    gcm --edit "$@"
 }
 
 godr () {
@@ -691,8 +614,8 @@ gffr () {
 
 gl11 () {
     if [[ -n $1 ]]; then
-        for commit in "$@"; do
-            gl1 --oneline $commit
+        for sha1 in "$@"; do
+            gl1 --oneline $sha1
         done
     else
         gl1 --oneline
@@ -700,13 +623,13 @@ gl11 () {
 }
 
 glgs () {
-    local _number_of_commits=7
+    local _number_of_lines=7
     if [[ $1 =~ ^-?[0-9]+$ ]]; then
-        _number_of_commits=$1
+        _number_of_lines=$1
         shift
     fi
     for branch in "$@"; do
-        glg $_number_of_commits $branch
+        glg $_number_of_lines $branch
     done
 }
 
@@ -816,9 +739,15 @@ verbosity () {
 
 git_root () {
     local _verbose=$(verbosity $1 )
-    [[ $1 =~ -[qv] ]] && shift
-    _there="$1"; shift
+    _there=
+    for word in $*; do
+        [[ $word =~ -[qv] ]] && continue
+        [[ -e "$word" ]] || continue
+        _there="$word"; shift
+        break
+    done
     [[ -f "$_there" ]] && _there=$(dirname $_there)
+    [[ -d "$_there" ]] || echo "Not a dir '$_there'"
     [[ -d "$_there" ]] || return 1
     (cd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
     local _root=$(cd "$_there"; git rev-parse --git-dir 2>/dev/null)
@@ -910,10 +839,26 @@ untracked () {
 
 _do_git_status () {
     local __doc__="get the status from git"
-    dir=$1; shift
-    [[ -z $dir ]] && dir=$PWD
-    git_root -q $dir || return 1
+    [[ -d $1 ]] && dir=$1; shift
+    [[ -z $dir || $(readlink -f $dir) == $(readlink -f .) ]] && dir=$PWD
+    local _msg=
+    [[ -d $dir ]] || _msg="Not a dir: $dir"
+    local _verbose=1
+    [[ -n "$@" && "$@" =~ -q ]] && _verbose=
+    [[ -n "$@" && "$@" =~ -v ]] && _verbose=1
+    [[ -z $_verbose ]] && _msg=
+    [[ -n $_msg ]] && echo $_msg >&2
+    # [[ -n $_msg ]] && set +x
+    # set -x
+    # set -e
+    [[ -n $_msg ]] && return 1
+    if git_root -q $dir; then
+        echo "Fail: git_root -q $dir" >&2
+        return 1
+    fi
     git -C $dir status "$@"
+    # set +e
+    # set +x
 }
 
 # xxxxxxxxxxxxxx
@@ -1001,3 +946,80 @@ log_test_file ()
 {
     grep_git_log_for_python_test_file 3
 }
+
+_ggi_show_diff () {
+    if _git_untracked "$1"; then
+        kat -n "$f"
+        return 0
+    fi
+    if _git_modified "$1"; then
+        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $_lines < $LINES ]]; then
+            git di "$1"
+        else
+            gdi "$1"
+        fi
+    fi
+    git status -s $f
+}
+
+_gsi_show_diff () {
+    if _git_untracked "$1"; then
+        kat -n "$f"
+        return 0
+    fi
+    if _git_modified "$1"; then
+        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $_lines < $LINES ]]; then
+            git di "$1"
+        else
+            gdi "$1"
+        fi
+    fi
+    git status -s $f
+}
+
+_gvi_show_diff () {
+    git diff "$1"
+    git status -s $f
+}
+
+_ggi_response () {
+    [[ $answer =~ [rR] ]] && _gsi_drop "$1" && return 0
+    [[ $answer =~ [vV] ]] && _gsi_vim "$1" && return 0
+    _gxi_response "$@"
+}
+
+_gsi_response () {
+    [[ $answer =~ [yY] ]] && ga "$1" && return 0
+    _ggi_response "$@"
+}
+
+_gvi_response () {
+    [[ $answer =~ [rR] ]] && _gvi_drop "$1" && return 0
+    [[ $answer =~ [vV] ]] && _gvi_vim "$1"
+    [[ $answer =~ [wW] ]] && _gvi_git_dv "$1"
+    _gxi_response "$@" 
+}
+
+_gxi_response () {
+    if [[ $answer =~ [fF] ]]; then
+        gi
+        _gxi_request "$1"
+        return 0
+    fi
+    [[ $answer =~ [aA] ]] && ga "$1" && return 0
+    [[ $answer =~ [mM] ]] && gcme "$1" && return 0
+    [[ $answer =~ [cC] ]] && gi && return 0
+    if _git_modified "$1" ; then
+        [[ $answer =~ [dD] ]] && git di "$1" && return 0
+        [[ $answer =~ [iI] ]] && gai "$1" && return 0
+        [[ $answer =~ [pP] ]] && gap "$1"
+    fi
+    if [[ $answer == "/" ]]; then
+        read -p "/ " GXI_QUERY
+        return 0
+    fi
+    return 1
+}
+
