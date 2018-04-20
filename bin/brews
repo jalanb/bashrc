@@ -49,7 +49,7 @@ brew install ping
 brew install pyenv
 brew install pyenv-virtualenv
 brew install python
-brew install python3
+brew install python
 brew install qfinder
 brew install ranger
 brew install ranger
@@ -57,7 +57,7 @@ brew install sloccount
 brew install synergy
 brew install tig
 brew install tree
-brew install upgrade python3
+brew install upgrade python
 brew install vifm
 brew install vifm
 brew install vim

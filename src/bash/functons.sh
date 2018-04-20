@@ -756,7 +756,7 @@ wvb () {
 }
 
 wtd () {
-    python3 ~/hub/dotsite/setup.py develop
+    python ~/hub/dotsite/setup.py develop
 }
 
 wvd () {
@@ -780,7 +780,7 @@ wvk () {
 }
 
 wtp () {
-    python3 ~/hub/pym/setup.py develop
+    python ~/hub/pym/setup.py develop
 }
 
 wvp () {
@@ -923,8 +923,8 @@ mkcd () {
 }
 
 mkv3 () {
-    mkvirtualenv -v --clear --system-site-packages --relocatable --python=python3.7 $1
-    virtualenv --python=python3.7 /Users/jab/.virtualenvs/$1
+    mkvirtualenv -v --clear --system-site-packages --relocatable --python=python $1
+    virtualenv --python=python /Users/jab/.virtualenvs/$1
 }
 
 nose () {
@@ -1180,7 +1180,7 @@ mkenv2 () {
 }
 
 mkenv3 () {
-    _mkenv python3
+    _mkenv python
 }
 
 _mkenv () {
