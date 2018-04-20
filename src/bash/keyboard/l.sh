@@ -3,19 +3,22 @@
 # x
 
 if [[ -f /usr/local/bin/gls ]]; then
-	l () {
+	lj () {
 	    /usr/local/bin/gls --group-directories-first --color -h "$@"
 	}
 else
-    _dir_option=
-    ls -l  --group-directories-first 2>&1 | grep -q unrecognized || _dir_option=--group-directories-first
-    _color_option=
-    ls -l --color 2>&1 | grep -q unrecognized || _color_option=--color
-	l () {
-	    ls $_dir_option $_color_option -h "$@"
+    _lj_dir_option=
+    ls -l  --group-directories-first 2>&1 | grep -q unrecognized || _lj_dir_option=--group-directories-first
+    _lj_color_option=
+    ls -l --color 2>&1 | grep -q unrecognized || _lj_color_option=--color
+	lj () {
+	    ls $_lj_dir_option $_lj_color_option -h "$@"
 	}
 fi
 
+l () {
+    lj "$@"
+}
 
 # xx
 
