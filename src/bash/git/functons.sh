@@ -27,9 +27,9 @@ ga () {
 
 gb () {
     if [[ -z "$*" ]]; then
-        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v warning
+        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning
     else
-        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v warning | grep --color "$@";
+        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color "$@";
     fi
 }
 
@@ -115,6 +115,10 @@ gai () {
 
 gba () {
     GIT_BRANCH_OPTION=-a gb "$@"
+}
+
+gbr () {
+    GIT_BRANCH_OPTION=-r gb "$@"
 }
 
 gbt () {
@@ -219,10 +223,6 @@ gdv () {
 gfa () {
     git fetch --all
     git fetch --tags
-}
-
-ggi () {
-    gxi _ggi_show_diff _ggi_response "$@"
 }
 
 gff () {
@@ -424,6 +424,12 @@ _gxi_stash () {
     fi
 }
 
+_gxi_grep () {
+    local _file=$1; shift
+    [[ -z "$@" ]] && return 0
+    grep -q "$@" $_file
+}
+
 _gsi_drop () {
     if [[ $answer =~ [rR] ]]; then
         _git_modified "$1" && go "$1"
@@ -464,8 +470,16 @@ _gsi_vim () {
     _git_modified $f && git dv $f || git diff $f | vin
 }
 
+ggi () {
+    gxi _ggi_show_diff _ggi_response "$@"
+}
+
 gsi () {
     gxi _gsi_show_diff _gsi_response "$@"
+}
+
+gvi () {
+    gxi _gvi_show_diff _gvi_response "$@"
 }
 
 gta () {
@@ -473,21 +487,20 @@ gta () {
     gt "$@"
 }
 
-gvi () {
-    gxi _gvi_show_diff _gvi_response "$@"
-}
-
 gxi () {
-    local _gxi_show_diff=$1; shift
-    local _gxi_response=$1; shift
+    local _show_diff=$1; shift
+    local _response=$1; shift
     _stashed=
     first_arg_dir_or_here "$@" && shift
+    GXI_QUERY=
     while git status -s "$dir"; do
+        git diff --staged
         for f in $(gssd_changes "$dir"); do
             [[ -n "$f" ]] || continue
-            $_gxi_show_diff "$f"
+            _gxi_grep $f $GXI_QUERY || continue
+            $_show_diff "$f"
             _gxi_request "$f"
-            $_gxi_response "$f"
+            $_response "$f"
         done
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [sS] ]] && _gxi_stash
@@ -496,6 +509,7 @@ gxi () {
         [[ -n $QUESTIONS ]] && v $QUESTIONS
     done
     [[ -n $_stashed ]] && gstp
+    git dn --staged
 }
 
 _ggi_show_diff () {
@@ -514,18 +528,6 @@ _ggi_show_diff () {
     git status -s $f
 }
 
-_ggi_response () {
-    if [[ $answer =~ [fF] ]]; then gi; _gxi_request "$1"; fi
-    [[ $answer =~ [aA] ]] && ga "$1"
-    [[ $answer =~ [cC] ]] && gi
-    [[ $answer =~ [rR] ]] && _gsi_drop "$1"
-    if _git_modified "$1" ; then
-        [[ $answer =~ [dD] ]] && git di "$1"
-        [[ $answer =~ [iI] ]] && gai "$1"
-    fi
-    [[ $answer =~ [vV] ]] && _gsi_vim "$1"
-}
-
 _gsi_show_diff () {
     if _git_untracked "$1"; then
         kat -n "$f"
@@ -542,39 +544,47 @@ _gsi_show_diff () {
     git status -s $f
 }
 
-_gsi_response () {
-    if [[ $answer =~ [fF] ]]; then gi; _gxi_request "$1"; fi
-    [[ $answer =~ [aAyY] ]] && ga "$1"
-    [[ $answer =~ [cC] ]] && gi
-    [[ $answer =~ [rR] ]] && _gsi_drop "$1"
-    if _git_modified "$1" ; then
-        [[ $answer =~ [dD] ]] && git di "$1"
-        [[ $answer =~ [iI] ]] && gai "$1"
-    fi
-    [[ $answer =~ [vV] ]] && _gsi_vim "$1"
-}
-
 _gvi_show_diff () {
     git diff "$1"
     git status -s $f
 }
 
+_ggi_response () {
+    [[ $answer =~ [rR] ]] && _gsi_drop "$1" && return 0
+    [[ $answer =~ [vV] ]] && _gsi_vim "$1" && return 0
+    _gxi_response "$@"
+}
+
+_gsi_response () {
+    [[ $answer =~ [yY] ]] && ga "$1" && return 0
+    _ggi_response "$@"
+}
+
 _gvi_response () {
-    if [[ $answer =~ [fF] ]]; then 
+    [[ $answer =~ [rR] ]] && _gvi_drop "$1" && return 0
+    [[ $answer =~ [vV] ]] && _gvi_vim "$1"
+    [[ $answer =~ [wW] ]] && _gvi_git_dv "$1"
+    _gxi_response "$@" 
+}
+
+_gxi_response () {
+    if [[ $answer =~ [fF] ]]; then
         gi
         _gxi_request "$1"
-    else
-        [[ $answer =~ [aA] ]] && ga "$1"
-        [[ $answer =~ [cC] ]] && gi
-        [[ $answer =~ [rR] ]] && _gvi_drop "$1"
-        if _git_modified "$1" ; then
-            [[ $answer =~ [dD] ]] && git diff "$1" | vin
-            [[ $answer =~ [iI] ]] && gai "$1"
-            [[ $answer =~ [pP] ]] && gap "$1"
-        fi
-        [[ $answer =~ [vV] ]] && _gvi_vim "$1"
-        [[ $answer =~ [wW] ]] && _gvi_git_dv "$1"
+        return 0
     fi
+    [[ $answer =~ [aA] ]] && ga "$1" && return 0
+    [[ $answer =~ [cC] ]] && gi && return 0
+    if _git_modified "$1" ; then
+        [[ $answer =~ [dD] ]] && git di "$1" && return 0
+        [[ $answer =~ [iI] ]] && gai "$1" && return 0
+        [[ $answer =~ [pP] ]] && gap "$1"
+    fi
+    if [[ $answer == "/" ]]; then
+        read -p "/ " GXI_QUERY
+        return 0
+    fi
+    return 1
 }
 
 # xxxx
@@ -823,6 +833,7 @@ git_stash_and () {
 _gxi_menu () {
     GSI_MENU=
     suffix=", "
+    red_one "/"
     red_one q uit
     red_one a dd
     red_one s tash
