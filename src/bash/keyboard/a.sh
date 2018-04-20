@@ -6,14 +6,14 @@
 # xx
 
 
-. ~/hub/ackvim/ack2vim.sh
+. ~/hub/ackvim/ackvim.sh
 
-# a is defined in ack2vim.sh
+# a is defined in ackvim.sh
 
 # _x
 # xx
 
-# aa is in ack2vim.sh
+# aa is in ackvim.sh
 
 # _xx
 
@@ -23,7 +23,7 @@ _av () {
 
 # xxx
 
-# aaa also ack2vim.sh
+# aaa also ackvim.sh
 
 avb () {
     __doc__="vack all args in ~/jab/src/bash";

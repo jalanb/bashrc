@@ -26,7 +26,7 @@ _source_jab_scripts () {
     require "~/jab/src/bash/functons.sh"
     require "~/jab/src/bash/prompt.sh"
     requite "~/hub/kd/kd.sh"
-    requite "~/hub/ackvim/ack2vim"
+    requite "~/hub/ackvim/ackvim"
 }
 
 
