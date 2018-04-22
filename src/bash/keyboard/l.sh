@@ -4,7 +4,7 @@
 
 if [[ -f /usr/local/bin/gls ]]; then
 	lj () {
-	    /usr/local/bin/gls --group-directories-first --color -h "$@"
+	    /usr/local/bin/gls --group-directories-first --color -h "$@" -1
 	}
 else
     _lj_dir_option=
@@ -12,7 +12,7 @@ else
     _lj_color_option=
     ls -l --color 2>&1 | grep -q unrecognized || _lj_color_option=--color
 	lj () {
-	    ls $_lj_dir_option $_lj_color_option -h "$@"
+	    ls $_lj_dir_option $_lj_color_option -h "$@" -1
 	}
 fi
 
