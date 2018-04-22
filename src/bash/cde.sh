@@ -38,7 +38,7 @@ _cde_here () {
     _here_python && _here_venv
     # set +x
     [[ -n $1 ]] && 
-    _here_ls && _here_range && _here_clean
+    _here_ls && _here_clean
     # set +x
 }
 
