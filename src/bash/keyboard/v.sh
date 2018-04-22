@@ -3,13 +3,13 @@
 
 # x
 
-v () {
-    [[ -z $1 ]] && vim_none || vim_some "$@"
-}
-#
 # v () {
-#     vim -p "$@"
+#     [[ -z $1 ]] && vim_none || vim_some "$@"
 # }
+
+v () {
+    vim -p "$@"
+}
 
 
 # xx
