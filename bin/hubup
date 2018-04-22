@@ -32,7 +32,7 @@ up_dir () {
 }
 
 main () {
-    up_dir ~/hub/ackvim
+    up_dir ~/hub/vimack
     up_dir ~/hub/al_got_rhythm.net
     up_dir ~/hub/autopep8
     up_dir ~/hub/ciss

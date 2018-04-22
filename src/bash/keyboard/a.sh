@@ -6,7 +6,7 @@
 # xx
 
 
-. ~/hub/ackvim/ackvim.sh
+. ~/hub/vimack/vimack.sh
 
 # a is defined in ackvim.sh
 

@@ -740,11 +740,11 @@ wvX () {
 }
 
 wta () {
-    . ~/hub/ackvim/ackvim.sh
+    . ~/hub/vimack/vimack.sh
 }
 
 wva () {
-    vim -p ~/hub/ackvim/ackvim.sh "$@"
+    vim -p ~/hub/vimack/vimack.sh "$@"
 }
 
 wtb () {
