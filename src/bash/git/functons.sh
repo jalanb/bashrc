@@ -78,9 +78,20 @@ gr () {
     git pull --rebase "$@"
 }
 
-gs () {
+
+_gs () {
+    l1
+    git status "$@"
+}
+
+_gs_quiet () {
     first_arg_dir_or_here "$@" && shift
     _do_git_status $dir "$@"
+}
+
+gs () {
+    # _gs_quiet"$@"
+    _gs "$@"
 }
 
 gt () {
