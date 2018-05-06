@@ -138,7 +138,7 @@ cnoremap w!! w !sudo tee %
 "noremap A - Append
 "noremap B - WORDS backwards
 "noremap C c$
-"noremap D d$
+    nmap D <esc>WQ
     nmap E WQ
 "noremap F f backwards
 "noremap G goto line (default last)
