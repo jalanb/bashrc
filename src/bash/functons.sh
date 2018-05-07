@@ -273,6 +273,33 @@ pt () {
     ptpython "$@"
 }
 
+pypp () {
+    python setup.py "$@"
+}
+alias popp=pypp
+
+pysd () {
+    pypp develop "$@"
+}
+
+pipi () {
+    pip install "$@"
+}
+
+pipp () {
+    local __doc__="Easier to do it right"
+    pipu
+    pipi "$@"
+}
+
+pipr () {
+    pipi -r requirements.txt
+}
+
+pipu () {
+    pipi --upgrade pip
+}
+
 pyth () {
     pypath python "$@"
 }
