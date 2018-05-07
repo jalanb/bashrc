@@ -273,6 +273,10 @@ pt () {
     ptpython "$@"
 }
 
+envv () {
+    env | g VIRTUAL_ENV= | g '=.*'
+}
+
 pypp () {
     python setup.py "$@"
 }
@@ -645,6 +649,10 @@ raj () {
 
 rlf () {
     [[ -z $1 ]] && realpath . || realpath "$@"
+}
+
+sai () {
+    /usr/bin/say -v Moira "$@"
 }
 
 sib () {
@@ -1078,6 +1086,13 @@ fewer () {
 
 freds () {
     pyth ~/jab/src/python/freds.py "$@"
+}
+
+hello () {
+    /usr/bin/say -v Moira \
+        Hello, my name is Moira. \
+        I am an Irish-English voice. \
+
 }
 
 LetGo () {
