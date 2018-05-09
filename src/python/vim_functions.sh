@@ -14,7 +14,7 @@ recover () {
         #   prevent opening of extra tabs, YMMV
         #
         local editor=${VIM:-$EDITOR}
-        $editor -r "$text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" >/dev/null 2>&1
+        $editor -r "$text_file" --cmd ":let g:recovering=1" -c"|:wq! ${recovered_file}" > ~/bash/fd/1 2> ~/bash/fd/2
         /bin/rm -i "$swap_file"
         if [[ -f "$recovered_file" ]]
         then

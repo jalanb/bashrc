@@ -318,7 +318,7 @@ py () {
         elif [[ "$all_args" =~ "-U" ]]; then
             pyth "$@"
         else
-            script=$(pyth ~/jab/src/python/scripts.py -m $args 2>/dev/null)
+            script=$(pyth ~/jab/src/python/scripts.py -m $args 2> ~/bash/fd/2)
             if [[ $? == 0 ]]; then
                 if [[ -z $script ]]; then
                     script=${1/%./.py}
@@ -686,7 +686,7 @@ tmp () {
     pushq $(pyth $KD_DIR/kd.py ~/tmp "$@")
 }
 
-unalias try > /dev/null 2>&1
+unalias try > ~/bash/fd/1 2> ~/bash/fd/2
 try () {
     TRY=~/jab/src/python/testing/try.py
     [[ -f "./try.py" ]] && TRY=./try.py
@@ -850,7 +850,7 @@ bash4 () {
 bool () {
     [[ -z $* || $1 =~ ^0*$ ]] && echo False && return 1
     if what -q "$1"; then
-        "$@" 2>/dev/null && echo True && return 0
+        "$@" 2> ~/bash/fd/2 && echo True && return 0
         echo False; return 1
     fi
     [[ $1 =~ ^0*$ ]] && echo False || echo True
@@ -882,26 +882,32 @@ bump () {
         bump_dir="$1"
         shift
     fi
-    local _bump_root=$(git_root $_bump_dir)
+    local _name=$(basename $1)
+    local _config=
+    [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
+    [[ -n $_config ]] && shift
+    local _bump_root=$(git_root -v $_bump_dir)
     local _part=${1:-patch}; shift
     if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
             [[ $_pulled == 1 ]] || git pull --rebase
             cd "$_bump_root"
-            if bumpversion $_part "$@"; then
+            local _options=
+            [[ -n $config ]] && _options="--config-file $_name"
+            if bumpversion $_options $_part "$@"; then
                 git push
                 git push origin v$(bump get)
             fi
         fi
     fi
-    local _config="$_bump_root/.bumpversion.cfg"
+    [[ -z $_config ]] && _config="$_bump_root/.bumpversion.cfg"
     local _sought=^current_version
     if [[ -n $_show ]]; then
         grep $_sought $_config | grep --colour '\d[0-9a-z.]\+$'
     elif [[ -n $_get ]]; then
         grep $_sought $_config | sed -e 's/.*= //'
     else
-        grep $_sought $_config 2>/dev/null
+        grep $_sought $_config 2> ~/bash/fd/2
     fi
 }
 
@@ -1124,7 +1130,7 @@ ptags () {
 }
 
 pushq () {
-    pushd "$@"  > /dev/null 2>&1
+    pushd "$@"  >/dev/null 2>&1
 }
 
 quack () {
@@ -1238,7 +1244,7 @@ _mkenv () {
 online () {
     local _dest="$1"; shift
     [[ -z $_dest ]] && _dest=www.google.com
-    if quick_ping $_dest "$@" >/dev/null 2>&1; then
+    if quick_ping $_dest "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
         echo $_dest online
         return 0
     else
@@ -1531,7 +1537,7 @@ source_aliases () {
 console_title_on () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
-    elif env | grep -iq konsole 2>/dev/null; then
+    elif env | grep -iq konsole 2> ~/bash/fd/2; then
         #dcop $KONSOLE_DCOP_SESSION renameSession $1
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/21380108/500942
     elif env | grep -iq gnome.terminal; then
@@ -1559,7 +1565,7 @@ show_functons_in ()
 console_title_off () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "]0;$1"
-    elif env | grep -iq konsole 2>/dev/null; then
+    elif env | grep -iq konsole 2> ~/bash/fd/2; then
         dcop $KONSOLE_DCOP_SESSION renameSession $1
     elif env | grep -iq gnome.terminal; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
@@ -1660,7 +1666,7 @@ _divv_get_difference () {
         --exclude=.gitignore \
         $_source_gitignore \
         $destination_gitignore \
-    "$_source_dir" "$_destination_dir" 2>/dev/null
+    "$_source_dir" "$_destination_dir" 2> ~/bash/fd/2
 }
 
 unremembered () {

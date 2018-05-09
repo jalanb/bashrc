@@ -10,7 +10,7 @@ am_interactive () {
 }
 
 is_running () {
-    /usr/bin/pgrep -f $1  > /dev/null 2>&1
+    /usr/bin/pgrep -f $1  >/dev/null 2>&1
     return $?
 }
 
@@ -59,7 +59,7 @@ Welcome_to $BASH_SOURCE
     export PATH=/usr/local/bin:/usr/bin:/bin
     export SHELL=/bin/bash
     . ~/hub/what/what.sh
-    builtin cd && . .bashrc > bashrc.log 2>&1 && builtin cd >/dev/null 2>&1
+    builtin cd && . .bashrc > bashrc.log 2>&1 && builtin cd > ~/bash/fd/1 2> ~/bash/fd/2
     if ! is_running autocutsel
     then
         autocutsel &

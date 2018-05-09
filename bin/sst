@@ -39,8 +39,8 @@ main () {
 
     local _local_user=$USER
     local _local_server=`hostname -s`
-    local _local_ip=$(python ~/jab/src/python/ifconfig.py 10 172 193 192 100)
-    local _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')")
+    local _local_ip=$(python ~/jab/src/python/ifconfig.py 10 172 193 192 100 2> ~/bash/fd/2; true)
+    local _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')" 2> ~/bash/fd/2; true)
     if [[ $_local_ip == $_remote_ip ]]; then
         _local_user=$_remote_user
         if [[ $_remote_user == $(whoami) ]]; then

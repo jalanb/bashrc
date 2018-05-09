@@ -56,7 +56,7 @@ pyi () {
         fi
         echo
     fi
-    if [[ -n $(ls *.py | grep -v __init__.py 2>/dev/null) ]]; then ly -q
+    if [[ -n $(ls *.py | grep -v __init__.py > /dev/null) ]]; then ly -q
     elif [[ -n $(ls * | grep -v __init__.py) ]]; then lk
     fi
     echo

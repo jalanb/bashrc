@@ -113,7 +113,7 @@ rri () {
 
 rrr () {
     # Scalp Hans too
-    sudo rm -rf "$@" 2> /dev/null
+    sudo rm -rf "$@" 2> ~/bash/fd/2
 }
 
 real_path () {

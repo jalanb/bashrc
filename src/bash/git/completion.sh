@@ -266,7 +266,7 @@ __gitcomp_file ()
 
     # use a hack to enable file mode in bash < 4
     compopt -o filenames +o nospace 2>/dev/null ||
-    compgen -f /non-existing-dir/ > /dev/null
+    compgen -f /non-existing-dir/ 2> /dev/null
 }
 
 # Execute 'git ls-files', unless the --committable option is specified, in

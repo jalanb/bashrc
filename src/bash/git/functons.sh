@@ -737,7 +737,7 @@ _show_git_here () {
 # xxxxxxxx
 
 _git_kd () {
-    kd "$@" >/dev/null 2>&1
+    kd "$@" > ~/bash/fd/1 2> ~/bash/fd/2
 }
 
 verbosity () {
@@ -769,7 +769,7 @@ git_root () {
     [[ -d "$_there" ]] || echo "Not a dir '$_there'"
     [[ -d "$_there" ]] || return 1
     (cd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
-    local _git_dir=$(cd "$_there"; git rev-parse --git-dir . 2>/dev/null)
+    local _git_dir=$(cd "$_there"; git rev-parse --git-dir . > /dev/null 2>&1)
     local _project_dir=$( dirname _git_dir)
     [[ -z $_project_dir ]] && _project_dir=.
     [[ -d $_project_dir ]] || echo "Not a dir: $_project_dir"
@@ -934,14 +934,14 @@ git_simple_status () {
     local arg_dir=${1:-$PWD}
     _has_git_changes $arg_dir || return
     local _git_dir=$(git_root $arg_dir)
-    [[ -d $_git_dir ]] && gssd "$_git_dir" 2>/dev/null | grep "$_git_status_regexp"
+    [[ -d $_git_dir ]] && gssd "$_git_dir" 2> ~/bash/fd/2 | grep "$_git_status_regexp"
 }
 
 _show_git_time_log () {
     if [[ -z $2 ]]; then
-        git -C $git_dir lg 2> /dev/null | grep $1
+        git -C $git_dir lg > /dev/null | grep $1
     else
-        git lg "$2" 2> /dev/null | grep $1
+        git lg "$2" > /dev/null | grep $1
     fi
 }
 

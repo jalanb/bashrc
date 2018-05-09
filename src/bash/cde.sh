@@ -82,18 +82,18 @@ _here_bash () {
 
 _here_clean () {
     for path in $(find . -type f -name '*.sw*'); do
-        ls -l $path 2> /dev/null
+        ls -l $path > ~/bash/fd/2
         rri $path && continue
         [[ $? == 1 ]] && break
     done
 }
 
 _here_l1 () {
-    l -1 2> /dev/null
+    l -1 > ~/bash/fd/2
 }
 
 _here_ls () {
-    l 2> /dev/null
+    l 2> ~/bash/fd/2
 }
 
 _here_venv () {

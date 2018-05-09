@@ -1,10 +1,12 @@
 #! /bin/bash
 
+. ~/jab/bash/welcome.sh
+
 Welcome_to $BASH_SOURCE
 
-. ~/jab/src/bash/run_python.sh
+. ~/jab/bash/run_python.sh
 
-PYTHON=${PYTHON:-$(pypath which python 2>/dev/null)}
+PYTHON=${PYTHON:-$(pypath which python 2> ~/bash/fd/2)}
 
 # [[ -n $WELCOME_BYE ]] && echo 3
 _has_ext () {
@@ -35,7 +37,7 @@ export PYTHON_SOURCE_PATH=~/jab/src/python:~/src/python
 # [[ -n $WELCOME_BYE ]] && echo 8
 _upgrade_package () {
     [[ -n $WELCOME_BYE ]] && echo Welcome to _upgrade_package "$@"
-    bg pip2 install --upgrade --retries=1 "$@" 2>&1 >/dev/null 2>&1
+    bg pip2 install --upgrade --retries=1 "$@" > ~/bash/fd/1 2> ~/bash/fd/2
     [[ -n $WELCOME_BYE ]] && echo Bye from _upgrade_package "$@"
 }
 

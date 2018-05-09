@@ -51,7 +51,7 @@ what_w () {
     elif is_existing_function $1; then
         _parse_function $1
         echo vim $path_to_file +$line_number "+/\"^$1 \""
-    elif which $1 > /dev/null 2>&1; then
+    elif which $1 >/dev/null 2>&1; then
         real_file=$(realpath $(which $1))
         if [[ $real_file != $1 ]]; then
             echo "$1 -> $real_file"
