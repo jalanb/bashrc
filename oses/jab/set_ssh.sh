@@ -1,6 +1,6 @@
 #! /bin/bash
 
-_expected=~/jab/environ.d/jab.sh; _actual="No $(basename $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
+_expected=~/jab/environ.d/jab.sh; _actual="No $(basename_ $_expected)."; [[ -f "$_expected" ]] && _actual=$_expected;. $_actual
 
 HOME_SSH=~/.ssh
 JAB_SSH=~/jab/etc/ssh

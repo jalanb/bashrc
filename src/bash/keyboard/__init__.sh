@@ -3,7 +3,7 @@
 Welcome_to $BASH_SOURCE
 
 _KEYBOARD_DIR=~/jab/src/bash/keyboard
-_NAME=$(basename $BASH_SOURCE)
+_NAME=$(basename_ $BASH_SOURCE)
 
 pushd $_KEYBOARD_DIR >/dev/null 2>&1
 for _script in $(ls *.sh); do

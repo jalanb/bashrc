@@ -1,6 +1,6 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 
 . ~/jab/src/bash/repo.sh
 
@@ -12,7 +12,7 @@ _jab_dir () {
 _set_ssh () {
     local home_id=~/.ssh/id_jab
     [[ -f "$home_id" ]] && export JAB_ID=$home_id
-    export JAB_SSH=$(dirname $home_id)
+    export JAB_SSH=$(dirname_ $home_id)
 }
 
 _set_ls_options () {
@@ -40,4 +40,4 @@ _main () {
 
 _main
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)

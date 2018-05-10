@@ -6,7 +6,7 @@ set_paths () {
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then
         . ~/jab/src/bash/add_to_a_path.sh
-        PATH=$(dirname $(which python))
+        PATH=$(dirname_ $(which python))
         add_to_a_path PATH $HOME/bin
         add_to_a_path PATH ~/jab/bin
         add_to_a_path PATH $HOME/.local

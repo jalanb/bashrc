@@ -61,7 +61,7 @@ y () {
 
 3y () {
     if [[ -f "$1" ]]; then
-        dir=$(dirname $1)
+        dir=$(dirname_ $1)
         shift
     elif [[ -d "$1" ]]; then
         dir=$1
@@ -129,7 +129,7 @@ fc () {
     for path in $(find $dir -name $name -print)
     do
         echo cd $path
-        [[ -f "$path" ]] && builtin cd $(dirname $path) || builtin cd $path
+        [[ -f "$path" ]] && builtin cd $(dirname_ $path) || builtin cd $path
     done
 }
 
@@ -543,7 +543,7 @@ lkq () {
         if lk -d $_sought 2>/dev/null; then
             break
         fi
-        _sought=$(dirname $_sought)
+        _sought=$(dirname_ $_sought)
         if [[ $_sought == / ]]; then
             break
         fi
@@ -882,7 +882,7 @@ bump () {
         bump_dir="$1"
         shift
     fi
-    local _name=$(basename $1)
+    local _name=$(basename_ $1)
     local _config=
     [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
     [[ -n $_config ]] && shift
@@ -972,7 +972,7 @@ nose () {
     local _progress=
     nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
     local _coverage=
-    nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=.coverage --cover-package=."
+    nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
     if nosetests -h 2>&1 | g -q stopwatch; then
         NOSE_COVER_TESTS= nosetests -A "speed!='slow'" $_coverage $_progress "$@"
     else
@@ -1326,7 +1326,7 @@ maketest () {
         echo $path is not a file >&2
         return 1
     fi
-    local filename=$(basename $path)
+    local filename=$(basename_ $path)
     local stem=${filename%.*}
     local classname=$(pyth -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
@@ -1335,7 +1335,7 @@ maketest () {
         echo $test_file is already a file >&2
         return 1
     fi
-    local test_dir=$(dirname $test_file)
+    local test_dir=$(dirname_ $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
@@ -1361,7 +1361,7 @@ todo_edit () {
         git_options=
     fi
     v $todo_txt
-    if git status -s ~/jab/todo.txt 2>&1 | grep -q "M.*$(basename ~/jab/todo.txt)"; then
+    if git status -s ~/jab/todo.txt 2>&1 | grep -q "M.*$(basename_ ~/jab/todo.txt)"; then
         git add ~/jab/todo.txt
         git commit -m'more or less stuff to be done' ~/jab/todo.txt
     elif svn stat "~/jab/todo.txt" 2>&1 | grep -q "M .* ~/jab/todo.txt"; then
@@ -1377,7 +1377,27 @@ todo_show () {
     python ~/jab/src/python/todo.py $todo_txt
 }
 
+dirname_ () {
+    local _result=1
+    for _arg in "$@"; do
+        [[ -e "$_arg" ]] || continue
+        dirname "$_arg"
+        _result=0
+    done
+    return $_result
+}
+
 # xxxxxxxxx
+
+basename_ () {
+    local _result=1
+    for _arg in "$@"; do
+        [[ -e "$_arg" ]] || continue
+        basename "$_arg"
+        _result=0
+    done
+    return $_result
+}
 
 viewstyle () {
     git status --porcelain "$1" | grep -q .  || return 1
@@ -1521,7 +1541,7 @@ three_two_one () {
 # xxxxxxxxxxxxxx
 
 console_whoami () {
-    console_title_on $USER@$(jostname)...$(basename "$PWD")
+    console_title_on $USER@$(jostname)...$(basename_ "$PWD")
 }
 
 source_aliases () {
@@ -1615,7 +1635,7 @@ _edit_source () {
     local filepath=$1
     shift
     blank_script $filepath
-    filedir=$(dirname $filepath)
+    filedir=$(dirname_ $filepath)
     if [[ $filedir == "." ]]; then
         v $filepath
     else
@@ -1672,7 +1692,7 @@ _divv_get_difference () {
 unremembered () {
     shift
     blank_script $filepath
-    filedir=$(dirname $filepath)
+    filedir=$(dirname_ $filepath)
     if [[ $filedir == "." ]]; then
         v $filepath
     else
@@ -1690,7 +1710,7 @@ unremembered () {
 copy_from_wwts_server () {
     local _server_name=$1
     local _source="$2"
-    local _source_dir=$(dirname "$_source")
+    local _source_dir=$(dirname_ "$_source")
     local _here_root=~/wwts/$_server_name
     [[ -d $_here_root ]] || mkdir -p $_here_root
     local _here_path=$_here_root/"$_source_dir"

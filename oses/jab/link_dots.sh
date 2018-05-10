@@ -23,7 +23,7 @@ link_to_config () {
         elif [[ -e "$dest_link" ]]; then
             echo "$dest_link exists and is not a link" >&2
         else
-            dest_dir=$(dirname $dest_link)
+            dest_dir=$(dirname_ $dest_link)
             if [[ -d "$dest_dir" ]]; then ln -s $source_file $dest_link
             else echo "$dest_dir is not a directory (for $dest_link)" >&2
             fi
@@ -39,9 +39,9 @@ link_to_ipython () {
 
 link_to_home () {
     local from=~/jab/$1
-    local to=$HOME/.$(basename $1)
+    local to=$HOME/.$(basename_ $1)
     [[ -e "$to" ]] && rm -rf $to
-    if [[ -e "$from" ]]; then link_to $from $HOME/.$(basename $1)
+    if [[ -e "$from" ]]; then link_to $from $HOME/.$(basename_ $1)
     else echo $from does not exist >&2
     fi
 }

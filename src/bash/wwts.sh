@@ -5,7 +5,7 @@ Welcome_to $BASH_SOURCE
 . ~/wwts/dashboard.master/deployment/bin/deploying.sh optional
 
 cd_deployment () {
-    [[ $(basename $(realpath .)) == deployment ]] && return
+    [[ $(basename_ $(realpath .)) == deployment ]] && return
     local _dest=~/wwts/dashboard/deployment
     [[ -d deployment ]] && _dest=deployment
     cd $_dest

@@ -19,7 +19,7 @@ cc () {
     # gcc has my back
     local _where=.
     [[ -n "$*" ]] && _where="$@"
-    c $(dirname $(git rev-parse --show-toplevel $_where ))
+    c $(dirname_ $(git rev-parse --show-toplevel $_where ))
 }
 
 ch () {
@@ -40,7 +40,7 @@ cr () {
 }
 
 cv () {
-    kd $1; v $(basename $1)
+    kd $1; v $(basename_ $1)
 }
 
 cy () {

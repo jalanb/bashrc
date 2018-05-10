@@ -765,12 +765,12 @@ git_root () {
         _there="$word"; shift
         break
     done
-    [[ -f "$_there" ]] && _there=$(dirname $_there)
+    [[ -f "$_there" ]] && _there=$(dirname_ $_there)
     [[ -d "$_there" ]] || echo "Not a dir '$_there'"
     [[ -d "$_there" ]] || return 1
     (cd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
     local _git_dir=$(cd "$_there"; git rev-parse --git-dir . > /dev/null 2>&1)
-    local _project_dir=$( dirname _git_dir)
+    local _project_dir=$(dirname_ _git_dir)
     [[ -z $_project_dir ]] && _project_dir=.
     [[ -d $_project_dir ]] || echo "Not a dir: $_project_dir"
     local _root_dir=$(readlink -f $_project_dir)

@@ -35,20 +35,20 @@ _counter () {
 
 _require_from () {
     local _repo=$1
-    local _basename=$(basename $2)
-    local _count=$(_find_from $_repo $_basename | _counter)
+    local _name=$(basename_ $2)
+    local _count=$(_find_from $_repo $_name | _counter)
     local _found=
     local _src=_repo
     [[ $_count == 0 ]] && continue
     if [[ $_count != 1 ]]; then
         _src=~/jab/src
-        _count=$(_find_from $_src $_basename | _counter)
+        _count=$(_find_from $_src $_name | _counter)
     fi
     if [[ $_count == 1 ]]; then
-        _found=$(_re_find $_src $_basename);
+        _found=$(_re_find $_src $_name);
     else
-        echo "$_count \"${_basename}\"s required:" >&2
-        for _found in $(_find_from $_src $_basename); do
+        echo "$_count \"${_name}\"s required:" >&2
+        for _found in $(_find_from $_src $_name); do
             echo "    $_found"
         done
     fi
@@ -70,19 +70,19 @@ _require_file_in () {
 }
 
 require () {
-    local _dirname=.
-    if [[ -d $1 ]]; then _dirname=$1; shift; fi
-    [[ ! -d $1 ]] && _require_file_in $_dirname $1
+    local _dir_path=.
+    if [[ -d $1 ]]; then _dir_path=$1; shift; fi
+    [[ ! -d $1 ]] && _require_file_in $_dir_path $1
 }
 
 requires () {
     echo "requires ($*)"
-    local _dirname=.
+    local _dir_path=.
     if [[ -d $1 ]]; then
-        _dirname=$1
+        _dir_path=$1
         shift
     fi
-    echo "require $_dirname, then require $*";
+    echo "require $_dir_path, then require $*";
     for arg in $*; do
         require $dirname $arg;
     done;

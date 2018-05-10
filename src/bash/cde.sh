@@ -102,12 +102,13 @@ _here_venv () {
     local _venvs=$HOME/.virtualenvs
     [[ -d $_venvs ]] || return 0
     local _here=$(realpath $(pwd))
-    local _name=$(basename $_here)
+    local _name="not_a_name"
+    [[ -e $_here ]] && _name=$(basename_ $_here)
     local _venv_path=
     for _venv_path in $_venvs/*; do
         local _venv_dir="$_venv_path"
         [[ -d "$_venv_dir" ]] || continue
-        local _venv_name=$(basename $_venv_dir)
+        local _venv_name=$(basename_ $_venv_dir)
         if [[ $_venv_name == $_name ]]; then
             local _venv_activate="$_venv_dir/bin/activate"
             [[ -f $_venv_activate ]] || return 1
@@ -138,7 +139,10 @@ _local_activate () {
 }
 
 _active () {
-    (( $(dirname $( readlink -f $ACTIVE )) == $(dirname $(readlink -f $(which python))) ))
+    #(( $(dirname_ $( readlink -f $ACTIVE )) == $(dirname $(readlink -f $(which python))) ))
+    local _one=$(dirname_ $( readlink -f $ACTIVE ))
+    local _two=$(dirname_ $(readlink -f $(which python)))
+    test "$_one" = "$_two"
 }
 
 activate_python_here () {
@@ -168,7 +172,7 @@ _here_python () {
     python_project_here || return 0
     activate_python_here
     local _dir=$(realpath .)
-    local _dir_name=$(basename $_dir)
+    local _dir_name=$(basename_ $_dir)
     local egg_info=${_dir_name}.egg-info
     if [[ -d $egg_info ]]; then
         ri $egg_info

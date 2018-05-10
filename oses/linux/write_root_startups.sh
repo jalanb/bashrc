@@ -17,7 +17,7 @@ add_to_path /usr/local/sbin after
 unset USERNAME
 
 echo Bye from ~/.bash_profile
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /root/.bashrc << EOB
@@ -38,7 +38,7 @@ Welcome_to $BASH_SOURCE
 [[ -f "/root/.bash_aliases" ]] && source  /root/.bash_aliases
 
 echo Bye from  ~/.bashrc
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(dirname $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+[[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /root/.bash_aliases << EOB

@@ -84,22 +84,22 @@ _assert_file () {
 _assert_directory () {
     if  ! _assert_path -d directory "$@"; then
         if [[ -f "$@" ]]; then
-            cp "$@" /assertions/$(basename "$@")
+            cp "$@" /assertions/$(basename_ "$@")
         fi
         rm -rf "$@"
         mkdir -p "$@"
     fi
-    local _basename=
+    local _base_name=
     if [[ -f "$@" ]]; then
-        _basename=$(basename "$@")
-        local _temp=/assertions/$_basename
+        _base_name=$(basename_ "$@")
+        local _temp=/assertions/$_base_name
         rm -rf $_temp
         mv "$@" $_temp
     fi
     [[ -d "$@" ]]
     if _assert_path -d directory "$@"; then
         local _file=
-        [[ -f "$@" ]] && _file=$_basename
+        [[ -f "$@" ]] && _file=$_base_name
     fi
 }
 

@@ -28,7 +28,7 @@ use_proxy () {
 
 _source () {
     test -f $1 || return 1
-    pushd $(dirname $1) >/dev/null 2>&1 || return 1
+    pushd $(dirname_ $1) >/dev/null 2>&1 || return 1
     source $1
     popd >/dev/null 2>&1 || return 1
     return 0
@@ -69,7 +69,7 @@ Welcome_to $BASH_SOURCE
     source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
     pyth ~/jab/src/python/checksums.py
-    [[ -n $WELCOME_BYE ]] && echo Bye from $(basename $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
+    [[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
 }
 
 concise_interactive_bashrc () {

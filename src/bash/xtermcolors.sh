@@ -12,7 +12,7 @@ MAXCOLOUR=$(tput colors)
 echo "TERM = $TERM"
 echo "this terminal type supports $MAXCOLOUR colour(s)"
 
-. $(dirname $BASH_SOURCE)/tput.sh
+. $(dirname_ $BASH_SOURCE)/tput.sh
 
 WIDE=0
 LINES=$(screen_height)
