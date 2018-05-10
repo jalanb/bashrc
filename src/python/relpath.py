@@ -7,7 +7,10 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-from dotsite.paths import pwd
+try:
+    from dotsite.paths import pwd
+except ImportError:
+    from pysyte.paths import pwd
 
 
 __version__ = '0.1.0'

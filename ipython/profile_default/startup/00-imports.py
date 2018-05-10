@@ -8,7 +8,8 @@ from __future__ import print_function
 import os
 import re
 import sys
-import dotsite
+import pysyte
+import requests
 
 try:
     from see import see
@@ -23,7 +24,7 @@ except ImportError:
     see = False
 
 
-print('import os, re, sys, dotsite')
+print('import os, re, sys, pysyte, requests')
 if see:
     print('from see import see, see_attributes, see_methods, spread')
     print('from see_code import code, highlight, see_code, see_highlight')

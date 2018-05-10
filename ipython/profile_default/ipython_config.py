@@ -188,14 +188,8 @@ c.TerminalInteractiveShell.colors = 'Linux'
 #
 # c.TerminalInteractiveShell.separate_in = '\n'
 
-# Deprecated, use PromptManager.in2_template
-# c.TerminalInteractiveShell.prompt_in2 = '   .\\D.: '
-
 #
 # c.TerminalInteractiveShell.separate_out = ''
-
-# Deprecated, use PromptManager.in_template
-# c.TerminalInteractiveShell.prompt_in1 = 'In [\\#]: '
 
 # Make IPython automatically call any callable object even if you didn't type
 # explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
@@ -220,9 +214,6 @@ c.TerminalInteractiveShell.editor = '/usr/local/bin/vim'
 
 # Shortcut style to use at the prompt
 c.TerminalInteractiveShell.editing_mode = 'vi'
-
-# Deprecated, use PromptManager.justify
-# c.TerminalInteractiveShell.prompts_pad_left = True
 
 # The part of the banner to be printed before the profile
 # c.TerminalInteractiveShell.banner1 = 'Python 2.7.1 (r271:86832, Aug  2 2012, 13:51:44) \nType "copyright", "credits" or "license" for more information.\n\nIPython 1.0.0 -- An enhanced Interactive Python.\n?         -> Introduction and overview of IPython\'s features.\n%quickref -> Quick reference.\nhelp      -> Python\'s own help system.\nobject?   -> Details about \'object\', use \'object??\' for extra details.\n'
@@ -294,9 +285,6 @@ c.TerminalInteractiveShell.confirm_exit = False
 #
 # c.TerminalInteractiveShell.object_info_string_level = 0
 
-# Deprecated, use PromptManager.out_template
-# c.TerminalInteractiveShell.prompt_out = 'Out[\\#]: '
-
 # Set the size of the output cache.  The default is 1000, you can change it
 # permanently in your config file.  Setting it to 0 completely disables the
 # caching system, and the minimum value accepted is 20 (if you provide a value
@@ -325,11 +313,10 @@ c.TerminalInteractiveShell.confirm_exit = False
 # c.PromptManager.justify = True
 
 # Input prompt.  '\#' will be transformed to the prompt number
-c.PromptManager.in_template = '{my_prompt}'
+# c.PromptManager.in_template = '{my_prompt}'
 
 # Continuation prompt.
-c.PromptManager.in2_template = '... '
-
+# c.PromptManager.in2_template = '... '
 
 #
 # c.PromptManager.color_scheme = 'Linux'

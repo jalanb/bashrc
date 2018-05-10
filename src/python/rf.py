@@ -10,7 +10,9 @@ import os
 import sys
 import argparse
 import fnmatch
-import ConfigParser
+
+
+from six.moves import configparser
 
 
 def get_module_name():
@@ -48,7 +50,7 @@ def default_options():
 
 
 def read_configuration():
-    parser = ConfigParser.SafeConfigParser()
+    parser = configparser.ConfigParser()
     path = _get_path_to_config()
     if not os.path.isfile(path):
         return default_options()
