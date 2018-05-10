@@ -3,10 +3,17 @@
 Welcome_to $BASH_SOURCE
 
 
+export FAIL_COLOUR="$RED"
+export PASS_COLOUR="$GREEN"
+
 export PROMPT_COLOUR=none
 if [[ "$1" == "green" ]]; then
     export PROMPT_COLOUR="$GREEN"
     export PROMPT_OPPOSITE_COLOUR="$MAGENTA"
+    export HIGH_COLOUR="$RED"
+    export HIGH_OPPOSITE_COLOUR="$CYAN"
+    export LOW_COLOUR="$LIGHT_BLUE"
+    export LOW_OPPOSITE_COLOUR="$YELLOW"
 elif [[ "$1" == "red" ]]; then
     export PROMPT_COLOUR="$RED"
     export PROMPT_OPPOSITE_COLOUR="$CYAN"
@@ -16,6 +23,10 @@ elif [[ "$1" == "blue" ]]; then
 else
     export PROMPT_COLOUR="$GREEN"
     export PROMPT_OPPOSITE_COLOUR="$MAGENTA"
+    export HIGH_COLOUR="$RED"
+    export HIGH_OPPOSITE_COLOUR="$CYAN"
+    export LOW_COLOUR="$LIGHT_BLUE"
+    export LOW_OPPOSITE_COLOUR="$YELLOW"
 fi
 
 changes=0
