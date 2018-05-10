@@ -15,8 +15,8 @@ fred
 fred.*
 *.tmp
 src/python/tmp*-vim.sh
+src/bash/fd
 etc/history
-bash/fd
 
 # Derived development files
 tags
