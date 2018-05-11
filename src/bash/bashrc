@@ -16,30 +16,6 @@ _set_path () {
 
 _home_user=$HOME/$USER
 
-local_rc () {
-    local __doc__="There might be local files with new $PWD and commands"
-    local _cd=$1; shift
-    local _cdd=
-    local _rcf=${BASH_RC:-_rc.sh}
-    local _cdf=${BASH_CD:-_cd.in}
-    [[ -f $_rcf ]] && _cdd=$(dirname $(readlink -f $_rcf))
-    if [[ -f $_cdf ]]; then
-        _cdd=$(dirname $(readlink -f $_cdf))
-        _cd=$(cat $_cdf)
-        rm -f $_cdf
-    fi
-    cd $_cd
-    if [[ -f $_rcf ]]; then
-        echo "-f "'$_rcf'"($_rcf)" >&2
-        local _rc="$(cat $_rcf)"
-        [[ -n $_rc ]] || echo "-z "'$_rc'"'$_rc'" >&2
-        [[ -n $_rc ]] && eval $_rc
-        rm -f $_rcf
-    else
-        echo "! -f "'$_rcf'"($_rcf)" >&2
-    fi 2>/dev/null
-}
-
 _bashrc () {
     WELCOME_BYE=
     source $_home_user/__init__.sh
