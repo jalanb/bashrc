@@ -43,7 +43,7 @@ log_main () {
 }
 
 _local () {
-    source_what $_home_user/local/bashrc optional
+    source_what $_home_user/local/__init__.sh optional
 }
 
 main () {
