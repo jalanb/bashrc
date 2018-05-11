@@ -34,7 +34,6 @@ local_rc () {
         local _rc="$(cat $_rcf)"
         [[ -n $_rc ]] || echo "-z "'$_rc'"'$_rc'" >&2
         [[ -n $_rc ]] && eval $_rc
-        echo "rm -f $_rcf" >&2
         rm -f $_rcf
     else
         echo "! -f "'$_rcf'"($_rcf)" >&2
@@ -45,7 +44,7 @@ _bashrc () {
     WELCOME_BYE=
     source $_home_user/__init__.sh
     WELCOME_BYE=
-    local_rc
+    local_rc $_home_user
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
     # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
@@ -53,9 +52,11 @@ _bashrc () {
 }
 
 vbb () {
+    local _log=
+    test -f ~/bashrc.log && _log=~/bashrc.log
     (cd $_home_user
-    vim -p ~/.bashrc ~/jab/__init__.sh ~/bashrc.log "$@" +/bash
-    ls -l ~/.bashrc ~/jab/__init__.sh ~/bashrc.log)
+    vim -p ~/.bashrc __init__.sh src/bash/__init__.sh $_log "$@" +/^_bashrc
+    ls -l ~/.bashrc __init__.sh src/bash/__init__.sh $_log)
 }
 
 log_main () {
