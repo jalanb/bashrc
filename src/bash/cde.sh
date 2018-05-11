@@ -127,6 +127,8 @@ any_python_scripts_here () {
 
 _activate () {
     . $ACTIVE
+    # Thanks to @nxnev at https://unix.stackexchange.com/a/443256/32775
+    hash -d python ipython pip pudb
 }
 
 _local_activate () {
