@@ -16,17 +16,36 @@ _set_path () {
 
 _home_user=$HOME/$USER
 
+local_rc () {
+    local __doc__="There might be local files with new $PWD and commands"
+    local _cd=$1; shift
+    local _cdd=
+    local _rcf=${BASH_RC:-_rc.sh}
+    local _cdf=${BASH_CD:-_cd.in}
+    [[ -f $_rcf ]] && _cdd=$(dirname $(readlink -f $_rcf))
+    if [[ -f $_cdf ]]; then
+        _cdd=$(dirname $(readlink -f $_cdf))
+        _cd=$(cat $_cdf)
+        rm -f $_cdf
+    fi
+    cd $_cd
+    if [[ -f $_rcf ]]; then
+        echo "-f "'$_rcf'"($_rcf)" >&2
+        local _rc="$(cat $_rcf)"
+        [[ -n $_rc ]] || echo "-z "'$_rc'"'$_rc'" >&2
+        [[ -n $_rc ]] && eval $_rc
+        echo "rm -f $_rcf" >&2
+        rm -f $_rcf
+    else
+        echo "! -f "'$_rcf'"($_rcf)" >&2
+    fi 2>/dev/null
+}
+
 _bashrc () {
     WELCOME_BYE=
     source $_home_user/__init__.sh
     WELCOME_BYE=
-    local _start_dir=$1; shift
-    local _jab_dir=~/jab/start_dir
-    if [[ -f $_jab_dir ]]; then
-        _start_dir=$(cat $_jab_dir)
-        rm -f $_jab_dir
-    fi
-    cd $_start_dir
+    local_rc
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
     # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
@@ -54,6 +73,7 @@ main () {
     _set_path
     _bashrc $_home_user
     _local
+    set +m
 }
 
 # echo bashrc
