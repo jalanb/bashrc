@@ -14,9 +14,11 @@ _set_path () {
     [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 }
 
+_home_user=$HOME/$USER
+
 _bashrc () {
     WELCOME_BYE=
-    source ~/jab/__init__.sh
+    source $_home_user/__init__.sh
     WELCOME_BYE=
     local _start_dir=$1; shift
     local _jab_dir=~/jab/start_dir
@@ -27,10 +29,12 @@ _bashrc () {
     cd $_start_dir
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
+    # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
+    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
 }
 
 vbb () {
-    (cd ~/jab
+    (cd $_home_user
     vim -p ~/.bashrc ~/jab/__init__.sh ~/bashrc.log "$@" +/bash
     ls -l ~/.bashrc ~/jab/__init__.sh ~/bashrc.log)
 }
@@ -43,12 +47,12 @@ log_main () {
 }
 
 _local () {
-    source_what ~/jab/local/bashrc optional
+    source_what $_home_user/local/bashrc optional
 }
 
 main () {
     _set_path
-    _bashrc ~/jab
+    _bashrc $_home_user
     _local
 }
 
