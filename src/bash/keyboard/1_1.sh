@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 known_dirs () {
     local _stem=$1; shift
     echo "$_stem ${_stem}.local ${_stem}.development ${_stem}.master"
@@ -49,3 +51,4 @@ head_45 () {
     head_4 waas waas "$@"
 }
 
+Bye_from $BASH_SOURCE

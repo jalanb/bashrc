@@ -1,8 +1,8 @@
 #! /bin/cat
 
-# x
+Welcome_to $BASH_SOURCE
 
-. ~/bash/keyboard/1_1.sh
+# x
 
 alias §="cd ~"
 alias 0="cd /"
@@ -96,3 +96,5 @@ alias 088="cd /usr/local"
 alias 5223="cde ~/src/git/hub/jab"
 alias 5224="cde ~/src/git/hub/grako"
 alias 5225="cde ~/src/git/hub/vimcat"
+
+Bye_from $BASH_SOURCE

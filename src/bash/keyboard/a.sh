@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 # _
 # x
 # _x
@@ -70,3 +72,5 @@ avv () {
     _av ~/jab/vim "$@"
 }
 
+
+Bye_from $BASH_SOURCE

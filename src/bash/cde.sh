@@ -1,6 +1,6 @@
 #! /bin/cat
 
-# . ~/jab/src/bash/cde.sh
+Welcome_to $BASH_SOURCE
 
 # x
 # _
@@ -205,3 +205,5 @@ show_version_here () {
     echo "git commit -m\"v0.0.0\""
     echo bump
 }
+
+Bye_from $BASH_SOURCE

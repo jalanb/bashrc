@@ -1,5 +1,8 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
+
 # x
 
 z () {
@@ -22,3 +25,5 @@ zz () {
 zzz () {
     df -h
 }
+
+Bye_from $BASH_SOURCE

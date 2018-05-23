@@ -1,6 +1,7 @@
 #! /bin/cat
 
-. ~/jab/src/bash/cde.sh
+Welcome_to $BASH_SOURCE
+
 
 
 # x
@@ -89,3 +90,5 @@ clean () {
 # _xxxx
 # xxxxxx
 # _xxxxx
+
+Bye_from $BASH_SOURCE
