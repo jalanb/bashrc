@@ -19,6 +19,7 @@ from see import see, see_methods, see_attributes, spread
 import files_for_test
 import try_plugins
 
+__version__ = '0.5.3'
 
 class DoctestInterrupt(KeyboardInterrupt):
     """This exception is for better naming of the only thing to stop doctest"""
@@ -103,7 +104,8 @@ def parse_args():
     pa('stems', metavar='stems', type=str, nargs='*',
        help='stems to be tested (e.g "try.py" or "try.*" or "try." or "try/"')
     pa('-s', '--show', help='show files being tested', action='store_true')
-    pa('-v', '--verbose', help='Hello World', action='store_true')
+    pa('-V', '--verbose', help='Show more text', action='store_true')
+    pa('-v', '--version', help='Show version', action='store_true')
     pa('-r', '--recursive', action='store_true',
        help='recurse into any sub-directories found',)
     pa('-a', '--all', action='store_true',
@@ -295,6 +297,9 @@ def test():
     sys_paths = SysPathHandler()
     global args
     args = parse_args()
+    if args.version:
+        print(__version__)
+        return 0
     messages = ['']
     pwd = os.getcwd()
     end = start_all = datetime.datetime.now()

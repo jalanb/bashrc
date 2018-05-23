@@ -76,5 +76,4 @@ echo_first_arg_dir_or_here () {
 
 alias shift_dir=first_arg_dir_or_here
 
-
 Bye_from $BASH_SOURCE
