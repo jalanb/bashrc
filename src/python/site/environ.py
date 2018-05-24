@@ -1,6 +1,6 @@
 import os
 
-from dotsite.paths import path
+from pysyte.paths import path
 
 def read_environ_items():
     jab = path('~/jab').expanduser()

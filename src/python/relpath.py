@@ -8,7 +8,7 @@ import argparse
 from bdb import BdbQuit
 
 try:
-    from dotsite.paths import pwd
+    from pysyte.paths import pwd
 except ImportError:
     from pysyte.paths import pwd
 

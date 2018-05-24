@@ -14,8 +14,8 @@ from fnmatch import fnmatch
 
 
 from repositories import repository
-from dotsite.paths import path as makepath
-from dotsite import splits
+from pysyte.paths import path as makepath
+from pysyte import splits
 
 
 def _path_to_locate():

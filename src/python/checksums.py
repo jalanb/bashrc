@@ -13,7 +13,7 @@ import argparse
 from datetime import datetime
 
 from bdb import BdbQuit
-from dotsite.paths import home
+from pysyte.paths import home
 
 __version__ = '1.0.0'
 

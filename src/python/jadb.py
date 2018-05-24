@@ -1,5 +1,5 @@
 
-from dotsite import term
+from pysyte import term
 
 
 import pudbs

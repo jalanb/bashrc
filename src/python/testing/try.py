@@ -14,7 +14,7 @@ import cStringIO
 from pprint import pprint
 
 
-from dotsite.paths import path
+from pysyte.paths import path
 from see import see, see_methods, see_attributes, spread
 import files_for_test
 import try_plugins

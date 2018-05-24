@@ -8,8 +8,8 @@ import argparse
 from bdb import BdbQuit
 
 
-from dotsite.paths import pwd
-from dotsite.paths import path as makepath
+from pysyte.paths import pwd
+from pysyte.paths import path as makepath
 import freds
 
 

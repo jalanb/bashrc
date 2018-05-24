@@ -25,7 +25,7 @@ try:
     import pudb
 except ImportError:
     pass
-from dotsite import getch
+from pysyte import getch
 import personal
 import mail_accounts
 

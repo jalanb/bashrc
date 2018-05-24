@@ -13,7 +13,7 @@ except ImportError:
     from commands import getoutput
 
 
-from dotsite.lists import de_duplicate
+from pysyte.lists import de_duplicate
 
 
 import script_paths

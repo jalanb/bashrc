@@ -5,7 +5,7 @@ from __future__ import print_function
 import os
 import sys
 
-from dotsite import text_streams
+from pysyte import text_streams
 
 
 def de_quote(string):

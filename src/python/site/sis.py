@@ -2,7 +2,7 @@
 import sys
 
 
-from dotsite.paths import path
+from pysyte.paths import path
 
 
 paths = []

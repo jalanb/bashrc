@@ -10,7 +10,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-from dotsite.paths import path
+from pysyte.paths import path
 
 
 __version__ = '0.1.0'

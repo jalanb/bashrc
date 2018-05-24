@@ -25,8 +25,8 @@ import re
 import os
 import sys
 
-from dotsite import text_streams
-from dotsite import tracebacks
+from pysyte import text_streams
+from pysyte import tracebacks
 
 
 def as_vim_command(lines, use_splits):

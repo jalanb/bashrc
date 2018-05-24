@@ -1,7 +1,7 @@
 """Try to replicate my bash environment"""
 
 
-from dotsite.paths import environ_path
+from pysyte.paths import environ_path
 
 
 def _environ_dir(name):

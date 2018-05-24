@@ -22,10 +22,10 @@ from __future__ import print_function
 import os
 import sys
 
-from dotsite import debuggers
-from dotsite import scripts
-from dotsite import text_streams
-from dotsite import tracebacks
+from pysyte import debuggers
+from pysyte import scripts
+from pysyte import text_streams
+from pysyte import tracebacks
 
 
 __version__ = '0.1.0'

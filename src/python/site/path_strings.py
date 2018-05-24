@@ -1,7 +1,7 @@
 import os
 
-from dotsite.paths import home
-from dotsite.paths import path
+from pysyte.paths import home
+from pysyte.paths import path
 
 def environ_paths():
     import environ
