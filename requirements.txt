@@ -10,5 +10,6 @@ pinocchio>=0.1
 pprintpp
 pudb
 pym
+pytest
 virtualenv
 virtualenvwrapper
