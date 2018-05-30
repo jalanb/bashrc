@@ -27,19 +27,25 @@ _bashrc () {
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
 }
 
+BASHRC_LOG=~/bashrc.log
 vbb () {
     local _log=
-    test -f ~/bashrc.log && _log=~/bashrc.log
+    test -f $BASHRC_LOG && _log=$BASHRC_LOG
     (cd $_home_user
-    vim -p ~/.bashrc __init__.sh src/bash/__init__.sh $_log "$@" +/^_bashrc
-    ls -l ~/.bashrc __init__.sh src/bash/__init__.sh $_log)
+    vim -p ~/.bashrc __init__.sh src/bash/__init__.sh $_log "$@" +/"WELCOME_BYE="
+    ls  ~/.bashrc __init__.sh src/bash/__init__.sh $_log)
+    [[ -f $_log ]] && mv $_log ~/log
+}
+
+vbl () {
+    [[ -f $BASHRC_LOG ]] || return 1
+    vim $BASHRC_LOG 
 }
 
 log_main () {
     set -x
-    [[ $- =~ i ]] && main > ~/login.log 2>&1
+    [[ $- =~ i ]] && main > $BASHRC_LOG 2>&1
     set +x
-    vim ~/login.log +/environ.d.jab.sh
 }
 
 _local () {
@@ -55,5 +61,6 @@ main () {
 
 # echo bashrc
 main  "$@"
-# log_main
+# log_main "$@"
+
 [[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)
