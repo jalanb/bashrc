@@ -47,11 +47,11 @@ link_to_home () {
 }
 
 link_bashrc () {
-    LOGIN=~/jab/src/bash/login.sh
-    if [[ -f $LOGIN ]]; then
+    local _bashrc=~/jab/src/bash/bashrc
+    if [[ -f $_bashrc ]]; then
         [[ -d ~/old ]] || mkdir ~/old
         mv ~/.bashrc old
-        ln -s $LOGIN ~/.bashrc
+        ln -s $_bashrc ~/.bashrc
     fi
 }
 

@@ -15,18 +15,10 @@ Examples of use:
     $ export PATH=/bin:/usr/bin
 
     $ add_to_a_path.py PATH /usr/local/bin
-    /bin:/usr/bin:/usr/local/bin
+    PATH=/bin:/usr/bin:/usr/local/bin
 
     $ add_to_a_path.py PATH /usr/local/bin --start
-    /usr/local/bin:/bin:/usr/bin
-
-
-    $ add_to_a_path.py $PATH /usr/local/bin --index=1
-    /bin:/usr/local/bin:/usr/bin
-
-    $ add_to_a_path.py $PATH /not/a/real/path
-    /bin:/usr/bin
-
+    PATH=/usr/local/bin:/bin:/usr/bin
 """
 
 
@@ -120,10 +112,11 @@ def script(args):
         if not paths:
             return False
     elif os.path.isdir(path_symbol):
-        paths = _add_symbol_to_paths(paths, path_symbol, args.index)
+        if path_symbol not in paths:
+            paths = _add_symbol_to_paths(paths, path_symbol, args.index)
     else:
         return False
-    print(os.path.pathsep.join(paths))
+    print('='.join((args.symbol, os.path.pathsep.join(paths))))
     return True
 
 

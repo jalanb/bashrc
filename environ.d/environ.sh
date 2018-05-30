@@ -7,14 +7,15 @@ set_paths () {
     if [[ -d ~/jab ]]; then
         . ~/jab/src/bash/add_to_a_path.sh
         PATH=$(dirname_ $(which python))
-        add_to_a_path PATH $HOME/bin
-        add_to_a_path PATH ~/jab/bin
-        add_to_a_path PATH $HOME/.local
-        add_to_a_path PATH $HOME/.local/bin
-        [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path PATH ${VIRTUAL_ENV}/bin
+        add_to_a_path PATH --start $HOME/bin
+        add_to_a_path PATH --index 1 ~/jab/bin
+        add_to_a_path PATH --index 2 ~/hub/pysyte/bin
+        add_to_a_path PATH --index 3 $HOME/.local
+        add_to_a_path PATH --index 4 $HOME/.local/bin
+        [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path --index 5 PATH ${VIRTUAL_ENV}/bin
         add_to_a_path PATH /usr/local/gnu
-        add_to_a_path PATH /bin
         add_to_a_path PATH /usr/local/bin
+        add_to_a_path PATH /bin
         add_to_a_path PATH /usr/bin
         add_to_a_path PATH /usr/local/sbin
         add_to_a_path PATH $HOME/git/bin
@@ -73,8 +74,10 @@ _source_jab_environ () {
     # set -x
     show_dir_colors
     # set +x
+    # set -x
     set_paths
-
+    # echo $PATH | tr ':' '\n'
+    # set +x
     shopt -s cdspell
     set -o vi
 }

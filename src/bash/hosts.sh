@@ -16,12 +16,13 @@ hosts () {
 
 vhosts () {
     vim -p \
-        ~/jab/src/bash/jabnet.sh \
         ~/jab/hss/hosts \
+        ~/jab/src/bash/jabnet.sh \
         /etc/hosts \
         "$@" \
         +/'Host[a-z]*' \
         ;
+
     . ~/jab/src/bash/jabnet.sh
 }
 

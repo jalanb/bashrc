@@ -11,18 +11,22 @@
 # Once sourced there is one major command:
 #
 add_to_a_path () {
-    if [[ -z $1 ]]; then
+    if [[ -z $2 ]]; then
         echo "Usage: add_to_a_path <SYMBOL> <new_path>"
-        echo "  e.g. add_to_a_path PYTHONPATH /dev/null"
+        echo "  e.g. add_to_a_path PYTHONPATH /path/to/pylibs"
     else
         DOT_PY=~/jab/src/python/add_to_a_path.py
-        local new_paths=$(python $DOT_PY "$@")
-        if [[ -n $new_paths ]]; then
-            eval $1=$new_paths
+        local _new_paths=$(python $DOT_PY "$@")
+        for word in "$@"; do
+            [[ $1 =~ - ]] || break
+            shift
+        done
+        if [[ -n $_new_paths ]]; then
+            eval $_new_paths
             export $1
         else
             echo $?
-            echo $new_paths
+            echo $_new_paths
         fi
     fi
 }

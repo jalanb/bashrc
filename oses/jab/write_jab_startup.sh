@@ -15,7 +15,7 @@ cat > ~/.bashrc << EOB
 
 Welcome_to $BASH_SOURCE
 if [[ \$- == *i* ]]; then
-    [[ -f "~/jab/login.sh" ]] && cd ~/jab && . login.sh && cd >/dev/null 2>&1
+    [[ -f ~/bash/bashrc ]] && . ~/bash/bashrc >/dev/null 2>&1
 fi
 [[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 echo Bye from /home/jab/.bashrc

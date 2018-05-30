@@ -4,7 +4,7 @@
 
 k () {
     local _dir="$1"; shift
-    [[ -z "$*" ]] && _dir=.
+    [[ -z "$_dir" ]] && _dir=.
     if [[ -d "$_dir" ]]; then
         (${XKCD:-cd} $_dir; 
         "$@")

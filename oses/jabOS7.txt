@@ -34,8 +34,6 @@ git clone $GITHUB/jalanb/ackvim
 pip install git+https://github.com/jeffkaufman/icdiff.git
 
 cd ~/jab
-# cp dotbashrc ~/.bashrc
-# mv dotbashrc ~/jab/src/jab/login.sh ?
 cd server/linux
 bash make_software.sh
 

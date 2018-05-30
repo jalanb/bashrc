@@ -15,8 +15,8 @@ try:
     from pysyte.paths import path
     from pysyte.colours import texts
 except ImportError:
-    from pysyte.paths import path
-    from pysyte.colours import texts
+    from dotsite.paths import path
+    from dotsite.colours import texts
 
 
 def todo_file():

@@ -5,8 +5,8 @@ from __future__ import print_function
 import linecache
 import sys
 from collections import defaultdict
-from dotsite import imports
-from dotsite import scripts
+from pysyte import imports
+from pysyte import scripts
 
 __version__ = '0.2.0'
 

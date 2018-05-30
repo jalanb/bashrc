@@ -16,7 +16,7 @@ import sys
 # from optparse import OptionParser
 
 
-from dotsite.paths import path
+from pysyte.paths import path
 
 
 class UserMessage(Exception):

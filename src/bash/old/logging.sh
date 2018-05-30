@@ -1,7 +1,5 @@
 #! /bin/cat
 
-# login.sh: source by ~/.bashrc
-
 # set -e
 # set +e
 

@@ -55,7 +55,8 @@ alias u="umports"
 
 # xx
 
-alias ..='cde ..'
+alias ,,='cdp'
+alias ..='cdup'
 
 alias eg="env | g "
 
@@ -64,7 +65,6 @@ alias p-="echo $OLDPWD"
 alias r.="rm -rvf *"
 
 alias sa="source_aliases ~/jab/src/bash/aliases.sh"
-alias sb="cde ~/jab && . login.sh && -"
 alias sf=". ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
@@ -98,28 +98,30 @@ alias tra="try ~/alans_tests"
 
 # xxxx
 
-alias ....='cde ../../..'
+alias ....='cduppp'
 
 alias comp=". ~/jab/environ.d/company.sh"
 
-alias home="cd; cls"
+alias popp=pisd
 
 alias tags="p ~/jab/src/python/ptags.py "
 
 
 # xxxxx
 
-alias .....='cde ../../../..'
+alias .....='cdupppp'
 
 alias mkenv=mkvirtualenv
 
+alias print=printf
+
 # xxxxxx
 
-alias ......='cde ../../../../..'
+alias ......='cduppppp'
 
 # xxxxxxx
 
-alias .......='cde ../../../../../..'
+alias .......='cdupppppp'
 alias service="sudo /sbin/service "
 
 # xxxxxxxx

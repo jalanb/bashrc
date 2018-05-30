@@ -5,8 +5,8 @@ from __future__ import print_function
 import commands
 
 
-from dotsite.paths import path
-from dotsite.paths import PathError
+from pysyte.paths import path
+from pysyte.paths import PathError
 
 
 def _get_existing_file(path_to_file):
