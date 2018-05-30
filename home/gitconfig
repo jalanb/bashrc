@@ -19,7 +19,7 @@
     co = checkout
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
-    di = difftool -y --extcmd=\"~/hub/icdiff/icdiff --line-numbers\"
+    di = difftool -y --extcmd=\"icdiff --line-numbers\"
     dk = difftool -y -t Kaleidoscope
     dm = difftool -y --extcmd=\"~/bin/meld  \"
     dn = diff --name-only
@@ -41,6 +41,7 @@
     pu = push
     re = rebase
     st = status
+    standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Mon == $(date +%a) ]] && echo last friday || echo yesterday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
 [push]
     default = simple
 [difftool "Kaleidoscope"]
@@ -71,3 +72,5 @@
     enabled = true
 [mergetool "diffconflicts"]
 	keepBackup = false
+[icdiff]
+	options = --highlight --line-numbers
