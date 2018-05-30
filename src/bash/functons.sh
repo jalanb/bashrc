@@ -103,21 +103,6 @@ IP () {
     done
 }
 
-gf () {
-    local __doc__="grep in any file args for other args"
-    shift_dir "$@" && shift
-    name=$1
-    shift
-    find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
-    local pattern=
-    for arg in "$@"; do
-        test ! -f "$arg" && pattern="$pattern $arg"
-    done
-    for arg in "$@"; do
-        [[ $(type -t "$arg") == "file" ]] && grep --colour -nH --binary-files=without-match $arg $pattern
-    done
-}
-
 fa () {
     fv "$@"
 }
@@ -142,6 +127,16 @@ fd () {
     find $dir -type d -name $name "$@"
 }
 
+fg () {
+    local _sought=$1; shift
+    for _path in $(ls); do
+        [[ -d $_path ]] || continue
+        local _dir=$(cd $_path; rlf .)
+        [[ -n $_sought && $(basename_ $_dir) =~ $_sought ]] && echo $_dir
+        [[ -z $_sought ]] && echo $_dir
+    done 
+}
+
 fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then
@@ -155,6 +150,21 @@ fv () {
             vim -p $files
         fi
     fi
+}
+
+gf () {
+    local __doc__="grep in any file args for other args"
+    shift_dir "$@" && shift
+    name=$1
+    shift
+    find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
+    local pattern=
+    for arg in "$@"; do
+        test ! -f "$arg" && pattern="$pattern $arg"
+    done
+    for arg in "$@"; do
+        [[ $(type -t "$arg") == "file" ]] && grep --colour -nH --binary-files=without-match $arg $pattern
+    done
 }
 
 gg () {
@@ -277,13 +287,9 @@ envv () {
     env | g VIRTUAL_ENV= | g '=.*'
 }
 
-pypp () {
-    python setup.py "$@"
-}
-alias popp=pypp
 
-pysd () {
-    pypp develop "$@"
+keys () {
+    . ~/bash/keyboard/*.sh
 }
 
 pipi () {
@@ -304,8 +310,20 @@ pipu () {
     pipi --upgrade pip
 }
 
+popq () {
+    popd >/dev/null 2>&1
+}
+
+pisd () {
+    pypp develop "$@"
+}
+
 pyth () {
     pypath python "$@"
+}
+
+pypp () { 
+    python setup.py "$@"
 }
 
 py () {
@@ -423,10 +441,6 @@ ask () {
     local _answer=
     read -e -n1 -p "$1 " _answer
     echo $_answer
-}
-
-ddg () {
-    firefox "https://next.duckduckgo.com/?q=$*"
 }
 
 fgg () {
@@ -703,15 +717,6 @@ vat () {
     vimcat "$@"
 }
 
-vbb () {
-    vim -p ~/.bashrc ~/hub/jab/__init__.sh ~/.bash_profile "$@" +/bash
-    ls -l ~/.bashrc ~/hub/jab/__init__.sh
-}
-
-vbl () {
-    vim $(ls -rt1 ~/jab/log/*bashrc*.log | tail -n 1) + +?"^++ "
-}
-
 vfg () {
     _sought="$1" && shift
     vf "$@" +/$_sought
@@ -837,8 +842,8 @@ bins () {
     [[ -z $_name ]] && return 1
     while [[ -n $_name ]]; do
         for root in $HOME /bin /usr; do
-            find $root -wholename "bin/*$_name*" -print 2> /dev/null
-        done | grep -e $_name | sort | uniq | g $_name 2> /dev/null
+            find $root -wholename "bin/*$_name*" -print 2>/dev/null
+        done | grep -e $_name | sort | uniq | g $_name 2>/dev/null
         _name="$1"; shift
     done
 }
@@ -1008,10 +1013,6 @@ divv () {
     _dixx "$@"
 }
 
-popq () {
-    popd >/dev/null 2>&1
-}
-
 rara () {
     local _cd=$1; shift
     local _path=$(kpp "$@")
@@ -1033,10 +1034,6 @@ this () {
 
 Tree () {
     tree "$@" | more
-}
-
-vibb () {
-    vim -p ~/.bashrc ~/jab/login.sh
 }
 
 vims () {
@@ -1166,6 +1163,34 @@ range () {
     return 0
 }
 
+start () {
+    local __doc__="$ start dir [commands] # for next session"
+    local _d="$1"
+    if [[ ! -d $_d ]]; then echo "! -d "'$1'" ($1)"; return 1; fi
+    shift
+    local _cdd=$_d
+    local _rc="$@"
+    if [[ -z $BASH_CD ]]; then echo "-z $ BASH_CD-'$BASH_CD'-" >&2; fi
+    local _cdf=$BASH_CD
+    if [[ -z $BASH_RC ]]; then echo "-z $ BASH_RC-'$BASH_RC'" >&2; fi
+    local _rcf=$BASH_RC
+    (cd ~/bash
+        if [[ ! -d $_cdd ]]; then echo "! -d "'$_cdd'" ($_cdd)"; return 1; fi
+        [[ -d $_cdd ]] || return 1
+        echo "echo $_cdd > $_cdf"
+        echo "$_cdd" > $_cdf
+        if [[ ! -f hash_bang.sh ]]; then echo "! -f ~/bash/hash_bang.sh" >&2; return 2; fi
+        echo 'Write "'$_rc'" to'" $_rcf"
+        [[ -f $_rcf ]] && chmod u+w $_rcf
+        cp hash_bang.sh $_rcf
+        chmod u+w $_rcf
+        echo $_rc > $_rcf
+        chmod u-w $_rcf
+        # ls -l $_rcf
+        # cat $_rcf
+    )
+}
+
 taocl () {
     curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md |
     pandoc -f markdown -t html |
@@ -1257,10 +1282,6 @@ please () {
     local last=$(history -p !-1)
     echo "sudo $last"
     sudo $last
-}
-
-pyth () {
-    pypath python "$@"
 }
 
 qwerty  () {
@@ -1374,7 +1395,7 @@ todo_show () {
     if [[ -f todo.txt ]]; then todo_txt=todo.txt
     elif [[ -f TODO.md ]]; then todo_txt=TODO.md
     fi
-    python ~/jab/src/python/todo.py $todo_txt
+    python3 ~/jab/src/python/todo.py $todo_txt
 }
 
 dirname_ () {
@@ -1397,6 +1418,12 @@ basename_ () {
         _result=0
     done
     return $_result
+}
+
+first_num () {
+    num=$(pyth ~/jab/src/python/first_num.py "$@")
+    args=$(pyth ~/jab/src/python/first_num.py --Invert "$@")
+    [[ -n $num ]]
 }
 
 viewstyle () {

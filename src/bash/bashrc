@@ -21,10 +21,13 @@ _bashrc () {
     source $_home_user/__init__.sh
     WELCOME_BYE=
     local_rc $_home_user
+    local _local_rc=$?
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     sp
     # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    [[ $_local_rc == 0 ]] || bash /Users/jab/src/git/hub/jab3/bin/dttc
+    cd ~/jab # >/dev/null 2>&1
 }
 
 BASHRC_LOG=~/bashrc.log
