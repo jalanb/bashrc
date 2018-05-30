@@ -32,7 +32,6 @@ local_rc () {
 . ~/bash/aliases.sh
 . ~/bash/asserts.sh
 . ~/bash/cde.sh
-. ~/bash/first_num.sh
 . ~/bash/functons.sh
 . ~/bash/github.sh
 . ~/bash/hosts.sh
@@ -42,7 +41,6 @@ local_rc () {
 . ~/bash/pt.sh
 . ~/bash/pym.sh
 . ~/bash/repo.sh
-. ~/bash/require.sh
 . ~/bash/rf.sh
 . ~/bash/run_python.sh
 . ~/bash/virtualenvwrapper.sh
