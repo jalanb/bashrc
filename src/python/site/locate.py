@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 """Methods to run the locate script more exactly"""
 
 

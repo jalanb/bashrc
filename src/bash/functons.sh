@@ -324,10 +324,6 @@ pisd () {
     pypp develop "$@"
 }
 
-pyth () {
-    pypath python "$@"
-}
-
 pypp () { 
     python setup.py "$@"
 }
