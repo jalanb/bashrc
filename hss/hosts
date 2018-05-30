@@ -1,21 +1,21 @@
 Host eos70D
     Hostname 192.168.130.102
 
-Host jab.ook
+Host jab.ook old.nalur
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.mini 
+Host jab.mini mini.nalur
     Hostname jalanmini.local
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.book
+Host jab.book book.nalur
     Hostname jalan-book.local 
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.mac
+Host jab.mac iMac.nalur
     Hostname jalan-mac.local
     User jab
     IdentityFile ~/.ssh/id_jab
@@ -56,6 +56,31 @@ Host default
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 
+Host twkwbe40 eopdev
+    Hostname 172.25.3.110
+    User builder
+    IdentityFile ~/.ssh/builder.key
+
+Host twkwbe41 eoptest
+    Hostname 172.25.3.111
+    User builder
+    IdentityFile ~/.ssh/builder.key
+
+Host twkwbe42 eopstage
+    Hostname 172.25.3.112
+    User portals
+    IdentityFile ~/.ssh/portals.key
+
+Host atlwbe43 eopbeta
+    Hostname 172.25.232.243
+    User builder
+    IdentityFile ~/.ssh/builder.key
+
+Host twkwbe43 eop
+    Hostname 172.25.32.103
+    User builder
+    IdentityFile ~/.ssh/builder.key
+
 Host twkwbe96 wmpdev
     Hostname 172.25.32.96
     User production
@@ -66,12 +91,12 @@ Host twkwbe95 wmptest
     User production
     IdentityFile ~/.ssh/production.key
 
-Host twkwbe34 wmptrain
+Host twkwbe34 wmptrain wmpstage
     Hostname 172.25.32.147
     User production
     IdentityFile ~/.ssh/production.key
 
-Host atlwbe35
+Host atlwbe35 wmpbeta
     Hostname 172.25.232.149
     User production
     IdentityFile ~/.ssh/production.key
