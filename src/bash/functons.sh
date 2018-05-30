@@ -429,14 +429,11 @@ sx () {
     export PS4='+ [${BASH_SOURCE##*/}:${LINENO}]'
     set -x
 }
-alias xxx=sx
 
 sz () {
     set +x
     export PS4=
 }
-# alias sssh=sz
-alias zzz=sz
 
 yt () {
     local _here=$(pwd)
