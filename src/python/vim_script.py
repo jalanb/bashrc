@@ -199,42 +199,9 @@ def extend(string):
         yield extended_string
 
 
-def tab_complete(string):
-    """Finish file names "left short" by tab-completion
-
-    For example, if an argument is "fred."
-        and no file called "fred." exists
-        but "fred.py" does exist
-        then return fred.py
-    """
-    if is_option(string):
-        return string
-    if not missing_extension(string):
-        return string
-    if os.path.isfile(string):
-        return string
-    extended_files = [f for f in extend(string) if os.path.isfile(f)]
-    try:
-        return extended_files[0]
-    except IndexError:
-        return string
-
-
-def textify(path_to_file):
-    """Change some file extensions to those which are more likely to be text
-
-    >>> textify('vim.pyc') == 'vim.py'
-    True
-    """
-    stem, ext = os.path.splitext(path_to_file)
-    if ext == '.pyc':
-        return '%s.py' % stem
-    return path_to_file
-
-
 def realify(path_to_file):
     """Get the real path to the source text file"""
-    return os.path.realpath(textify(path_to_file))
+    return os.path.realpath(script_paths.pyc_to_py(path_to_file))
 
 
 def get_globs(directory, glob):
@@ -369,12 +336,10 @@ def interpret_sys_argv():
     """Interpret the args from a command line"""
     options, not_options = divide(strip_puv(sys.argv[1:]), is_option)
     options = separate_options(options)
-    files = de_duplicate([tab_complete(a) for a in not_options])
-    known_files = script_paths.get(files)
-    if known_files:
-        return known_files, options
-    text_files = map(textify, map(tab_complete, files))
-    return text_files, options
+    args = de_duplicate([script_paths.tab_complete(a) for a in not_options])
+    paths = script_paths.arg_paths(args) or map(
+        script_paths.pyc_to_py, map(script_paths.tab_complete, args))
+    return paths, options
 
 
 def _vim_options(text_files, options):

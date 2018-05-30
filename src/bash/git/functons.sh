@@ -53,12 +53,16 @@ gl () {
 }
 
 go () {
-    local __doc__="git out"
+    local __doc__="git checkout"
+    local _stashed=
     if git checkout -q "$@" 2>&1 | grep -q fred; then
-        stash_herman || return 1
+        if _has_git_changes; then
+            stash_herman || return 1
+            _stashed=1
+        fi
         git checkout -q "$@"
         # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
-        echo "Cairo: git stash pop"
+        [[ -n $_stashed ]] && echo "Cairo: git stash pop"
     fi
     return 0
 }
@@ -80,7 +84,7 @@ gr () {
 
 
 _gs () {
-    l1
+    l0
     git status "$@"
 }
 
@@ -108,6 +112,10 @@ tc () {
     local _local_ignore=; test -f .gitignore && _local_ignore=.gitignore
     local _local_creds=; test -f ~/.git-credentials && _local_creds=~/.git-credentials
     vim -p $_global_config $_global_ignore $_local_ignore $_local_config $_local_creds
+}
+
+ts () {
+    tig status
 }
 
 # xxx
@@ -140,6 +148,11 @@ gbr () {
 gbt () {
     gb "$@"
     gt "$@"
+}
+
+gip () {
+    gi "$@"
+    gp
 }
 
 gst () {
@@ -266,12 +279,12 @@ gxi () {
     while git status -s "$dir"; do
         gb
         git diff --staged
-        for f in $(gssd_changes "$dir"); do
-            [[ -n "$f" ]] || continue
-            _gxi_grep $f $GXI_QUERY || continue
-            $_show_diff "$f"
-            _gxi_request "$f"
-            $_response "$f"
+        for _file in $(gssd_changes "$dir"); do
+            [[ -n "$_file" ]] || continue
+            _gxi_grep $_file $GXI_QUERY || continue
+            $_show_diff "$_file"
+            _gxi_request "$_file" || break
+            $_response "$_file"
         done
         [[ $answer =~ [qQ] ]] && break
         [[ $answer =~ [sS] ]] && _gxi_stash
@@ -360,6 +373,11 @@ gra () {
 
 grc () {
     git rebase --continue
+}
+
+grm () {
+    local _current_branch=$(git_branch)
+    git rebase master $_current_branch
 }
 
 grs () {
@@ -525,7 +543,7 @@ _gvi_vim () {
 }
 
 _gsi_vim () {
-    _git_modified $f && git dv $f || git diff $f | vin
+    _git_modified "$1" && git dv "$1" || git diff "$1" | vin
 }
 
 # xxxx
@@ -573,6 +591,11 @@ gbta () {
 
 gcme () {
     gcm --edit "$@"
+}
+
+gipf () {
+    gi "$@"
+    gpf
 }
 
 godr () {
@@ -671,12 +694,13 @@ grmm () {
     gmmm
 }
 
-grup () {
-    git remote update origin --prune
+grmt () {
+    local _current_branch=$(git_branch)
+    git rebase master $_current_branch -X theirs
 }
 
-gstl () {
-    gst --list
+grup () {
+    git remote update origin --prune
 }
 
 gsri () {
@@ -688,14 +712,22 @@ gssd () {
     _status_line -C $_dir "$@"
 }
 
+gstl () {
+    gst --list
+}
+
+gstp () {
+    gst pop
+}
+
 gtlg () {
     gtl | g "$@"
 }
 
 gvsd () {
     first_arg_dir_or_here "$@" && shift
-    for f in $(gssd $dir); do
-        _gvi_vim "$f"
+    for _file in $(gssd $dir); do
+        _gvi_vim "$_file"
     done
 }
 
@@ -741,10 +773,10 @@ _git_kd () {
 }
 
 verbosity () {
-    set -x
+  # set -x
     [[ $2 =~ off ]] && STDOUT=off
     [[ $2 =~ on ]] && STDOUT=on
-    [[ -n $STDOUT ]] || for word in "$@"; do
+    for word in "$@"; do
         [[ $word =~ -[qQvV] ]] || continue
         [[ $word =~ .q ]] && STDOUT=off
         [[ $word =~ .Q ]] && STDERR=off
@@ -752,18 +784,20 @@ verbosity () {
         [[ $word =~ .V ]] && STDERR=on
     done
     echo $STDOUT
-    set +x
+  # set +x
     true
 }
 
 git_root () {
-    STDOUT=$(verbosity $1 on)
+    STDOUT=$(verbosity $1)
     _there=
     for word in $*; do
-        [[ $word =~ -[qv] ]] && continue
-        [[ -e "$word" ]] || continue
-        _there="$word"; shift
-        break
+        [[ $word =~ -[qQvV] ]] && continue
+        if [[ -e "$word" ]]; then
+            _there="$word"
+            shift
+            break
+        fi
     done
     [[ -f "$_there" ]] && _there=$(dirname_ $_there)
     [[ -d "$_there" ]] || echo "Not a dir '$_there'"
@@ -776,7 +810,7 @@ git_root () {
     local _root_dir=$(readlink -f $_project_dir)
     [[ -d $_root_dir ]] || echo "$_root_dir not a dir" >&2
     [[ -d $_root_dir ]] || return 1
-    [[ -z $_verbose ]] || echo $_root_dir
+    [[ $STDOUT == off ]] || echo $_root_dir
     return 0
 }
 
@@ -830,7 +864,8 @@ git_changed () {
 _gxi_request () {
     _gxi_menu $1
     read -e -n1 -p " " answer
-    [[ $answer =~ [qQ] ]] && break
+    [[ $answer =~ [qQ] ]] && return 1
+    return 0
 }
 
 gssd_changes () {
@@ -972,7 +1007,7 @@ log_test_file ()
 
 _ggi_show_diff () {
     if _git_untracked "$1"; then
-        kat -n "$f"
+        kat -n "$1"
         return 0
     fi
     if _git_modified "$1"; then
@@ -983,12 +1018,12 @@ _ggi_show_diff () {
             gdi "$1"
         fi
     fi
-    git status -s $f
+    git status -s $1
 }
 
 _gsi_show_diff () {
     if _git_untracked "$1"; then
-        kat -n "$f"
+        kat -n "$1"
         return 0
     fi
     if _git_modified "$1"; then
@@ -999,12 +1034,12 @@ _gsi_show_diff () {
             gdi "$1"
         fi
     fi
-    git status -s $f
+    git status -s $1
 }
 
 _gvi_show_diff () {
     git diff "$1"
-    git status -s $f
+    git status -s $1
 }
 
 _ggi_response () {

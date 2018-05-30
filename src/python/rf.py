@@ -36,7 +36,6 @@ def default_options():
         'quiet': False,
         'temporary': True,
         'Trial-Run': False,
-        'Use-Debugger': False,
     }
     globs = {
         'development': 'tags a.out *.log',
@@ -84,7 +83,10 @@ def get_help_text(configured_globs):
     glob_explations = [(name, 'remove "%s"' % value)
                        for name, value in configured_globs.items()
                        if name not in explanation_names]
-    return sorted(explanations + glob_explations, cmp=compare_options)
+    try:
+        return sorted(explanations + glob_explations, cmp=compare_options)
+    except TypeError as e:
+        return sorted(explanations + glob_explations, key=lambda x: x[0])
 
 
 def add_argument(parser, name, default, explanation):
@@ -192,7 +194,9 @@ def remove_files(files, quiet, trial_run):
     for a_file in files:
         try:
             if not trial_run:
-                os.remove(a_file)
+                # Files can be temp, and gone since we found them
+                if os.path.isfile(a_file):
+                    os.remove(a_file)
             if not quiet:
                 print(a_file)
         except (IOError, OSError) as e:

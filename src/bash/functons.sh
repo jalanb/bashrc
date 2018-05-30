@@ -55,7 +55,7 @@ y () {
     if first_num "$@"; then
         Tree -L $num $args
     else
-        Tree -L 2 "$@"
+        Tree -L 3 "$@"
     fi
 }
 
@@ -265,6 +265,12 @@ pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
+dir () {
+    local _where=.
+    [[ -n "$@" ]] && _where="$@"
+    say $(short_dir $_where)
+}
+
 pii () {
     local me=$USER
     local here=$(jostname)
@@ -420,11 +426,23 @@ sq () {
 }
 
 sx () {
+    export PS4='+ [${BASH_SOURCE##*/}:${LINENO}]'
     set -x
 }
+alias xxx=sx
 
 sz () {
     set +x
+    export PS4=
+}
+# alias sssh=sz
+alias zzz=sz
+
+yt () {
+    local _here=$(pwd)
+    cd ~/Downloads/youtube.dl
+    youtube.dl "$@"
+    cd $_here
 }
 
 zm () {
@@ -588,6 +606,10 @@ lly () {
     $reset
 }
 
+lns () {
+    ln -s "$@"
+}
+
 lr2 () {
     lra "$@" | grep --color -- "->"
 }
@@ -666,7 +688,22 @@ rlf () {
 }
 
 sai () {
-    /usr/bin/say -v Moira "$@"
+    local _one=$1
+    local _voices="-v Moira"
+    if [[ $_one =~ ^v(oices*)*$ ]]; then
+        shift
+        local _two=$1; [[ -n $_two ]] && shift
+        _voices="-v?";
+        if [[ $_one == "voice" ]]; then
+            _voices="-v $_two"
+        elif [[ $_one == v ]]; then
+            local _voice=
+            [[ -n $_two ]] &&  _voice=$_two
+            _voices="-v $_two"
+        fi
+    fi
+    # From https://stackoverflow.com/a/31189843/500942
+    ( { { /usr/bin/say $_voices "$@" >&2; } 2>&3- & } 3>&2 2>/dev/null )
 }
 
 sib () {
@@ -700,7 +737,6 @@ tmp () {
     pushq $(pyth $KD_DIR/kd.py ~/tmp "$@")
 }
 
-unalias try > ~/bash/fd/1 2> ~/bash/fd/2
 try () {
     TRY=~/jab/src/python/testing/try.py
     [[ -f "./try.py" ]] && TRY=./try.py
@@ -926,7 +962,7 @@ dots () {
 
 down () {
     cd ~/down "$@"
-    l1 -tr . | tail
+    l -tr . | tail
 }
 
 init () {
@@ -973,15 +1009,19 @@ mkv3 () {
     virtualenv --python=python /Users/jab/.virtualenvs/$1
 }
 
+nosedocs () {
+    nosetests --with-doctest --doctest-tests --doctest-extension=.test "$@"
+}
+
 nose () {
     local _progress=
     nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
     local _coverage=
     nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
     if nosetests -h 2>&1 | g -q stopwatch; then
-        NOSE_COVER_TESTS= nosetests -A "speed!='slow'" $_coverage $_progress "$@"
+        NOSE_COVER_TESTS= nosedocs -A "speed!='slow'" $_coverage $_progress "$@"
     else
-        NOSE_COVER_TESTS= nosetests $_coverage $_progress "$@"
+        NOSE_COVER_TESTS= nosedocs $_coverage $_progress "$@"
     fi
 }
 
@@ -1111,9 +1151,13 @@ paste () {
     fi
 }
 
+clipvim () {
+    bash -x /Users/jab/src/git/hub/jab3/bin/tmp_fred.sh
+}
+
 clip_in () {
     pbcopy
-    echo "# $(clipout)"
+    echo "$(clipout)" | sed -e "s:^:# :"
 }
 
 clipout () {
@@ -1200,8 +1244,8 @@ taocl () {
 }
 
 tools () {
-    (cd ~/wwts/tools/bin
-    PATH=~/wwts/tools/bin:$PATH
+    (cd ~/wwts/tools/tools/bin
+    PATH=~/wwts/tools/tools/bin:$PATH
     [[ -f ~/.virtualenvs/tools/bin/activate ]] && . ~/.virtualenvs/tools/bin/activate
     "$@"
     )
@@ -1489,7 +1533,7 @@ _any_diff () {
 }
 
 vim_diff () {
-    first_file="$1"
+    local _first_file="$1"
     shift
     second_file="$1"
     shift
@@ -1500,13 +1544,13 @@ vim_diff () {
         [[ $arg =~ ^-.* ]] && editor_command="$editor_command $arg" && continue
         [[ -z $third_file ]] && third_file=$arg
     done
-    if ! _any_diff "$first_file" "$second_file" "$third_file"; then
+    if ! _any_diff "$_first_file" "$second_file" "$third_file"; then
         echo same
         return 0
     fi
     if [[ -n $third_file ]]; then
-        $editor_command "$first_file" "$second_file" "$third_file"
-    else $editor_command "$first_file" "$second_file"
+        $editor_command "$_first_file" "$second_file" "$third_file"
+    else $editor_command "$_first_file" "$second_file"
     fi
 }
 

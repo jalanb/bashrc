@@ -60,7 +60,7 @@ def lines(path_to_item):
 
 
 def script(args):
-    paths_to_items = script_paths.get(args.keys)
+    paths_to_items = script_paths.arg_paths(args.keys)
     result = False
     for path_to_item in paths_to_items:
         if args.python:

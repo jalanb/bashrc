@@ -3,26 +3,26 @@
 scriptencoding 'utf-8'
 " Keyboard {{{1
 " function keys {{{2
- noremap  <F1>      :help<cr>
- noremap  <F2>      :ls<CR>:b<Space>
- noremap  <F3>      :map <F3>
-inoremap  <F3>      <esc>:w!<CR>
- noremap  <F4>      <c-w>w
- noremap  <F5>      <C-W>_
- noremap  <F6>      :map <F6>
- noremap  <F7>      :set list!<CR>
- noremap  <F8>      O<esc>:w!<CR>:Limelight<cr>
- noremap  <F9>      :w!<CR>:Limelight<cr>
- noremap  <F9>      :map <F9>
-inoremap  <F9>      <esc>:w!<CR>
+ noremap <F1>      :help<cr>
+ noremap <F2>      :ls<CR>:b<Space>
+ noremap <F3>      :map <F3>
+inoremap <F3>      <esc>:w!<CR>
+ noremap <F4>      <c-w>w
+ noremap <F5>      <C-W>_
+ noremap <F6>      :map <F6>
+ noremap <F7>      :set list!<CR>
+ noremap <F8>      O<esc>:w!<CR>:Limelight<cr>
+ noremap <F9>      :w!<CR>:Limelight<cr>
+ noremap <F9>      :map <F9>
+inoremap <F9>      <esc>:w!<CR>
  noremap <F10>      :map <F10>
  noremap <F10>      k\mdndnddn.
  noremap <F11>      :map <F11>
  noremap <F12>      :map <F12>
 
+" modifier keys {{{2
  noremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
-
  noremap <S-F5>     <C-W>=
 " ordinary keys {{{2
 " number row {{{3
@@ -55,8 +55,12 @@ nnoremap & J
 nnoremap £ :nnoremap £
 "noremap @ execute contents of register
 "noremap ! shell
+ noremap !! :noremap @@
+ noremap ££ :noremap @@<up>
 "noremap ±
 " letters {{{3
+"a-y {{{4
+" /map \zs[a-yA-Y]\([<][^ ]*\|[^ ]\)
 "noremap a - append
 "noremap b - backword
 "noremap c - start cutting
@@ -86,21 +90,38 @@ cnoremap w!! w !sudo tee %
 "noremap x - remove char
 "noremap y - yank
  noremap yb byw
+"z {{{4
+" /map \zsz\([<][^ ]*\|[^ ]\)
 "noremap z - folds. centering, ...
- noremap z<up> zM
- noremap z<right> zr
- noremap z<left> zm
- noremap z<down> zR
  noremap z+ zO
  noremap z= zo
  noremap z- zc
  noremap z_ zC
+ noremap zq zC
+ noremap zQ zc
+ noremap zw zO
+ noremap zW zo
+"noremap ze 
+"noremap zr 
+"noremap zt 
+"noremap zy 
+ noremap za z<cr>
+ noremap zs jzck
+"noremap zd 
+"noremap zf 
+"noremap zh 
+"noremap zj 
+"noremap zk 
+"noremap zl 
+ noremap zx jzO
  noremap zn nzMzvzz
  noremap zN NzMzvzz
  noremap z/ /<cr>zMzvzz
  noremap z? ?<cr>zMzvzz
- noremap zs jzck
- noremap zx jzO
+ noremap z<up> zM
+ noremap z<right> zr
+ noremap z<left> zm
+ noremap z<down> zR
 " Punctuation {{{3
  noremap ] <C-]>
  noremap [ <C-T>
@@ -174,29 +195,29 @@ noremap <PageDown> <C-F>
 nnoremap <left>      :tabprev<cr>
 nnoremap <right>     :tabnext<cr>
 " control keys {{{2
- noremap     <C-d> :qa<CR>
- noremap     <C-n> :next<CR>
- noremap     <C-p> :prev<CR>
- noremap     <C-q> :qa!<CR>
- noremap     <C-h> <c-w><c-h>
- noremap     <C-j> <c-w><c-j>
- noremap     <C-k> <c-w><c-k>
- noremap     <C-l> <c-w><c-l>
-     map     <c-m> dd=dndndd=
-     map     <c-n> dndndd=dd=
+ noremap    <C-d> :qa<CR>
+ noremap    <C-n> :next<CR>
+ noremap    <C-p> :prev<CR>
+ noremap    <C-q> :qa!<CR>
+ noremap    <C-h> <c-w><c-h>
+ noremap    <C-j> <c-w><c-j>
+ noremap    <C-k> <c-w><c-k>
+ noremap    <C-l> <c-w><c-l>
+     map    <c-m> dd=dndndd=
+     map    <c-n> dndndd=dd=
  noremap <C-Right> w
  noremap <C-Left>  b
-inoremap     <C-d> <esc>:qa<CR>
-inoremap     <C-q> <Esc>:qa!<CR>
+inoremap    <C-d> <esc>:qa<CR>
+inoremap    <C-q> <Esc>:qa!<CR>
 inoremap <C-Right> <Esc>lwi
 inoremap <C-Left>  <Esc>bi
 " Alt keys {{{2
- noremap     <A-q>      :qa!<CR>
+ noremap    <A-q>      :qa!<CR>
  noremap <A-Right>      :tabnext<Cr>
- noremap  <A-Left>      :tabprev<Cr>
-inoremap     <A-q> <Esc>:qa!<CR>
+ noremap <A-Left>      :tabprev<Cr>
+inoremap    <A-q> <Esc>:qa!<CR>
 inoremap <A-Right> <Esc>:tabnext<CR>
-inoremap  <A-Left> <Esc>:tabprev<CR>
+inoremap <A-Left> <Esc>:tabprev<CR>
 " Leader keys {{{2
  noremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
@@ -232,10 +253,11 @@ inoremap  <A-Left> <Esc>:tabprev<CR>
  noremap <leader>[ :cp<cr>zMzvzz
  noremap <leader>: q:
 nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+ noremap <leader>' :call SearchXxx()<cr><c-l>
  noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
  noremap <leader><Left>     <<
  noremap <leader><Right>    >>
-" Kinda keys {{{1
+" Kinda keys {{{2
 set backspace=eol,start,indent
 set autoindent smartindent
 set matchpairs+=<:>
@@ -246,6 +268,7 @@ set whichwrap+=<,>,h,l,[,] " http://vim.wikia.com/wiki/Automatically_wrap_left_a
 set mouse=
 " Mouse works: set mouse=
 " Screen {{{1
+" Settings {{{2
 set background=dark     " My colorscheme works best on a dark background
 colorscheme jalanb " I have my own colorscheme (usually at ~/.vim/colors/jalanb.vim
 set title           " the title of the window will be set to filename being edited
@@ -261,6 +284,7 @@ set smarttab        " When on, a <Tab> in front of a line inserts blanks accordi
 set tabpagemax=1000 " Maximum number of tab pages to be opened by the -p command line argument
                     " I set it very high as I use -p by default
 set nospell         " Turn off spell checking
+set t_Co=256
 " Back in the day I used to use the SeeTab plugin
 " let g:SeeTabGuiFG="Cyan"
 " See http://www.vim.org/scripts/script.php?script_id=628 for more
@@ -273,7 +297,6 @@ if &term ==? 'linux'
     set t_te=[?1049l
 endif
 " Colours {{{3
-set t_Co=256
 " Cursor shapes differing in different modes {{{3
 " from http://www.reddit.com/user/Eyckelboom
 " " set a nicer cursor in insert mode (from terryma on github)
@@ -305,8 +328,9 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 set updatetime=500
 " Splice {{{2
 let g:splice_initial_scrollbind_grid=1
-" vimdiff, aka vim -d {{{1
-function EnterBuffer ()
+" Functions {{{1
+" vimdiff, aka vim -d {{{2
+function EnterBuffer () 
     "
     " diff options
     "
@@ -331,7 +355,7 @@ function EnterBuffer ()
     let &titlestring = $HOSTNAME . ':vim ' . expand('%:p:~')
 endfunction
 
-function! LeaveBuffer ()
+function! LeaveBuffer () 
     let &titlestring = $HOSTNAME . ':not ' . expand('%:p:~')
 endfunction
 
@@ -342,19 +366,24 @@ autocmd BufLeave * call LeaveBuffer()
 if !exists(':DiffOrig')
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
-" Ok, ok, so I have some spelling blind-spots {{{1
+" Miscellaneous {{{1
+" Abbreviations {{{3
+" Ok, ok, so I have some spelling blind-spots {{{3
 abbreviate becuase because
 abbreviate lamda lambda
 abbreviate seperate separate
-" Some miscellaneous stuff from around the interwebs {{{1
+" Some miscellaneous stuff from around the interwebs
+" Filetype {{{2
 autocmd FileType c,cpp,h,java set cindent
-" From http://items.sjbach.com/319/configuring-vim-right {{{2
+"  Configuring Vim right {{{2
+" From http://items.sjbach.com/319/configuring-vim-right
 set hidden      " When on a buffer becomes hidden when it is abandoned.
 set scrolloff=9 " Minimal number of screen lines to keep above and below the cursor.
 set ruler
 set shortmess=atI
 set visualbell
-" From http://www.pixelbeat.org/settings/.vimrc {{{2
+" Assortment {{{2
+" http://www.pixelbeat.org/settings/.vimrc 
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
 set cursorline      " Highlight the screen line of the cursor with CursorLine
 set wildmenu        " visual autocomplete for command menu
@@ -363,7 +392,8 @@ set completeopt=menu,preview,longest
 " Ignorance {{{2
 "Ignore these files when completing names and in Explorer
 set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,*.py[co]
-" From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html {{{2
+" Do not backup temps {{{2
+" From http://tim.theenchanter.com/2008/07/crontab-temp-file-must-be-edited-in.html
 "   When one of the patterns matches with the name of the file which is written, no backup file is created.
 set backupskip=/tmp/*,/private/tmp/*,~/tmp
 " Stronger encryption {{{2
@@ -372,16 +402,16 @@ if exists('+cm')
 endif
 autocmd BufReadPost * if &key != "" | set noswapfile nowritebackup viminfo= nobackup noshelltemp history=0 secure | endif
 
-" From vim help
+" From vim help {{{2
 set backupdir=~/old
 " Add a date to backup file extension
 :au BufWritePre * let &bex = '-' . strftime('%F.%T') . '~'
 
-" Unset an option which babun (?) has set
+" Unset an option which babun (?) has set {{{2
 set noundofile
 
 " Despacing {{{2
-function! RetabAndStripTrailingWhitespace()
+function! RetabAndStripTrailingWhitespace() 
     :retab!
     :%s/\s\+$//e
 endfunction
@@ -433,25 +463,30 @@ function CycleNumber() " {{{3
         set nonumber norelativenumber
     endif
 endfunction
-" Start without 'em, as they are now so easy to turn on
+" Start without 'em, as they are now so easy to turn on {{{3
 set nonumber    " Start without line numbers
 " Search {{{2
 " Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci
 :set grepprg=grep\ -nH
 " <leader>\ is bound to calling ToggleHighlightSearch
 "   The leader key is also \, so really \\ calls this
-function ToggleHighlightSearch()
+function SearchXxx() 
+    normal /Xxx<cr>
+endfunction
+
+function ToggleHighlightSearch() 
     if &hlsearch
         set nohlsearch
     else
         set hlsearch
     endif
 endfunction
+" set some tings {{{3
 set noignorecase      " Ignore Case while searching (\C in the regexp to search casefully)
 set nosmartcase       " Do not ignorecase if the regexp includes capitals
 set incsearch       " search as characters are entered
 set hlsearch        " highlight matches
-" seek.vim is a plugin for 'in current line' searching
+" seek.vim is a plugin for 'in current line' searching {{{3
 let g:SeekKey = 'f'
 let g:SeekBackKey = 'F'
 " This looks like one of mine
@@ -496,7 +531,7 @@ let g:is_posix = 1
 
 " Use ranger as a file explorer {{2
 " From http://www.everythingcli.org/use-ranger-as-a-file-explorer-in-vim/
-function RangerExplorer()
+function RangerExplorer() 
     exec 'silent !ranger --choosefile=/tmp/vim_ranger_current_file ' . expand('%:p:h')
     if filereadable('/tmp/vim_ranger_current_file')
         exec 'edit ' . system('cat /tmp/vim_ranger_current_file')

@@ -207,8 +207,13 @@ def all_possible_test_files_in(path_to_root, recursive):
     for glob in _positive_test_globs():
         result.extend(find_files(glob))
     for path_to_file in find_files():
-        if not path_to_file.ext and _first_line_is_python_shebang(path_to_file.lines()):
-            result.append(path_to_file)
+        if '.git' in path_to_file:
+            continue
+        try:
+            if not path_to_file.ext and _first_line_is_python_shebang(path_to_file.lines()):
+                result.append(path_to_file)
+        except UnicodeDecodeError as e:
+            raise ValueError('%s - %s' % (path_to_file, repr(e)))
     return result
 
 
