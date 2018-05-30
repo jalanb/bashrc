@@ -4,6 +4,29 @@
 
 . ~/jab/src/bash/repo.sh
 
+BASH_CD=~/bash/_cd.in
+BASH_RC=~/bash/_rc.sh
+
+dirname_ () {
+    local _result=1
+    for _arg in "$@"; do
+        [[ -e "$_arg" ]] || continue
+        dirname "$_arg"
+        _result=0
+    done
+    return $_result
+}
+
+basename_ () {
+    local _result=1
+    for _arg in "$@"; do
+        [[ -e "$_arg" ]] || continue
+        basename "$_arg"
+        _result=0
+    done
+    return $_result
+}
+
 _jab_dir () {
     [[ -d ~/jab ]] || echo ~/jab is not a directory >&2
     [[ -d ~/jab ]] 

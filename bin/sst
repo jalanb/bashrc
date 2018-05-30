@@ -30,17 +30,21 @@ main () {
         _remote_server=$(echo $1 | cut -d\@ -f 2)
         shift
     else
-        local _remote_user=$1
-        shift
-        local _remote_server=$1
-        shift
+        _remote_user=$1
+        _remote_server=$2
+        shift 2
     fi
     local _options="$@"
 
     local _local_user=$USER
+    [[ -n $_local_user ]] || return 1
     local _local_server=`hostname -s`
+    [[ -n $_local_server ]] || return 1
     local _local_ip=$(python ~/jab/src/python/ifconfig.py 10 172 193 192 100 2> ~/bash/fd/2; true)
-    local _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')" 2> ~/bash/fd/2; true)
+    [[ -n $_local_ip ]] || return 1
+    local _remote_ip=
+    [[ -n $_remote_server ]] || return 1
+    _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')" 2> ~/bash/fd/2; true)
     if [[ $_local_ip == $_remote_ip ]]; then
         _local_user=$_remote_user
         if [[ $_remote_user == $(whoami) ]]; then

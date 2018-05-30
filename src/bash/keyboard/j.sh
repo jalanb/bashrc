@@ -1,5 +1,8 @@
 #! /bin/cat
 
+. ~/bash/jabnet.sh
+. ~/keys/k.sh
+
 # x
 
 j () {
@@ -8,6 +11,17 @@ j () {
 
 
 # xx
+jb () {
+    ssb "$@"
+}
+
+ji () {
+    ssi "$@"
+}
+
+jm () {
+    ssm "$@"
+}
 
 jj () {
     if [[ -z "$*" ]]; then

@@ -199,6 +199,9 @@ coverage/
 nosetests.xml
 coverage.xml
 
+# virtualenv activator
+bin/activate
+
 # Translations
 *.mo
 *.pot

@@ -2,53 +2,45 @@
 
 Welcome_to $BASH_SOURCE
 
-known_dirs () {
-    local _stem=$1; shift
-    echo "$_stem ${_stem}.local ${_stem}.development ${_stem}.master"
+known_subs () {
+    local _parent=$(basename $(readlink -f .))
+    echo "$_parent bin local development master"
 }
 
-first_dir () {
-    for dir in $(known_dirs "$1"); do
+first_sub () {
+    for dir in $(known_subs "$1"); do
         test -d $dir || continue
         break
     done
     echo "$dir"
 }
 
-wwts_path () {
-    readlink -f ~/wwts/"$1"
+home_path () {
+    readlink -f ~/"$1"
 }
 
-head_4 () {
-    local _default="$1"; shift
-    _name="$1"; shift
-    local _dir=$(first_dir $( wwts_path $_default ))
-    [[ -d $_dir ]] || _dir=$(first_dir $( wwts_path $_name ))
+. ~/bash/add_to_a_path.sh
+
+home () {
+    # set -x
+    local _name=$1; shift
+    local _parent=~/$_name
+    local _dir=~/$_name/$_name
+    [[ -d $_dir ]] || _dir=$_parent
+    [[ -d $_dir ]] || return 1
     # Args should overwrite defaults
-    local _wwts_paths=$( (
-        cd ~/wwts
+    local _match_dir=$( (
+        cd $_parent
         for _arg_path in "$@"; do
-            if [[ -d $( wwts_path $_arg_path ) ]]; then
-                wwts_path $_arg_path
+            if [[ -d $_arg_path ]]; then
+                readlink -f $_arg_path
             fi
-        done | sort | uniq | tr '\n' ' '
+        done
     ) )
-    local _wwts_dir=$(first_dir $_wwts_paths)
-    [[ -d "$_wwts_dir" ]] && _dir="$_wwts_dir"
+    [[ -d "$_match_dir" ]] && _dir="$_match_dir"
     [[ -d "$_dir" ]] || return 1
     CDE_header=$( (cd $_dir; l -d ${_name}* 2>/dev/null ) ) cde $_dir
-}
-
-head_43 () {
-    head_4 tools tools.release "$@"
-}
-
-head_44 () {
-    head_4 dashboard dashboard.2.7 "$@"
-}
-
-head_45 () {
-    head_4 waas waas "$@"
+    # set +x
 }
 
 Bye_from $BASH_SOURCE

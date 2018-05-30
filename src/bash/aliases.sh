@@ -10,8 +10,10 @@ Welcome_to $BASH_SOURCE
 
 # This list is quite long enough, we accept no other aliases
 #   Thanks anyway
+#
+# (Except we will hang on to '.' (which is set by what.sh))
 
-_keep_dot=$(alias . | sed -e "s/.*=//" -e "s/'//g")
+_keep_dot=$(alias . | sed -e "s/.*=//" -e "s/'//g")  # parses out any alias of '.'
 unalias -a
 [[ -n "$_keep_dot" ]] && alias .=$_keep_dot
 
@@ -24,34 +26,34 @@ unalias -a
 
 # x
 
-# 0= is an alias in ./digits.sh
-# a= function
-# b= function
-# c= function
-alias d="d"
-alias e="ex --noplugin -u ~/.vim/exrc"
-# f= function
-# g= function
-# h= function
-alias i="i"
-# j= function
-# k= function
-# l= function
-alias m="m"
-alias n="n"
-alias o="o"
-# p= function
-# q= function
-# Q= function
+# [0-9]* are in keys/1_0.sh
+# a()
+# b()
+# c()
+# d
+# e()
+# f()
+# g()
+# h()
+# i
+# j()
+# k()
+# l()
+# m
+# n
+# o
+# p()
+# q()
+# Q()
 # r= script
-alias s="s"
-# t= function
-alias u="umports"
-# v= function
-# w= function
-# x= function
-# y= function
-# z= function
+# s
+# t()
+# u
+# v()
+# w()
+# x()
+# y()
+# z()
 
 # xx
 
@@ -73,12 +75,9 @@ alias z.="zm \*"
 # xxx
 
 alias ..l='cl ..'
-alias ...='cde ../..'
+alias ...='cdupp'
 
 alias doc="cde ~/Documents"
-
-alias clx="cl; lx "
-alias cly="cl; ly "
 
 alias got=git
 alias gti=git
