@@ -57,9 +57,18 @@ vff () {
 # _xx
 # xxxx
 
+bash_null () {
+    echo ~/bash/null 
+}
+
 fynd () {
+    sudo find "$@"
+}
+
+fynd.old () {
     if [[ "$@" =~ -name ]]; then
         echo "Do not use '-name'" >&2
+        return 1
         shift
     fi
     dir=
@@ -79,7 +88,7 @@ fynd () {
     fi
     local old_ifs=$IFS
     IFS=";"
-    for FOUND in $(find $(realpath "$dir") -name "$_arg" -print "$@" | tr '\n' ';')
+        for FOUND in $(find $(realpath "$dir") -name "$_arg" -print "$@" 2>/dev/null | tr '\n' ';')
     do
         relpath -s $FOUND
     done

@@ -2,11 +2,11 @@
 
 Welcome_to $BASH_SOURCE
 
-
-
 # x
 
-alias c=cde
+c () {
+    cde "$@"
+}
 
 # _
 # xx
@@ -36,8 +36,7 @@ cl () {
 }
 
 cr () {
-    cde "$@"
-    ranger
+    clear
 }
 
 cv () {

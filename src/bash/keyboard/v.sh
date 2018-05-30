@@ -6,11 +6,11 @@
 # v () {
 #     [[ -z $1 ]] && vim_none || vim_some "$@"
 # }
-
+# 
 v () {
+    # sai Give, Vim, Parser, keys &
     vim -p "$@"
 }
-
 
 # xx
 
@@ -50,6 +50,50 @@ vv () {
 
 
 # xxx
+
+vdd () {
+    local _vim_mark=_vim_
+    local _vim_files=$(find . -type f -name "*$_vim_mark")
+    for _vim_file in $_vim_files; do
+        _vim_rlf=$(readlink -f $_vim_file)
+        _vim_dir=$(dirname_ $_vim_rlf)
+
+        _vim_name=$(basename_ $_vim_rlf)
+        _vim_stem="${_vim_name/$_vim_mark/}"
+        _vim_back="${_vim_stem}$_vim_mark"
+        # echo "file: $_vim_file"
+        # echo "readlink: $_vim_rlf"
+        # echo "name: $_vim_name"
+        # echo "stem: $_vim_stem"
+        # echo "back: $_vim_back"
+        # echo "dir: $_vim_dir"
+
+        [[ -d "$_vim_dir" ]] || echo "not -d $_vim_dir"
+        [[ -d "$_vim_dir" ]] || continue
+
+        (
+        # echo "cd $_vim_dir"
+            cd $_vim_dir
+            if [[ -f "$_vim_stem" ]]; then
+                ls -l "$_vim_stem"
+                if [[ -f "$_vim_back" ]]; then
+                    ls -l "$_vim_back"
+                    vd $_vim_back $_vim_stem
+                    rri $_vim_back
+                # else
+                    # echo "not -f $_vim_back"
+                fi
+            # else
+                # echo "not -f $_vim_stem"
+            fi
+        )
+        echo
+    done
+}
+
+vdf () {
+    [[ -f ~/tmp/fred.vim ]] && vd ~/tmp/fred.vim "$1"
+}
 
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
@@ -180,4 +224,8 @@ vim_some () {
             echo pyth ~/jab/src/python/vim.py -U "$@"
         fi
     fi
+}
+
+_vim_recover () {
+    [[ -f ~/tmp/fred.vim ]] && vd ~/tmp/fred.vim ~/bash/functons.sh
 }
