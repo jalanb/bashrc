@@ -5,7 +5,7 @@ Welcome_to $BASH_SOURCE
 # set -e
 
 . ~/jab/bin/first_dir.sh
-. ~/jab/src/bash/run_python.sh
+. ~/bash/python.sh
 
 # Called functons.sh because "functions" is ... something else
 

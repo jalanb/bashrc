@@ -1,20 +1,25 @@
+#! /usr/bin/env python3
 """Script to handle running of doctests"""
 
 
-from __future__ import print_function
+
 
 import re
 import os
 import imp
+import io
 import sys
 import doctest
-import commands
+import subprocess
 import datetime
-import cStringIO
 from pprint import pprint
 
 
-from pysyte.paths import path
+try:
+    from pysyte.paths import path
+except ImportError:
+    assert None, sys.executable
+
 from see import see, see_methods, see_attributes, spread
 import files_for_test
 import try_plugins
@@ -29,7 +34,7 @@ def no_print(method, *args, **kwargs):
     """Discard all writes to stdout"""
     old_stdout = sys.stdout
     try:
-        sys.stdout = cStringIO.StringIO()
+        sys.stdout = io.StringIO()
         return method(*args, **kwargs)
     finally:
         sys.stdout = old_stdout
@@ -37,7 +42,7 @@ def no_print(method, *args, **kwargs):
 
 def run_command(command):
     """Run a command in the local shell (usually bash)"""
-    status, output = commands.getstatusoutput(command)
+    status, output = subprocess.getstatusoutput(command)
     if status:
         print('FAIL: %s:%s' % (status, output))
         return False

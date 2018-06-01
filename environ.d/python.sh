@@ -1,10 +1,10 @@
 #! /bin/bash
 
-. ~/jab/bash/welcome.sh
+. ~/bash/welcome.sh
 
 Welcome_to $BASH_SOURCE
 
-. ~/jab/bash/run_python.sh
+. ~/bash/python.sh
 
 PYTHON=${PYTHON:-$(pypath which python 2> ~/bash/fd/2)}
 
