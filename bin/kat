@@ -13,7 +13,7 @@ from pysyte import text_streams
 def parse_args():
     """Parse out command line arguments"""
     parser = arguments.parser(__doc__)
-    parser.strings('files', help='files to edit')
+    parser.args('files', help='files to edit')
     parser.int('-a', '--at', default=None, help='Show line at the line number')
     parser.true('-c', '--clipboard', help='Get lines from clipboard')
     parser.arg('-f', '--first', default="1",
