@@ -84,7 +84,6 @@ gr () {
 
 
 _gs () {
-    l0
     git status "$@"
 }
 
@@ -269,31 +268,53 @@ gvi () {
     gxi _gvi_show_diff _gvi_response "$@"
 }
 
+green_line () {
+    printf "$GREEN$1$NO_COLOUR\n"
+}
+
+show_this_branch () {
+    git branch $1 | grep --colour -B3 -A 3 $(git_branch)
+}
+
+_show_pre_loop () {
+    green_line local
+    show_this_branch
+    green_line status
+}
+
 gxi () {
     local _show_diff=$1; shift
     local _response=$1; shift
+    local _responded=
     _stashed=
     first_arg_dir_or_here "$@" && shift
     GXI_QUERY=
-    gbr
+    green_line remote
+    glg
+    show_this_branch -r
+    _show_pre_loop
     while git status -s "$dir"; do
-        gb
+        green_line staged
         git diff --staged
+        green_line files
+        _responded=
         for _file in $(gssd_changes "$dir"); do
             [[ -n "$_file" ]] || continue
             _gxi_grep $_file $GXI_QUERY || continue
             $_show_diff "$_file"
             _gxi_request "$_file" || break
-            $_response "$_file"
+            $_response "$_file" && _responded=1
         done
-        [[ $answer =~ [qQ] ]] && break
+        [[ $answer =~ [qQ] || -z $_responded ]] && break
         [[ $answer =~ [sS] ]] && _gxi_stash
         gi
         git status -v | g -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
+        _show_pre_loop
     done
     [[ -n $_stashed ]] && gstp
     git dn --staged
+    git status
 }
 
 gff () {
@@ -834,9 +855,12 @@ _gxi_menu () {
     red_one "/"
     red_one q uit
     red_one a dd
+    red_two a m end
+    red_two am e dit
     red_one s tash
     _git_modified $1 && red_one d iff
     red_two d r op
+    red_two dele t e
     [[ -n $GIT_ADDED ]] && red_one f asten
     red_one c ommit
     red_one v im
@@ -1044,6 +1068,7 @@ _gvi_show_diff () {
 
 _ggi_response () {
     [[ $answer =~ [rR] ]] && _gsi_drop "$1" && return 0
+    [[ $answer =~ [tT] && -f $1 ]] && rm -f "$1" && return 0
     [[ $answer =~ [vV] ]] && _gsi_vim "$1" && return 0
     _gxi_response "$@"
 }
@@ -1055,20 +1080,20 @@ _gsi_response () {
 
 _gvi_response () {
     [[ $answer =~ [rR] ]] && _gvi_drop "$1" && return 0
-    [[ $answer =~ [vV] ]] && _gvi_vim "$1"
-    [[ $answer =~ [wW] ]] && _gvi_git_dv "$1"
+    [[ $answer =~ [vV] ]] && _gvi_vim "$1" && return 0
+    [[ $answer =~ [wW] ]] && _gvi_git_dv "$1" && return 0
     _gxi_response "$@" 
 }
 
 _gxi_response () {
-    if [[ $answer =~ [fF] ]]; then
+    if [[ $answer =~ [cC] ]]; then
         gi
         _gxi_request "$1"
         return 0
     fi
     [[ $answer =~ [aA] ]] && ga "$1" && return 0
-    [[ $answer =~ [mM] ]] && gcme "$1" && return 0
-    [[ $answer =~ [cC] ]] && gi && return 0
+    [[ $answer =~ [mM] ]] && gcm "$1" && return 0
+    [[ $answer =~ [eE] ]] && gcme "$1" && return 0
     if _git_modified "$1" ; then
         [[ $answer =~ [dD] ]] && git di "$1" && return 0
         [[ $answer =~ [iI] ]] && gai "$1" && return 0

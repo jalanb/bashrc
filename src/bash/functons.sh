@@ -813,7 +813,14 @@ bash4 () {
 bool () {
     [[ -z $* || $1 =~ ^0*$ ]] && echo False && return 1
     if what -q "$1"; then
-        "$@" 2> ~/bash/fd/2 && echo True && return 0
+        if [[ $1 == "[[" ]]; then
+            eval "$@"
+            local _result=$?
+            [[ $_result == 0 ]] && echo True || echo False
+            return $_result
+        else
+            "$@" 2> ~/bash/fd/2 && echo True && return 0
+        fi
         echo False; return 1
     fi
     [[ $1 =~ ^0*$ ]] && echo False || echo True
