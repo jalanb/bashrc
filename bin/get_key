@@ -34,7 +34,9 @@ def script(args):
         else:
             print(getch.get_key())
     except KeyError as e:
-        print(e.message)
+        print(e)
+    except KeyboardInterrupt:
+        print('^C')
     return True
 
 
