@@ -62,7 +62,9 @@ bash_null () {
 }
 
 fynd () {
-    sudo find "$@"
+    local _options=
+    [[ $# == 1 ]] && _options=". -name"
+    sudo find $_options "$@"
 }
 
 fynd.old () {

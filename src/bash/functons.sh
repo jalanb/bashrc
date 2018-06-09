@@ -81,7 +81,7 @@ ag () {
 }
 
 bd () {
-    . ~/jab/src/bash/bd.sh -s "$@"
+    . ~/bash/bd.sh -s "$@"
 }
 
 dp () {
@@ -371,7 +371,9 @@ sz () {
 yt () {
     local _here=$(pwd)
     cd ~/Downloads/youtube.dl
-    youtube.dl "$@"
+    local _options=" --no-check-certificate --extract-audio --audio-format=best --audio-quality=0"
+    youtube-dl $_options "$@"
+    ll -tr ~/Downloads/youtube.dl | tail -n 3
     cd $_here
 }
 
@@ -460,7 +462,7 @@ hub () {
 }
 
 jjb () {
-    kk ~/jab/src/bash "$@"
+    kk ~/bash "$@"
 }
 
 jjy () {
@@ -672,9 +674,9 @@ try () {
 }
 
 vaf () {
-    vim -p ~/jab/src/bash/aliases.sh ~/jab/src/bash/functons.sh
-    source_path ~/jab/src/bash/aliases.sh
-    source_path ~/jab/src/bash/functons.sh
+    vim -p ~/bash/aliases.sh ~/jab/src/bash/functons.sh
+    source_path ~/bash/aliases.sh
+    source_path ~/bash/functons.sh
 }
 
 vat () {
@@ -1161,14 +1163,6 @@ taocl () {
     xmlstarlet fo --html --dropdtd |
     xmlstarlet sel -t -v "(html/body/ul/li[count(p)>0])[$RANDOM mod last()+1]" |
     xmlstarlet unesc | fmt -80
-}
-
-tools () {
-    (cd ~/wwts/tools/tools/bin
-    PATH=~/wwts/tools/tools/bin:$PATH
-    [[ -f ~/.virtualenvs/tools/bin/activate ]] && . ~/.virtualenvs/tools/bin/activate
-    "$@"
-    )
 }
 
 ylint () {

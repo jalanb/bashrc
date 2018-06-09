@@ -121,11 +121,15 @@ def _locate(args):
             one = one.upper()
             two = two.upper()
         if args.globs:
+            if '*' not in two:
+                two = f'*{two}*'
             return fnmatch(one, two)
         # cmp? pylint: disable=undefined-variable
         try:
             return cmp(one, two) == 0
         except NameError:
+            if args.basename:
+                return one == two
             return (one > two) - (one < two)
 
     def _directory_in_path(path):
