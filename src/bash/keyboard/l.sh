@@ -66,6 +66,21 @@ lal () {
     l -a -l "$@"
 }
 
+llg () {
+    local _grep=$1; shift
+    if [[ -n "$@" ]]; then
+        if [[ -d "$1" ]]; then
+            local _dir="$1"
+            shift
+            ll "$_dir/" "$@"
+        else
+            ll "$@" 
+        fi
+    else
+        ll ./
+    fi | g $_grep
+}
+
 lll () {
     ll -a "$@"
 }

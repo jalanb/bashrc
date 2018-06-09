@@ -212,6 +212,8 @@ def all_possible_test_files_in(path_to_root, recursive):
     for path_to_file in find_files():
         if '.git' in path_to_file:
             continue
+        if path_to_file.ext in ('.swp', '.swo'):
+            continue
         try:
             if not path_to_file.ext and _first_line_is_python_shebang(path_to_file.lines()):
                 result.append(path_to_file)
