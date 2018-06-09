@@ -369,12 +369,12 @@ sz () {
 }
 
 yt () {
-    local _here=$(pwd)
-    cd ~/Downloads/youtube.dl
-    local _options=" --no-check-certificate --extract-audio --audio-format=best --audio-quality=0"
+    local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
+    # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
+    ( cd ~/Downloads/youtube.dl
     youtube-dl $_options "$@"
-    ll -tr ~/Downloads/youtube.dl | tail -n 3
-    cd $_here
+    ll -tr | tail -n 3
+    )
 }
 
 zm () {
