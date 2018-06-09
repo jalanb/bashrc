@@ -877,9 +877,10 @@ bump () {
     elif [[ -n $_get ]]; then
         grep $_sought $_config | sed -e 's/.*= //'
     else
-        grep $_sought $_config 2> ~/bash/fd/2
+        bumpversion "$@"
     fi
 }
+
 
 cdra () {
     rara cd "$@"
