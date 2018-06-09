@@ -213,6 +213,10 @@ gbv () {
     git blame "$1" | vin
 }
 
+gia () {
+    GIT_EDITOR=true git commit --amend "$@"
+}
+
 gij () {
     local _storage=/tmp/gij.sh
     local JIT="git -C ~/jab"
@@ -221,10 +225,6 @@ gij () {
         python -c "print '$JIT commit -m\"$*\"'" > $_storage
         _run_storage
     fi
-}
-
-gcm () {
-    git commit --amend "$@"
 }
 
 gcp () {
@@ -368,8 +368,8 @@ gob () {
     go -b "$@"
 }
 
-god () {
-    go development
+gof () {
+    gbD fred 2>/dev/null; gob fred
 }
 
 gog () {

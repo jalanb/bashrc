@@ -157,9 +157,9 @@ cnoremap w!! w !sudo tee %
 "noremap +
 " LETTERS {{{3
 "noremap A - Append
-"noremap B - WORDS backwards
-"noremap C c$
-    nmap D <esc>WQ
+nnoremap B :vsplit 
+nnoremap C <esc>:qa!<CR>
+"noremap D d$
     nmap E WQ
 "noremap F f backwards
 "noremap G goto line (default last)
@@ -179,9 +179,9 @@ nnoremap L <C-F>zz
  noremap U :redo<cr>
 "noremap V - linewise visual
  noremap W :wa!<CR>
- noremap X :x!<CR>
+ noremap X :wa!<CR>
 "noremap Y - aka yy
- noremap Z zR
+ noremap Z XC
 " ordinary keys for movement {{{2
  noremap <Space><Space>  <PageDown>zz
  noremap t<left>  :tabprev<cr>
