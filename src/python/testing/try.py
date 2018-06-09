@@ -1,8 +1,8 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 """Script to handle running of doctests"""
 
 
-
+from __future__ import print_function
 
 import re
 import os
@@ -18,7 +18,7 @@ from pprint import pprint
 try:
     from pysyte.paths import path
 except ImportError:
-    assert None, sys.executable
+    from dotsite.paths import path
 
 from see import see, see_methods, see_attributes, spread
 import files_for_test

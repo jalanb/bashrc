@@ -731,9 +731,7 @@ tmp () {
 }
 
 try () {
-    TRY=~/jab/src/python/testing/try.py
-    [[ -f "./try.py" ]] && TRY=./try.py
-    python $TRY "$@"
+    pyth ~/python/testing/try.py "$@"
 }
 
 vaf () {

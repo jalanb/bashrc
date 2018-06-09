@@ -13,7 +13,11 @@ except ImportError:
     from commands import getoutput
 
 
-from pysyte.lists import de_duplicate
+try:
+    from pysyte.lists import de_duplicate
+except ImportError:
+    sys.stderr.write('Import Error with %s\n' % sys.executable)
+    sys.exit(1)
 
 
 import script_paths

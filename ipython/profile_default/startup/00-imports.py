@@ -27,10 +27,10 @@ except ImportError:
     see = False
 
 
-print 'import os, re, sys, pysyte, requests'
+print('import os, re, sys, pysyte, requests')
 if see:
-    print 'from see import see, see_attributes, see_methods, spread'
-    print 'from see_code import code, highlight, see_code, see_highlight'
+    print('from see import see, see_attributes, see_methods, spread')
+    print('from see_code import code, highlight, see_code, see_highlight')
 
 try:
     import pysyte
