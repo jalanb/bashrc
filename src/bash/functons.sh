@@ -456,9 +456,12 @@ hub () {
             _directory=
         fi
     fi
-    [[ $_remote =~ http ]] && _directory=$(clone -n $_remote)
+    if [[ $_remote =~ http ]]; then
+        [[ -d $_directory ]] && cd $_directory
+        _directory=$(clone -n $_remote)
+    fi
     [[ -d $_directory ]] && cde $_directory
-    ranger
+    ranger $_directory
 }
 
 jjb () {

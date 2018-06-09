@@ -760,10 +760,12 @@ clone () {
     [[ "$1" == "-y" ]] && _range=ranger
     local _remote=
     [[ -n "$1" ]] && _remote="$1" && shift
+    local _local=
+    [[ -n "$1" ]] && _local="$1" && shift
 
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
-    git clone "$_remote" > $_clone_log 2>&1
+    git clone "$_remote" "$_local" > $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
         kat -n $_clone_log
     else
