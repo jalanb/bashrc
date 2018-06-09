@@ -25,18 +25,25 @@ vhist () {
 # xxxxxxxxxxxxx
 
 _tease_history () {
-    history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|gh\)\>"
+    history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|[tg]h\)\>"
 }
 
 _strip_history () {
-    HISTTIMEFORMAT= _tease_history "$@"
+    local _grep=
+    if [[ $1 =~ [g?/] ]]; then
+        shift
+        _grep="$1"; shift
+        HISTTIMEFORMAT= _tease_history "$@" | grep $_grep
+    else
+        HISTTIMEFORMAT= _tease_history "$@"
+    fi
 }
 
 # xxxxxxxxxxxxxx
 # xxxxxxxxxxxxxxx
 
 _history_commands () {
-    _strip_history | \
+    _strip_history "$@" | \
         sed "s/^(//" | \     # remove leading (
         g -v '^["$!)-]' | \  # remove quotes, symbol use, history expansions, cd -
         cut -d' ' -f 1 | \   # take first word (command)
@@ -63,7 +70,7 @@ set_history_file () {
     # format history times
     export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
     # ignore some simple commands in history
-    export HISTIGNORE="bg:fg:history:gh:hh"
+    export HISTIGNORE="bg:fg:history:gh:hh:th"
     #  remember multi-line commands
     shopt -s cmdhist
     # edit a failed history substitution (default just ignores them)

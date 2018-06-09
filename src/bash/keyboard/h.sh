@@ -33,17 +33,11 @@ hl () {
 }
 
 th () {
-    local _lines=$LINES
-    if [[ $1 =~ [0-9] ]]; then
-        _lines="$1"; shift
+    local _options="-n $(( $LINES - 7 ))"
+    if [[ $1 =~ ^[0-9] ]]; then
+        _options="-n $1"; shift
     fi
-    local _sought=
-    if [[ $1 == "?" ]]; then
-        _sought="$1"; shift
-        _strip_history | grep -A $_lines "$@"
-    else
-        _strip_history $_lines 
-    fi
+    _strip_history "$@" | tail $_options
 }
 
 hv () {
