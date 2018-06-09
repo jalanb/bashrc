@@ -258,7 +258,7 @@ if !exists("Try")
             call TryTest(a:quietly)
         endif
     endfunction
-    command -nargs=0 Try :call Try(1)
+    command! -nargs=0 Try :call Try(1)
 endif
 if !exists("Mash")
     function Mash()
@@ -298,6 +298,7 @@ endfunction
 
 function WritePython()
     call ReSpacePython()
+    call Try(1)
 endfunction
 
 " function LintPython()
