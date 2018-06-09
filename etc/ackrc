@@ -17,4 +17,5 @@
 --ignore-dir=coverage
 --ignore-dir=vim
 --ignore-file=match:tags
+--ignore-file=match:.coverage
 --ignore-file=match:.nose-stopwatch-times

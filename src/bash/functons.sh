@@ -271,19 +271,6 @@ dir () {
     say $(short_dir $_where)
 }
 
-pii () {
-    local me=$USER
-    local here=$(jostname)
-    local options=-noconfirm_exit
-    local _ipython=${IPYTHON:-ipython}
-    if [[ $($_ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
-        options=--no-confirm-exit
-    fi
-    console_title_on "ipython@${here}" && \
-        $_ipython $options "$@" && \
-        console_title_off "${me}@${here}"
-}
-
 
 pt () {
     ptpython "$@"
@@ -298,58 +285,8 @@ keys () {
     . ~/bash/keyboard/*.sh
 }
 
-pipi () {
-    pip install "$@"
-}
-
-pipp () {
-    local __doc__="Easier to do it right"
-    pipu
-    pipi "$@"
-}
-
-pipr () {
-    pipi -r requirements.txt
-}
-
-pipu () {
-    pipi --upgrade pip
-}
-
 popq () {
     popd >/dev/null 2>&1
-}
-
-pisd () {
-    pypp develop "$@"
-}
-
-pypp () { 
-    python setup.py "$@"
-}
-
-py () {
-    if [[ -z "$@" ]]; then
-        pyth
-    else
-        all_args="$*"
-        if [[ "$all_args" =~ "--help" || "$all_args" =~ "-h" ]]; then
-            pyth "$@"
-        elif [[ "$all_args" =~ "-U" ]]; then
-            pyth "$@"
-        else
-            script=$(pyth ~/jab/src/python/scripts.py -m $args 2> ~/bash/fd/2)
-            if [[ $? == 0 ]]; then
-                if [[ -z $script ]]; then
-                    script=${1/%./.py}
-                    shift
-                fi
-                pyth $script $*
-            else
-                pyth "$@"
-            fi
-        fi
-    fi
 }
 
 ra () {
@@ -822,10 +759,6 @@ wvb () {
     vim -p ~/bash "$@"
 }
 
-wtd () {
-    python ~/hub/dotsite/setup.py develop
-}
-
 wvd () {
     vim -p ~/hub/dotsite/dotsite/ "$@"
 }
@@ -844,10 +777,6 @@ wtk () {
 
 wvk () {
     vim -p ~/hub/kd.sh "$@"
-}
-
-wtp () {
-    python ~/hub/pym/setup.py develop
 }
 
 wvp () {
@@ -1340,11 +1269,6 @@ run_as () {
 
 has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | hd1) ]]
-}
-
-pylinum () {
-    local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
-    [[ $string != "# pylint: disable=No" ]] && echo $string
 }
 
 relpath () {
