@@ -463,8 +463,7 @@ function CycleNumber() " {{{3
         set nonumber norelativenumber
     endif
 endfunction
-" Start without 'em, as they are now so easy to turn on {{{3
-set nonumber    " Start without line numbers
+set number    " Start with line numbers
 " Search {{{2
 " Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci
 :set grepprg=grep\ -nH
