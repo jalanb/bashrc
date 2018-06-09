@@ -15,8 +15,10 @@ h () {
 # xx
 
 
-gh () {
-    local __doc__="show stuff from history"
+alias HG=$(which hg) # With apologies, but don't really use it
+
+hg () {
+    local __doc__="grep in history"
     _strip_history | grep --color "$@"
 }
 
@@ -32,7 +34,8 @@ hl () {
     _strip_history | less
 }
 
-th () {
+ht () {
+    local __doc__="tail history"
     local _options="-n $(( $LINES - 7 ))"
     if [[ $1 =~ ^[0-9] ]]; then
         _options="-n $1"; shift
@@ -45,7 +48,7 @@ hv () {
 }
 
 vh () {
-    local __doc__="edit stuff from history"
+    local __doc__="edit history"
     if [[ -n $* ]]; then
         _strip_history > ~/tmp/fred
         local _search=+/"$@"
@@ -55,6 +58,14 @@ vh () {
         _strip_history > ~/tmp/fred
         vim ~/tmp/fred +
     fi
+}
+
+# xxx
+
+hgt () {
+    local __doc__="grep and tail history"
+    local _grep="$1"; shift
+    th g $_grep "$@"
 }
 
 Bye_from $BASH_SOURCE
