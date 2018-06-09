@@ -857,6 +857,7 @@ _gxi_menu () {
     red_one a dd
     red_two a m end
     red_two am e dit
+    red_two sta g ed
     red_one s tash
     _git_modified $1 && red_one d iff
     red_two d r op
@@ -1086,19 +1087,20 @@ _gvi_response () {
 }
 
 _gxi_response () {
-    if [[ $answer =~ [cC] ]]; then
-        gi
+    if [[ $answer =~ [cCgGdDiI] ]]; then
+        [[ $answer =~ [cC] ]] && gi
+        [[ $answer =~ [gG] ]] && git diff --staged
+        if _git_modified "$1" ; then
+            [[ $answer =~ [dD] ]] && git di "$1"
+            [[ $answer =~ [pP] ]] && git diff --patch "$1"
+            [[ $answer =~ [iI] ]] && gai "$1" && git di
+        fi
         _gxi_request "$1"
         return 0
     fi
     [[ $answer =~ [aA] ]] && ga "$1" && return 0
     [[ $answer =~ [mM] ]] && gcm "$1" && return 0
     [[ $answer =~ [eE] ]] && gcme "$1" && return 0
-    if _git_modified "$1" ; then
-        [[ $answer =~ [dD] ]] && git di "$1" && return 0
-        [[ $answer =~ [iI] ]] && gai "$1" && return 0
-        [[ $answer =~ [pP] ]] && gap "$1"
-    fi
     if [[ $answer == "/" ]]; then
         read -p "/ " GXI_QUERY
         return 0
