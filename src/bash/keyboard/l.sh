@@ -44,7 +44,12 @@ lg () {
 }
 
 ll () {
-    l -l "$@"
+    local _options=-l
+    if [[ -d "$1" ]]; then
+        [[ "$1" =~ /$ ]] && _option=a || _option=d
+        _options="${_options}$_option"
+    fi
+    l $_options "$@"
 }
 
 lr () {
@@ -67,4 +72,8 @@ lll () {
 
 ltr () {
     lt -r "$@"
+}
+jl () 
+{ 
+    /usr/local/bin/gls --group-directories-first --color -h "$@"
 }
