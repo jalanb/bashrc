@@ -27,8 +27,8 @@ nnoremap <C-F4>     <C-W>c
 " ordinary keys {{{2
 " number row {{{3
 nnoremap <bs> /
-nnoremap = /<cr>zvzzzx
-nnoremap - ?<cr>zvzzzx
+nnoremap = /<cr>zvz<cr>
+nnoremap - ?<cr>zvz<cr>
 "noremap 0 *
 nnoremap 9 *zvzz
 "noremap 8
@@ -43,8 +43,8 @@ nnoremap § ?
 inoremap § <esc>
 " shifted number row {{{3
 "noremap <S-bs> doesn't work
-nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx
-nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>zx
+nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>jzO
+nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>jzO
 nnoremap ) %
 "noremap (
 "noremap *
