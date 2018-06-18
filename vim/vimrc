@@ -8,8 +8,8 @@ scriptencoding 'utf-8'
  noremap <F3>      :map <F3>
 inoremap <F3>      <esc>:w!<CR>
  noremap <F4>      <c-w>w
- noremap <F5>      <C-W>_
- noremap <F6>      :map <F6>
+ noremap <F5>      :map <F6> 
+    nmap <F6>      WQ
  noremap <F7>      :set list!<CR>
  noremap <F8>      O<esc>:w!<CR>:Limelight<cr>
  noremap <F9>      :w!<CR>:Limelight<cr>
