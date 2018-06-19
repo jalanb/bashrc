@@ -27,10 +27,10 @@ nnoremap <C-F4>     <C-W>c
 " ordinary keys {{{2
 " number row {{{3
 nnoremap <bs> /
-nnoremap = /<cr>zvz<cr>n
-nnoremap - ?<cr>zvz<cr>n
+nnoremap = /<cr>zazv
+nnoremap - ?<cr>zazv
 "noremap 0 *
-nnoremap 9 *zvzz
+nnoremap 9 *zv
 "noremap 8
 "noremap 7
 "noremap 6
@@ -38,7 +38,7 @@ nnoremap 9 *zvzz
 "noremap 4
 "noremap 3
 "noremap 2
-nnoremap 1 #zvzz
+nnoremap 1 #zv
 nnoremap § ?
 inoremap § <esc>
 " shifted number row {{{3
