@@ -1,7 +1,7 @@
 Host eos70D
     Hostname 192.168.130.102
 
-Host jab.ook old.nalur
+Host jab.ook 
     User jab
     IdentityFile ~/.ssh/id_jab
 
@@ -31,11 +31,11 @@ Host build
     IdentityFile ~/.ssh/alan.brogan-rsa
 
 Host builder
-    Hostname 172.25.1.219
+    Hostname twkgit20.wwts.com
     User builder
     IdentityFile ~/.ssh/builder.key
 
-Host gitlab twkgit20
+Host gitlab build
     Hostname 172.25.1.219
     User ab13173
     IdentityFile ~/.ssh/alan.brogan-rsa
