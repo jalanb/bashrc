@@ -1,0 +1,3 @@
+#! /bin/bash
+
+ssh -t -q -i /Users/jab/.ssh/builder.key builder@twkgit20.wwts.com

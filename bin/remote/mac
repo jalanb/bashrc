@@ -1,0 +1,3 @@
+#! /bin/bash
+
+ssh -t -q -i /Users/jab/.ssh/id_jab jab@mac.nalur

@@ -1,0 +1,36 @@
+#! /bin/bash
+
+server=eop
+
+
+if [[ -n $1 ]]; then
+    server=$1
+    shift
+    if [[ $server =~ builder ]]; then
+        user=builder
+        server=twkgit20.wwts.com
+    elif [[ $server =~ eop ]]; then
+        user=builder
+    elif [[ $server =~ wmp ]]; then
+        user=production
+    fi
+else
+    echo "Please supply server name" >&2
+    return 1
+fi
+if [[ $1 == ab13173 ]]; then
+    user=ab13173
+fi
+
+args=
+if [[ $user == "ab13173" ]]; then 
+    key=~/.ssh/alan.brogan-rsa
+    args="sudo su -"
+else
+    [[ $user == "builder" ]] && key=~/.ssh/builder.key
+    [[ $user == "production" ]] && key=~/.ssh/production.key
+fi
+
+[[ $1 == "sudo" ]] && args="sudo su -"
+
+ssh -t -q -i $key $user@$server $args
