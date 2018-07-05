@@ -95,7 +95,7 @@ IP () {
     fi
     for number in 10 172 193 192 100
     do
-        if python ~/jab/src/python/ifconfig.py $number; then
+        if ~/jab/bin/mifconfig $number; then
             if [[ $_break == yes ]]; then
                 break
             fi
@@ -134,7 +134,7 @@ fg () {
         local _dir=$(cd $_path; rlf .)
         [[ -n $_sought && $(basename_ $_dir) =~ $_sought ]] && echo $_dir
         [[ -z $_sought ]] && echo $_dir
-    done 
+    done
 }
 
 fv () {

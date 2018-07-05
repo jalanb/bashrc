@@ -13,7 +13,7 @@ usage () {
     if [[ $# < 2 ]]; then
         if [[ $# == 1 ]]; then
             local _parts=$(echo $1 | tr '@' '\n' | wc -l)
-            if [[ $_parts -ne 2 ]]; then
+            if [[ $_parts -gt 2 ]]; then
                 echo "usage: $PATH_TO_SCRIPT <username> <server>" >&2
                 exit 1
             fi
@@ -25,7 +25,10 @@ main () {
     local _parts=$(echo $1 | tr '@' '\n' | wc -l)
     local _remote_user=
     local _remote_server=
-    if [[ $_parts -eq 2 ]]; then
+    if [[ $_parts == 1 ]]; then
+        _remote_server="$1"
+        shift
+    elif [[ $_parts == 2 ]]; then
         _remote_user=$(echo $1 | cut -d\@ -f 1)
         _remote_server=$(echo $1 | cut -d\@ -f 2)
         shift
@@ -34,32 +37,43 @@ main () {
         _remote_server=$2
         shift 2
     fi
-    local _options="$@"
+    local _args="$@"
 
     local _local_user=$USER
     [[ -n $_local_user ]] || return 1
+    local _known_user=
+    if [[ -z $_remote_user ]]; then
+        _known_user=$(ssh -G ${_local_user}@${_remote_server} | g -w user | sed -e "s:user ::")
+        [[ -n $_known_user ]] && _remote_user=$_known_user 
+    fi
+    _known_user=$(ssh -G ${_remote_user}@${_remote_server} | g -w user | sed -e "s:user ::")
     local _local_server=`hostname -s`
     [[ -n $_local_server ]] || return 1
-    local _local_ip=$(python ~/jab/src/python/ifconfig.py 10 172 193 192 100 2> ~/bash/fd/2; true)
+    local _local_ip=$(mifconfig 10 172 193 192 100 2> ~/bash/fd/2; true)
     [[ -n $_local_ip ]] || return 1
     local _remote_ip=
     [[ -n $_remote_server ]] || return 1
     _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')" 2> ~/bash/fd/2; true)
     if [[ $_local_ip == $_remote_ip ]]; then
-        _local_user=$_remote_user
         if [[ $_remote_user == $(whoami) ]]; then
             echo "Here I am: $_remote_user@$_remote_server ($_remote_ip)" 2>&1
         else
-            echo "Here is: $_remote_server ($_remote_ip)" >&2
-            echo '  Perhaps you meant to use "$ su -u '$_local_user'"' >&2
+            echo "Here we are: \"$_local_server\" / \"$_remote_server\" ($_remote_ip)" >&2
+            echo '  Perhaps you meant to use "$ su -u '$_remote_user'"' >&2
         fi
         return
     fi
+    local _identity_file=$(ssh -G ${_remote_user}@${_remote_server} | g identityfile | sed -e "s:identityfile ::")
+    if [[ -n $_identity_file ]]; then
+        [[ $_args =~ -i ]] || _args="$_args -i $_identity_file"
+    fi
     local there_small=${_remote_server/.$EMPLOYER_DOMAIN/}
+    set -x
     console_title_on ${_remote_user}@${there_small} && \
-        ssh -t -o ConnectTimeout=5 $_options $_remote_user@$_remote_server && \
+        ssh -t -o ConnectTimeout=5 $_args $_remote_user@$_remote_server && \
         console_title_off ${_local_user}@${_local_server}
+    set +x
 }
 
-usage $*m
-main $*
+usage "$@"
+main "$@"

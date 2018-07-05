@@ -5,18 +5,18 @@ Host jab.ook old.nalur
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.mini mini.nalur
-    Hostname jalanmini.local
+Host jab.mini
+    Hostname mini.nalur
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.book book.nalur
-    Hostname jalan-book.local 
+Host jab.book
+    Hostname book.nalur
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host jab.mac iMac.nalur
-    Hostname jalan-mac.local
+Host jab.mac
+    Hostname mac.nalur
     User jab
     IdentityFile ~/.ssh/id_jab
 
@@ -68,8 +68,8 @@ Host twkwbe41 eoptest
 
 Host twkwbe42 eopstage
     Hostname 172.25.3.112
-    User portals
-    IdentityFile ~/.ssh/portals.key
+    User builder
+    IdentityFile ~/.ssh/builder.key
 
 Host atlwbe43 eopbeta
     Hostname 172.25.232.243

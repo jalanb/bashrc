@@ -11,15 +11,15 @@ ssa () {
 }
 
 ssi () {
-    _ssj jalanmini.local "$@"
+    sst jab.mini "$@"
 }
 
 ssb () {
-    _ssj jalan-book.local "$@"
+    sst jab.book "$@"
 }
 
 ssm () {
-    _ssj jalan-mac.local "$@"
+    sst jab.mac "$@"
 }
 
 ssu () {
@@ -49,7 +49,7 @@ ssw () {
 
 _ssj () {
     _server=$1
-    [[ $(hostname) == $_server ]] || sst jab $_server -q -i ~/.ssh/id_jab "$@"
+    [[ $(hostname) == $_server ]] || sst jab $_server -q "$@"
 }
 
 Bye_from $BASH_SOURCE
