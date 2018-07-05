@@ -47,10 +47,9 @@ piu () {
 # xxxx
 
 pipp () {
-    set -x
     local __doc__="""pip install stuff, then update pip if needed"""
-    pi "$@" # 2>&1 | grep 'pip install --upgrade pip' && pipu
-    set +x
+    pi "$@" 2>&1 | tee /tmp/pipp.log
+    grep 'pip install --upgrade pip' /tmp/pipp.log && pipu
 }
 
 pipr () {
