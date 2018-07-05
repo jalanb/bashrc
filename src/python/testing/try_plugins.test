@@ -2,8 +2,7 @@ The try_plugins module
 ======================
 
     >>> import try_plugins
-    >>> print try_plugins.__doc__
-    This module holds plugins for try.py
+    >>> assert try_plugins.__doc__ == 'This module holds plugins for try.py'
 
 Plugin methods
 --------------

@@ -12,16 +12,4 @@ def pre_test(_path_to_test_file):
 
 def post_test(_path_to_test_file, _failures, _tests_run):
     """This method is called after each test has been run"""
-    check_bash()
     return True
-
-
-def check_bash():
-    try:
-        import bash
-        shown = bash.BashOptions.verbosity.shown()
-        if shown:
-            print('bash', ','.join(shown))
-        del bash
-    except (ImportError, AttributeError):
-        pass
