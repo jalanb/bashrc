@@ -295,7 +295,7 @@ gxi () {
     _show_pre_loop
     while git status -s "$dir"; do
         green_line staged
-        git diff --staged
+        git di --staged
         green_line files
         _responded=
         for _file in $(gssd_changes "$dir"); do
@@ -315,11 +315,6 @@ gxi () {
     [[ -n $_stashed ]] && gstp
     git dn --staged
     git status
-}
-
-gff () {
-    gfa
-    grup
 }
 
 gl1 () {
@@ -358,10 +353,6 @@ glt () {
 
 gma () {
     git merge --abort
-}
-
-gmm () {
-    git merge master
 }
 
 gob () {
@@ -657,16 +648,12 @@ ggai () {
     g -q $1 $2 && gai $2 || echo fuck off
 }
 
-gfmr () {
-    gffr gom
+gfff () {
+    gff; gr
 }
 
-gfdr () {
-    gffr god
-}
-
-gffr () {
-    gff; $1; gr
+gffm () {
+    gff; gomr
 }
 
 gl11 () {
@@ -698,21 +685,16 @@ gls1 () {
     GIT_LOG_LINES=31 gls -n1 "$@"
 }
 
-gmmm () {
+gmm () {
     local _branch=$(git_branch)
     go master
     grr
     go $_branch
-    gmm
+    git merge master
 }
 
 gpod () {
     gpo --delete $1
-}
-
-grmm () {
-    grr
-    gmmm
 }
 
 grmt () {
