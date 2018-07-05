@@ -87,6 +87,8 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .log          00;33
 .md           00;33
 .odt          00;33
+.doc          00;33
+.docx         00;33
 .pdf          00;33
 .txt          00;33
 *README*      00;33

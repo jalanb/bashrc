@@ -241,7 +241,7 @@ inoremap <A-Left> <Esc>:tabprev<CR>
  noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
  noremap <leader>u :GundoToggle<CR>
  noremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
- noremap <leader>w :w<cr>
+ noremap <leader>w :w !sudo tee % >/dev/null<cr>
  noremap <leader>x :call RangerExplorer()<cr>
 "noremap <leader>y
 "noremap <leader>z

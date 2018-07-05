@@ -11,5 +11,6 @@ pprintpp
 pudb
 pym
 pytest
+sh
 virtualenv
 virtualenvwrapper
