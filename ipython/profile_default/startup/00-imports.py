@@ -8,11 +8,17 @@ from __future__ import print_function
 import os
 import re
 import sys
+
 try:
     import pysyte
 except ImportError:
     import dotsite as pysyte
 import requests
+
+try:
+    from pathlib import Path
+except ImportError:
+    from pysyte.paths import path as Path
 
 try:
     from see import see
@@ -33,6 +39,8 @@ if see:
     print('from see_code import code, highlight, see_code, see_highlight')
 
 try:
-    import pysyte
-except ImportError:
-    pass
+    e = Path('~/%s' % Path(sys.executable).relative_to(os.environ['HOME']))
+except ValueError:
+    e = Path(sys.executable)
+print()
+print(e, sys.version.split()[0])

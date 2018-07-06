@@ -86,9 +86,5 @@ lll () {
 }
 
 ltr () {
-    lt -r "$@"
-}
-jl () 
-{ 
-    /usr/local/bin/gls --group-directories-first --color -h "$@"
+    lr -t "$@"
 }
