@@ -12,8 +12,7 @@ from __future__ import print_function
 import os
 import re
 import sys
-# Hello future me , please convert to argparse
-# from optparse import OptionParser
+import argparse
 
 
 try:
@@ -210,7 +209,7 @@ def all_possible_test_files_in(path_to_root, recursive):
     for glob in _positive_test_globs():
         result.extend(find_files(glob))
     for path_to_file in find_files():
-        if '.git' in path_to_file:
+        if '.git' in path_to_file or path_to_file.basename()[0] == '.':
             continue
         if path_to_file.ext in ('.swp', '.swo'):
             continue
@@ -282,7 +281,7 @@ def _re_order_scripts(paths_to_scripts):
     """
     result = []
     for extension in possible_test_extensions():
-        extension_paths = [path_to_script for path_to_script in paths_to_scripts if path_to_script.ext == extension]
+        extension_paths = [p for p in paths_to_scripts if p.ext == extension]
         result.extend(extension_paths)
     return result
 
@@ -308,21 +307,23 @@ def paths_to_doctests(strings, recursive):
 
 def handle_command_line():
     """Find options and arguments on the command line"""
-    parser = OptionParser()
-    parser.add_option('-r', '--recursive', action='store_true', dest='recursive', help='Look in sub-directories')
-    options, args = parser.parse_args()
-    if not args:
-        args = [os.path.dirname(__file__)]
-    return options, args
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument(
+        'stems', type=str, nargs='*', help='filename stems')
+    parser.add_argument(
+        '-r', '--recursive', action='store_true', help='Look in sub-directories')
+    args = parser.parse_args()
+    stems = args.stems if args.stems else [os.path.dirname(__file__)]
+    return stems, args.recursiive
 
 
 def main():
     """Run the progam"""
-    options, args = handle_command_line()
+    stems, recursive = handle_command_line()
     try:
-        scripts = paths_to_doctests(args, options.recursive)
+        scripts = paths_to_doctests(stems, recursive)
     except UserMessage as e:
-        print >> sys.stderr, e
+        print(e, file=sys.stderr)
         return 1
     print('\n'.join(scripts))
     return 0
