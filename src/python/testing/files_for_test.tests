@@ -2,7 +2,7 @@ The files_for_test module
 =========================
 
     >>> import files_for_test
-    >>> print files_for_test.paths_to_doctests(args=['no_such_file'], recursive=False)
+    >>> print files_for_test.paths_to_doctests(strings=['no_such_file'], recursive=False)
     Traceback (most recent call last):
     ...
     UserMessage: ...no_such_file.test*, ...no_such_file.py not found
@@ -18,10 +18,6 @@ We'll need to find all possible extension of a stem
 
 Find test files related to a text file
     >>> path_to_files_for_test = makepath(files_for_test.__file__)
-    >>> path_to_text_equivalent = path_to_files_for_test.splitext()[0] + '.txt'
-    >>> bool(files_for_test._existing_files_for_test(path_to_text_equivalent))
-    True
-
     >>> path_to_tests = files_for_test._get_path_to_test_directory([path_to_files_for_test])
     >>> path_to_tests == path_to_test_directory
     True
@@ -39,9 +35,6 @@ Edge cases
     Traceback (most recent call last):
     ...
     UserMessage: No doctests found in '/etc/httpd/conf'
-
-    >>> files_for_test._existing_files_for_test(path_to_test_directory / 'fred/fred/fred')
-    []
 
     >>> path_to_test_directory in files_for_test._get_path_stems([str(path_to_test_directory)], True)
     True

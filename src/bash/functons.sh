@@ -765,7 +765,7 @@ wvb () {
 }
 
 wvd () {
-    vim -p ~/hub/dotsite/dotsite/ "$@"
+    vim -p ~/hub/pysyte/pysyte/ "$@"
 }
 
 wtj () {
@@ -890,7 +890,7 @@ cdra () {
 }
 
 dots () {
-    cde ~/hub/dotsite/dotsite
+    cde ~/hub/pysyte/pysyte
 }
 
 down () {

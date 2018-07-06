@@ -16,8 +16,8 @@ run_these_before_running_this_script () {
 
 checkouts () {
     cd ~/hub
-    git clone $GITHUB/jalanb/dotsite
-    cd dotsite
+    git clone $GITHUB/jalanb/pysyte
+    cd pysyte
     python setup.py develop
     cd ..
     git clone $GITHUB/jalanb/what
@@ -26,7 +26,7 @@ checkouts () {
 }
 
 setup_python () {
-    cd ~/hub/dotsite
+    cd ~/hub/pysyte
     python setup.py develop
     cd
     pip install pudb

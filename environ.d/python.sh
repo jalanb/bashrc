@@ -46,7 +46,7 @@ upgrades () {
     # [[ -n $WELCOME_BYE ]] && echo 9.1
     _upgrade_package pip
     # [[ -n $WELCOME_BYE ]] && echo 9.2
-    _upgrade_package dotsite
+    _upgrade_package pysyte
     # [[ -n $WELCOME_BYE ]] && echo 9.0
 }
 
