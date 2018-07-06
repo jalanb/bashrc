@@ -19,7 +19,9 @@ add_to_a_path () {
         local _new_paths=$(python $DOT_PY "$@")
         for word in "$@"; do
             [[ $1 =~ - ]] || break
-            shift
+            local _shifts=
+            [[ $1 == '-i' || $1 == '--index' ]] && _shifts=2
+            shift $_shifts
         done
         if [[ -n $_new_paths ]]; then
             eval $_new_paths
@@ -49,7 +51,7 @@ show_a_path () {
     local name=$1 && shift
     if [[ $1 == "-q" ]]; then _quiet=1; shift; fi
     local setter=bash
-    if [[ -n $1 ]]; then 
+    if [[ -n $1 ]]; then
         setter=$1
         shift
     fi
