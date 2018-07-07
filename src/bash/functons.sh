@@ -293,10 +293,6 @@ ra () {
     cdra "$@"
 }
 
-raa () {
-    rara no ~
-}
-
 ru () {
     # do da root root route, do da ru !
     if [[ -z "$@" ]]; then
@@ -886,7 +882,17 @@ bump () {
 
 
 cdra () {
-    rara cd "$@"
+    local _path=$(kpp "$@")
+    cd $_path
+    ranger --choosedir=$HOME/.local/ranger.txt
+    local _ranged=
+    [[ -f $HOME/.local/ranger.txt ]] && _ranged=$(cat $HOME/.local/ranger.txt)
+    [[ -z $_ranged ]] && return
+    for word in "$@"; do
+        if [[ $word =~ "[-]*cd" ]]; then
+            cd $_ranged
+        fi
+    done
 }
 
 dots () {
@@ -984,21 +990,6 @@ dihh () {
 divv () {
     COMMAND_FOR_SAME_FILES=vd
     _dixx "$@"
-}
-
-rara () {
-    local _cd=$1; shift
-    local _path=$(kpp "$@")
-    [[ $_cd != "no" ]] && $_cd $_path
-    ranger --choosedir=$HOME/.local/ranger.txt
-    local _ranged=
-    [[ -f $HOME/.local/ranger.txt ]] && _ranged=$(cat $HOME/.local/ranger.txt)
-    [[ -z $_ranged ]] && return
-    for word in "$@"; do
-        if [[ $word =~ "[-]*cd" ]]; then
-            cd $_ranged
-        fi
-    done
 }
 
 this () {

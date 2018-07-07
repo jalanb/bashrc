@@ -121,10 +121,6 @@ _here_git () {
     return 0
 }
 
-_here_range () {
-    cdra .
-}
-
 # xxxxxxxxxxxxx
 
 _here_bash () {
