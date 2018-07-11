@@ -587,6 +587,11 @@ _gbd () {
     git branch "$@"
 }
 
+gbDD () {
+    gbD "$@"
+    gpod "$@"
+}
+
 gaai () {
     local addable=.
     if [[ -e "$1" ]]; then
