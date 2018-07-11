@@ -9,7 +9,11 @@ alias f=fynd
 # _
 # xx
 
-alias ff=ffind
+ff () {
+    local _root=.
+    [[ -d "$1" ]] && _root="$1" && shift
+    find $_root -type f "$@"
+}
 
 fl () {
     freds | tr ' ' '\n'

@@ -244,7 +244,9 @@ lx () {
 }
 
 ly () {
-    lx *.py
+    local _dir=.
+    [[ -d "$1" ]] && _dir="$1" 
+    lx ${_dir}/*.py
 }
 
 ma () {
