@@ -33,7 +33,7 @@ Host build
 Host builder
     Hostname twkgit20.wwts.com
     User builder
-    IdentityFile ~/.ssh/builder.key
+    IdentityFile ~/.ssh/wwts/tools/builder.key
 
 Host gitlab build
     Hostname 172.25.1.219
@@ -59,50 +59,50 @@ Host default
 Host twkwbe40 eopdev
     Hostname 172.25.3.110
     User builder
-    IdentityFile ~/.ssh/builder.key
+    IdentityFile ~/.ssh/wwts/eop/builder.key
 
 Host twkwbe41 eoptest
     Hostname 172.25.3.111
     User builder
-    IdentityFile ~/.ssh/builder.key
+    IdentityFile ~/.ssh/wwts/eop/builder.key
 
 Host twkwbe42 eopstage
     Hostname 172.25.3.112
     User builder
-    IdentityFile ~/.ssh/builder.key
+    IdentityFile ~/.ssh/wwts/eop/builder.key
 
 Host atlwbe43 eopbeta
     Hostname 172.25.232.243
     User builder
-    IdentityFile ~/.ssh/builder.key
+    IdentityFile ~/.ssh/wwts/eop/builder.key
 
 Host twkwbe43 eop
     Hostname 172.25.32.103
     User builder
-    IdentityFile ~/.ssh/builder.key
+    IdentityFile ~/.ssh/wwts/eop/builder.key
 
 Host twkwbe96 wmpdev
     Hostname 172.25.32.96
     User production
-    IdentityFile ~/.ssh/production.key
+    IdentityFile ~/.ssh/wwts/wmp/production.key
 
 Host twkwbe95 wmptest 
     Hostname 172.25.32.95
     User production
-    IdentityFile ~/.ssh/production.key
+    IdentityFile ~/.ssh/wwts/wmp/production.key
 
 Host twkwbe34 wmptrain wmpstage
     Hostname 172.25.32.147
     User production
-    IdentityFile ~/.ssh/production.key
+    IdentityFile ~/.ssh/wwts/wmp/production.key
 
 Host atlwbe35 wmpbeta
     Hostname 172.25.232.149
     User production
-    IdentityFile ~/.ssh/production.key
+    IdentityFile ~/.ssh/wwts/wmp/production.key
 
 Host twkwbe35 wmp
     Hostname 172.25.32.149
     User production
-    IdentityFile ~/.ssh/production.key
+    IdentityFile ~/.ssh/wwts/wmp/production.key
 
