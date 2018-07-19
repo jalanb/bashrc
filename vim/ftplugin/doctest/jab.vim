@@ -154,4 +154,4 @@ command -nargs=0 Try :call Test(1)
 
 " From http://www.vex.net/~x/python_and_vim.html
   " Remove trailing space when writing the file
-  autocmd BufWritePre * call Test()
+  autocmd BufWritePre * call Test(0)
