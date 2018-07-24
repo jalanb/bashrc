@@ -194,6 +194,10 @@ _free_line_here () {
     :
 }
 
+lj () {
+    l ~/jab "$@"
+}
+
 ky () {
     shift_dir "$@" && shift
     dir=${dir:-~/jab/src/python}
@@ -201,53 +205,6 @@ ky () {
     y .
 }
 
-
-ld () {
-    lk -1d "$@"
-}
-
-lf () {
-    locate -f "$@"
-}
-
-lj () {
-    lk ~/jab "$@"
-}
-
-lh () {
-    lk -lh  "$@"
-}
-
-lk () {
-    LS_PROGRAM=$(which ls 2>/dev/null)
-    local _gls=$(which gls 2>/dev/null)
-    [[ -f $_gls ]] && LS_PROGRAM=$_gls
-    export LS_PROGRAM
-    local _css=
-    $LS_PROGRAM  --help 2>/dev/null | grep -q -- --color && _css=--color
-    $LS_PROGRAM  --help 2>/dev/null | grep -q -- --classify && _css="$_css --classify"
-    local _header=
-    $LS_PROGRAM  --help 2>/dev/null | grep -q -- --group-directories-first && _header=--group-directories-first
-    $LS_PROGRAM $_css $_header "$@"
-}
-
-lr () {
-    lk -lhtr "$@"
-}
-
-lt () {
-    lk *.test*
-}
-
-lx () {
-    lk -xhtr "$@"
-}
-
-ly () {
-    local _dir=.
-    [[ -d "$1" ]] && _dir="$1" 
-    lx ${_dir}/*.py
-}
 
 ma () {
     local _storage=/tmp/fred.sh;
@@ -487,11 +444,11 @@ lff () {
 }
 
 lka () {
-    lk -a "$@"
+    l -a "$@"
 }
 
 lkk () {
-    lk -a "$@"
+    l -a "$@"
 }
 
 lkl () {
@@ -501,11 +458,11 @@ lkl () {
 lkq () {
     local _sought=$1
     if [[ -f $_sought ]]; then
-        lk $_sought
+        l $_sought
         return 0
     fi
     while [[ -n $_sought ]]; do
-        if lk -d $_sought 2>/dev/null; then
+        if l -d $_sought 2>/dev/null; then
             break
         fi
         _sought=$(dirname_ $_sought)
@@ -516,7 +473,7 @@ lkq () {
 }
 
 lkr () {
-    lk -lhtr "$@"
+    l -lhtr "$@"
 }
 
 lib () {
@@ -543,17 +500,17 @@ lns () {
     ln -s "$@"
 }
 
-lr2 () {
-    lra "$@" | grep --color -- "->"
-}
-
 loc () {
     locate "$@"
 }
 
+lof () {
+    locate -f "$@"
+}
+
 lr1 () {
     shift_dir "$@" && shift
-    lk -1tr --color=always "$dir" | tel
+    l -1tr --color=always "$dir" | tel
 }
 
 lra () {
@@ -565,7 +522,7 @@ lrd () {
 }
 
 lrt () {
-    lk --color=always -lrth "$@" | tel
+    l --color=always -lrth "$@" | tel
 }
 
 ls1 () {
@@ -573,14 +530,14 @@ ls1 () {
 }
 
 lsh () {
-    lk *.sh
+    l *.sh
 }
 
 
 lyy () {
     reset=$(shopt -p dotglob)
     shopt -s dotglob
-    lk -xd $(ls -F |grep \/$)
+    l -xd $(ls -F |grep \/$)
     echo
     lx *.tests 2>/dev/null
     echo
@@ -1503,7 +1460,7 @@ one_two_three () {
     else
         3d 1 --noreport "$@"
     fi
-    lk $(ls1 -p | g -v "\(pyc\|/\)$")
+    l $(ls1 -p | g -v "\(pyc\|/\)$")
 }
 
 insert_commas () {

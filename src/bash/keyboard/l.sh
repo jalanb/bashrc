@@ -2,27 +2,13 @@
 
 # x
 
-if [[ -f /usr/local/bin/gls ]]; then
-	jl () {
-	    /usr/local/bin/gls --group-directories-first --color -h "$@"
-	}
-else
-    _lj_dir_option=
-    ls -l  --group-directories-first 2>&1 | grep -q unrecognized || _lj_dir_option=--group-directories-first
-    _lj_color_option=
-    ls -l --color 2>&1 | grep -q unrecognized || _lj_color_option=--color
-	jl () {
-	    ls $_lj_dir_option $_lj_color_option -h "$@"
-	}
-fi
-
 l () {
     local _one=-1
     if [[ $* =~ "-1" ]]; then
         _one=
         shift
     fi
-    jl $_one "$@"
+    $(_ls_command) $_one "$@"
 }
 
 # xx
@@ -31,16 +17,16 @@ l0 () {
     ll -htrLo "$@"
 }
 
-lo () {
-    l -1 "$@"
-}
-
 la () {
     l -a "$@"
 }
 
 lg () {
     l -g "$@"
+}
+
+lh () {
+    l -lh  "$@"
 }
 
 ll () {
@@ -52,12 +38,26 @@ ll () {
     l $_options "$@"
 }
 
+lo () {
+    l -1 "$@"
+}
+
 lr () {
-    ll -htr "$@"
+    ll -tr "$@"
 }
 
 lt () {
     l -t "$@"
+}
+
+lx () {
+    l -xtr "$@"
+}
+
+ly () {
+    local _dir=.
+    [[ -d "$1" ]] && _dir="$1" 
+    lx ${_dir}/*.py
 }
 
 # xxx
@@ -87,4 +87,37 @@ lll () {
 
 ltr () {
     lr -t "$@"
+}
+
+# _xxxxxxxxxx
+
+_ls_command () {
+    local _options="-h"
+    if _is_ls_option -G; then
+        _options="$_options -G"
+    elif _is_ls_option --color; then
+        _options="$_options --color"
+    fi
+    if _is_ls_option -F; then
+        _options="$_options -F"
+    elif _is_ls_option --classify; then
+        _options="$_options --classify"
+    fi
+    _is_ls_option --group-directories-first && _options="$_options --group-directories-first"
+    echo "$(_ls_program) $_options"
+}
+
+_ls_program () {
+    if [[ -z $LS_PROGRAM ]]; then
+        LS_PROGRAM=$(which ls 2>/dev/null)
+        local _gls=$(which gls 2>/dev/null)
+        [[ -x "$_gls" ]] && LS_PROGRAM="$_gls"
+        export LS_PROGRAM
+    fi
+    echo $LS_PROGRAM
+    return 0
+}
+
+_is_ls_option () {
+    $(_ls_program)  --help 2>/dev/null | grep -q -- $1
 }
