@@ -16,16 +16,16 @@ local_rc () {
         _cd=$(cat $_cdf)
         rm -f $_cdf
     fi
-    cd $_cd
-    if [[ -f $_rcf ]]; then
-        echo "-f "'$_rcf'"($_rcf)" >&2
-        local _rc="$(cat $_rcf)"
-        [[ -n $_rc ]] || echo "-z "'$_rc'"'$_rc'" >&2
-        [[ -n $_rc ]] && eval $_rc
-        rm -f $_rcf
-    else
-        echo "! -f "'$_rcf'"($_rcf)" >&2
-    fi 2>/dev/null
+    export LOCAL_CD=
+    [[ -d "$_cd" ]] || return 1
+    [[ -f $_rcf ]] || return 1
+    set -x
+    cd "$_cd"
+    local _rc="$(cat $_rcf)"
+    [[ -n $_rc ]] && eval $_rc
+    rm -f $_rcf
+    export LOCAL_CD="$_cd"
+    return 0
 }
 
 . ~/bash/tput.sh
