@@ -5,15 +5,14 @@
 
 # x
 
-alias f=fynd
-# _
-# xx
-
-ff () {
+f () {
     local _root=.
     [[ -d "$1" ]] && _root="$1" && shift
     find $_root -type f "$@"
 }
+
+# _
+# xx
 
 fl () {
     freds | tr ' ' '\n'

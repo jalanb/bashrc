@@ -80,14 +80,6 @@ ag () {
     alias | grep "$@"
 }
 
-bd () {
-    . ~/bash/bd.sh -s "$@"
-}
-
-dp () {
-    (PYTHON_DEBUGGING=-U db "$@")
-}
-
 IP () {
     local _break=yes
     if [[ $1 == all ]]; then
