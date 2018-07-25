@@ -83,15 +83,6 @@ gr () {
 }
 
 
-_gs () {
-    git status "$@"
-}
-
-_gs_quiet () {
-    first_arg_dir_or_here "$@" && shift
-    _do_git_status $dir "$@"
-}
-
 gs () {
     # _gs_quiet"$@"
     _gs "$@"
@@ -117,11 +108,13 @@ ts () {
     tig status
 }
 
-# xxx
+# _xx
 
-aga () {
-    git reset HEAD "$@"
+_gs () {
+    git status "$@"
 }
+
+# xxx
 
 gaa () {
     ga .
@@ -149,31 +142,6 @@ gbt () {
     gt "$@"
 }
 
-gip () {
-    gi "$@"
-    gp
-}
-
-gst () {
-    git stash "$@"
-}
-
-gsp () {
-    gs --porcelain
-}
-
-gta () {
-    gt "$@"
-}
-
-gtl () {
-    gt "$@"
-}
-
-gtl () {
-    gt --list "$@"
-}
-
 gbb () {
     git_branch "$@"
 }
@@ -194,37 +162,8 @@ gbm () {
     git branch -m "$@"
 }
 
-gff () {
-    gfa
-    grup
-}
-
-gro () {
-    local _origin=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
-    if [[ -n $_origin ]]; then
-        echo $_origin
-        return 0
-    fi
-    echo No origin >&2
-    return 1
-}
-
 gbv () {
     git blame "$1" | vin
-}
-
-gia () {
-    GIT_EDITOR=true git commit --amend "$@"
-}
-
-gij () {
-    local _storage=/tmp/gij.sh
-    local JIT="git -C ~/jab"
-    if [[ -z "$@" ]]; then $JIT commit --all --verbose
-    else
-        python -c "print '$JIT commit -m\"$*\"'" > $_storage
-        _run_storage
-    fi
 }
 
 gcp () {
@@ -247,8 +186,18 @@ gdl () {
     git diff --color=always "$@"| fewer
 }
 
+gds () {
+    local diff_=${1:-diff}
+    git $diff_ --staged "$@"
+}
+
 gdv () {
     git dv "$@"
+}
+
+gff () {
+    gfa
+    grup
 }
 
 gfa () {
@@ -260,61 +209,27 @@ ggi () {
     gxi _ggi_show_diff _ggi_response "$@"
 }
 
-gsi () {
-    gxi _gsi_show_diff _gsi_response "$@"
+gia () {
+    GIT_EDITOR=true git commit --amend "$@"
 }
 
-gvi () {
-    gxi _gvi_show_diff _gvi_response "$@"
+gie () {
+    git commit --amend --edit "$@"
 }
 
-green_line () {
-    printf "$GREEN$1$NO_COLOUR\n"
+gij () {
+    local _storage=/tmp/gij.sh
+    local JIT="git -C ~/jab"
+    if [[ -z "$@" ]]; then $JIT commit --all --verbose
+    else
+        python -c "print '$JIT commit -m\"$*\"'" > $_storage
+        _run_storage
+    fi
 }
 
-show_this_branch () {
-    git branch $1 | grep --colour -B3 -A 3 $(git_branch)
-}
-
-_show_pre_loop () {
-    green_line local
-    show_this_branch
-    green_line status
-}
-
-gxi () {
-    local _show_diff=$1; shift
-    local _response=$1; shift
-    local _responded=
-    _stashed=
-    first_arg_dir_or_here "$@" && shift
-    GXI_QUERY=
-    green_line remote
-    glg
-    show_this_branch -r
-    _show_pre_loop
-    while git status -s "$dir"; do
-        green_line staged
-        git di --staged
-        green_line files
-        _responded=
-        for _file in $(gssd_changes "$dir"); do
-            [[ -n "$_file" ]] || continue
-            _gxi_grep $_file $GXI_QUERY || continue
-            $_show_diff "$_file"
-            _gxi_request "$_file" || break
-            $_response "$_file" && _responded=1
-        done
-        [[ $answer =~ [qQ] || -z $_responded ]] && break
-        [[ $answer =~ [sS] ]] && _gxi_stash
-        gi
-        git status -v | g -q "working [a-z][a-z]* clean" && break
-        [[ -n $QUESTIONS ]] && v $QUESTIONS
-        _show_pre_loop
-    done
-    [[ -n $_stashed ]] && gstp
-    git dn --staged
-    git status
+gip () {
+    gi "$@"
+    gp
 }
 
 gl1 () {
@@ -355,6 +270,14 @@ gma () {
     git merge --abort
 }
 
+gmm () {
+    local _branch=$(git_branch)
+    go master
+    grr
+    go $_branch
+    git merge master
+}
+
 gob () {
     go -b "$@"
 }
@@ -367,16 +290,56 @@ gog () {
     go "$@"; glg; bump show
 }
 
-gor () {
-    go "$@"; gr
-}
-
 gom () {
     go master
 }
 
+gor () {
+    go "$@"; gr
+}
+
 gop () {
     go python
+}
+
+gpf () {
+    gp --force "$@"
+}
+
+gpo () {
+    git push origin "$@"
+}
+
+gpp () {
+    gp "$@"
+    gpt
+}
+
+gps () {
+    git_stash_and gp "$@"
+}
+
+gpt () {
+    gpo --tags
+}
+
+green_line () {
+    printf "$GREEN$1$NO_COLOUR\n"
+}
+
+show_this_branch () {
+    git branch $1 | grep --colour -B3 -A 3 $(git_branch)
+}
+
+_gs_quiet () {
+    first_arg_dir_or_here "$@" && shift
+    _do_git_status $dir "$@"
+}
+
+_show_pre_loop () {
+    green_line local
+    show_this_branch
+    green_line status
 }
 
 gra () {
@@ -387,17 +350,25 @@ grc () {
     git rebase --continue
 }
 
+grg () {
+    gr; glg
+}
+
+grh () {
+    git reset HEAD "$@"
+}
+
+gri () {
+    if [[ -n $1 ]]; then
+        git rebase --interactive "$@"
+    else
+        git rebase --interactive HEAD~2
+    fi
+}
+
 grm () {
     local _current_branch=$(git_branch)
     git rebase master $_current_branch
-}
-
-grs () {
-    git rebase --skip
-}
-
-grg () {
-    gr; glg
 }
 
 gro () {
@@ -417,45 +388,12 @@ grp () {
     [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpp "$@"
 }
 
-gpf () {
-    gp --force "$@"
-}
-
-gpo () {
-    git push origin "$@"
-}
-
-gpp () {
-    gpf "$@"
-    gpt
-}
-
-gps () {
-    git_stash_and gp "$@"
-}
-
-gpt () {
-    gpo --tags
-}
-
-grh () {
-    git reset HEAD "$@"
-}
-
-grc () {
-    git rebase --continue
-}
-
-gri () {
-    if [[ -n $1 ]]; then
-        git rebase --interactive "$@"
-    else
-        git rebase --interactive HEAD~2
-    fi
-}
-
 grr () {
     git_stash_and git pull --rebase "$@"
+}
+
+grs () {
+    git rebase --skip
 }
 
 gsd () {
@@ -468,94 +406,67 @@ gsd () {
     [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
-gds () {
-    local diff_=${1:-diff}
-    git $diff_ --staged "$@"
+gsi () {
+    gxi _gsi_show_diff _gsi_response "$@"
 }
 
-red_one () {
-    local red="\033[0;31m"
-    local no_colour="\033[0m"
-    GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
+gst () {
+    git stash "$@"
 }
 
-red_two () {
-    local red="\033[0;31m"
-    local no_colour="\033[0m"
-    GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
+gsp () {
+    gs --porcelain
 }
 
-_status_line () {
-    [[ -n "$*" ]] && git status -s . || git status -s "$@"
+gta () {
+    gt "$@"
 }
 
-_status_chars () {
-    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+gtl () {
+    gt "$@"
 }
 
-_git_modified () {
-    [[ $(_status_chars $1) == " M" ]]
+gtl () {
+    gt --list "$@"
 }
 
-_git_added () {
-    [[ $(_status_chars $1) == " A" ]]
+gvi () {
+    gxi _gvi_show_diff _gvi_response "$@"
 }
 
-_git_untracked () {
-    [[ $(_status_chars $1) == "??" ]]
-}
-
-_gxi_stash () {
-    if [[ -z $_stashed ]]; then
-        _stashed=gxi
-        gst
-    fi
-}
-
-_gxi_grep () {
-    local _file=$1; shift
-    [[ -z "$@" ]] && return 0
-    grep -q "$@" $_file
-}
-
-_gsi_drop () {
-    if [[ $answer =~ [rR] ]]; then
-        _git_modified "$1" && go "$1"
-        _git_untracked "$1" && rm -i "$1"
-    fi
-}
-
-_gvi_drop () {
-    if [[ $answer =~ [rR] ]]; then
-        _git_modified "$1" && go "$1"
-        _git_untracked "$1" && rm -f "$1"
-    fi
-}
-
-_gvi_git_dv () {
-    local _one="$1"
-    shift
-    _gvi_other_vim 
-    if _git_modified "$1"; then
-        git dv $(echo "$1" | cut -dM -f2)
-    else
-        _gvi_vim "$1"
-    fi
-}
-
-_gvi_vim () {
-    if _git_untracked "$1"; then
-        v $(_status_line "$1" | grep "??" | cut -d' ' -f2)
-    elif _git_modified "$1"; then
-        v $(echo "$1" | cut -dM -f2)
-    elif _git_added "$1"; then
-        v  $(echo "$1" | cut -dA -f2)
-    fi
-    _status_line "$1"
-}
-
-_gsi_vim () {
-    _git_modified "$1" && git dv "$1" || git diff "$1" | vin
+gxi () {
+    local _show_diff=$1; shift
+    local _response=$1; shift
+    local _responded=
+    _stashed=
+    first_arg_dir_or_here "$@" && shift
+    GXI_QUERY=
+    green_line remote
+    glg
+    show_this_branch -r
+    _show_pre_loop
+    while git status -s "$dir"; do
+        green_line staged
+        git di --staged
+        green_line files
+        _responded=
+        for _file in $(gssd_changes "$dir"); do
+            [[ -n "$_file" ]] || continue
+            _gxi_grep $_file $GXI_QUERY || continue
+            $_show_diff "$_file"
+            _gxi_request "$_file" || break
+            $_response "$_file" && _responded=1
+        done
+        [[ $answer =~ [qQ] || -z $_responded ]] && break
+        [[ $answer =~ [sS] ]] && _gxi_stash
+        gi
+        git status -v | g -q "working [a-z][a-z]* clean" && break
+        [[ -n $QUESTIONS ]] && v $QUESTIONS
+        _show_pre_loop
+    done
+    [[ -n $_stashed ]] && gstp
+    git dn --staged
+    git status
 }
 
 # xxxx
@@ -608,6 +519,10 @@ gbta () {
 
 gcme () {
     gcm --edit "$@"
+}
+
+gdis () {
+    gdi --staged "$@"
 }
 
 gipf () {
@@ -690,16 +605,13 @@ gls1 () {
     GIT_LOG_LINES=31 gls -n1 "$@"
 }
 
-gmm () {
-    local _branch=$(git_branch)
-    go master
-    grr
-    go $_branch
-    git merge master
-}
-
 gpod () {
     gpo --delete $1
+}
+
+gppp () {
+    gpf "$@"
+    gpt
 }
 
 grmt () {
@@ -779,7 +691,7 @@ _show_git_here () {
 # xxxxxxxx
 
 _git_kd () {
-    kd "$@" > ~/bash/fd/1 2> ~/bash/fd/2
+    cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
 }
 
 verbosity () {
@@ -1095,5 +1007,90 @@ _gxi_response () {
         return 0
     fi
     return 1
+}
+
+red_one () {
+    local red="\033[0;31m"
+    local no_colour="\033[0m"
+    GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
+}
+
+red_two () {
+    local red="\033[0;31m"
+    local no_colour="\033[0m"
+    GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
+}
+
+_status_line () {
+    [[ -n "$*" ]] && git status -s . || git status -s "$@"
+}
+
+_status_chars () {
+    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+}
+
+_git_modified () {
+    [[ $(_status_chars $1) == " M" ]]
+}
+
+_git_added () {
+    [[ $(_status_chars $1) == " A" ]]
+}
+
+_git_untracked () {
+    [[ $(_status_chars $1) == "??" ]]
+}
+
+_gxi_stash () {
+    if [[ -z $_stashed ]]; then
+        _stashed=gxi
+        gst
+    fi
+}
+
+_gxi_grep () {
+    local _file=$1; shift
+    [[ -z "$@" ]] && return 0
+    grep -q "$@" $_file
+}
+
+_gsi_drop () {
+    if [[ $answer =~ [rR] ]]; then
+        _git_modified "$1" && go "$1"
+        _git_untracked "$1" && rm -i "$1"
+    fi
+}
+
+_gvi_drop () {
+    if [[ $answer =~ [rR] ]]; then
+        _git_modified "$1" && go "$1"
+        _git_untracked "$1" && rm -f "$1"
+    fi
+}
+
+_gvi_git_dv () {
+    local _one="$1"
+    shift
+    _gvi_other_vim 
+    if _git_modified "$1"; then
+        git dv $(echo "$1" | cut -dM -f2)
+    else
+        _gvi_vim "$1"
+    fi
+}
+
+_gvi_vim () {
+    if _git_untracked "$1"; then
+        v $(_status_line "$1" | grep "??" | cut -d' ' -f2)
+    elif _git_modified "$1"; then
+        v $(echo "$1" | cut -dM -f2)
+    elif _git_added "$1"; then
+        v  $(echo "$1" | cut -dA -f2)
+    fi
+    _status_line "$1"
+}
+
+_gsi_vim () {
+    _git_modified "$1" && git dv "$1" || git diff "$1" | vin
 }
 
