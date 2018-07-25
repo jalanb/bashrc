@@ -10,6 +10,8 @@ import imp
 import io
 import sys
 import doctest
+import getpass
+import socket
 import subprocess
 import datetime
 from pprint import pprint
@@ -61,32 +63,33 @@ def show(thing):
     return pprint(thing)
 
 
+def get_host():
+    return os.environ.get('HOST', os.environ.get('HOSTNAME',
+        socket.getfqdn().split('.')[0]))
+
+
+def get_user():
+    return getpass.getuser()
+
+
 class TestBeingRun(object):
     """Encapsulation of the current test"""
 
     def __init__(self, that):
         self.here = path('.')
         self.home = path('~')
-        self.username = os.environ['USER']
-        try:
-            self.host = os.environ['HOST']
-        except KeyError:
-            try:
-                self.host = os.environ['HOSTNAME']
-            except KeyError:
-                self.host = None
-                if self.home.startswith('/Users'):
-                    self.host = 'jab.ook'
-        self.user = '%s@%s' % (self.username, self.host)
+        self.username = get_user()
+        self.host = get_host()
+        self.user = '@'.join((self.username, self.host))
         self.path = self.here.relpathto(that)
         base, _ext = self.path.splitext()
-        [self.add_path(base, _) for _ in ['py', 'test', 'tests', 'fail']]
+        [self.add_ext(base, _) for _ in {_ext[1:], 'py', 'test', 'tests', 'fail'}]
 
     def __repr__(self):
         return '<%s %r>' % (self.__class__.__name__, str(
             self.path.short_relative_path_from_here()))
 
-    def add_path(self, base, ext):
+    def add_ext(self, base, ext):
         """Add a path for base.ext as an attribute to self"""
         name = 'path_to_%s' % ext
         if hasattr(self, name):

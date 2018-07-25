@@ -97,19 +97,19 @@ def _run_locate(args):
 def _make_check_method(method, args):
     """Make a check method by combining the given method with the args"""
 
-    def is_file(string):
-        return method(string) and os.path.isfile(string)
+    def make_method(predicate):
+        def inner_method(string):
+            return method(string) and predicate(string)
+        return inner_method
 
     if args.directories:
-        def is_dir(string):
-            return method(string) and os.path.isdir(string)
-        return is_dir
+        return make_method(os.path.isdir)
     if args.files:
-        return is_file
+        return make_method(os.path.isfile)
     if args.executables:
-        def is_exe(string):
-            return is_file(string) and os.access(string, os.X_OK)
-        return is_exe
+        return make_method(lambda x: os.path.isfile(x) and os.access(x, os.X_OK))
+    if args.real:
+        return make_method(os.path.exists)
     return method
 
 
@@ -164,6 +164,7 @@ def parse_args():
     pa('-g', '--globs', action='store_true', help='match on globs')
     pa('-i', '--ignore-case', action='store_true', help='ignore case in searches')
     pa('-l', '--lsld', action='store_true', help='run "ls -ld" on locations')
+    pa('-r', '--real', action='store_true', help='only include real paths')
     pa('-x', '--exclude', type=str, nargs='+', help='exclude paths which match regexp(s)')
     pa('-v', '--verbose', help='Show locate command')
     args = parser.parse_args()

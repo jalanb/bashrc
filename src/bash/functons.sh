@@ -391,8 +391,8 @@ hed () {
 hub () {
     local _directory=~/hub
     local _remote=
-    [[ $( clipout ) =~ http ]] && _remote=$( clipout )
-    [[ $1 =~ http ]] && _remote="$1" && shift
+    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
+    [[ $1 =~ http.*git ]] && _remote="$1" && shift
     local _destination=
     if [[ -n $1 ]]; then
         _destination=$(kp "$1" "$@")
@@ -408,7 +408,11 @@ hub () {
         _directory=$(clone -n $_remote)
     fi
     [[ -d $_directory ]] && cde $_directory
-    ranger $_directory
+    if [[ $(rlf $_directory) == $(rlf ~/hub) ]]; then
+        lo
+    else
+        cdra $_directory
+    fi
 }
 
 jjb () {
@@ -887,8 +891,8 @@ mkcd () {
 }
 
 mkv3 () {
-    mkvirtualenv -v --clear --system-site-packages --relocatable --python=python $1
-    virtualenv --python=python /Users/jab/.virtualenvs/$1
+    mkvirtualenv -v --clear --system-site-packages --relocatable --python=/usr/local/bin/python3 $1
+    virtualenv --python=/usr/local/bin/python3 /Users/jab/.virtualenvs/$1
 }
 
 nosedocs () {
