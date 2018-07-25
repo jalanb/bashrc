@@ -131,16 +131,20 @@ _colour_prompt () {
     local _colour_name=$(_colour green $_name)
     local _colour_where=$(_colour green $_where)
     local _colour_user="${_colour_name}@$_colour_where"
-    local _colour_dir=$(_colour l_blue "$_dir")
+    local _colour_dir=$(_colour l_blue "$_dir $_dir_vir")
     if [[ -n $_branch ]]; then
         local _colour_branch=$(_colour l_blue "$_branch")
         _colour_dir="$_colour_dir,$_colour_branch"
     fi
-    local _colour_version=$(_colour l_red "${_py_vers}")
-    local _colour_virtual=$(_colour l_red "${_py_venv}")
-    local _colour_python="$_colour_version.$_colour_virtual"
-    printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python\n$ "
-    
+    if [[ -n $_py_venv ]]; then
+        local _colour_version=$(_colour l_red "${_py_vers}")
+        local _colour_virtual=$(_colour l_red "${_py_venv}")
+        local _colour_python="$_colour_version.$_colour_virtual"
+        printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python\n$ "
+    else
+        local _colour_python=$(_colour l_red "${_py_vers}")
+        printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_python $_colour_dir\n$ "
+    fi
 }
 
 _pre_prompt () {
