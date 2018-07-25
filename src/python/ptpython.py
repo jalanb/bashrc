@@ -5,4 +5,4 @@ import sys
 from pprint import pprint as pp
 
 
-import dotsite
+import pysyte

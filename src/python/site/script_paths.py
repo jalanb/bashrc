@@ -2,7 +2,7 @@
 
 
 from pysyte.vim.args import sift
-from dotsite import paths
+from pysyte import paths
 
 
 def arg_paths(sys_args):

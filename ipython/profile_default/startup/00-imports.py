@@ -9,10 +9,7 @@ import os
 import re
 import sys
 
-try:
-    import pysyte
-except ImportError:
-    import dotsite as pysyte
+import pysyte
 import requests
 
 try:

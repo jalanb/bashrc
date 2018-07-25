@@ -8,12 +8,8 @@ import argparse
 from bdb import BdbQuit
 
 
-try:
-    from pysyte.paths import path
-    from pysyte.paths import home
-except ImportError:
-    from dotsite.paths import path
-    from dotsite.paths import home
+from pysyte.paths import path
+from pysyte.paths import home
 
 
 __version__ = '0.1.0'

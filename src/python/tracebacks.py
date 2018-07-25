@@ -23,7 +23,6 @@ import os
 import sys
 
 from pysyte import debuggers
-from pysyte import scripts
 from pysyte import text_streams
 from pysyte import tracebacks
 
