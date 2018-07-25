@@ -110,7 +110,11 @@ _colour_prompt () {
     local _status=$1; shift
     local _name="${USER:-$(whoami)}"
     local _where="${HOSTNAME:-$(hostname -s)}"
-    local _dir="$(pyth ~/jab/bin/short_dir "${PWD}")"
+    local _here=$PWD
+    local _dir="$(cd ~/jab/bin; . activate; pyth short_dir "$_here")"
+    local _dir_version=$(bump get 2>/dev/null)
+    local _dir_vir=
+    [[ -n $_dir_version ]] && _dir_vir="($_dir_version)"
     local _branch=$(get_git_branch)
     local _git=$(get_git_status)
     [[ -n $_git ]] && _branch="($_git)"
