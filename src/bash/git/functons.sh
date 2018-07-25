@@ -236,8 +236,17 @@ gl1 () {
     gl -n1 "$@"
 }
 
+glone () {
+    local __doc__="""pronounced 'g l one'"""
+    gl --oneline "$@"
+}
+
 gla () {
     git_on_screen lg --author=Alan.Brogan "$@"
+}
+
+glf () {
+    git lf "$@"
 }
 
 glg () {
@@ -248,6 +257,10 @@ glg () {
         shift
     fi
     GIT_LOG_LINES=$_number_of_commits git_on_screen lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+}
+
+gll () {
+    glf "$@"
 }
 
 gln () {
@@ -601,6 +614,11 @@ glp1 () {
     glp -n1 "$@"
 }
 
+glf1 () {
+    git lg -n1 "$@"
+    git lg -n1 --compact-summary "$@" | kat -f 2 -l -2 | cut -d'|' -f2
+}
+
 gls1 () {
     GIT_LOG_LINES=31 gls -n1 "$@"
 }
@@ -671,11 +689,6 @@ clone () {
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
         [[ -n $_range ]] && ranger
     fi
-}
-
-glone () {
-    local __doc__="""pronounced 'g l one', because 'gl1' was taken"""
-    gl --oneline "$@"
 }
 
 # xxxxxx
