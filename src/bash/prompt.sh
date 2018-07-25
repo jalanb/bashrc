@@ -141,7 +141,7 @@ _colour_prompt () {
 
 _pre_prompt () {
     console_whoami
-    (what -q kd && kd --add . >/dev/null 2>&1)
+    (what -q py_cd && py_cd --add . >/dev/null 2>&1)
     history -a
 }
 

@@ -5,11 +5,9 @@
 k () {
     local _dir="$1"; shift
     [[ -z "$_dir" ]] && _dir=.
-    if [[ -d "$_dir" ]]; then
-        cde "$_dir" "$@"
-        return 0
-    fi
-    return 1
+    [[ -d "$_dir" ]] || return 1
+    cd $_dir; 
+    "$@"
 }
 
 # xx

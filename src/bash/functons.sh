@@ -201,7 +201,7 @@ lj () {
 ky () {
     shift_dir "$@" && shift
     dir=${dir:-~/jab/src/python}
-    kd $dir "$@"
+    cde $dir "$@"
     y .
 }
 
@@ -624,7 +624,7 @@ tma () {
 }
 
 tmp () {
-    pushq $(pyth $KD_DIR/kd.py ~/tmp "$@")
+    pushq $(pyth ~/hub/kd/cd.py ~/tmp "$@")
 }
 
 try () {
@@ -729,14 +729,6 @@ wtj () {
 
 wvj () {
     vim -p ~/jab/__init__.sh "$@"
-}
-
-wtk () {
-    . ~/hub/kd.sh
-}
-
-wvk () {
-    vim -p ~/hub/kd.sh "$@"
 }
 
 wvp () {
@@ -1071,7 +1063,7 @@ quack () {
 range () {
     local destination=.
     if [[ -n "$*" ]]; then
-        local kd_script=$KD_DIR/kd.py
+        local kd_script=~/hub/kd/cd.py
         if ! destination=$(PYTHONPATH=$python_directory pyth $kd_script "$@" 2>&1); then
             echo "$destination"
             return 1

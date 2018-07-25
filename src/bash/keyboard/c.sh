@@ -40,7 +40,7 @@ cr () {
 }
 
 cv () {
-    kd $1; v $(basename_ $1)
+    cde $1; v $(basename_ $1)
 }
 
 cy () {
@@ -63,7 +63,7 @@ ib () { cn ~/.bashrc
 }
 
 cjy () {
-    kd ~/jab/src/python "$@"
+    cd ~/jab/src/python "$@"
 }
 
 clf () {

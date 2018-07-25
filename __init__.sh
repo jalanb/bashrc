@@ -14,7 +14,7 @@ Welcome_to $BASH_SOURCE
 . ~/hub/what/what.sh
 . ~/jab/src/bash/hub.sh
 . ~/hub/vimack/vimack.sh
-. ~/hub/kd/kd.sh
+. ~/hub/kd/cd.sh
 . ~/hub/what/what.sh
 
 _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
