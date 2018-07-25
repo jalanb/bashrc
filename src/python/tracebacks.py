@@ -40,21 +40,18 @@ def as_vim_command(lines, use_splits):
     return ' '.join(args)
 
 
-def add_args(parser):
+def parse_args():
     """Parse out command line arguments"""
-    # parser.add_argument('source', help='path to source(s) to be checked')
-    parser.add_argument('-c', '--clipboard', action='store_true',
-                        help='Copy traceback lines from clipboard')
-    parser.add_argument('-e', '--edit', action='store_true',
-                        help='Show a vim command using tabs')
-    parser.add_argument('-i', '--ipdb', action='store_true',
-                        help='Show an ipdb command')
-    parser.add_argument('-u', '--pudb', action='store_true',
-                        help='Show a pudb command')
-    parser.add_argument('-s', '--splits', action='store_true',
-                        help='Show a vim command using splits')
-    parser.add_argument('-y', '--pym', action='store_true',
-                        help='Show a pym command')
+    parser = arguments.parser(__doc__)
+    parser.arg('file', help='File with traceback data')
+    parser.true('-e', '--edit', help='Show a vim command using tabs')
+    parser.true('-s', '--splits', help='Show a vim command using splits')
+    parser.true('-d', '--ipdb', help='Show an ipdb command')
+    parser.true('-u', '--pudb', help='Show a pudb command')
+    parser.true('-y', '--pym', help='Show a pym command')
+    parser.true('-p', '--paste', help='Paste text from clipboard')
+    parser.true('-i', '--stdin', help='Wait for text from stdin')
+    return parser.parse_args()
 
 
 def show(lines, args):
@@ -71,16 +68,22 @@ def show(lines, args):
     debugger.add_breaks(lines)
 
 
-def script(args):
+def main(args):
     """Run the script"""
-    stream = text_streams.first_argv('-c')
-    if not stream:
+    args = parse_args()
+    streams = text_streams.args(args, 'file')
+    if not streams:
         print('No file specified', file=sys.stderr)
         return not os.EX_OK
-    lines = map(tracebacks.parse_line, text_streams.full_lines(stream))
+    lines = map(tracebacks.parse_line, text_streams.full_lines(streams[0]))
     show([_ for _ in lines if _], args)
     return os.EX_OK
 
 
+def main():
+    script(args)
+    return 0
+
+
 if __name__ == '__main__':
-    scripts.main(script, add_args, __version__, __doc__)
+    sys.exit(main())

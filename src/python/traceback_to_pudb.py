@@ -91,9 +91,19 @@ def parse_traceback_lines(lines):
             for l in file_lines]
 
 
+def parse_args():
+    """Parse out command line arguments"""
+    parser = arguments.parser(__doc__)
+    parser.arg('file', help='File with traceback data')
+    parser.true('-p', '--paste', help='Paste text from clipboard')
+    parser.true('-i', '--stdin', help='Wait for text from stdin')
+    return parser.parse_args()
+
+
 def main(_args):
     """Use command line args as files containing tracebacks"""
-    streams = text_streams.argvs('-c')
+    args = parse_args()
+    streams = text_streams.args(args, 'file')
     if not streams:
         print('No traceback file specified', file=sys.stderr)
         return not os.EX_OK
