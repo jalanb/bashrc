@@ -18,6 +18,10 @@ fl () {
     freds | tr ' ' '\n'
 }
 
+fn () {
+    f -name "$@"
+}
+
 # _x
 # xxx
 

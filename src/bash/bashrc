@@ -30,7 +30,7 @@ _bashrc () {
     # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     [[ -n $_local_cd ]] || bash /Users/jab/src/git/hub/jab3/bin/dttc
-    cd $_bashrc_cd # >/dev/null 2>&1
+    cde $_bashrc_cd # >/dev/null 2>&1
 }
 
 BASHRC_LOG=~/bashrc.log

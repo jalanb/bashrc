@@ -3,11 +3,11 @@
 
 import sys
 
-from pysyte import args
+from pysyte import args as arguments
 
 def parse_args():
     """Parser for command line arguments"""
-    parser = args.parser(__doc__)
+    parser = arguments.parser(__doc__)
     parser.true('-e', '--empty', help="Use empty string as joiner")
     parser.arg('-j', '--joiner', help="String to use as a joiner", default=',')
     parser.args('words')
