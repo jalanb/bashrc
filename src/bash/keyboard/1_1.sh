@@ -22,6 +22,10 @@ home_path () {
 . ~/bash/add_to_a_path.sh
 
 home () {
+    if [[ -z "$@" ]]; then
+        c ~
+        return 0
+    fi
     # set -x
     local _name=$1; shift
     local _parent=~/$_name
