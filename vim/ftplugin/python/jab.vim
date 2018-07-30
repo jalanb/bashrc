@@ -298,7 +298,9 @@ endfunction
 
 function WritePython()
     call ReSpacePython()
+    call Try(1)
 endfunction
+autocmd BufWritePost * call WritePython()
 
 " function LintPython()
 "     let command = "! TERM=linux && pylint "

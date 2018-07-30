@@ -15,6 +15,7 @@ except ImportError:
 
 try:
     from pysyte.lists import de_duplicate
+    from pysyte.paths import tab_complete
 except ImportError:
     sys.stderr.write('Import Error with %s\n' % sys.executable)
     sys.exit(1)
@@ -340,9 +341,9 @@ def interpret_sys_argv():
     """Interpret the args from a command line"""
     options, not_options = divide(strip_puv(sys.argv[1:]), is_option)
     options = separate_options(options)
-    args = de_duplicate([script_paths.tab_complete(a) for a in not_options])
+    args = de_duplicate([tab_complete(a) for a in not_options])
     paths = script_paths.arg_paths(args) or map(
-        script_paths.pyc_to_py, map(script_paths.tab_complete, args))
+        script_paths.pyc_to_py, map(tab_complete, args))
     return paths, options
 
 
