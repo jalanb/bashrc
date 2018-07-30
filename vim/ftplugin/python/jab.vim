@@ -280,7 +280,7 @@ if !exists("Mash")
     endfunction
     command -nargs=0 MashTry :call MashTry()
 endif
-"   From ie-build-1:/usr/share/vim/vim70/vimrc_example.vim
+"   From vim/vim70/vimrc_example.vim
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -305,11 +305,6 @@ endfunction
 "     exec command_line
 "     redraw!
 " endfunction
-
-
-" From http://www.vex.net/~x/python_and_vim.html
-  " Remove trailing space when writing the file
-  autocmd BufWritePre * call WritePython()
 " autocmd InsertLeave * call LintPython()
 
 if !exists("PPP")

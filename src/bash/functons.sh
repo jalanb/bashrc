@@ -119,16 +119,6 @@ fd () {
     find $dir -type d -name $name "$@"
 }
 
-fg () {
-    local _sought=$1; shift
-    for _path in $(ls); do
-        [[ -d $_path ]] || continue
-        local _dir=$(cd $_path; rlf .)
-        [[ -n $_sought && $(basename_ $_dir) =~ $_sought ]] && echo $_dir
-        [[ -z $_sought ]] && echo $_dir
-    done
-}
-
 fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then
@@ -142,21 +132,6 @@ fv () {
             vim -p $files
         fi
     fi
-}
-
-gf () {
-    local __doc__="grep in any file args for other args"
-    shift_dir "$@" && shift
-    name=$1
-    shift
-    find $dir -name "$name" -exec grep --colour "$@" -nH {} \;
-    local pattern=
-    for arg in "$@"; do
-        test ! -f "$arg" && pattern="$pattern $arg"
-    done
-    for arg in "$@"; do
-        [[ $(type -t "$arg") == "file" ]] && grep --colour -nH --binary-files=without-match $arg $pattern
-    done
 }
 
 gg () {
@@ -184,10 +159,6 @@ hd () {
 
 _free_line_here () {
     :
-}
-
-lj () {
-    l ~/jab "$@"
 }
 
 ky () {
