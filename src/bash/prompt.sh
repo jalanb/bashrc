@@ -111,7 +111,7 @@ _colour_prompt () {
     local _name="${USER:-$(whoami)}"
     local _where="${HOSTNAME:-$(hostname -s)}"
     local _here=$PWD
-    local _dir="$(cd ~/jab/bin; . activate; pyth short_dir "$_here")"
+    local _dir="$(short_dir "$_here")"
     local _dir_version=$(bump get 2>/dev/null)
     local _dir_vir=
     [[ -n $_dir_version ]] && _dir_vir="($_dir_version)"

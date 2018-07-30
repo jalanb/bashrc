@@ -93,15 +93,15 @@ ltr () {
 
 _ls_command () {
     local _options="-h"
-    if _is_ls_option -G; then
-        _options="$_options -G"
-    elif _is_ls_option --color; then
+    if _is_ls_option --color; then
         _options="$_options --color"
+    elif _is_ls_option -G; then
+        _options="$_options -G"
     fi
-    if _is_ls_option -F; then
-        _options="$_options -F"
-    elif _is_ls_option --classify; then
+    if _is_ls_option --classify; then
         _options="$_options --classify"
+    elif _is_ls_option -F; then
+        _options="$_options -F"
     fi
     _is_ls_option --group-directories-first && _options="$_options --group-directories-first"
     echo "$(_ls_program) $_options"

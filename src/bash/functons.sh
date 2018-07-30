@@ -800,7 +800,7 @@ bump () {
 
 
 cdra () {
-    local _path=$(kpp "$@")
+    local _path=$(py_pp "$@")
     cd $_path
     ranger --choosedir=$HOME/.local/ranger.txt
     local _ranged=
