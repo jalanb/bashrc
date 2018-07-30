@@ -37,6 +37,10 @@ gd () {
     git diff "$@"
 }
 
+gf () {
+    git fetch --all
+}
+
 gi () {
     local __doc__="git in"
     local _storage=/tmp/gi.sh
@@ -196,13 +200,13 @@ gdv () {
 }
 
 gff () {
-    gfa
-    grup
+    gf
+    git fetch --tags
 }
 
-gfa () {
-    git fetch --all
-    git fetch --tags
+gfp () {
+    gff
+    grup
 }
 
 ggi () {
