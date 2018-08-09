@@ -26,11 +26,11 @@ fn () {
 # xxx
 
 fdd () {
-    $(freds -d "$@")
+    $(freds --debug "$@")
 }
 
 fee () {
-    $(freds -e "$@")
+    $(freds --edit "$@")
 }
 
 fff () {
@@ -38,27 +38,23 @@ fff () {
 }
 
 fll () {
-    $(freds -l)
+    $(freds --list)
 }
 
 frr () {
-    $(freds -r "$@")
+    $(freds --remove "$@")
 }
 
 fpp () {
-    $(freds -p "$@")
+    $(freds --python "$@")
 }
 
 fss () {
-    $(freds -s "$@")
-}
-
-fuu () {
-    $(freds -U "$@")
+    $(freds --shell "$@")
 }
 
 vff () {
-    $(freds -e "$@")
+    $(freds --edit "$@")
 }
 
 # _xx
