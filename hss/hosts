@@ -25,8 +25,8 @@ Host wwts
     User jalanb
     IdentityFile ~/.ssh/id_jab
 
-Host build
-    Hostname 172.25.1.219
+Host twkgit20
+    Hostname twkgit20.wwts.com
     User ab13173
     IdentityFile ~/.ssh/alan.brogan-rsa
 
@@ -35,7 +35,17 @@ Host builder
     User builder
     IdentityFile ~/.ssh/wwts/tools/builder.key
 
-Host gitlab build
+Host twkgit30
+    Hostname twkgit30.wwts.com
+    User builder
+    IdentityFile ~/.ssh/wwts/tools/builder.key
+
+Host buildor build3
+    Hostname twkgit30.wwts.com
+    User ab13173
+    IdentityFile ~/.ssh/alan.brogan-rsa
+
+Host gitlab 
     Hostname 172.25.1.219
     User ab13173
     IdentityFile ~/.ssh/alan.brogan-rsa
@@ -83,26 +93,26 @@ Host twkwbe43 eop
 
 Host twkwbe96 wmpdev
     Hostname 172.25.32.96
-    User production
-    IdentityFile ~/.ssh/wwts/wmp/production.key
+    User builder
+    IdentityFile ~/.ssh/wwts/wmp/builder.key
 
-Host twkwbe95 wmptest 
+Host twkwbe95 wmptest
     Hostname 172.25.32.95
-    User production
-    IdentityFile ~/.ssh/wwts/wmp/production.key
+    User builder
+    IdentityFile ~/.ssh/wwts/wmp/builder.key
 
 Host twkwbe34 wmptrain wmpstage
     Hostname 172.25.32.147
-    User production
-    IdentityFile ~/.ssh/wwts/wmp/production.key
+    User builder
+    IdentityFile ~/.ssh/wwts/wmp/builder.key
 
 Host atlwbe35 wmpbeta
     Hostname 172.25.232.149
-    User production
-    IdentityFile ~/.ssh/wwts/wmp/production.key
+    User builder
+    IdentityFile ~/.ssh/wwts/wmp/builder.key
 
 Host twkwbe35 wmp
     Hostname 172.25.32.149
-    User production
-    IdentityFile ~/.ssh/wwts/wmp/production.key
+    User builder
+    IdentityFile ~/.ssh/wwts/wmp/builder.key
 
