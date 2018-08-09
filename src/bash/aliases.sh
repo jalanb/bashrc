@@ -74,9 +74,6 @@ alias z.="zm \*"
 
 # xxx
 
-alias ..l='cl ..'
-alias ...='cdupp'
-
 alias doc="cde ~/Documents"
 
 alias got=git
