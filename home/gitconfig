@@ -33,6 +33,8 @@
     last = log -1 HEAD
     ld = log --pretty=format:'%Cgreen%ci %C(auto)%h %C(blue)%an %Creset %s'
     lf = log --stat --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
+    lp = log -p --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
+    ll = log --oneline --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
     lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
     lh = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' 
     li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s ' 
