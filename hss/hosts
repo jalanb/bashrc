@@ -6,17 +6,17 @@ Host jab.ook
     IdentityFile ~/.ssh/id_jab
 
 Host jab.mini
-    Hostname mini.nalur
+    Hostname mini.local
     User jab
     IdentityFile ~/.ssh/id_jab
 
 Host jab.book
-    Hostname book.nalur
+    Hostname book.local
     User jab
     IdentityFile ~/.ssh/id_jab
 
 Host jab.mac
-    Hostname mac.nalur
+    Hostname mac.local
     User jab
     IdentityFile ~/.ssh/id_jab
 

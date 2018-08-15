@@ -11,15 +11,15 @@ ssa () {
 }
 
 ssi () {
-    sst jab.mini "$@"
+    sst mini.local "$@"
 }
 
 ssb () {
-    sst jab.book "$@"
+    sst book.local "$@"
 }
 
 ssm () {
-    sst jab.mac "$@"
+    sst mac.local "$@"
 }
 
 ssu () {
