@@ -169,7 +169,7 @@ sp () {
 }
 
 vp () {
-    _edit_source ~/bash/prompt.sh "$@"
+    _edit_source ~/bash/prompt.sh +/^prompt_command
 }
 
 if [[ -n "$MYVIMRC" ]]; then
