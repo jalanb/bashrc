@@ -588,7 +588,7 @@ tmp () {
 }
 
 try () {
-    pyth ~/python/testing/try.py "$@"
+    pyth ~/pysyte/testing/try.py "$@"
 }
 
 vaf () {
@@ -1538,10 +1538,10 @@ _edit_source () {
     blank_script $filepath
     filedir=$(dirname_ $filepath)
     if [[ $filedir == "." ]]; then
-        v $filepath
+        v $filepath "$@"
     else
         pushq $filedir
-        v $filepath
+        v $filepath "$@"
         popq
     fi
     if echo $filepath | grep -q alias; then
