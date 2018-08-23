@@ -6,13 +6,25 @@
 # x
 
 f () {
-    local _root=.
-    [[ -d "$1" ]] && _root="$1" && shift
-    find $_root -type f "$@"
+    local _dir=.
+    [[ -d "$1" ]] && _dir="$1" && shift
+    local _type=f
+    [[ $1 =~ ^[dDfF]$ ]] && _type="$1" && shift
+    _type="-type $_type"
+    local _name='*'
+    [[ -n $1 ]] && _name="$1" && shift
+    _name="-name $_name"
+    find $_dir $_type $_name "$@"
 }
 
 # _
 # xx
+
+ff () {
+    local _dir=.
+    [[ -d "$1" ]] && _dir="$1" && shift
+    find $_dir -type f -name "$@"
+}
 
 fl () {
     freds | tr ' ' '\n'
