@@ -164,16 +164,12 @@ _post_prompt () {
     _get_status "$@"
 }
 
-# sp () {
-#     source ~/jab/src/bash/prompt.sh
-# }
-# 
 sp () {
-    source ~/jab/src/bash/prompt.sh
+    source ~/bash/prompt.sh
 }
 
 vp () {
-    _edit_jab src/bash/prompt.sh "$@"
+    _edit_source ~/bash/prompt.sh "$@"
 }
 
 if [[ -n "$MYVIMRC" ]]; then
