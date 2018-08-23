@@ -66,8 +66,6 @@ alias p-="echo $OLDPWD"
 
 alias r.="rm -rvf *"
 
-alias sa="source_aliases ~/jab/src/bash/aliases.sh"
-alias sf=". ~/jab/src/bash/functons.sh"
 alias sr="sudo rm -vrf "
 
 alias z.="zm \*"
@@ -84,9 +82,7 @@ alias jlf="sst jlfieblu jlf.ie"
 
 alias out="to_release"
 
-alias sla=". ~/jab/local/aliases.sh optional"
 alias sle=". ~/jab/local/environ.sh optional"
-alias slf=". ~/jab/local/functons.sh optional"
 alias slp=". ~/jab/local/prompt optional"
 alias spe=". ~/jab/environ.d/python.sh"
 

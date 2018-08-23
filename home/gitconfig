@@ -9,7 +9,6 @@
 [pager]
     diff =
 [core]
-    editor = vim
     excludesfile = ~/.gitignore_global
     trustctime = false
 [alias]
