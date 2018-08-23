@@ -1,24 +1,21 @@
-"""Set up the dotjab project"""
+"""Set up the jab project"""
 
 
 from setuptools import setup
 
 
-import dotjab
-
-
-name = 'dotjab'
+import jab
 
 
 setup(
-    name=name,
-    packages=[name],
-    version=dotjab.__version__,
-    url='https://github.com/jalanb/dotjab/src/python/dotjab',
+    name=jab.name,
+    packages=[jab.name],
+    version=jab.__version__,
+    url='https://github.com/jalanb/jab/tree/master/src/python/jab',
     license='MIT License',
     author='J Alan Brogan',
     author_email='github@al-got-rhythm.net',
-    description=dotjab.__doc__,
+    description=jab.__doc__,
     platforms='any',
     classifiers=[
         'Programming Language :: Python :: 2.7',

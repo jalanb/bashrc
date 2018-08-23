@@ -55,7 +55,6 @@ export_symbols () {
     export EX_BAD=1
     export EXITSTATUS="$?"
     export FIGNORE=.pyc:.swp:~:.o
-    export EMAIL="dotjab@al-got-rhythm.net"
     export RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
     export LOG_LINES_ON_CD_GIT_DIR=7
     if [[ -x /usr/local/bin/which ]]; then

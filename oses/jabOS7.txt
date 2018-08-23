@@ -26,7 +26,7 @@ sudo rm -rf ~/Downloads/*
 
 cd ~/hub
 
-# If you are reading this then dotjab ($GITHUB/jalanb/dotjab) is already cloned
+# If you are reading this then dotjab ($GITHUB/jalanb/jab) is already cloned
 git clone $GITHUB/jalanb/dotsite
 git clone $GITHUB/jalanb/what
 git clone $GITHUB/jalanb/kd

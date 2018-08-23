@@ -11,7 +11,7 @@ run_these_before_running_this_script () {
     git config --global user.email github@al-got-rhythm.net
     mkdir -p ~/hub
     cd ~/hub
-    git clone $GITHUB/jalanb/dotjab
+    git clone $GITHUB/jalanb/jab
 }
 
 checkouts () {

@@ -12,7 +12,7 @@
 #     hence the name of this file
 # TODO: Generalise (currently based on layout of this repo)
 #
-# See also https://github.com/jalanb/dotjab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec
+# See also https://github.com/jalanb/jab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec
 
 vim_clone_to_home () {
     source="$clone_link"/$1
@@ -90,7 +90,7 @@ renew_clone_link () {
         echo $script_dir/.git is not a directory
         return 2
     fi
-          
+
     # clone_dir == ~/.../jab
           clone_link=~/$(basename $clone_dir)       # ~/jab
     local script_name=$(basename $script_file)      # .link

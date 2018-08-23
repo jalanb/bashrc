@@ -1,0 +1,5 @@
+The jab package
+===============
+
+    >>> import jab
+    >>> assert jab.name == 'jab'

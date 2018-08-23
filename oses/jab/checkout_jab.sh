@@ -7,7 +7,7 @@
 checkout () {
     [[ -d ~/jab ]] && return 1
     . ~/jab/src/bash/github.sh
-    git clone $GITHUB/jalanb/dotjab ~/jab
+    git clone $GITHUB/jalanb/jab ~/jab
 }
 
 main () {
