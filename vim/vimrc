@@ -106,14 +106,14 @@ cnoremap w!! w !sudo tee %
 "noremap zt 
 "noremap zy 
  noremap za z<cr>
- noremap zs jzckza
+ noremap zs jzck
 "noremap zd 
 "noremap zf 
 "noremap zh 
 "noremap zj 
 "noremap zk 
 "noremap zl 
- noremap zx jzOza
+ noremap zx jzO
  noremap zn nzMzvzz
  noremap zN NzMzvzz
  noremap z/ /<cr>zMzvzz
