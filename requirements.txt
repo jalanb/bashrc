@@ -1,6 +1,5 @@
 bumpversion
 coverage>=4.3.4
-dotsite>=0.3.7
 ipython==5.3.0
 nose-progressive>=1.5.0
 nose-pudb
@@ -10,6 +9,7 @@ pinocchio>=0.1
 pprintpp
 pudb
 pym
+pysyte
 pytest
 sh
 virtualenv
