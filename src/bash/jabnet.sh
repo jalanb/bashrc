@@ -25,11 +25,9 @@ ssm () {
 ssu () {
     local _server=$1
     shift
-    if [[ -z "$@" ]]; then
-        ssh -tq $_server "sudo su -"
-    else
-        ssh -tq $_server "sudo $@"
-    fi
+    local _sudo="sudo $@"
+    [[ -z "$@" ]] && _sudo="sudo su -"
+    ssh -tq $_server "$_sudo" || ssh -t $_server "$_sudo"
 }
 
 ssga () {

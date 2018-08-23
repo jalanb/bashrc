@@ -264,7 +264,7 @@ glg () {
 }
 
 gll () {
-    glf "$@"
+    git ll "$@"
 }
 
 gln () {
