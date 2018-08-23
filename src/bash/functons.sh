@@ -211,10 +211,6 @@ popq () {
     popd >/dev/null 2>&1
 }
 
-ra () {
-    cdra "$@"
-}
-
 ru () {
     # do da root root route, do da ru !
     if [[ -z "$@" ]]; then
@@ -251,15 +247,15 @@ tt () {
 }
 
 va () {
-    _edit_jab src/bash/aliases.sh
+    _edit_source $(aliases) "$@"
 }
 
 ve () {
-    _edit_jab environ.d/jab.sh "$@"
+    _edit_source ~/jab/environ.d/jab.sh "$@"
 }
 
 vf () {
-    _edit_jab src/bash/functons.sh "$@"
+    _edit_source $(functons) "$@"
 }
 
 vj () {
@@ -291,7 +287,7 @@ yt () {
     # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
     ( cd ~/Downloads/youtube.dl
     youtube-dl $_options "$@"
-    ll -tr | tail -n 3
+    ll *.mp3| tail -n 3
     )
 }
 
@@ -365,13 +361,10 @@ hub () {
     [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
     [[ $1 =~ http.*git ]] && _remote="$1" && shift
     local _destination=
-    if [[ -n $1 ]]; then
-        _destination=$(kp "$1" "$@")
-        shift
-        if [[ -d "$_destination" ]]; then
-            _directory=$_destination
-            cde "$_directory"
-            _directory=
+    if [[ -n "$@" ]]; then
+        if cde_ok "$@"; then
+            cde "$@"
+            return
         fi
     fi
     if [[ $_remote =~ http ]]; then
@@ -599,9 +592,9 @@ try () {
 }
 
 vaf () {
-    vim -p ~/bash/aliases.sh ~/jab/src/bash/functons.sh
-    source_path ~/bash/aliases.sh
-    source_path ~/bash/functons.sh
+    vim -p $(aliases) $(functons)
+    sa
+    sf
 }
 
 vat () {
@@ -622,7 +615,7 @@ vfr () {
 }
 
 vgf () {
-    _edit_jab src/bash/git/functons.sh "$@"
+    _edit_source ~/bash/git/functons.sh "$@"
 }
 
 vla () {
@@ -642,7 +635,7 @@ vlo () {
 }
 
 vpe () {
-    _edit_jab environ.d/python
+    _edit_source ~/jab/environ.d/python
 }
 
 vpr () {
@@ -800,17 +793,13 @@ bump () {
 
 
 cdra () {
-    local _path=$(py_pp "$@")
+    local _path=$(py_cp "$@")
     cd $_path
     ranger --choosedir=$HOME/.local/ranger.txt
     local _ranged=
     [[ -f $HOME/.local/ranger.txt ]] && _ranged=$(cat $HOME/.local/ranger.txt)
-    [[ -z $_ranged ]] && return
-    for word in "$@"; do
-        if [[ $word =~ "[-]*cd" ]]; then
-            cd $_ranged
-        fi
-    done
+    [[ -d $_ranged ]] || return
+    cd $_ranged
 }
 
 dots () {
@@ -1181,6 +1170,12 @@ run_as () {
 
 # xxxxxxx
 
+aliases () {
+    local _local=
+    [[ $1 == -l ]] && _local="/local"
+    echo "~/bash${_local}/aliases.sh"
+}
+
 has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | hd1) ]]
 }
@@ -1209,6 +1204,12 @@ umports () {
 }
 
 # xxxxxxxx
+
+functons () {
+    local _local=
+    [[ $1 == -l ]] && _local="/local"
+    echo "$HOME/bash${_local}/functons.sh"
+}
 
 jostname () {
     echo ${HOSTNAME:-$(hostname -s)}
@@ -1548,13 +1549,6 @@ _edit_source () {
     else
         source_path $filepath "$@"
     fi
-}
-
-_edit_jab () {
-    [[ -d "~/jab" ]] || mkdir -p ~/jab
-    local filepath=~/jab/$1
-    shift
-    _edit_source $filepath "$@"
 }
 
 _edit_locals () {
