@@ -6,28 +6,6 @@ Welcome_to $BASH_SOURCE
 export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
-export PROMPT_COLOUR=none
-if [[ "$1" == "green" ]]; then
-    export PROMPT_COLOUR="$GREEN"
-    export PROMPT_OPPOSITE_COLOUR="$MAGENTA"
-    export HIGH_COLOUR="$RED"
-    export HIGH_OPPOSITE_COLOUR="$CYAN"
-    export LOW_COLOUR="$LIGHT_BLUE"
-    export LOW_OPPOSITE_COLOUR="$YELLOW"
-elif [[ "$1" == "red" ]]; then
-    export PROMPT_COLOUR="$RED"
-    export PROMPT_OPPOSITE_COLOUR="$CYAN"
-elif [[ "$1" == "blue" ]]; then
-    export PROMPT_COLOUR="$LIGHT_BLUE"
-    export PROMPT_OPPOSITE_COLOUR="$YELLOW"
-else
-    export PROMPT_COLOUR="$GREEN"
-    export PROMPT_OPPOSITE_COLOUR="$MAGENTA"
-    export HIGH_COLOUR="$RED"
-    export HIGH_OPPOSITE_COLOUR="$CYAN"
-    export LOW_COLOUR="$LIGHT_BLUE"
-    export LOW_OPPOSITE_COLOUR="$YELLOW"
-fi
 
 get_git_branch () {
     git branch > /dev/null 2>&1 || return 1
@@ -39,6 +17,8 @@ get_git_branch () {
 get_git_status() {
     local _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     [[ -z $_branch ]] && return 1
+    local _branch_at=
+    [[ $1 =~ [0-9] ]] && _branch_at="$_branch/$1" && shift
     local _modified=$(git status --porcelain | wc -l | tr -d ' ')
     local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
     local _remote_branch="$(\git config --get branch.${_branch}.merge)"
@@ -47,18 +27,18 @@ get_git_status() {
     local _pulls=$(git rev-list --count HEAD..${_remote_branch/refs\/heads/refs\/remotes\/$remote} 2>/dev/null)
     [[ -z $_pulls ]] && _pulls=?
     if [[ $_modified == 0 && $_pushes == 0 && $_pulls == 0 ]]; then
-        echo $_branch
+        echo $_branch_at 
         return 0
     fi
     local _git_branch=
     if [[ $_pulls == 0 ]]; then
         if [[ $_pushes == 0 ]]; then
-            _git_branch="$_branch $_modified"
+            _git_branch="$_branch_at $_modified"
         else
-            _git_branch="$_branch $_modified+$_pushes"
+            _git_branch="$_branch_at $_modified+$_pushes"
         fi
     else
-        _git_branch="$_branch $_modified+$pushes-$_pulls"
+        _git_branch="$_branch_at $_modified+$pushes-$_pulls"
     fi
     echo $_git_branch
     return 0
@@ -112,11 +92,11 @@ _colour_prompt () {
     local _where="${HOSTNAME:-$(hostname -s)}"
     local _here=$PWD
     local _dir="$(short_dir "$_here")"
-    local _dir_version=$(bump get 2>/dev/null)
-    local _dir_vir=
-    [[ -n $_dir_version ]] && _dir_vir="($_dir_version)"
+    local _got_bump=$(bump get 2>/dev/null)
+    local _bump_version=
+    [[ -n $_got_bump ]] && _bump_version="$_got_bump"
     local _branch=$(get_git_branch)
-    local _git=$(get_git_status)
+    local _git=$(get_git_status $_bump_version)
     [[ -n $_git ]] && _branch="($_git)"
     local _py_vers=$(pyth --version 2>&1 | sed -e s/Python.//)
     local _venv=$(env | g VIRTUAL_ENV= | sed -e "s/[^=]*=//")
@@ -131,7 +111,7 @@ _colour_prompt () {
     local _colour_name=$(_colour green $_name)
     local _colour_where=$(_colour green $_where)
     local _colour_user="${_colour_name}@$_colour_where"
-    local _colour_dir=$(_colour l_blue "$_dir $_dir_vir")
+    local _colour_dir=$(_colour l_blue "$_dir ")
     if [[ -n $_branch ]]; then
         local _colour_branch=$(_colour l_blue "$_branch")
         _colour_dir="$_colour_dir,$_colour_branch"
@@ -143,7 +123,7 @@ _colour_prompt () {
         printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python\n$ "
     else
         local _colour_python=$(_colour l_red "${_py_vers}")
-        printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_python $_colour_dir\n$ "
+        printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python \n$ "
     fi
 }
 
@@ -169,8 +149,21 @@ sp () {
 }
 
 vp () {
-    _edit_source ~/bash/prompt.sh +/^prompt_command
+    _edit_source ~/bash/prompt.sh +/^_colour_prompt
 }
+
+export_prompt_colour () {
+    local _prompt_colour=
+    case $1 in
+        green ) _prompt_colour="$GREEN";;
+        red ) _prompt_colour="$RED";;
+        blue ) _prompt_colour="$LIGHT_BLUE";;
+    esac
+    [[ -n $_prompt_colour ]] && shift || _prompt_colour="$GREEN"
+    export PROMPT_COLOUR=$_prompt_colour
+}
+
+export_prompt_colour "$@"
 
 if [[ -n "$MYVIMRC" ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
