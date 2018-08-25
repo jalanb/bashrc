@@ -19,7 +19,7 @@ alias HG=$(which hg) # With apologies, but don't really use it
 
 hg () {
     local __doc__="grep in history"
-    _strip_history | grep --color "$@"
+    _strip_history | grep -v '^hg ' | grep --color "$@"
 }
 
 h1 () {
