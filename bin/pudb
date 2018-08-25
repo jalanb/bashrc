@@ -4,18 +4,16 @@
 
 set -e
 
-_find_python () {
-    MY_PATH=~/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
-    [[ -n $VIRTUAL_ENV ]] && MY_PATH=$VIRTUAL_ENV/bin:$MY_PATH
-    PYTHON_TWO_SEVEN=$(PATH=$MY_PATH which python 2>/dev/null)
-    [[ -x "$PYTHON_TWO_SEVEN" ]] || exit 1
-}
-
 main () {
+    local _my_path=~/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
+    [[ -n $VIRTUAL_ENV ]] && _my_path=$VIRTUAL_ENV/bin:$_my_path
+    local _python=$(PATH=$_my_path which python 2>/dev/null)
+    [[ -x "$_python" ]] || exit 1
     local _pudb=$(PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin which pudb)
+    local _headline=$(head -n1 $_pudb)
+    [[ $_headline =~ python ]] && _python=
     export TERM=xterm-256color
-    $PYTHON_TWO_SEVEN $_pudb "$@"
+    $_python $_pudb "$@"
 }
 
-_find_python
 main "$@"
