@@ -12,5 +12,6 @@ pym
 pysyte
 pytest
 sh
+tldr
 virtualenv
 virtualenvwrapper
