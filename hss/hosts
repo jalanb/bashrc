@@ -67,7 +67,7 @@ Host default
   UserKnownHostsFile /dev/null
 
 Host twkwbe40 eopdev
-    Hostname 172.25.3.110
+    Hostname 172.25.32.110
     User builder
     IdentityFile ~/.ssh/wwts/eop/builder.key
 
@@ -77,7 +77,7 @@ Host twkwbe41 eoptest
     IdentityFile ~/.ssh/wwts/eop/builder.key
 
 Host twkwbe42 eopstage
-    Hostname 172.25.3.112
+    Hostname 172.25.32.112
     User builder
     IdentityFile ~/.ssh/wwts/eop/builder.key
 
