@@ -1087,6 +1087,10 @@ has_py () {
     has_ext py "$@"
 }
 
+howdoi () {
+    /usr/local/bin/howdoi -c -a "$@"
+}
+
 _lesser () {
     less -R "$@"
 }
