@@ -18,7 +18,7 @@ get_git_status() {
     local _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     [[ -z $_branch ]] && return 1
     local _branch_at=
-    [[ $1 =~ [0-9] ]] && _branch_at="$_branch/$1" && shift
+    [[ $1 =~ [0-9] ]] && _branch_at="$_branch v$1" && shift
     local _modified=$(git status --porcelain | wc -l | tr -d ' ')
     local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
     local _remote_branch="$(\git config --get branch.${_branch}.merge)"
@@ -42,18 +42,6 @@ get_git_status() {
     fi
     echo $_git_branch
     return 0
-}
-
-_get_status () {
-    local _status=0
-    if [[ -z "$1" ]]; then
-        _status=$(_colour red "777 $1")
-    elif [[ $1 == 0 ]]; then
-        _status=$(_colour green "$1")
-    else
-        _status=$(_colour red "$1")
-    fi
-    export STATUS=$_status
 }
 
 _colour () {
@@ -111,10 +99,10 @@ _colour_prompt () {
     local _colour_name=$(_colour green $_name)
     local _colour_where=$(_colour green $_where)
     local _colour_user="${_colour_name}@$_colour_where"
-    local _colour_dir=$(_colour l_blue "$_dir ")
+    local _colour_dir=$(_colour l_blue "$_dir")
     if [[ -n $_branch ]]; then
         local _colour_branch=$(_colour l_blue "$_branch")
-        _colour_dir="$_colour_dir,$_colour_branch"
+        _colour_dir="$_colour_dir, $_colour_branch"
     fi
     if [[ -n $_py_venv ]]; then
         local _colour_version=$(_colour l_red "${_py_vers}")
@@ -125,23 +113,6 @@ _colour_prompt () {
         local _colour_python=$(_colour l_red "${_py_vers}")
         printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python \n$ "
     fi
-}
-
-_pre_prompt () {
-    console_whoami
-    (what -q py_cd && py_cd --add . >/dev/null 2>&1)
-    history -a
-}
-
-prompt_command () {
-    local _status=$1
-    _pre_prompt
-    export PS1=$(_colour_prompt $_status)
-    _post_prompt "$@"
-}
-
-_post_prompt () {
-    _get_status "$@"
 }
 
 sp () {
@@ -159,22 +130,41 @@ export_prompt_colour () {
         red ) _prompt_colour="$RED";;
         blue ) _prompt_colour="$LIGHT_BLUE";;
     esac
-    [[ -n $_prompt_colour ]] && shift || _prompt_colour="$GREEN"
+    [[ -n $_prompt_colour ]] && shift || _prompt_colour=None
     export PROMPT_COLOUR=$_prompt_colour
 }
 
-export_prompt_colour "$@"
+export_status () {
+    local _one=$1; shift
+    local _status=
+    [[ -z "$_one" ]] && _one="-z \$?"
+    local _status_color=red
+    [[ $_one == 0 ]] && _status_color=green
+    _status=$(_colour $_status_color $_one)
+    export STATUS=$_status
+}
 
-if [[ -n "$MYVIMRC" ]]; then
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
-    export PROMPT_COMMAND='prompt_command $?'
-elif [[ "$PROMPT_COLOUR" == "none" ]]; then
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
-else
-    export PROMPT_COMMAND='prompt_command $?'
-fi
-export PS2="... "  # Continuation line
-export PS3="#?"    # Prompt for select command
-export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
-                                                # Thanks to pyenv for the (ahem) prompt
+_pre_pses () {
+    console_whoami
+    (what -q py_cd && py_cd --add . >/dev/null 2>&1)
+    history -a
+}
+
+_post_pses () {
+    export_status "$@"
+}
+
+export_pses () {
+    local _status=$1
+    _pre_pses
+    export PS1=$(_colour_prompt $_status)
+    export PS2="... "  # Continuation line
+    export PS3="#?"    # Prompt for select command
+    export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
+                                                    # Thanks to pyenv for the (ahem) prompt
+    _post_pses "$@"
+}
+
+export_prompt_colour "$@"
+[[ "$PROMPT_COLOUR" == "None" ]] && export PS1="\$? [\u@\h:\$PWD]\n$ " || export PROMPT_COMMAND='export_pses $?'
 Bye_from $BASH_SOURCE
