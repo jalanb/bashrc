@@ -746,12 +746,11 @@ git_root () {
     [[ -d "$_there" ]] || echo "Not a dir '$_there'"
     [[ -d "$_there" ]] || return 1
     (cd "$_there"; git rev-parse --git-dir) >/dev/null 2>&1 || return 1
-    local _git_dir=$(cd "$_there"; git rev-parse --git-dir . > /dev/null 2>&1)
-    local _project_dir=$(dirname_ _git_dir)
+    local _project_dir=$(cd "$_there"; git rev-parse --show-toplevel | head -n 1)
     [[ -z $_project_dir ]] && _project_dir=.
-    [[ -d $_project_dir ]] || echo "Not a dir: $_project_dir"
+    [[ -d $_project_dir ]] || echo "Not a dir: '$_project_dir'"
     local _root_dir=$(readlink -f $_project_dir)
-    [[ -d $_root_dir ]] || echo "$_root_dir not a dir" >&2
+    [[ -d $_root_dir ]] || echo "Not a dir: '$_root_dir'"
     [[ -d $_root_dir ]] || return 1
     [[ $STDOUT == off ]] || echo $_root_dir
     return 0
