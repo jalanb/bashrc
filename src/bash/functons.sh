@@ -99,26 +99,6 @@ fa () {
     fv "$@"
 }
 
-fc () {
-    shift_dir "$@" && shift
-    name=$1
-    shift
-    for path in $(find $dir -name $name -print)
-    do
-        echo cd $path
-        [[ -f "$path" ]] && builtin cd $(dirname_ $path) || builtin cd $path
-    done
-}
-
-fd () {
-    shift_dir "$@" && shift
-    if [[ -n $1 ]]; then
-        name=$1
-        shift
-    fi
-    find $dir -type d -name $name "$@"
-}
-
 fv () {
     shift_dir "$@" && shift
     if [[ -z "$@" ]]; then

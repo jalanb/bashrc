@@ -64,8 +64,7 @@ vh () {
 
 hgt () {
     local __doc__="grep and tail history"
-    local _grep="$1"; shift
-    th g $_grep "$@"
+    hg "$@" | tail
 }
 
 Bye_from $BASH_SOURCE
