@@ -56,6 +56,10 @@ gl () {
     git log "$@"
 }
 
+gm () {
+    git merge --no-ff --no-edit "$@"
+}
+
 go () {
     local __doc__="git checkout"
     local _stashed=
