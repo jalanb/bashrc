@@ -1157,7 +1157,7 @@ run_as () {
 aliases () {
     local _local=
     [[ $1 == -l ]] && _local="/local"
-    echo "~/bash${_local}/aliases.sh"
+    echo "$HOME/bash${_local}/aliases.sh"
 }
 
 has_ext () {

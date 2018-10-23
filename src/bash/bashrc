@@ -58,6 +58,7 @@ _local () {
 }
 
 main () {
+    [[ $- =~ i ]] || return
     _set_path
     _bashrc $_home_user
     _local

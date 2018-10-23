@@ -141,6 +141,10 @@ gba () {
     GIT_BRANCH_OPTION=-a gb "$@"
 }
 
+gbb () {
+    git_branch "$@"
+}
+
 gbr () {
     GIT_BRANCH_OPTION=-r gb "$@"
 }
@@ -148,10 +152,6 @@ gbr () {
 gbt () {
     gb "$@"
     gt "$@"
-}
-
-gbb () {
-    git_branch "$@"
 }
 
 gbd () {
