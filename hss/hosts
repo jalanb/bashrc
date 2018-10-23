@@ -20,48 +20,42 @@ Host jab.mac
     User jab
     IdentityFile ~/.ssh/id_jab
 
-Host wwts
-    Hostname 192.168.130.119
-    User jalanb
-    IdentityFile ~/.ssh/id_jab
-
-Host twkgit20
-    Hostname twkgit20.wwts.com
-    User ab13173
-    IdentityFile ~/.ssh/alan.brogan-rsa
-
-Host builder
-    Hostname twkgit20.wwts.com
-    User builder
-    IdentityFile ~/.ssh/wwts/tools/builder.key
-
-Host twkgit30
-    Hostname twkgit30.wwts.com
-    User builder
-    IdentityFile ~/.ssh/wwts/tools/builder.key
-
-Host buildor build3
-    Hostname twkgit30.wwts.com
-    User ab13173
-    IdentityFile ~/.ssh/alan.brogan-rsa
-
-Host gitlab 
-    Hostname 172.25.1.219
-    User ab13173
-    IdentityFile ~/.ssh/alan.brogan-rsa
-
 Host wwits
     Hostname 172.25.3.126
     User ab13173
     Port 22
 
+Host tools
+    Hostname 172.25.1.219
+    User jalanb
+    IdentityFile ~/.ssh/wwts/jalanb.key
 
+Host tooltest
+    Hostname 172.25.1.218
+    User ab13173
+    IdentityFile ~/.ssh/wwts/ab13173.key
+
+Host builder
+    Hostname 172.25.1.218
+    User builder
+    IdentityFile ~/.ssh/wwts/tools/builder.key
+
+Host baker
+    Hostname 172.25.1.219
+    User builder
+    IdentityFile ~/.ssh/wwts/tools/builder.key
+
+Host toolstoo
+    Hostname gitlab
+    Hostname tools.wwts.com
+    
 Host twkdbs98.ad.wwts.com
     Hostname 172.25.1.128
 
 Host default
-  Hostname 192.168.111.222
+  HostName 127.0.0.1
   User vagrant
+  Port 2222
   IdentityFile ~/.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
@@ -115,4 +109,3 @@ Host twkwbe35 wmp
     Hostname 172.25.32.149
     User builder
     IdentityFile ~/.ssh/wwts/wmp/builder.key
-

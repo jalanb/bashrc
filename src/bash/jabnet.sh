@@ -43,6 +43,11 @@ ssw () {
     ssu ab13173@${_server}.wwts.com "$@"
 }
 
+ssx () {
+    local _server=$1; shift
+    ssu ${_server} "$@"
+}
+
 # xxxx
 
 _ssj () {

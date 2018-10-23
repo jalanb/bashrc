@@ -17,6 +17,7 @@ hosts () {
 vhosts () {
     vim -p \
         ~/jab/hss/hosts \
+        ~/.git-credentials \
         ~/jab/src/bash/jabnet.sh \
         /etc/hosts \
         "$@" \
