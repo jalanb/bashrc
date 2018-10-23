@@ -1,0 +1,5 @@
+The fizzbuzz module
+==================
+
+    >>> import fizzbuzz
+    >>> assert fizzbuzz.__doc__.splitlines()[0] == 'Python version of fizzbuzz'
