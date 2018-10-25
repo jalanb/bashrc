@@ -36,6 +36,13 @@ py () {
 
 # xxx
 
+pii () {
+    local _ipython=$(which ipython)
+    [[ -n $IPYTHON ]] && _ipython=$IPYTHON
+    local _executable=$_ipython
+    EXECUTABLE_PY=$_executable pi "$@"
+}
+
 pir () {
     pipr "$@"
 }
@@ -62,12 +69,13 @@ pipu () {
 
 pith () {
     set -x
-    local __doc__="""Run a python command"""
-    local _executable=pip3
+    local __doc__="""Run a pythonic command [pip]"""
+    local _executable=pip
     if [[ $1 == 2 ]]; then
         _executable=pip2
         shift
     fi
+    [[ -n $EXECUTABLE_PY ]] && _executable=$EXECUTABLE_PY
     pypath $_executable "$@"
     set +x
 }
@@ -104,6 +112,7 @@ pypath () {
     local _venv_bin="${VIRTUAL_ENV:-xxx}"/bin
     [[ -d $_venv_bin ]] && _path="$_venv_bin:$_path"
     local _executable="$1"; shift
+    [[ -n $EXECUTABLE_PY ]] && _executable=$EXECUTABLE_PY
     if [[ $_executable =~ python[2-9] ]]; then
         (PATH=$_path $_executable "$@")
     else

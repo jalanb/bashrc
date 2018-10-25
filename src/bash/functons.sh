@@ -492,7 +492,7 @@ num () {
 }
 
 pi2 () {
-    IPYTHON="/usr/local/bin/python2 /usr/local/bin/ipython2"; pii "$@"
+    IPYTHON="/usr/local/bin/python2 /usr/local/bin/ipython2"; pii 2 "$@"
 }
 alias pi1=pi2 # I keept typo-ing on that
 
