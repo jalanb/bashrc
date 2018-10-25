@@ -9,8 +9,15 @@ import os
 import re
 import sys
 
-import pysyte
 import requests
+
+try:
+    import pysyte
+except ImportError as e:
+    try:
+        import dotsite as pysyte
+    except ImportError:
+        sys.stderr.write('pip install pysyte # please')
 
 try:
     from pathlib import Path
