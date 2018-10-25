@@ -8,7 +8,7 @@
 # }
 # 
 v () {
-    # sai Give, Vim, Parser, keys &
+    sai Give, Vim, Parser, keys &
     vim -p "$@"
 }
 

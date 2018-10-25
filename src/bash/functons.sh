@@ -532,8 +532,13 @@ sai () {
             _voices="-v $_two"
         fi
     fi
+    local _message="$@"
+    local _dir=
+    [[ -d $_message ]] && _dir=$_message && _message=
+    [[ -d "$1" ]] && _dir="$1" && shift && _message="$@"
+    [[ -d $_dir ]] && _dir=$(short_dir $_dir) || _dir=
     # From https://stackoverflow.com/a/31189843/500942
-    ( { { /usr/bin/say $_voices "$@" >&2; } 2>&3- & } 3>&2 2>/dev/null )
+    ( { { /usr/bin/say $_voices $_dir $_message >&2; } 2>&3- & } 3>&2 2>/dev/null )
 }
 
 sib () {
