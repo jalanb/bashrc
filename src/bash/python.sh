@@ -40,7 +40,7 @@ pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
     local _executable=$_ipython
-    EXECUTABLE_PY=$_executable pi "$@"
+    EXECUTABLE_PY=$_executable pypath "$@"
 }
 
 pir () {

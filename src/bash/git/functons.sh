@@ -254,17 +254,11 @@ gla () {
 }
 
 glf () {
-    git lf "$@"
+    GIT_LOG_ALIAS=lf GIT_LOG_LINES=$(( LINES / 2 )) git_on_lines "$@"
 }
 
 glg () {
-    gs
-    local _number_of_commits=7
-    if [[ $1 =~ ^-?[0-9]+$ ]]; then
-        _number_of_commits=$1
-        shift
-    fi
-    GIT_LOG_LINES=$_number_of_commits git_on_screen lg -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+    GIT_LOG_ALIAS=lg GIT_LOG_LINES=$_number_of_commits git_on_lines "$@"
 }
 
 gll () {
@@ -825,6 +819,18 @@ _run_storage () {
 }
 
 # xxxxxxxxxxxxx
+
+git_on_lines () {
+    local _number_of_commits=7
+    if [[ $1 =~ ^-?[0-9]+$ ]]; then
+        _number_of_commits=$1
+        shift
+    fi
+    local _log_alias=lg
+    [[ -n $GIT_LOG_ALIAS ]] && _log_alias=$GIT_LOG_ALIAS
+    git status --short
+    GIT_LOG_LINES=$(( LINES / 2 )) git_on_screen $_log_alias -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+}
 
 git_on_screen () {
     local cmd=$1; shift
