@@ -18,13 +18,13 @@ Welcome_to $BASH_SOURCE
 # Other environment variables:
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
-. ~/hub/what/what.sh
+. ~/hub/whyp/whyp.sh
 . ~/jab/local/environ.sh optional
 
 pt () {
     local __doc__="function to run https://github.com/jonathanslenders/ptpython, if installed"
     local _ptpython=
-    what -q ptpython && _ptpython=$(what -f ptpython)
+    whyp -q ptpython && _ptpython=$(whyp -f ptpython)
     [[ -z $_ptpython && -e $PTPYTHON ]] && _ptpython=$PTPYTHON
     [[ $1 != hub && -z $_ptpython && -d ~/hub/ptpython ]] && (cd ~/hub/pypython; python setup.py install) && pt hub
     if [[ $1 == -h || $1 == --help ]]; then

@@ -37,7 +37,7 @@ alias 11="cde ~/hub/craas"
 alias 12="cde ~/hub/kd"
 alias 13="cde ~/hub/pym"
 alias 14="cde ~/hub/pysyte"
-alias 15="cde ~/hub/what"
+alias 15="cde ~/hub/whyp"
 
 alias 20="cd ~/bash/.."
 alias 22="cde ~/bash/keyboard"

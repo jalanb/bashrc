@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-source ~/hub/what/what.sh
+source ~/hub/whyp/whyp.sh
 
 # _
 # x

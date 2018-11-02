@@ -11,7 +11,7 @@ Welcome_to $BASH_SOURCE
 # This list is quite long enough, we accept no other aliases
 #   Thanks anyway
 #
-# (Except we will hang on to '.' (which is set by what.sh))
+# (Except we will hang on to '.' (which is set by whype.sh))
 
 _keep_dot=$(alias . | sed -e "s/.*=//" -e "s/'//g")  # parses out any alias of '.'
 unalias -a

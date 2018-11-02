@@ -56,7 +56,7 @@ run_bashrc () {
 Welcome_to $BASH_SOURCE
     export PATH=/usr/local/bin:/usr/bin:/bin
     export SHELL=/bin/bash
-    . ~/hub/what/what.sh
+    . ~/hub/whyp/whyp.sh
     builtin cd && . .bashrc > bashrc.log 2>&1 && builtin cd > ~/bash/fd/1 2> ~/bash/fd/2
     if ! is_running autocutsel
     then

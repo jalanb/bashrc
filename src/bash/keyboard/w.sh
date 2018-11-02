@@ -25,17 +25,17 @@ Welcome_to $BASH_SOURCE
 # # xxxxxx
 # 
 # what_ww () {
-# . ~/hub/what/what.sh
-#     local __doc__='what(all arguments (whether they like it or not))'
+# . ~/hub/whyp/whyp.sh
+#     local __doc__='whyp(all arguments (whether they like it or not))'
 #     PASS=0
 #     FAIL=1
 #     [[ -z "$@" ]] && return $FAIL
-#     [[ $1 == -q ]] && return what "$@"
+#     [[ $1 == -q ]] && return whyp "$@"
 #     if [[ $(type -t $1) == "file" ]]; then
 #         what_file $1
 #         return $PASS
 #     fi
-#     what -v "$@" && return $PASS
+#     whype -v "$@" && return $PASS
 #     echo $1 not found
 #     what_ww ${1:0:${#1}-1} && return $PASS
 #     return $FAIL
@@ -44,7 +44,7 @@ Welcome_to $BASH_SOURCE
 # # xxxxxxx
 # 
 # what_w () {
-# . ~/hub/what/what.sh
+# . ~/hub/whyp/whyp.sh
 #     local __doc__='Show whether the first argument is a text file, alias or function'
 #     if is_existing_alias $1; then
 #         alias $1
@@ -64,7 +64,7 @@ Welcome_to $BASH_SOURCE
 # # xxxxxxxx
 # 
 # what_www () {
-#     . ~/hub/what/what.sh
+#     . ~/hub/whyp/whyp.sh
 #     (DEBUGGING=www;
 #     local _command=$1; shift
 #     ww $_command;

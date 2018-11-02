@@ -681,7 +681,7 @@ wvp () {
 }
 
 wvw () {
-    vim -p ~/hub/what/what.sh "$@"
+    vim -p ~/hub/whyp/whyp.sh "$@"
 }
 
 xib () {
@@ -707,7 +707,7 @@ bash4 () {
 
 bool () {
     [[ -z $* || $1 =~ ^0*$ ]] && echo False && return 1
-    if what -q "$1"; then
+    if whype -q "$1"; then
         if [[ $1 == "[[" ]]; then
             eval "$@"
             local _result=$?
@@ -916,7 +916,7 @@ build () {
 
 detab () {
     local _expand=$(which expand)
-    what -q gexpand && _expand=$(what -f gexpand)
+    whype -q gexpand && _expand=$(whyp -f gexpand)
     if [[ -f "$1" ]]; then
         if grep -Pq "^\s*\t\s*[^ \t]" $1; then
             $_expand -i --tabs=4 $1 > /tmp/txt
@@ -1122,9 +1122,65 @@ _mkenv () {
     rr $_file
 }
 
+online_all () {
+    online www.google.com
+    online www.wwts.com
+    online tools.wwts.com
+    online wmp.wwts.com
+    online eop.wwts.com
+    online tooltest.wwts.com
+}
+
+offline_all () {
+    offline www.google.com
+    offline www.wwts.com
+    offline tools.wwts.com 172.25.1.218
+    offline wmp.wwts.com
+    offline eop.wwts.com
+    offline tooltest.wwts.com 172.25.1.219
+    return 0
+}
+
+
+is_online () {
+    online_destination "$@" >/dev/null 2>&1 && return 0 
+    return 1
+}
+
+show_line () {
+    local _prefix=$1; shift
+    local _ip=
+    local _server=
+    local _suffix=
+    if [[ -n $2 ]]; then
+        _ip="$2"
+        _suffix=", $_ip"
+        _server=$1
+    fi
+    [[ -n $1 ]] && _server=$1
+
+    echo "$_prefix $_server$_suffix"
+}
+
+offline () {
+    show_line offline "$@"
+}
+
 online () {
-    local _dest="$1"; shift
-    [[ -z $_dest ]] && _dest=www.google.com
+    show_line online "$@"
+}
+
+online () {
+    if [[ -n "$@" ]]; then
+        online_destination "$@"
+        return 0
+    fi
+    online_all
+    offline_all
+    return 0
+}
+
+online_destination () {
     if quick_ping $_dest "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
         echo $_dest online
         return 0
@@ -1466,7 +1522,7 @@ console_title_on () {
 show_functons_in ()
 {
     for f in $(grep "^[a-z][a-z_]\+ .. .$" $1  | sed -e "s: .. .$::"); do
-        what -v $f
+        whype -v $f
     done | fewer
 }
 

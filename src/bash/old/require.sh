@@ -7,9 +7,9 @@ export REQUIRE_SH=$(realpath $BASH_SOURCE)
 _require () {
     _source=source
     if [[ -z $WHAT_SOURCED ]]; then
-        echo source what
+        echo source whyp
         if [[ -d ~/hub ]]; then
-            $_source ~/hub/what/what.sh
+            $_source ~/hub/whyp/whyp.sh
         else
             echo "~/hub is not a directory" >&2
             return 1

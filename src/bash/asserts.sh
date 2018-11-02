@@ -115,7 +115,7 @@ _assert_github () {
 }
 
 _assert_what_executable () {
-    what -q $1
+    whype -q $1
 }
 
 _assert_which_executable () {
@@ -171,12 +171,12 @@ _assert_source () {
 }
 
 _assert_source_what () {
-    local _what=$(_assert_github what)
-    local _what=~/hub/what/what.sh
+    local _what=$(_assert_github whyp)
+    local _what=~/hub/whyp/whyp.sh
     _assert_file $_what
     source $_what
     _assert_source $_what
-    _assert_is_function what
+    _assert_is_function whyp
 }
 
 
