@@ -8,30 +8,35 @@ Welcome_to $BASH_SOURCE
 # x
 
 h () {
-    history | tel "$@"
+    local __doc__="count history"
+    history_count 
 }
 
 # _x
 # xx
 
-
 alias HG=$(which hg) # With apologies, but don't really use it
 
 hg () {
     local __doc__="grep in history"
-    _strip_history | grep -v '^hg ' | grep --color "$@"
-}
-
-h1 () {
-    th 2 | head -n1
+    h "$@" | grep -v '^hg ' | grep --color "$@"
 }
 
 hh () {
-    _strip_history | head "$@"
+    local __doc__="head history"
+    local _options="-n $(( $LINES - 7 ))"
+    if [[ $1 =~ ^[0-9] ]]; then
+        _options="-n $1"; shift
+    fi
+    h "$@" | head $_options
 }
 
 hl () {
-    _strip_history | less
+    h "$@" | less
+}
+
+h1 () {
+    ht 2 | head -n 1
 }
 
 ht () {
@@ -40,24 +45,18 @@ ht () {
     if [[ $1 =~ ^[0-9] ]]; then
         _options="-n $1"; shift
     fi
-    _strip_history "$@" | tail $_options
+    h "$@" | tail $_options
 }
 
 hv () {
-    history | vim - +
-}
-
-vh () {
     local __doc__="edit history"
+    history_parse "$@" > ~/tmp/history.tmp
+    local _vim_suffix=+
     if [[ -n $* ]]; then
-        _strip_history > ~/tmp/fred
-        local _search=+/"$@"
-        [[ "$@" =~ ^+ ]] && _search="$@"
-        vim ~/tmp/fred $_search
-    else
-        _strip_history > ~/tmp/fred
-        vim ~/tmp/fred +
+        _vim_suffix=+/"$@"
+        [[ "$@" =~ ^+ ]] && _vim_suffix="$@"
     fi
+    vim ~/tmp/history.tmp $_vim_suffix
 }
 
 # xxx
@@ -68,3 +67,61 @@ hgt () {
 }
 
 Bye_from $BASH_SOURCE
+hgv () 
+{ 
+    local __doc__="edit history";
+    local _vim_suffix=+
+    if [[ -n $* ]]; then
+        _vim_suffix=+/"$@";
+        [[ "$@" =~ ^+ ]] && _vim_suffix="$@";
+    fi
+    h "$@" > ~/tmp/history.tmp
+    vim ~/tmp/history.tmp $_vim_suffix;
+    rr ~/tmp/history.tmp
+}
+
+
+# premature abbreviations
+
+alias hn=history_view
+alias hnh=history_head
+alias hnt=history_tail
+
+# history_xxxx+
+
+export HISTORY_COUNTER=
+
+history_parse () {
+    HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|[tg]h\)\>" 
+}
+
+history_count () {
+    history_parse "$@" | cat -n
+}
+
+history_view () {
+    local _history_viewer="cat -n"
+    local _one="$1"
+    if [[ -n $_one ]]; then
+        [[ -e $1 ]] && _history_viewer=_one
+        shift
+    fi
+    local __doc__="number history"
+    local _count_options="-n $(( $LINES - 7 ))"
+    if [[ $1 =~ ^[0-9] ]]; then
+        _count_options="-n $1"; shift
+    fi
+    local _counter=tail
+    [[ -n $HISTORY_COUNTER ]] && _counter=$HISTORY_COUNTER
+    history_count "$@" | $_counter $_count_options | $_history_viewer
+    [[ -n $HISTORY_COUNTER ]] && return
+    export HISTORY_COUNTER=tail
+}
+
+history_head () {
+    history_view head "$@"
+}
+
+history_tail () {
+    history_view tail"$@"
+}
