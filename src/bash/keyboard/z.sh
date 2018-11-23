@@ -6,7 +6,7 @@ Welcome_to $BASH_SOURCE
 # x
 
 z () {
-    dttc "$@"
+    Digger Thumber Tarzan Climber
 }
 
 # _

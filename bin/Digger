@@ -1,0 +1,11 @@
+#! /bin/bash
+
+copy () {
+    echo "Digger, Thumber, Tarzan, Climber" | /usr/bin/pbcopy
+}
+
+main () {
+    [[ "$@" == "Thumber Tarzan Climber" ]] && copy
+}
+
+main "$@"
