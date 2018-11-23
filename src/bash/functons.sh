@@ -1060,7 +1060,7 @@ taocl () {
 }
 
 ylint () {
-    pyth /home/alanb/.jab/src/python/site/ylint.py "$@"
+    pyth $HOME/jab/src/python/site/ylint.py "$@"
 }
 
 # xxxxxx

@@ -2,39 +2,65 @@
 
 Welcome_to $BASH_SOURCE
 
-. ~/bash/keyboard/1_1.sh
+at_home () {
+    local _doc="""Try $1 as a directory in, or under, $HOME"""
+    if [[ -z "$@" ]]; then
+        c ~
+        return 0
+    fi
+    # set -x
+    local _name=$1; shift
+    local _homed=~/$_name
+    local _underhomed=$_homed/$_name
+    [[ -d $_homed ]] || [[ -d $_underhomed ]] || return 1
+    [[ -d $_homed ]] || _homed=$_underhomed
+    # Args should overwrite defaults
+    local _match_dir=$( (
+        [[ -d $_homed ]] && ( 
+            cd $_homed
+            for _arg_path in "$@"; do
+                if [[ -d $_arg_path ]]; then
+                    readlink -f $_arg_path
+                fi
+            done
+        )
+    ) )
+    [[ -d "$_match_dir" ]] && _homed="$_match_dir"
+    [[ -d "$_homed" ]] || return 1
+    CDE_header=$( (cd $_homed; l -d ${_name}* 2>/dev/null ) ) cde $_homed
+    # set +x
+}
 
 _2 () {
-    home bash
+    at_home bash
 }
 
 _21 () {
-    home tools "$@"
+    at_home tools.master "$@"
 }
 
 _22 () {
-    home portals "$@"
+    at_home jab "$@"
 }
 
 _23 () {
-    home waas "$@"
+    at_home waas "$@"
 }
 
 _24 () {
-    home saas "$@"
+    at_home saas "$@"
 }
 
 _25 () {
-    home bash "$@"
+    at_home bash "$@"
 }
 
 _26 () {
-    home ~/tmp
-    home /tmp
+    at_home /tmp
 }
 
 _27 () {
-    home /tmp
+    at_home /tmp
 }
 
 Bye_from $BASH_SOURCE
