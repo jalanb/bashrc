@@ -79,7 +79,10 @@ _colour_prompt () {
     local _name="${USER:-$(whoami)}"
     local _where="${HOSTNAME:-$(hostname -s)}"
     local _here=$PWD
-    local _dir="$(short_dir "$_here")"
+    local _dir="$(short_dir "$_here" 2>/dev/null)"
+    local _basename=/usr/bin/basename # YMMV
+
+    [[ -n $_dir ]] || _dir=$($_basename $(readlink -f .))
     local _got_bump=$(bump get 2>/dev/null)
     local _bump_version=
     [[ -n $_got_bump ]] && _bump_version="$_got_bump"
@@ -88,8 +91,15 @@ _colour_prompt () {
     [[ -n $_git ]] && _branch="($_git)"
     local _py_vers=$(pyth --version 2>&1 | sed -e s/Python.//)
     local _venv=$(env | g VIRTUAL_ENV= | sed -e "s/[^=]*=//")
+    local _venv_name=
+    [[ -n $_venv ]] && _venv_name=$($_basename $_venv)
+    if [[ $_venv_name == ".venv" ]]; then
+        local _parent=$(dirname $_venv)
+        local _parent_name=$($_basename $_parent)
+        _venv=$_parent_name
+    fi
     local _py_venv=
-    [[ -e $_venv ]] && _py_venv=$(basename_ $_venv)
+    [[ -e $_py_venv ]] && _py_venv=$($_basename $_venv)
 
 
 
