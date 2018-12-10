@@ -23,10 +23,4 @@ _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 . ~/jab/environ.d/__init__.sh
 . ~/jab/local/__init__.sh optional
 
-_all_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
-_in_funcs=$(( $_all_funcs - $_out_funcs ))
-echo $_all_funcs functions
-echo $_out_funcs before '~/jab'
-echo $_in_funcs in '~/jab'
-
 Bye_from $BASH_SOURCE

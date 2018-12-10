@@ -1447,6 +1447,14 @@ blank_script () {
 
 # xxxxxxxxxxxxx
 
+show_functions () {
+    _all_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
+    _in_funcs=$(( $_all_funcs - $_out_funcs ))
+    echo $_all_funcs functions
+    echo $_out_funcs before '~/jab'
+    echo $_in_funcs in '~/jab'
+}
+
 console_hello () {
     local me=$USER
     local here=$(jostname)
