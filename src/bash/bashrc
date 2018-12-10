@@ -55,7 +55,7 @@ log_main () {
 }
 
 _local () {
-    source_what $_home_user/local/__init__.sh optional
+    . $_home_user/local/__init__.sh optional
 }
 
 main () {

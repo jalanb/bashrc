@@ -11,11 +11,11 @@ realdir () {
 
 Welcome_to $BASH_SOURCE
 
-. ~/hub/what/what.sh
+. ~/hub/whyp/whyp.sh
 . ~/jab/src/bash/hub.sh
 . ~/hub/vimack/vimack.sh
 . ~/hub/kd/cd.sh
-. ~/hub/what/what.sh
+. ~/hub/whyp/whyp.sh
 
 _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 

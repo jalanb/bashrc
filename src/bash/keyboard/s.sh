@@ -8,7 +8,7 @@ source ~/hub/whyp/whyp.sh
 # x
 s () {
     local __doc__="""s is for sourcing"""
-    source_what "$@"
+    . "$@"
 }
 
 # _x

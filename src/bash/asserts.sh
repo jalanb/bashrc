@@ -137,7 +137,7 @@ _assert_executable () {
 }
 
 source_script () {
-    source_what $1
+    . $1
 }
 
 _assert_source_script () {
@@ -166,8 +166,8 @@ _assert_is_function () {
 
 _assert_source () {
     _assert_file "$@"
-    _assert_is_function source_what
-    source_what "$@"
+    _assert_is_function .
+    . "$@"
 }
 
 _assert_source_what () {

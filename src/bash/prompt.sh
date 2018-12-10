@@ -146,7 +146,7 @@ export_status () {
 
 _pre_pses () {
     console_whoami
-    (what -q py_cd && py_cd --add . >/dev/null 2>&1)
+    (whyp-command -q py_cd && py_cd --add . >/dev/null 2>&1)
     history -a
 }
 

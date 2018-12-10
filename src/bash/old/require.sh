@@ -6,7 +6,7 @@ export REQUIRE_SH=$(realpath $BASH_SOURCE)
 
 _require () {
     _source=source
-    if [[ -z $WHAT_SOURCED ]]; then
+    if [[ -z $WHYP_SOURCED ]]; then
         echo source whyp
         if [[ -d ~/hub ]]; then
             $_source ~/hub/whyp/whyp.sh
@@ -15,8 +15,8 @@ _require () {
             return 1
         fi
     fi
-    if [[ -n $WHAT_SOURCED ]]; then
-        _source=source_what
+    if [[ -n $WHYP_SOURCED ]]; then
+        _source=source_whyp
     fi
     $_source "$@"
 }
