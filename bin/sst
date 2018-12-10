@@ -42,11 +42,12 @@ main () {
     local _local_user=$USER
     [[ -n $_local_user ]] || return 1
     local _known_user=
-    if [[ -z $_remote_user ]]; then
+    if [[ -n $_remote_user ]]; then
+        _known_user=$(ssh -G ${_remote_user}@${_remote_server} | g -w user | sed -e "s:user ::")
+    else
         _known_user=$(ssh -G ${_local_user}@${_remote_server} | g -w user | sed -e "s:user ::")
         [[ -n $_known_user ]] && _remote_user=$_known_user 
     fi
-    _known_user=$(ssh -G ${_remote_user}@${_remote_server} | g -w user | sed -e "s:user ::")
     local _local_server=`hostname -s`
     [[ -n $_local_server ]] || return 1
     local _local_ip=$(mifconfig 10 172 193 192 100 2> ~/bash/fd/2; true)
