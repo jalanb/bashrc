@@ -4,14 +4,15 @@
 
 _set_path () {
     LOCAL=/usr/local
-    [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCAL/bin" || LOCALS="$LOCAL/bin"
+    LOCALS="$LOCAL/bin"
+    [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCALS"
+    [[ -d $LOCAL/go/bin ]] && LOCALS==$LOCALS="$LOCALS:$LOCAL/go/bin"
     BINS=/usr/bin:/bin:/usr/sbin:/sbin
     HOMES=$HOME/bin:$HOME/.local
-    export PATH=$LOCALS:$BINS:$HOMES
+    export PATH=$HOMES:$LOCALS:$BINS
     export STDOUT=on
     export STDERR=on
 
-    [[ -d $LOCAL/go/bin ]] && PATH=$PATH:$LOCAL/go/bin
 }
 
 _home_user=$HOME/$USER
