@@ -50,7 +50,7 @@ main () {
     fi
     local _local_server=`hostname -s`
     [[ -n $_local_server ]] || return 1
-    local _local_ip=$(mifconfig 10 172 193 192 100 2> ~/bash/fd/2; true)
+    local _local_ip=$(local_ip)
     [[ -n $_local_ip ]] || return 1
     local _remote_ip=
     [[ -n $_remote_server ]] || return 1

@@ -1,0 +1,28 @@
+#! /usr/bin/env python3
+
+import sys
+import socket
+
+
+def open_socket_name(socket):
+    try:
+        socket.connect(("8.8.8.8", 53))
+        return socket.getsockname()[0]
+    finally:
+        socket.close()
+
+
+def main ():
+    hostname = socket.gethostname()
+    _true_hostname, _aliases, ip_addresses = socket.gethostbyname_ex(hostname)
+    remote_addresses = [_ for _ in ip_addresses if not _.startswith('127.')]
+    openable_sockets = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    open_addresses = [[open_socket_name(s) for s in [openable_sockets]][0][1]]
+    output = remote_addresses or open_addresses
+    output = output or "No IP"
+    print('\n'.join(output))
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
