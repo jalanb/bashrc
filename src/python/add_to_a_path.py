@@ -78,7 +78,7 @@ def _add_symbol_to_paths(paths, symbol, i):
     return result
 
 
-def arg_path(args):
+def get_arg_path(args):
     path = args.path
     if not path:
         return ''
@@ -106,14 +106,15 @@ def get_paths(args):
 
 
 def script(args):
-    path_symbol = arg_path(args)
+    arg_path = get_arg_path(args)
     paths = get_paths(args)
-    if not path_symbol:
+    if not arg_path:
         if not paths:
             return False
-    elif os.path.isdir(path_symbol):
-        if path_symbol not in paths:
-            paths = _add_symbol_to_paths(paths, path_symbol, args.index)
+    elif os.path.isdir(arg_path):
+        if arg_path in paths:
+            paths.remove(arg_path)
+        paths = _add_symbol_to_paths(paths, arg_path, args.index)
     else:
         return False
     print('='.join((args.symbol, os.path.pathsep.join(paths))))
