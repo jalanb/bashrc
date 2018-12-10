@@ -564,7 +564,7 @@ gcpe () {
 }
 
 gcpc () {
-    git cherry-pick --continue
+    GIT_EDITOR=true git cherry-pick --continue
 }
 
 gcpe () {
