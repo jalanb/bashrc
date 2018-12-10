@@ -36,7 +36,7 @@ Host tooltest
     IdentityFile ~/.ssh/wwts/ab13173.key
 
 Host builder
-    Hostname 172.25.1.218
+    Hostname 172.25.32.115
     User builder
     IdentityFile ~/.ssh/wwts/tools/builder.key
 
@@ -82,6 +82,11 @@ Host atlwbe43 eopbeta
 
 Host twkwbe43 eop
     Hostname 172.25.32.103
+    User builder
+    IdentityFile ~/.ssh/wwts/eop/builder.key
+
+Host twkwbe47 cor
+    Hostname 172.25.32.122
     User builder
     IdentityFile ~/.ssh/wwts/eop/builder.key
 
