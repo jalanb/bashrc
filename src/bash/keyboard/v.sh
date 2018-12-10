@@ -8,7 +8,8 @@
 # }
 # 
 v () {
-    sai Give, Vim, Parser, keys &
+    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
+    sai pyithonise VIM &
     vim -p "$@"
 }
 
@@ -29,6 +30,10 @@ vc () {
 
 vd () {
     vim_diff "$1" "$2" "$3" -O
+}
+
+vq () {
+    vim -p "$@"
 }
 
 vu () {
