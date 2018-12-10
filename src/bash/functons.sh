@@ -33,7 +33,7 @@ b () {
 }
 
 g () {
-    $(which grep) --color "$@"
+    $(which egrep) --color "$@"
 }
 
 x () {
@@ -1092,6 +1092,10 @@ has_py () {
     has_ext py "$@"
 }
 
+header () {
+    head -n 1 "$@"
+}
+
 howdoi () {
     /usr/local/bin/howdoi -c -a "$@"
 }
@@ -1110,6 +1114,10 @@ mkenv2 () {
 
 mkenv3 () {
     _mkenv python
+}
+
+tailer () {
+    tail -n 1 "$@"
 }
 
 _mkenv () {
