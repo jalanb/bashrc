@@ -42,24 +42,36 @@ set match-hidden-files on
 # "\e[D": 
 
 $if Bash
+
+# Set keys for when editting a line
+
+set keymap vi-insert
+
 #
 # Function keys
 #
-# <F5>
-"\e[15~": "jj\r"
-# <F6>
-"\e[17~": "21\r"
-#
-# <F12>
-"\e[24~": "!$\r"
-# <Shift-F12>
-"\e[24;2~": "!!\r\e0"
 
-set keymap vi-insert
 # <PageUp>
 "\e[5~": "\ek0"
 # <PageDown>
 "\e[6~": "\ej$"
+
+# <F5>
+"\e[15~": "\$(!!)$\r"
+
+# <F6>
+"\e[17~": "!$\r"
+#
+
+# <F11>
+# "\e[23~": "\$(!!)$\r"
+
+# <F12>
+"\e[24~":"!$\r"
+# <Shift-F12>
+"\e[24;2~":"!!\r\e0"
+
+# Set keys for when not editting (command mode)
 
 set keymap vi-command
 # <PageUp>
