@@ -36,13 +36,6 @@ py () {
 
 # xxx
 
-pii () {
-    local _ipython=$(which ipython)
-    [[ -n $IPYTHON ]] && _ipython=$IPYTHON
-    local _executable=$_ipython
-    EXECUTABLE_PY=$_executable pypath "$@"
-}
-
 pir () {
     pipr "$@"
 }
@@ -69,15 +62,20 @@ pipu () {
 
 pith () {
     set -x
-    local __doc__="""Run a pythonic command [pip]"""
+    local __doc__="""Run a pip command [pip]"""
     local _executable=pip
     if [[ $1 == 2 ]]; then
         _executable=pip2
         shift
     fi
-    [[ -n $EXECUTABLE_PY ]] && _executable=$EXECUTABLE_PY
     pypath $_executable "$@"
     set +x
+}
+
+pii () {
+    local _ipython=$(which ipython)
+    [[ -n $IPYTHON ]] && _ipython=$IPYTHON
+    pypath python $_ipython "$@"
 }
 
 pypd () {
@@ -89,12 +87,12 @@ pypp () {
 }
 
 pyth () {
-    local __doc__="""Run a python command"""
+    local __doc__="""Run a python command on a script which might have a shebang"""
     local _python=python
     for _arg in "$@"; do
         [[ -f "$_arg" ]] || continue
         if [[ -d "$_arg" ]]; then
-            echo Choose one: $(ls "$_arg")
+            echo Choose one: $(ls "$_arg/")
         else
             head -n 1 "$_arg" | grep -q '#!.*python' || continue
             _python=$(head -n 1 "$_arg" | sed -e "s:.* ::")
@@ -111,8 +109,7 @@ pypath () {
     local _path="$HOME/bin:/usr/local/bin:/usr/bin"
     local _venv_bin="${VIRTUAL_ENV:-xxx}"/bin
     [[ -d $_venv_bin ]] && _path="$_venv_bin:$_path"
-    local _executable="$1"; shift
-    [[ -n $EXECUTABLE_PY ]] && _executable=$EXECUTABLE_PY
+    local _executable=$1; shift
     if [[ $_executable =~ python[2-9] ]]; then
         (PATH=$_path $_executable "$@")
     else
