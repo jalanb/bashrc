@@ -1,12 +1,8 @@
+
 Live, 0
     Lose It, 5
            Let Go, 1
                  Laugh, 4
                       Love, 2
 
-https://github.com/asottile/reorder_python_imports
-vs
-https://github.com/timothycrosley/isort
-
-http://albertz.github.io/music-player/
-http://thesis.flyingpudding.com/
+So lucky I code this way, 4
