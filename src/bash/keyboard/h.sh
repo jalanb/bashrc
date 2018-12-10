@@ -8,8 +8,9 @@ Welcome_to $BASH_SOURCE
 # x
 
 h () {
-    local __doc__="count history"
-    history_count 
+    local __doc__="tail history"
+    local _options="-n $(( $LINES / 2 ))"
+    history_tail "$@" $_options
 }
 
 # _x
@@ -19,7 +20,7 @@ alias HG=$(which hg) # With apologies, but don't really use it
 
 hg () {
     local __doc__="grep in history"
-    h "$@" | grep -v '^hg ' | grep --color "$@"
+    history_parse | grep -v '^hg ' | grep --color "$@"
 }
 
 hh () {
@@ -123,5 +124,5 @@ history_head () {
 }
 
 history_tail () {
-    history_view tail"$@"
+    history_view tail "$@"
 }
