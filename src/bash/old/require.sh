@@ -15,8 +15,8 @@ _require () {
             return 1
         fi
     fi
-    if [[ -n $WHYP_SOURCED ]]; then
-        _source=source_whyp
+    if [[ -n $WHAT_SOURCED ]]; then
+        _source=source-whyp
     fi
     $_source "$@"
 }

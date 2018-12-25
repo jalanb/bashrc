@@ -137,7 +137,7 @@ _assert_executable () {
 }
 
 source_script () {
-    . $1
+    source-whyp $1
 }
 
 _assert_source_script () {
@@ -166,11 +166,11 @@ _assert_is_function () {
 
 _assert_source () {
     _assert_file "$@"
-    _assert_is_function .
-    . "$@"
+    _assert_is_function source-whyp
+    source-whyp "$@"
 }
 
-_assert_source_what () {
+_assert_source-whyp () {
     local _what=$(_assert_github whyp)
     local _what=~/hub/whyp/whyp.sh
     _assert_file $_what

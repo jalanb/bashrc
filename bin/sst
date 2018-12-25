@@ -5,7 +5,7 @@
 
 PATH_TO_SCRIPT=$(readlink -f $BASH_SOURCE)
 
-. ~/hub/what/what.sh
+. ~/hub/whyp/whyp.sh
 . ~/jab/environ.d/jab.sh
 . ~/jab/src/bash/functons.sh
 

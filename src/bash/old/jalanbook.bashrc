@@ -78,8 +78,8 @@ bashrc_in_jab () {
     _trap_jab
     builtin cd ~/jab
     _trap_what
-    _assert_is_function source_what
-    source_what ~/jab_SH/assertions
+    _assert_is_function source-whyp
+    source-whyp ~/jab_SH/assertions
     _trap_python
     _show_welcome
 }

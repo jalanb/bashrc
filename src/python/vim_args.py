@@ -11,5 +11,5 @@ args = {
     'main': ['~/hub/main.py'],
     'paths': ['~/hub/pysyte/dotpaths.py'],
     'whap': ['~/hub/what/whap.py'],
-    'what': ['~/hub/what/what.sh', '~/hub/what/what.py'],
+    'whyp': ['~/hub/whyp/whyp.sh', '~/hub/whyp/whyp.py'],
 }

@@ -20,7 +20,7 @@ checkouts () {
     cd pysyte
     python setup.py develop
     cd ..
-    git clone $GITHUB/jalanb/what
+    git clone $GITHUB/jalanb/whyp
     git clone $GITHUB/jalanb/kd
     git clone $GITHUB/jalanb/ackvim
 }
