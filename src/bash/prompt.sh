@@ -68,10 +68,12 @@ _colour () {
 _colour_pass () {
     local _test=$1
     local _result=$FAIL_COLOUR
-    local _one=$1
-    [[ -n $_one ]] && _test=$_one
-    [[ $_test == 0 ]] && _result=$PASS_COLOUR
-    echo $(_colour $_result "$@")
+    if [[ $_test == 0 ]]; then # && _result=$PASS_COLOUR
+        echo "😎 "
+    else
+        local _faces=(👿 👎 💀 👻 💩 🤨  😐 😑 😥 😮 😫 😲 ☹️  😤 😢 😭 😦 😧 😨 😩 🤯  😬 😰 😱 🥵  🥶  😳 🤢 🤮 )
+        echo "${_faces[$?]} "
+    fi
 }
 
 _colour_prompt () {
