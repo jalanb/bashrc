@@ -92,6 +92,7 @@ gr () {
 
 
 gs () {
+    local __doc__="""git status front end"""
     # _gs_quiet"$@"
     _gs "$@"
 }
@@ -119,6 +120,7 @@ ts () {
 # _xx
 
 _gs () {
+    local __doc__="""git status back end"""
     git status "$@"
 }
 
@@ -134,6 +136,7 @@ gac () {
 }
 
 gai () {
+    local __doc__="""Add args interactively"""
     ga --patch "$@"
 }
 
@@ -183,6 +186,7 @@ gdd () {
 }
 
 gdi () {
+    local __doc__="""git di args"""
     git di "$@"
 }
 
@@ -214,7 +218,8 @@ gfp () {
 }
 
 ggi () {
-    gxi _ggi_show_diff _ggi_response "$@"
+    local __doc__=""""""
+    gxi _gdis _ggi_response "$@"
 }
 
 gia () {
@@ -374,6 +379,7 @@ grh () {
 }
 
 gri () {
+    local __doc__=""""""
     if [[ -n $1 ]]; then
         git rebase --interactive "$@"
     else
@@ -411,25 +417,23 @@ grs () {
     git rebase --skip
 }
 
-gsd () {
-    first_arg_dir_or_here "$@" && shift
-    for f in $(gssd $dir | grep "^ M" | cut -dM -f2)
-    do
-        git dv $f
-    done
-    QUESTIONS=$(untracked $dir)
-    [[ -n $QUESTIONS ]] && v $QUESTIONS
-}
-
 gsi () {
+    local __doc__="""Menu to help clearing git status"""
     gxi _gsi_show_diff _gsi_response "$@"
 }
 
+gss () {
+    local __doc__="""git short status"""
+    gs --short "$@"
+}
+
 gst () {
+    local __doc__="""git stash"""
     git stash "$@"
 }
 
 gsp () {
+    local __doc__="""Porcelain status"""
     gs --porcelain
 }
 
@@ -445,11 +449,24 @@ gtl () {
     gt --list "$@"
 }
 
+gvd () {
+    local __doc__="""vim diff all changed files"""
+    first_arg_dir_or_here "$@" && shift
+    for f in $(gssd $dir | grep "^ M" | cut -dM -f2)
+    do
+        git dv $f
+    done
+    QUESTIONS=$(untracked $dir)
+    [[ -n $QUESTIONS ]] && v $QUESTIONS
+}
+
 gvi () {
+    local __doc__="""Menu to help vimming git status"""
     gxi _gvi_show_diff _gvi_response "$@"
 }
 
 gxi () {
+    local __doc__=""""""
     local _show_diff=$1; shift
     local _response=$1; shift
     local _responded=
@@ -460,7 +477,7 @@ gxi () {
     glg
     show_this_branch -r
     _show_pre_loop
-    while git status -s "$dir"; do
+    while git status --short "$dir"; do
         green_line staged
         git di --staged
         green_line files
@@ -957,7 +974,8 @@ log_test_file ()
     grep_git_log_for_python_test_file 3
 }
 
-_ggi_show_diff () {
+_gdis () {
+    local __doc__="""git di args; git short status"""
     if _git_untracked "$1"; then
         kat -n "$1"
         return 0
@@ -970,7 +988,7 @@ _ggi_show_diff () {
             gdi "$1"
         fi
     fi
-    git status -s $1
+    git status --short $1
 }
 
 _gsi_show_diff () {
@@ -986,12 +1004,12 @@ _gsi_show_diff () {
             gdi "$1"
         fi
     fi
-    git status -s $1
+    git status --short $1
 }
 
 _gvi_show_diff () {
     git diff "$1"
-    git status -s $1
+    git status --short $1
 }
 
 _ggi_response () {
@@ -1048,7 +1066,7 @@ red_two () {
 }
 
 _status_line () {
-    [[ -n "$*" ]] && git status -s . || git status -s "$@"
+    [[ -n "$*" ]] && git status --short . || git status --short "$@"
 }
 
 _status_chars () {
