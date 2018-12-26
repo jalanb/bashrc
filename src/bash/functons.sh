@@ -121,17 +121,6 @@ gg () {
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
-gv () {
-    if which gvim >/dev/null 2>&1; then
-        date >> ~/log/gvim.log
-        echo gvim "$@" >> ~/log/gvim.log
-        gvim "$@" 2>> ~/log/gvim.log
-    else
-        echo gvim not available >&2
-        return 1
-    fi
-}
-
 hd () {
     vim_diff "$1" "$2" "$3" -o
 }
