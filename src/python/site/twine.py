@@ -15,12 +15,16 @@ class Twine(Spine, str):
         popular?? :)"
     at http://mail.python.org/pipermail/python-dev/2006-January/060115.html
     """
+    def __init__(self, string=None):
+        self._string = string or ''
+
+    def __str__(self):
+        return self._string
 
     def str_class_and_list(self):
         """A tuple with three strings for the value, class and list names
 
-        >>> print Twine().str_class_and_list()
-        ('', 'Twine', 'Twines')
+        >>> assert Twine().str_class_and_list() == ('', 'Twine', 'Twines')
         """
         return str(self), self.class_name(), self.list_name()
 

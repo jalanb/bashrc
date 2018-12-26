@@ -2,8 +2,7 @@ The site/spine module
 =====================
 
     >>> import spine
-    >>> print spine.__doc__
-    Show the spine of a class
+    >>> assert 'the spine of a class' in  spine.__doc__
 
 A Thing is a kind of Spine
     which can provide a string value

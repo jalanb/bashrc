@@ -5,24 +5,23 @@ The twine module
 
 A Twine is ako string
     >>> twine = Twine('Fred')
-    >>> print twine
-    Fred
+    >>> assert twine == "Fred"
 
-With a different representation than string
+With a different representation than str
     >>> twine
     <Twine 'Fred'>
 
 And can parse out its class name
-    >>> print twine.class_name(), twine.full_class_name(), twine.list_name()
-    Twine twine.Twine Twines
+    >>> assert twine.class_name() == 'Twine'
+    >>> assert twine.full_class_name() == 'twine.Twine'
+    >>> assert twine.list_name() == 'Twines'
 
 A subclass of Twine
     >>> class Freddy(Twine): pass
     >>> twine = Freddy('Fred')
 
 is also ako string
-    >>> print twine
-    Fred
+    >>> assert twine == 'Fred'
 
 and knows its class
     >>> twine
@@ -33,8 +32,9 @@ and parses its name
         full class name has no module as it was created in this script
     Note again:
         This is now version dependent, 2.7 calls this script's module "__main__"
-    >>> print twine.class_name(), twine.full_class_name(), twine.list_name()
-    Freddy ...Freddy Freddies
+    >>> assert twine.class_name() == 'Freddy'
+    >>> assert twine.full_class_name().endswith('Freddy')
+    >>> assert twine.list_name() == 'Freddies'
 
 I think this one is a meta-sub-class
     but it might be a sub-meta-class.
@@ -46,13 +46,13 @@ And that gives you a new class
     >>> ted = Teddy('ted')
 
 which is also ako string
-    >>> print ted
-    ted
+    >>> assert ted == 'ted'
 
 and knows its class
     >>> ted
     <Teddy 'ted'>
 
 and parses its name
-    >>> print ted.class_name(), ted.full_class_name(), ted.list_name()
-    Teddy twine.Teddy Teddies
+    >>> assert ted.class_name() == 'Teddy'
+    >>> assert ted.full_class_name() == 'twine.Teddy'
+    >>> assert ted.list_name() == 'Teddies'

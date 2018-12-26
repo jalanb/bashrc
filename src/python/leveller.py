@@ -26,8 +26,8 @@ def show_directories(needed, names=None, sizes=None):
     level, size = directories(needed, names = names, sizes = sizes)
     dirs, files = size == 1 and ('y', '') or ('ies','s')
     operator = size == needed and '==' or '>'
-    print 'Level %d can hold %d director%s and %d file%s %s %d' % (
-        level, size, dirs, size, files, operator, needed)
+    print('Level %d can hold %d director%s and %d file%s %s %d' % (
+        level, size, dirs, size, files, operator, needed))
 
 
 def files(needed, available=1, level=1):
@@ -36,7 +36,7 @@ def files(needed, available=1, level=1):
     return sum(range(level + 1)), level, available, needed
 
 def show_files(needed):
-    print 'level %d, can hold %d files, > %d' % files(needed)[1:]
+    print('level %d, can hold %d files, > %d' % files(needed)[1:])
 
 
 def lines(needed, available=7, level=1):

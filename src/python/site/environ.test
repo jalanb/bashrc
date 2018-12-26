@@ -2,18 +2,13 @@
 
 A method to read the keys set in ~/jab/environ
     >>> keys = environ.read_environ_keys()
-    >>> 'EDITOR' in keys
-    True
+    >>> assert 'EDITOR' in keys
 
 Turn those keys into a dictionary with values from bash's environment
-    >>> int(environ.jab['HISTSIZE']) > 1000
-    True
-    >>> environ.jab['EDITOR'].endswith('/vim')
-    True
+    >>> assert environ.jab['HISTFILE']
+    >>> assert environ.jab['EDITOR'].endswith('vim')
 
 Bash's environment variables are attributes of the module
-    >>> print environ.EDITOR == environ.jab['EDITOR']
-    True
+    >>> assert environ.EDITOR == environ.jab['EDITOR']
 
     >>> paths = environ.environ_paths()
-    True

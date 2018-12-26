@@ -127,8 +127,7 @@ def join_mail_site(prefix):
 def path_in_localhost(filename):
     """Where we store files for viewing on localhost
 
-    >>> print path_in_localhost('fred.html')
-    /.../Sites/mail/fred.html
+    >>> assert path_in_localhost('fred.html').endswith('mail/fred.html')
     """
     mail_site = os.environ.get('MAIL_SITE_DIRECTORY')
     if not mail_site:
@@ -140,8 +139,7 @@ def path_in_localhost(filename):
 def url_in_localhost(filename):
     """Where we view filename on localhost
 
-    >>> print url_in_localhost('fred.html')
-    http://localhost/.../mail/fred.html
+    >>> assert url_in_localhost('fred.html').endswith('/mail/fred.html')
     """
     home_name = os.path.basename(os.path.expanduser('~'))
     sites_name = 'http://localhost/~%s' % home_name

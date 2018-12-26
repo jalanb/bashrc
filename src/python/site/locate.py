@@ -68,11 +68,7 @@ def _make_locate_command(args):
 
 
 def _locatable(path):
-    """Whether that path is wanted in location results
-
-    >>> not _locatable('/path/to/.svn/file')
-    True
-    """
+    """Whether that path is wanted in location results"""
     return not repository.is_repository_path(path)
 
 

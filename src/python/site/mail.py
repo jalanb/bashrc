@@ -8,7 +8,6 @@ It is not a full mail reader,
 # TODO: "Too many lines in buffer"
 # pylint: disable-msg=C0302
 
-from __future__ import print_statement
 import re
 import sys
 import time
@@ -18,7 +17,7 @@ import email.header
 import socket
 import imaplib
 import inspect
-import commands
+import subprocess
 
 
 try:
@@ -29,7 +28,7 @@ from pysyte import getch
 import personal
 import mail_accounts
 
-import colours
+from pysyte import colours
 
 
 def get_new_payload(part, content_type, old_payload):
@@ -394,7 +393,7 @@ def read_issue(issue_id):
     if timed_out[0]:
         return ''
     command = personal.get_issue_data_command(issue_id)
-    status, output = commands.getstatusoutput(command)
+    status, output = subprocess.getstatusoutput(command)
     if not status:
         return output
     if 'Operation timed out' in output:

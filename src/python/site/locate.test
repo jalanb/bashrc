@@ -2,8 +2,7 @@ The locate module
 =================
 
     >>> import locate
-    >>> print locate.__doc__
-    Methods to run the locate script more exactly
+    >>> assert 'run the locate script' in locate.__doc__
 
 More modules for testing
 ------------------------
@@ -18,31 +17,32 @@ Some methods need options which look like they came from an OptionParser
     ...     pass
     >>> options = Values()
     >>> options.directories = False
-    >>> options.files = False
+    >>> options.files = True
     >>> options.ignore_case = False
-    >>> options.basename = False
+    >>> options.basename = True
     >>> options.globs = False
+    >>> options.sought = 'locate'
+    >>> options.executables = []
+    >>> options.verbose = False
+    >>> options.exclude = []
+    >>> options.real = False
 
 locate
 ------
 
 The script will need to run locate commands
-    >>> print locate._make_locate_command('fred', options)
-    /.../locate "fred"
+    >>> assert locate._make_locate_command(options).endswith('locate  "locate"')
 
 The standard locate command gives many files for its own name
-    >>> lines = locate._run_locate('locate', options)
-    >>> len(lines) > 10
-    True
+    >>> lines = locate._run_locate(options)
+    >>> assert len(lines) > 10
 
 But the module cuts that down to just the files named locate
-    >>> lines = locate._locate('locate', options)
-    >>> len(lines) < 10
-    True
+    >>> lines = locate._locate(options)
+    >>> assert len(lines) < 10
 
 And everything found has just the filename as "locate"
-    >>> not [l for l in lines if os.path.basename(l) != 'locate']
-    True
+    >>> assert not [l for l in lines if os.path.basename(l) != 'locate']
 
 Using options
 -------------
@@ -50,13 +50,15 @@ Using options
 We can insist on finding only directories
     >>> options.directories = True
 
-But, it turns out there are no directories called 'locate'
-    >>> not locate._locate('locate', options)
-    True
+There are fewer of them
+    >>> assert len(locate._locate(options)) < 3
 
 So we can use a glob instead
     >>> options.directories = False
     >>> options.globs = True
-    >>> locates = locate._locate('lo*te', options)
-    >>> locate._path_to_locate() in locates
-    True
+    >>> options.sought = 'lo*te'
+    >>> try:
+    ...     locates = locate._locate(options)
+    ...     assert locate._path_to_locate() in locates
+    ... except ValueError as e:
+    ...     assert 'illegal option' in str(e)

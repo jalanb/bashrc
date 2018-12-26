@@ -22,8 +22,7 @@ Edge cases
     True
 
     >>> text = 'some text'
-    >>> print handler(header, text)
-    Handled: ...
+    >>> assert 'boring mail delivery' in handler(header, text)
     >>> header = {'From': 'MAILER-DAEMON@ie-mail-1.altobridge.com (Mail Delivery System)'}
     >>> check(header)
     True
@@ -55,79 +54,3 @@ Edge cases
     True
 
 
-Here's one that I prepared earlier
-    >>> message_spam = email.message_from_file(file('spam.eml'))
-
-For which we know some stuff:
-    >>> mail.sent_by_address(message_spam, re.compile('.*@chemin-info.com.br'))
-    True
-    >>> mail.sent_to_address(message_spam, 'webmaster@altobridge.com')
-    True
-    >>> mail.has_subject_with(message_spam, 'career')
-    True
-    >>> mail.has_subject_starting(message_spam, 'Free')
-    True
-    >>> mail.has_subject_with(message_spam, 'career')
-    True
-
-And another one
-    >>> message_spam2 = email.message_from_file(file('spam2.eml'))
-    >>> mail.only_sent_to_address(message_spam2, 'webmaster@altobridge.com')
-    False
-    >>> mail.only_sent_to_address(message_spam2, 'iwalter@altobridge.com')
-    True
-    >>> mail.has_subject_with(message_spam2, ' [fF]ree ')
-    False
-    >>> mail.has_subject_with(message_spam2, re.compile(' [fF]ree '))
-    True
-
-    >>> header = {'subject':'Notification : Issue 18124 impacts on Licensing'}
-    >>> impact_regexp = re.compile('Notification : Issue (?P<issue>[0-9]+) impacts on (?P<impactee>[^ ]+).*')
-    >>> ('18124', 'Licensing',) == mail.match_subject(header, impact_regexp)
-    True
-    >>> header = {'subject':'Something else'}
-    >>> not mail.match_subject(header, impact_regexp)
-    True
-
-    >>> mail.matched_groups(re.match('fred (was) here', 'fred was here'))
-    ('was',)
-    >>> mail.matched_groups(re.search('was', 'fred was here'))
-    ('was',)
-    >>> mail.matched_groups(re.match('fred was here', 'fred was here'))
-    ('fred was here',)
-    >>> mail.matched_groups(re.match('fred was there', 'fred was here'))
-    ()
-
-    >>> mail.sent_from(message_spam)
-    [('Jacob Green', 'Hilaire.Baileylemja@chemin-info.com.br')]
-    >>> mail.sent_from(message_spam2)
-    [('Fleur Matthews', 'Sergionnpip@ukrtel.net')]
-
-    >>> header = {'subject': '[bug #37588] ranger hangs'}
-    >>> mail.from_bug_tracker(header)
-    True
-
-    >>> mail.is_signature('Alan:')
-    False
-    >>> mail.is_signature('Regards,')
-    True
-    >>> mail.is_signature('/Martin')
-    True
-    >>> mail.is_signature('Alan B, Darran, Pierre')
-    False
-
-    >>> check, handle = mail.has_out_of_office()
-    >>> check({'subject':'I am out of the office'}, '')
-    True
-    >>> check({}, "I'm out of office")
-    True
-    >>> check({},"\n\nI'm on PTO between 11/5 - 11/25.")
-    True
-    >>> check({},"\n\n\n\n\n\n\n\n\nOOO ")
-    True
-    >>> check({},"\n\n\n\n\n\n\n\n\n\nOOO ")
-    False
-    >>> check({}, "I'm away as am on leave from 12th Nov until 25th Nov 2012")
-    True
-    >>> check({}, "I am at an offsite meeting")
-    True

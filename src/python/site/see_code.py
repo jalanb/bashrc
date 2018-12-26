@@ -30,16 +30,26 @@ def subsequent_lines_with_more_indentation(filename, first_line_number):
 
 
 def code_of_method(method):
+    """The code for that method, if available
+
+    >>> print(code_of_method(code_of_method))
+    def code_of_method(method):
+    ...
+        if not callable(method):
+            raise NoCode('Not callable: %r' % method)
+    ...
+    """
+
     if not callable(method):
         raise NoCode('Not callable: %r' % method)
     try:
-        function_code = method.func_code
+        function_code = method.__code__
     except AttributeError:
         try:
-            function_code = method.im_func.func_code
+            function_code = method.func_code
         except AttributeError:
             raise NoCode('No code available for %s' % method)
-    filename = re.sub('.py[co]$', '.py', method.func_code.co_filename)
+    filename = re.sub('.py[co]$', '.py', function_code.co_filename)
     if not os.path.isfile(filename):
         raise NoCode('Source is not a file: %r' % filename)
     return subsequent_lines_with_more_indentation(filename, function_code.co_firstlineno)

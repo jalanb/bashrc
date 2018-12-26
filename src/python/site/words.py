@@ -2,7 +2,6 @@
 
 
 import re
-from itertools import ifilter
 
 
 def match_case(string1, string2):
@@ -28,8 +27,9 @@ def _any_true(function, iterable):
     >>> _any_true(lambda x: x > 5, (3, 6))
     True
     """
-    for _ in ifilter(function, iterable):
-        return True
+    for item in iterable:
+        if function(item):
+            return True
     return False
 
 

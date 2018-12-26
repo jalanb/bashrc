@@ -2,8 +2,7 @@ The sis module
 ==============
 
     >>> import sis
-    >>> print sis.__doc__
-    A companion module to sys
+    >>> assert 'companion module to sys' in sis.__doc__
 
 paths
 -----

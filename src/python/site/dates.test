@@ -8,7 +8,9 @@ now() is hard to test, reproducibly
     >>> if p.exists(): p.remove()
 
 Make a file, now
-    >>> p.touch()
+    >>> touched = p.touch()
+    >>> assert p == touched
+    >>> assert p.exists()
 
 Get the date/time now
     >>> now = dates.now()
@@ -16,7 +18,8 @@ Get the date/time now
 Find the creation time of the created file
     >>> import time
     >>> year, month, day, hour, minute, second, _, _, _ = time.gmtime(p.getctime())
-    >>> p.remove()
+    >>> _ = p.remove()
+    >>> assert not p.exists()
 
 Test that the call to now was within a second of when the file was created
     >>> now.year == year and now.day == day and now.second == second

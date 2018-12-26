@@ -4,5 +4,4 @@ The twine module
     >>> from twine import Twine
 
     >>> twine = Twine('Fred')
-    >>> print twine.str_class_and_list()
-    ('Fred', 'Twine', 'Twines')
+    >>> assert twine.str_class_and_list()  == ('Fred', 'Twine', 'Twines')

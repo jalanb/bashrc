@@ -2,12 +2,12 @@
 
 
 import os
-from ConfigParser import SafeConfigParser
 
 
 def _credentials(server, username):
     def read_passes():
         passes = {}
+        from ConfigParser import SafeConfigParser
         parser = SafeConfigParser()
         parser.read('%s/.config/mailservers.ini' % os.environ['HOME'])
         for section in parser.sections():
