@@ -531,7 +531,7 @@ sai () {
 }
 
 sib () {
-    source_path ~/.bashrc
+    . ~/.bashrc
 }
 
 sto () {
@@ -1597,7 +1597,7 @@ _edit_source () {
     if echo $filepath | grep -q alias; then
         source_aliases $filepath
     else
-        source_path $filepath "$@"
+        . $filepath "$@"
     fi
 }
 
@@ -1647,7 +1647,7 @@ unremembered () {
     if echo $filepath | grep -q alias; then
         source_aliases $filepath
     else
-        source_path $filepath "$@"
+        . $filepath "$@"
     fi
 }
 
