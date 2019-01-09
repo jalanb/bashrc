@@ -46,6 +46,7 @@ local_rc () {
 . ~/bash/wwts.sh
 . ~/bash/keyboard/__init__.sh
 . ~/bash/git/__init__.sh
+. ~/bash/zzz_renames.sh
 
 export _BASH_DIR=~/bash
 
