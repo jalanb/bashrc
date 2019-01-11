@@ -23,7 +23,6 @@ set_paths () {
         add_to_a_path PATH /sbin
         add_to_a_path PATH /usr/sbin
         add_to_a_path PATH /usr/local/go/bin
-        export PATH
     else
         echo ~/jab is not a directory
     fi

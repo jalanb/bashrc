@@ -75,7 +75,7 @@ pith () {
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
-    pypath python $_ipython "$@"
+    pypath ipython $_ipython "$@"
 }
 
 pypd () {
@@ -84,38 +84,6 @@ pypd () {
 
 pypp () { 
     pyth setup.py "$@"
-}
-
-pyth () {
-    local __doc__="""Run a python command on a script which might have a shebang"""
-    local _python=python
-    for _arg in "$@"; do
-        [[ -f "$_arg" ]] || continue
-        if [[ -d "$_arg" ]]; then
-            echo Choose one: $(ls "$_arg/")
-        else
-            head -n 1 "$_arg" | grep -q '#!.*python' || continue
-            _python=$(head -n 1 "$_arg" | sed -e "s:.* ::")
-            break
-        fi
-    done
-    pypath $_python "$@"
-}
-
-# xxxxxx
-
-pypath () {
-    local __doc__="""Restrict PATH when running python commands"""
-    local _path="$HOME/bin:/usr/local/bin:/usr/bin"
-    local _venv_bin="${VIRTUAL_ENV:-xxx}"/bin
-    [[ -d $_venv_bin ]] && _path="$_venv_bin:$_path"
-    local _executable=$1; shift
-    if [[ $_executable =~ python[2-9] ]]; then
-        (PATH=$_path $_executable "$@")
-    else
-        # Other programs might not like the subshell so much
-        PATH=$_path $_executable "$@"
-    fi
 }
 
 # xxxxxxx

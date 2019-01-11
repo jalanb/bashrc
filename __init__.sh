@@ -16,6 +16,7 @@ Welcome_to $BASH_SOURCE
 . ~/hub/vimack/vimack.sh
 . ~/hub/kd/cd.sh
 . ~/hub/whyp/whyp.sh
+. ~/hub/pyth/pyth.sh
 
 _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 
