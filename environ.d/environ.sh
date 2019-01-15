@@ -77,6 +77,7 @@ _source_jab_environ () {
     # echo $PATH | tr ':' '\n'
     # set +x
     shopt -s cdspell
+    shopt -s autocd   #Use dir name as a "cd command"
     set -o vi
 }
 
