@@ -77,6 +77,7 @@ _colour_pass () {
 }
 
 _colour_prompt () {
+    local __doc__="""Use a coloured prompt with helpful info"""
     local _status=$1; shift
     local _name="${USER:-$(whoami)}"
     local _where="${HOSTNAME:-$(hostname -s)}"
@@ -91,7 +92,7 @@ _colour_prompt () {
     local _branch=$(get_git_branch)
     local _git=$(get_git_status $_bump_version)
     [[ -n $_git ]] && _branch="($_git)"
-    local _py_vers=$(pyth --version 2>&1 | sed -e s/Python.//)
+    local _py_vers=$(python --version 2>&1 | sed -e s/Python.//)
     local _venv=$(env | g VIRTUAL_ENV= | sed -e "s/[^=]*=//")
     local _venv_name=
     [[ -n $_venv ]] && _venv_name=$($_basename $_venv)
@@ -136,6 +137,7 @@ vp () {
 }
 
 export_prompt_colour () {
+    local __doc__="""Interpret first arg as main colour for the prompt"""
     local _prompt_colour=
     case $1 in
         green ) _prompt_colour="$GREEN";;
@@ -147,6 +149,7 @@ export_prompt_colour () {
 }
 
 export_status () {
+    local __doc__="""Interpret first arg to set STATUS"""
     local _one=$1; shift
     local _status=
     [[ -z "$_one" ]] && _one="-z \$?"
@@ -157,16 +160,19 @@ export_status () {
 }
 
 _pre_pses () {
+    local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
     (whyp-whyp -q py_cd && py_cd --add . >/dev/null 2>&1)
     history -a
 }
 
 _post_pses () {
+    local __doc__="""Stuff to do after setting the prompt"""
     export_status "$@"
 }
 
 export_pses () {
+    local __doc__="""Set all PS* symbols (which control prompts"""
     local _status=$1
     _pre_pses
     export PS1=$(_colour_prompt $_status)
