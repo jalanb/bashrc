@@ -93,4 +93,13 @@ pylinum () {
     [[ $string != "# pylint: disable=No" ]] && echo $string
 }
 
+install_develop () {
+    [[ -f setup.py ]] || echo "setup.py is not a file" >&2
+    [[ -f setup.py ]] || return 1
+    local _pip=pip
+    [[ $1 =~ 2 ]] && _pip=pip2
+    [[ -f requirements.txt ]] && $_pip install -r requirements.txt
+    $_pip install -e .
+}
+
 Bye_from $BASH_SOURCE
