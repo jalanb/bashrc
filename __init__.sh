@@ -14,7 +14,7 @@ Welcome_to $BASH_SOURCE
 . ~/hub/whyp/whyp.sh
 . ~/jab/src/bash/hub.sh
 . ~/hub/vimack/vimack.sh
-. ~/hub/kd/cd.sh
+. ~/hub/cde/cd.sh
 . ~/hub/whyp/whyp.sh
 . ~/hub/pyth/pyth.sh
 

@@ -558,7 +558,7 @@ tma () {
 }
 
 tmp () {
-    pushq $(pyth ~/hub/kd/cd.py ~/tmp "$@")
+    pushq $(pyth ~/hub/cde/cd.py ~/tmp "$@")
 }
 
 try () {
@@ -993,8 +993,8 @@ quack () {
 range () {
     local destination=.
     if [[ -n "$*" ]]; then
-        local kd_script=~/hub/kd/cd.py
-        if ! destination=$(PYTHONPATH=$python_directory pyth $kd_script "$@" 2>&1); then
+        local cde_script=~/hub/cde/cd.py
+        if ! destination=$(PYTHONPATH=$python_directory pyth $cde_script "$@" 2>&1); then
             echo "$destination"
             return 1
         fi

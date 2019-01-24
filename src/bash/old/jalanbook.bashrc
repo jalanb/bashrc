@@ -25,7 +25,7 @@ _source_jab_scripts () {
     require "~/jab/src/bash/aliases.sh"
     require "~/jab/src/bash/functons.sh"
     require "~/jab/src/bash/prompt.sh"
-    requite "~/hub/kd/kd.sh"
+    requite "~/hub/cde/cde.sh"
     requite "~/hub/vimack/vimack"
 }
 

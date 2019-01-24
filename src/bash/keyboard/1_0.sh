@@ -34,7 +34,7 @@ alias 09="cd /Volumes"
 
 alias 10="cd ~/hub/.."
 alias 11="cde ~/hub/craas"
-alias 12="cde ~/hub/kd"
+alias 12="cde ~/hub/cde"
 alias 13="cde ~/hub/pym"
 alias 14="cde ~/hub/pysyte"
 alias 15="cde ~/hub/whyp"

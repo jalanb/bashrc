@@ -21,7 +21,7 @@ checkouts () {
     python setup.py develop
     cd ..
     git clone $GITHUB/jalanb/whyp
-    git clone $GITHUB/jalanb/kd
+    git clone $GITHUB/jalanb/cde
     git clone $GITHUB/jalanb/ackvim
 }
 

@@ -41,7 +41,7 @@ main () {
     up_dir ~/hub/dotsite
     up_dir ~/hub/jail
     up_dir ~/hub/jalanb.github.io
-    up_dir ~/hub/kd
+    up_dir ~/hub/cde
     up_dir ~/hub/pss
     up_dir ~/hub/pym
     up_dir ~/hub/vimcat

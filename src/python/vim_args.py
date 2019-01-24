@@ -6,7 +6,7 @@ args = {
     'v': ['~/python/vim.py', '~/python/vim_script.py', '~/python/site/script_paths.py'],
     'rf': ['~/python/rf.py', '~/.config/rf/config'],
     'jpm': ['~/hub/jpm/jpm/jpm.py', '~/hub/jpm/bin/jpm'],
-    'kd':  ['~/hub/kd/kd.sh', '~/hub/kd/kd.py', '~/.config/kd'],
+    'cd':  ['~/hub/cde/cd.sh', '~/hub/cde/cd.py', '~/.config/cd'],
     'locate': ['~/jab/bin/locate', '~/python/site/locate.py'],
     'main': ['~/hub/main.py'],
     'paths': ['~/hub/pysyte/dotpaths.py'],
