@@ -9,7 +9,7 @@ _set_path () {
     [[ -d $LOCAL/go/bin ]] && LOCALS==$LOCALS="$LOCALS:$LOCAL/go/bin"
     BINS=/usr/bin:/bin:/usr/sbin:/sbin
     HOMES=$HOME/bin:$HOME/.local
-    export PATH=$HOMES:$LOCALS:$BINS
+    PATH=$HOMES:$LOCALS:$BINS
     export STDOUT=on
     export STDERR=on
 
@@ -23,14 +23,21 @@ _bashrc () {
     WELCOME_BYE=
     local _local_cd=
     local_rc $_home_user && _local_cd=$LOCAL_CD
-    set +x
+    # set +x
     local _bashrc_cd=~/jab
     [[ -n $_local_cd ]] && _bashrc_cd="$_local_cd"
     export PS1="\$? [\u@\h:\$PWD]\n$ "
+    # set -x
     sp green
+    # echo === bashrc 31
+    # echo $PATH | tr ':' '\n'
     # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    # set -x
     cde $_bashrc_cd # >/dev/null 2>&1
+    # set +x
+    # echo === bashrc 38
+    # echo $PATH | tr ':' '\n'
 }
 
 BASHRC_LOG=~/bashrc.log
@@ -45,7 +52,7 @@ vbb () {
 
 vbl () {
     [[ -f $BASHRC_LOG ]] || return 1
-    vim $BASHRC_LOG 
+    vim $BASHRC_LOG
 }
 
 log_main () {

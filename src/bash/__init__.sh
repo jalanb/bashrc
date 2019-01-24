@@ -19,7 +19,7 @@ local_rc () {
     export LOCAL_CD=
     [[ -d "$_cd" ]] || return 1
     [[ -f $_rcf ]] || return 1
-    set -x
+    # set -x
     cd "$_cd"
     local _rc="$(cat $_rcf)"
     [[ -n $_rc ]] && eval $_rc

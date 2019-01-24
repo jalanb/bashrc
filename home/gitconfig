@@ -16,6 +16,7 @@
     cb = rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
+    df = diff --name-only
     dh = difftool -y --extcmd=\"vim -d -o\"
     dump = cat-file -p
     di = difftool -y --extcmd=\"icdiff --line-numbers\"

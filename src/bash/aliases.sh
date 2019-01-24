@@ -72,6 +72,9 @@ alias z.="zm \*"
 
 # xxx
 
+alias bim=vim
+alias cim=vim
+
 alias doc="cde ~/Documents"
 
 alias got=git

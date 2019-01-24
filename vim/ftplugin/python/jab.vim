@@ -162,9 +162,20 @@ endif
 " Try to run this file(s) through doctest
 "
 if !exists("Try")
+    function PythonTwo ()
+        return system(' python -c "import sys; sys.stdout.write(str(sys.version_info.major))"') == '2'
+    endfunction
     function NewTestFile(filename)
+        let dirname = fnamemodify(s:file_name, ':h:t')
+        if dirname == 'bin'
+            return
+        endif
+        let extension = fnamemodify(s:file_name, ':e')
+        if extension != 'py'
+            return
+        endif
         exec "tabnew! " . s:file_test
-        exec "normal IThe " . s:file_stem . " module\<cr>===========" . substitute(s:file_stem, ".", "=", "g") . "\<cr>\<cr>    >>> import ". s:file_stem . "\<cr>>>> print " . s:file_stem . ".__doc__\<Esc>"
+        exec "normal IThe " . substitute(s:file_stem, "/", ".", "g") . " module\<cr>===========" . substitute(s:file_stem, ".", "=", "g") . "\<cr>\<cr>    >>> import ". s:file_stem . "\<cr>>>> assert 'module' in " . s:file_stem . ".__doc__\<Esc>"
         set cmdheight+=1
         write
         set cmdheight-=1
@@ -178,10 +189,12 @@ if !exists("Try")
             let try_py = './try.py'
         elseif filereadable($TRY)
             let try_py = $TRY
+        elseif PythonTwo()
+            let try_py = '/usr/local/bin/try2'
         else
-            let try_py = '~/pysyte/testing/try.py'
+            let try_py = '/usr/local/bin/try'
         endif
-        let command = "! TERM=linux && python " . try_py . " -qa "
+        let command = "! TERM=linux && " . try_py . " -qa "
         let command_line = command . item_name . " | grep -v DocTestRunner.merge "
         if a:quietly
             let tmpfile = tempname()
@@ -191,6 +204,12 @@ if !exists("Try")
             let quiet_line = command_line
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
+        if filereadable(s:file_fail) && empty(readfile(s:file_fail))
+            call delete(s:file_fail)
+        endif
+        if ! filereadable(s:file_fail)
+            return
+        endif
         try
             exec quiet_line
             if tmpfile != 'none'

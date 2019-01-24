@@ -85,7 +85,7 @@ Host twkwbe43 eop
     User builder
     IdentityFile ~/.ssh/wwts/eop/builder.key
 
-Host twkwbe47 cor
+Host twkwbe47 order
     Hostname 172.25.32.122
     User builder
     IdentityFile ~/.ssh/wwts/eop/builder.key
