@@ -22,7 +22,13 @@ except ImportError as e:
 try:
     from pathlib import Path
 except ImportError:
-    from pysyte.paths import path as Path
+    try:
+        from pysyte.paths import path as Path
+    except ImportError:
+        if sys.version_info.major == 2:
+            from dotsite.paths import path as Path
+        else:
+            raise
 
 try:
     from see import see
@@ -43,7 +49,7 @@ if see:
     print('from see_code import code, highlight, see_code, see_highlight')
 
 try:
-    e = Path('~/%s' % Path(sys.executable).relative_to(os.environ['HOME']))
+    e = '~/%s' % Path(sys.executable).relative_to(os.environ['HOME'])
 except ValueError:
     e = Path(sys.executable)
 print()
