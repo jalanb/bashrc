@@ -155,6 +155,11 @@ vd13 () {
 vd23 () {
     vd ~/tmp/two ~/tmp/three
 }
+
+vvpj () {
+    vvf python/jab.vim
+}
+
 # xxxxx
 
 old_v () {
