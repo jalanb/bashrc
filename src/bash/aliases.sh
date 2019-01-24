@@ -55,6 +55,9 @@ unalias -a
 # y()
 # z()
 
+alias X='set -x'
+alias Z='set +x'
+
 # xx
 
 alias ,,='cdp'
