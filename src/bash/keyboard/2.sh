@@ -11,23 +11,23 @@ at_home () {
     # set -x
     local _name=$1; shift
     local _homed=~/$_name
-    local _underhomed=$_homed/$_name
-    [[ -d $_homed ]] || [[ -d $_underhomed ]] || return 1
-    [[ -d $_homed ]] || _homed=$_underhomed
+    [[ -d $_homed ]] || return 1
+    local _undername=$1; shift
+    [[ $_undername ]] || _undername=$_name
     # Args should overwrite defaults
     local _match_dir=$( (
-        [[ -d $_homed ]] && ( 
-            cd $_homed
-            for _arg_path in "$@"; do
-                if [[ -d $_arg_path ]]; then
-                    readlink -f $_arg_path
-                fi
-            done
-        )
+        cd $_homed
+        for _arg_path in $_undername "$@"; do
+            if [[ -d $_arg_path ]]; then
+                readlink -f $_arg_path
+                break
+            fi
+        done
     ) )
-    [[ -d "$_match_dir" ]] && _homed="$_match_dir"
-    [[ -d "$_homed" ]] || return 1
-    CDE_header=$( (cd $_homed; l -d ${_name}* 2>/dev/null ) ) cde $_homed
+    local _dir=$_homed
+    [[ -d "$_match_dir" ]] && _dir="$_match_dir"
+    [[ -d "$_dir" ]] || return 1
+    CDE_header=$( (cd $_dir; l -d ${_name}* 2>/dev/null ) ) cde $_dir
     # set +x
 }
 
@@ -36,7 +36,7 @@ _2 () {
 }
 
 _21 () {
-    at_home tools.master "$@"
+    at_home tools "$@"
 }
 
 _22 () {
