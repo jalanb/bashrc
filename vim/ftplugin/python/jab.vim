@@ -197,10 +197,11 @@ if !exists("Try")
             return
         endif
         exec "tabnew! " . s:file_test
-        exec "normal IThe " . substitute(s:file_stem, "/", ".", "g") . " module\<cr>===========" . substitute(s:file_stem, ".", "=", "g") . "\<cr>\<cr>    >>> import ". s:file_stem . "\<cr>>>> assert 'module' in " . s:file_stem . ".__doc__\<Esc>"
-        set cmdheight+=1
+        let l:dot_stem = substitute(s:file_stem, "/", ".", "g")
+        exec "normal IThe " . l:dot_stem . " module\<cr>===========" . substitute(s:file_stem, ".", "=", "g") . "\<cr>\<cr>    >>> import ". l:dot_stem . "\<cr>>>> assert 'module' in " . l:dot_stem . ".__doc__\<Esc>"
+        set cmdheight=2
         write
-        set cmdheight-=1
+        set cmdheight=1
     endfunction
     function TryTest(quietly)
         call UseFile(expand("%"))
