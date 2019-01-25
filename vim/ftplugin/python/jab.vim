@@ -69,6 +69,23 @@ let g:syntastic_auto_jump = 1
 let g:syntastic_stl_format = '%E{%e errors, from line %fe}%B{, }%W{%w warnings from line %fw}'
 
 
+function OpenTabFor(path)
+    let sought = expand(a:path)
+    let start_tab = expand('%')
+    if sought == start_tab
+        return
+    endif
+    let this_tab = ''
+    while this_tab != start_tab
+        tabnext
+        let this_tab = expand('%')
+        if sought == this_tab
+            return
+        endif
+    endwhile
+    silent exec "tabnew " . sought
+endfunction
+
 function FindUnitTest()
     let s:unit_test = substitute(s:file_py,'\.py$','_test.py',"")
     if ! filereadable(s:unit_test)
@@ -86,7 +103,7 @@ function LoadUnitTest()
     call FindUnitTest()
     if filereadable(s:unit_test) && s:file_py != s:unit_test && &loadplugins
         setl autoread
-        exec "tabnew " s:unit_test
+        call OpenTabFor(s:unit_test)
         set filetype=python
         set foldlevel=1
     endif
@@ -103,7 +120,7 @@ function LoadTestUnit()
     call FindTestUnit()
     if filereadable(s:test_unit) && s:file_py != s:test_unit && s:unit_test != s:test_unit && &loadplugins
         setl autoread
-        exec "tabnew " s:test_unit
+        call OpenTabFor(s:test_unit)
         set filetype=python
         set foldlevel=1
     endif
@@ -118,16 +135,16 @@ let s:file_actual = s:file_stem . '.actual'
 if ! &diff && ! exists("g:recovering") && argc() == 1
     let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
     if filereadable(s:file_jabber) && s:file_py != s:file_jabber && &loadplugins
-        exec "tabnew " s:file_jabber
+        call OpenTabFor(s:file_jabber)
     endif
     let s:file_parsley = substitute(s:file_py,'\.py$','.parsley',"")
     if filereadable(s:file_parsley) && s:file_py != s:file_parsley && &loadplugins
-        exec "tabnew " s:file_parsley
+        call OpenTabFor(s:file_parsley)
         set filetype=doctest
     endif
     let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
     if filereadable(s:file_grammar) && s:file_py != s:file_grammar && &loadplugins
-        exec "tabnew " s:file_grammar
+        call OpenTabFor(s:file_grammar)
         set filetype=doctest
     endif
     call LoadUnitTest()
@@ -135,21 +152,21 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
     let s:file_test = substitute(s:file_py,'\.py$','.test',"")
     if filereadable(s:file_test) && s:file_py != s:file_test && &loadplugins
         setl autoread
-        exec "tabnew " s:file_test
+        call OpenTabFor(s:file_test)
         set filetype=doctest
         set foldlevel=1
     endif
     let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
     if filereadable(s:file_tests) && s:file_py != s:file_tests && &loadplugins
         setl autoread
-        exec "tabnew " s:file_tests
+        call OpenTabFor(s:file_tests)
         set filetype=doctest
         set foldlevel=1
     endif
     let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
     if filereadable(s:file_fail) && s:file_py != s:file_fail && &loadplugins
         setl autoread
-        exec "tabnew " s:file_fail
+        call OpenTabFor(s:file_fail)
         set filetype=doctest_fail
     endif
     tabnext
@@ -259,7 +276,7 @@ if !exists("Try")
             return
         endif
         silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! " . s:file_actual
-        silent exec "tabnew " . s:file_expected
+        call OpenTabFor(s:file_expected)
         set buftype=nofile
         set diffopt=filler,iwhite,vertical
         silent exec "diffsplit " . s:file_actual
