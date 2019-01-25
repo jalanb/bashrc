@@ -188,11 +188,11 @@ if !exists("Try")
         return system(' python -c "import sys; sys.stdout.write(str(sys.version_info.major))"') == '2'
     endfunction
     function NewTestFile(filename)
-        let dirname = fnamemodify(s:file_name, ':h:t')
+        let dirname = fnamemodify(a:filename, ':h:t')
         if dirname == 'bin'
             return
         endif
-        let extension = fnamemodify(s:file_name, ':e')
+        let extension = fnamemodify(a:filename, ':e')
         if extension != 'py'
             return
         endif
