@@ -127,12 +127,13 @@ function LoadTestUnit()
 endfunction
 
 set autowrite
-let s:file_name = expand("%")
-let s:file_stem = fnamemodify(s:file_name,":r")
-let s:file_py = s:file_stem . '.py'
-let s:file_expected = s:file_stem . '.expected'
-let s:file_actual = s:file_stem . '.actual'
-if ! &diff && ! exists("g:recovering") && argc() == 1
+
+function UseFile(file_name_arg)
+    let s:file_name = a:file_name_arg
+    let s:file_stem = fnamemodify(s:file_name,":r")
+    let s:file_py = s:file_stem . '.py'
+    let s:file_expected = s:file_stem . '.expected'
+    let s:file_actual = s:file_stem . '.actual'
     let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
     if filereadable(s:file_jabber) && s:file_py != s:file_jabber && &loadplugins
         call OpenTabFor(s:file_jabber)
@@ -169,11 +170,15 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
         call OpenTabFor(s:file_fail)
         set filetype=doctest_fail
     endif
+endfunction
+
+if ! &diff && ! exists("g:recovering") && argc() == 1
+    call UseFile(expand("%"))
     tabnext
-    if !getfsize(expand('%')) > 0
+    if !filereadable(expand('%')) || empty(readfile(expand('%')))
         tabnext
-        syntax on
     endif
+    syntax on
 endif
 "
 " Try to run this file(s) through doctest
@@ -198,6 +203,7 @@ if !exists("Try")
         set cmdheight-=1
     endfunction
     function TryTest(quietly)
+        call UseFile(expand("%"))
         let item_name = s:file_stem . "."
         if ! filereadable(s:file_test) && ! filereadable(s:file_tests) && ! filereadable(s:test_unit) && ! filereadable(s:unit_test)
             call NewTestFile(s:file_test)
