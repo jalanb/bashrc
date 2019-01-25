@@ -14,10 +14,6 @@ ssi () {
     sst mini.local "$@"
 }
 
-ssb () {
-    sst book.local "$@"
-}
-
 ssm () {
     sst mac.local "$@"
 }
