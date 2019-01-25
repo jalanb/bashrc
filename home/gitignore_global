@@ -53,6 +53,7 @@
 .svn
 .settings
 .eggs
+.cd
 #
 # Names
 #

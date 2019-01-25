@@ -48,20 +48,22 @@ y () {
 # xx
 
 3d () {
-    3l "$@" -d
+    3l -d "$@"
 }
 
 3l () {
-    if first_num "$@"; then
-        Tree -L $num $args
-    else
-        Tree -L 3 "$@"
-    fi
+    local _num=
+    [[ $1 =~ ^[0-9]+$ ]] && _num=$1
+    [[ $_num ]] && shift || _num=3
+    Tree -L $_num  "$@"
 }
 
 3y () {
+    local _dir=
+    [[ -f "$1" ]] && _dir=$(dirname "$1")
+    [[ -d "$1" ]] && _dir="$1"
     if [[ -f "$1" ]]; then
-        dir=$(dirname_ $1)
+        dir=$(dirnames "$1")
         shift
     elif [[ -d "$1" ]]; then
         dir=$1
@@ -394,7 +396,7 @@ lkq () {
         if l -d $_sought 2>/dev/null; then
             break
         fi
-        _sought=$(dirname_ $_sought)
+        _sought=$(dirnames $_sought)
         if [[ $_sought == / ]]; then
             break
         fi
@@ -829,20 +831,45 @@ mkv3 () {
     virtualenv --python=/usr/local/bin/python3 /Users/jab/.virtualenvs/$1
 }
 
-nosedocs () {
-    nosetests --with-doctest --doctest-tests --doctest-extension=.test "$@"
+nose_doctests () {
+    nosetests -h 2>&1 | g -q doctest || return
+    echo "--with-doctest --doctest-tests --doctest-extension=.test --doctest-extension=.tests "
+}
+
+nose_coverage () {
+    nosetests -h 2>&1 | g -q coverage || return
+    echo """ \
+        --with-coverage \
+        --cover-erase \
+        --cover-package=. \
+        --cover-tests \
+        --cover-html --cover-html-dir=coverage \
+        """
+}
+
+nose_stopwatch () {
+    [[ $1 == 1 ]] && return
+    nosetests -h 2>&1 | g -q stopwatch || return
+    echo "-A \"speed!='slow'\""
+}
+
+nose_progress () {
+    nosetests -h 2>&1 | g -q progressive || return
+    echo "--with-progressive "
+    nose_coverage $_progress "$@"
 }
 
 nose () {
-    local _progress=
-    nosetests -h 2>&1 | g -q progressive && _progress="--with-progressive"
-    local _coverage=
-    nosetests -h 2>&1 | g -q coverage && _coverage="--with-coverage --cover-erase --cover-html --cover-html-dir=coverage --cover-package=."
-    if nosetests -h 2>&1 | g -q stopwatch; then
-        NOSE_COVER_TESTS= nosedocs -A "speed!='slow'" $_coverage $_progress "$@"
-    else
-        NOSE_COVER_TESTS= nosedocs $_coverage $_progress "$@"
-    fi
+    local _there=
+    [[ -d $1 ]] && _there=$1
+    [[ $_there ]] && shift
+    [[ $_there ]] || _there=.
+    local _all=
+    [[ $1 == -a ]] && _all=1
+    [[ $_all ]] && shift
+    (cd $_there
+    NOSE_COVER_TESTS= nosetests $(nose_doctests) $(nose_coverage) $(nose_stopwatch $_all) $(nose_progress)
+    )
 }
 
 SUDO () {
@@ -1272,7 +1299,7 @@ maketest () {
         echo $test_file is already a file >&2
         return 1
     fi
-    local test_dir=$(dirname_ $test_file)
+    local test_dir=$(files_dirs $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
@@ -1314,11 +1341,23 @@ todo_show () {
     python3 ~/jab/src/python/todo.py $todo_txt
 }
 
-dirname_ () {
+files_dirs () {
+    local __doc__="""echo all args' directories"""
     local _result=1
     for _arg in "$@"; do
         [[ -e "$_arg" ]] || continue
         dirname "$_arg"
+        _result=0
+    done
+    return $_result
+}
+
+dirnames () {
+    local __doc__="""echo all directories in args"""
+    local _result=1
+    for _arg in "$@"; do
+        [[ -e "$_arg" ]] || continue
+        [[ -d "$_arg" ]] && echo "$_arg" || dirname "$_arg"
         _result=0
     done
     return $_result
@@ -1586,7 +1625,7 @@ _edit_source () {
     local filepath=$1
     shift
     blank_script $filepath
-    filedir=$(dirname_ $filepath)
+    filedir=$(files_dirs $filepath)
     if [[ $filedir == "." ]]; then
         v $filepath "$@"
     else
@@ -1636,7 +1675,7 @@ _divv_get_difference () {
 unremembered () {
     shift
     blank_script $filepath
-    filedir=$(dirname_ $filepath)
+    filedir=$(files_dirs $filepath)
     if [[ $filedir == "." ]]; then
         v $filepath
     else
@@ -1654,7 +1693,7 @@ unremembered () {
 copy_from_wwts_server () {
     local _server_name=$1
     local _source="$2"
-    local _source_dir=$(dirname_ "$_source")
+    local _source_dir=$(dirnames "$_source")
     local _here_root=~/wwts/$_server_name
     [[ -d $_here_root ]] || mkdir -p $_here_root
     local _here_path=$_here_root/"$_source_dir"
