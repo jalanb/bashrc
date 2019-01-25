@@ -230,12 +230,6 @@ if !exists("Try")
             let quiet_line = command_line
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
-        if filereadable(s:file_fail) && empty(readfile(s:file_fail))
-            call delete(s:file_fail)
-        endif
-        if ! filereadable(s:file_fail)
-            return
-        endif
         try
             exec quiet_line
             if tmpfile != 'none'
@@ -256,10 +250,10 @@ if !exists("Try")
                 exec "tabnext"
             endwhile
         endif
-        let path_to_fails = expand(s:file_fail)
-        let z = getfsize(path_to_fails)
-        " echo "Size of " . path_to_fails . " is " . z
-        if ! z
+        if filereadable(s:file_fail) && empty(readfile(s:file_fail))
+            call delete(s:file_fail)
+        endif
+        if ! filereadable(s:file_fail)
             return
         endif
         exec "tablast"
