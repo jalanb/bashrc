@@ -208,16 +208,19 @@ if !exists("Try")
         if ! filereadable(s:file_test) && ! filereadable(s:file_tests) && ! filereadable(s:test_unit) && ! filereadable(s:unit_test)
             call NewTestFile(s:file_test)
         endif
-        if filereadable('./try.py')
-            let try_py = './try.py'
-        elseif filereadable($TRY)
-            let try_py = $TRY
-        elseif PythonTwo()
-            let try_py = '/usr/local/bin/try2'
+        if PythonTwo()
+            let item_name = expand('%')
+            let command = '! TERM=linux && python -m doctest '
         else
-            let try_py = '/usr/local/bin/try'
+            if filereadable('./try.py')
+                let try_py = './try.py'
+            elseif filereadable($TRY)
+                let try_py = $TRY
+            else
+                let try_py = '/usr/local/bin/try'
+            endif
+            let command = "! TERM=linux && " . try_py . " -qa "
         endif
-        let command = "! TERM=linux && " . try_py . " -qa "
         let command_line = command . item_name . " | grep -v DocTestRunner.merge "
         if a:quietly
             let tmpfile = tempname()
