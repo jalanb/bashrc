@@ -9,7 +9,7 @@ Welcome_to $BASH_SOURCE
 
 h () {
     local __doc__="tail history"
-    local _options="-n $(( $LINES / 2 ))"
+    local _options=$(( $LINES / 2 ))
     history_tail "$@" $_options
 }
 
@@ -18,36 +18,22 @@ h () {
 
 alias HG=$(which hg) # With apologies, but don't really use it
 
+h1 () {
+    history_tail 2 | head -n 1
+}
+
 hg () {
     local __doc__="grep in history"
     history_parse | grep -v '^hg ' | grep --color "$@"
 }
 
-hh () {
-    local __doc__="head history"
-    local _options="-n $(( $LINES - 7 ))"
-    if [[ $1 =~ ^[0-9] ]]; then
-        _options="-n $1"; shift
-    fi
-    h "$@" | head $_options
-}
+alias hh="history_head"
 
 hl () {
     h "$@" | less
 }
 
-h1 () {
-    ht 2 | head -n 1
-}
-
-ht () {
-    local __doc__="tail history"
-    local _options="-n $(( $LINES - 7 ))"
-    if [[ $1 =~ ^[0-9] ]]; then
-        _options="-n $1"; shift
-    fi
-    h "$@" | tail $_options
-}
+alias ht="history_tail"
 
 hv () {
     local __doc__="edit history"
@@ -84,39 +70,33 @@ hgv ()
 
 # premature abbreviations
 
-alias hn=history_view
-alias hnh=history_head
-alias hnt=history_tail
+alias hn=history_count
+alias hnh="history_count head"
+alias hnt=history_count
 
 # history_xxxx+
 
-export HISTORY_COUNTER=
 
 history_parse () {
     HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|[tg]h\)\>" 
 }
 
 history_count () {
-    history_parse "$@" | cat -n
+    history_view "$@" | cat -n
 }
 
 history_view () {
-    local _history_viewer="cat -n"
-    local _one="$1"
-    if [[ -n $_one ]]; then
-        [[ -e $1 ]] && _history_viewer=_one
+    local __doc__="view history"
+    local _viewer=
+    whyp-executable "$1" && _viewer="$1"
+    [[ $_viewer ]] && shift || _viewer=tail
+    local _options="-n $(( $LINES - 7 ))"
+    [[ $1 == -n ]] && shift
+    if [[ $1 =~ ^[0-9] ]]; then
+        _options="-n $1"
         shift
     fi
-    local __doc__="number history"
-    local _count_options="-n $(( $LINES - 7 ))"
-    if [[ $1 =~ ^[0-9] ]]; then
-        _count_options="-n $1"; shift
-    fi
-    local _counter=tail
-    [[ -n $HISTORY_COUNTER ]] && _counter=$HISTORY_COUNTER
-    history_count "$@" | $_counter $_count_options | $_history_viewer
-    [[ -n $HISTORY_COUNTER ]] && return
-    export HISTORY_COUNTER=tail
+    history_parse "$@" | $_viewer $_options
 }
 
 history_head () {
