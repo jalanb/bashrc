@@ -607,7 +607,7 @@ vlf () {
 }
 
 vlo () {
-    v $(locate "$@")
+    v_safely $(locate "$@")
 }
 
 vpe () {
@@ -1627,10 +1627,10 @@ _edit_source () {
     blank_script $filepath
     filedir=$(files_dirs $filepath)
     if [[ $filedir == "." ]]; then
-        v $filepath "$@"
+        v_safely $filepath "$@"
     else
         pushq $filedir
-        v $filepath "$@"
+        v_safely $filepath "$@"
         popq
     fi
     if echo $filepath | grep -q alias; then
@@ -1677,10 +1677,10 @@ unremembered () {
     blank_script $filepath
     filedir=$(files_dirs $filepath)
     if [[ $filedir == "." ]]; then
-        v $filepath
+        v_safely $filepath
     else
         pushq $filedir
-        v $filepath
+        v_safely $filepath
         popq
     fi
     if echo $filepath | grep -q alias; then

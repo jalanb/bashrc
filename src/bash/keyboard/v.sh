@@ -195,6 +195,12 @@ old_v () {
     fi
 }
 # xxxxxx
+
+v_safely () {
+    local __doc__="""Use a safe vim function"""
+    vim -p "$@"
+}
+
 # xxxxxxx
 # xxxxxxxx
 
