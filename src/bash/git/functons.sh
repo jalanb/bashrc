@@ -137,7 +137,7 @@ gac () {
 
 gai () {
     local __doc__="""Add args interactively"""
-    ga --patch "$@"
+    git add --patch "$@"
 }
 
 gba () {
@@ -787,6 +787,7 @@ _gxi_menu () {
     red_one "/"
     red_one q uit
     red_one a dd
+    _git_modified $1 && red_two in t eractive
     red_two a m end
     red_two am e dit
     red_two sta g ed
@@ -795,9 +796,8 @@ _gxi_menu () {
     red_two d r op
     red_two dele t e
     [[ -n $GIT_ADDED ]] && red_one f asten
-    red_one c ommit
+    red_two comm i t
     red_one v im
-    _git_modified $1 && red_one i nteractive
     _git_modified $1 && red_one p atch
     suffix=";"
     red_one hjkl " move"
@@ -1032,13 +1032,13 @@ _gvi_response () {
 }
 
 _gxi_response () {
-    if [[ $answer =~ [cCgGdDiI] ]]; then
-        [[ $answer =~ [cC] ]] && gi
+    if [[ $answer =~ [iIgGdDnN] ]]; then
+        [[ $answer =~ [iI] ]] && gi
         [[ $answer =~ [gG] ]] && git diff --staged
         if _git_modified "$1" ; then
             [[ $answer =~ [dD] ]] && git di "$1"
             [[ $answer =~ [pP] ]] && git diff --patch "$1"
-            [[ $answer =~ [iI] ]] && gai "$1" && git di
+            [[ $answer =~ [nN] ]] && gai "$1" && git di
         fi
         _gxi_request "$1"
         return 0
