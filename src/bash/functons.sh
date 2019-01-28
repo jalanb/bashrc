@@ -868,7 +868,7 @@ nose () {
     [[ $1 == -a ]] && _all=1
     [[ $_all ]] && shift
     (cd $_there
-    NOSE_COVER_TESTS= nosetests $(nose_doctests) $(nose_coverage) $(nose_stopwatch $_all) $(nose_progress)
+    NOSE_COVER_TESTS= nosetests $(nose_doctests) $(nose_coverage) $(nose_stopwatch $_all) $(nose_progress) "$@"
     )
 }
 
