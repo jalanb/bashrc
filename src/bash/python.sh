@@ -75,7 +75,7 @@ pith () {
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
-    pypath ipython $_ipython "$@"
+    pypath $_ipython "$@"
 }
 
 pypd () {
