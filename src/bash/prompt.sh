@@ -102,7 +102,7 @@ _colour_prompt () {
         _venv=$_parent_name
     fi
     local _py_venv=
-    [[ -e $_py_venv ]] && _py_venv=$($_basename $_venv)
+    [[ -e $_venv ]] && _py_venv=$($_basename $_venv)
 
 
 

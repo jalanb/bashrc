@@ -149,7 +149,7 @@ def _locate(args):
 
 
 def parse_args():
-    """Handle options and arguments from the command line"""
+    """Handle arguments from the command line"""
     parser = argparse.ArgumentParser()
     pa = parser.add_argument
     pa('sought', help='String to locate')

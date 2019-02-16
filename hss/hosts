@@ -90,6 +90,11 @@ Host twkwbe47 order
     User builder
     IdentityFile ~/.ssh/wwts/eop/builder.key
 
+Host twkwbe48 corteva
+    Hostname 172.25.32.123
+    User builder
+    IdentityFile ~/.ssh/wwts/eop/builder.key
+
 Host twkwbe96 wmpdev
     Hostname 172.25.32.96
     User builder

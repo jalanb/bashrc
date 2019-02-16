@@ -1124,26 +1124,32 @@ lesen () {
     less -NR "$@"
 }
 
-mkenv2 () {
-    _mkenv python
-}
-
-mkenv3 () {
-    _mkenv python
+mkvenv () {
+    local _req=
+    [[ -f requirements.txt ]] && _req="-r requirements.txt"
+    local _project_dir=
+    [[ -f setup.py || -f requirements.txt || $(ls */__init__.py) ]] && _project_dir="-a $(readlink -f .)"
+    local _env_name=$(basename $_project_dir 2>/dev/null)
+    [[ $1 ]] && _env_name=$1
+    [[ $1 ]] && shift
+    [[ $_env_name ]] || echo "_env_name is empty" >&2
+    [[ $_env_name ]] || return 1
+        # --verbose  # Increase verbosity. \
+        # --clear # Clear out the non-root install and start from scratch. \
+        # --system-site-packages # Give the virtual environment access to the global site-packages. \
+        # --relocatable # Make an EXISTING virtualenv environment relocatable. \
+        # --python=/usr/local/bin/python3 # The Python interpreter to use \
+        # $_project_dir # Provide a full path to a project directory to associate with the new environment. \
+        # $_req # Provide a pip requirements file to install a base set of packages into the new environment. \
+        # $_env_name
+    local _python=/usr/local/bin/python3
+    [[ $1 == 2 ]] && _python=/usr/local/bin/python2
+    mkvirtualenv --verbose --clear --system-site-packages --relocatable --python=$_python $_project_dir $_req $_env_name
+    virtualenv --python=/usr/local/bin/python3 /Users/jab/.virtualenvs/$_env_name
 }
 
 tailer () {
     tail -n 1 "$@"
-}
-
-_mkenv () {
-    local _python=$1; shift
-    local _pager=vin
-    local _file=/tmp/mager
-    mkvirtualenv -v -r pai/requirements.txt -p $_python --clear --always-copy --download "$@" 2>&1 > $_file
-    [[ $(wc -l $_file) < 39 ]] && _pager="kat -n"
-    $_pager $_file
-    rr $_file
 }
 
 online_all () {
@@ -1247,6 +1253,11 @@ aliases () {
 
 has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | hd1) ]]
+}
+
+is_a_dir () {
+    [[ -d "$1" ]] || echo "\"$1\" is not a directory" >&2
+    [[ -d "$1" ]] 
 }
 
 relpath () {
@@ -1363,6 +1374,16 @@ dirnames () {
     return $_result
 }
 
+twkgit00 () {
+    is_a_file .git/config || return 1
+    sed -i -e s/twkgit30.wwts.com/git.wwts.com/ .git/config
+}
+
+twkgit30 () {
+    is_a_file .git/config || return 1
+    sed -i -e s/git.wwts.com/twkgit30.wwts.com/ .git/config
+}
+
 # xxxxxxxxx
 
 basename_ () {
@@ -1379,6 +1400,11 @@ first_num () {
     num=$(pyth ~/jab/src/python/first_num.py "$@")
     args=$(pyth ~/jab/src/python/first_num.py --Invert "$@")
     [[ -n $num ]]
+}
+
+is_a_file () {
+    [[ -f "$1" ]] || echo "\"$1\" is not a file" >&2
+    [[ -f "$1" ]] 
 }
 
 viewstyle () {
