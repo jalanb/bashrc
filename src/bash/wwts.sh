@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-. ~/wwts/dashboard.master/deployment/bin/deploying.sh optional
+# . ~/wwts/dashboard.master/deployment/bin/deploying.sh optional
 
 cd_deployment () {
     [[ $(basename_ $(realpath .)) == deployment ]] && return

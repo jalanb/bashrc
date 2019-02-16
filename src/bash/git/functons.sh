@@ -17,28 +17,27 @@ _git_status_regexp="^${_git_status_char_regexp}${_git_status_char_regexp}"
 ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     if [[ -z "$*" ]]; then
-        echo Nothing specified for add >&2
-        echo 'Did you mean "gaa" (add all) ?'
+        show_error "Nothing specified for add "
+        show_error 'Did you mean "gaa" (add all) ?'
         return 1
     else
-        git add "$@"
+        show_run_command git add "$@" 
     fi
 }
 
 gb () {
-    if [[ -z "$*" ]]; then
-        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning
-    else
-        git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color "$@";
-    fi
+    local _sought="$*"
+    [[ $_sought ]] || _sought=.
+    show_command "git branch $GIT_BRANCH_OPTION" 
+    git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color $_sought
 }
 
 gd () {
-    git diff "$@"
+    show_run_command git diff "$@" 
 }
 
 gf () {
-    git fetch --all
+    show_run_command git fetch --all
 }
 
 gi () {
@@ -57,17 +56,22 @@ gl () {
 }
 
 gm () {
-    git merge --no-ff --no-edit "$@"
+    show_run_command git merge --no-ff --no-edit "$@" 
 }
 
 go () {
     local __doc__="git checkout"
     local _stashed=
+    local _current_branch=$(current_branch)
+    [[ "$@" =~ $_current_branch ]] && show_error "Already on $(current_branch)"
+    [[ "$@" =~ $_current_branch ]] && return 0
+    show_command "git checkout $@" 
     if git checkout -q "$@" 2>&1 | grep -q fred; then
         if _has_git_changes; then
             stash_herman || return 1
             _stashed=1
         fi
+        show_command "git checkout $@" 
         git checkout -q "$@"
         # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
         [[ -n $_stashed ]] && echo "Cairo: git stash pop"
@@ -76,18 +80,20 @@ go () {
 }
 
 gp () {
+    show_command "git push $@" 
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
-            $(echo "$MSG" | grep set-upstream)
+            local _command=$(echo "$MSG" | grep set-upstream)
+            show_run_command $_command 
         else
-            echo "$MSG" >&2
+            show_error "$MSG" 
             return 1
         fi
     fi
 }
 
 gr () {
-    git pull --rebase "$@"
+    show_run_command git pull --rebase "$@" 
 }
 
 
@@ -100,7 +106,7 @@ gs () {
 gt () {
     local _tag=
     for _tag in "$@"; do
-        git tag "$_tag"
+        show_run_command git tag $_tag 
     done
 }
 
@@ -121,7 +127,7 @@ ts () {
 
 _gs () {
     local __doc__="""git status back end"""
-    git status "$@"
+    show_run_command git status "$@" 
 }
 
 # xxx
@@ -170,15 +176,15 @@ gbo () {
 }
 
 gbm () {
-    git branch -m "$@"
+    show_run_command git branch -m "$@"
 }
 
 gbv () {
-    git blame "$1" | vin
+    show_run_command git blame "$1" | vin
 }
 
 gcp () {
-    git cherry-pick -x --allow-empty "$@"
+    show_run_command git cherry-pick -x --allow-empty "$@"
 }
 
 gdd () {
@@ -209,7 +215,7 @@ gdv () {
 
 gff () {
     gf
-    git fetch --tags
+    show_run_command git fetch --tags
 }
 
 gfp () {
@@ -227,7 +233,7 @@ gia () {
 }
 
 gie () {
-    git commit --amend --edit "$@"
+    show_run_command git commit --amend --edit "$@"
 }
 
 gij () {
@@ -287,15 +293,15 @@ glt () {
 }
 
 gma () {
-    git merge --abort
+    show_run_command git merge --abort
 }
 
 gmm () {
-    local _branch=$(git_branch)
+    local _branch=$(current_branch)
     go master
     grr
     go $_branch
-    git merge master
+    gm master
 }
 
 gob () {
@@ -311,7 +317,7 @@ gog () {
 }
 
 gom () {
-    go master
+    go master "$@"
 }
 
 gor () {
@@ -327,7 +333,7 @@ gpf () {
 }
 
 gpo () {
-    git push origin "$@"
+    show_run_command git push origin "$@"
 }
 
 gpp () {
@@ -343,31 +349,24 @@ gpt () {
     gpo --tags
 }
 
-green_line () {
-    printf "$GREEN$1$NO_COLOUR\n"
-}
-
-show_this_branch () {
-    git branch $1 | grep --colour -B3 -A 3 $(git_branch)
-}
-
 _gs_quiet () {
     first_arg_dir_or_here "$@" && shift
     _do_git_status $dir "$@"
 }
 
 _show_pre_loop () {
-    green_line local
+    show_green local
     show_this_branch
-    green_line status
+    show_green status
 }
 
 gra () {
-    git rebase --abort
+    show_run_command git rebase --abort
 }
 
 grc () {
-    git rebase --continue
+    show_command git rebase --continue
+    git rebase --continue | g "skip this commit" && git rebase --skip
 }
 
 grg () {
@@ -375,21 +374,20 @@ grg () {
 }
 
 grh () {
-    git reset HEAD "$@"
+    show_run_command git reset HEAD "$@"
 }
 
 gri () {
-    local __doc__=""""""
-    if [[ -n $1 ]]; then
-        git rebase --interactive "$@"
-    else
-        git rebase --interactive HEAD~2
-    fi
+    local __doc__="""Rebase args interactively"""
+    local _args="HEAD~2"
+    [[ "$@" ]] && _args="$@"
+    show_run_command git rebase --interactive $_args
 }
 
 grm () {
-    local _current_branch=$(git_branch)
-    git rebase master $_current_branch
+    local _current_branch=$(current_branch)
+    [[ $1 ]] && _current_branch=$1
+    show_run_command git rebase master $_current_branch
 }
 
 gro () {
@@ -398,23 +396,22 @@ gro () {
         echo $_origin
         return 0
     fi
-    echo No origin >&2
+    show_error No origin 
     return 1
 }
 
 grp () {
-    echo "Pull"
     grr "$@"
     read -p "Push? [Y]" reply
     [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpp "$@"
 }
 
 grr () {
-    git_stash_and git pull --rebase "$@"
+    git_stash_and gr "$@"
 }
 
 grs () {
-    git rebase --skip
+    show_run_command git rebase --skip
 }
 
 gsi () {
@@ -429,7 +426,7 @@ gss () {
 
 gst () {
     local __doc__="""git stash"""
-    git stash "$@"
+    show_run_command git stash "$@"
 }
 
 gsp () {
@@ -473,14 +470,14 @@ gxi () {
     _stashed=
     first_arg_dir_or_here "$@" && shift
     GXI_QUERY=
-    green_line remote
+    show_green remote
     glg
     show_this_branch -r
     _show_pre_loop
     while git status --short "$dir"; do
-        green_line staged
+        show_green staged
         git di --staged
-        green_line files
+        show_green files
         _responded=
         for _file in $(gssd_changes "$dir"); do
             [[ -n "$_file" ]] || continue
@@ -504,30 +501,35 @@ gxi () {
 # xxxx
 
 _gbd () {
-    local _current_branch=$(git_branch)
+    local _current_branch=$(current_branch)
     if [[ "$@" =~ $_current_branch ]]; then
         if [[ "$@" =~ "master" ]]; then
-            echo Please checkout another branch before deleting master >&2
+            show_error Please checkout another branch before deleting master 
             return 1
         else
             gom
         fi
     elif [[ "$@" =~ ^-[dD]$ ]]; then
         if [[ $_current_branch == "master" ]]; then
-            echo Please checkout another branch before deleting master >&2
+            show_error Please checkout another branch before deleting master 
             return 1
         fi
         read -p "OK to remove $_current_branch [y]? " -n1 answer
         if [[ -z $answer || $answer =~ [yY] ]]; then
             if git status 2>&1 | grep -q git.merge...abort; then
-                git merge --abort
+                gma
             fi
-            git checkout -q master
-            git branch "$@" $_current_branch
+            gom 
+            show_run_command git branch "$@" $_current_branch
         fi
         return 0
     fi
-    git branch "$@"
+    show_run_command git branch "$@"
+}
+
+gbdr () {
+    gbD
+    gr
 }
 
 gbDD () {
@@ -573,11 +575,11 @@ gomr () {
 }
 
 gcpa () {
-    git cherry-pick --abort
+    show_run_command git cherry-pick --abort
 }
 
 gcpe () {
-    git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
+    show_run_command git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
 }
 
 gcpc () {
@@ -585,7 +587,7 @@ gcpc () {
 }
 
 gcpe () {
-    git cherry-pick --edit "$@"
+    show_run_command git cherry-pick --edit "$@"
 }
 
 gdsi () {
@@ -601,11 +603,15 @@ ggai () {
 }
 
 gfff () {
-    gff; gr
+    gff
+    grup
+    gr
 }
 
 gffm () {
-    gff; gomr
+    gff
+    grup
+    gomr
 }
 
 gl11 () {
@@ -652,12 +658,12 @@ gppp () {
 }
 
 grmt () {
-    local _current_branch=$(git_branch)
-    git rebase master $_current_branch -X theirs
+    local _current_branch=$(current_branch)
+    show_run_command git rebase master $_current_branch -X theirs
 }
 
 grup () {
-    git remote update origin --prune
+    show_run_command git remote update origin --prune
 }
 
 gsri () {
@@ -669,12 +675,16 @@ gssd () {
     _status_line -C $_dir "$@"
 }
 
+gstb () {
+    show_run_command git stash branch "$@"
+}
+
 gstl () {
-    gst --list
+    show_run_command git stash list
 }
 
 gstp () {
-    gst pop
+    show_run_command git stash pop
 }
 
 gtlg () {
@@ -701,7 +711,7 @@ clone () {
 
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
-    git clone "$_remote" "$_local" > $_clone_log 2>&1
+    show_run_command git clone "$_remote" "$_local" > $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
         kat -n $_clone_log
     else
@@ -721,6 +731,10 @@ _show_git_here () {
 }
 
 # xxxxxxxx
+
+show_red () {
+    show_colour "${RED}""$*"
+}
 
 _git_kd () {
     cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
@@ -773,7 +787,8 @@ git_stash_and () {
     local stashed=
     if git_changed; then
         stashed=1
-        gst -q
+        show_command git stash
+        git stash -q
     fi
     "$@"
     if [[ $stashed == 1 ]]; then
@@ -805,7 +820,16 @@ _gxi_menu () {
 }
 
 git_branch () {
-    git rev-parse --abbrev-ref HEAD
+    show_run_command git rev-parse --abbrev-ref HEAD
+}
+
+show_error () {
+    show_red_line "$@"
+    return 1
+}
+
+show_green () {
+    show_colour "${GREEN}""$*"
 }
 
 # xxxxxxxxxxx
@@ -816,7 +840,15 @@ git_changed () {
     git -C $git_dir status --porcelain | grep -q "$_git_status_regexp"
 }
 
+show_colour () {
+    printf "$*""${NO_COLOUR}" >&2
+}
+
 # xxxxxxxxxxxx
+
+show_command () {
+    show_green_line "$ ""$*"
+}
 
 _gxi_request () {
     _gxi_menu $1
@@ -857,6 +889,10 @@ git_on_screen () {
     git $cmd --color "$@" | head -n $_lines
 }
 
+show_red_line () {
+    show_colour_line "${RED}""$*"
+}
+
 untracked () {
     local _path="$1"; shift
     ( test -d "$_path" && gssd "$_path" || _status_line "$_path" ) | grep "??" | cut -d' ' -f2
@@ -874,13 +910,13 @@ _do_git_status () {
     [[ -n "$@" && "$@" =~ -Q ]] && STDERR=off
     [[ -n "$@" && "$@" =~ -[vV] ]] && STDOUT=on
     if [[ -n $_msg ]]; then
-        [[ $STDERR == "on" ]] && echo $_msg >&2
+        [[ $STDERR == "on" ]] && show_error $_msg 
     fi
     # set -x
     # set -e
     [[ -n $_msg ]] && return 1
     if git_root -q $dir; then
-        echo "Fail: git_root -q $dir" >&2
+        show_error "Fail: git_root -q $dir" 
         return 1
     fi
     git -C $dir status "$@"
@@ -889,6 +925,10 @@ _do_git_status () {
 }
 
 # xxxxxxxxxxxxxx
+
+current_branch () {
+    git rev-parse --abbrev-ref HEAD
+}
 
 show_git_time () {
     local _arg_dir="${1:-$PWD}"
@@ -930,6 +970,25 @@ _has_git_changes () {
     local dir=$1
     local _files=$(_any_git_changes $dir)
     [[ -n $_files ]]
+}
+
+show_green_line () {
+    show_colour_line "${GREEN}""$*"
+}
+
+# xxxxxxxxxxxxxxxx
+
+show_colour_line () {
+    printf "$*""${NO_COLOUR}\n" >&2
+}
+
+show_run_command () {
+    show_command "$@"
+    "$@"
+}
+
+show_this_branch () {
+    git branch $1 | grep --colour -B3 -A 3 $(current_branch)
 }
 
 # xxxxxxxxxxxxxxxxx
@@ -1088,7 +1147,7 @@ _git_untracked () {
 _gxi_stash () {
     if [[ -z $_stashed ]]; then
         _stashed=gxi
-        gst
+        git stash
     fi
 }
 
