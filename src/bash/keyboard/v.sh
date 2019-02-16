@@ -3,16 +3,14 @@
 
 # x
 
+v () {
+    vim -p "$@"
+}
+
 # v () {
 #     [[ -z $1 ]] && vim_none || vim_some "$@"
 # }
 # 
-v () {
-    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
-    sai pyithonise VIM &
-    vim -p "$@"
-}
-
 # xx
 
 v. () {
@@ -44,15 +42,15 @@ vu () {
 }
 
 vv () {
-    local __doc__="Edit vim files"
-    [[ -z $* ]] && vvu || vvv "$@"
+    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
+    sai pyithonise VIM &
+    vb "$@"
 }
-#
-# vv () {
-#     local __doc__="Edit vim files"
-#     [[ -n $* ]] && vu || vva "$@"
-# }
 
+# vv () {
+#     local __doc__="""Edit vim files"""
+#     [[ -z $* ]] && vvu || vvv "$@"
+# }
 
 # xxx
 

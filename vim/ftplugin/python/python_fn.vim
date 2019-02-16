@@ -70,22 +70,22 @@ let b:loaded_py_ftplugin = 1
 
 " jump to previous class
   map  [c   :call PythonDec("class", -1)<CR>
-  map  <C-Up>   :call PythonDec("class", -1)<CR>
+  map  <A-Up>   :call PythonDec("class", -1)<CR>
 " vmap ]J   :call PythonDec("class", -1)<CR>
 
 " jump to next class
   map  ]c   :call PythonDec("class", 1)<CR>
-  map  <C-Down>   :call PythonDec("class", 1)<CR>
+  map  <A-Down>   :call PythonDec("class", 1)<CR>
 " vmap ]j   :call PythonDec("class", 1)<CR>
 
 " jump to previous function
   map  [d   :call PythonDec("function", -1)<CR>
-  map  <Up>   zx:call PythonDec("function", -1)<CR>zvjzOk
+  map  <C-Up>   zx:call PythonDec("function", -1)<CR>zvjzOk
 " vmap ]F   :call PythonDec("function", -1)<CR>
 
 " jump to next function
   map  ]d   :call PythonDec("function", 1)<CR>
-  map  <Down>   zx:call PythonDec("function", 1)<CR>zvjzOk
+  map  <C-Down>   zx:call PythonDec("function", 1)<CR>zvjzOk
 " vmap ]f   :call PythonDec("function", 1)<CR>
 
 

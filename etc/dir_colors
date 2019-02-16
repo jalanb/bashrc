@@ -38,6 +38,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .g            00;35
 .parsley      00;35
 .html         00;35
+.json         00;35
 .ini          00;35
 .in           00;35
 .pth          00;35
@@ -47,6 +48,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .tests        00;35
 .xml          00;35
 .yml          00;35
+.yaml         00;35
 *Makefile     00;35
 
 
@@ -93,6 +95,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .txt          00;33
 *README*      00;33
 *readme*      00;33
+*Readme*      00;33
 .text         00;33
 
 # Data - CYAN

@@ -69,6 +69,23 @@ let g:syntastic_auto_jump = 1
 let g:syntastic_stl_format = '%E{%e errors, from line %fe}%B{, }%W{%w warnings from line %fw}'
 
 
+function OpenTabFor(path)
+    let sought = expand(a:path)
+    let start_tab = expand('%')
+    if sought == start_tab
+        return
+    endif
+    let this_tab = ''
+    while this_tab != start_tab
+        tabnext
+        let this_tab = expand('%')
+        if sought == this_tab
+            return
+        endif
+    endwhile
+    silent exec "tabnew " . sought
+endfunction
+
 function FindUnitTest()
     let s:unit_test = substitute(s:file_py,'\.py$','_test.py',"")
     if ! filereadable(s:unit_test)
@@ -86,7 +103,7 @@ function LoadUnitTest()
     call FindUnitTest()
     if filereadable(s:unit_test) && s:file_py != s:unit_test && &loadplugins
         setl autoread
-        exec "tabnew " s:unit_test
+        call OpenTabFor(s:unit_test)
         set filetype=python
         set foldlevel=1
     endif
@@ -103,31 +120,32 @@ function LoadTestUnit()
     call FindTestUnit()
     if filereadable(s:test_unit) && s:file_py != s:test_unit && s:unit_test != s:test_unit && &loadplugins
         setl autoread
-        exec "tabnew " s:test_unit
+        call OpenTabFor(s:test_unit)
         set filetype=python
         set foldlevel=1
     endif
 endfunction
 
 set autowrite
-let s:file_name = expand("%")
-let s:file_stem = fnamemodify(s:file_name,":r")
-let s:file_py = s:file_stem . '.py'
-let s:file_expected = s:file_stem . '.expected'
-let s:file_actual = s:file_stem . '.actual'
-if ! &diff && ! exists("g:recovering") && argc() == 1
+
+function UseFile(file_name_arg)
+    let s:file_name = a:file_name_arg
+    let s:file_stem = fnamemodify(s:file_name,":r")
+    let s:file_py = s:file_stem . '.py'
+    let s:file_expected = s:file_stem . '.expected'
+    let s:file_actual = s:file_stem . '.actual'
     let s:file_jabber = substitute(s:file_py,'\.py$','.j',"")
     if filereadable(s:file_jabber) && s:file_py != s:file_jabber && &loadplugins
-        exec "tabnew " s:file_jabber
+        call OpenTabFor(s:file_jabber)
     endif
     let s:file_parsley = substitute(s:file_py,'\.py$','.parsley',"")
     if filereadable(s:file_parsley) && s:file_py != s:file_parsley && &loadplugins
-        exec "tabnew " s:file_parsley
+        call OpenTabFor(s:file_parsley)
         set filetype=doctest
     endif
     let s:file_grammar = substitute(s:file_py,'\.py$','.g',"")
     if filereadable(s:file_grammar) && s:file_py != s:file_grammar && &loadplugins
-        exec "tabnew " s:file_grammar
+        call OpenTabFor(s:file_grammar)
         set filetype=doctest
     endif
     call LoadUnitTest()
@@ -135,28 +153,32 @@ if ! &diff && ! exists("g:recovering") && argc() == 1
     let s:file_test = substitute(s:file_py,'\.py$','.test',"")
     if filereadable(s:file_test) && s:file_py != s:file_test && &loadplugins
         setl autoread
-        exec "tabnew " s:file_test
+        call OpenTabFor(s:file_test)
         set filetype=doctest
         set foldlevel=1
     endif
     let s:file_tests = substitute(s:file_py,'\.py$','.tests',"")
     if filereadable(s:file_tests) && s:file_py != s:file_tests && &loadplugins
         setl autoread
-        exec "tabnew " s:file_tests
+        call OpenTabFor(s:file_tests)
         set filetype=doctest
         set foldlevel=1
     endif
     let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
     if filereadable(s:file_fail) && s:file_py != s:file_fail && &loadplugins
         setl autoread
-        exec "tabnew " s:file_fail
+        call OpenTabFor(s:file_fail)
         set filetype=doctest_fail
     endif
+endfunction
+
+if ! &diff && ! exists("g:recovering") && argc() == 1
+    call UseFile(expand("%"))
     tabnext
-    if !getfsize(expand('%')) > 0
+    if !filereadable(expand('%')) || empty(readfile(expand('%')))
         tabnext
-        syntax on
     endif
+    syntax on
 endif
 "
 " Try to run this file(s) through doctest
@@ -166,35 +188,40 @@ if !exists("Try")
         return system(' python -c "import sys; sys.stdout.write(str(sys.version_info.major))"') == '2'
     endfunction
     function NewTestFile(filename)
-        let dirname = fnamemodify(s:file_name, ':h:t')
+        let dirname = fnamemodify(a:filename, ':h:t')
         if dirname == 'bin'
             return
         endif
-        let extension = fnamemodify(s:file_name, ':e')
+        let extension = fnamemodify(a:filename, ':e')
         if extension != 'py'
             return
         endif
         exec "tabnew! " . s:file_test
-        exec "normal IThe " . substitute(s:file_stem, "/", ".", "g") . " module\<cr>===========" . substitute(s:file_stem, ".", "=", "g") . "\<cr>\<cr>    >>> import ". s:file_stem . "\<cr>>>> assert 'module' in " . s:file_stem . ".__doc__\<Esc>"
-        set cmdheight+=1
+        let l:dot_stem = substitute(s:file_stem, "/", ".", "g")
+        exec "normal IThe " . l:dot_stem . " module\<cr>===========" . substitute(s:file_stem, ".", "=", "g") . "\<cr>\<cr>    >>> import ". l:dot_stem . "\<cr>>>> assert 'module' in " . l:dot_stem . ".__doc__\<Esc>"
+        set cmdheight=2
         write
-        set cmdheight-=1
+        set cmdheight=1
     endfunction
     function TryTest(quietly)
+        call UseFile(expand("%"))
         let item_name = s:file_stem . "."
         if ! filereadable(s:file_test) && ! filereadable(s:file_tests) && ! filereadable(s:test_unit) && ! filereadable(s:unit_test)
             call NewTestFile(s:file_test)
         endif
-        if filereadable('./try.py')
-            let try_py = './try.py'
-        elseif filereadable($TRY)
-            let try_py = $TRY
-        elseif PythonTwo()
-            let try_py = '/usr/local/bin/try2'
+        if PythonTwo()
+            let item_name = expand('%')
+            let command = '! TERM=linux && python -m doctest '
         else
-            let try_py = '/usr/local/bin/try'
+            if filereadable('./try.py')
+                let try_py = './try.py'
+            elseif filereadable($TRY)
+                let try_py = $TRY
+            else
+                let try_py = '/usr/local/bin/try'
+            endif
+            let command = "! TERM=linux && " . try_py . " -qa "
         endif
-        let command = "! TERM=linux && " . try_py . " -qa "
         let command_line = command . item_name . " | grep -v DocTestRunner.merge "
         if a:quietly
             let tmpfile = tempname()
@@ -204,12 +231,6 @@ if !exists("Try")
             let quiet_line = command_line
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
-        if filereadable(s:file_fail) && empty(readfile(s:file_fail))
-            call delete(s:file_fail)
-        endif
-        if ! filereadable(s:file_fail)
-            return
-        endif
         try
             exec quiet_line
             if tmpfile != 'none'
@@ -230,10 +251,10 @@ if !exists("Try")
                 exec "tabnext"
             endwhile
         endif
-        let path_to_fails = expand(s:file_fail)
-        let z = getfsize(path_to_fails)
-        " echo "Size of " . path_to_fails . " is " . z
-        if ! z
+        if filereadable(s:file_fail) && empty(readfile(s:file_fail))
+            call delete(s:file_fail)
+        endif
+        if ! filereadable(s:file_fail)
             return
         endif
         exec "tablast"
@@ -259,7 +280,7 @@ if !exists("Try")
             return
         endif
         silent exec "/Got:/+1,/\\(^File\\)\\|\\(had failures\\)/-2 w! " . s:file_actual
-        silent exec "tabnew " . s:file_expected
+        call OpenTabFor(s:file_expected)
         set buftype=nofile
         set diffopt=filler,iwhite,vertical
         silent exec "diffsplit " . s:file_actual

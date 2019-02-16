@@ -8,7 +8,7 @@ scriptencoding 'utf-8'
  noremap <F3>      :map <F3>
 inoremap <F3>      <esc>:w!<CR>
  noremap <F4>      <c-w>w
- noremap <F5>      :map <F6> 
+ noremap <F5>      :map <F6>
     nmap <F6>      WQ
  noremap <F7>      :set list!<CR>
  noremap <F8>      O<esc>:w!<CR>:Limelight<cr>
@@ -24,13 +24,15 @@ inoremap <F9>      <esc>:w!<CR>
  noremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
  noremap <S-F5>     <C-W>=
+
+
 " ordinary keys {{{2
 " number row {{{3
-nnoremap <bs> /
-nnoremap = /<cr>zazv
-nnoremap - ?<cr>zazv
-"noremap 0 *
-nnoremap 9 *zv
+"noremap <bs>
+"noremap =
+"noremap -
+"noremap 0
+"noremap 9
 "noremap 8
 "noremap 7
 "noremap 6
@@ -38,8 +40,7 @@ nnoremap 9 *zv
 "noremap 4
 "noremap 3
 "noremap 2
-nnoremap 1 #zv
-nnoremap § ?
+"noremap 1
 inoremap § <esc>
 " shifted number row {{{3
 "noremap <S-bs> doesn't work
@@ -66,6 +67,7 @@ nnoremap £ :nnoremap £
 "noremap c - start cutting
 "noremap d - delete
 "noremap e - to end of word
+"noremap f - to next char
 "noremap g - many actions
 "noremap h - go left
 "noremap i - insert
@@ -101,19 +103,20 @@ cnoremap w!! w !sudo tee %
  noremap zQ zc
  noremap zw zO
  noremap zW zo
-"noremap ze 
-"noremap zr 
-"noremap zt 
-"noremap zy 
+"noremap ze
+"noremap zr
+"noremap zt
+"noremap zy
  noremap za z<cr>
  noremap zs jzck
-"noremap zd 
-"noremap zf 
-"noremap zh 
-"noremap zj 
-"noremap zk 
-"noremap zl 
- noremap zx jzO
+"noremap zd
+"noremap zf
+"noremap zh
+"noremap zj
+"noremap zk
+"noremap zl
+ noremap zx jzo
+ noremap zX jzO
  noremap zn nzMzvzz
  noremap zN NzMzvzz
  noremap z/ /<cr>zMzvzz
@@ -157,7 +160,7 @@ cnoremap w!! w !sudo tee %
 "noremap +
 " LETTERS {{{3
 "noremap A - Append
-nnoremap B :vsplit 
+nnoremap B :vsplit
 nnoremap C <esc>:qa!<CR>
 "noremap D d$
     nmap E WQ
@@ -188,8 +191,14 @@ nnoremap L <C-F>zz
  noremap t<right> :tabnext<cr>
  noremap th       :tabprev<cr>
  noremap tl       :tabnext<cr>
-nnoremap <Up>     <C-B>
-nnoremap <Down>   <C-F>
+
+nnoremap <Up>       ?<cr>zazv
+nnoremap <Down>     /<cr>zazv
+nnoremap <S-Up>     ?
+nnoremap <S-Down>   /
+nnoremap <S-Left>   #zv
+nnoremap <S-Right>  *zv
+
 noremap <PageUp>   <C-B>
 noremap <PageDown> <C-F>
 nnoremap <left>      :tabprev<cr>
@@ -232,7 +241,7 @@ inoremap <A-Left> <Esc>:tabprev<CR>
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
 "noremap <leader>l
- noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>
+ noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
  noremap <leader>n :call ChangeNumber()<cr>
 "noremap <leader>o used by ftplugin/jab/python
  noremap <leader>p :set paste<cr>
@@ -331,7 +340,7 @@ set updatetime=500
 let g:splice_initial_scrollbind_grid=1
 " Functions {{{1
 " vimdiff, aka vim -d {{{2
-function EnterBuffer () 
+function EnterBuffer ()
     "
     " diff options
     "
@@ -356,7 +365,7 @@ function EnterBuffer ()
     let &titlestring = $HOSTNAME . ':vim ' . expand('%:p:~')
 endfunction
 
-function! LeaveBuffer () 
+function! LeaveBuffer ()
     let &titlestring = $HOSTNAME . ':not ' . expand('%:p:~')
 endfunction
 
@@ -373,6 +382,7 @@ endif
 abbreviate becuase because
 abbreviate lamda lambda
 abbreviate seperate separate
+cnoreabbrev H vert bo help
 " Some miscellaneous stuff from around the interwebs
 " Filetype {{{2
 autocmd FileType c,cpp,h,java set cindent
@@ -384,7 +394,7 @@ set ruler
 set shortmess=atI
 set visualbell
 " Assortment {{{2
-" http://www.pixelbeat.org/settings/.vimrc 
+" http://www.pixelbeat.org/settings/.vimrc
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
 set cursorline      " Highlight the screen line of the cursor with CursorLine
 set wildmenu        " visual autocomplete for command menu
@@ -412,7 +422,7 @@ set backupdir=~/old
 set noundofile
 
 " Despacing {{{2
-function! RetabAndStripTrailingWhitespace() 
+function! RetabAndStripTrailingWhitespace()
     :retab!
     :%s/\s\+$//e
 endfunction
@@ -470,11 +480,11 @@ set number    " Start with line numbers
 :set grepprg=grep\ -nH
 " <leader>\ is bound to calling ToggleHighlightSearch
 "   The leader key is also \, so really \\ calls this
-function SearchXxx() 
+function SearchXxx()
     normal /Xxx<cr>
 endfunction
 
-function ToggleHighlightSearch() 
+function ToggleHighlightSearch()
     if &hlsearch
         set nohlsearch
     else
@@ -531,7 +541,7 @@ let g:is_posix = 1
 
 " Use ranger as a file explorer {{2
 " From http://www.everythingcli.org/use-ranger-as-a-file-explorer-in-vim/
-function RangerExplorer() 
+function RangerExplorer()
     exec 'silent !ranger --choosefile=/tmp/vim_ranger_current_file ' . expand('%:p:h')
     if filereadable('/tmp/vim_ranger_current_file')
         exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
