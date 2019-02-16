@@ -159,7 +159,7 @@ def read_file(path_to_python):
     return tags
 
 
-def read_dir(path_to_directory):
+def read_dir_tags(path_to_directory):
     """Read tags for all python files in the given directory"""
     if not path_to_directory.isdir():
         return []
@@ -170,15 +170,15 @@ def read_dir(path_to_directory):
     return tags
 
 
-def read_dirs(path_to_directory=None):
+def read_dirs_tags(path_to_directory=None):
     """Read tags for directory/*.py, and recursively under it"""
     if not path_to_directory:
         path_to_directory = paths.pwd()
-    tags = read_dir(path_to_directory)
+    tags = read_dir_tags(path_to_directory)
     for path_to_sub_directory in path_to_directory.walkdirs():
         if repository.is_repository_path(path_to_sub_directory):
             continue
-        tags.append(read_dir(path_to_sub_directory))
+        tags.append(read_dir_tags(path_to_sub_directory))
     return tags
 
 
@@ -189,7 +189,7 @@ def tags_to_text(tags):
     return '\n'.join(sorted_tags)
 
 
-def write_dir(path_to_directory, tags):
+def write_tags(path_to_directory, tags):
     """Write the given tags to a tags file in the given directory"""
     out = paths.path('%s/tags' % path_to_directory)
     if out.isdir():
@@ -202,39 +202,28 @@ def write_dir(path_to_directory, tags):
         print(message)
 
 
-def read_write_dir(path_to_directory=None):
+def tag_directory(path_to_directory):
     """Read tags from the files in the directory, and write a tags file"""
-    if not path_to_directory:
-        if scripts.args.directories:
-            [read_write_dir(d) for d in scripts.args.directories]
-        else:
-            path_to_directory = paths.pwd()
-    tags = read_dir(path_to_directory)
-    write_dir(path_to_directory, tags)
+    tags = read_dir_tags(path_to_directory)
+    write_tags(path_to_directory, tags)
 
 
-def read_write_dirs(source=None):
+def tag_directory_recursively(source):
     """Write tags from the files in/under the directory"""
-    if not source:
-        if scripts.args.directories:
-            [read_write_dirs(d) for d in scripts.args.directories]
-        else:
-            source = paths.pwd()
     path_to_directory = paths.path(source)
-    tags = read_dirs(path_to_directory)
-    write_dir(path_to_directory, tags)
+    tags = read_dirs_tags(path_to_directory)
+    write_tags(path_to_directory, tags)
     for path_to_sub_directory in path_to_directory.walkdirs():
         if repository.is_repository_path(path_to_sub_directory):
             continue
-        tags = read_dirs(path_to_sub_directory)
-        write_dir(path_to_sub_directory, tags)
+        tag_directory(path_to_directory)
 
 
 def read_sys_dirs():
     """Read tags for each path in sys.path"""
     tags = []
     for path_to_system in sys.path:
-        tags.append(read_dir(paths.path(path_to_system)))
+        tags.append(read_dir_tags(paths.path(path_to_system)))
     return tags
 
 
@@ -245,10 +234,11 @@ def all_directories_in_a_list_of_tags(tags):
 
 def script(args):
     """Run the program"""
+    directory = args.source or paths.pwd()
     if args.recursive:
-        read_write_dirs(args.source)
+        tag_directory_recursively(directory)
     else:
-        read_write_dir()
+        tag_directory(directory)
 
 
 if __name__ == '__main__':
