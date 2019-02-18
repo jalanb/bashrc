@@ -78,3 +78,4 @@ main  "$@"
 # log_main "$@"
 
 [[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)
+set +x

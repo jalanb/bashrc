@@ -7,6 +7,9 @@ Welcome_to $BASH_SOURCE
 . ~/bash/python.sh
 
 PYTHON=${PYTHON:-$(pypath which python 2> ~/bash/fd/2)}
+    
+export PIP_REQUIRE_VIRTUALENV=false
+export PIP_RESPECT_VIRTUALENV=true
 
 # [[ -n $WELCOME_BYE ]] && echo 3
 _has_ext () {
