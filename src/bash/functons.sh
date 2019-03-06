@@ -1376,12 +1376,16 @@ dirnames () {
 
 twkgit00 () {
     is_a_file .git/config || return 1
+    sed -i -e s/twkgit20.wwts.com/git.wwts.com/ .git/config
     sed -i -e s/twkgit30.wwts.com/git.wwts.com/ .git/config
+    sed -i -e 's!http://git.wwts.com!https://git.wwts.com!' .git/config
 }
 
 twkgit30 () {
     is_a_file .git/config || return 1
     sed -i -e s/git.wwts.com/twkgit30.wwts.com/ .git/config
+    sed -i -e s/twkgit20.wwts.com/twkgit30.wwts.com/ .git/config
+    sed -i -e 's!http://twkgit30.wwts.com!https://twkgit30.wwts.com!' .git/config
 }
 
 # xxxxxxxxx
