@@ -61,7 +61,7 @@ pipu () {
 }
 
 pith () {
-    set -x
+    # set -x
     local __doc__="""Run a pip command [pip]"""
     local _executable=pip
     if [[ $1 == 2 ]]; then
@@ -69,7 +69,7 @@ pith () {
         shift
     fi
     pypath $_executable "$@"
-    set +x
+    # set +x
 }
 
 pii () {
