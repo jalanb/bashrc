@@ -63,8 +63,8 @@ go () {
     local __doc__="git checkout"
     local _stashed=
     local _current_branch=$(current_branch)
-    [[ "$@" =~ $_current_branch ]] && show_error "Already on $(current_branch)"
-    [[ "$@" =~ $_current_branch ]] && return 0
+    [[ "$@" == $_current_branch ]] && show_error "Already on $(current_branch)"
+    [[ "$@" == $_current_branch ]] && return 0
     show_command "git checkout $@" 
     if git checkout -q "$@" 2>&1 | grep -q fred; then
         if _has_git_changes; then
@@ -229,6 +229,7 @@ ggi () {
 }
 
 gia () {
+    show_command git commit --amend "$@"
     GIT_EDITOR=true git commit --amend "$@"
 }
 
@@ -366,7 +367,8 @@ gra () {
 
 grc () {
     show_command git rebase --continue
-    git rebase --continue | g "skip this commit" && git rebase --skip
+    git rebase --continue | g "skip this commit" || return
+    show_run_command git rebase --skip
 }
 
 grg () {
@@ -503,7 +505,7 @@ gxi () {
 _gbd () {
     local _current_branch=$(current_branch)
     if [[ "$@" =~ $_current_branch ]]; then
-        if [[ "$@" =~ "master" ]]; then
+        if [[ "$@" == "master" ]]; then
             show_error Please checkout another branch before deleting master 
             return 1
         else
@@ -605,7 +607,6 @@ ggai () {
 gfff () {
     gff
     grup
-    gr
 }
 
 gffm () {
@@ -699,6 +700,11 @@ gvsd () {
 }
 
 # xxxxx
+
+gffff () {
+    gfff
+    gr
+}
 
 clone () {
     local _range=yes
@@ -809,13 +815,13 @@ _gxi_menu () {
     red_one s tash
     _git_modified $1 && red_one d iff
     red_two d r op
-    red_two dele t e
+    red_two de l ete
     [[ -n $GIT_ADDED ]] && red_one f asten
     red_two comm i t
     red_one v im
     _git_modified $1 && red_one p atch
     suffix=";"
-    red_one hjkl " move"
+    red_one space " next"
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
 }
 
@@ -1073,7 +1079,7 @@ _gvi_show_diff () {
 
 _ggi_response () {
     [[ $answer =~ [rR] ]] && _gsi_drop "$1" && return 0
-    [[ $answer =~ [tT] && -f $1 ]] && rm -f "$1" && return 0
+    [[ $answer =~ [lL] && -f $1 ]] && rm -f "$1" && return 0
     [[ $answer =~ [vV] ]] && _gsi_vim "$1" && return 0
     _gxi_response "$@"
 }
@@ -1091,13 +1097,13 @@ _gvi_response () {
 }
 
 _gxi_response () {
-    if [[ $answer =~ [iIgGdDnN] ]]; then
+    if [[ $answer =~ [iIgGdDpPtT] ]]; then
         [[ $answer =~ [iI] ]] && gi
         [[ $answer =~ [gG] ]] && git diff --staged
         if _git_modified "$1" ; then
             [[ $answer =~ [dD] ]] && git di "$1"
             [[ $answer =~ [pP] ]] && git diff --patch "$1"
-            [[ $answer =~ [nN] ]] && gai "$1" && git di
+            [[ $answer =~ [tT] ]] && gai "$1"
         fi
         _gxi_request "$1"
         return 0
