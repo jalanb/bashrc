@@ -50,7 +50,7 @@
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
-	tool = diffconflicts
+    tool = diffconflicts
     conflictstyle = diff3
 [mergetool "splice"]
     cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
@@ -74,6 +74,6 @@
 [rerere]
     enabled = true
 [mergetool "diffconflicts"]
-	keepBackup = false
+    keepBackup = false
 [icdiff]
-	options = --highlight --line-numbers
+    options = --highlight --line-numbers
