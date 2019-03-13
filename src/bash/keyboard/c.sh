@@ -17,10 +17,9 @@ cb () {
 }
 
 cc () {
-    # gcc has my back
     local _where=.
     [[ -n "$*" ]] && _where="$@"
-    c $(dirname_ $(git rev-parse --show-toplevel $_where ))
+    c $(git -C "$_where" rev-parse --show-toplevel)
 }
 
 ch () {
