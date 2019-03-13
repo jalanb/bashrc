@@ -650,7 +650,7 @@ gls1 () {
 }
 
 gpod () {
-    gpo --delete $1
+    gpo --delete "$@"
 }
 
 gppp () {
