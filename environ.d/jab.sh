@@ -1,8 +1,6 @@
 #! /bin/cat
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
-
-. ~/jab/src/bash/repo.sh
+Welcome_to $BASH_SOURCE
 
 BASH_CD=~/bash/_cd.in
 BASH_RC=~/bash/_rc.sh
@@ -63,4 +61,4 @@ _main () {
 
 _main
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
+Bye_from $BASH_SOURCE

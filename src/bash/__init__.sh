@@ -39,7 +39,6 @@ local_rc () {
 . ~/bash/prompt.sh
 . ~/bash/pt.sh
 . ~/bash/pym.sh
-. ~/bash/repo.sh
 . ~/bash/rf.sh
 . ~/bash/python.sh
 . ~/bash/virtualenvwrapper.sh
