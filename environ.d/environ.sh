@@ -67,14 +67,14 @@ export_symbols () {
 _source_jab_environ () {
     [[ -f ~/jab/environ.d/jab.sh ]] && . ~/jab/environ.d/jab.sh
 
+    # set -x
+    set_paths
+    # echo $PATH | tr ':' '\n'
+    # set +x
     export_symbols
     set_bucket
     # set -x
     show_dir_colors
-    # set +x
-    # set -x
-    set_paths
-    # echo $PATH | tr ':' '\n'
     # set +x
     shopt -s cdspell
     shopt -s autocd   #Use dir name as a "cd command"
