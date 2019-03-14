@@ -1154,20 +1154,19 @@ tailer () {
 
 online_all () {
     online www.google.com
-    online www.wwts.com
-    online tools.wwts.com
-    online wmp.wwts.com
-    online eop.wwts.com
-    online tooltest.wwts.com
+    online $(worker www)
+    online $(worker tools)
+    online $(worker wmp)
+    online $(worker eop)
+    online $(worker tooltest)
 }
 
 offline_all () {
     offline www.google.com
-    offline www.wwts.com
-    offline tools.wwts.com 172.25.1.218
-    offline wmp.wwts.com
-    offline eop.wwts.com
-    offline tooltest.wwts.com 172.25.1.219
+    offline $(worker www)
+    offline $(worker tools) 
+    offline $(worker wmp)
+    offline $(worker eop)
     return 0
 }
 
@@ -1376,16 +1375,16 @@ dirnames () {
 
 twkgit00 () {
     is_a_file .git/config || return 1
-    sed -i -e s/twkgit20.wwts.com/git.wwts.com/ .git/config
-    sed -i -e s/twkgit30.wwts.com/git.wwts.com/ .git/config
-    sed -i -e 's!http://git.wwts.com!https://git.wwts.com!' .git/config
+    sed -i -e s/$(worker twkgit20)/$(worker git)/ .git/config
+    sed -i -e s/$(worker twkgit30)/$(worker git)/ .git/config
+    sed -i -e 's!http://$(worker git)!https://$(worker git)!' .git/config
 }
 
 twkgit30 () {
     is_a_file .git/config || return 1
-    sed -i -e s/git.wwts.com/twkgit30.wwts.com/ .git/config
-    sed -i -e s/twkgit20.wwts.com/twkgit30.wwts.com/ .git/config
-    sed -i -e 's!http://twkgit30.wwts.com!https://twkgit30.wwts.com!' .git/config
+    sed -i -e s/$(worker git)/$(worker twkgit30)/ .git/config
+    sed -i -e s/$(worker twkgit20)/$(worker twkgit30)/ .git/config
+    sed -i -e 's!http://$(worker twkgit30)!https://$(worker twkgit30)!' .git/config
 }
 
 # xxxxxxxxx
@@ -1720,11 +1719,11 @@ unremembered () {
     fi
 }
 
-copy_from_wwts_server () {
+copy_from_work_server () {
     local _server_name=$1
     local _source="$2"
     local _source_dir=$(dirnames "$_source")
-    local _here_root=~/wwts/$_server_name
+    local _here_root=$(homework $_server_name)
     [[ -d $_here_root ]] || mkdir -p $_here_root
     local _here_path=$_here_root/"$_source_dir"
     [[ -d "$_here_path" ]] || mkdir -p "$_here_path"

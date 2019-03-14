@@ -28,7 +28,7 @@ ga () {
 gb () {
     local _sought="$*"
     [[ $_sought ]] || _sought=.
-    show_command "git branch $GIT_BRANCH_OPTION" 
+    show_command "git branch $GIT_BRANCH_OPTION | grep $_sought" 
     git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color $_sought
 }
 
@@ -310,7 +310,8 @@ gob () {
 }
 
 gof () {
-    gbD fred 2>/dev/null; gob fred
+    gbD fred 2>/dev/null
+    gob fred "$@"
 }
 
 gog () {
@@ -1024,7 +1025,7 @@ _show_run_storage () {
 _call_me_alan () {
     sed \
         -e "s/.*al-got-rhythm.net/jalanb/" \
-        -e "s/.*@wwts.com/Alan Brogan/" \
+        -e "s/$(mail_work '.*')/Alan Brogan/" \
         -e "s/J Alan Brogan/Alan/"
 }
 

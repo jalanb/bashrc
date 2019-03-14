@@ -26,9 +26,3 @@ tx () {
     ra
 }
 
-# xxx
-
-ttt () {
-    wwts tool
-}
-

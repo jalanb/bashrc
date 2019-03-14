@@ -42,7 +42,7 @@ local_rc () {
 . ~/bash/rf.sh
 . ~/bash/python.sh
 . ~/bash/virtualenvwrapper.sh
-. ~/bash/wwts.sh
+. ~/bash/work.sh
 . ~/bash/keyboard/__init__.sh
 . ~/bash/git/__init__.sh
 . ~/bash/zzz_renames.sh

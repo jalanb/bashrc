@@ -32,11 +32,6 @@ avb () {
     _av ~/jab/src/bash "$@"
 }
 
-avd () {
-    __doc__="vack all args in ~/wwts/dashboard";
-    _av ~/wwts/dashboard "$@"
-}
-
 avg () {
     __doc__="vack all args in ~/src/git";
     _av ~/src/git "$@"

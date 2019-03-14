@@ -8,7 +8,7 @@ if [[ -n $1 ]]; then
     shift
     if [[ $server =~ builder ]]; then
         user=builder
-        server=twkgit20.wwts.com
+        server=$(worker twkgit20)
     elif [[ $server =~ eop ]]; then
         user=builder
     elif [[ $server =~ wmp ]]; then

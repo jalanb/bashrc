@@ -2,12 +2,6 @@
 
 . ~/jab/src/bash/hub.sh
 
-wwts () {
-    # workon wwts
-    add_to_a_path PATH /cygdrive/c/Users/AB13173/BabunVagrantAnsible/vagrant/bin
-    cde ~/src/git/parthenonsoftware/git-wwts/wwts-dashboard
-}
-
 restarts () {
     server=$1
     for name in uwsgi nginx redis mysqld; do

@@ -28,22 +28,22 @@ Host wwits
 Host tools
     Hostname 172.25.1.219
     User jalanb
-    IdentityFile ~/.ssh/wwts/jalanb.key
+    IdentityFile ~/.ssh/work/jalanb.key
 
 Host tooltest
     Hostname 172.25.1.218
     User ab13173
-    IdentityFile ~/.ssh/wwts/ab13173.key
+    IdentityFile ~/.ssh/work/ab13173.key
 
 Host builder
     Hostname 172.25.32.115
     User builder
-    IdentityFile ~/.ssh/wwts/tools/builder.key
+    IdentityFile ~/.ssh/work/tools/builder.key
 
 Host baker
     Hostname 172.25.1.219
     User builder
-    IdentityFile ~/.ssh/wwts/tools/builder.key
+    IdentityFile ~/.ssh/work/tools/builder.key
 
 Host toolstoo
     Hostname gitlab
@@ -63,59 +63,59 @@ Host default
 Host twkwbe40 eopdev
     Hostname 172.25.32.110
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host twkwbe41 eoptest
     Hostname 172.25.3.111
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host twkwbe42 eopstage
     Hostname 172.25.32.112
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host atlwbe43 eopbeta
     Hostname 172.25.232.243
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host twkwbe43 eop
     Hostname 172.25.32.103
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host twkwbe47 order
     Hostname 172.25.32.122
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host twkwbe48 corteva
     Hostname 172.25.32.123
     User builder
-    IdentityFile ~/.ssh/wwts/eop/builder.key
+    IdentityFile ~/.ssh/work/eop/builder.key
 
 Host twkwbe96 wmpdev
     Hostname 172.25.32.96
     User builder
-    IdentityFile ~/.ssh/wwts/wmp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe95 wmptest
     Hostname 172.25.32.95
     User builder
-    IdentityFile ~/.ssh/wwts/wmp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe34 wmptrain wmpstage
     Hostname 172.25.32.147
     User builder
-    IdentityFile ~/.ssh/wwts/wmp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host atlwbe35 wmpbeta
     Hostname 172.25.232.149
     User builder
-    IdentityFile ~/.ssh/wwts/wmp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe35 wmp
     Hostname 172.25.32.149
     User builder
-    IdentityFile ~/.ssh/wwts/wmp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key

@@ -27,7 +27,7 @@ ssu () {
 }
 
 ssga () {
-    ssa twkgit20.wwts.com
+    ssa $(worker twkgit20)
 }
 
 ssgb () {
@@ -36,7 +36,7 @@ ssgb () {
 
 ssw () {
     local _server=$1; shift
-    ssu ab13173@${_server}.wwts.com "$@"
+    ssu ab13173@$(worker $_server) "$@"
 }
 
 ssx () {
