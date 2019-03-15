@@ -698,7 +698,7 @@ bash4 () {
 
 bool () {
     [[ -z $* || $1 =~ ^0*$ ]] && echo False && return 1
-    if whype -q "$1"; then
+    if whyp -q "$1"; then
         if [[ $1 == "[[" ]]; then
             eval "$@"
             local _result=$?
@@ -1153,23 +1153,13 @@ tailer () {
 }
 
 online_all () {
-    online www.google.com
-    online $(worker www)
-    online $(worker tools)
-    online $(worker wmp)
-    online $(worker eop)
-    online $(worker tooltest)
+    online_destination www.google.com
+    online_destination $(worker www)
+    online_destination $(worker tools)
+    online_destination $(worker wmp)
+    online_destination $(worker eop)
+    online_destination $(worker tooltest)
 }
-
-offline_all () {
-    offline www.google.com
-    offline $(worker www)
-    offline $(worker tools) 
-    offline $(worker wmp)
-    offline $(worker eop)
-    return 0
-}
-
 
 is_online () {
     online_destination "$@" >/dev/null 2>&1 && return 0 
@@ -1191,30 +1181,21 @@ show_line () {
     echo "$_prefix $_server$_suffix"
 }
 
-offline () {
-    show_line offline "$@"
-}
-
-online () {
-    show_line online "$@"
-}
-
 online () {
     if [[ -n "$@" ]]; then
         online_destination "$@"
         return 0
     fi
     online_all
-    offline_all
     return 0
 }
 
 online_destination () {
-    if quick_ping $_dest "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
-        echo $_dest online
+    if quick_ping "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
+        show_pass "$@" online
         return 0
     else
-        echo $_dest offline
+        show_fail "$@" offline
         return 1
     fi
 }
@@ -1444,7 +1425,7 @@ jab_scripts () {
 }
 
 quick_ping () {
-    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | grep -q -e illegal -e invalid; then
+    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | grep -q -e usage -e illegal -e invalid; then
         # looks like OS X
         ping -c 1 -t 1 -W 1 "$@"
     else
