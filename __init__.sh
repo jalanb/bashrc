@@ -20,8 +20,8 @@ Welcome_to $BASH_SOURCE
 
 _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 
-. ~/jab/src/bash/__init__.sh
 . ~/jab/environ.d/__init__.sh
+. ~/jab/src/bash/__init__.sh
 . ~/jab/local/__init__.sh optional
 
 Bye_from $BASH_SOURCE

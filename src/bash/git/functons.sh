@@ -1,5 +1,7 @@
 #! /bin/cat
 
+Welcome_to $BASH_SOURCE
+
 . ~/jab/bin/first_dir.sh
 . ~/jab/environ.d/colour.sh
 . ~/jab/src/bash/keyboard/r.sh
@@ -739,10 +741,6 @@ _show_git_here () {
 
 # xxxxxxxx
 
-show_red () {
-    show_colour "${RED}""$*"
-}
-
 _git_kd () {
     cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
 }
@@ -830,15 +828,6 @@ git_branch () {
     show_run_command git rev-parse --abbrev-ref HEAD
 }
 
-show_error () {
-    show_red_line "$@"
-    return 1
-}
-
-show_green () {
-    show_colour "${GREEN}""$*"
-}
-
 # xxxxxxxxxxx
 
 git_changed () {
@@ -847,15 +836,7 @@ git_changed () {
     git -C $git_dir status --porcelain | grep -q "$_git_status_regexp"
 }
 
-show_colour () {
-    printf "$*""${NO_COLOUR}" >&2
-}
-
 # xxxxxxxxxxxx
-
-show_command () {
-    show_green_line "$ ""$*"
-}
 
 _gxi_request () {
     _gxi_menu $1
@@ -894,10 +875,6 @@ git_on_screen () {
     local _one_third_of_vertical=$(( $_vertical_lines / 4 ))
     local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
     git $cmd --color "$@" | head -n $_lines
-}
-
-show_red_line () {
-    show_colour_line "${RED}""$*"
 }
 
 untracked () {
@@ -979,24 +956,7 @@ _has_git_changes () {
     [[ -n $_files ]]
 }
 
-show_green_line () {
-    show_colour_line "${GREEN}""$*"
-}
-
 # xxxxxxxxxxxxxxxx
-
-show_colour_line () {
-    printf "$*""${NO_COLOUR}\n" >&2
-}
-
-show_run_command () {
-    show_command "$@"
-    "$@"
-}
-
-show_this_branch () {
-    git branch $1 | grep --colour -B3 -A 3 $(current_branch)
-}
 
 # xxxxxxxxxxxxxxxxx
 
@@ -1204,3 +1164,5 @@ _gsi_vim () {
     _git_modified "$1" && git dv "$1" || git diff "$1" | vin
 }
 
+
+Bye_from $BASH_SOURCE
