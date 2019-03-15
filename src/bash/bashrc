@@ -40,13 +40,17 @@ _bashrc () {
     # echo $PATH | tr ':' '\n'
 }
 
-BASHRC_LOG=~/bashrc.log
+BASHRC_LOG=~/log/bashrc.log
 vbb () {
     local _log=
     test -f $BASHRC_LOG && _log=$BASHRC_LOG
-    (cd $_home_user
-    vim -p ~/.bashrc __init__.sh src/bash/__init__.sh $_log "$@" +/"WELCOME_BYE="
-    ls  ~/.bashrc __init__.sh src/bash/__init__.sh $_log)
+    (
+        cd $_home_user
+        local _local=
+        test -f local/__init__.sh && _local=local/__init__.sh
+        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log "$@" +/"WELCOME_BYE="
+        ls  ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log
+    )
     [[ -f $_log ]] && mv $_log ~/log
 }
 
