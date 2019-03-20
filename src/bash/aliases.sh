@@ -104,9 +104,6 @@ alias comp=". ~/jab/environ.d/company.sh"
 
 alias popp=pisd
 
-alias tags="p ~/jab/src/python/ptags.py "
-
-
 # xxxxx
 
 alias .....='cdupppp'
