@@ -538,8 +538,9 @@ gbdr () {
 }
 
 gbDD () {
-    gbD "$@"
-    gpod "$@"
+    local _current_branch=$(current_branch)
+    [[ "$@" ]] && _current_branch="$@"
+    gbD "$@" && gpod $_current_branch
 }
 
 gaai () {
