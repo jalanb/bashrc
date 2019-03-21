@@ -82,6 +82,7 @@ alias 211="_21 develop"
 alias 212="_21 mrs"
 alias 213="_21 master"
 alias 214="_21 deploy"
+alias 233="_23 corteva"
 alias 088="cd /usr/local"
 # xxxx
 
