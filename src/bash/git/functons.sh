@@ -48,7 +48,9 @@ gi () {
     if [[ -z "$@" ]]; then git commit --verbose
     else
         python -c "print('git commit -m\"$*\"')" > $_storage
-        _show_run_storage
+        cat $_storage
+        bash $_storage
+        rr $_storage
     fi
     GIT_ADDED=
 }
@@ -101,7 +103,6 @@ gr () {
 
 gs () {
     local __doc__="""git status front end"""
-    # _gs_quiet"$@"
     _gs "$@"
 }
 
@@ -145,7 +146,7 @@ gac () {
 
 gai () {
     local __doc__="""Add args interactively"""
-    git add --patch "$@"
+    show_run_command git add --patch "$@"
 }
 
 gba () {
@@ -237,16 +238,6 @@ gia () {
 
 gie () {
     show_run_command git commit --amend --edit "$@"
-}
-
-gij () {
-    local _storage=/tmp/gij.sh
-    local JIT="git -C ~/jab"
-    if [[ -z "$@" ]]; then $JIT commit --all --verbose
-    else
-        python -c "print '$JIT commit -m\"$*\"'" > $_storage
-        _run_storage
-    fi
 }
 
 gip () {
@@ -526,6 +517,8 @@ _gbd () {
             fi
             gom 
             show_run_command git branch "$@" $_current_branch
+        else
+            return 1
         fi
         return 0
     fi
@@ -851,11 +844,6 @@ gssd_changes () {
     gssd "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
 }
 
-_run_storage () {
-    bash $_storage
-    rr $_storage
-}
-
 # xxxxxxxxxxxxx
 
 git_on_lines () {
@@ -873,7 +861,7 @@ git_on_lines () {
 git_on_screen () {
     local cmd=$1; shift
     local _vertical_lines=${LINES:-$(screen_height)}
-    local _one_third_of_vertical=$(( $_vertical_lines / 4 ))
+    local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
     local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
     git $cmd --color "$@" | head -n $_lines
 }
@@ -974,11 +962,6 @@ _show_git_time_log () {
     else
         git lg "$2" > /dev/null | grep $1
     fi
-}
-
-_show_run_storage () {
-    cat $_storage
-    _run_storage
 }
 
 # xxxxxxxxxxxxxxxxxxxxxx
