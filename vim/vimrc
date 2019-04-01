@@ -213,8 +213,8 @@ nnoremap <right>     :tabnext<cr>
  noremap    <C-k> <c-w><c-k>
  noremap    <C-l> <c-w><c-l>
      map    <C-b> dndndndd/<cr>
-     map    <C-m> dd/<cr>dndndd/<cr>
-     map    <C-n> dndndd/<cr>dd/<cr>
+     map    <C-m> dd/<cr>dndd/<cr>
+     map    <C-n> dndd/<cr>dd/<cr>
  noremap <C-Right> w
  noremap <C-Left>  b
 inoremap    <C-d> <esc>:qa<CR>
