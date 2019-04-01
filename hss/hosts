@@ -90,8 +90,23 @@ Host twkwbe47 order
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
+Host twkwbe50 cortevatest
+    Hostname 172.25.1.216
+    User builder
+    IdentityFile ~/.ssh/work/eop/builder.key
+
 Host twkwbe48 corteva
     Hostname 172.25.32.123
+    User builder
+    IdentityFile ~/.ssh/work/eop/builder.key
+
+Host twkwbe49 dupont
+    Hostname 172.25.32.104
+    User builder
+    IdentityFile ~/.ssh/work/eop/builder.key
+
+Host atlwbe49 dupontbeta
+    Hostname 172.25.232.244
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
