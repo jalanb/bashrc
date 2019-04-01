@@ -3,7 +3,6 @@
 # pylint: disable-msg=W0611
 
 # import this
-from __future__ import print_function
 
 import os
 import re
@@ -43,14 +42,14 @@ except ImportError:
     see = False
 
 
-print('import os, re, sys, pysyte, requests')
-if see:
-    print('from see import see, see_attributes, see_methods, spread')
-    print('from see_code import code, highlight, see_code, see_highlight')
+def line(s):
+    sys.stdout.write('%s\n' % s)
 
-try:
-    e = '~/%s' % Path(sys.executable).relative_to(os.environ['HOME'])
-except ValueError:
-    e = Path(sys.executable)
-print()
-print(e, sys.version.split()[0])
+line('import os, re, sys, pysyte, requests')
+if see:
+    line('from see import see, see_attributes, see_methods, spread')
+    line('from see_code import code, highlight, see_code, see_highlight')
+
+line('')
+line('%s %s' % (
+    sys.executable.replace(os.environ['HOME'], '~'), sys.version.split()[0]))
