@@ -662,6 +662,7 @@ grmt () {
 
 grup () {
     show_run_command git remote update origin --prune
+    show_run_command git gc
 }
 
 gsri () {
