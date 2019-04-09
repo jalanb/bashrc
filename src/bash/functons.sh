@@ -564,7 +564,7 @@ tmp () {
 }
 
 try () {
-    pyth ~/pysyte/testing/try.py "$@"
+    ~/hub/pysyte/bin/try "$@"
 }
 
 vaf () {
