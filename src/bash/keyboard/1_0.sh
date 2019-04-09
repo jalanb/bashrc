@@ -83,8 +83,10 @@ alias 212="_21 mrs"
 alias 213="_21 master"
 alias 214="_21 deploy"
 alias 232="_23 mrs"
-alias 242="_24 mrs"
 alias 233="_23 corteva"
+alias 234="_23 deploy"
+alias 242="_24 mrs"
+alias 244="_24 deploy"
 alias 088="cd /usr/local"
 # xxxx
 
