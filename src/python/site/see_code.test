@@ -1,5 +1,0 @@
-The see_code module
--------------------
-
-    >>> import see_code
-    >>> assert 'handle source codes' in see_code.__doc__

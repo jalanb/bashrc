@@ -66,7 +66,7 @@ Welcome_to $BASH_SOURCE
     export TERM="xterm-256color"
     source $HOME/bin/virtualenvwrapper.sh
     do_not_use_proxy
-    pyth ~/jab/src/python/checksums.py
+    python ./checksums.py
     [[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(realdir $BASH_SOURCE) on $(hostname -f)
 }
 

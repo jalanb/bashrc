@@ -1076,7 +1076,7 @@ taocl () {
 }
 
 ylint () {
-    pyth $HOME/jab/src/python/site/ylint.py "$@"
+    pyth $HOME/jab/src/python/ylint.py "$@"
 }
 
 # xxxxxx
