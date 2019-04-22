@@ -100,7 +100,6 @@ gr () {
     show_run_command git pull --rebase "$@" 
 }
 
-
 gs () {
     local __doc__="""git status front end"""
     _gs "$@"
@@ -249,6 +248,11 @@ gl1 () {
     gl -n1 "$@"
 }
 
+gorll () {
+    gor "$@"
+    git lg
+}
+
 glone () {
     local __doc__="""pronounced 'g l one'"""
     gl --oneline "$@"
@@ -284,6 +288,10 @@ gls () {
 
 glt () {
     git_on_screen lt "$@"
+}
+
+glv () {
+    git lg --color=never "$@" | vim -
 }
 
 gma () {
@@ -571,6 +579,11 @@ godr () {
 gomr () {
     gor master
     bump show
+}
+
+gorl () {
+    gor "$@"
+    glg
 }
 
 gcpa () {
