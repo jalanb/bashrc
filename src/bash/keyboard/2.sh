@@ -52,7 +52,7 @@ _24 () {
 }
 
 _25 () {
-    at_home bash "$@"
+    at_home tippy "$@"
 }
 
 _26 () {
