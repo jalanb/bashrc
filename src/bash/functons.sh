@@ -213,8 +213,8 @@ tt () {
         extract=x
     fi
     tar ${extract}f $1
-    cd $(tar ${contents}f $1 | hd1)
-    ra
+    cd $(tar ${contents}f $1 | head -n 1)
+    ranger
 }
 
 va () {
@@ -1232,7 +1232,7 @@ aliases () {
 }
 
 has_ext () {
-    [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | hd1) ]]
+    [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
 }
 
 is_a_dir () {
