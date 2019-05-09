@@ -984,7 +984,7 @@ paste () {
 }
 
 clipvim () {
-    bash -x /Users/jab/src/git/hub/jab3/bin/tmp_fred.sh
+    bash -x ~/jab/bin/tmp_fred.sh
 }
 
 clip_in () {
@@ -1162,7 +1162,7 @@ online_all () {
 }
 
 is_online () {
-    online_destination "$@" >/dev/null 2>&1 && return 0 
+    online_destination "$@" >/dev/null 2>&1 && return 0
     return 1
 }
 
@@ -1237,7 +1237,7 @@ has_ext () {
 
 is_a_dir () {
     [[ -d "$1" ]] || echo "\"$1\" is not a directory" >&2
-    [[ -d "$1" ]] 
+    [[ -d "$1" ]]
 }
 
 relpath () {
@@ -1388,7 +1388,7 @@ first_num () {
 
 is_a_file () {
     [[ -f "$1" ]] || echo "\"$1\" is not a file" >&2
-    [[ -f "$1" ]] 
+    [[ -f "$1" ]]
 }
 
 viewstyle () {
