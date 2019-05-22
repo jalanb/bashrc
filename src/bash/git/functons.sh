@@ -248,11 +248,6 @@ gl1 () {
     gl -n1 "$@"
 }
 
-gorll () {
-    gor "$@"
-    git lg
-}
-
 glone () {
     local __doc__="""pronounced 'g l one'"""
     gl --oneline "$@"
@@ -312,7 +307,7 @@ gob () {
 
 gof () {
     gbD fred 2>/dev/null
-    gob fred "$@"
+    gob "$@" fred
 }
 
 gog () {
@@ -327,12 +322,16 @@ gor () {
     go "$@"; gr
 }
 
-gop () {
-    go python
+got () {
+    if git branch -a | grep $1; then
+        gor "$@"
+    else
+        show_run_command git "$@"
+    fi
 }
 
 gpf () {
-    gp --force "$@"
+    gp --force-with-lease "$@"
 }
 
 gpo () {
@@ -369,7 +368,7 @@ gra () {
 
 grc () {
     show_command git rebase --continue
-    git rebase --continue | g "skip this commit" || return
+    GIT_EDITOR=true git rebase --continue | g "skip this commit" || return
     show_run_command git rebase --skip
 }
 
@@ -391,6 +390,7 @@ gri () {
 grm () {
     local _current_branch=$(current_branch)
     [[ $1 ]] && _current_branch=$1
+    gor master
     show_run_command git rebase master $_current_branch
 }
 
@@ -576,6 +576,10 @@ godr () {
     bump show
 }
 
+gomb () {
+    gob "$@" master 
+}
+
 gomr () {
     gor master
     bump show
@@ -663,6 +667,10 @@ gpod () {
     gpo --delete "$@"
 }
 
+gpff () {
+    gp --force "$@"
+}
+
 gppp () {
     gpf "$@"
     gpt
@@ -722,19 +730,24 @@ clone () {
     [[ "$1" == "-n" ]] && _range= && shift
     [[ "$1" == "-y" ]] && _range=ranger
     local _remote=
-    [[ -n "$1" ]] && _remote="$1" && shift
+    [[ -n $1 ]] && _remote=$1 && shift
     local _local=
-    [[ -n "$1" ]] && _local="$1" && shift
+    [[ -n $1 ]] && _local=$1 && shift
 
     local _clone_log=/tmp/_clone.log
     echo "" > $_clone_log
-    show_run_command git clone "$_remote" "$_local" > $_clone_log 2>&1
+    show_run_command git clone $_remote $_local > $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
         kat -n $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
         [[ -n $_range ]] && ranger
     fi
+}
+
+gorll () {
+    gor "$@"
+    git lg
 }
 
 # xxxxxx
@@ -837,6 +850,17 @@ git_branch () {
 }
 
 # xxxxxxxxxxx
+
+clean_clone() {
+    show_run_command git reset head .
+    show_run_command git checkout .
+    show_run_command git clean -f -d -f
+    show_run_command git checkout master
+    for branch in $(git branch | grep -v -e master -e deployed-to); do
+        [[ -f $branch ]] && continue
+        show_run_command git branch -d $branch
+    done
+}
 
 git_changed () {
     local git_dir=$(git_root ${1:-$PWD})

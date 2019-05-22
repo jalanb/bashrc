@@ -82,7 +82,6 @@ alias cim=vim
 
 alias doc="cde ~/Documents"
 
-alias got=git
 alias gti=git
 
 alias jlf="sst jlfieblu jlf.ie"
