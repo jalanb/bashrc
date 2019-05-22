@@ -11,10 +11,12 @@
 --type-set=snmp=.mib,.funcs
 --type-set=test=.test,.tests
 --ignore-dir=.idea
+--ignore-dir=.tox
 --ignore-dir=.pytest_cache
 --ignore-dir=.ipynb_checkpoints
 --ignore-dir=compliance.egg-info
 --ignore-dir=coverage
+--ignore-dir=htmlcov
 --ignore-dir=vim
 --ignore-file=match:tags
 --ignore-file=match:.coverage
