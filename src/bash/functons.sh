@@ -1248,7 +1248,7 @@ whiches () {
 umports () {
     for file in "$@"; do
         reorder-python-imports "$file"
-        python ~/jab/bin/imports -ume "$file"
+        python3 ~/jab/bin/imports -ume "$file"
     done
 }
 

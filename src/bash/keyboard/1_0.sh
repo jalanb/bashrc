@@ -56,6 +56,7 @@ alias 23="_23"
 alias 24="_24"
 alias 25="_25"
 alias 26="_26"
+alias 27="_27"
 
 alias 50="cd ~/src/.."
 alias 51="cd ~/src/experiments"

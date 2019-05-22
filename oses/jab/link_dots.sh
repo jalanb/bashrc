@@ -41,8 +41,10 @@ link_to_home () {
     local from=~/jab/$1
     local to=$HOME/.$(basename_ $1)
     [[ -e "$to" ]] && rm -rf $to
-    if [[ -e "$from" ]]; then link_to $from $HOME/.$(basename_ $1)
-    else echo $from does not exist >&2
+    if [[ -e "$from" ]]; then
+        link_to $from $to
+    else
+        echo $from does not exist >&2
     fi
 }
 
@@ -56,6 +58,11 @@ link_bashrc () {
 }
 
 main () {
+    if [[ ! -e ~/jab ]]; then
+        local _this_dir=$(dirname $(readlink -f $BASH_SOURCE))
+        local _top_level=$(git -C "$_this_dir" rev-parse --show-toplevel)
+        (cd ~; ln -s $_top_level jab)
+    fi
     [[ -d ~/.vim ]] && rm -rf ~/.vim
     link_to_home vim
     link_to_home vim/vimrc

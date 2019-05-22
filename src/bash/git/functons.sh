@@ -134,6 +134,10 @@ _gs () {
 
 # xxx
 
+egi () {
+    GIT_EDITOR=true gi "$@"
+}
+
 gaa () {
     ga .
 }
