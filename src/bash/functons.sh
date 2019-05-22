@@ -1353,6 +1353,8 @@ twkgit30 () {
     is_a_file .git/config || return 1
     sed -i -e s/$(worker git)/$(worker twkgit30)/ .git/config
     sed -i -e s/$(worker twkgit20)/$(worker twkgit30)/ .git/config
+    sed -i -e s/$(worker tools)/$(worker twkgit30)/ .git/config
+    sed -i -e s/$(worker tooltest)/$(worker twkgit30)/ .git/config
     sed -i -e 's!http://$(worker twkgit30)!https://$(worker twkgit30)!' .git/config
 }
 

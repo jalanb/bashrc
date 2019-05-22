@@ -35,15 +35,25 @@ Host tooltest
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host builder
+Host builder twkgit30
     Hostname 172.25.32.115
     User builder
     IdentityFile ~/.ssh/work/tools/builder.key
 
-Host baker
+Host baker twkgit20
     Hostname 172.25.1.219
     User builder
     IdentityFile ~/.ssh/work/tools/builder.key
+
+Host master
+    Hostname 172.25.1.219
+    User master
+    IdentityFile ~/.ssh/work/tools/master.key
+
+Host worker
+    Hostname 172.25.1.219
+    User worker
+    IdentityFile ~/.ssh/work/tools/worker.key
 
 Host toolstoo
     Hostname gitlab
@@ -76,7 +86,7 @@ Host twkwbe42 eopstage
     IdentityFile ~/.ssh/work/eop/builder.key
 
 Host atlwbe43 eopbeta
-    Hostname 172.25.232.243
+    Hostname 172.25.32.200
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
@@ -126,7 +136,7 @@ Host twkwbe34 wmptrain wmpstage
     IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host atlwbe35 wmpbeta
-    Hostname 172.25.232.149
+    Hostname 172.25.32.202
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
