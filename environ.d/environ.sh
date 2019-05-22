@@ -9,7 +9,6 @@ set_paths () {
         PATH=$(dirname_ $(which python))
         add_to_a_path PATH --start $HOME/bin
         add_to_a_path PATH --index 1 ~/jab/bin
-        add_to_a_path PATH --index 2 ~/hub/pysyte/bin
         add_to_a_path PATH --index 3 $HOME/.local
         add_to_a_path PATH --index 4 $HOME/.local/bin
         [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path --index 5 PATH ${VIRTUAL_ENV}/bin
