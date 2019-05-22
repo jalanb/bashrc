@@ -222,7 +222,7 @@ if !exists("Try")
             endif
             let command = "! TERM=linux && " . try_py . " -qa "
         endif
-        let command_line = command . item_name . " | grep -v DocTestRunner.merge "
+        let command_line = command . item_name . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
         if a:quietly
             let tmpfile = tempname()
             let quiet_line = command_line . " > " . tmpfile . " 2>&1 || true"
