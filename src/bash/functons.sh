@@ -563,10 +563,6 @@ tmp () {
     pushq $(pyth ~/hub/cde/cd.py ~/tmp "$@")
 }
 
-try () {
-    ~/hub/pysyte/bin/try "$@"
-}
-
 vaf () {
     vim -p $(aliases) $(functons)
     sa
@@ -653,10 +649,6 @@ wtb () {
 
 wvb () {
     vim -p ~/bash "$@"
-}
-
-wvd () {
-    vim -p ~/hub/pysyte/pysyte/ "$@"
 }
 
 wtj () {
@@ -776,10 +768,6 @@ cdra () {
     [[ -f $HOME/.local/ranger.txt ]] && _ranged=$(cat $HOME/.local/ranger.txt)
     [[ -d $_ranged ]] || return
     cd $_ranged
-}
-
-dots () {
-    cde ~/hub/pysyte/pysyte
 }
 
 down () {

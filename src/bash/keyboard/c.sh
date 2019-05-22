@@ -82,7 +82,7 @@ calf () {
 # xxxxx
 
 clean () {
-    rfq "$@"
+    rf -q "$@"
 }
 
 # _xxxx
