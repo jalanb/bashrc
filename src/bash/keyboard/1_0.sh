@@ -87,9 +87,7 @@ alias 233="_23 corteva"
 alias 234="_23 deploy"
 alias 242="_24 mrs"
 alias 244="_24 deploy"
-alias 251="_25 site"
-alias 252="_25 opp_common"
-alias 253="_25 django_tools"
+alias 255="25; vagrant ssh"
 alias 088="cd /usr/local"
 # xxxx
 
