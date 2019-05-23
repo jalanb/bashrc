@@ -509,6 +509,7 @@ rlf () {
 }
 
 sai () {
+    [[ -f /usr/bin/say ]] || return
     local _one=$1
     local _voices="-v Moira"
     if [[ $_one =~ ^v(oices*)*$ ]]; then

@@ -66,6 +66,7 @@ links_into_home () {
 
     link_into_home ~/src/git/hub        hub
     link_into_home ~/jab/src/bash       bash
+    link_into_home ~/bash/keyboard      keys
 
     vim_clone_to_home home/pythonrc.py           .pythonrc.py
     link_clone_to_home home/pylintrc             .pylintrc
