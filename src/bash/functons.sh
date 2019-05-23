@@ -772,7 +772,7 @@ cdra () {
 }
 
 down () {
-    cd ~/down "$@"
+    cd ~/Downloads "$@"
     l -tr . | tail
 }
 
