@@ -19,6 +19,7 @@ src/python/tmp*-vim.sh
 src/bash/fd
 etc/history
 bin/venv_bin
+vim/bundle.remote
 
 # Derived development files
 tags
