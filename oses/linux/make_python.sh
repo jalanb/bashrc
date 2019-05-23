@@ -3,7 +3,7 @@
 set -e
 
 
-MINIMUM_VERSION=2.7.14
+MINIMUM_VERSION=3.7.3
 
 install_home_python () {
     if [[ -f "~/Downloads/Python-${MINIMUM_VERSION}.tgz" ]]; then
