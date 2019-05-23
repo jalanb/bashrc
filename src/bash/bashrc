@@ -20,14 +20,14 @@ _set_path () {
 _home_user=$HOME/jab
 
 _bashrc () {
+    _local_cd=
     WELCOME_BYE=
     source $_home_user/__init__.sh
     WELCOME_BYE=
-    local _local_cd=
     local_rc $_home_user && _local_cd=$LOCAL_CD
     # set +x
     local _bashrc_cd=~/jab
-    [[ -n $_local_cd ]] && _bashrc_cd="$_local_cd"
+    [[ -e $_local_cd ]] && _bashrc_cd="$_local_cd"
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     # set -x
     sp green

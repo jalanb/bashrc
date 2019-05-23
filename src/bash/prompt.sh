@@ -17,6 +17,7 @@ get_git_branch () {
 get_git_status() {
     local _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     [[ -z $_branch ]] && return 1
+    [[ -z $1 ]] && echo "$_branch" && return 0
     local _branch_at=
     [[ $1 =~ [0-9] ]] && _branch_at="$_branch v$1" && shift
     local _modified=$(git status --porcelain | wc -l | tr -d ' ')
