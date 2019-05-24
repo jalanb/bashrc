@@ -1072,10 +1072,8 @@ _gsi_response () {
 }
 
 _gvi_response () {
-    [[ $answer =~ [rR] ]] && _gvi_drop "$1" && return 0
-    [[ $answer =~ [vV] ]] && _gvi_vim "$1" && return 0
-    [[ $answer =~ [wW] ]] && _gvi_git_dv "$1" && return 0
-    _gxi_response "$@" 
+    [[ $answer =~ [yY] ]] && ga "$1" && return 0
+    _ggi_response "$@"
 }
 
 _gxi_response () {
