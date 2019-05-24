@@ -644,14 +644,9 @@ gl11 () {
 }
 
 glgs () {
-    local _number_of_lines=7
-    if [[ $1 =~ ^-?[0-9]+$ ]]; then
-        _number_of_lines=$1
-        shift
-    fi
-    for branch in "$@"; do
-        glg $_number_of_lines $branch
-    done
+    glg "$@"
+    echo 
+    gs
 }
 
 glp1 () {
