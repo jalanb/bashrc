@@ -168,8 +168,8 @@ nnoremap C <esc>:qa!<CR>
 "noremap G goto line (default last)
 nnoremap H <C-B>zz
 "noremap I - Insert
-nnoremap J <PageUp>zz
-nnoremap K <PageDown>zz
+nnoremap J <PageDown>zz
+nnoremap K <PageUp>zz
 nnoremap L <C-F>zz
 "noremap M - To Middle of window
  noremap N :cn<cr>zMzvzz
