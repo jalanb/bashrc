@@ -19,7 +19,7 @@ get_git_status() {
     [[ -z $_branch ]] && return 1
     local _bump_version=$1; shift
     local _branch_at="$_branch"
-    [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$1" 
+    [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$_bump_version" 
     local _modified=$(git status --porcelain | wc -l | tr -d ' ')
     local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
     local _remote_branch="$(\git config --get branch.${_branch}.merge)"
@@ -84,9 +84,8 @@ _colour_prompt () {
     local _where="${HOSTNAME:-$(hostname -s)}"
     local _here=$PWD
     local _dir="$(short_dir "$_here" 2>/dev/null)"
-    local _basename=/usr/bin/basename # YMMV
 
-    [[ -n $_dir ]] || _dir=$($_basename $(readlink -f .))
+    [[ -n $_dir ]] || _dir=$(basename $(readlink -f .))
     local _got_bump=$(bump get 2>/dev/null)
     local _bump_version=
     [[ -n $_got_bump ]] && _bump_version="$_got_bump"
@@ -96,14 +95,14 @@ _colour_prompt () {
     local _py_vers=$(python --version 2>&1 | sed -e s/Python.//)
     local _venv=$(env | g VIRTUAL_ENV= | sed -e "s/[^=]*=//")
     local _venv_name=
-    [[ -n $_venv ]] && _venv_name=$($_basename $_venv)
+    [[ -n $_venv ]] && _venv_name=$(basename $_venv)
     if [[ $_venv_name == ".venv" ]]; then
         local _parent=$(dirname $_venv)
-        local _parent_name=$($_basename $_parent)
+        local _parent_name=$(basename $_parent)
         _venv=$_parent_name
     fi
     local _py_venv=
-    [[ -e $_venv ]] && _py_venv=$($_basename $_venv)
+    [[ -e $_venv ]] && _py_venv=$(basename $_venv)
 
 
 
