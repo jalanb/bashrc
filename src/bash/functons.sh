@@ -959,6 +959,11 @@ hello () {
 
 }
 
+jalanb () {
+    cd ~/src/git/jalanb
+    bash for_all.sh
+}
+
 LetGo () {
     echo 'Digger, Thumber, Tarzan, Climber'
 }

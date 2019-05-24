@@ -10,7 +10,7 @@ j () {
 }
 
 jj () {
-    c ~/jab "$@"
+    c ~/src/git/jalanb "$@"
 }
 
 
