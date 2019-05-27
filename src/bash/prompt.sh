@@ -121,7 +121,7 @@ _colour_prompt () {
     if [[ -n $_py_venv ]]; then
         local _colour_version=$(_colour l_red "${_py_vers}")
         local _colour_virtual=$(_colour l_red "${_py_venv}")
-        local _colour_python="$_colour_version.$_colour_virtual"
+        local _colour_python="$_colour_version.${_colour_virtual/./}"
         printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python\n$ "
     else
         local _colour_python=$(_colour l_red "${_py_vers}")
