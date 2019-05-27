@@ -1289,6 +1289,12 @@ maketest () {
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
 
+ssh_tippy () {
+    at_home tippy
+    vagrant status | grep -q 'poweroff' && vagrant up
+    vagrant ssh
+}
+
 sudo_ssh () {
     local _host=$1; shift
     ssh -t -q $_host "sudo ""$@"

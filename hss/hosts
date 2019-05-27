@@ -144,3 +144,19 @@ Host twkwbe35 wmp
     Hostname 172.25.32.149
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
+
+Host twkwbe51 oppdev
+    Hostname 172.25.1.105
+    User builder
+    IdentityFile ~/.ssh/work/opp/builder.key
+
+Host twkwbe52 opptest
+    Hostname 172.25.1.106
+    User builder
+    IdentityFile ~/.ssh/work/opp/builder.key
+
+Host twkwbe53 opp
+    Hostname 172.25.32.141
+    User builder
+    IdentityFile ~/.ssh/work/opp/builder.key
+

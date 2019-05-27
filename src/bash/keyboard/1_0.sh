@@ -87,7 +87,7 @@ alias 233="_23 corteva"
 alias 234="_23 deploy"
 alias 242="_24 mrs"
 alias 244="_24 deploy"
-alias 255="25; vagrant ssh"
+alias 255="ssh_tippy"
 alias 088="cd /usr/local"
 # xxxx
 
