@@ -267,6 +267,7 @@ glf () {
 
 glg () {
     GIT_LOG_ALIAS=lg GIT_LOG_LINES=$_number_of_commits git_on_lines "$@"
+    echo
 }
 
 gll () {
@@ -645,7 +646,6 @@ gl11 () {
 
 glgs () {
     glg "$@"
-    echo 
     gs
 }
 
