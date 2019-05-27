@@ -44,3 +44,4 @@ tags
 # for python virtualenvs
 bin/activate
 .venv
+.jab
