@@ -6,7 +6,7 @@
 # x
 
 j () {
-    cd ~/jab
+    cde ~/jab
 }
 
 jj () {
