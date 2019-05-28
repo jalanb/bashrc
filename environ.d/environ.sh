@@ -41,40 +41,25 @@ set_bucket () {
 }
 
 show_dir_colors () {
-    local _dircolors=$(which dircolors 2>/dev/null)
-    [[ -z $_dircolors ]] && return 1
-    local _dircolours=$(realpath $_dircolors)
-    [[ -z $_dircolours ]] && return 1
-    eval $($_dircolours ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
+    local _dircolors=$(quietly realpath $(which dircolors) )
+    [[ $_dircolors ]] || return 1
+    eval $($_dircolors ~/.dir_colors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 }
 
 export_symbols () {
     export EX_OK=0
     export EX_BAD=1
-    export EXITSTATUS="$?"
     export FIGNORE=.pyc:.swp:~:.o
     export RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
     export LOG_LINES_ON_CD_GIT_DIR=7
-    if [[ -x /usr/local/bin/which ]]; then
-        export WHICH=/usr/local/bin/which
-    else
-        export WHICH=/usr/bin/which
-    fi
     export EDITOR=vim
 }
 
 _source_jab_environ () {
-    [[ -f ~/jab/environ.d/jab.sh ]] && . ~/jab/environ.d/jab.sh
-
-    # set -x
     set_paths
-    # echo $PATH | tr ':' '\n'
-    # set +x
     export_symbols
     set_bucket
-    # set -x
     show_dir_colors
-    # set +x
     shopt -s cdspell
     shopt -s autocd   #Use dir name as a "cd command"
     set -o vi
