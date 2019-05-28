@@ -9,9 +9,9 @@ set_paths () {
         PATH=$(dirname_ $(which python))
         add_to_a_path PATH --start $HOME/bin
         add_to_a_path PATH --index 1 ~/jab/bin
-        add_to_a_path PATH --index 3 $HOME/.local
-        add_to_a_path PATH --index 4 $HOME/.local/bin
-        [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path --index 5 PATH ${VIRTUAL_ENV}/bin
+        add_to_a_path PATH --index 2 $HOME/.local
+        add_to_a_path PATH --index 3 $HOME/.local/bin
+        [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path --index 4 PATH ${VIRTUAL_ENV}/bin
         add_to_a_path PATH /usr/local/gnu
         add_to_a_path PATH /usr/local/bin
         add_to_a_path PATH /bin
