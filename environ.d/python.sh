@@ -26,11 +26,14 @@ export TRY=$_try
 . ~/jab/environ.d/jab.sh
 . ~/jab/src/bash/add_to_a_path.sh
 
-[[ -z $PYTHONPATH ]] && suffix= || suffix=:$PYTHONPATH
-export PYTHONPATH=~/jab/src/python/site$suffix
+add_to_a_path PYTHONPATH ~/jab/src/python/site
+add_to_a_path PYTHON_SOURCE_PATH ~/jab/src/python
+add_to_a_path PYTHON_SOURCE_PATH ~/src/python
+[[ -f ~/jab/src/python/pythonrc.py ]] && export PYTHONSTARTUP=~/jab/src/python/pythonrc.py
 
 _upgrade_package () {
-    bg pip2 install --upgrade --retries=1 "$@" > ~/bash/fd/1 2> ~/bash/fd/2
+    (pip2 install --upgrade --retries=1 "$@" > ~/bash/fd/1 2> ~/bash/fd/2)
+    (pip3 install --upgrade --retries=1 "$@" > ~/bash/fd/1 2> ~/bash/fd/2)
 }
 
 upgrades () {
