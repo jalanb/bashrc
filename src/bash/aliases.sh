@@ -111,6 +111,8 @@ alias mkenv=mkvirtualenv
 
 alias print=printf
 
+alias whihc=which
+
 # xxxxxx
 
 alias ......='cduppppp'
