@@ -1240,6 +1240,10 @@ is_a_dir () {
     [[ -d "$1" ]]
 }
 
+playbook () {
+    ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook "$*"
+}
+
 relpath () {
     python ~/jab/src/python/relpath.py "$@"
 }
