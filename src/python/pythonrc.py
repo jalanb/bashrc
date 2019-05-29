@@ -5,7 +5,7 @@ from __future__ import print_function
 
 try:
     see
-except (NameError, ModuleNotFoundError):
+except (NameError):
     def see(thing, regexp=None):
         """layout a dir listing filtered by the given regexp"""
         if regexp:
