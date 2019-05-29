@@ -478,6 +478,15 @@ lyy () {
     $reset
 }
 
+mkd () {
+    local __doc__='make a directory'
+    if [[ -d "$@" ]]; then
+        echo Directory existed "$@" >&2
+    else
+        mkdir -p "$@"
+    fi
+}
+
 num () {
     vim ~/jab/local/numbers.txt
 }
@@ -807,11 +816,8 @@ mine () {
 
 mkcd () {
     local __doc__='make a directory and start using it';
-    if [[ -d "$@" ]]; then
-        echo Directory existed "$@"
-    else
-        mkdir -p "$@"
-    fi
+    mkd "$@"
+    [[ -d "$@" ]] || return 1
     cd "$@"
 }
 
