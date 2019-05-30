@@ -1241,7 +1241,7 @@ is_a_dir () {
 }
 
 playbook () {
-    ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook "$*"
+    ANSIBLE_STDOUT_CALLBACK=debug ansible-playbook "$@"
 }
 
 relpath () {
