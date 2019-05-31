@@ -890,9 +890,12 @@ dihh () {
     COMMAND_FOR_SAME_FILES=hd _dixx "$@"
 }
 
+diic () {
+    COMMAND_FOR_SAME_FILES=icdiff _dixx "$@"
+}
+
 divv () {
-    COMMAND_FOR_SAME_FILES=vd
-    _dixx "$@"
+    COMMAND_FOR_SAME_FILES=vd _dixx "$@"
 }
 
 this () {
