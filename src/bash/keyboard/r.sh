@@ -55,6 +55,10 @@ rr () {
         _interactive=1
         shift
     fi
+    if [[ $1 =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
+        echo "Will not remove $1" >&2
+        return 1
+    fi
     local _real_home=$(real_path $HOME)
     if [[ $(real_path "$@") == "$_real_home" ]]; then
         scalp_hermann
