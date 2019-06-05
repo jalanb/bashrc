@@ -182,6 +182,10 @@ popq () {
     popd >/dev/null 2>&1
 }
 
+ra () {
+    ranger "$@"
+}
+
 ru () {
     # do da root root route, do da ru !
     if [[ -z "$@" ]]; then

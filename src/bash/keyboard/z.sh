@@ -16,6 +16,11 @@ zz () {
     du -sh "$*"
 }
 
+zx ()
+{
+    Under a spreading chestnut tree
+}
+
 # _x
 # _xx
 # xxx

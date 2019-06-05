@@ -84,6 +84,9 @@ nnoremap n nzvzz
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 noremap tf :tabnew ~/tmp/fred.txt
 noremap tn :tabnew<Space>
+ noremap tq <esc>;iq<CR>
+ noremap ttq <esc>;iqa!<CR>
+ noremap tw <esc>;iwa!<CR>qa!<CR>
 "noremap u - undo
 "noremap v - start visual
 "noremap w - forword
