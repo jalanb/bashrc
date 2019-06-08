@@ -1,0 +1,14 @@
+#! /bin/bash
+
+GREEN="\033[0;32m"
+LIGHT_GREEN="\033[1;32m"
+
+NO_COLOUR="\033[0m"
+
+main () {
+    local _colour=$LIGHT_GREEN
+    printf "$_colour""$@""$NO_COLOUR"
+}
+
+main "$@"
+
