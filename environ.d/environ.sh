@@ -55,13 +55,18 @@ export_symbols () {
     export EDITOR=vim
 }
 
+_set_option () {
+    shopt | grep -q $1 || return 1
+    shopt -s $1
+}
+
 _source_jab_environ () {
     set_paths
     export_symbols
     set_bucket
     show_dir_colors
-    shopt -s cdspell
-    shopt -s autocd   #Use dir name as a "cd command"
+    _set_option cdspell
+    _set_option autocd
     set -o vi
 }
 
