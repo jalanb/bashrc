@@ -16,9 +16,9 @@ cb () {
     cde ~/bash/
 }
 
-cc () {
+cg () {
     local _where=.
-    [[ -n "$*" ]] && _where="$@"
+    [[ "$*" ]] && _where="$@"
     c $(git -C "$_where" rev-parse --show-toplevel)
 }
 
