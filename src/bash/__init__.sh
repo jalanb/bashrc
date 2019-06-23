@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-__version__=2.12.223
+__version__=0.7.7
 
 local_rc () {
     local __doc__="There might be local files with new $PWD and commands"
