@@ -1227,9 +1227,10 @@ online_destination () {
 }
 
 please () {
-    local last=$(history -p !-1)
-    echo "sudo $last"
-    sudo $last
+    local _command=$(history -p !-1)
+    [[ "$@" ]] && _command="$@"
+    green_line "$ sudo $_command"
+    sudo $_command
 }
 
 qwerty  () {
@@ -1473,6 +1474,10 @@ continuing () {
 
 jab_scripts () {
     pyth ~/jab/src/python/scripts.py "$@"
+}
+
+make_it_so () {
+    please "$@"
 }
 
 quick_ping () {
