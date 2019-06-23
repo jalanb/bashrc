@@ -724,6 +724,7 @@ gvsd () {
 gffff () {
     gffm
     gr
+    show_run_command git status
 }
 
 clone () {
