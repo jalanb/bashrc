@@ -598,6 +598,10 @@ tmp () {
     pushq $(pyth ~/hub/cde/cd.py ~/tmp "$@")
 }
 
+tti () {
+    tty | cut -d'/' -f3
+}
+
 vaf () {
     vim -p $(aliases) $(functons)
     sa

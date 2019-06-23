@@ -84,6 +84,7 @@ alias doc="cde ~/Documents"
 
 alias gti=git
 
+alias jab=j
 alias jlf="sst jlfieblu jlf.ie"
 
 
