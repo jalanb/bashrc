@@ -199,13 +199,13 @@ nnoremap <Up>       ?<cr>zazv
 nnoremap <Down>     /<cr>zazv
 nnoremap <S-Up>     ?
 nnoremap <S-Down>   /
-nnoremap <S-Left>   #zv
-nnoremap <S-Right>  *zv
+nnoremap <S-Left>   :tabprev<cr>
+nnoremap <S-Right>  :tabnext<cr>
 
 noremap <PageUp>   <C-B>
 noremap <PageDown> <C-F>
-nnoremap <left>      :tabprev<cr>
-nnoremap <right>     :tabnext<cr>
+nnoremap <left>      #zv
+nnoremap <right>     *zv
 " control keys {{{2
  noremap    <C-d> :qa<CR>
  noremap    <C-n> :next<CR>
