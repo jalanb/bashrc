@@ -78,3 +78,8 @@
     keepBackup = false
 [icdiff]
     options = --highlight --line-numbers
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
