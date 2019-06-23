@@ -1,8 +1,9 @@
 language: python
 python:
 - '2.7'
-install: "pip install -r requirements.txt "
+install: 'pip install -r requirements.txt '
 script: nosetests
 notifications:
   email: false
-  slack: jalanb:wqEssxDWp8j7FAaeNoOxz0z6#travis
+  slack:
+    secure: aD/F8MRz7SM1gXexhxy/K5frXpumUNspUOpf0MLXu+SgkPFsHg3Ev8FfT4e1l6edZq+X6HGcshKfgkbRz4BkPky5Lja3GXzknanwdIM5GLqxajsy/0w27lwrarO534L+jMyIDrUtSGgUspnU8tqTe5voEZ3lxxZXfgTou5ixs9I=
