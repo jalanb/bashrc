@@ -11,6 +11,19 @@ Welcome_to $BASH_SOURCE
 
 # sorted by strcmp of function name, underscores following
 # x
+
+unalias X 2>/dev/null
+Y () {
+    local __doc__="""Colourize a command and it's streams"""
+    local _term=~/jab/bin
+    $_term/blue "$ $@"
+    (
+        set -e;
+        set -x; 
+        "$@" 
+    ) 1> $_term/green 2> $_term/red
+}
+
 # _
 # xx
 # _x
@@ -178,6 +191,10 @@ keys () {
     . ~/bash/keyboard/*.sh
 }
 
+pong () {
+    ping -c1 "$@" | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | g ' [0-9.]*'
+}
+
 popq () {
     popd >/dev/null 2>&1
 }
@@ -280,6 +297,10 @@ ask () {
     local _answer=
     read -e -n1 -p "$1 " _answer
     echo $_answer
+}
+
+fdv () {
+    vim -p $(fd "$@")
 }
 
 fgg () {
@@ -1159,15 +1180,6 @@ tailer () {
     tail -n 1 "$@"
 }
 
-online_all () {
-    online_destination www.google.com
-    online_destination $(worker www)
-    online_destination $(worker tools)
-    online_destination $(worker wmp)
-    online_destination $(worker eop)
-    online_destination $(worker tooltest)
-}
-
 is_online () {
     online_destination "$@" >/dev/null 2>&1 && return 0
     return 1
@@ -1189,17 +1201,24 @@ show_line () {
 }
 
 online () {
-    if [[ -n "$@" ]]; then
-        online_destination "$@"
-        return 0
-    fi
-    online_all
-    return 0
+    [[ "$@" ]] && online_destination "$@"
+    [[ "$@" ]] || online_all
+}
+
+online_all () {
+    online_destination www.google.com
+    online_destination $(worker bots)
+    online_destination $(worker git)
+    online_destination $(worker wmp)
+    online_destination $(worker eop)
+    online_destination $(worker dupont)
+    online_destination $(worker corteva)
+    online_destination $(worker eopdev)
 }
 
 online_destination () {
     if quick_ping "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
-        show_pass "$@" online
+        show_pass $(pong "$@")
         return 0
     else
         show_fail "$@" offline
@@ -1236,6 +1255,11 @@ aliases () {
     local _local=
     [[ $1 == -l ]] && _local="/local"
     echo "$HOME/bash${_local}/aliases.sh"
+}
+
+clearly () {
+    clear
+    l
 }
 
 has_ext () {
@@ -1304,6 +1328,10 @@ maketest () {
     local test_dir=$(files_dirs $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
+}
+
+pong_wwts () {
+    pong $1.wwts.com
 }
 
 ssh_tippy () {
@@ -1432,6 +1460,10 @@ autostyle () {
 # xxxxxxxxxx
 _like_duck () {
     has_py "$*"
+}
+
+jalanb_hub () {
+    (cd ~/hub; grep jalanb -H */.travis.yml | sed -e "s/:.*//" | sort | uniq)
 }
 
 continuing () {
