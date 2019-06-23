@@ -1,66 +1,91 @@
-Host eos70D
-    Hostname 192.168.130.102
-
-Host jab.ook 
-    User jab
-    IdentityFile ~/.ssh/id_jab
-
-Host jab.mini
-    Hostname mini.local
-    User jab
-    IdentityFile ~/.ssh/id_jab
-
-Host jab.book
-    Hostname book.local
-    User jab
-    IdentityFile ~/.ssh/id_jab
-
-Host jab.mac
-    Hostname mac.local
-    User jab
-    IdentityFile ~/.ssh/id_jab
-
+#
+# ~/.ssh/config that connects with WWTS
+#
+# Rules for `~/.ssh/config`
+# 
+# If anyone else reads this, we're hacked already anyway
+# 
+# * Keep `~/.ssh` fully private. 
+# I also keep it write-protected from myself
+# ```
+# $ ls -ld ~/.ssh; ls -l ~/.ssh/config
+# dr-x------ 14 jab ... /Users/jab/.ssh
+# -r-------- 14 jab ... /Users/jab/.ssh/config
+# ```
+# 
+# WWTS
+#
 Host wwits
     Hostname 172.25.3.126
     User ab13173
     Port 22
+
+Host twkwbe35 wmp
+    Hostname 172.25.32.149
+    User builder
+    IdentityFile ~/.ssh/work/wmp/builder.key
+
+Host twkwbe43 eop
+    Hostname 172.25.32.103
+    User builder
+    IdentityFile ~/.ssh/work/eop/builder.key
+
+Host twkwbe53 opp
+    Hostname 172.25.32.141
+    User builder
+    IdentityFile ~/.ssh/work/opp/builder.key
+
+Host twkwbe52 opptest
+    Hostname 172.25.1.106
+    User builder
+    IdentityFile ~/.ssh/work/opp/builder.key
+
+Host twkwbe51 oppdev
+    Hostname 172.25.1.105
+    User builder
+    IdentityFile ~/.ssh/work/opp/builder.key
+# 
+# Host baker twkgit20
+#     Hostname 172.25.1.219
+#     User builder
+#     IdentityFile ~/.ssh/work/tools/builder.key
+# 
+Host gitlab twkgit30
+    Hostname 172.25.32.115
+    User builder
+    IdentityFile ~/.ssh/work/tools/builder.key
+
+Host git
+    Hostname 172.25.32.115
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host builder twkgit31
+    Hostname 172.25.32.74
+    User builder
+    IdentityFile ~/.ssh/work/tools/builder.key
+
+Host bots
+    Hostname 172.25.32.74
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host master
+    Hostname 172.25.32.74
+    User master
+    IdentityFile ~/.ssh/work/tools/master.key
+
+Host worker
+    Hostname 172.25.32.74
+    User worker
+    IdentityFile ~/.ssh/work/tools/worker.key
+
 
 Host tools
     Hostname 172.25.1.219
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host tooltest
-    Hostname 172.25.1.218
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
-Host builder twkgit30
-    Hostname 172.25.32.115
-    User builder
-    IdentityFile ~/.ssh/work/tools/builder.key
-
-Host baker twkgit20
-    Hostname 172.25.1.219
-    User builder
-    IdentityFile ~/.ssh/work/tools/builder.key
-
-Host master
-    Hostname 172.25.1.219
-    User master
-    IdentityFile ~/.ssh/work/tools/master.key
-
-Host worker
-    Hostname 172.25.1.219
-    User worker
-    IdentityFile ~/.ssh/work/tools/worker.key
-
-Host toolstoo
-    Hostname gitlab
-    Hostname tools.wwts.com
-    
-Host twkdbs98.ad.wwts.com
-    Hostname 172.25.1.128
 
 Host default
   HostName 127.0.0.1
@@ -87,11 +112,6 @@ Host twkwbe42 eopstage
 
 Host atlwbe43 eopbeta
     Hostname 172.25.32.200
-    User builder
-    IdentityFile ~/.ssh/work/eop/builder.key
-
-Host twkwbe43 eop
-    Hostname 172.25.32.103
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
@@ -130,7 +150,7 @@ Host twkwbe95 wmptest
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe34 wmptrain wmpstage
+Host twkwbe34 wmpstage
     Hostname 172.25.32.147
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
@@ -140,23 +160,25 @@ Host atlwbe35 wmpbeta
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe35 wmp
-    Hostname 172.25.32.149
+
+Host twkwbe96 wmppdev
+    Hostname 172.25.32.96
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe51 oppdev
-    Hostname 172.25.1.105
+Host twkwbe95 wmpptest
+    Hostname 172.25.32.95
     User builder
-    IdentityFile ~/.ssh/work/opp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe52 opptest
-    Hostname 172.25.1.106
+Host twkwbe34 wmppstage
+    Hostname 172.25.32.147
     User builder
-    IdentityFile ~/.ssh/work/opp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe53 opp
-    Hostname 172.25.32.141
+Host atlwbe35 wmppbeta
+    Hostname 172.25.32.202
     User builder
-    IdentityFile ~/.ssh/work/opp/builder.key
+    IdentityFile ~/.ssh/work/wmp/builder.key
 
+  HostName 192.168.111.222
