@@ -324,7 +324,10 @@ gom () {
 }
 
 gor () {
-    go "$@"; gr
+    for branch in "$@"; do
+        go "$branch"
+        gr
+    done
 }
 
 got () {
@@ -629,9 +632,8 @@ gfff () {
 }
 
 gffm () {
-    gff
-    grup
     gomr
+    gfff
 }
 
 gl11 () {
@@ -720,7 +722,7 @@ gvsd () {
 # xxxxx
 
 gffff () {
-    gfff
+    gffm
     gr
 }
 
