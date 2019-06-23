@@ -87,6 +87,8 @@ noremap tn :tabnew<Space>
  noremap tq <esc>;iq<CR>
  noremap ttq <esc>;iqa!<CR>
  noremap tw <esc>;iwa!<CR>qa!<CR>
+ noremap tz :! /Users/jab/src/git/hub/jab/bin/Digging "Thumber Tarzan Climber"<cr>
+ noremap tzx :! /Users/jab/src/git/hub/jab/bin/Under "a spreading chest tree"<cr>
 "noremap u - undo
 "noremap v - start visual
 "noremap w - forword
