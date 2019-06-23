@@ -579,6 +579,10 @@ gipf () {
     gpf
 }
 
+glgg () {
+    git lg "$@"
+}
+
 godr () {
     gor development
     bump show
