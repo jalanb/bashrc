@@ -636,8 +636,8 @@ gfff () {
 }
 
 gffm () {
-    gomr
     gfff
+    gomr
 }
 
 gl11 () {
@@ -727,7 +727,6 @@ gvsd () {
 
 gffff () {
     gffm
-    gr
     show_run_command git status
 }
 
