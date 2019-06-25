@@ -15,12 +15,11 @@ Welcome_to $BASH_SOURCE
 Y () {
     local __doc__="""Colourize a command and it's streams"""
     local _term=~/jab/bin
-    $_term/blue "$ $@"
-    (
-        set -e;
-        set -x; 
-        "$@" 
-    ) 1> $_term/green 2> $_term/red
+    $_term/BLUE '$ '"$@"
+    echo
+    # { "$@" 2>&1 1>&3 3>&- | $_term/RED; } 3>&1 1>&2 | $_term/GREEN
+    # { "$@" 2>&1 1>&3 3>&- | bin/RED; } 3>&1 1>&2 | bin/GREEN
+    ( set -x; "$@" )  > >(bin/GREEN) 2> >(bin/RED)
 }
 
 # _

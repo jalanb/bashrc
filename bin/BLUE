@@ -1,13 +1,15 @@
 #! /bin/bash
 
-BLUE="\033[0;34m"
-LIGHT_BLUE="\033[1;34m"
-
-NO_COLOUR="\033[0m"
-
-main () {
-    local _colour=$LIGHT_BLUE
-    printf "$_colour""$@""$NO_COLOUR"
-}
-
-main "$@"
+if [[ "$@" ]]; then
+    if [[ $NO_COLOUR ]]; then
+        printf "$LIGHT_BLUE"
+        echo -n "$@"
+        printf "$NO_COLOUR"
+    else
+        printf "blue: ""$@"
+    fi
+else
+    printf "$LIGHT_BLUE"
+    cat
+    printf "$NO_COLOUR"
+fi
