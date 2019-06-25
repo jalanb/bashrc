@@ -575,7 +575,10 @@ gipf () {
 }
 
 glgg () {
+    show_command git lg "$@"
+    tput smcup
     git lg "$@"
+    tput rmcup
 }
 
 godr () {

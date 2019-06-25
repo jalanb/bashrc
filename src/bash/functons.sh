@@ -710,6 +710,10 @@ xib () {
 
 # xxxx
 
+back () {
+    tput rmcup
+}
+
 bins () {
     local _name="$1"; shift
     [[ -z $_name ]] && return 1
@@ -923,6 +927,10 @@ diic () {
 
 divv () {
     COMMAND_FOR_SAME_FILES=vd _dixx "$@"
+}
+
+over () {
+    tput smcup
 }
 
 this () {
