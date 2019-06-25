@@ -12,7 +12,6 @@ Welcome_to $BASH_SOURCE
 # sorted by strcmp of function name, underscores following
 # x
 
-unalias X 2>/dev/null
 Y () {
     local __doc__="""Colourize a command and it's streams"""
     local _term=~/jab/bin

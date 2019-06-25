@@ -224,11 +224,6 @@ gff () {
     show_run_command git fetch --tags
 }
 
-gfp () {
-    gff
-    grup
-}
-
 ggi () {
     local __doc__=""""""
     gxi _gdis _ggi_response "$@"
@@ -726,7 +721,8 @@ gvsd () {
 # xxxxx
 
 gffff () {
-    gffm
+    gfff
+    gomr
     show_run_command git status
 }
 
