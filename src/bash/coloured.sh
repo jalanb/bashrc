@@ -30,7 +30,7 @@ show_colour () {
 # xxxxxxxxxxxx
 
 show_command () {
-    show_green_line "$ ""$*"
+    show_blue_line '$ '"$*"
 }
 
 # xxxxxxxxxxxxx
@@ -41,6 +41,11 @@ show_red_line () {
 alias red_line=show_red_line
 alias show_fail=show_red_line
 
+# xxxxxxxxxxxxxxx
+
+show_blue_line () {
+    show_colour_line "${LIGHT_BLUE}""$*"
+}
 # xxxxxxxxxxxxxxx
 
 show_green_line () {

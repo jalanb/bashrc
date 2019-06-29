@@ -9,14 +9,15 @@ def parse_args():
     """Parser for command line arguments"""
     parser = arguments.parser(__doc__)
     parser.true('-e', '--empty', help="Use empty string as joiner")
-    parser.arg('-j', '--joiner', help="String to use as a joiner", default=',')
+    parser.arg('-j', '--joiner', help="String to use as a joiner", default=', ')
     parser.args('words', help="words to be joined")
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    joiner = '' if args.empty else (args.joiner or '')
+    joiner_ = args.joiner or ''
+    joiner = '' if args.empty else joiner_
     print(joiner.join(args.words))
     return 0
 

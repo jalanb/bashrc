@@ -67,14 +67,15 @@ def _add_symbol_to_paths(paths, symbol, i):
     if i is False:
         i = len(paths)
     result = paths[:]
-    if symbol:
-        if symbol not in result:
-            result.insert(i, symbol)
-        else:
-            j = result.index(symbol)
-            if i != j:
-                del result[j]
-                result.insert(i, symbol)
+    if not symbol:
+        return result
+    if symbol not in result:
+        result.insert(i, symbol)
+        return result
+    j = result.index(symbol)
+    if i != j:
+        del result[j]
+        result.insert(i, symbol)
     return result
 
 

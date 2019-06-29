@@ -6,22 +6,23 @@ set_paths () {
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then
         . ~/jab/src/bash/add_to_a_path.sh
-        PATH=$(dirname_ $(which python))
-        add_to_a_path PATH --start $HOME/bin
-        add_to_a_path PATH --index 1 ~/jab/bin
-        add_to_a_path PATH --index 2 $HOME/.local
-        add_to_a_path PATH --index 3 $HOME/.local/bin
-        [[ -d "${VIRTUAL_ENV:-xxx}"/bin ]] && add_to_a_path --index 4 PATH ${VIRTUAL_ENV}/bin
-        add_to_a_path PATH /usr/local/gnu
-        add_to_a_path PATH /usr/local/bin
-        add_to_a_path PATH /bin
-        add_to_a_path PATH /usr/bin
-        add_to_a_path PATH /usr/local/sbin
-        add_to_a_path PATH $HOME/git/bin
-        add_to_a_path PATH /opt/local/bin
-        add_to_a_path PATH /sbin
-        add_to_a_path PATH /usr/sbin
-        add_to_a_path PATH /usr/local/go/bin
+        add_dir_to_PATH $HOME/bin
+        add_to_PATH ~/jab/bin
+        add_to_PATH $HOME/.local
+        add_to_PATH $HOME/.local/bin
+        add_dir_to_PATH ${VIRTUAL_ENV}/bin
+        add_dir_to_PATH /usr/local/opt/python/libexec/bin
+        add_dir_to_PATH /usr/local/gnu
+        add_to_PATH /usr/local/bin
+        add_to_PATH /bin
+        add_to_PATH /usr/bin
+        add_to_PATH /usr/local/sbin
+        add_dir_to_PATH $HOME/git/bin
+        add_dir_to_PATH /opt/local/bin
+        add_to_PATH /sbin
+        add_to_PATH /usr/sbin
+        add_dir_to_PATH /usr/local/go/bin
+        export PATH
     else
         echo ~/jab is not a directory
     fi
