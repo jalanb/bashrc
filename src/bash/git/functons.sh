@@ -39,18 +39,33 @@ gd () {
 }
 
 gf () {
-    show_run_command git fetch --all
+    show_command "git push --force-with-lease $@" 
+    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            local _command=$(echo "$MSG" | grep set-upstream)
+            show_run_command $_command 
+        else
+            show_error "$MSG" 
+            return 1
+        fi
+    fi
+}
+
+GI () {
+    GIT_EDITOR=true gi "$@"
 }
 
 gi () {
     local __doc__="git in"
-    local _storage=/tmp/gi.sh
-    if [[ -z "$@" ]]; then git commit --verbose
-    else
+    if [[ "$@" ]]; then 
+        local _storage=/tmp/gi.sh
+        show_command "$@"
         python -c "print('git commit -m\"$*\"')" > $_storage
         cat $_storage
         bash $_storage
         rr $_storage
+    else
+        show_run_command git commit --verbose
     fi
     GIT_ADDED=
 }
@@ -220,7 +235,7 @@ gdv () {
 }
 
 gff () {
-    gf
+    show_run_command git fetch --all
     show_run_command git fetch --tags
 }
 
@@ -575,8 +590,8 @@ gipf () {
 }
 
 glgg () {
-    show_command git lg "$@"
     tput smcup
+    show_command git lg "$@"
     git lg "$@"
     tput rmcup
 }
@@ -896,7 +911,8 @@ git_on_lines () {
     fi
     local _log_alias=lg
     [[ -n $GIT_LOG_ALIAS ]] && _log_alias=$GIT_LOG_ALIAS
-    git status --short
+    show_run_command git status --short
+    show_command git $_log_alias -n$_number_of_commits "$@"
     GIT_LOG_LINES=$(( LINES / 2 )) git_on_screen $_log_alias -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
 }
 

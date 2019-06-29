@@ -14,12 +14,10 @@ Welcome_to $BASH_SOURCE
 
 Y () {
     local __doc__="""Colourize a command and it's streams"""
-    local _term=~/jab/bin
-    $_term/BLUE '$ '"$@"
+    local _bin=~/jab/bin
+    $_bin/BLUE '$ '"$@"
     echo
-    # { "$@" 2>&1 1>&3 3>&- | $_term/RED; } 3>&1 1>&2 | $_term/GREEN
-    # { "$@" 2>&1 1>&3 3>&- | bin/RED; } 3>&1 1>&2 | bin/GREEN
-    ( set -x; "$@" )  > >(bin/GREEN) 2> >(bin/RED)
+    ( set -x; "$@" )  > >($_bin/GREEN) 2> >($_bin/RED)
 }
 
 # _
@@ -515,12 +513,14 @@ num () {
 }
 
 pi2 () {
-    IPYTHON="/usr/local/bin/python2 /usr/local/bin/ipython2"; pii 2 "$@"
+    IPYTHON="/usr/local/bin/ipython2" pii "$@"
+    IPYTHON=
 }
 alias pi1=pi2 # I keept typo-ing on that
 
 pi3 () {
     IPYTHON=ipython3; pii "$@"
+    IPYTHON=
 }
 
 ps3 () {
@@ -662,14 +662,6 @@ vtr () {
 
 VIM () {
     sudo vim "$@"
-}
-
-wtX () {
-    . ~/hub/SH.sh
-}
-
-wvX () {
-    vim -p ~/hub/SH.sh "$@"
 }
 
 wta () {
@@ -1474,7 +1466,13 @@ _like_duck () {
 }
 
 jalanb_hub () {
-    (cd ~/hub; grep jalanb -H */.travis.yml | sed -e "s/:.*//" | sort | uniq)
+    (
+        cd ~/hub; 
+        grep slack -H */.travis.yml | \
+            sed -e "s/:.*//" -e "s:..travis.yml::" | \
+            grep -v -e old -e master -e suds | \
+            sort | uniq
+    )
 }
 
 continuing () {
