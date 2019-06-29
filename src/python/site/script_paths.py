@@ -1,7 +1,7 @@
 """Provide paths for known scripts"""
 
 
-from pysyte import paths
+from pysyte.types import paths
 
 args = {
     '2': ['~/jab/todo.txt', '~/python/todo.py'],

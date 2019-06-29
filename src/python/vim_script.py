@@ -14,8 +14,8 @@ except ImportError:
 
 
 try:
-    from pysyte.lists import de_duplicate
-    from pysyte.paths import tab_complete
+    from pysyte.types.lists import de_duplicate
+    from pysyte.types.paths import tab_complete
 except ImportError:
     sys.stderr.write('Import Error with %s\n' % sys.executable)
     sys.exit(1)

@@ -22,7 +22,7 @@ try:
     from pathlib import Path
 except ImportError:
     try:
-        from pysyte.paths import path as Path
+        from pysyte.types.paths import path as Path
     except ImportError:
         if sys.version_info.major == 2:
             from dotsite.paths import path as Path

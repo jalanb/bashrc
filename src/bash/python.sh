@@ -56,6 +56,22 @@ pipr () {
     pi -r requirements.txt
 }
 
+pipy () {
+    pipu >/dev/null 2>&1
+    local _dir=.
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+    fi
+    local _force=
+    [[ $1 == "-f" ]] && _force=--force-reinstall
+    (
+        cd $_dir
+        [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
+        [[ -f setup.py ]] && pip install $_force -e . 
+    ) 2>&1 | grep -v already.satisfied
+}
+
 pipu () {
     pi --upgrade pip
 }

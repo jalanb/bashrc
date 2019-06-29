@@ -6,7 +6,7 @@ import sys
 import tarfile
 
 
-from pysyte.paths import path as makepath
+from pysyte.types.paths import path as makepath
 
 
 def has_tarball_extension(path):

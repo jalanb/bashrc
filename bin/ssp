@@ -17,7 +17,7 @@ from pysyte import args as arguments
 def parse_args():
     """Parse out command line arguments"""
     parser = arguments.parser(__doc__)
-    parser.args('credentials', help='User / machine')
+    parser.argss('credentials', help='User / machine')
     return parser.parse_args()
 
 def extract_users(strings):

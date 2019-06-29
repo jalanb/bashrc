@@ -11,7 +11,7 @@ except ImportError:
     from collections import namedtuple
 
 
-from pysyte.paths import path
+from pysyte.types.paths import path
 from pysyte.colours import texts
 
 

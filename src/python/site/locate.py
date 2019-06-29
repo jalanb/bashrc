@@ -15,7 +15,7 @@ from fnmatch import fnmatch
 
 
 from repositories import repository
-from pysyte.paths import path as makepath
+from pysyte.types.paths import path as makepath
 from pysyte import splits
 
 
