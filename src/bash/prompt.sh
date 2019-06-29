@@ -19,7 +19,7 @@ get_git_status() {
     [[ -z $_branch ]] && return 1
     local _bump_version=$1; shift
     local _branch_at="$_branch"
-    [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$_bump_version" 
+    [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$_bump_version"
     local _modified=$(git status --porcelain | wc -l | tr -d ' ')
     local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
     local _remote_branch="$(\git config --get branch.${_branch}.merge)"
@@ -28,7 +28,7 @@ get_git_status() {
     local _pulls=$(git rev-list --count HEAD..${_remote_branch/refs\/heads/refs\/remotes\/$remote} 2>/dev/null)
     [[ -z $_pulls ]] && _pulls=?
     if [[ $_modified == 0 && $_pushes == 0 && $_pulls == 0 ]]; then
-        echo $_branch_at 
+        echo $_branch_at
         return 0
     fi
     local _git_branch=
@@ -82,8 +82,7 @@ _colour_prompt () {
     local _status=$1; shift
     local _name="${USER:-$(whoami)}"
     local _where="${HOSTNAME:-$(hostname -s)}"
-    local _here=$PWD
-    local _dir="$(short_dir "$_here" 2>/dev/null)"
+    local _dir="$(short_dir "$PWD" 2>/dev/null)"
 
     [[ -n $_dir ]] || _dir=$(basename $(readlink -f .))
     local _got_bump=$(bump get 2>/dev/null)

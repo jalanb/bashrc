@@ -9,11 +9,11 @@ j () {
     cde ~/jab
 }
 
+# xx
+
 jj () {
-    c ~/src/git/jalanb "$@"
+    . ~/jab/__init__.sh
 }
 
-
-# xx
 # xxx
 

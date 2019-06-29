@@ -177,10 +177,10 @@ def get_files_in(directory, globs):
 
 def get_files(directory, globs, recursive):
     """Get a list of files under that directory, matching those globs"""
-    get_some_files = recursive and get_files_under or get_files_in
+    get_paths = recursive and get_files_under or get_files_in
     result = []
     for glob in globs:
-        result.extend(get_some_files(directory, glob))
+        result.extend(get_paths(directory, glob))
     return result
 
 
@@ -190,18 +190,24 @@ def remove_files(files, quiet, trial_run):
     Print out each file removed, unless quiet is True
     Do not actually delete if trial_run is True
     """
+    dirs = set()
     result = os.EX_OK
     for a_file in files:
         try:
             if not trial_run:
-                # Files can be temp, and gone since we found them
                 if os.path.isfile(a_file):
                     os.remove(a_file)
+                    dirs.add(os.path.dirname(a_file))
             if not quiet:
                 print(a_file)
         except (IOError, OSError) as e:
             print(e)
             result = os.EX_IOERR
+    for a_dir in dirs:
+        if not os.listdir(a_dir):
+            os.removedirs(a_dir)
+            if not quiet:
+                print(a_dir)
     return result
 
 
