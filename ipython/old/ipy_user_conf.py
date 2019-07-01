@@ -42,7 +42,7 @@ def main():
 
     config_helper_functions.import_modules('os sys re')
     config_helper_functions.import_some('pysyte.path', 'path')
-    config_helper_functions.import_some('pysyte.paths', 'makepath')
+    config_helper_functions.import_some('pysyte.types.paths', 'makepath')
     config_helper_functions.import_some('see','see spread see_methods see_attributes')
     config_helper_functions.import_some('see_code','code highlight')
 
