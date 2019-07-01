@@ -25,7 +25,7 @@ import re
 import os
 import sys
 
-from pysyte import text_streams
+from pysyte.cli import streams
 from pysyte import tracebacks
 
 
@@ -42,11 +42,11 @@ def as_vim_command(lines, use_splits):
 def main(args):
     """Run the script"""
     args = [_ for _ in args if _[:2] != '--']
-    stream = text_streams.first_argv('-c')
+    stream = streams.first_argv('-c')
     if not stream:
         print('No file specified', file=sys.stderr)
         return not os.EX_OK
-    lines = map(tracebacks.parse_line, text_streams.full_lines(stream))
+    lines = map(tracebacks.parse_line, streams.full_lines(stream))
     print(as_vim_command(lines, '-s' in args))
     return os.EX_OK
 

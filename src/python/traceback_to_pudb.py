@@ -5,7 +5,7 @@ from __future__ import print_function
 import os
 import sys
 
-from pysyte import text_streams
+from pysyte.cli import streams
 
 
 def de_quote(string):
@@ -103,12 +103,12 @@ def parse_args():
 def main(_args):
     """Use command line args as files containing tracebacks"""
     args = parse_args()
-    streams = text_streams.args(args, 'file')
+    streams = streams.args(args, 'file')
     if not streams:
         print('No traceback file specified', file=sys.stderr)
         return not os.EX_OK
     for stream in streams:
-        for line in parse_traceback_lines(text_streams.full_lines(stream)):
+        for line in parse_traceback_lines(streams.full_lines(stream)):
             print('b', ':'.join(line))
     return os.EX_OK
 
