@@ -1182,11 +1182,6 @@ tailer () {
     tail -n 1 "$@"
 }
 
-is_online () {
-    online_destination "$@" >/dev/null 2>&1 && return 0
-    return 1
-}
-
 show_line () {
     local _prefix=$1; shift
     local _ip=
@@ -1202,29 +1197,38 @@ show_line () {
     echo "$_prefix $_server$_suffix"
 }
 
-online () {
-    [[ "$@" ]] && online_destination "$@"
-    [[ "$@" ]] || online_all
-}
 
-online_all () {
-    online_destination www.google.com
-    online_destination $(worker bots)
-    online_destination $(worker git)
-    online_destination $(worker wmp)
-    online_destination $(worker eop)
-    online_destination $(worker dupont)
-    online_destination $(worker corteva)
-    online_destination $(worker eopdev)
-}
-
-online_destination () {
+pingable () {
     if quick_ping "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
         show_pass $(pong "$@")
         return 0
     else
         show_fail "$@" offline
         return 1
+    fi
+}
+
+is_online () {
+    pingable "$@" >/dev/null 2>&1 && return 0
+    return 1
+}
+
+online_all () {
+    is_online www.google.com
+    is_online $(worker bots)
+    is_online $(worker git)
+    is_online $(worker wmp)
+    is_online $(worker eop)
+    is_online $(worker dupont)
+    is_online $(worker corteva)
+    is_online $(worker eopdev)
+}
+
+online () {
+    if [[ "$@" ]]; then
+        is_online "$@"
+    else 
+        online_all
     fi
 }
 
@@ -1304,9 +1308,9 @@ umports () {
 # xxxxxxxx
 
 functons () {
-    local _local=
-    [[ $1 == -l ]] && _local="/local"
-    echo "$HOME/bash${_local}/functons.sh"
+    local _sub_dir="src/bash"
+    [[ $1 == -l ]] && _sub_dir="local"
+    echo "$HOME/jab/${_sub_dir}/functons.sh"
 }
 
 jostname () {
@@ -1404,18 +1408,21 @@ dirnames () {
 
 twkgit00 () {
     is_a_file .git/config || return 1
-    sed -i -e s/$(worker twkgit20)/$(worker git)/ .git/config
-    sed -i -e s/$(worker twkgit30)/$(worker git)/ .git/config
-    sed -i -e 's!http://$(worker git)!https://$(worker git)!' .git/config
+    sed -i -e s/$(work twkgit30)/$(work git)/ .git/config
+    sed -i -e s/$(work twkgit20)/$(work bots)/ .git/config
+    sed -i -e s/$(work twkgit31)/$(work bots)/ .git/config
+    sed -i -e 's!https://$(work git)!https://$(work git)!' .git/config
+    sed -i -e 's!http://$(work bots)!https://$(work bots)!' .git/config
 }
 
 twkgit30 () {
     is_a_file .git/config || return 1
-    sed -i -e s/$(worker git)/$(worker twkgit30)/ .git/config
-    sed -i -e s/$(worker twkgit20)/$(worker twkgit30)/ .git/config
-    sed -i -e s/$(worker tools)/$(worker twkgit30)/ .git/config
-    sed -i -e s/$(worker tooltest)/$(worker twkgit30)/ .git/config
-    sed -i -e 's!http://$(worker twkgit30)!https://$(worker twkgit30)!' .git/config
+    local _twkgit30=$(work twkgit30)
+    sed -i -e s/$(work git)/${_twkgit30}/ .git/config
+    sed -i -e s/$(work twkgit20)/${_twkgit30}/ .git/config
+    sed -i -e s/$(work tools)/${_twkgit30}/ .git/config
+    sed -i -e s/$(work tooltest)/${_twkgit30}/ .git/config
+    sed -i -e 's!http://${_twkgit30}!https://${_twkgit30}!' .git/config
 }
 
 # xxxxxxxxx

@@ -7,12 +7,10 @@ export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
 
-get_git_branch () {
+_git_branch () {
     git branch > /dev/null 2>&1 || return 1
     git status >/dev/null 2>&1 || return 1
-    local _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return 1
-    echo "$_branch"
-}
+    local _echo_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return 1
 
 get_git_status() {
     local _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -21,6 +19,7 @@ get_git_status() {
     local _branch_at="$_branch"
     [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$_bump_version"
     local _modified=$(git status --porcelain | wc -l | tr -d ' ')
+    local _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) 
     local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
     local _remote_branch="$(\git config --get branch.${_branch}.merge)"
     local _pushes=$(git rev-list --count ${_remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
@@ -100,31 +99,35 @@ _colour_prompt () {
         local _parent_name=$(basename $_parent)
         _venv=$_parent_name
     fi
-    local _py_venv=
-    [[ -e $_venv ]] && _py_venv=$(basename $_venv)
+    local _python_name=
+    [[ -e $_virtual_name ]] && _python_name=$(basename $_virtual_name)
 
 
 
     local _colour_status=$(_colour_pass $_status)
-    local _colour_day=$(_colour l_green $(date +'%A'))
-    local _colour_date=$(_colour green $(date +' %F %H:%M'))
-    local _colour_name=$(_colour green $_name)
-    local _colour_where=$(_colour green $_where)
-    local _colour_user="${_colour_name}@$_colour_where"
-    local _colour_dir=$(_colour l_blue "$_dir")
-    if [[ -n $_branch ]]; then
-        local _colour_branch=$(_colour l_blue "$_branch")
-        _colour_dir="$_colour_dir, $_colour_branch"
+    local _colour_now=$(_colour green $(date +' %F %H:%M %A'))
+    local _colour_user=$(_colour green ${USER:-$(whoami)})
+    local _colour_where=$(_colour green ${HOSTNAME:-$(hostname -s)})
+    local _colour_user="${_colour_user}@$_colour_where"
+    local _version="v$(bump get 2>/dev/null)"
+    [[ $_version == v ]] && _version=
+    local _text_branch="$(_git_branch) $_version"
+    local _colour_branch=
+    if [[ $_text_branch ]]; then
+        _colour_branch=", $(_colour l_blue $_text_branch)"
     fi
-    if [[ -n $_py_venv ]]; then
-        local _colour_version=$(_colour l_red "${_py_vers}")
-        local _colour_virtual=$(_colour l_red "${_py_venv}")
-        local _colour_python="$_colour_version.${_colour_virtual/./}"
-        printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python\n$ "
-    else
-        local _colour_python=$(_colour l_red "${_py_vers}")
-        printf "$_colour_status $_colour_date $_colour_day $_colour_user:$_colour_dir $_colour_python \n$ "
+
+    local _text_dir="$(short_dir $PWD 2>/dev/null)"
+    [[ $_text_dir ]] || _text_dir=$(basename $(readlink -f .))
+    local _colour_dir=$(_colour l_blue "$_text_dir $_colour_branch")
+    local _colour_python=$(_colour l_red "${_python_version}")
+    if [[ -n $_python_name ]]; then
+        local _colour_version=$(_colour l_red "${_python_version}")
+        local _colour_name=$(_colour l_red "${_python_name/./}")
+        _colour_python="$_colour_version.${_colour_name}"
     fi
+    local _local_colour=$_colour_user:$_colour_dir
+    printf "$_colour_status $_colour_now $_local_colour $_colour_python\n$ "
 }
 
 sp () {
@@ -135,8 +138,19 @@ vp () {
     _edit_source ~/bash/prompt.sh +/^_colour_prompt
 }
 
-export_prompt_colour () {
-    local __doc__="""Interpret first arg as main colour for the prompt"""
+set_status_bit () {
+    local __doc__="""Set the status bit from $?"""
+    local _one=$1; shift
+    local _status=
+    [[ -z "$_one" ]] && _one="-z \$?"
+    local _status_color=red
+    [[ $_one == 0 ]] && _status_color=green
+    _status=$(_colour $_status_color $_one)
+    export STATUS=$_status
+}
+
+set_prompt_colour () {
+    local __doc__="""Paint the prompt with $1"""
     local _prompt_colour=
     case $1 in
         green ) _prompt_colour="$GREEN";;
@@ -147,41 +161,22 @@ export_prompt_colour () {
     export PROMPT_COLOUR=$_prompt_colour
 }
 
-export_status () {
-    local __doc__="""Interpret first arg to set STATUS"""
-    local _one=$1; shift
-    local _status=
-    [[ -z "$_one" ]] && _one="-z \$?"
-    local _status_color=red
-    [[ $_one == 0 ]] && _status_color=green
-    _status=$(_colour $_status_color $_one)
-    export STATUS=$_status
-}
+bash_prompts () {
+    local __doc__="""Set all PS* symbols (which control prompts)"""
 
-_pre_pses () {
-    local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
     (whyp-whyp -q py_cd && py_cd --add . >/dev/null 2>&1)
     history -a
-}
 
-_post_pses () {
-    local __doc__="""Stuff to do after setting the prompt"""
-    export_status "$@"
-}
-
-export_pses () {
-    local __doc__="""Set all PS* symbols (which control prompts"""
     local _status=$1
-    _pre_pses
     export PS1=$(_colour_prompt $_status)
     export PS2="... "  # Continuation line
     export PS3="#?"    # Prompt for select command
     export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
                                                     # Thanks to pyenv for the (ahem) prompt
-    _post_pses "$@"
+    set_status_bit "$@"
 }
 
-export_prompt_colour "$@"
-[[ "$PROMPT_COLOUR" == "None" ]] && export PS1="\$? [\u@\h:\$PWD]\n$ " || export PROMPT_COMMAND='export_pses $?'
+set_prompt_colour "$@"
+[[ "$PROMPT_COLOUR" == "None" ]] && export PS1="\$? [\u@\h:\$PWD]\n$ " || export PROMPT_COMMAND='bash_prompts $?'
 Bye_from $BASH_SOURCE
