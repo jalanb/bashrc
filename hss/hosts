@@ -189,11 +189,11 @@ Host vagrant
 #
 # Sumpf Na Lur
 #
-# 
-# Host book
-#     Hostname book.local
-#     User jab
-#     IdentityFile ~/.ssh/id_jab
+
+Host book
+    Hostname book.local
+    User jab
+    IdentityFile ~/.ssh/id_jab
 
 Host mini
     Hostname mini.local
@@ -204,26 +204,7 @@ Host mac
     Hostname mac.local
     User jab
     IdentityFile ~/.ssh/id_jab
-#
-# Host jab.ook 
-#     User jab
-#     IdentityFile ~/.ssh/id_jab
-# 
-# Host jab.mini
-#     Hostname mini.local
-#     User jab
-#     IdentityFile ~/.ssh/id_jab
-# 
-# Host jab.book
-#     Hostname book.local
-#     User jab
-#     IdentityFile ~/.ssh/id_jab
-# 
-# Host jab.mac
-#     Hostname mac.local
-#     User jab
-#     IdentityFile ~/.ssh/id_jab
-# 
+
 Host eos70D
     Hostname 192.168.130.102
 

@@ -29,6 +29,7 @@
 *.kate-swp
 *.part
 *.pyproj
+.colours/
 [a-z.]*-[a-z.]*.html
 #
 # Developers' data

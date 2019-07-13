@@ -4,6 +4,7 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/bin/first_dir.sh
 . ~/jab/environ.d/colour.sh
+. ~/jab/src/bash/coloured.sh
 . ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
@@ -23,29 +24,29 @@ ga () {
         show_error 'Did you mean "gaa" (add all) ?'
         return 1
     else
-        show_run_command git add "$@" 
+        show_run_command git add "$@"
     fi
 }
 
 gb () {
     local _sought="$*"
     [[ $_sought ]] || _sought=.
-    show_command "git branch $GIT_BRANCH_OPTION | grep $_sought" 
+    show_command "git branch $GIT_BRANCH_OPTION | grep $_sought"
     git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color $_sought
 }
 
 gd () {
-    show_run_command git diff "$@" 
+    show_run_command git diff "$@"
 }
 
 gf () {
-    show_command "git push --force-with-lease $@" 
+    show_command "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local _command=$(echo "$MSG" | grep set-upstream)
-            show_run_command $_command 
+            show_run_command $_command
         else
-            show_error "$MSG" 
+            show_error "$MSG"
             return 1
         fi
     fi
@@ -57,7 +58,7 @@ GI () {
 
 gi () {
     local __doc__="git in"
-    if [[ "$@" ]]; then 
+    if [[ "$@" ]]; then
         local _storage=/tmp/gi.sh
         show_command "$@"
         python -c "print('git commit -m\"$*\"')" > $_storage
@@ -75,7 +76,7 @@ gl () {
 }
 
 gm () {
-    show_run_command git merge --no-ff --no-edit "$@" 
+    show_run_command git merge --no-ff --no-edit "$@"
 }
 
 go () {
@@ -84,13 +85,13 @@ go () {
     local _current_branch=$(current_branch)
     [[ "$@" == $_current_branch ]] && show_error "Already on $(current_branch)"
     [[ "$@" == $_current_branch ]] && return 0
-    show_command "git checkout $@" 
+    show_command "git checkout $@"
     if git checkout -q "$@" 2>&1 | grep -q fred; then
         if _has_git_changes; then
             stash_herman || return 1
             _stashed=1
         fi
-        show_command "git checkout $@" 
+        show_command "git checkout $@"
         git checkout -q "$@"
         # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
         [[ -n $_stashed ]] && echo "Cairo: git stash pop"
@@ -99,20 +100,20 @@ go () {
 }
 
 gp () {
-    show_command "git push $@" 
+    show_command "git push $@"
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local _command=$(echo "$MSG" | grep set-upstream)
-            show_run_command $_command 
+            show_run_command $_command
         else
-            show_error "$MSG" 
+            show_error "$MSG"
             return 1
         fi
     fi
 }
 
 gr () {
-    show_run_command git pull --rebase "$@" 
+    show_run_command git pull --rebase "$@"
 }
 
 gs () {
@@ -123,7 +124,7 @@ gs () {
 gt () {
     local _tag=
     for _tag in "$@"; do
-        show_run_command git tag $_tag 
+        show_run_command git tag $_tag
     done
 }
 
@@ -144,7 +145,7 @@ ts () {
 
 _gs () {
     local __doc__="""git status back end"""
-    show_run_command git status "$@" 
+    show_run_command git status "$@"
 }
 
 # xxx
@@ -418,7 +419,7 @@ gro () {
         echo $_origin
         return 0
     fi
-    show_error No origin 
+    show_error No origin
     return 1
 }
 
@@ -526,14 +527,14 @@ _gbd () {
     local _current_branch=$(current_branch)
     if [[ "$@" =~ $_current_branch ]]; then
         if [[ "$@" == "master" ]]; then
-            show_error Please checkout another branch before deleting master 
+            show_error Please checkout another branch before deleting master
             return 1
         else
             gom
         fi
     elif [[ "$@" =~ ^-[dD]$ ]]; then
         if [[ $_current_branch == "master" ]]; then
-            show_error Please checkout another branch before deleting master 
+            show_error Please checkout another branch before deleting master
             return 1
         fi
         read -p "OK to remove $_current_branch [y]? " -n1 answer
@@ -541,7 +542,7 @@ _gbd () {
             if git status 2>&1 | grep -q git.merge...abort; then
                 gma
             fi
-            gom 
+            gom
             show_run_command git branch "$@" $_current_branch
         else
             return 1
@@ -602,7 +603,7 @@ godr () {
 }
 
 gomb () {
-    gob "$@" master 
+    gob "$@" master
 }
 
 gomr () {
@@ -692,6 +693,10 @@ gpff () {
 gppp () {
     gpf "$@"
     gpt
+}
+
+gpsu () {
+    show_run_command git push --set-upstream origin "$@"
 }
 
 grmt () {
@@ -941,13 +946,13 @@ _do_git_status () {
     [[ -n "$@" && "$@" =~ -Q ]] && STDERR=off
     [[ -n "$@" && "$@" =~ -[vV] ]] && STDOUT=on
     if [[ -n $_msg ]]; then
-        [[ $STDERR == "on" ]] && show_error $_msg 
+        [[ $STDERR == "on" ]] && show_error $_msg
     fi
     # set -x
     # set -e
     [[ -n $_msg ]] && return 1
     if git_root -q $dir; then
-        show_error "Fail: git_root -q $dir" 
+        show_error "Fail: git_root -q $dir"
         return 1
     fi
     git -C $dir status "$@"
@@ -1181,7 +1186,7 @@ _gvi_drop () {
 _gvi_git_dv () {
     local _one="$1"
     shift
-    _gvi_other_vim 
+    _gvi_other_vim
     if _git_modified "$1"; then
         git dv $(echo "$1" | cut -dM -f2)
     else
