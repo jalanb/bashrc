@@ -20,7 +20,7 @@ Host bots twkgit31
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host builder
+Host baker
     Hostname 172.25.32.74
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
@@ -45,7 +45,7 @@ Host git
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host butcher twkgit30
+Host builder twkgit30
     Hostname 172.25.32.115
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
