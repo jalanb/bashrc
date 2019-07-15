@@ -89,16 +89,16 @@ _colour_prompt () {
     local _branch_at=$(get_git_status $_branch $_bump_version)
     [[ -n $_branch_at ]] && _branch="($_branch_at)"
     local _py_vers=$(python --version 2>&1 | sed -e s/Python.//)
-    local _venv=$(env | g VIRTUAL_ENV= | sed -e "s/[^=]*=//")
+    local _path_to_venv=$(env | g VIRTUAL_ENV= | cut -d= -f2)
     local _venv_name=
-    [[ -n $_venv ]] && _venv_name=$(basename $_venv)
+    [[ -n $_path_to_venv ]] && _venv_name=$(basename $_path_to_venv)
     if [[ $_venv_name == ".venv" ]]; then
-        local _parent=$(dirname $_venv)
+        local _parent=$(dirname $_path_to_venv)
         local _parent_name=$(basename $_parent)
-        _venv=$_parent_name
+        _path_to_venv=$_parent_name
     fi
     local _python_name=
-    [[ -e $_virtual_name ]] && _python_name=$(basename $_virtual_name)
+    [[ -e $_venv_name ]] && _python_name=$(basename $_venv_name)
 
 
 
@@ -118,12 +118,15 @@ _colour_prompt () {
     [[ $_colour_branch ]] && _colour_dir="$_colour_dir, $_colour_branch"
     local _text_dir="$(short_dir $PWD 2>/dev/null)"
     [[ $_text_dir ]] || _text_dir=$(basename $(readlink -f .))
-    local _colour_dir=$(_colour l_blue "$_text_dir")
+    local _python_version=$(python -V 2>&1 | cut -d' ' -f2)
     local _colour_python=$(_colour l_red "${_python_version}")
     if [[ -n $_python_name ]]; then
         local _colour_version=$(_colour l_red "${_python_version}")
-        local _colour_username=$(_colour l_red "${_python_name/./}")
-        _colour_python="$_colour_version.${_colour_username}"
+        local _colour_name=$(_colour l_red "${_python_name/./}")
+        local _join='/'
+        [[ $_path_to_venv =~ ~ ]] && _join='~'
+        [[ $_path_to_venv =~ ^[.] ]] && _join='.'
+        _colour_python="$_colour_version${_join}${_colour_name}"
     fi
     local _local_colour=$_colour_user:$_colour_dir
     printf "$_colour_status $_colour_date $_colour_day $_local_colour $_colour_python\n$ "
