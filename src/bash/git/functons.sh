@@ -869,6 +869,12 @@ _gxi_menu () {
     echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
 }
 
+get_branch () {
+    git branch > /dev/null 2>&1 || return 1
+    git status >/dev/null 2>&1 || return 1
+    git rev-parse --abbrev-ref HEAD 2>/dev/null || return 1
+}
+
 git_branch () {
     show_run_command git rev-parse --abbrev-ref HEAD
 }
