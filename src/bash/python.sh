@@ -36,15 +36,23 @@ py () {
 
 # xxx
 
-pir () {
-    pipr "$@"
-}
-
-piu () {
-    pipu "$@"
+pii () {
+    local _ipython=$(which ipython)
+    [[ -n $IPYTHON ]] && _ipython=$IPYTHON
+    pypath $_ipython "$@"
 }
 
 # xxxx
+
+pipd () {
+    local __doc__="""pip install a directory for development"
+    _pipy develop "$@"
+}
+
+pipi () {
+    local __doc__="""pip install a directory"
+    _pipy install "$@"
+}
 
 pipp () {
     local __doc__="""pip install stuff, then update pip if needed"""
@@ -54,22 +62,6 @@ pipp () {
 
 pipr () {
     pi -r requirements.txt
-}
-
-pipy () {
-    pipu >/dev/null 2>&1
-    local _dir=.
-    if [[ -d "$1" ]]; then
-        _dir="$1"
-        shift
-    fi
-    local _force=
-    [[ $1 == "-f" ]] && _force=--force-reinstall
-    (
-        cd $_dir
-        [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
-        [[ -f setup.py ]] && pip install $_force -e . 
-    ) 2>&1 | grep -v already.satisfied
 }
 
 pipu () {
@@ -88,20 +80,34 @@ pith () {
     # set +x
 }
 
-pii () {
-    local _ipython=$(which ipython)
-    [[ -n $IPYTHON ]] && _ipython=$IPYTHON
-    pypath $_ipython "$@"
-}
+# _xxxx
 
-pypd () {
-    pypp develop "$@"
+_pipy () {
+    pipu >/dev/null 2>&1
+    local _install=$1; shift
+    local _dir=.
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+        (
+            cd $_dir
+            local _edit=
+            [[ $_install == "develop" ]] && _edit=-e
+            local _force=
+            [[ $1 == "-f" ]] && _force=--force-reinstall
+            local _pip=pip
+            [[ -f requirements.txt ]] && $_pip install $_force -r requirements.txt
+            if [[ -f setup.py ]]; then
+                if [[ $_force ]]; then
+                    _force=--force
+                    [[ $_install == "develop" ]] && _force=--upgrade
+                fi
+                local _python=python
+                $_python setup.py $_force $_install $_edit . 
+            fi
+        ) 2>&1 | grep -v already.satisfied
+    fi
 }
-
-pypp () { 
-    pyth setup.py "$@"
-}
-
 # xxxxxxx
 
 pylinum () {
