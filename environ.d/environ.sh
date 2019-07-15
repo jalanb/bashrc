@@ -11,11 +11,11 @@ set_paths () {
         add_to_PATH $HOME/.local
         add_to_PATH $HOME/.local/bin
         add_dir_to_PATH ${VIRTUAL_ENV}/bin
-        add_dir_to_PATH /usr/local/opt/python/libexec/bin
         add_dir_to_PATH /usr/local/gnu
         add_to_PATH /usr/local/bin
         add_to_PATH /bin
         add_to_PATH /usr/bin
+        add_dir_to_PATH /usr/local/opt/python/libexec/bin
         add_to_PATH /usr/local/sbin
         add_dir_to_PATH $HOME/git/bin
         add_dir_to_PATH /opt/local/bin
