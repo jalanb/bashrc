@@ -214,6 +214,7 @@ if !exists("Try")
             let l:item_name = expand('%')
             let l:try_command = '! TERM=linux && python -m doctest '
         else
+            let l:try_py = ''
             if filereadable('./try.py')
                 let l:try_py = './try.py'
             else
@@ -223,6 +224,7 @@ if !exists("Try")
                     let l:virtual_try = $VIRTUAL_ENV . "/bin/try"
                     if filereadable(l:virtual_try)
                         let l:try_py = l:virtual_try
+                    endif
                 else
                     let l:try_py = '/usr/local/bin/try'
                 endif
@@ -232,6 +234,7 @@ if !exists("Try")
             endif
         endif
         if ! l:try_command
+            echoerr "No try command available"
             return
         endif
         let l:command_line = l:try_command . l:item_name . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
