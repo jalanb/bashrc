@@ -36,7 +36,7 @@ _2 () {
 }
 
 _21 () {
-    at_home tools "$@"
+    at_home bots "$@"
 }
 
 _22 () {
