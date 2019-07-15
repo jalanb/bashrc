@@ -100,7 +100,13 @@ _colour_prompt () {
     local _python_name=
     [[ -e $_venv_name ]] && _python_name=$(basename $_venv_name)
 
-
+    local _virtual_env_name=
+    local _virtual_env_root=$(env | g VIRTUAL_ENV | cut -d= -f2)
+    [[ $_virtual_env_root ]] && _virtual_env_name=$(basename $_virtual_env_root)
+    if [[ $_virtual_env_name == ".venv" ]]; then
+        local _virtual_env_directory=$(dirname $_virtual_env_root)
+        _virtual_env_name=$(basename $_virtual_env_directory)
+    fi
 
     local _colour_status=$(_colour_pass $_status)
     local _colour_day=$(_colour l_green $(date +'%A'))
@@ -108,11 +114,17 @@ _colour_prompt () {
     local _colour_username=$(_colour green ${USER:-$(whoami)})
     local _colour_where=$(_colour green ${HOSTNAME:-$(hostname -s)})
     local _colour_user="${_colour_username}@$_colour_where"
-    local _version="v$(bump get 2>/dev/null)"
-    [[ $_version == v ]] && _version=
+    local _text_branch="$(get_branch)"
     local _colour_branch=
-    [[ $_branch ]] && _colour_branch="$(_colour l_blue $_branch)"
+    if [[ $_text_branch ]]; then
+        local _project_version="v$(bump get 2>/dev/null)"
+        [[ $_project_version == v ]] && _project_version=
+        _colour_branch=", $(_colour l_blue $_text_branch $_project_version)"
+    fi
+
+    set -x
     local _text_dir="$(short_dir $PWD 2>/dev/null)"
+    set +x
     [[ $_text_dir ]] || _text_dir=$(basename $(readlink -f .))
     local _colour_dir=$(_colour l_blue "$_text_dir")
     [[ $_colour_branch ]] && _colour_dir="$_colour_dir, $_colour_branch"
