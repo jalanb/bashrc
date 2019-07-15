@@ -18,7 +18,7 @@ get_git_status() {
     local _bump_version=$1; shift
     local _branch_at="$_branch"
     [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$_bump_version"
-    local _modified=$(git status --porcelain | wc -l | tr -d ' ')
+    local _modified=$(quietly git status --porcelain | wc -l | tr -d ' ')
     local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
     local _remote_branch="$(\git config --get branch.${_branch}.merge)"
     local _pushes=$(git rev-list --count ${_remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
@@ -85,7 +85,7 @@ _colour_prompt () {
     local _bump_version=
     [[ -n $_got_bump ]] && _bump_version="$_got_bump"
     local _branch=$(get_git_branch)
-    local _branch=$(git rev-parse --abbrev-ref HEAD)
+    local _branch=$(quietly git rev-parse --abbrev-ref HEAD)
     local _branch_at=$(get_git_status $_branch $_bump_version)
     [[ -n $_branch_at ]] && _branch="($_branch_at)"
     local _py_vers=$(python --version 2>&1 | sed -e s/Python.//)
