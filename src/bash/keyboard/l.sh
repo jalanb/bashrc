@@ -4,11 +4,12 @@
 
 l () {
     local _one=-1
-    if [[ $* =~ "-1" ]]; then
+    local _rest="$@"
+    if echo "$@" | grep -q "[-]\<1\>"; then
         _one=
-        shift
+        _rest=$(echo "$@" | sed -e "s:-1::")
     fi
-    $(_ls_command) $_one "$@"
+    $(_ls_command) $_one $_rest
 }
 
 # xx

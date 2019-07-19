@@ -16,9 +16,12 @@ zz () {
     du -sh "$*"
 }
 
-zx ()
-{
+zx () {
     Under a spreading chestnut tree
+}
+
+zy () {
+    Badee Bado Badum, Batter
 }
 
 # _x
@@ -32,3 +35,7 @@ zzz () {
 }
 
 Bye_from $BASH_SOURCE
+zx () 
+{ 
+    Under a spreading chestnut tree
+}

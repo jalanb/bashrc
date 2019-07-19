@@ -8,13 +8,11 @@ Welcome_to $BASH_SOURCE
 # xx
 
 pi () {
-    local _version=; if [[ $1 == 2 ]]; then _version=2; shift; fi
-    pith $_version install "$@"
+    pipp install "$@"
 }
 
 pu () {
-    local _version=; if [[ $1 == 2 ]]; then _version=2; shift; fi
-    pith $_version uninstall "$@"
+    pipp uninstall "$@"
 }
 
 py () {
@@ -54,30 +52,17 @@ pipi () {
     _pipy install "$@"
 }
 
-pipp () {
-    local __doc__="""pip install stuff, then update pip if needed"""
-    pi "$@" 2>&1 | tee /tmp/pipp.log
-    grep 'pip install --upgrade pip' /tmp/pipp.log && pipu
-}
-
 pipr () {
-    pi -r requirements.txt
+    pipp install -r requirements.txt "$@"
 }
 
 pipu () {
     pi --upgrade pip
 }
 
-pith () {
-    # set -x
-    local __doc__="""Run a pip command [pip]"""
-    local _executable=pip
-    if [[ $1 == 2 ]]; then
-        _executable=pip2
-        shift
-    fi
-    pypath $_executable "$@"
-    # set +x
+pip22 () {
+    local __doc__="""Run a pip2 command, then update pip if needed"""
+    pipp "$@" 2
 }
 
 # _xxxx

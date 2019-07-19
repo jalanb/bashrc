@@ -11,8 +11,9 @@ noremap <leader><down> jzOw
 noremap f<up> zx?^[^{} \t#].* ()<cr>jzOk
 noremap f<down> zx/^[^{} \t#].* ()<cr>jzOk
 " to function start/end
-noremap [d ?^[^{} \t#]<cr>
-noremap ]d /^[^{} \t#]<cr>
+noremap [d ?^[^{} \t#]<cr>#/<cr>
+noremap ]d /^[^{} \t#]<cr>#/<cr>
+noremap <leader>d   ?\<\i\+\zs.*<cr>*zv
 "
 " introduce variable
 "
