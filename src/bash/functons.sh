@@ -593,7 +593,7 @@ tma () {
 }
 
 tmp () {
-    pushq $(pyth ~/hub/cde/cd.py ~/tmp "$@")
+    cde ~/tmp
 }
 
 tti () {

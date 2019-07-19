@@ -152,6 +152,8 @@ def get_paths_under(directory, glob):
     """Get a list of directories under that directory, matching those globs"""
     result = []
     for name in get_names_in(directory):
+        if name in ('.git', '.idea', '.venv', '.tox'):
+            continue
         path = os.path.join(directory, name)
         if os.path.isdir(path):
             if name == '.git':
@@ -205,7 +207,10 @@ def remove_files(files, quiet, trial_run):
             result = os.EX_IOERR
     for a_dir in dirs:
         if not os.listdir(a_dir):
-            os.removedirs(a_dir)
+            try:
+                os.removedirs(a_dir)
+            except NotADirectoryError:
+                continue
             if not quiet:
                 print(a_dir)
     return result

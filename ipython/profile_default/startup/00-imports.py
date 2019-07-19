@@ -8,7 +8,11 @@ import os
 import re
 import sys
 
-import requests
+try:
+    import requests
+    and_requests = ', requests'
+except ModuleNotFoundError:
+    and_requests = ''
 
 try:
     import pysyte
@@ -45,7 +49,7 @@ except ImportError:
 def line(s):
     sys.stdout.write('%s\n' % s)
 
-line('import os, re, sys, pysyte, requests')
+line(f'import os, re, sys, pysyte{and_requests}')
 if see:
     line('from see import see, see_attributes, see_methods, spread')
     line('from see_code import code, highlight, see_code, see_highlight')

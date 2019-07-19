@@ -31,14 +31,11 @@ _bashrc () {
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     # set -x
     sp green
-    # echo === bashrc 31
     # echo $PATH | tr ':' '\n'
-    # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     # set -x
     cde $_bashrc_cd # >/dev/null 2>&1
     # set +x
-    # echo === bashrc 38
     # echo $PATH | tr ':' '\n'
 }
 

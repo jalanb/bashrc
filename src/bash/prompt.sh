@@ -88,7 +88,7 @@ _colour_prompt () {
     local _branch=$(quietly git rev-parse --abbrev-ref HEAD)
     local _branch_at=$(get_git_status $_branch $_bump_version)
     [[ -n $_branch_at ]] && _branch="($_branch_at)"
-    local _py_vers=$(python --version 2>&1 | sed -e s/Python.//)
+    local _py_vers=$(python --version 2>&1 | head -n 1 | sed -e s/Python.//)
     local _path_to_venv=$(env | g VIRTUAL_ENV= | cut -d= -f2)
     local _venv_name=
     [[ -n $_path_to_venv ]] && _venv_name=$(basename $_path_to_venv)
@@ -130,7 +130,7 @@ _colour_prompt () {
     [[ $_colour_branch ]] && _colour_dir="$_colour_dir, $_colour_branch"
     local _text_dir="$(short_dir $PWD 2>/dev/null)"
     [[ $_text_dir ]] || _text_dir=$(basename $(readlink -f .))
-    local _python_version=$(python -V 2>&1 | cut -d' ' -f2)
+    local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
     local _colour_python=$(_colour l_red "${_python_version}")
     if [[ -n $_python_name ]]; then
         local _colour_version=$(_colour l_red "${_python_version}")
