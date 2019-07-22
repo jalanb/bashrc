@@ -188,6 +188,7 @@ keys () {
 }
 
 pong () {
+    local _remote=$(ssh_host $1)
     ping -c1 "$@" | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | g ' [0-9.]*'
 }
 
@@ -1198,8 +1199,8 @@ show_line () {
 }
 
 
-pingable () {
-    if quick_ping "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
+is_online () {
+    if quick_pong "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
         show_pass $(pong "$@")
         return 0
     else
@@ -1208,8 +1209,8 @@ pingable () {
     fi
 }
 
-is_online () {
-    pingable "$@" >/dev/null 2>&1 && return 0
+pingable () {
+    is_online "$@" >/dev/null 2>&1 && return 0
     return 1
 }
 
@@ -1222,6 +1223,9 @@ online_all () {
     is_online $(worker dupont)
     is_online $(worker corteva)
     is_online $(worker eopdev)
+    is_online mac
+    is_online book
+    is_online mini
 }
 
 online () {
@@ -1286,6 +1290,11 @@ relpath () {
     python ~/jab/src/python/relpath.py "$@"
 }
 
+ssh_host () {
+    local __doc__"""Get a server name from the hostname in ~/.ssh/config"""
+    ssh -G $1 | grep hostname.*$1 | cut -d' ' -f2
+}
+
 whiches () {
     local _which=$(which $1)
     local _located=
@@ -1338,7 +1347,11 @@ maketest () {
 }
 
 pong_wwts () {
-    pong $1.wwts.com
+    pong -t3 $1.wwts.com
+}
+
+pong_local () {
+    pong -t1 $1.local
 }
 
 ssh_tippy () {
@@ -1495,13 +1508,16 @@ make_it_so () {
     please "$@"
 }
 
-quick_ping () {
-    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | grep -q -e usage -e illegal -e invalid; then
+quick_pong () {
+    local _timeout="-w 2"
+    [[ $_remote =~ $(worker)$ ]] && _timeout="-w 3"
+    [[ $_remote =~ [.]local$ ]] && _timeout="-w 1"
+    if pong $_timeout -W 1 $_remote 2>&1 | grep -q -e usage -e illegal -e invalid; then
         # looks like OS X
-        ping -c 1 -t 1 -W 1 "$@"
+        pong ${_timeout/w/t} -W 1 $_remote
     else
         # make sure we return correctly
-        ping -c 1 -w 1 -W 1 "$@"
+        pong $_timeout -W 1 $_remote
     fi
 }
 
