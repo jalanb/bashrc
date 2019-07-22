@@ -47,13 +47,22 @@ pipd () {
     _pipy develop "$@"
 }
 
-pipi () {
-    local __doc__="""pip install a directory"
-    _pipy install "$@"
-}
-
-pipr () {
-    pipp install -r requirements.txt "$@"
+pipy () {
+    pipu >/dev/null 2>&1
+    local _dir=.
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+    fi
+    local _force=
+    [[ $1 == "-f" ]] && _force=--force-reinstall
+    (
+        cd $_dir
+        [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
+        [[ $_force ]] && _force="--upgrade"
+        [[ $1 == "-F" ]] && _force="--upgrade" 
+        [[ -f setup.py ]] && python setup.py develop $_force --script-dir=$(script_dir)
+    ) 2>&1 | grep -v already.satisfied
 }
 
 pipu () {
