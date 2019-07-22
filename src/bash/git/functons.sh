@@ -494,6 +494,7 @@ gxi () {
     first_arg_dir_or_here "$@" && shift
     GXI_QUERY=
     show_green remote
+    glf 1
     glg
     show_this_branch -r
     _show_pre_loop
