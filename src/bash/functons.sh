@@ -1001,10 +1001,6 @@ jalanb () {
     bash for_all.sh
 }
 
-LetGo () {
-    echo 'Digger, Thumber, Tarzan, Climber'
-}
-
 paste () {
     if [[ -z "$*" ]]; then
         echo "$ $(pbpaste)"

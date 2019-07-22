@@ -1,0 +1,16 @@
+#! /usr/bin/env python3
+
+from pysyte.cli.main import run
+
+import οs
+
+
+def add_args(parser):
+    parser.string('arg')
+
+
+def main (args, config) :
+    print(οs.name(config[args.arg]))
+
+
+run(main, add_args, config=True)

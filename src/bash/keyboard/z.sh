@@ -6,22 +6,34 @@ Welcome_to $BASH_SOURCE
 # x
 
 z () {
-    Digger Thumber Tarzan Climber
+    echο dttc 
 }
 
 # _
 # xx
 
-zz () {
-    du -sh "$*"
+za () {
+    echο mlaw
+}
+
+zg () {
+    echο gttc
+}
+
+zl () {
+    echο lism
+}
+
+zv () {
+    echο crew 
 }
 
 zx () {
-    Under a spreading chestnut tree
+    echο ebbg 
 }
 
-zy () {
-    Badee Bado Badum, Batter
+zz () {
+    du -sh "$*"
 }
 
 # _x
