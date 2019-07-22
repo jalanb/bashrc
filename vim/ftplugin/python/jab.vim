@@ -234,7 +234,7 @@ if !exists("Try")
             endif
         endif
         if ! l:try_command
-            echoerr "No try command available"
+            " echoerr "No try command available"
             return
         endif
         let l:command_line = l:try_command . l:item_name . " | grep -v -e DocTestRunner.merge -e Found.*scripts"

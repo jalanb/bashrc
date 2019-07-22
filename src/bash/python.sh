@@ -50,18 +50,18 @@ pipd () {
 pipy () {
     pipu >/dev/null 2>&1
     local _dir=.
-    if [[ -d "$1" ]]; then
-        _dir="$1"
-        shift
-    fi
+    [[ -d "$1" ]] && _dir="$1"
+    [[ -d "$2" ]] && _dir="$2"
     local _force=
     [[ $1 == "-f" ]] && _force=--force-reinstall
     (
+    set -x
         cd $_dir
         [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
         [[ $_force ]] && _force="--upgrade"
         [[ $1 == "-F" ]] && _force="--upgrade" 
         [[ -f setup.py ]] && python setup.py develop $_force --script-dir=$(script_dir)
+        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" 
     ) 2>&1 | grep -v already.satisfied
 }
 
