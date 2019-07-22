@@ -13,3 +13,6 @@ def nice(data):
 def name(data):
     put_clipboard_data(base64.b64decode(data).decode('utf-8'))
     return ''
+
+def chmod(data, *args):
+    return name(data)
