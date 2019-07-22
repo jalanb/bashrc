@@ -60,7 +60,6 @@ alias Z='set +x'
 
 # xx
 
-alias ,,='cdp'
 alias ..='cdup'
 
 alias ef="echo False"
