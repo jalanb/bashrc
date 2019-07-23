@@ -55,7 +55,6 @@ pipy () {
     local _force=
     [[ $1 == "-f" ]] && _force=--force-reinstall
     (
-    set -x
         cd $_dir
         [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
         [[ $_force ]] && _force="--upgrade"

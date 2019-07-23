@@ -358,8 +358,7 @@ gpo () {
 }
 
 gpp () {
-    gp "$@"
-    gpt
+    gp "$@" && gpt
 }
 
 gps () {

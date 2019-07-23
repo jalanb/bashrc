@@ -74,13 +74,19 @@ _colour_pass () {
     fi
 }
 
+_short_dir () {
+    # (
+    local _short=$(which short_dir)
+    $_short "$1" 2> /dev/null
+}
+
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
     local _status=$1; shift
     local _where="${HOSTNAME:-$(hostname -s)}"
-    local _dir="$(short_dir "$PWD" 2>/dev/null)"
+    local _dir="$(_short_dir "$PWD")"
 
-    [[ -n $_dir ]] || _dir=$(basename $(readlink -f .))
+    [[ -n $_dir ]] || _dir=$(basename "$(readlink -f .)")
     local _got_bump=$(bump get 2>/dev/null)
     local _bump_version=
     [[ -n $_got_bump ]] && _bump_version="$_got_bump"
@@ -91,21 +97,21 @@ _colour_prompt () {
     local _py_vers=$(python --version 2>&1 | head -n 1 | sed -e s/Python.//)
     local _path_to_venv=$(env | g VIRTUAL_ENV= | cut -d= -f2)
     local _venv_name=
-    [[ -n $_path_to_venv ]] && _venv_name=$(basename $_path_to_venv)
+    [[ -n $_path_to_venv ]] && _venv_name=$(basename "$_path_to_venv")
     if [[ $_venv_name == ".venv" ]]; then
         local _parent=$(dirname $_path_to_venv)
         local _parent_name=$(basename $_parent)
         _path_to_venv=$_parent_name
     fi
     local _python_name=
-    [[ -e $_venv_name ]] && _python_name=$(basename $_venv_name)
+    [[ -e $_venv_name ]] && _python_name=$(basename "$_venv_name")
 
     local _virtual_env_name=
     local _virtual_env_root=$(env | g VIRTUAL_ENV | cut -d= -f2)
-    [[ $_virtual_env_root ]] && _virtual_env_name=$(basename $_virtual_env_root)
+    [[ $_virtual_env_root ]] && _virtual_env_name=$(basename "$_virtual_env_root")
     if [[ $_virtual_env_name == ".venv" ]]; then
         local _virtual_env_directory=$(dirname $_virtual_env_root)
-        _virtual_env_name=$(basename $_virtual_env_directory)
+        _virtual_env_name=$(basename "$_virtual_env_directory")
     fi
 
     local _colour_status=$(_colour_pass $_status)
@@ -122,14 +128,12 @@ _colour_prompt () {
         _colour_branch=", $(_colour l_blue $_text_branch $_project_version)"
     fi
 
-    set -x
-    local _text_dir="$(short_dir $PWD 2>/dev/null)"
-    set +x
-    [[ $_text_dir ]] || _text_dir=$(basename $(readlink -f .))
+    local _text_dir="$(_short_dir "$PWD")"
+    [[ $_text_dir ]] || _text_dir=$(basename "$(readlink -f .)")
     local _colour_dir=$(_colour l_blue "$_text_dir")
     [[ $_colour_branch ]] && _colour_dir="$_colour_dir, $_colour_branch"
-    local _text_dir="$(short_dir $PWD 2>/dev/null)"
-    [[ $_text_dir ]] || _text_dir=$(basename $(readlink -f .))
+    local _text_dir="$(_short_dir "$PWD")"
+    [[ $_text_dir ]] || _text_dir=$(basename "$(readlink -f .)")
     local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
     local _colour_python=$(_colour l_red "${_python_version}")
     if [[ -n $_python_name ]]; then
