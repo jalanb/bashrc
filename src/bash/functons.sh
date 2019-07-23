@@ -1352,7 +1352,7 @@ pong_local () {
 
 ssh_tippy () {
     at_home tippy
-    vagrant status | grep -q 'poweroff' && vagrant up
+    vagrant status 2>&1 | grep -q -e 'poweroff' -e 'Run .vagrant up' && vagrant up
     vagrant ssh
 }
 
