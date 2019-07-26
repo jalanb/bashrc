@@ -5,6 +5,8 @@ Welcome_to $BASH_SOURCE
 # set -e
 
 . ~/jab/bin/first_dir.sh
+. ~/bash/coloured.sh
+. ~/bash/pong.sh
 . ~/bash/python.sh
 
 # Called functons.sh because "functions" is ... something else
@@ -193,11 +195,6 @@ envv () {
 
 keys () {
     . ~/bash/keyboard/*.sh
-}
-
-pong () {
-    local _remote=$(ssh_host $1)
-    ping -c1 "$@" | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | g ' [0-9.]*'
 }
 
 popq () {
@@ -1205,21 +1202,6 @@ show_line () {
 }
 
 
-is_online () {
-    if quick_pong "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
-        show_pass $(pong "$@")
-        return 0
-    else
-        show_fail "$@" offline
-        return 1
-    fi
-}
-
-pingable () {
-    is_online "$@" >/dev/null 2>&1 && return 0
-    return 1
-}
-
 online_all () {
     is_online www.google.com
     is_online $(worker bots)
@@ -1232,14 +1214,6 @@ online_all () {
     is_online mac
     is_online book
     is_online mini
-}
-
-online () {
-    if [[ "$@" ]]; then
-        is_online "$@"
-    else 
-        online_all
-    fi
 }
 
 please () {
@@ -1353,12 +1327,8 @@ maketest () {
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
 
-pong_wwts () {
-    pong -t3 $1.wwts.com
-}
-
-pong_local () {
-    pong -t1 $1.local
+pong_work () {
+    pong -t3 $1.$(work $1)
 }
 
 ssh_tippy () {
@@ -1505,19 +1475,6 @@ jab_scripts () {
 
 make_it_so () {
     please "$@"
-}
-
-quick_pong () {
-    local _timeout="-w 2"
-    [[ $_remote =~ $(worker)$ ]] && _timeout="-w 3"
-    [[ $_remote =~ [.]local$ ]] && _timeout="-w 1"
-    if pong $_timeout -W 1 $_remote 2>&1 | grep -q -e usage -e illegal -e invalid; then
-        # looks like OS X
-        pong ${_timeout/w/t} -W 1 $_remote
-    else
-        # make sure we return correctly
-        pong $_timeout -W 1 $_remote
-    fi
 }
 
 thirty_two () {
