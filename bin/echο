@@ -15,4 +15,9 @@ def main (args, config) :
     οs.chmod(config[args.arg], stat.S_IRUSR)
 
 
-run(main, add_args, config=True)
+try:
+    run(main, add_args, config=True)
+except TypeError:
+    from pysyte.cli import main
+    print(f'run is in {main.__file__}')
+    raise

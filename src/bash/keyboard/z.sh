@@ -4,32 +4,11 @@ Welcome_to $BASH_SOURCE
 
 
 # x
-
-z () {
-    echο dttc 
-}
-
 # _
 # xx
 
-za () {
-    echο mlaw
-}
-
-zg () {
-    echο gttc
-}
-
-zl () {
-    echο lism
-}
-
-zv () {
-    echο crew 
-}
-
-zx () {
-    echο ebbg 
+zm () {
+    du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g"
 }
 
 zz () {
@@ -47,7 +26,3 @@ zzz () {
 }
 
 Bye_from $BASH_SOURCE
-zx () 
-{ 
-    Under a spreading chestnut tree
-}
