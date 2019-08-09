@@ -1386,14 +1386,6 @@ todo_edit () {
     fi
 }
 
-todo_show () {
-    local todo_txt="~/jab/todo.txt"
-    if [[ -f todo.txt ]]; then todo_txt=todo.txt
-    elif [[ -f TODO.md ]]; then todo_txt=TODO.md
-    fi
-    python3 ~/jab/src/python/todo.py $todo_txt
-}
-
 files_dirs () {
     local __doc__="""echo all args' directories"""
     local _result=1

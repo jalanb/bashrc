@@ -26,13 +26,13 @@ _bashrc () {
     WELCOME_BYE=
     local_rc $_home_user && _local_cd=$LOCAL_CD
     # set +x
-    local _bashrc_cd=~/jab
-    [[ -e $_local_cd ]] && _bashrc_cd="$_local_cd"
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     # set -x
     sp green
     # echo $PATH | tr ':' '\n'
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    local _bashrc_cd=~/jab
+    [[ -e $_local_cd ]] && _bashrc_cd="$_local_cd"
     # set -x
     # PUDB_CD=1 PYTHONPATH=~/hub/pysyte cde $_bashrc_cd # >/dev/null 2>&1
     # echo cde $_bashrc_cd # >/dev/null 2>&1

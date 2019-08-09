@@ -1,10 +1,8 @@
 """Handle nice names"""
 
-import re
 import base64
 
 from pysyte.oss import platforms
-# from pysyte.oss.platforms import put_clipboard_data
 
 
 def nice(data):

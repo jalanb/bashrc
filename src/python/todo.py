@@ -20,16 +20,21 @@ def todo_file():
     # Tell pylint not to warn that this is a todo
     # pylint: disable-msg=W0511
     if sys.argv[1:]:
-        arg = sys.argv[1]
-        if os.path.isfile(arg):
-            return arg
-    jab = path('~/jab')
-    return jab / 'todo.txt'
+        todo = path(sys.argv[1])
+        if todo.isfile():
+            return todo
+    todo = path('~/jab') / 'todo.txt'
+    if todo.isfile():
+        return todo
+    todo = jab / 'todo.md'
+    if todo.isfile():
+        return todo
+    return None
 
 
-def read_todo(path_to_todo):
+def read_todo(todo):
     result = []
-    for line in open(path_to_todo):
+    for line in open(todo):
         line = line.rstrip()
         if not line:
             continue
@@ -38,9 +43,13 @@ def read_todo(path_to_todo):
 
 
 def read_todo_items():
-    path_to_todo = todo_file()
-    lines = read_todo(path_to_todo)
-    return [parse_todo_line(l) for l in lines]
+    """Extract a list of todo items from a list of lines
+
+    Each item is a tuple of (text, priority)
+    """
+    todo = todo_file()
+    lines = read_todo(todo) if todo else []
+    return [as_todo_item(l) for l in lines]
 
 
 def priorities():
@@ -71,11 +80,8 @@ def priority_colour(priority_number):
     return 'white'
 
 
-def parse_todo_line(line):
-    """Extract a list of todo items from a list of lines
-
-    Each item is a tuple of (text, priority)
-    """
+def as_todo_item(line):
+    """Initialise a TodoItem from the line"""
     item_regexp = re.compile('^(?P<text>.*), (?P<priority>[%s])$' %
                              priority_keys_string())
     match = item_regexp.match(line)
