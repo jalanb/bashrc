@@ -58,12 +58,20 @@ pipy () {
         cd $_dir
         [[ -f requirements.txt ]] && pip install $_force -r requirements.txt 2>&1
         [[ $_force ]] && _force="--upgrade"
-        [[ $1 == "-F" ]] && _force="--upgrade" 
+        [[ $1 == "-F" ]] && _force="--upgrade"
         local _script_dir=
-        [[ $(which python) =~ ^/usr/local ]] && _script_dir="--script-dir=/usr/local/bin"
+        local _command=develop
+        if [[ $(which python) =~ ^/usr/local ]]; then
+            _script_dir="--script-dir=/usr/local/bin"
+            _command=install
+        elif [[ $(which python) =~ ^/ ]]; then
+            show_error Cannot pipy $(which python)
+            return 1
+        fi
         [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
+        [[ -f setup.py ]] || return 1
         set -x
-        [[ -f setup.py ]] && python setup.py develop $_force $_script_dir  2>&1
+        [[ -f setup.py ]] && python setup.py $_command $_force $_script_dir  2>&1
         set +x
     ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | g -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
 }
@@ -100,7 +108,7 @@ _pipy () {
                     [[ $_install == "develop" ]] && _force=--upgrade
                 fi
                 local _python=python
-                $_python setup.py $_force $_install $_edit . 
+                $_python setup.py $_force $_install $_edit .
             fi
         ) 2>&1 | grep -v already.satisfied
     fi
