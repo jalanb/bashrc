@@ -8,6 +8,17 @@ realdir () {
 }
 
 . ~/bash/welcome.sh
+. ~/bash/add_to_a_path.sh
+
+. ~/bash/coloured.sh
+source_pythonpath () {
+    . "$1"
+    show_pythonpath "$1"
+}
+
+show_pythonpath () {
+    show_green_line PYTHONPATH==$PYTHONPATH after "$1"
+}
 
 Welcome_to $BASH_SOURCE
 
@@ -17,6 +28,7 @@ export VIMACK=~/hub/vimack/vimack
 . $VIMACK.sh
 export CDE=~/hub/cde/cde
 . $CDE.sh
+. ~/bash/coloured.sh
 export WHYP=~/hub/whyp/whyp
 . $WHYP.sh
 export PYTH=~/hub/pyth/pyth

@@ -34,6 +34,8 @@ _bashrc () {
     # echo $PATH | tr ':' '\n'
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     # set -x
+    # PUDB_CD=1 PYTHONPATH=~/hub/pysyte cde $_bashrc_cd # >/dev/null 2>&1
+    # echo cde $_bashrc_cd # >/dev/null 2>&1
     cde $_bashrc_cd # >/dev/null 2>&1
     # set +x
     # echo $PATH | tr ':' '\n'
