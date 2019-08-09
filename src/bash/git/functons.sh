@@ -40,16 +40,8 @@ gd () {
 }
 
 gf () {
-    show_command "git push --force-with-lease $@"
-    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
-        if [[ $MSG =~ set-upstream ]]; then
-            local _command=$(echo "$MSG" | grep set-upstream)
-            show_run_command $_command
-        else
-            show_error "$MSG"
-            return 1
-        fi
-    fi
+    gfa
+    gft
 }
 
 GI () {
@@ -82,8 +74,8 @@ gm () {
 go () {
     local __doc__="git checkout"
     local _stashed=
-    local _current_branch=$(current_branch)
-    [[ "$@" == $_current_branch ]] && show_error "Already on $(current_branch)"
+    local _current_branch=$(get_branch)
+    [[ "$@" == $_current_branch ]] && show_error "Already on $_current_branch)"
     [[ "$@" == $_current_branch ]] && return 0
     show_command "git checkout $@"
     if git checkout -q "$@" 2>&1 | grep -q fred; then
@@ -235,9 +227,22 @@ gdv () {
     git dv "$@"
 }
 
+gfa () {
+    show_run_command git fetch --prune --all
+}
+
 gff () {
-    show_run_command git fetch --all
-    show_run_command git fetch --tags
+    gfa
+    grup --tags
+}
+
+gfm () {
+    gff
+    gomr
+}
+
+gft () {
+    gfpt --tags
 }
 
 ggi () {
@@ -310,11 +315,15 @@ gma () {
 }
 
 gmm () {
-    local _branch=$(current_branch)
+    local _branch=$(get_branch)
     go master
     grr
     go $_branch
     gm master
+}
+
+gmt () {
+    show_run_command git merge --no-ff --no-edit -X theirs "$@"
 }
 
 gob () {
@@ -334,6 +343,10 @@ gom () {
     go master "$@"
 }
 
+goo () {
+    go .
+}
+
 gor () {
     for branch in "$@"; do
         go "$branch"
@@ -350,7 +363,16 @@ got () {
 }
 
 gpf () {
-    gp --force-with-lease "$@"
+    show_command "git push --force-with-lease $@"
+    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            local _command=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force:")
+            show_run_command $_command
+        else
+            show_error "$MSG"
+            return 1
+        fi
+    fi
 }
 
 gpo () {
@@ -406,7 +428,7 @@ gri () {
 }
 
 grm () {
-    local _current_branch=$(current_branch)
+    local _current_branch=$(get_branch)
     [[ $1 ]] && _current_branch=$1
     gor master
     show_run_command git rebase master $_current_branch
@@ -524,7 +546,7 @@ gxi () {
 # xxxx
 
 _gbd () {
-    local _current_branch=$(current_branch)
+    local _current_branch=$(get_branch)
     if [[ "$@" =~ $_current_branch ]]; then
         if [[ "$@" == "master" ]]; then
             show_error Please checkout another branch before deleting master
@@ -558,7 +580,7 @@ gbdr () {
 }
 
 gbDD () {
-    local _current_branch=$(current_branch)
+    local _current_branch=$(get_branch)
     [[ "$@" ]] && _current_branch="$@"
     gbD "$@" && gpod $_current_branch
 }
@@ -595,6 +617,10 @@ glgg () {
     show_command git lg "$@"
     git lg "$@"
     tput rmcup
+}
+
+glgo () {
+    glg origin/"$@"
 }
 
 godr () {
@@ -644,16 +670,6 @@ ggai () {
     g -q $1 $2 && gai $2 || echo fuck off
 }
 
-gfff () {
-    gff
-    grup
-}
-
-gffm () {
-    gfff
-    gomr
-}
-
 gl11 () {
     if [[ -n $1 ]]; then
         for sha1 in "$@"; do
@@ -700,12 +716,13 @@ gpsu () {
 }
 
 grmt () {
-    local _current_branch=$(current_branch)
+    local _current_branch=$(get_branch)
     show_run_command git rebase master $_current_branch -X theirs
 }
 
 grup () {
     show_run_command git remote update origin --prune
+    gfpt $1
     show_run_command git gc
 }
 
@@ -719,7 +736,10 @@ gssd () {
 }
 
 gstb () {
-    show_run_command git stash branch "$@"
+    local _branch=$1
+    [[ $_branch ]] || _branch=fred && shift
+    [[ $_branch == 'fred' ]] && Quietly git branch -D fred
+    show_run_command git stash branch $_branch "$@"
 }
 
 gstl () {
@@ -743,16 +763,24 @@ gvsd () {
 
 # xxxxx
 
-gffff () {
-    gfff
-    gomr
+gfff () {
+    git_root -o
+    gff
+    gomr | g -v "up to date"
     show_run_command git status
+    # set -x
+    local _lines=3
+    [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
+    glg $_lines
+}
+
+gfpt () {
+    show_run_command git fetch $1 --prune-tags --prune origin "refs/tags/*:refs/tags/*"
 }
 
 clone () {
-    local _range=yes
-    [[ "$1" == "-n" ]] && _range= && shift
-    [[ "$1" == "-y" ]] && _range=ranger
+    local _range=
+    [[ "$1" == "-r" ]] && _range=ranger
     local _remote=
     [[ -n $1 ]] && _remote=$1 && shift
     local _local=
@@ -765,8 +793,16 @@ clone () {
         kat -n $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
-        [[ -n $_range ]] && ranger
+        if [[ $_remote =~ $(work) ]]; then
+            git config --local user.name "Alan Brogan"
+            git config --local user.email $(work_email alan.brogan)
+        fi
+        runnable $_range && $_range
     fi
+}
+
+glggo () {
+    glgg origin/"$@"
 }
 
 gorll () {
@@ -791,43 +827,58 @@ _git_kd () {
 }
 
 verbosity () {
-  # set -x
-    [[ $2 =~ off ]] && STDOUT=off
-    [[ $2 =~ on ]] && STDOUT=on
+    local _stdout=
     for word in "$@"; do
-        [[ $word =~ -[qQvV] ]] || continue
-        [[ $word =~ .q ]] && STDOUT=off
-        [[ $word =~ .Q ]] && STDERR=off
-        [[ $word =~ .v ]] && STDOUT=on
-        [[ $word =~ .V ]] && STDERR=on
+        [[ $word =~ -[qQ] ]] && _stdout=off
+        [[ $word =~ -[vV] ]] && _stdout=on
     done
-    echo $STDOUT
-  # set +x
+    echo $_stdout
     true
 }
 
 git_root () {
-    STDOUT=$(verbosity $1)
-    _there=
-    for word in $*; do
-        [[ $word =~ -[qQvV] ]] && continue
-        if [[ -e "$word" ]]; then
-            _there="$word"
+    local _stdout=$(verbosity "$@")
+    local _git_dir=
+    local _origin=
+    local _quiet=
+    local _verbose=
+    for _arg in $*; do
+        if [[ -e "$_arg" ]]; then
+            _git_dir="$_arg"
             shift
             break
         fi
+        [[ $_arg == -o ]] && _origin=yes
+        [[ $_arg == -q ]] && _quiet=yes
+        [[ $_arg == -v ]] && _verbose=yes
     done
-    [[ -f "$_there" ]] && _there=$(dirname_ $_there)
-    [[ -d "$_there" ]] || echo "Not a dir '$_there'"
-    [[ -d "$_there" ]] || return 1
-    git -C "$_there" rev-parse --git-dir >/dev/null 2>&1 || return 1
-    local _project_dir=$(git -C "$_there" rev-parse --show-toplevel | head -n 1)
-    [[ -z $_project_dir ]] && _project_dir=.
-    [[ -d $_project_dir ]] || echo "Not a dir: '$_project_dir'"
-    local _root_dir=$(readlink -f $_project_dir)
+    [[ $_origin ]] && _verbose=yes
+    [[ $_verbose ]] && _quiet=
+    [[ $_git_dir ]] || _git_dir=$(readlink -f .)
+    [[ -f "$_git_dir" ]] && _git_dir=$(dirname_ $_git_dir)
+    [[ -d "$_git_dir" ]] || echo "Not a dir '$_git_dir'"
+    [[ -d "$_git_dir" ]] || return 1
+    local _full_dir=$(readlink -f $_git_dir)
+    Quietly git -C "$_full_dir" rev-parse --git-dir || return 1
+    local _show=
+    [[ $_verbose ]] && _show=show_run_command
+    [[ $_quiet ]] && _show=
+    local _short=$(short_dir $_git_dir)
+    [[ $_show ]] && show_command git -C "$_full_dir" rev-parse --show-toplevel
+    local _toplevel_dir=$(git -C "$_full_dir" rev-parse --show-toplevel | head -n 1)
+    [[ ! "$_toplevel_dir" ]] && _toplevel_dir=$(readlink -f .)
+    [[ -d $_toplevel_dir ]] || echo "Not a dir: '$_toplevel_dir'"
+    [[ -d $_toplevel_dir ]] || return 1
+    local _root_dir=$(readlink -f $_toplevel_dir)
     [[ -d $_root_dir ]] || echo "Not a dir: '$_root_dir'"
     [[ -d $_root_dir ]] || return 1
-    [[ $STDOUT == off ]] || echo $_root_dir
+    [[ $_stdout == off ]] && return
+    echo $_root_dir
+    if [[ $_origin ]]; then
+        _short=$(short_dir $_root_dir)
+        show_command git -C $_full_dir remote get-url origin
+        git -C $_full_dir remote get-url origin
+    fi
     return 0
 }
 
@@ -872,11 +923,11 @@ _gxi_menu () {
 get_branch () {
     git branch > /dev/null 2>&1 || return 1
     git status >/dev/null 2>&1 || return 1
-    git rev-parse --abbrev-ref HEAD 2>/dev/null || return 1
+    current_branch -q 2>/dev/null || return 1
 }
 
 git_branch () {
-    show_run_command git rev-parse --abbrev-ref HEAD
+    current_branch
 }
 
 # xxxxxxxxxxx
@@ -893,7 +944,7 @@ clean_clone() {
 }
 
 git_changed () {
-    local git_dir=$(git_root ${1:-$PWD})
+    local git_dir=$(git_root "$1")
     [[ -n $git_dir ]] || return 1
     git -C $git_dir status --porcelain | grep -q "$_git_status_regexp"
 }
@@ -920,11 +971,14 @@ git_on_lines () {
         _number_of_commits=$1
         shift
     fi
+    # set +x
     local _log_alias=lg
     [[ -n $GIT_LOG_ALIAS ]] && _log_alias=$GIT_LOG_ALIAS
     show_run_command git status --short
     show_command git $_log_alias -n$_number_of_commits "$@"
+    # set -x
     GIT_LOG_LINES=$(( LINES / 2 )) git_on_screen $_log_alias -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+    # set +x
 }
 
 git_on_screen () {
@@ -942,34 +996,22 @@ untracked () {
 
 _do_git_status () {
     local __doc__="get the status from git"
-    [[ -d $1 ]] && dir=$1; shift
-    [[ -z $dir || $(readlink -f $dir) == $(readlink -f .) ]] && dir=$PWD
-    local _msg=
-    [[ -d $dir ]] || _msg="Not a dir: $dir"
-    STDOUT=off
-    STDERR=on
-    [[ -n "$@" && "$@" =~ -q ]] && STDOUT=off
-    [[ -n "$@" && "$@" =~ -Q ]] && STDERR=off
-    [[ -n "$@" && "$@" =~ -[vV] ]] && STDOUT=on
-    if [[ -n $_msg ]]; then
-        [[ $STDERR == "on" ]] && show_error $_msg
-    fi
-    # set -x
-    # set -e
-    [[ -n $_msg ]] && return 1
-    if git_root -q $dir; then
-        show_error "Fail: git_root -q $dir"
+    local _root=$(git_root "$1")
+    if [[ $_root ]]; then
+        shift
+        git -C $_root status "$@"
+    else
+        show_error "Fail: git_root $@"
         return 1
     fi
-    git -C $dir status "$@"
-    # set +e
-    # set +x
 }
 
 # xxxxxxxxxxxxxx
 
 current_branch () {
-    git rev-parse --abbrev-ref HEAD
+    local _show=show_run_command
+    [[ $1 == -q ]] && _show=
+    $_show git rev-parse --abbrev-ref HEAD
 }
 
 show_git_time () {
@@ -1019,9 +1061,9 @@ _has_git_changes () {
 # xxxxxxxxxxxxxxxxx
 
 git_simple_status () {
-    local arg_dir=${1:-$PWD}
+    local arg_dir="${1:-$PWD}"
     _has_git_changes $arg_dir || return
-    local _git_dir=$(git_root $arg_dir)
+    local _git_dir=$(git_root "$arg_dir")
     [[ -d $_git_dir ]] && gssd "$_git_dir" 2> ~/bash/fd/2 | grep "$_git_status_regexp"
 }
 
@@ -1038,7 +1080,7 @@ _show_git_time_log () {
 _call_me_alan () {
     sed \
         -e "s/.*al-got-rhythm.net/jalanb/" \
-        -e "s/$(mail_work '.*')/Alan Brogan/" \
+        -e "s/$(work_email '.*')/Alan Brogan/" \
         -e "s/J Alan Brogan/Alan/"
 }
 

@@ -136,6 +136,10 @@ gg () {
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
+gv () {
+    g -v "$@"
+}
+
 hd () {
     vim_diff "$1" "$2" "$3" -o
 }
@@ -566,6 +570,12 @@ sai () {
     ( { { /usr/bin/say $_voices $_dir $_message >&2; } 2>&3- & } 3>&2 2>/dev/null )
 }
 
+ses () {
+    local _old="$1"; shift
+    local _new="$1"; shift
+    echo "$@" | sed -e "s:$_old:$_new:"
+}
+
 sib () {
     . ~/.bashrc
 }
@@ -704,6 +714,12 @@ xib () {
 # xxxx
 
 back () {
+    tput rmcup
+}
+
+bbat () {
+    tput smcup
+    bat "$@"
     tput rmcup
 }
 

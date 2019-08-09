@@ -63,48 +63,68 @@ _colour () {
     echo -n "$_hues""$@""$NO_COLOUR"
 }
 
-_colour_pass () {
-    local _test=$1
-    local _result=$FAIL_COLOUR
-    if [[ $_test == 0 ]]; then # && _result=$PASS_COLOUR
+emoji_error () {
+    if [[ $1 == 0 ]]; then 
         echo "😎 "
     else
         local _faces=(👿 👎 💀 👻 💩 🤨  😐 😑 😥 😮 😫 😲 ☹️  😤 😢 😭 😦 😧 😨 😩 🤯  😬 😰 😱 🥵  🥶  😳 🤢 🤮 )
-        echo "${_faces[$?]} "
+        echo "${_faces[$1]} "
     fi
-}
-
-_short_dir () {
-    # (
-    local _short=$(which short_dir)
-    $_short "$1" 2> /dev/null
 }
 
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    local _status=$1; shift
-    local _where="${HOSTNAME:-$(hostname -s)}"
-    local _dir="$(_short_dir "$PWD")"
+    printf "$(emoji_error $1) $(green_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
+}
 
-    [[ -n $_dir ]] || _dir=$(basename "$(readlink -f .)")
-    local _got_bump=$(bump get 2>/dev/null)
-    local _bump_version=
-    [[ -n $_got_bump ]] && _bump_version="$_got_bump"
-    local _branch=$(get_git_branch)
-    local _branch=$(quietly git rev-parse --abbrev-ref HEAD)
-    local _branch_at=$(get_git_status $_branch $_bump_version)
-    [[ -n $_branch_at ]] && _branch="($_branch_at)"
-    local _py_vers=$(python --version 2>&1 | head -n 1 | sed -e s/Python.//)
-    local _path_to_venv=$(env | g VIRTUAL_ENV= | cut -d= -f2)
-    local _venv_name=
-    [[ -n $_path_to_venv ]] && _venv_name=$(basename "$_path_to_venv")
+path_to_venv () {
+    env | g VIRTUAL_ENV= | cut -d= -f2
+}
+
+venv_name () {
+    local _path_to_venv=$(path_to_venv)
+    [[ -e $_path_to_venv ]] || return 1
+    local _venv_name=$(basename "$_path_to_venv")
     if [[ $_venv_name == ".venv" ]]; then
         local _parent=$(dirname $_path_to_venv)
         local _parent_name=$(basename $_parent)
-        _path_to_venv=$_parent_name
+        _venv_name=$_parent_name
     fi
-    local _python_name=
-    [[ -e $_venv_name ]] && _python_name=$(basename "$_venv_name")
+    echo $(_colour l_red "${_venv_name/./}")
+}
+
+green_date () {
+    local _colour_day=$(_colour green $(date +'%A'))
+    local _colour_date=$(_colour l_green $(date +' %F %H:%M'))
+    echo $_colour_day $_colour_date
+}
+
+_short_dir () {
+    local _short=$(which short_dir 2> /dev/null)
+    [[ $_short ]] || return 1
+    $_short "$1"
+}
+
+blue_pwd_git () {
+    local _text_branch="$(get_branch)"
+    local _branch_version=
+    if [[ $_text_branch ]]; then
+        local _project_version="v$(bump get 2>/dev/null)"
+        [[ $_project_version == v ]] && _project_version=
+        _branch_version=", $_text_branch $_project_version"
+    fi
+    local _text_dir="$(_short_dir "$PWD")"
+    [[ $_text_dir ]] || _text_dir=../$(basename "$(readlink -f .)")
+    echo $(_colour l_blue "${_text_dir}${_branch_version}")
+}
+
+blue_user () {
+    local _colour_username=$(_colour blue ${USER:-$(whoami)})
+    local _colour_host=$(_colour blue ${HOSTNAME:-$(hostname -s)})
+    echo "${_colour_username}@$_colour_host"
+}
+
+red_python () {
 
     local _virtual_env_name=
     local _virtual_env_root=$(env | g VIRTUAL_ENV | cut -d= -f2)
@@ -114,38 +134,18 @@ _colour_prompt () {
         _virtual_env_name=$(basename "$_virtual_env_directory")
     fi
 
-    local _colour_status=$(_colour_pass $_status)
-    local _colour_day=$(_colour l_green $(date +'%A'))
-    local _colour_date=$(_colour green $(date +' %F %H:%M'))
-    local _colour_username=$(_colour green ${USER:-$(whoami)})
-    local _colour_where=$(_colour green ${HOSTNAME:-$(hostname -s)})
-    local _colour_user="${_colour_username}@$_colour_where"
-    local _text_branch="$(get_branch)"
-    local _colour_branch=
-    if [[ $_text_branch ]]; then
-        local _project_version="v$(bump get 2>/dev/null)"
-        [[ $_project_version == v ]] && _project_version=
-        _colour_branch=", $(_colour l_blue $_text_branch $_project_version)"
-    fi
-
-    local _text_dir="$(_short_dir "$PWD")"
-    [[ $_text_dir ]] || _text_dir=$(basename "$(readlink -f .)")
-    local _colour_dir=$(_colour l_blue "$_text_dir")
-    [[ $_colour_branch ]] && _colour_dir="$_colour_dir, $_colour_branch"
-    local _text_dir="$(_short_dir "$PWD")"
-    [[ $_text_dir ]] || _text_dir=$(basename "$(readlink -f .)")
     local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
     local _colour_python=$(_colour l_red "${_python_version}")
-    if [[ -n $_python_name ]]; then
-        local _colour_version=$(_colour l_red "${_python_version}")
-        local _colour_name=$(_colour l_red "${_python_name/./}")
-        local _join='/'
-        [[ $_path_to_venv =~ ~ ]] && _join='~'
-        [[ $_path_to_venv =~ ^[.] ]] && _join='.'
-        _colour_python="$_colour_version${_join}${_colour_name}"
+    local _colour_venv=$(venv_name)
+    if [[ ! $_colour_venv ]]; then
+        echo $_colour_python
+        return 0
     fi
-    local _local_colour=$_colour_user:$_colour_dir
-    printf "$_colour_status $_colour_date $_colour_day $_local_colour $_colour_python\n$ "
+    local _path_to_venv=$(path_to_venv)
+    local _join='/'
+    [[ $_path_to_venv =~ ~ ]] && _join='~'
+    [[ $_path_to_venv =~ ^[.] ]] && _join='.'
+    echo "${_colour_python}${_join}${_colour_venv}"
 }
 
 sp () {
