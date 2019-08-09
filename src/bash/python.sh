@@ -56,12 +56,16 @@ pipy () {
     [[ $1 == "-f" ]] && _force=--force-reinstall
     (
         cd $_dir
-        [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
+        [[ -f requirements.txt ]] && pip install $_force -r requirements.txt 2>&1
         [[ $_force ]] && _force="--upgrade"
         [[ $1 == "-F" ]] && _force="--upgrade" 
-        [[ -f setup.py ]] && python setup.py develop $_force --script-dir=$(script_dir)
-        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" 
-    ) 2>&1 | grep -v already.satisfied
+        local _script_dir=
+        [[ $(which python) =~ ^/usr/local ]] && _script_dir="--script-dir=/usr/local/bin"
+        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
+        set -x
+        [[ -f setup.py ]] && python setup.py develop $_force $_script_dir  2>&1
+        set +x
+    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | g -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
 }
 
 pipu () {

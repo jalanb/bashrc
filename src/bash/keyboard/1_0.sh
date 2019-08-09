@@ -81,13 +81,20 @@ alias 211="_21 develop"
 alias 212="_21 mrs"
 alias 213="_21 master"
 alias 214="_21 deploys"
+alias 231="_23 master"
 alias 232="_23 mrs"
-alias 233="_23 corteva"
+alias 233="_23 eop"
 alias 234="_23 deploy"
 alias 242="_24 mrs"
 alias 244="_24 deploys"
+alias 254="_21 deploys/tippy"
 alias 255="ssh_tippy"
 alias 088="cd /usr/local"
+
+alias 2144="214; gfff"
+alias 2344="234; gfff"
+alias 2444="244; gfff"
+alias 2544="254; gfff"
 # xxxx
 
 Bye_from $BASH_SOURCE

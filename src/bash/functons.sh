@@ -29,6 +29,10 @@ Y () {
 # x
 
 
+,. () {
+    [[ -f .cd ]] && . .cd
+}
+
 ,, () {
     cde . "$@"
 }
@@ -1310,6 +1314,7 @@ umports () {
 
 functons () {
     local _sub_dir="src/bash"
+    [[ $1 == -g ]] && _sub_dir="$_sub_dir/git"
     [[ $1 == -l ]] && _sub_dir="local"
     echo "$HOME/jab/${_sub_dir}/functons.sh"
 }

@@ -91,6 +91,6 @@ path () {
     show_path "$@" -q
 }
 
-phow_ppath () {
+show_ppath () {
     show_a_path PYTHONPATH "$@"
 }

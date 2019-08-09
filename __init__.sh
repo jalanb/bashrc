@@ -7,7 +7,7 @@ realdir () {
     done
 }
 
-. ~/jab/src/bash/welcome.sh
+. ~/bash/welcome.sh
 
 Welcome_to $BASH_SOURCE
 
