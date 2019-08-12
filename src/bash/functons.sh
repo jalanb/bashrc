@@ -717,12 +717,6 @@ back () {
     tput rmcup
 }
 
-bbat () {
-    tput smcup
-    bat "$@"
-    tput rmcup
-}
-
 bins () {
     local _name="$1"; shift
     [[ -z $_name ]] && return 1
