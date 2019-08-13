@@ -413,7 +413,7 @@ grc () {
 }
 
 grg () {
-    gr; glg
+    gr && glg
 }
 
 grh () {
@@ -445,9 +445,10 @@ gro () {
 }
 
 grp () {
-    grr "$@"
-    read -p "Push? [Y]" reply
-    [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpp "$@"
+    if grr "$@"; then
+        read -p "Push? [Y]" reply
+        [[ -z $reply || $reply == "y" || $reply == "Y" ]] && gpp "$@"
+    fi
 }
 
 grr () {
@@ -885,16 +886,18 @@ git_root () {
 # xxxxxxxxxx
 
 git_stash_and () {
-    local stashed=
+    local _stashed=
     if git_changed; then
-        stashed=1
         show_command git stash
         git stash -q
+        _stashed=1
     fi
     "$@"
-    if [[ $stashed == 1 ]]; then
+    local _result=$?
+    if [[ $_stashed == 1 ]]; then
         gstp -q
     fi
+    return $_result
 }
 
 _gxi_menu () {
