@@ -24,7 +24,7 @@ Welcome_to $BASH_SOURCE
 
 . ~/hub/whyp/whyp.sh
 . ~/jab/src/bash/hub.sh
-export VIMACK=~/hub/vimack/vimack
+export VIMACK=~/hub/ackvim/ackvim
 . $VIMACK.sh
 export CDE=~/hub/cde/cde
 . $CDE.sh
