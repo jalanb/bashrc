@@ -992,8 +992,17 @@ hello () {
 }
 
 jalanb () {
-    cd ~/src/git/jalanb
-    bash for_all.sh
+    local _root=~/src/git/jalanb
+    for repo in $(readlink -f $_root/*); do 
+        [[ -d $repo ]] || continue
+        git_dirty $repo || continue
+        echo
+        show_green_line $repo
+        git -C $repo branch
+        git -C $repo lg -n 3
+        git -C $repo status | grep 'Your branch'
+        git -C $repo status -s
+    done
 }
 
 paste () {

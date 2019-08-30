@@ -919,6 +919,12 @@ git_root () {
     return 0
 }
 
+# xxxxxxxxx
+
+git_dirty () {
+    git -C $1 status | grep -v -e 'On branch' -e '^$' -e 'branch is up to date' -e 'working tree clean' | grep -q .
+}
+
 # xxxxxxxxxx
 
 _mastered () {
@@ -966,11 +972,13 @@ _gxi_menu () {
 get_branch () {
     git branch > /dev/null 2>&1 || return 1
     git status >/dev/null 2>&1 || return 1
-    current_branch -q 2>/dev/null || return 1
+    git_branch -q 2>/dev/null || return 1
 }
 
 git_branch () {
-    current_branch
+    local _show=show_run_command
+    [[ $1 == -q ]] && _show=
+    $_show git rev-parse --abbrev-ref HEAD
 }
 
 # xxxxxxxxxxx
@@ -1050,12 +1058,6 @@ _do_git_status () {
 }
 
 # xxxxxxxxxxxxxx
-
-current_branch () {
-    local _show=show_run_command
-    [[ $1 == -q ]] && _show=
-    $_show git rev-parse --abbrev-ref HEAD
-}
 
 in_repo () {
     git rev-parse --is-inside-work-tree
