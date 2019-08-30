@@ -35,7 +35,8 @@
     lf = log --stat --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
     lp = log -p --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
     ll = log --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s' --no-color
-    lg = log --oneline --graph --decorate --abbrev-commit --date=iso-local --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
+    lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
+    li = log --oneline --graph --decorate --abbrev-commit --date=iso-local --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
     lh = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' 
     li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s ' 
     lt = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --tags

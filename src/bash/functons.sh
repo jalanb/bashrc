@@ -672,14 +672,6 @@ VIM () {
     sudo vim "$@"
 }
 
-wta () {
-    . ~/hub/vimack/vimack.sh
-}
-
-wva () {
-    vim -p ~/hub/vimack/vimack.sh "$@"
-}
-
 wtb () {
     . ~/bash/__init__.sh
 }
