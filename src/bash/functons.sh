@@ -1203,9 +1203,9 @@ online_all () {
     is_online $(worker dupont)
     is_online $(worker corteva)
     is_online $(worker eopdev)
-    is_online mac
-    is_online book
-    is_online mini
+    is_online mac.local
+    is_online book.local
+    is_online mini.local
 }
 
 please () {

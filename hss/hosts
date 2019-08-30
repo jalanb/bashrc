@@ -15,12 +15,12 @@
 # 
 # WWTS
 #
-Host bots twkgit31
+Host digger twkgit31
     Hostname 172.25.32.74
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host baker
+Host bots
     Hostname 172.25.32.74
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
@@ -40,7 +40,7 @@ Host jenkins
 #     User worker
 #     IdentityFile ~/.ssh/work/bots/worker.key
 
-Host git
+Host thumber
     Hostname 172.25.32.115
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
@@ -55,7 +55,8 @@ Host builder twkgit30
 #     User builder
 #     IdentityFile ~/.ssh/work/bots/builder.key
 # 
-Host wwits
+Host tarzan
+    Hostname wwits
     Hostname 172.25.3.126
     User ab13173
     Port 22
