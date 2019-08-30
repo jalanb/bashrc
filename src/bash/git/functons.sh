@@ -29,7 +29,7 @@ ga () {
 }
 
 gb () {
-    local _sought="$*"
+    local _sought="$@"
     [[ $_sought ]] || _sought=.
     show_command "git branch $GIT_BRANCH_OPTION | grep $_sought"
     git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color $_sought
@@ -708,8 +708,7 @@ gpff () {
 }
 
 gppp () {
-    gpf "$@"
-    gpt
+    gpf "$@" && gpt
 }
 
 gpsu () {

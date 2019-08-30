@@ -44,7 +44,8 @@ vu () {
 vv () {
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     sai pyithonise VIM &
-    vb "$@"
+    :
+    v "$@"
 }
 
 # vv () {
@@ -132,7 +133,7 @@ vvu () {
 
 vvv () {
     (cd ~/jab/vim
-    vim -p "$@"
+    vim -p . "$@"
     gsi)
 }
 

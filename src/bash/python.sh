@@ -8,11 +8,11 @@ Welcome_to $BASH_SOURCE
 # xx
 
 pi () {
-    pipp install "$@"
+    pip install "$@"
 }
 
 pu () {
-    pipp uninstall "$@"
+    pip uninstall "$@"
 }
 
 py () {
@@ -54,11 +54,15 @@ pipy () {
     [[ -d "$2" ]] && _dir="$2"
     local _force=
     [[ $1 == "-f" ]] && _force=--force-reinstall
+    [[ $1 == "-F" ]] && _force="--upgrade"
+    [[ $_force ]] && shift
     (
         cd $_dir
-        [[ -f requirements.txt ]] && pip install $_force -r requirements.txt 2>&1
+        if [[ -f requirements.txt ]]; then
+            [[ $1 == "-d" && -f development.txt ]] && pip install $_force -r development.txt
+            [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
+        fi
         [[ $_force ]] && _force="--upgrade"
-        [[ $1 == "-F" ]] && _force="--upgrade"
         local _script_dir=
         local _command=develop
         if [[ $(which python) =~ ^/usr/local ]]; then
@@ -78,11 +82,6 @@ pipy () {
 
 pipu () {
     pi --upgrade pip
-}
-
-pip22 () {
-    local __doc__="""Run a pip2 command, then update pip if needed"""
-    pipp "$@" 2
 }
 
 # _xxxx

@@ -40,11 +40,7 @@ Y () {
 }
 
 b () {
-    if [[ -f ./build.sh ]]; then
-        bash ./build.sh
-    elif [[ -f Makefile ]]; then
-        make
-    fi
+    211
 }
 
 g () {
@@ -767,7 +763,7 @@ bump () {
     local _config=
     [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
     [[ -n $_config ]] && shift
-    local _bump_root=$(git_root -v $_bump_dir)
+    local _bump_root=$(git_root $_bump_dir)
     local _part=${1:-patch}; shift
     if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
@@ -1263,7 +1259,7 @@ relpath () {
 }
 
 ssh_host () {
-    local __doc__"""Get a server name from the hostname in ~/.ssh/config"""
+    local __doc__="""Get a server name from the hostname in ~/.ssh/config"""
     ssh -G $1 | grep hostname.*$1 | cut -d' ' -f2
 }
 
