@@ -428,10 +428,21 @@ gri () {
 }
 
 grm () {
-    local _current_branch=$(get_branch)
-    [[ $1 ]] && _current_branch=$1
-    gor master
-    show_run_command git rebase master $_current_branch
+    local _branch=$(get_branch)
+    if [[ $1 ]]; then
+        local _one=$1
+        local _one_branch=$(git branch | grep "^[ ]*[^ ]*$_one[^ ]*$" | head -n 1)
+        [[ $_one_branch ]] && _branch="$_one_branch"
+        [[ $_one_branch ]] && shift
+    fi
+    local _options="$@"
+#   if [[ $1 == "theirs" || $1 == "t" ]]; then
+#       shift
+#       _options="-X theirs ""$@"
+#   fi
+    local _upstream=master
+    gor $_upstream
+    show_run_command git rebase $_options $_upstream $_branch
 }
 
 gro () {
@@ -459,6 +470,11 @@ grs () {
     show_run_command git rebase --skip
 }
 
+gsg () {
+    gs
+    glg
+}
+
 gsi () {
     local __doc__="""Menu to help clearing git status"""
     gxi _gsi_show_diff _gsi_response "$@"
@@ -481,6 +497,14 @@ gsp () {
 
 gta () {
     gt "$@"
+}
+
+gtd () {
+    show_run_command git tag -d "$@"
+}
+
+gtD () {
+    gpod "$@"
 }
 
 gtl () {
@@ -561,18 +585,24 @@ _gbd () {
             return 1
         fi
         read -p "OK to remove $_current_branch [y]? " -n1 answer
-        if [[ -z $answer || $answer =~ [yY] ]]; then
-            if git status 2>&1 | grep -q git.merge...abort; then
-                gma
-            fi
-            gom
-            show_run_command git branch "$@" $_current_branch
-        else
-            return 1
+        [[ -n $answer && ! $answer =~ [yY] ]] && return 1
+        if git status 2>&1 | grep -q git.merge...abort; then
+            gma
         fi
+        gom
+        show_run_command git branch "$@" $_current_branch
         return 0
     fi
     show_run_command git branch "$@"
+}
+
+gbdd () {
+    local _branch=
+    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+        if _mastered $_branch; then
+            gbd $_branch
+        fi
+    done
 }
 
 gbdr () {
@@ -722,8 +752,10 @@ grmt () {
 
 grup () {
     show_run_command git remote update origin --prune
+    gbdd
+    git branch | grep -q fred && gbD fred
     gfpt $1
-    show_run_command git gc
+    show_run_command git gc 2>&1 | grep -v -e objects -e ' reused '
 }
 
 gsri () {
@@ -750,6 +782,11 @@ gstp () {
     show_run_command git stash pop
 }
 
+gtdd () {
+    gtd "$@"
+    gtD "$@"
+}
+
 gtlg () {
     gtl | g "$@"
 }
@@ -765,13 +802,13 @@ gvsd () {
 
 gfff () {
     git_root -o
-    gff
-    gomr | g -v "up to date"
-    show_run_command git status
-    # set -x
-    local _lines=3
+    gff | grep -v 'Fetching'
+    gor master 2>/dev/null | grep -v "up to date"
+    gb
+    bump show
+    local _lines=5
     [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
-    glg $_lines
+    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch' 
 }
 
 gfpt () {
@@ -883,6 +920,10 @@ git_root () {
 }
 
 # xxxxxxxxxx
+
+_mastered () {
+    git branch --contains $1 | grep -q master 
+}
 
 git_stash_and () {
     local _stashed=
@@ -1014,6 +1055,10 @@ current_branch () {
     local _show=show_run_command
     [[ $1 == -q ]] && _show=
     $_show git rev-parse --abbrev-ref HEAD
+}
+
+in_repo () {
+    git rev-parse --is-inside-work-tree
 }
 
 show_git_time () {
