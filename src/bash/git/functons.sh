@@ -233,7 +233,7 @@ gfa () {
 
 gff () {
     gfa
-    grup --tags
+    grup
 }
 
 gfm () {
@@ -242,7 +242,7 @@ gfm () {
 }
 
 gft () {
-    gfpt --tags
+    show_run_command git fetch --tags --force 
 }
 
 ggi () {
@@ -754,7 +754,7 @@ grup () {
     show_run_command git remote update origin --prune
     gbdd
     git branch | grep -q fred && gbD fred
-    gfpt $1
+    show_run_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     show_run_command git gc 2>&1 | grep -v -e objects -e ' reused '
 }
 
@@ -809,10 +809,6 @@ gfff () {
     local _lines=5
     [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
     glg $_lines | grep -v -e 'nothing to commit' -e 'On branch' 
-}
-
-gfpt () {
-    show_run_command git fetch $1 --prune-tags --prune origin "refs/tags/*:refs/tags/*"
 }
 
 clone () {
