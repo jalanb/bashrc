@@ -51,16 +51,16 @@ stash_herman () {
 
 rr () {
     local _interactive=
-    if [[ $1 == '-i' ]]; then
+    if [[ "$1" == '-i' ]]; then
         _interactive=1
         shift
     fi
-    if [[ $1 =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
+    if [[ "$1" =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
         echo "Will not remove $1" >&2
         return 1
     fi
-    local _real_home=$(real_path $HOME)
-    if [[ $(real_path "$@") == "$_real_home" ]]; then
+    local _real_home=$(realpath $HOME)
+    if [[ $(realpath "$@") == "$_real_home" ]]; then
         scalp_hermann
         return 1
     fi
@@ -83,8 +83,8 @@ rr () {
         return 1
     fi
     for p in $_paths; do
-        local _path=$(real_path "$p")
-        if [[ "$_path" == $(real_path $HOME) ]]; then
+        local _path=$(realpath "$p")
+        if [[ "$_path" == $(realpath $HOME) ]]; then
             scalp_hermann
         fi
         local _options=
@@ -118,8 +118,4 @@ rri () {
 rrr () {
     # Scalp Hans too
     sudo rm -rf "$@" 2> ~/bash/fd/2
-}
-
-real_path () {
-    python -c "from os import path; print(path.realpath(path.expanduser('"$1"')))"
 }

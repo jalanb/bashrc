@@ -41,6 +41,7 @@ pong_local () {
 
 quick_pong () {
     local _timeout="-w 2"
+    local _remote="$1"
     [[ $_remote =~ $(worker)$ ]] && _timeout="-w 3"
     [[ $_remote =~ [.]local$ ]] && _timeout="-w 1"
     if pong $_timeout -W 1 $_remote 2>&1 | grep -q -e usage -e illegal -e invalid; then

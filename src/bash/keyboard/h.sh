@@ -24,7 +24,8 @@ h1 () {
 
 hg () {
     local __doc__="grep in history"
-    history_parse | grep --color "$@"
+    local _sought="$@"
+    history_parse | grep --color "${_sought/ /.}"
 }
 
 alias hh="history_head"
