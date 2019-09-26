@@ -1785,3 +1785,8 @@ copy_from_work_server () {
 }
 
 Bye_from $BASH_SOURCE
+jalanb_hub () 
+{ 
+    ( cd ~/hub;
+    grep slack -H */.travis.yml | sed -e "s/:.*//" -e "s:..travis.yml::" | grep -v -e old -e master -e suds | sort | uniq )
+}

@@ -48,7 +48,7 @@ pipd () {
 }
 
 pipy () {
-    pipu >/dev/null 2>&1
+    piup >/dev/null 2>&1
     local _dir=.
     [[ -d "$1" ]] && _dir="$1"
     [[ -d "$2" ]] && _dir="$2"
@@ -80,14 +80,18 @@ pipy () {
     ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | g -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
 }
 
-pipu () {
+pirr () {
+    pip install -r requirements.txt
+}
+
+piup () {
     pi --upgrade pip
 }
 
 # _xxxx
 
 _pipy () {
-    pipu >/dev/null 2>&1
+    piup >/dev/null 2>&1
     local _install=$1; shift
     local _dir=.
     if [[ -d "$1" ]]; then
