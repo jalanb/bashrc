@@ -62,9 +62,7 @@ alias Z='set +x'
 
 alias ..='cdup'
 
-alias ef="echo False"
 alias eg="env | g "
-alias et="echo True"
 
 alias p-="echo $OLDPWD"
 

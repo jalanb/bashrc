@@ -24,6 +24,27 @@ Y () {
 
 # _
 # xx
+
+quietly unalias ef
+ef () {
+    [[ $? == 0 ]] && return
+    local _status=$?
+    local _faces=(👿  👎  💀  👻  💩  🤨   😐  😑  😥  😮  😫  😲  ☹️  😤  😢  😭  😦  😧  😨  😩  🤯   😬  😰  😱  🥵   🥶   😳  🤢  🤮)
+    local _out=False
+    [[ $_status == 1 ]] || _out="False $_status ${_faces[$_status]}"
+    echo $_out >&2
+}
+
+quietly unalias et
+et () {
+    [[ $? == 0 ]] || return
+    local _status=0
+    local _statout=
+    local _faces=(😎)
+    local _out=True
+    _out="True $$_status ${_faces[$_status]}"
+    echo $_out >&1
+}
 # _x
 # xxx
 # _xx
@@ -1451,19 +1472,28 @@ _like_duck () {
     has_py "$*"
 }
 
-jalanb_hub () {
+continuing () {
+    local _answer=$(ask "Continue ?")
+    [[ $_answer =~ [yY] ]]
+}
+
+hub_jab () {
+    local _dir=
+    local _dirs=
+    [[ $1 == -d ]] && _dirs=1
+    [[ $1 == -D ]] && _dirs=2
     (
         cd ~/hub; 
+        local _result=$(
         grep slack -H */.travis.yml | \
             sed -e "s/:.*//" -e "s:..travis.yml::" | \
             grep -v -e old -e master -e suds | \
             sort | uniq
+        )
+        [[ $_dirs == 1 ]] && for _dir in $_result; do short_dir $_dir; done
+        [[ $_dirs == 2 ]] && for _dir in $_result; do rlf $_dir; done
+        [[ $_dirs ]] || echo $_result | spaces_to_lines
     )
-}
-
-continuing () {
-    local _answer=$(ask "Continue ?")
-    [[ $_answer =~ [yY] ]]
 }
 
 jab_scripts () {
@@ -1519,6 +1549,9 @@ vim_diff () {
 
 # xxxxxxxxxxx
 
+spaces_to_lines () {
+    tr ' ' '\n'
+}
 lines_to_spaces () {
     tr '\n' ' '
 }
