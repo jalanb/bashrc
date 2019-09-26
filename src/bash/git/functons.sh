@@ -205,6 +205,11 @@ gcp () {
     show_run_command git cherry-pick -x --allow-empty "$@"
 }
 
+gcu () {
+    show_command git config user
+    echo "$(git config user.name) <$(git config user.email)>"
+}
+
 gdd () {
     gdi .
 }
