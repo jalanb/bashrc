@@ -168,6 +168,10 @@ gbb () {
     git_branch "$@"
 }
 
+gbc () {
+    show_run_command git branch --contains "$@"
+}
+
 gbr () {
     GIT_BRANCH_OPTION=-r gb "$@"
 }
@@ -596,6 +600,10 @@ _gbd () {
     show_run_command git branch "$@"
 }
 
+gbac () {
+    show_run_command git branch --all --contains "$@"
+}
+
 gbdd () {
     local _branch=
     for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
@@ -730,7 +738,12 @@ gls1 () {
 }
 
 gpod () {
-    gpo --delete "$@"
+    local _arg=
+    local _branch=
+    for _arg in "$@"; do
+        _branch=$(echo $_arg | sed -e "s:.*origin/::")
+        gpo --delete $_branch
+    done
 }
 
 gpff () {
@@ -770,7 +783,7 @@ gssd () {
 gstb () {
     local _branch=$1
     [[ $_branch ]] || _branch=fred && shift
-    [[ $_branch == 'fred' ]] && Quietly git branch -D fred
+    [[ $_branch == 'fred' ]] && QUietly git branch -D fred
     show_run_command git stash branch $_branch "$@"
 }
 
@@ -801,6 +814,7 @@ gvsd () {
 # xxxxx
 
 gfff () {
+    gcu
     git_root -o
     gff | grep -v 'Fetching'
     gor master 2>/dev/null | grep -v "up to date"
