@@ -196,19 +196,51 @@ nnoremap L <C-F>zz
  noremap t<right> :tabnext<cr>
  noremap th       :tabprev<cr>
  noremap tl       :tabnext<cr>
+" 
+" Arrows
+" 
+nnoremap <up>               ?
+nnoremap <down>             /
+nnoremap <left>             0
+nnoremap <right>            $
+nnoremap <PageUp>           <C-B>
+nnoremap <PageDown>         <C-F>
+"
+" More Arrows
+" 
+nnoremap <up><up>           #zv
+nnoremap <down><down>       *zv
+nnoremap <left><left>       ?<cr>zazv
+nnoremap <right><right>     /<cr>zazv
+"
+" Shift Arrows
+"
+nnoremap <s-up>             <C-B>
+nnoremap <s-down>           <C-F>
+nnoremap <s-left>           :tabprev<cr>
+nnoremap <s-right>          :tabnext<cr>
+"noremap <s-left>           :tabprev<cr>
+"noremap <s-right>          :tabnext<cr>
+"
+" Normal Control Arrows
+"
+"noremap <c-up>             window up
+"noremap <c-down>           does nothing ?
+"noremap <c-left>           prev desktop
+"noremap <c-right>          next desktop
+nnoremap <c-k>              window up
+nnoremap <c-j>              does nothing ?
+nnoremap <c-h>              prev desktop
+nnoremap <c-l>              next desktop
+"
+" Insert Control Arrows
+"
+inoremap <c-up>             <Esc><PageUp>I
+inoremap <c-down>           <Esc><PageDown>I
+inoremap <c-left>           <Esc>bi
+inoremap <c-right>          <Esc>lwi
 
-nnoremap <Up>       ?<cr>zazv
-nnoremap <Down>     /<cr>zazv
-nnoremap <S-Up>     ?
-nnoremap <S-Down>   /
-nnoremap <S-Left>   :tabprev<cr>
-nnoremap <S-Right>  :tabnext<cr>
-
-noremap <PageUp>   <C-B>
-noremap <PageDown> <C-F>
-nnoremap <left>      #zv
-nnoremap <right>     *zv
-" control keys {{{2
+" Other Control Keys {{{2
  noremap    <C-d> :qa<CR>
  noremap    <C-n> :next<CR>
  noremap    <C-p> :prev<CR>
@@ -220,12 +252,8 @@ nnoremap <right>     *zv
      map    <C-b> dndndndd/<cr>
      map    <C-m> dd/<cr>dndd/<cr>
      map    <C-n> dndd/<cr>dd/<cr>
- noremap <C-Right> w
- noremap <C-Left>  b
 inoremap    <C-d> <esc>:qa<CR>
 inoremap    <C-q> <Esc>:qa!<CR>
-inoremap <C-Right> <Esc>lwi
-inoremap <C-Left>  <Esc>bi
 " Alt keys {{{2
  noremap    <A-q>      :qa!<CR>
  noremap <A-Right>      :tabnext<Cr>
