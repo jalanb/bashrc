@@ -336,12 +336,16 @@ gmt () {
 }
 
 gob () {
-    go -b "$@"
+    local _new_branch=$1; shift
+    [[ $_new_branch ]] || return 1
+    local _old_commit=$1; shift
+    [[ $_old_commit ]] || _old_commit=$(get_branch)
+    show_run_command git checkout -b $_new_branch $_old_commit
 }
 
 gof () {
     gbD fred 2>/dev/null
-    gob "$@" fred
+    gob fred "$@"
 }
 
 gog () {

@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-at_home () {
+echo_home () {
     local _doc="""Try $1 as a directory in, or under, $HOME"""
     if [[ -z "$@" ]]; then
         c ~
@@ -27,40 +27,23 @@ at_home () {
     local _dir=$_homed
     [[ -d "$_match_dir" ]] && _dir="$_match_dir"
     [[ -d "$_dir" ]] || return 1
+    echo $_dir
+}
+
+cd_home () {
+    local _dir=$(echo_home "$@")
     CDE_header=$( (cd $_dir; l -d ${_name}* 2>/dev/null ) ) cde $_dir
     # set +x
 }
 
-_2 () {
-    at_home bash
+in_home () {
+    local _one=$1; shift
+    local _two=$1
+    test -n $_two -a -d ~/$_one/$two || _two=
+    [[ $_two ]] && shift
+    local _dir=$(cd_home "$@")
+   (
+   cd $_dir
+   "$@"
+    )
 }
-
-_21 () {
-    at_home bots "$@"
-}
-
-_22 () {
-    at_home jab "$@"
-}
-
-_23 () {
-    at_home eop "$@"
-}
-
-_24 () {
-    at_home saas "$@"
-}
-
-_25 () {
-    at_home tippy "$@"
-}
-
-_26 () {
-    at_home /tmp
-}
-
-_27 () {
-    at_home /tmp
-}
-
-Bye_from $BASH_SOURCE

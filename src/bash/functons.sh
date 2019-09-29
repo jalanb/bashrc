@@ -211,7 +211,7 @@ envv () {
 
 
 keys () {
-    . ~/bash/keyboard/*.sh
+    . ~/bash/keyboard/__init__.sh
 }
 
 popq () {
@@ -1472,12 +1472,17 @@ _like_duck () {
     has_py "$*"
 }
 
+al_email () {
+    echo "$@@al-got-rhythm.net"
+}
+
+
 continuing () {
     local _answer=$(ask "Continue ?")
     [[ $_answer =~ [yY] ]]
 }
 
-hub_jab () {
+jab_hub () {
     local _dir=
     local _dirs=
     [[ $1 == -d ]] && _dirs=1
