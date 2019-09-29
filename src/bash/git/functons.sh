@@ -207,7 +207,7 @@ gcp () {
 
 gcu () {
     show_command git config user
-    echo "$(git config user.name) <$(git config user.email)>"
+    echo "$(git config user.name) "'<'"$(git config user.email)"'>'
 }
 
 gdd () {
@@ -647,6 +647,24 @@ gcme () {
     gcm --edit "$@"
 }
 
+gcua () {
+    local_gcu 'Alan Brogan' $(work_email alan.brogan)
+}
+
+gcuh () {
+    local_gcu jalanb $(al_email github)
+}
+
+gcug () {
+    local_gcu 'Git Lab' $(work_email gitlab)
+}
+
+alias gcuj=gcuh
+
+gcuw () {
+    local_gcu 'Alan Brogan' $(work_email ab13173)
+}
+
 gdis () {
     gdi --staged "$@"
 }
@@ -938,6 +956,15 @@ git_root () {
 
 git_dirty () {
     git -C $1 status | grep -v -e 'On branch' -e '^$' -e 'branch is up to date' -e 'working tree clean' | grep -q .
+}
+
+local_gcu () {
+    local _name="$1"
+    shift
+    local _email="$1"
+    shift
+    git config --local user.name "$_name"
+    git config --local user.email "$_email"
 }
 
 # xxxxxxxxxx
