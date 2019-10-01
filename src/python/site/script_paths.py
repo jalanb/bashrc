@@ -23,8 +23,11 @@ def sift(sys_args):
 
 
 def arg_paths(sys_args):
-    arg_files = paths.files(sift(sys_args))
-    if arg_files:
-        return arg_files
-    return [paths.pyc_to_py(a) for a in
+    sifted = sift(sys_args)
+    values = sifted.values()
+    arg_paths = [paths.path(p) for v in sifted.values() for p in v]
+    if arg_paths:
+        return arg_paths
+    expanded = [paths.pyc_to_py(a) for a in
             paths.tab_complete(sys_args, paths.add_stars)]
+    return [p for p in expanded if hasattr(p, 'isfile')]
