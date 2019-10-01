@@ -42,7 +42,20 @@ def read_todo(todo):
     return result
 
 
-def read_todo_items():
+def as_todo_item(line):
+    """Initialise a TodoItem from the line"""
+    item_regexp = re.compile('^(?P<text>.*), (?P<priority>[%s])$' %
+                             priority_keys_string())
+    match = item_regexp.match(line)
+    TodoItem = namedtuple('TodoItem', 'text, priority')
+    if not match:
+        return TodoItem(line, -1)
+    text = match.groupdict()['text']
+    priority = match.groupdict()['priority']
+    return TodoItem(text, int(priority))
+
+
+def read_items():
     """Extract a list of todo items from a list of lines
 
     Each item is a tuple of (text, priority)
@@ -80,31 +93,14 @@ def priority_colour(priority_number):
     return 'white'
 
 
-def as_todo_item(line):
-    """Initialise a TodoItem from the line"""
-    item_regexp = re.compile('^(?P<text>.*), (?P<priority>[%s])$' %
-                             priority_keys_string())
-    match = item_regexp.match(line)
-    TodoItem = namedtuple('TodoItem', 'text, priority')
-    if not match:
-        return TodoItem(line, -1)
-    text = match.groupdict()['text']
-    priority = match.groupdict()['priority']
-    return TodoItem(text, int(priority))
-
-
-def show_todo_item(item):
+def show_item(item):
     """Show the item on screen, coloured by it's priority"""
     colour = priority_colour(item.priority)
-    print(texts.colour_text(item.text, colour))
+    print(texts.colour_text(colour, item.text))
 
 
 def main():
     """Read all todo items and show them on screen"""
-    for item in read_todo_items():
-        show_todo_item(item)
+    for item in read_items():
+        show_item(item)
     return 0
-
-
-if __name__ == '__main__':
-    sys.exit(main())
