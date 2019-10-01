@@ -47,6 +47,12 @@ et () {
 }
 # _x
 # xxx
+
+rg () {
+    c "$@"
+    ranger 
+}
+
 # _xx
 
 # x

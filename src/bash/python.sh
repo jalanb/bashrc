@@ -50,19 +50,20 @@ pipd () {
 pipy () {
     piup >/dev/null 2>&1
     local _dir=.
-    [[ -d "$1" ]] && _dir="$1"
-    [[ -d "$2" ]] && _dir="$2"
+    [[ -d "$1" ]] && _dir="$1" && shift
     local _force=
-    [[ $1 == "-f" ]] && _force=--force-reinstall
-    [[ $1 == "-F" ]] && _force="--upgrade"
+    [[ $1 == "-u*fu*" ]] && _force=--force-reinstall
+    [[ $1 =~ "-f*uf*" ]] && _force="$_force --upgrade"
     [[ $_force ]] && shift
+    [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
     (
         cd $_dir
+        local _dev=
         if [[ -f requirements.txt ]]; then
             [[ $1 == "-d" && -f development.txt ]] && pip install $_force -r development.txt
-            [[ -f requirements.txt ]] && pip install $_force -r requirements.txt
+            pip install $_force -r requirements.txt
         fi
-        [[ $_force ]] && _force="--upgrade"
+        [[ $_force ]] && _force="--force"
         local _script_dir=
         local _command=develop
         if [[ $(which python) =~ ^/usr/local ]]; then
@@ -75,7 +76,7 @@ pipy () {
         [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
         [[ -f setup.py ]] || return 1
         set -x
-        [[ -f setup.py ]] && python setup.py $_command $_force $_script_dir  2>&1
+        python setup.py $_command $_force $_script_dir
         set +x
     ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | g -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
 }
