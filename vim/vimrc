@@ -199,8 +199,8 @@ nnoremap L <C-F>zz
 " 
 " Arrows
 " 
-nnoremap <up>               ?
-nnoremap <down>             /
+nnoremap <up>               #zv
+nnoremap <down>             *zv
 nnoremap <left>             0
 nnoremap <right>            $
 nnoremap <PageUp>           <C-B>
@@ -208,8 +208,8 @@ nnoremap <PageDown>         <C-F>
 "
 " More Arrows
 " 
-nnoremap <up><up>           #zv
-nnoremap <down><down>       *zv
+nnoremap <up><up>           ?<cr>
+nnoremap <down><down>       /<cr>
 nnoremap <left><left>       ?<cr>zazv
 nnoremap <right><right>     /<cr>zazv
 "
