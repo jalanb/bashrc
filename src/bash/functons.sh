@@ -513,6 +513,13 @@ mkd () {
     fi
 }
 
+nat () {
+    local _cmd=bat
+    $(kat "$@" >~/fd/1 2>~/fd/2)
+    [[ $? == 0 ]] && _cmd=kat
+    $_cmd "$@"
+}
+
 num () {
     vim ~/jab/local/numbers.txt
 }
