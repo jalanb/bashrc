@@ -112,10 +112,6 @@ y () {
     3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
 }
 
-add () {
-    echo $($1 + $2)
-}
-
 ag () {
     alias | grep "$@"
 }
@@ -200,28 +196,8 @@ pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
-dir () {
-    local _where=.
-    [[ -n "$@" ]] && _where="$@"
-    say $(short_dir $_where)
-}
-
-
 pt () {
     ptpython "$@"
-}
-
-envv () {
-    env | g VIRTUAL_ENV= | g '=.*'
-}
-
-
-keys () {
-    . ~/bash/keyboard/__init__.sh
-}
-
-popq () {
-    popd >/dev/null 2>&1
 }
 
 ra () {
@@ -402,6 +378,10 @@ jjb () {
 
 jjy () {
     kk ~/jab/src/python "$@"
+}
+
+keys () {
+    . ~/bash/keyboard/__init__.sh
 }
 
 kpj () {

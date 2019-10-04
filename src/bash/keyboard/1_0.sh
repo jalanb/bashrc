@@ -6,17 +6,17 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/local/functons.sh optional
 
-alias §="cd ~"
-alias 0="cd /"
-alias 1="cd_home jab"
-alias 2="cd_home bots"
-alias 3="cd_home eop"
-alias 4="cd_home saas"
-alias 5="cd_home tippy"
-alias 6="cd_home txt"
-alias 7="vim -p keys"
-alias 8="in_home ack"
-alias 9="cd_home tmp"
+alias §="alias | grep 'alias [0-9][0-9]*'"
+alias 0="home_cde hub"
+alias 1="home_cde jab"
+alias 2="home_cde bots"
+alias 3="home_cde eop"
+alias 4="home_cde wmp"
+alias 5="home_cde tippy"
+alias 6="home_cde txt"
+alias 7="home_vim "
+alias 8="home_range "
+alias 9="in_home -e tmp"
 alias -- -="cde -"
 # _
 
@@ -27,34 +27,55 @@ alias §3="cde ~/jab/crontab/jab.ook/Users/jab/bin"
 alias §5="cde ~/src/git/bucket/qaz"
 # xx
 
-alias 10="1 bash"
-alias 11="1 "
-alias 12="1 python"
-alias 13=
-alias 14=
-alias 15=
-alias 16=
-alias 17=
-alias 18=
-alias 19="1 tmp"
+alias 00="0 pysyte"
 
-alias 20=
-alias 21=
-alias 22="1 testing"
-alias 23=
-alias 24=
-alias 25=
-alias 26=
-alias 27=
+# crontab
+# python -> src/python
+# keys -> bash/keyboard
 
-alias 30="cd ~/jab/.."
-alias 31="cde ~/jab/etc"
-alias 32="cde ~/jab/src/bash"
-alias 33="cde ~/jab/bin"
-alias 34="cde ~/jab/src/python"
-alias 35="cde ~/jab/log"
-alias 36="cde ~/jab/txt"
+alias 10="1 bin"
+alias 11="1 bash"
+alias 12="1 txt"
+alias 13="1 local"
+alias 14="1 vim"
+alias 15="1 python"
+alias 16="1 keys"
+alias 17="1 etc"
+alias 18="1 home"
+alias 19="1 crontab"
 
+alias 20="2 bin"
+alias 21="2 testing"
+alias 22="2 bots"
+alias 23="2 testing.master"
+alias 24="2 deploys"
+alias 25="2 developed"
+alias 26="2 tools"
+alias 27="2 tools-107"
+
+alias 31="3 local"
+alias 32="3 master"
+alias 33="3 eop"
+alias 34="3 deploy"
+alias 35="3 dupont"
+alias 35="3 mrs"
+alias 36="3 corteva"
+alias 36="3 order"
+alias 30="3 eop"
+
+alias 41="4 local"
+alias 42="4 master"
+alias 43="4 deploy"
+alias 44="4 dashboard"
+alias 45="4 mrs"
+alias 46="4 documents"
+alias 47="4 wmp"
+alias 48="4 the_dark_side"
+
+alias 54="5 site"
+alias 55="vagrant ssh"
+alias 56="5 opp_common"
+alias 57="5 django_tools"
 
 alias 50="cd ~/src/.."
 alias 51="cd ~/src/experiments"
@@ -64,13 +85,15 @@ alias 54="cde ~/src/python"
 
 alias 60="cd ~/txt/.."
 
-alias 70="cd ~/tmp/.."
-alias 77="cd ~/tmp"
+alias 77="home_vim tmp"
+
+alias 88="ranger ~/src/git"
 
 alias 99="cde /"
 alias 92="cde /etc"
-alias 98="cde /usr"
-alias 99="cde /usr/local"
+alias 97="cde /usr"
+alias 98="cde /usr/local"
+alias 99="in_home tmp"
 
 # _x
 # _xx
@@ -105,6 +128,8 @@ alias 244="4 deploy"
 alias 249="4 dashboard.local"
 alias 254="2 deploys/tippy"
 alias 255="ssh_tippy"
+
+alias 777="home_vim vim"
 
 alias 2144="214; gfff"
 alias 2344="234; gfff"

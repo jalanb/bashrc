@@ -22,8 +22,7 @@ vb () {
 }
 
 vc () {
-    # https://www.reddit.com/r/vim/comments/53mhut/using_vim_like_awk/d7ude9m
-    vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
+    local _doc="""vim c"
 }
 
 vd () {
@@ -54,6 +53,10 @@ vv () {
 # }
 
 # xxx
+
+vd1 () {
+    vd ~/one "$@"
+}
 
 vdd () {
     local _vim_mark=_vim_
@@ -99,6 +102,11 @@ vdf () {
     [[ -f ~/tmp/fred.vim ]] && vd ~/tmp/fred.vim "$1"
 }
 
+ved () {
+    # https://www.reddit.com/r/vim/comments/53mhut/using_vim_like_awk/d7ude9m
+    vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
+}
+
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
 }
@@ -140,19 +148,19 @@ vvv () {
 # xxxx
 
 hd12 () {
-    hd ~/tmp/one ~/tmp/two
+    hd ~/one ~/two
 }
 
 vd12 () {
-    vd ~/tmp/one ~/tmp/two
+    vd ~/one ~/two
 }
 
 vd13 () {
-    vd ~/tmp/one ~/tmp/three
+    vd ~/one ~/three
 }
 
 vd23 () {
-    vd ~/tmp/two ~/tmp/three
+    vd ~/two ~/three
 }
 
 vvpj () {
@@ -204,7 +212,7 @@ v_safely () {
 # xxxxxxxx
 
 vd123 () {
-    vd ~/tmp/one ~/tmp/two ~/tmp/three
+    vd ~/one ~/two ~/three
 }
 
 # xxxxx

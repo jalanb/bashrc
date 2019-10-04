@@ -24,6 +24,7 @@ h1 () {
 
 hg () {
     local __doc__="grep in history"
+    [[ $1 =~(-h|--help) ]] && ww hg && return 0
     local _sought="$@"
     history_parse | grep --color "${_sought/ /.}"
 }
