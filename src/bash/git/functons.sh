@@ -110,7 +110,7 @@ gr () {
 
 gs () {
     local __doc__="""git status front end"""
-    _gs "$@"
+    gs_ "$@"
 }
 
 gt () {
@@ -135,7 +135,7 @@ ts () {
 
 # _xx
 
-_gs () {
+gs_ () {
     local __doc__="""git status back end"""
     show_run_command git status "$@"
 }
@@ -404,7 +404,7 @@ gpt () {
     gpo --tags
 }
 
-_gs_quiet () {
+gs__quiet () {
     first_arg_dir_or_here "$@" && shift
     _do_git_status $dir "$@"
 }
@@ -733,7 +733,7 @@ gdsv () {
 }
 
 ggai () {
-    g -q $1 $2 && gai $2 || echo fuck off
+    g -q $1 $2 && gai $2 || echo fuck off >&2
 }
 
 gl11 () {
@@ -864,7 +864,8 @@ clone () {
     echo "" > $_clone_log
     show_run_command git clone $_remote $_local > $_clone_log 2>&1
     if grep -q fatal $_clone_log; then
-        kat -n $_clone_log
+        # kat -n $_clone_log
+        cat -n $_clone_log
     else
         cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
         if [[ $_remote =~ $(work) ]]; then

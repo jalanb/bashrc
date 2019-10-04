@@ -46,10 +46,9 @@ et () {
     echo $_out >&1
 }
 # _x
-# xxx
 
 rg () {
-    c "$@"
+    [[ "$@" ]] && c "$@"
     ranger 
 }
 
@@ -294,6 +293,16 @@ ask () {
     local _answer=
     read -e -n1 -p "$1 " _answer
     echo $_answer
+}
+
+dir () {
+    local _where=.
+    [[ -n "$@" ]] && _where="$@"
+    say $(short_dir $_where)
+}
+
+envv () {
+    env | g VIRTUAL_ENV= | g '=.*'
 }
 
 fdv () {
@@ -933,6 +942,10 @@ divv () {
 
 over () {
     tput smcup
+}
+
+popq () {
+    popd >/dev/null 2>&1
 }
 
 this () {
