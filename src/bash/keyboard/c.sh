@@ -5,7 +5,9 @@ Welcome_to $BASH_SOURCE
 # x
 
 c () {
-    cde "$@"
+    local _index=0
+    [[ $1 =~ [0-2] ]] && _index=$1
+    cde -$_index "$@"
 }
 
 # _
