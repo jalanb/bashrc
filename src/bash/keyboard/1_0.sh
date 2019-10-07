@@ -6,7 +6,6 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/local/functons.sh optional
 
-alias §="alias | grep 'alias [0-9][0-9]*'"
 alias 0="home_cde hub"
 alias 1="home_cde jab"
 alias 2="home_cde bots"
@@ -14,7 +13,7 @@ alias 3="home_cde eop"
 alias 4="home_cde wmp"
 alias 5="home_cde tippy"
 alias 6="home_cde txt"
-alias 7="home_vim "
+alias 7="c ~/hub/zatso"
 alias 8="home_range "
 alias 9="in_home -e tmp"
 alias -- -="cde -"

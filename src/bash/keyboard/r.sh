@@ -34,7 +34,7 @@ chewed_rri () {
 
 
 scalp_hermann () {
-    red (
+    (
     echo "Landa: Are you mad? What have you done? I made a deal with your general for that man's life!"
     echo ""
     echo "Aldo: Yeah, they made that deal, but they don't give a fuck about him. They need you"
