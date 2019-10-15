@@ -41,7 +41,7 @@ cd_home_dirs () {
     local _echo=
     local _arg=
     cd
-    while "$@"
+    while [[ $# > 0 ]]
     do
         _arg="$1"
         [[ "$_arg" ]] || break 
