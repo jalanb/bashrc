@@ -52,14 +52,36 @@ pipd () {
 }
 
 pipy () {
+    local __doc__="""Install a python project dir
+
+    [path] : path to the project (defaults to \$PWD)
+    -v : edit the setup files first
+    -V : only edit the setup files
+    -f : force 
+    -u : upgrade
+    """
     piup >/dev/null 2>&1
-    local _dir=.
+    local _dir=$PWD
     [[ -d "$1" ]] && _dir="$1" && shift
+    local _vim=
+    [[ $1 =~ -[vV] ]] && _vim="vim -p"
+    local _vvim=
+    [[ $1 == -V ]] && _vvim=1
+    [[ $_vim ]] && shift
     local _force=
     [[ $1 == "-u*fu*" ]] && _force=--force-reinstall
     [[ $1 =~ "-f*uf*" ]] && _force="$_force --upgrade"
     [[ $_force ]] && shift
     [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
+    (
+        cd $_dir
+        local _setups=
+        [[ -f setup.py ]] && _setups=setup.py
+        [[ -f requirements.txt ]] && _setups="$_setups requirements.txt"
+        [[ -d requirements ]] && _setups="$_setups requirements"
+        [[ $_vim ]] && $_vim $_setups
+        [[ $_vvim ]] && return 0
+    )
     (
         cd $_dir
         local _dev=
@@ -91,6 +113,10 @@ pirr () {
 
 piup () {
     pi --upgrade pip
+}
+
+vipy () {
+    pipy -V "$@"
 }
 
 # _xxxx
