@@ -29,6 +29,10 @@ vd () {
     vim_diff "$1" "$2" "$3" -O
 }
 
+vk () {
+    vim -p ~/keys "$@"
+}
+
 vq () {
     vim -p "$@"
 }
