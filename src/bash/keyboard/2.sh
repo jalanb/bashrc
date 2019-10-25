@@ -41,19 +41,20 @@ cd_home_dirs () {
     local _echo=
     local _arg=
     cd
-    while "$@"
+    while [[ $# > 0 ]]
     do
         _arg="$1"
         [[ "$_arg" ]] || break 
         if [[ "$_arg" =~ -[ve] ]]; then
-            _[[ $_arg == -v ]] && echo=1
-            _[[ $_arg == -e ]] && _cd=cde
+            [[ $_arg == -v ]] && _echo=1
+            [[ $_arg == -e ]] && _cd=cde
+            shift
             continue
         fi
         [[ -d "$_arg" ]] || continue
         _count=$(( $_count + 1 ))
-        cd ""$_arg""
-        pwd
+        cd "$_arg"
+        [[ $_echo ]] && pwd
         shift
     done
     [[ $_echo ]] && pwd
@@ -70,7 +71,7 @@ home_ls () {
 home_cd () {
     local _return=$(count_dirs "$@")
     cd_home_dirs "$@"
-    return $?
+    [[ $? > 0 ]]
 }
 
 home_cde () {

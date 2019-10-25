@@ -62,8 +62,6 @@ alias Z='set +x'
 
 alias ..='cdup'
 
-alias eg="env | g "
-
 alias p-="echo $OLDPWD"
 
 alias r.="rm -rvf *"

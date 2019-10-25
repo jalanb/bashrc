@@ -23,47 +23,8 @@ Y () {
 }
 
 # _
-# xx
-
-quietly unalias ef
-ef () {
-    [[ $? == 0 ]] && return
-    local _status=$?
-    local _faces=(👿  👎  💀  👻  💩  🤨   😐  😑  😥  😮  😫  😲  ☹️  😤  😢  😭  😦  😧  😨  😩  🤯   😬  😰  😱  🥵   🥶   😳  🤢  🤮)
-    local _out=False
-    [[ $_status == 1 ]] || _out="False $_status ${_faces[$_status]}"
-    echo $_out >&2
-}
-
-quietly unalias et
-et () {
-    [[ $? == 0 ]] || return
-    local _status=0
-    local _statout=
-    local _faces=(😎)
-    local _out=True
-    _out="True $$_status ${_faces[$_status]}"
-    echo $_out >&1
-}
-# _x
-
-rg () {
-    [[ "$@" ]] && c "$@"
-    ranger 
-}
-
-# _xx
-
 # x
 
-
-,. () {
-    [[ -f .cd ]] && . .cd
-}
-
-,, () {
-    cde . "$@"
-}
 
 b () {
     211
@@ -80,6 +41,16 @@ x () {
 y () {
     clear
     pyth ~/jab/src/python/y.py "$@"
+}
+
+# _x
+
+,. () {
+    [[ -f .cd ]] && . .cd
+}
+
+,, () {
+    cde . "$@"
 }
 
 # xx
@@ -201,6 +172,11 @@ pt () {
 
 ra () {
     ranger "$@"
+}
+
+rg () {
+    [[ "$@" ]] && c "$@"
+    ranger 
 }
 
 ru () {

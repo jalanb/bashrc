@@ -8,11 +8,11 @@ Welcome_to $BASH_SOURCE
 # xx
 
 pi () {
-    pip install "$@"
+    ppip install "$@"
 }
 
 pu () {
-    pip uninstall "$@"
+    ppip uninstall "$@"
 }
 
 py () {
@@ -42,15 +42,32 @@ pii () {
 
 # xxxx
 
+ppip () {
+    python -m pip "$@"
+}
+
 pipd () {
     local __doc__="""pip install a directory for development"
     _pipy develop "$@"
 }
 
 pipy () {
+    local __doc__="""Install a python project dir
+
+    [path] : path to the project (defaults to \$PWD)
+    -v : edit the setup files first
+    -V : only edit the setup files
+    -f : force 
+    -u : upgrade
+    """
     piup >/dev/null 2>&1
-    local _dir=.
+    local _dir=$PWD
     [[ -d "$1" ]] && _dir="$1" && shift
+    local _vim=
+    [[ $1 =~ -[vV] ]] && _vim="vim -p"
+    local _vvim=
+    [[ $1 == -V ]] && _vvim=1
+    [[ $_vim ]] && shift
     local _force=
     [[ $1 == "-u*fu*" ]] && _force=--force-reinstall
     [[ $1 =~ "-f*uf*" ]] && _force="$_force --upgrade"
@@ -58,10 +75,19 @@ pipy () {
     [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
     (
         cd $_dir
+        local _setups=
+        [[ -f setup.py ]] && _setups=setup.py
+        [[ -f requirements.txt ]] && _setups="$_setups requirements.txt"
+        [[ -d requirements ]] && _setups="$_setups requirements"
+        [[ $_vim ]] && $_vim $_setups
+        [[ $_vvim ]] && return 0
+    )
+    (
+        cd $_dir
         local _dev=
         if [[ -f requirements.txt ]]; then
-            [[ $1 == "-d" && -f development.txt ]] && pip install $_force -r development.txt
-            pip install $_force -r requirements.txt
+            [[ $1 == "-d" && -f development.txt ]] && ppip install $_force -r development.txt
+            ppip install $_force -r requirements.txt
         fi
         [[ $_force ]] && _force="--force"
         local _script_dir=
@@ -82,11 +108,15 @@ pipy () {
 }
 
 pirr () {
-    pip install -r requirements.txt
+    ppip install -r requirements.txt
 }
 
 piup () {
     pi --upgrade pip
+}
+
+vipy () {
+    pipy -V "$@"
 }
 
 # _xxxx
@@ -104,7 +134,7 @@ _pipy () {
             [[ $_install == "develop" ]] && _edit=-e
             local _force=
             [[ $1 == "-f" ]] && _force=--force-reinstall
-            local _pip=pip
+            local _pip=ppip
             [[ -f requirements.txt ]] && $_pip install $_force -r requirements.txt
             if [[ -f setup.py ]]; then
                 if [[ $_force ]]; then
@@ -127,7 +157,7 @@ pylinum () {
 install_develop () {
     [[ -f setup.py ]] || echo "setup.py is not a file" >&2
     [[ -f setup.py ]] || return 1
-    local _pip=pip
+    local _pip=ppip
     [[ $1 =~ 2 ]] && _pip=pip2
     [[ -f requirements.txt ]] && $_pip install -r requirements.txt
     $_pip install -e .

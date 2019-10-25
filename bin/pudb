@@ -6,16 +6,14 @@ set -e
 
 main () {
     local _pudb=
-    local ppath="/usr/local/bin:/usr/bin:/bin"
-    _pudb3=$(PATH=$ppath which pudb3)
+    local _ppath="/usr/local/bin:/usr/bin:/bin"
+    [[ -d $VIRTUAL_ENV && -d $VIRTUAL_ENV/bin ]] && _ppath="$VIRTUAL_ENV/bin:$_ppath"
+    _pudb3=$(PATH=$_ppath which pudb3)
     [[ -x $_pudb3 ]] && _pudb="$_pudb3"
-    [[ -x $_pudb ]] || _pudb=$(PATH=$ppath which pudb)
-    [[ -x $_pudb ]] || which pudb
+    [[ -x $_pudb ]] || _pudb=$(PATH=$_ppath which pudb 2>/dev/null)
+    [[ -x $_pudb ]] || PATH=$_ppath which pudb
     [[ -x $_pudb ]] || return 1
-    local _headline=$(head -n1 $_pudb)
-    [[ $_headline =~ python ]] && _python=
-    export TERM=xterm-256color
-    $_python $_pudb "$@"
+    TERM=xterm-256color $_pudb "$@"
 }
 
 main "$@"

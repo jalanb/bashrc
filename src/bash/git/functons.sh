@@ -287,7 +287,7 @@ gla () {
 }
 
 glf () {
-    GIT_LOG_ALIAS=lf GIT_LOG_LINES=$(( LINES / 2 )) git_on_lines "$@"
+    GIT_LOG_ALIAS=lf GIT_LOG_LINES=3 git_on_lines "$@"
 }
 
 glg () {
