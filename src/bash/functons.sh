@@ -499,9 +499,9 @@ mkd () {
 }
 
 nat () {
-    local _cmd=bat
-    $(kat "$@" >~/fd/1 2>~/fd/2)
-    [[ $? == 0 ]] && _cmd=kat
+    local _cmd=cat
+    is-file bat && _cmd=bat
+    is-file kat && $(kat "$@" >~/fd/1 2>~/fd/2) && _cmd=kat
     $_cmd "$@"
 }
 

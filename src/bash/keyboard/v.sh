@@ -52,7 +52,7 @@ vv () {
 }
 
 vw () {
-    . $WHYP.sh
+    v $WHYP.sh
 }
 
 # vv () {
