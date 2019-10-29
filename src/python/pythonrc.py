@@ -49,7 +49,7 @@ def complete():
         import readline
         readline.parse_and_bind('tab: complete')
         _read_history(readline)
-    except ImportError as e:
+    except (OSError, ImportError) as e:
         import sys
         print('Python shell enhancement modules not available because %s' % e,
               file=sys.stderr)
