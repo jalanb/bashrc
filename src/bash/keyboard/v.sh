@@ -22,7 +22,7 @@ vb () {
 }
 
 vc () {
-    local _doc="""vim c"
+    v $CDE.sh "$@"
 }
 
 vd () {
@@ -49,6 +49,10 @@ vv () {
     sai pyithonise VIM &
     :
     v "$@"
+}
+
+vw () {
+    . $WHYP.sh
 }
 
 # vv () {

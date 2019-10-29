@@ -13,9 +13,12 @@ c () {
 # _
 # xx
 
-
 cb () {
     cde ~/bash/
+}
+
+cc () {
+    c $CDE.sh
 }
 
 cg () {
@@ -38,6 +41,10 @@ cl () {
 
 cr () {
     clear
+}
+
+cw () {
+    c $WHYP.sh
 }
 
 cv () {
