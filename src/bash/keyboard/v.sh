@@ -22,7 +22,7 @@ vb () {
 }
 
 vc () {
-    v $CDE.sh "$@"
+    v $CDE.sh $CDE/*.py "$@"
 }
 
 vd () {
