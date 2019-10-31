@@ -3,9 +3,6 @@
     email = github@al-got-rhythm.net
 [credential]
     helper = store
-[github]
-    user = jalanb
-    token = 112879b850edd91a06ef96bf6e990ced
 [pager]
     diff =
 [core]
