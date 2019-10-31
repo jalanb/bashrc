@@ -36,7 +36,7 @@ et () {
     local _statout=
     local _faces=(😎)
     local _out=True
-    _out="True $$_status ${_faces[$_status]}"
+    _out="True $_status ${_faces[$_status]}"
     echo $_out >&1
 }
 

@@ -498,7 +498,7 @@ gss () {
     gs --short "$@"
 }
 
-gst () {
+git_stash () {
     local __doc__="""git stash"""
     show_run_command git stash "$@"
 }
@@ -531,7 +531,7 @@ gtl () {
 gvd () {
     local __doc__="""vim diff all changed files"""
     first_arg_dir_or_here "$@" && shift
-    for f in $(gssd $dir | grep "^ M" | cut -dM -f2)
+    for f in $(git_status_line_dir $dir | grep "^ M" | cut -dM -f2)
     do
         git dv $f
     done
@@ -562,7 +562,7 @@ gxi () {
         git di --staged
         show_green files
         _responded=
-        for _file in $(gssd_changes "$dir"); do
+        for _file in $(git_status_line_dir_changes "$dir"); do
             [[ -n "$_file" ]] || continue
             _gxi_grep $_file $GXI_QUERY || continue
             $_show_diff "$_file"
@@ -576,7 +576,7 @@ gxi () {
         [[ -n $QUESTIONS ]] && v $QUESTIONS
         _show_pre_loop
     done
-    [[ -n $_stashed ]] && gstp
+    [[ -n $_stashed ]] && git_stash_pop
     git dn --staged
     git status
 }
@@ -699,7 +699,9 @@ gomb () {
 }
 
 gomr () {
+    git_stash
     gor master
+    git_stash_pop
     bump show
 }
 
@@ -802,25 +804,29 @@ gsri () {
     git_stash_and gri "$@"
 }
 
-gssd () {
+git_status_line_dir () {
     local _dir="$1"; shift
     _status_line -C $_dir "$@"
 }
+alias gssd=git_status_line_dir
 
-gstb () {
+git_stash_branch () {
     local _branch=$1
     [[ $_branch ]] || _branch=fred && shift
     [[ $_branch == 'fred' ]] && QUietly git branch -D fred
     show_run_command git stash branch $_branch "$@"
 }
+alias gstb=git_stash_branch
 
-gstl () {
+git_stash_list () {
     show_run_command git stash list
 }
+alias gstl=git_stash_list
 
-gstp () {
+git_stash_pop () {
     show_run_command git stash pop
 }
+alias gstp=git_stash_pop
 
 gtdd () {
     gtd "$@"
@@ -833,7 +839,7 @@ gtlg () {
 
 gvsd () {
     first_arg_dir_or_here "$@" && shift
-    for _file in $(gssd $dir); do
+    for _file in $(git_status_line_dir $dir); do
         _gvi_vim "$_file"
     done
 }
@@ -988,7 +994,7 @@ git_stash_and () {
     "$@"
     local _result=$?
     if [[ $_stashed == 1 ]]; then
-        gstp -q
+        git_stash_pop -q
     fi
     return $_result
 }
@@ -1056,9 +1062,9 @@ _gxi_request () {
     return 0
 }
 
-gssd_changes () {
+git_status_line_dir_changes () {
     local _dir="$1"; shift
-    gssd "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
+    git_status_line_dir "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
 }
 
 # xxxxxxxxxxxxx
@@ -1089,7 +1095,7 @@ git_on_screen () {
 
 untracked () {
     local _path="$1"; shift
-    ( test -d "$_path" && gssd "$_path" || _status_line "$_path" ) | grep "??" | cut -d' ' -f2
+    ( test -d "$_path" && git_status_line_dir "$_path" || _status_line "$_path" ) | grep "??" | cut -d' ' -f2
 }
 
 _do_git_status () {
@@ -1160,7 +1166,7 @@ git_simple_status () {
     local arg_dir="${1:-$PWD}"
     _has_git_changes $arg_dir || return
     local _git_dir=$(git_root "$arg_dir")
-    [[ -d $_git_dir ]] && gssd "$_git_dir" 2> ~/bash/fd/2 | grep "$_git_status_regexp"
+    [[ -d $_git_dir ]] && git_status_line_dir "$_git_dir" 2> ~/bash/fd/2 | grep "$_git_status_regexp"
 }
 
 _show_git_time_log () {

@@ -85,9 +85,12 @@ pipy () {
     (
         cd $_dir
         local _dev=
-        if [[ -f requirements.txt ]]; then
-            [[ $1 == "-d" && -f development.txt ]] && ppip install $_force -r development.txt
-            ppip install $_force -r requirements.txt
+        if [[ -f requirements.txt || -d requirements ]]; then
+            (
+                [[ -d requirements ]] && cd requirements
+                [[ $1 == "-d" && -f development.txt ]] && pi $_force -r development.txt
+                pi $_force -r requirements.txt
+            )
         fi
         [[ $_force ]] && _force="--force"
         local _script_dir=
@@ -108,7 +111,7 @@ pipy () {
 }
 
 pirr () {
-    ppip install -r requirements.txt
+    pi -r requirements.txt
 }
 
 piup () {

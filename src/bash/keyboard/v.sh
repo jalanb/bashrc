@@ -22,7 +22,7 @@ vb () {
 }
 
 vc () {
-    local _doc="""vim c"
+    v $CDE.sh "$@"
 }
 
 vd () {
@@ -46,6 +46,10 @@ vu () {
 
 vv () {
     v ~/.vimrc "$@"
+}
+
+vw () {
+    v $WHYP.sh
 }
 
 # vv () {
