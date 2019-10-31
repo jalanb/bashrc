@@ -45,10 +45,7 @@ vu () {
 }
 
 vv () {
-    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
-    sai pyithonise VIM &
-    :
-    v "$@"
+    v ~/.vimrc "$@"
 }
 
 # vv () {
