@@ -15,11 +15,6 @@
 # 
 # WWTS
 #
-Host digger twkgit31
-    Hostname 172.25.32.74
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
 Host bots builder
     Hostname 172.25.32.74
     User builder
@@ -29,6 +24,12 @@ Host jenkins
     Hostname 172.25.32.74
     User jenkins
     IdentityFile ~/.ssh/work/bots/jenkins.key
+
+Host digger twkgit31
+    Hostname 172.25.32.74
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
 # 
 # Host master
 #     Hostname 172.25.32.74
@@ -40,16 +41,21 @@ Host jenkins
 #     User worker
 #     IdentityFile ~/.ssh/work/bots/worker.key
 
-Host thumber
-    Hostname 172.25.32.115
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
 Host bolder
     Hostname 172.25.32.115
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
 
+Host thumber
+    Hostname 172.25.32.115
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host absosobeta
+    Hostname 172.25.32.134
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+ 
 # Host twkgit20
 #     Hostname 172.25.1.219
 #     User builder
@@ -79,6 +85,21 @@ Host twkwbe40 eopdev
     Hostname 172.25.32.110
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
+
+Host twkwbe51 soso
+    Hostname 172.25.32.135
+    User builder
+    IdentityFile ~/.ssh/work/soso/builder.key
+
+Host twkwbe52 sosobeta
+    Hostname 172.25.32.134
+    User builder
+    IdentityFile ~/.ssh/work/soso/builder.key
+ 
+Host twkwbe53 sosotest
+    Hostname 172.25.32.133
+    User builder
+    IdentityFile ~/.ssh/work/soso/builder.key
 
 Host twkwbe41 eoptest
     Hostname 172.25.3.111
