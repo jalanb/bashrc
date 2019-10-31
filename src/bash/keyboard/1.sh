@@ -2,9 +2,12 @@
 
 Welcome_to $BASH_SOURCE
 
-# x
+THIS=$BASH_SOURCE
 
 . ~/jab/local/functons.sh optional
+
+# _
+# x
 
 alias 0="home_cde hub"
 alias 1="home_cde jab"
@@ -14,19 +17,22 @@ alias 4="home_cde wmp"
 alias 5="home_cde tippy"
 alias 6="home_cde txt"
 alias 7="c ~/hub/zatso"
-alias 8="home_range "
+alias 8="home_range hub"
 alias 9="in_home -e tmp"
-alias -- -="cde -"
-# _
 
-alias §0="cd ~/.."
-alias §1="cde ~/hub/pym/pym"
-alias §2="cde ~/bash/keyboard"
-alias §3="cde ~/jab/crontab/jab.ook/Users/jab/bin"
-alias §5="cde ~/src/git/bucket/qaz"
+# _x
 # xx
 
 alias 00="0 pysyte"
+alias 01="0 cde"
+alias 01="0 whyp"
+alias 01="0 zatso"
+alias 01="0 pym"
+alias 01="0 "
+alias 01="0 "
+alias 01="0 "
+alias 01="0 "
+alias 01="0 "
 
 # crontab
 # python -> src/python
@@ -42,15 +48,17 @@ alias 16="1 keys"
 alias 17="1 etc"
 alias 18="1 home"
 alias 19="1 crontab"
+alias 1v="vim $THIS +1 +/^alias.1[0-9a-z]*="
 
 alias 20="2 bin"
 alias 21="2 testing"
-alias 22="2 bots"
+alias 22="2 bots/bots"
 alias 23="2 testing.master"
 alias 24="2 deploys"
 alias 25="2 developed"
 alias 26="2 tools"
 alias 27="2 tools-107"
+alias 2v="vim $THIS +1 +/^alias.2[0-9a-z]*= -p ~/keys/2.sh"
 
 alias 31="3 local"
 alias 32="3 master"
@@ -61,6 +69,7 @@ alias 35="3 mrs"
 alias 36="3 corteva"
 alias 36="3 order"
 alias 30="3 eop"
+alias 3v="vim $THIS +1 +/^alias.3[0-9a-z]*="
 
 alias 41="4 local"
 alias 42="4 master"
@@ -127,6 +136,8 @@ alias 244="4 deploy"
 alias 249="4 dashboard.local"
 alias 254="2 deploys/tippy"
 alias 255="ssh_tippy"
+
+alias 333="green_line Hello World"
 
 alias 777="home_vim vim"
 

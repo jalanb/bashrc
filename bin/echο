@@ -17,7 +17,8 @@ def main (args, config) :
 
 try:
     run(main, add_args, config=True)
-except TypeError:
+except TypeError as e:
     from pysyte.cli import main
-    print(f'run is in {main.__file__}')
-    raise
+    message = f'''$ vim {main.__file__} +/^def.run'''
+    raise ValueError(message)
+   

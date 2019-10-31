@@ -33,6 +33,7 @@ tags
 /lib/
 /share/
 /vim/bundle
+/vim/pack
 /vim/view
 
 # from root-level directories
