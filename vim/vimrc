@@ -186,8 +186,8 @@ nnoremap L <C-F>zz
  noremap T :!tags
  noremap U :redo<cr>
 "noremap V - linewise visual
- noremap W :wa!<CR>
- noremap X :wa!<CR>
+ noremap W :wa!<cr>:qa!<cr>
+ noremap X :wa!<cr>
 "noremap Y - aka yy
  noremap Z XC
 " ordinary keys for movement {{{2
@@ -348,7 +348,7 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Pathogen {{{2
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)
-call pathogen#infect()
+execute pathogen#infect()
 call pathogen#helptags()
 filetype on
 filetype plugin on
