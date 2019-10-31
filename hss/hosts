@@ -15,12 +15,7 @@
 # 
 # WWTS
 #
-Host digger twkgit31
-    Hostname 172.25.32.74
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
-Host bots
+Host bots twkgit31
     Hostname 172.25.32.74
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
@@ -40,11 +35,6 @@ Host jenkins
 #     User worker
 #     IdentityFile ~/.ssh/work/bots/worker.key
 
-Host thumber
-    Hostname 172.25.32.115
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
 Host builder twkgit30
     Hostname 172.25.32.115
     User builder
@@ -55,12 +45,6 @@ Host builder twkgit30
 #     User builder
 #     IdentityFile ~/.ssh/work/bots/builder.key
 # 
-Host tarzan
-    Hostname wwits
-    Hostname 172.25.3.126
-    User ab13173
-    Port 22
-
 Host twkwbe35 wmp
     Hostname 172.25.32.149
     User builder
@@ -171,6 +155,61 @@ Host atlwbe35 wmppbeta
     Hostname 172.25.32.202
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
+
+Host sosotest
+    Hostname 172.25.32.133
+    User builder
+    IdentityFile ~/.ssh/work/soso/builder.key
+
+Host sosobeta
+    Hostname 172.25.32.134
+    User builder
+    IdentityFile ~/.ssh/work/soso/builder.key
+
+Host soso
+    Hostname 172.25.32.135
+    User builder
+    IdentityFile ~/.ssh/work/soso/builder.key
+
+#
+# My aliases on wwts' machines
+#
+Host digger
+    Hostname 172.25.32.74
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host thumber
+    Hostname 172.25.32.115
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host tarzan
+    Hostname wwits
+    Hostname 172.25.3.126
+    User ab13173
+    Port 22
+
+Host climber
+    Hostname 172.25.32.115
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host twkwbe63 
+    Hostname 172.25.32.133
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host twkwbe64
+    Hostname 172.25.32.134
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host twkwbe65 
+    Hostname 172.25.32.135
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
 
 Host default
   HostName 127.0.0.1
