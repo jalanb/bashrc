@@ -34,11 +34,6 @@ ssgb () {
     ssh builder
 }
 
-ssw () {
-    local _server=$1; shift
-    ssu ab13173@$(worker $_server) "$@"
-}
-
 ssx () {
     local _server=$1; shift
     ssu ${_server} "$@"
