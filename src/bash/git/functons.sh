@@ -837,6 +837,10 @@ gtlg () {
     gtl | g "$@"
 }
 
+gurl () {
+    grep https .git/config | sed -e "s:url =::" | g git.*
+}
+
 gvsd () {
     first_arg_dir_or_here "$@" && shift
     for _file in $(git_status_line_dir $dir); do
