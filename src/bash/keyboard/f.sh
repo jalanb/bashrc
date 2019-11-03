@@ -65,6 +65,10 @@ fss () {
     $(freds --shell "$@")
 }
 
+vfd () {
+    vim -p $(fd "$@")
+}
+
 vff () {
     $(freds --edit "$@")
 }

@@ -7,6 +7,8 @@
 
 j () {
     cde ~/jab
+    clear
+    lo
 }
 
 # xx
