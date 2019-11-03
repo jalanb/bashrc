@@ -1,0 +1,14 @@
+#! /bin/bash
+
+. $CDE.sh
+
+main () {
+    deactivate 2>/dev/null
+    source .venv/bin/activate
+    _here_bin=$(dirname $(readlink -f $BASH_SOURCE))/bin
+    [[ $PATH =~ $_here_bin ]] || export PATH="$_here_bin:$PATH"
+    ~/jab/bin/todo
+    show_git_was_here
+}
+
+main
