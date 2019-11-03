@@ -7,6 +7,9 @@ Welcome_to $BASH_SOURCE
 # _x
 # xx
 
-alias x=echo
+x () {
+    exit 1
+}
+
 
 Bye_from $BASH_SOURCE

@@ -7,6 +7,9 @@ Welcome_to $BASH_SOURCE
 # _x
 # xx
 
-alias g=echo
+g () {
+    $(which egrep) --color "$@"
+}
+
 
 Bye_from $BASH_SOURCE

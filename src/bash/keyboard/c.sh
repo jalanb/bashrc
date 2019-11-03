@@ -2,12 +2,11 @@
 
 Welcome_to $BASH_SOURCE
 
+
 # x
 
 c () {
-    local _index=0
-    [[ $1 =~ [0-2] ]] && _index=$1
-    cde -$_index "$@"
+    cdi "$@"
 }
 
 # _
@@ -16,6 +15,8 @@ c () {
 cb () {
     cde ~/bash/
 }
+
+unalias cc 2>/dev/null
 
 cc () {
     c $CDE.sh
@@ -36,15 +37,18 @@ cj () {
 }
 
 cl () {
-    cde "$@" && lk
+    clear
+    l "$@"
 }
 
 cr () {
     clear
 }
 
+# cp is hashed (/usr/local/gnu/cp)
+
 cw () {
-    c $WHYP.sh
+    cde $WHYP.sh
 }
 
 cv () {
@@ -52,7 +56,7 @@ cv () {
 }
 
 cy () {
-    cde ~/python/
+    cde ~/hub/pysyte
 }
 
 # _x
@@ -61,10 +65,6 @@ cy () {
 
 can () {
     cat -n "$@"
-}
-
-ccc () {
-    cccde "$@"
 }
 
 ib () { cn ~/.bashrc
@@ -78,7 +78,19 @@ clf () {
     cat ~/jab/local/functons.sh
 }
 
+cla () {
+    cl -a "$@"
+}
+
 clo () {
+    cl -1 "$@"
+}
+
+cloa () {
+    clo -a "$@"
+}
+
+cloo () {
     cde $(locate "$@")
 }
 

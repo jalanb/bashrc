@@ -3,13 +3,7 @@
 # x
 
 l () {
-    local _one=-1
-    local _rest="$@"
-    if echo "$@" | grep -q "[-]\<1\>"; then
-        _one=
-        _rest=$(echo "$@" | sed -e "s:-1::")
-    fi
-    $(_ls_command) $_one $_rest
+    $(_ls_command) "$@"
 }
 
 # xx
@@ -40,7 +34,7 @@ ll () {
 }
 
 lo () {
-    l -1 "$@"
+    l -C "$@"
 }
 
 lr () {
@@ -90,14 +84,22 @@ lll () {
     ll -a "$@"
 }
 
+llr () {
+    show_run_command lr "$@"
+}
+
 ltr () {
     lr -t "$@"
+}
+
+loa () {
+    lo -a
 }
 
 # _xxxxxxxxxx
 
 _ls_command () {
-    local _options="-h"
+    local _options="-h -1"
     if _is_ls_option --color; then
         _options="$_options --color"
     elif _is_ls_option -G; then
