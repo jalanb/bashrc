@@ -18,7 +18,11 @@ shift_path () {
             return 0
         fi
     done
-    return 1
+    [[ $path ]]
+}
+
+python_realpath () {
+    python -c"import os; print(os.path.realpath('""$@""'))"
 }
 
 reuse_dir () {
@@ -33,12 +37,12 @@ all_dir_args () {
     [[ -z "$*" ]] && return 1
     for _arg in "$@"; do
         [[ -d "$_arg" ]] || continue
-        _arg_dir=$(python -c"import os; print os.path.realpath('""$_arg""')")
+        _arg_dir=$(python_realpath "$_arg")
         [[ -z "$dir" ]] && dir="$_arg_dir"
         [[ -z "$dirr" ]] && dirr="$_arg_dir" || dirr="$dirr:$_arg_dir"
     done
     [[ -z "$dirr" ]] && return 1
-    return 0
+    [[ $dir ]]
 }
 
 any_dir_arg () {
@@ -46,32 +50,46 @@ any_dir_arg () {
     [[ -z "$*" ]] && return 1
     for _arg in "$@"; do
         [[ -d "$_arg" ]] || continue
-        dir=$(python -c"import os; print os.path.realpath('""$_arg""')")
+        dir=$(python_realpath "$_arg")
         return 0
     done
-    return 1
+    [[ $dir ]]
+}
+
+show_arg_dir () {
+    [[ "$*" ]] || return 1
+    [[ -d "$1" ]] || return 1
+    python_realpath "$1"
+    [[ $1 ]]
 }
 
 first_dir_arg () {
-    dir=
-    [[ -z "$*" ]] && return 1
-    [[ -d "$1" ]] || return 1
-    dir=$(python -c"import os; print os.path.realpath('""$1""')")
-    return 0
+    dir=$(show_arg_dir "$@")
+    [[ $dir ]]
+}
+
+show_arg_dir_or_here () {
+    local _dir=
+    if [[ "$@" ]]; then
+        _dir=$(show_arg_dir "$@")
+    else
+        _dir=$(show_arg_dir $(pwd))
+    fi
+    [[ -d $_dir ]] || return 1
+    echo $_dir
+    dir="$_dir"
+    true
 }
 
 first_arg_dir_or_here () {
-    if ! first_dir_arg "$@"; then
-        dir=$(pwd)
-        return 1
-    fi
-    return 0
+    dir=$(show_arg_dir_or_here "$@")
+    [[ $dir ]]
 }
 
 echo_first_arg_dir_or_here () {
     first_arg_dir_or_here "$@" || return 1
     echo $dir
-    return 0
+    [[ $dir ]]
 }
 
 alias shift_dir=first_arg_dir_or_here
