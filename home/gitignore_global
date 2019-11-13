@@ -23,6 +23,7 @@
 #
 # Developers temporary files
 #
+.cd
 *.fail
 *.history
 *.ilk
@@ -54,7 +55,6 @@
 .svn
 .settings
 .eggs
-.cd
 #
 # Names
 #
