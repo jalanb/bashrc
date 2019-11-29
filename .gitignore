@@ -2,6 +2,7 @@
 .DS_Store
 
 # Editor files
+mps
 .idea
 .*.sw[po]
 
