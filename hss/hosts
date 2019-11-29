@@ -55,6 +55,26 @@ Host bolder
 #     User builder
 #     IdentityFile ~/.ssh/work/bots/builder.key
 # 
+Host twkwbe54
+    Hostname 172.25.32.105
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host twkwbe55
+    Hostname 172.25.32.106
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host twkwbe56
+    Hostname 172.25.32.107
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host twkwbe57
+    Hostname 172.25.32.108
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
 Host twkwbe35 wmp
     Hostname 172.25.32.149
     User builder
@@ -62,16 +82,18 @@ Host twkwbe35 wmp
 
 Host twkwbe51 opp
     Hostname 172.25.32.141
+#   Hostname 65.246.197.203
     User builder
     IdentityFile ~/.ssh/work/opp/builder.key
 
 Host twkwbe52 oppdev
     Hostname 172.25.32.113
+#   Hostname 65.246.197.113
     User builder
     IdentityFile ~/.ssh/work/opp/builder.key
  
 Host twkwbe53 opptest
-    Hostname 172.25.1.106
+    Hostname 172.25.32.121
     User builder
     IdentityFile ~/.ssh/work/opp/builder.key
 
@@ -141,27 +163,6 @@ Host twkwbe34 wmpstage
     IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host atlwbe35 wmpbeta
-    Hostname 172.25.32.202
-    User builder
-    IdentityFile ~/.ssh/work/wmp/builder.key
-
-
-Host twkwbe96 wmppdev
-    Hostname 172.25.32.96
-    User builder
-    IdentityFile ~/.ssh/work/wmp/builder.key
-
-Host twkwbe95 wmpptest
-    Hostname 172.25.32.95
-    User builder
-    IdentityFile ~/.ssh/work/wmp/builder.key
-
-Host twkwbe34 wmppstage
-    Hostname 172.25.32.147
-    User builder
-    IdentityFile ~/.ssh/work/wmp/builder.key
-
-Host atlwbe35 wmppbeta
     Hostname 172.25.32.202
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
