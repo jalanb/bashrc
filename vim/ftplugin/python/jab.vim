@@ -184,9 +184,11 @@ endif
 " Try to run this file(s) through doctest
 "
 if !exists("Try")
+
     function PythonTwo ()
         return system(' python -c "import sys; sys.stdout.write(str(sys.version_info.major))"') == '2'
     endfunction
+
     function NewTestFile(filename)
         let l:dirname = fnamemodify(a:filename, ':h:t')
         if l:dirname == 'bin'
@@ -203,16 +205,15 @@ if !exists("Try")
         write
         set cmdheight=1
     endfunction
-    function TryTest(quietly)
+
+    function TryCommand()
         call UseFile(expand("%"))
-        let l:item_name = s:file_stem . "."
         if ! filereadable(s:file_test) && ! filereadable(s:file_tests) && ! filereadable(s:test_unit) && ! filereadable(s:unit_test)
             call NewTestFile(s:file_test)
         endif
-        let l:try_command = ""
+        let l:python_test_command = ""
         if PythonTwo()
-            let l:item_name = expand('%')
-            let l:try_command = '! TERM=linux && python -m doctest '
+            let l:python_test_command = '! TERM=linux && python -m doctest '
         else
             let l:try_py = ''
             if filereadable('./try.py')
@@ -225,31 +226,39 @@ if !exists("Try")
                     if filereadable(l:virtual_try)
                         let l:try_py = l:virtual_try
                     endif
-                else
+                elseif filereadable('/usr/local/bin/try')
                     let l:try_py = '/usr/local/bin/try'
                 endif
             endif
             if filereadable(l:try_py)
-                let l:try_command = "! TERM=linux && " . l:try_py . " -qa "
+                let l:python_test_command = "! TERM=linux && " . l:try_py . " -qa "
             endif
         endif
-        if ! l:try_command
+        if ! l:python_test_command
             " echoerr "No try command available"
             return
         endif
-        let l:command_line = l:try_command . l:item_name . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
+        let l:try_this_file = expand('%')
+        let l:try_command = l:python_test_command . l:try_this_file
+        let l:quieter_command = l:try_command . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
+        return l:quieter_command
+    endfunction
+
+    function TryTest(quietly)
+        let l:try_command = TryCommand()
         if a:quietly
-            let l:tmpfile = tempname()
-            let l:quiet_line = l:command_line . " > " . l:tmpfile . " 2>&1 || true"
+            let l:tempfile_ = tempname()
+            let l:temped = 1
+            let l:exec_command = l:try_command . " > " . l:tempfile_ . " 2>&1 || true"
         else
-            let l:tmpfile = 'none'
-            let l:quiet_line = l:command_line
+            let l:temped = 0
+            let l:exec_command = l:try_command
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
         try
-            exec l:quiet_line
-            if l:tmpfile != 'none'
-                call rename(l:tmpfile,s:file_fail)
+            exec l:exec_command
+            if l:temped == 1
+                call rename(l:tempfile_,s:file_fail)
             endif
             redraw!
         catch /.*/
