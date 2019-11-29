@@ -80,16 +80,11 @@ alias 46="4 documents"
 alias 47="4 wmp"
 alias 48="4 the_dark_side"
 
+
 alias 54="5 site"
 alias 55="vagrant ssh"
 alias 56="5 opp_common"
 alias 57="5 django_tools"
-
-alias 50="cd ~/src/.."
-alias 51="cd ~/src/experiments"
-alias 52="cd ~/src/git"
-alias 53="cde ~/src/jab"
-alias 54="cde ~/src/python"
 
 alias 60="cd ~/txt/.."
 

@@ -283,15 +283,15 @@ glone () {
 }
 
 gla () {
-    git_on_screen lg --author=Alan.Brogan "$@"
+    git_log_to_screen lg --author=Alan.Brogan "$@"
 }
 
 glf () {
-    GIT_LOG_ALIAS=lf GIT_LOG_LINES=3 git_on_lines "$@"
+    GIT_LOG_ALIAS=lf git_log_lines_to_screen -l 3 "$@"
 }
 
 glg () {
-    GIT_LOG_ALIAS=lg GIT_LOG_LINES=$_number_of_commits git_on_lines "$@"
+    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@"
     echo
 }
 
@@ -300,7 +300,7 @@ gll () {
 }
 
 gln () {
-    git_on_screen lg --name-only "$@"
+    git_log_to_screen lg --name-only "$@"
 }
 
 glp () {
@@ -308,11 +308,11 @@ glp () {
 }
 
 gls () {
-    git_on_screen log --stat "$@"
+    git_log_to_screen log --stat "$@"
 }
 
 glt () {
-    git_on_screen lt "$@"
+    git_log_to_screen lt "$@"
 }
 
 glv () {
@@ -763,7 +763,7 @@ glf1 () {
 }
 
 gls1 () {
-    GIT_LOG_LINES=31 gls -n1 "$@"
+    gls -n 1 -l 31 "$@"
 }
 
 gpod () {
@@ -1073,28 +1073,44 @@ git_status_line_dir_changes () {
 
 # xxxxxxxxxxxxx
 
-git_on_lines () {
+trim_git_lines () {
+    _call_me_alan -e "s/ ago//"
+}
+
+git_log_lines_to_screen () {
     local _number_of_commits=7
-    if [[ $1 =~ ^-?[0-9]+$ ]]; then
-        _number_of_commits=$1
+    local _shifts=0
+    if [[ $1 =~ ^-[n] ]]; then
         shift
+        if [[ $1 =~ ^-?[0-9]+$ ]]; then
+            _number_of_commits=$1
+            shift
+        fi
     fi
     # set +x
-    local _log_alias=lg
-    [[ -n $GIT_LOG_ALIAS ]] && _log_alias=$GIT_LOG_ALIAS
+    local _log_cmd=lg
+    [[ -n $GIT_LOG_ALIAS ]] && _log_cmd=$GIT_LOG_ALIAS
     show_run_command git status --short
-    show_command git $_log_alias -n$_number_of_commits "$@"
+    show_command git $_log_cmd -n $_number_of_commits "$@"
     # set -x
-    GIT_LOG_LINES=$(( LINES / 2 )) git_on_screen $_log_alias -n$_number_of_commits "$@" | _call_me_alan | sed -e "s/ ago//"
+    git_log_to_screen $_log_cmd -n $_number_of_commits -l $_number_of_lines "$@" | trim_git_lines
     # set +x
 }
 
-git_on_screen () {
-    local cmd=$1; shift
+git_log_to_screen () {
+    local _number_of_lines=
+    if [[ $1 =~ ^-[l] ]]; then
+        shift
+        if [[ $1 =~ ^-?[0-9]+$ ]]; then
+            _number_of_lines=$1
+            shift
+        fi
+    fi
+    local _log_cmd=$1; shift
     local _vertical_lines=${LINES:-$(screen_height)}
     local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
-    local _lines=${GIT_LOG_LINES:-$_one_third_of_vertical}
-    git $cmd --color "$@" | head -n $_lines
+    local _lines=${_number_of_lines:-$_one_third_of_vertical}
+    git $_log_cmd --color "$@" | head -n $_lines
 }
 
 untracked () {
@@ -1137,7 +1153,7 @@ show_git_time () {
         _log=$(_show_git_time_log $regexp $_arg_dir)
         if [[ -n $_log ]]; then
             period_lines=$(_show_git_time_log $regexp $_arg_dir | wc -l)
-            _show_git_time_log $regexp $_arg_dir | _call_me_alan | sed -e "s/ ago//" | head -n $lines_left
+            _show_git_time_log $regexp $_arg_dir | trim_git_lines | head -n $lines_left
             [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
@@ -1187,7 +1203,8 @@ _call_me_alan () {
     sed \
         -e "s/.*al-got-rhythm.net/jalanb/" \
         -e "s/$(work_email '.*')/Alan Brogan/" \
-        -e "s/J Alan Brogan/Alan/"
+        -e "s/J Alan Brogan/Alan/" \
+        "$@"
 }
 
 grep_git_log_for_python_test_file ()

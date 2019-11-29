@@ -17,24 +17,49 @@ v. () {
     v .
 }
 
+# va
+
 vb () {
     vim -p "$@"
 }
 
 vc () {
-    v $CDE.sh $CDE/*.py "$@"
+    local _files=
+    [[ -f .cd ]] && _files=.cd
+    v $_files $CDE.sh ~/hub/cde "$@"
 }
 
 vd () {
     vim_diff "$1" "$2" "$3" -O
 }
 
+# ve
+# vf
+
+vj () {
+    (cd ~/jab; v. gsi)
+}
+
 vk () {
     vim -p ~/keys "$@"
 }
 
+vo () {
+    local _command=$(history -p !-1)
+    vim -p $($_command 2>/dev/null)
+}
+
+vr () {
+    local _command=$(history -p !-1)
+    vim -p $($_command >/dev/null)
+}
+
 vq () {
     vim -p "$@"
+}
+
+vt () {
+    pyth ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vu () {
@@ -49,7 +74,7 @@ vv () {
 }
 
 vw () {
-    v $WHYP.sh
+    v $WHYP.sh "$@"
 }
 
 # vv () {
@@ -57,7 +82,21 @@ vw () {
 #     [[ -z $* ]] && vvu || vvv "$@"
 # }
 
+vy () {
+    v $(ls *.py | grep -v '__*.py*')
+}
+
 # xxx
+
+VIM () {
+    sudo vim -p "$@"
+}
+
+# vaf
+
+vat () {
+    vimcat "$@"
+}
 
 vd1 () {
     vd ~/one "$@"
@@ -112,8 +151,29 @@ ved () {
     vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
 }
 
+vfd () {
+    vim -p $(fd "$@")
+}
+
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
+}
+
+vlo () {
+    v_safely $(locate "$@")
+}
+
+vtc () {
+    vtr -c
+}
+
+vtr () {
+    python ~/jab/src/python/tracebacks.py -e "$@"
+}
+
+vtt () {
+    local _crappy_program_py=$1
+    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
 vvb () {
@@ -166,6 +226,14 @@ vd13 () {
 
 vd23 () {
     vd ~/two ~/three
+}
+
+vims () {
+    whiches vim
+}
+
+vini () {
+    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
 }
 
 vvpj () {

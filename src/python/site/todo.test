@@ -4,6 +4,7 @@ The todo module
     >>> import random
 
     >>> import todo
+    >>> from pysyte.colours import texts
 
 For bin/todo
 ============
@@ -15,13 +16,11 @@ The mmodule should provide a program
 That reads and shows items
 
     >>> items = todo.read_items()
-    >>> assert getattr(todo, show_item, False)
+    >>> assert getattr(todo, 'show_item', False)
 
 Items have text and priority
-    >>> item = random(items)
+    >>> item = random.choice(items)
     >>> assert item.text and item.priority
-    >>> p = item.priority
-    >>> assert p.name and p.colour
 
 Priorities have names and colours
     >>> priorities = todo.priorities()
