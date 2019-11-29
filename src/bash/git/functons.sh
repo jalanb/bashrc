@@ -114,10 +114,7 @@ gs () {
 }
 
 gt () {
-    local _tag=
-    for _tag in "$@"; do
-        show_run_command git tag $_tag
-    done
+    show_run_command git tag "$@"
 }
 
 tc () {
@@ -287,11 +284,18 @@ gla () {
 }
 
 glf () {
-    GIT_LOG_ALIAS=lf git_log_lines_to_screen -l 3 "$@"
+    local _option=
+    [[ $1 =~ [0-9] ]] && _option="-n $1"
+    [[ $_option ]] && shift
+    GIT_LOG_ALIAS=lf git_log_lines_to_screen -l 3 $_option "$@"
 }
 
 glg () {
-    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@"
+    local _option=
+    [[ $1 == -n ]] && shift
+    [[ $1 =~ [0-9] ]] && _option="-n $1"
+    [[ $_option ]] && shift
+    GIT_LOG_ALIAS=lg git_log_lines_to_screen $_option "$@"
     echo
 }
 
@@ -498,7 +502,7 @@ gss () {
     gs --short "$@"
 }
 
-git_stash () {
+gst () {
     local __doc__="""git stash"""
     show_run_command git stash "$@"
 }
@@ -513,7 +517,7 @@ gta () {
 }
 
 gtd () {
-    show_run_command git tag -d "$@"
+    gt -d "$@"
 }
 
 gtD () {
@@ -526,6 +530,13 @@ gtl () {
 
 gtl () {
     gt --list "$@"
+}
+
+gtt () {
+    local _tag=
+    for _tag in "$@"; do
+        gt $_tag
+    done
 }
 
 gvd () {
@@ -549,6 +560,11 @@ gxi () {
     local _show_diff=$1; shift
     local _response=$1; shift
     local _responded=
+    local _one=
+    [[ $1 ]] && _one="$1"
+    local _dir=
+    [[ -n "$_one" && -d "$_one" ]] && _dir="$_one"
+    [[ -d $_dir ]] || _dir=.
     _stashed=
     first_arg_dir_or_here "$@" && shift
     GXI_QUERY=
@@ -557,7 +573,7 @@ gxi () {
     glg
     show_this_branch -r
     _show_pre_loop
-    while git status --short "$dir"; do
+    while git status --short "$_dir"; do
         show_green staged
         git di --staged
         show_green files
@@ -689,19 +705,17 @@ glgo () {
     glg origin/"$@"
 }
 
+gobm () {
+    gob "$1" master
+}
+
 godr () {
     gor development
     bump show
 }
 
-gomb () {
-    gob "$@" master
-}
-
 gomr () {
-    git_stash
     gor master
-    git_stash_pop
     bump show
 }
 
@@ -768,11 +782,13 @@ gls1 () {
 
 gpod () {
     local _arg=
-    local _branch=
+    local _item=
+    local _items=
     for _arg in "$@"; do
-        _branch=$(echo $_arg | sed -e "s:.*origin/::")
-        gpo --delete $_branch
+        _item=$(echo $_arg | sed -e "s:.*origin/::")
+        _items="$_items $_item"
     done
+    gpo --delete $_items
 }
 
 gpff () {
@@ -806,6 +822,9 @@ gsri () {
 
 git_status_line_dir () {
     local _dir="$1"; shift
+    [[ -d $_dir ]] || echo "not a dir: $d_ir"
+    [[ $_dir ]] || return 1
+    [[ -d $_dir ]] || return 1
     _status_line -C $_dir "$@"
 }
 alias gssd=git_status_line_dir
@@ -937,7 +956,7 @@ git_root () {
     [[ $_verbose ]] && _quiet=
     [[ $_git_dir ]] || _git_dir=$(readlink -f .)
     [[ -f "$_git_dir" ]] && _git_dir=$(dirname_ $_git_dir)
-    [[ -d "$_git_dir" ]] || echo "Not a dir '$_git_dir'"
+    [[ -d "$_git_dir" ]] || echo "Not a git dir '$_git_dir'"
     [[ -d "$_git_dir" ]] || return 1
     local _full_dir=$(readlink -f $_git_dir)
     Quietly git -C "$_full_dir" rev-parse --git-dir || return 1
@@ -948,10 +967,10 @@ git_root () {
     [[ $_show ]] && show_command git -C "$_full_dir" rev-parse --show-toplevel
     local _toplevel_dir=$(git -C "$_full_dir" rev-parse --show-toplevel | head -n 1)
     [[ ! "$_toplevel_dir" ]] && _toplevel_dir=$(readlink -f .)
-    [[ -d $_toplevel_dir ]] || echo "Not a dir: '$_toplevel_dir'"
+    [[ -d $_toplevel_dir ]] || echo "Not a top dir: '$_toplevel_dir'"
     [[ -d $_toplevel_dir ]] || return 1
     local _root_dir=$(readlink -f $_toplevel_dir)
-    [[ -d $_root_dir ]] || echo "Not a dir: '$_root_dir'"
+    [[ -d $_root_dir ]] || echo "Not a root dir: '$_root_dir'"
     [[ -d $_root_dir ]] || return 1
     [[ $_stdout == off ]] && return
     echo $_root_dir
@@ -965,8 +984,24 @@ git_root () {
 
 # xxxxxxxxx
 
+git_dir_status () {
+    local _one=$1
+    local _msg=
+    [[ $_one ]] || _msg="Empty arg"
+    [[ -d "$_one" ]] || _msg="not a dir: $_one"
+    [[ -e "$_one/.git" ]] || _msg="not a file $_one/.git"
+    [[ $_msg ]] && echo "$_msg" >&2
+    [[ $_msg ]] && return 1
+    shift
+    git -C "$_one" status "$@"
+}
+
 git_dirty () {
-    git -C $1 status | grep -v -e 'On branch' -e '^$' -e 'branch is up to date' -e 'working tree clean' | grep -q .
+    [[ $1 ]] || echo "No arg" >& 2
+    [[ $1 ]] || return 1
+    [[ -d $1 ]] || echo "Not a directory $1" >& 2
+    [[ -d $1 ]] || return 1
+    git_dir_status $1 | grep -v -e 'On branch' -e '^$' -e 'branch is up to date' -e 'working tree clean' | grep -q .
 }
 
 local_gcu () {
@@ -1049,8 +1084,7 @@ clean_clone() {
 
 git_changed () {
     local git_dir=$(git_root "$1")
-    [[ -n $git_dir ]] || return 1
-    git -C $git_dir status --porcelain | grep -q "$_git_status_regexp"
+    git_dir_status $git_dir --porcelain | grep -q "$_git_status_regexp"
 }
 
 # xxxxxxxxxxxx
@@ -1089,7 +1123,12 @@ git_log_lines_to_screen () {
     show_run_command git status --short
     show_command git $_log_cmd -n $_number_of_commits "$@"
     # set -x
-    git_log_to_screen $_log_cmd -n $_number_of_commits -l $_number_of_lines "$@" | trim_git_lines
+    local __doc__="""git_log_lines_to_screen $@"
+    local _n_option=
+    [[ $_number_of_commits =~ [0-9] ]] && _n_option="-n $_number_of_commits"
+    local _l_option=
+    [[ $_number_of_lines ]] && _l_option="-n $_number_of_lines"
+    git_log_to_screen $_log_cmd $_n_option $_l_option "$@" | trim_git_lines
     # set +x
 }
 
@@ -1119,7 +1158,7 @@ _do_git_status () {
     local _root=$(git_root "$1")
     if [[ $_root ]]; then
         shift
-        git -C $_root status "$@"
+        git_dir_status $_root "$@"
     else
         show_error "Fail: git_root $@"
         return 1
@@ -1136,17 +1175,18 @@ show_git_time () {
     local _arg_dir="${1:-$PWD}"
     git_dir=$(git_root "$_arg_dir")
     [[ $git_dir == $_arg_dir ]] && _arg_dir=
-    if [[ -n $git_dir ]]; then
-        echo
+    if [[ ! -d $git_dir ]]; then
+        echo "Not a (git) dir: $git_dir" >&2
         return 1
     fi
     local _log=
     local period=
     local lines_left=$(( ${LINES:-$(screen_height)} / 2 ))
-    for period in seconds minutes hours days weeks "month | grep -v year" year
+    for period in seconds minutes hours days weeks month year
     do
-        regexp=$period.ago
+        regexp="${period}.ago"
         _log=$(_show_git_time_log $regexp $_arg_dir)
+        [[ $period == month ]] && log=$(echo $_log | grep -v year)
         if [[ -n $_log ]]; then
             period_lines=$(_show_git_time_log $regexp $_arg_dir | wc -l)
             _show_git_time_log $regexp $_arg_dir | trim_git_lines | head -n $lines_left
@@ -1161,11 +1201,9 @@ show_git_time () {
 
 _any_git_changes () {
     local __doc__="whether the current dir has modified or untacked files"
-    local dir=$1
-    [[ -z $dir ]] && dir=$PWD
-    if [[ -d "${dir}/.git" ]]; then
-        git -C $dir status --porcelain | gre "$_git_status_regexp"
-    fi
+    local git_dir=$1
+    [[ -z $git_dir ]] && git_dir=$PWD
+    git_dir_status $git_dir --porcelain | gre "$_git_status_regexp"
 }
 
 _has_git_changes () {
@@ -1308,7 +1346,7 @@ _status_line () {
 }
 
 _status_chars () {
-    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+    git_dir_status $dir -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
 _git_modified () {

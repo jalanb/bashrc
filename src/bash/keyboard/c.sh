@@ -36,11 +36,6 @@ cj () {
     cde ~/jab/
 }
 
-cl () {
-    clear
-    l "$@"
-}
-
 cr () {
     clear
 }
@@ -67,7 +62,8 @@ can () {
     cat -n "$@"
 }
 
-ib () { cn ~/.bashrc
+ib () {
+    cn ~/.bashrc
 }
 
 cjy () {
@@ -76,22 +72,6 @@ cjy () {
 
 clf () {
     cat ~/jab/local/functons.sh
-}
-
-cla () {
-    cl -a "$@"
-}
-
-clo () {
-    cl -1 "$@"
-}
-
-cloa () {
-    clo -a "$@"
-}
-
-cloo () {
-    cde $(locate "$@")
 }
 
 # xxxx

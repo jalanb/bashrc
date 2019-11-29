@@ -8,6 +8,7 @@
 [core]
     excludesfile = ~/.gitignore_global
     trustctime = false
+	autocrlf = input
 [alias]
     br = branch
     cb = rev-parse --abbrev-ref HEAD
@@ -35,6 +36,7 @@
     lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
     li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s %Creset' 
     lh = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' 
+    lr = reflog --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset'
     lt = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --tags
     mo = merge origin/master
     pr = pull --rebase

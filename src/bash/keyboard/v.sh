@@ -24,9 +24,12 @@ vb () {
 }
 
 vc () {
-    local _files=
-    [[ -f .cd ]] && _files=.cd
-    v $_files $CDE.sh ~/hub/cde "$@"
+    local _available=$(type vim_cde 2>/dev/null) 
+    if [[ $_available ]]; then
+        vim_cde "$@"
+    else
+        vim $CDE.sh
+    fi
 }
 
 vd () {
@@ -274,21 +277,20 @@ old_v () {
         fi
     fi
 }
+
+vd123 () {
+    vd ~/one ~/two ~/three
+}
+
 # xxxxxx
+# xxxxxxx
+# xxxxxxxx
 
 v_safely () {
     local __doc__="""Use a safe vim function"""
     vim -p "$@"
 }
 
-# xxxxxxx
-# xxxxxxxx
-
-vd123 () {
-    vd ~/one ~/two ~/three
-}
-
-# xxxxx
 vim_none () {
     (echo "" > ~/tmp/fred
     $EDITOR ~/tmp/fred)
@@ -321,6 +323,8 @@ vim_some () {
         fi
     fi
 }
+
+# _xxxxxxxxxxx
 
 _vim_recover () {
     [[ -f ~/tmp/fred.vim ]] && vd ~/tmp/fred.vim ~/bash/functons.sh

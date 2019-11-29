@@ -24,35 +24,7 @@ Y () {
 
 # _
 # x
-
-
-b () {
-    211
-}
-
-g () {
-    $(which egrep) --color "$@"
-}
-
-x () {
-    exit 1
-}
-
-y () {
-    clear
-    pyth ~/jab/src/python/y.py "$@"
-}
-
 # _x
-
-,. () {
-    [[ -f .cd ]] && . .cd
-}
-
-,, () {
-    cde . "$@"
-}
-
 # xx
 
 3d () {
@@ -226,16 +198,6 @@ vf () {
     _edit_source $(functons) "$@"
 }
 
-vj () {
-    (cd ~/jab;
-        v.
-        gsi)
-}
-
-vy () {
-    v $(ls *.py | grep -v '__*.py*')
-}
-
 sq () {
     . $GIT_BUCKET/qaz/src/bash/qazrc
 }
@@ -279,10 +241,6 @@ dir () {
 
 envv () {
     env | g VIRTUAL_ENV= | g '=.*'
-}
-
-fdv () {
-    vim -p $(fd "$@")
 }
 
 fgg () {
@@ -609,23 +567,6 @@ vaf () {
     sf
 }
 
-vat () {
-    vimcat "$@"
-}
-
-vfg () {
-    _sought="$1" && shift
-    vf "$@" +/$_sought
-}
-
-vfh () {
-    vim -p $( $( h1 ) | space_lines ) "$@"
-}
-
-vfr () {
-    pyth ~/jab/src/python/vim_traceback.py "$@"
-}
-
 vgf () {
     _edit_source ~/bash/git/functons.sh "$@"
 }
@@ -642,29 +583,8 @@ vlf () {
     _edit_locals functons.sh
 }
 
-vlo () {
-    v_safely $(locate "$@")
-}
-
 vpe () {
     _edit_source ~/jab/environ.d/python
-}
-
-vpr () {
-    local _crappy_program_py=$1
-    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
-}
-
-vtc () {
-    vtr -c
-}
-
-vtr () {
-    python ~/jab/src/python/tracebacks.py -e "$@"
-}
-
-VIM () {
-    sudo vim "$@"
 }
 
 wtb () {
@@ -730,7 +650,7 @@ bool () {
         echo False; return 1
     fi
     [[ $1 =~ ^0*$ ]] && echo False || echo True
-    return 0
+    true
 }
 
 brew () {
@@ -932,14 +852,6 @@ Tree () {
     tree "$@" | more
 }
 
-vims () {
-    whiches vim
-}
-
-vini () {
-    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
-}
-
 # xxxxx
 
 build () {
@@ -995,6 +907,7 @@ hello () {
 }
 
 jalanb () {
+    [[ $1 =~ -h|--hub ]] && jalanb_hub && return 0
     local _root=~/src/git/jalanb
     for repo in $(readlink -f $_root/*); do 
         [[ -d $repo ]] || continue
@@ -1070,7 +983,7 @@ range () {
     pushq "$destination"
     source $(which ranger) $(which ranger)
     console_whoami
-    return 0
+    true
 }
 
 start () {
@@ -1140,6 +1053,10 @@ cd_one () {
 
 has_py () {
     has_ext py "$@"
+}
+
+hashed () { 
+     hash -l | sed -e "s:builtin hash -p ::" | sort |g '[a-z]*$'
 }
 
 header () {
@@ -1288,9 +1205,14 @@ whiches () {
 }
 
 umports () {
-    for file in "$@"; do
-        reorder-python-imports "$file"
+    local _options=
+    local _arg=
+    for _arg in "$@"; do
+        [[ $_arg =~ [-][-] ]] && _options=$_arg
+        [[ $_options ]] && shift
+        reorder-python-imports $_options "$file"
         python3 ~/jab/bin/imports -ume "$file"
+        _options=
     done
 }
 
@@ -1553,6 +1475,10 @@ blank_script () {
 
 # xxxxxxxxxxxxx
 
+activate_bots () {
+    cde_activate_home bots
+}
+
 show_functions () {
     _all_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
     _in_funcs=$(( $_all_funcs - $_out_funcs ))
@@ -1776,4 +1702,5 @@ jalanb_hub ()
 { 
     ( cd ~/hub;
     grep slack -H */.travis.yml | sed -e "s/:.*//" -e "s:..travis.yml::" | grep -v -e old -e master -e suds | sort | uniq )
+    true
 }

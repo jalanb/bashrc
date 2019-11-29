@@ -1,4 +1,3 @@
-#! /bin/bash
 
 cde_activate_venv .virtualenvs/jab3
 cde_bin_PATH

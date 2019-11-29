@@ -91,6 +91,9 @@ noremap tn :tabnew<Space>
  noremap tzx :! /Users/jab/src/git/hub/jab/bin/Under "a spreading chest tree"<cr>
 "noremap u - undo
 "noremap v - start visual
+noremap vb :tabnew<Space>~/.bashrc<cr>
+noremap vi :tabnew<Space>~/.inputrc<cr>
+noremap vv :tabnew<Space>~/.vimrc<cr>
 "noremap w - forword
 " Next one is from http://vi.stackexchange.com/a/479/182
 cnoremap w!! w !sudo tee %
@@ -168,7 +171,7 @@ cnoremap w!! w !sudo tee %
 nnoremap B :vsplit
 nnoremap C <esc>:qa!<CR>
 "noremap D d$
-    nmap E WQ
+    nmap E :wa!<cr>:qa!<cr>
 "noremap F f backwards
 "noremap G goto line (default last)
 nnoremap H <C-B>zz
@@ -186,10 +189,13 @@ nnoremap L <C-F>zz
  noremap T :!tags
  noremap U :redo<cr>
 "noremap V - linewise visual
- noremap W :wa!<cr>:qa!<cr>
+ noremap W :w!<cr>
+ noremap WW :w!<cr>:q!<cr>
+ noremap WWW :wa!<cr>
+ noremap WWWW :wa!<cr>:qa!<cr>
  noremap X :wa!<cr>
-"noremap Y - aka yy
- noremap Z XC
+"noremap Y aka yy
+"noremap Z
 " ordinary keys for movement {{{2
  noremap <Space><Space>  <PageDown>zz
  noremap t<left>  :tabprev<cr>
@@ -587,3 +593,4 @@ set modeline
 set modelines=1
 
 let g:ycm_server_keep_logfiles=1
+let g:pymode_virtualenv = 0

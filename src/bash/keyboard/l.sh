@@ -8,6 +8,12 @@ l () {
 
 # xx
 
+cl () {
+    clear
+    pwd
+    l "$@"
+}
+
 l0 () {
     ll -htrLo "$@"
 }
@@ -57,6 +63,14 @@ ly () {
 
 # xxx
 
+cla () {
+    cl -a "$@"
+}
+
+clo () {
+    cl -C "$@"
+}
+
 lao () {
     l -1 -a "$@"
 }
@@ -93,7 +107,21 @@ ltr () {
 }
 
 loa () {
-    lo -a
+    lo -a "$@"
+}
+
+# xxxx
+
+clao () {
+    cla -C "$@"
+}
+
+cloa () {
+    clo -a "$@"
+}
+
+cloo () {
+    cde $(locate "$@")
 }
 
 # _xxxxxxxxxx
@@ -124,6 +152,8 @@ _ls_program () {
     echo $LS_PROGRAM
     return 0
 }
+
+# _xxxxxxxxxxxx
 
 _is_ls_option () {
     $(_ls_program)  --help 2>/dev/null | grep -q -- $1

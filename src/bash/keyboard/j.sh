@@ -4,13 +4,6 @@
 . ~/keys/k.sh
 
 # x
-
-j () {
-    cde ~/jab
-    clear
-    lo
-}
-
 # xx
 
 jj () {

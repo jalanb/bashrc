@@ -181,8 +181,8 @@ export_prompt_colour () {
 
 _pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
-    console_whoami
-    (whyp-whyp -q py_cd && py_cd --add . >/dev/null 2>&1)
+    # console_whoami
+    (type cdpy >/dev/null 2>&1 && cdpy --add . >/dev/null 2>&1)
     history -a
 }
 
@@ -192,7 +192,7 @@ _post_pses () {
 }
 
 export_pses () {
-    local __doc__="""Set all PS* symbols (which control prompts"""
+    local __doc__="""Set all PS* symbols (which control prompts)"""
     local _status=$1
     _pre_pses
     export PS1=$(_colour_prompt $_status)
