@@ -51,6 +51,51 @@ pipd () {
     _pipy develop "$@"
 }
 
+_pipy_vim () {
+    local _dir="$1"; shift
+    local _vim="$1"; shift
+    (
+        cd $_dir
+        local _setups=
+        [[ -f setup.py ]] && _setups=setup.py
+        [[ -f requirements.txt ]] && _setups="$_setups requirements.txt"
+        [[ -d requirements ]] && _setups="$_setups requirements"
+        [[ $_vim ]] && $_vim $_setups
+    )
+}
+
+_pipy_setup () {
+    local _dir="$1"; shift
+    local _force="$1"; shift
+    (
+        cd $_dir
+        local _dev=
+        if [[ -f requirements.txt || -d requirements ]]; then
+            (
+                [[ -d requirements ]] && cd requirements
+                [[ $1 == "-d" && -f development.txt ]] && pi $_force -r development.txt
+                pi $_force -r requirements.txt
+            )
+        fi
+        [[ $_force ]] && _force="--force"
+        local _script_dir=
+        local _command=develop
+        local _which_python=$(short_dir $(which python))
+        if [[ $_which_python =~ ^/usr/local ]]; then
+            _script_dir="--script-dir=/usr/local/bin"
+            _command=install
+        elif [[ $_which_python =~ ^/ ]]; then
+            show_error Cannot pipy $(which python)
+            return 1
+        fi
+        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
+        [[ -f setup.py ]] || return 1
+        set -x
+        python setup.py $_command $_force $_script_dir
+        set +x
+    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
+}
+
 pipy () {
     local __doc__="""Install a python project dir
 
@@ -73,41 +118,9 @@ pipy () {
     [[ $1 =~ "-f*uf*" ]] && _force="$_force --upgrade"
     [[ $_force ]] && shift
     [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
-    (
-        cd $_dir
-        local _setups=
-        [[ -f setup.py ]] && _setups=setup.py
-        [[ -f requirements.txt ]] && _setups="$_setups requirements.txt"
-        [[ -d requirements ]] && _setups="$_setups requirements"
-        [[ $_vim ]] && $_vim $_setups
-        [[ $_vvim ]] && return 0
-    )
-    (
-        cd $_dir
-        local _dev=
-        if [[ -f requirements.txt || -d requirements ]]; then
-            (
-                [[ -d requirements ]] && cd requirements
-                [[ $1 == "-d" && -f development.txt ]] && pi $_force -r development.txt
-                pi $_force -r requirements.txt
-            )
-        fi
-        [[ $_force ]] && _force="--force"
-        local _script_dir=
-        local _command=develop
-        if [[ $(which python) =~ ^/usr/local ]]; then
-            _script_dir="--script-dir=/usr/local/bin"
-            _command=install
-        elif [[ $(which python) =~ ^/ ]]; then
-            show_error Cannot pipy $(which python)
-            return 1
-        fi
-        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
-        [[ -f setup.py ]] || return 1
-        set -x
-        python setup.py $_command $_force $_script_dir
-        set +x
-    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | g -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
+    _pipy_vim $_dir $_vim
+    [[ $_vvim ]] && return 0
+    _pipy_setup $_dir $_force
 }
 
 pirr () {
@@ -151,6 +164,19 @@ _pipy () {
     fi
 }
 # xxxxxxx
+pythoni () {
+    python -c "import $1; print($1.__file__)"
+}
+
+pythonv () {
+    python -V "$@"
+}
+
+pythonvv () {
+    python -m .venv
+    sed -i -e /activate/d .cd 
+    echo "activate_python_here" >> .cd
+}
 
 pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
