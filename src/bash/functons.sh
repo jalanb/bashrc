@@ -1160,9 +1160,10 @@ run_as () {
 # xxxxxxx
 
 aliases () {
-    local _local=
-    [[ $1 == -l ]] && _local="/local"
-    echo "$HOME/bash${_local}/aliases.sh"
+    local _sub_dir=
+    [[ $1 == -l ]] && _sub_dir="local"
+    [[ $1 == -w ]] && _sub_dir="work"
+    echo "$HOME/jab/${_sub_dir}/aliases.sh"
 }
 
 clearly () {
@@ -1222,6 +1223,7 @@ functons () {
     local _sub_dir="src/bash"
     [[ $1 == -g ]] && _sub_dir="$_sub_dir/git"
     [[ $1 == -l ]] && _sub_dir="local"
+    [[ $1 == -w ]] && _sub_dir="work"
     echo "$HOME/jab/${_sub_dir}/functons.sh"
 }
 
@@ -1638,6 +1640,12 @@ _edit_source () {
 
 _edit_locals () {
     local local_dir=~/jab/local
+    [[ -d "$local_dir" ]] || mkdir -p $local_dir
+    _edit_source $local_dir/$1
+}
+
+_edit_work () {
+    local local_dir=~/jab/work
     [[ -d "$local_dir" ]] || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }

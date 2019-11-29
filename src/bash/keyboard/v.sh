@@ -28,7 +28,7 @@ vc () {
     if [[ $_available ]]; then
         vim_cde "$@"
     else
-        vim $CDE.sh
+        vim -p $CDE.sh $CDE/*.py "$@"
     fi
 }
 
