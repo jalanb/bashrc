@@ -5,15 +5,15 @@
 set -e
 
 main () {
-    local _my_path=~/jab/bin:$HOME/bin:/usr/local/bin:/usr/bin
-    [[ -n $VIRTUAL_ENV ]] && _my_path=$VIRTUAL_ENV/bin:$_my_path
-    local _python=$(PATH=$_my_path which python 2>/dev/null)
-    [[ -x "$_python" ]] || exit 1
-    local _pudb=$(PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin which pudb)
-    local _headline=$(head -n1 $_pudb)
-    [[ $_headline =~ python ]] && _python=
-    export TERM=xterm-256color
-    $_python $_pudb "$@"
+    local _pudb=
+    local _ppath="/usr/local/bin:/usr/bin:/bin"
+    [[ -d $VIRTUAL_ENV && -d $VIRTUAL_ENV/bin ]] && _ppath="$VIRTUAL_ENV/bin:$_ppath"
+    _pudb3=$(PATH=$_ppath which pudb3)
+    [[ -x $_pudb3 ]] && _pudb="$_pudb3"
+    [[ -x $_pudb ]] || _pudb=$(PATH=$_ppath which pudb 2>/dev/null)
+    [[ -x $_pudb ]] || PATH=$_ppath which pudb
+    [[ -x $_pudb ]] || return 1
+    TERM=xterm-256color $_pudb "$@"
 }
 
 main "$@"

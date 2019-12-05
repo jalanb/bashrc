@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-__version__=0.7.6
+__version__=0.7.11
 
 local_rc () {
     local __doc__="There might be local files with new $PWD and commands"
@@ -46,7 +46,7 @@ local_rc () {
 . ~/bash/work.sh
 . ~/bash/keyboard/__init__.sh
 . ~/bash/git/__init__.sh
-. ~/bash/zzz_renames.sh
+. ~/bash/zzz_renames.sh optional
 
 export _BASH_DIR=~/bash
 

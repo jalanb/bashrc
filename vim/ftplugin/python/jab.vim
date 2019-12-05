@@ -27,15 +27,15 @@ noremap <leader>8   call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
 function! FoldCommentsAndIndentation(lnum)
-    let line = getline(a:lnum)
-    if line =~ '.*{{{'
+    let l:line = getline(a:lnum)
+    if l:line =~ '.*{{{'
         return 'a1'
-    elseif line =~ '.*}}}'
+    elseif l:line =~ '.*}}}'
         return 's1'
     endif
-    let comment_re = '\v^\s*#(([{}]{3})@!.)*$'
-    if getline(a:lnum) =~ comment_re
-        if getline(a:lnum - 1) =~ comment_re
+    let l:comment_re = '\v^\s*#(([{}]{3})@!.)*$'
+    if getline(a:lnum) =~ l:comment_re
+        if getline(a:lnum - 1) =~ l:comment_re
             return '1'
         else
             return '0'
@@ -70,20 +70,20 @@ let g:syntastic_stl_format = '%E{%e errors, from line %fe}%B{, }%W{%w warnings f
 
 
 function OpenTabFor(path)
-    let sought = expand(a:path)
-    let start_tab = expand('%')
-    if sought == start_tab
+    let l:sought = expand(a:path)
+    let l:start_tab = expand('%')
+    if l:sought == l:start_tab
         return
     endif
-    let this_tab = ''
-    while this_tab != start_tab
+    let l:this_tab = ''
+    while l:this_tab != l:start_tab
         tabnext
-        let this_tab = expand('%')
-        if sought == this_tab
+        let l:this_tab = expand('%')
+        if l:sought == l:this_tab
             return
         endif
     endwhile
-    silent exec "tabnew " . sought
+    silent exec "tabnew " . l:sought
 endfunction
 
 function FindUnitTest()
@@ -184,16 +184,18 @@ endif
 " Try to run this file(s) through doctest
 "
 if !exists("Try")
+
     function PythonTwo ()
         return system(' python -c "import sys; sys.stdout.write(str(sys.version_info.major))"') == '2'
     endfunction
+
     function NewTestFile(filename)
-        let dirname = fnamemodify(a:filename, ':h:t')
-        if dirname == 'bin'
+        let l:dirname = fnamemodify(a:filename, ':h:t')
+        if l:dirname == 'bin'
             return
         endif
-        let extension = fnamemodify(a:filename, ':e')
-        if extension != 'py'
+        let l:extension = fnamemodify(a:filename, ':e')
+        if l:extension != 'py'
             return
         endif
         exec "tabnew! " . s:file_test
@@ -203,51 +205,73 @@ if !exists("Try")
         write
         set cmdheight=1
     endfunction
-    function TryTest(quietly)
+
+    function TryCommand()
         call UseFile(expand("%"))
-        let item_name = s:file_stem . "."
         if ! filereadable(s:file_test) && ! filereadable(s:file_tests) && ! filereadable(s:test_unit) && ! filereadable(s:unit_test)
             call NewTestFile(s:file_test)
         endif
+        let l:python_test_command = ""
         if PythonTwo()
-            let item_name = expand('%')
-            let command = '! TERM=linux && python -m doctest '
+            let l:python_test_command = '! TERM=linux && python -m doctest '
         else
+            let l:try_py = ''
             if filereadable('./try.py')
-                let try_py = './try.py'
-            elseif filereadable($TRY)
-                let try_py = $TRY
+                let l:try_py = './try.py'
             else
-                let try_py = '/usr/local/bin/try'
+                if filereadable($TRY)
+                    let l:try_py = $TRY
+                elseif isdirectory($VIRTUAL_ENV)
+                    let l:virtual_try = $VIRTUAL_ENV . "/bin/try"
+                    if filereadable(l:virtual_try)
+                        let l:try_py = l:virtual_try
+                    endif
+                elseif filereadable('/usr/local/bin/try')
+                    let l:try_py = '/usr/local/bin/try'
+                endif
             endif
-            let command = "! TERM=linux && " . try_py . " -qa "
+            if filereadable(l:try_py)
+                let l:python_test_command = "! TERM=linux && " . l:try_py . " -qa "
+            endif
         endif
-        let command_line = command . item_name . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
+        if ! l:python_test_command
+            " echoerr "No try command available"
+            return
+        endif
+        let l:try_this_file = expand('%')
+        let l:try_command = l:python_test_command . l:try_this_file
+        let l:quieter_command = l:try_command . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
+        return l:quieter_command
+    endfunction
+
+    function TryTest(quietly)
+        let l:try_command = TryCommand()
         if a:quietly
-            let tmpfile = tempname()
-            let quiet_line = command_line . " > " . tmpfile . " 2>&1 || true"
+            let l:tempfile_ = tempname()
+            let l:temped = 1
+            let l:exec_command = l:try_command . " > " . l:tempfile_ . " 2>&1 || true"
         else
-            let tmpfile = 'none'
-            let quiet_line = command_line
+            let l:temped = 0
+            let l:exec_command = l:try_command
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
         try
-            exec quiet_line
-            if tmpfile != 'none'
-                call rename(tmpfile,s:file_fail)
+            exec l:exec_command
+            if l:temped == 1
+                call rename(l:tempfile_,s:file_fail)
             endif
             redraw!
         catch /.*/
             " echo fred
         endtry
-        let old_tab = expand("%")
+        let l:old_tab = expand("%")
         exec "tablast"
-        let last_tab = expand("%")
+        let l:last_tab = expand("%")
         if expand("%:e") == "fail"
             exec "quit!"
         endif
-        if old_tab != last_tab
-            while old_tab != expand("%")
+        if l:old_tab != l:last_tab
+            while l:old_tab != expand("%")
                 exec "tabnext"
             endwhile
         endif
@@ -343,8 +367,8 @@ endfunction
 autocmd BufWritePost * call WritePython()
 
 " function LintPython()
-"     let command = "! TERM=linux && pylint "
-"     exec command_line
+"     let l:command = "! TERM=linux && pylint "
+"     exec l:command
 "     redraw!
 " endfunction
 " autocmd InsertLeave * call LintPython()
@@ -380,8 +404,8 @@ if !exists("PPP")
     endfunction
     function AddDocstrings()
         exec '%s/\(^\s*def \)\([^(]\+\)\((.*):\n\)\(\s\+\)\([^  "]\)/\1\2\3\4""""""\4\5/e'
-        let empty_docstring_line = search('""""""',"cn")
-        if empty_docstring_line != 0
+        let l:empty_docstring_line = search('""""""',"cn")
+        if l:empty_docstring_line != 0
             exec '/"""\zs"""'
             normal n
             startinsert

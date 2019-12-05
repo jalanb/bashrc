@@ -5,7 +5,10 @@
 set -e
 
 main () {
-    local _pudb3=$(PATH=/usr/local/bin:/usr/bin:/bin which pudb3)
+    local _pudb3=
+    local ppath="/usr/local/bin:/usr/bin:/bin"
+    _pudb3=$(PATH=$ppath which pudb3)
+    [[ -x $_pudb3 ]] || return 1
     # set -x
     TERM=xterm-256color $_pudb3 "$@"
     # set +x

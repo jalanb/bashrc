@@ -8,7 +8,7 @@ Welcome_to $BASH_SOURCE
 # xx
 
 
-. ~/hub/vimack/vimack.sh
+. ~/hub/ackvim/ackvim.sh
 
 # a is defined in ackvim.sh
 

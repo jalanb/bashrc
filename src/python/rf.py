@@ -152,9 +152,11 @@ def get_paths_under(directory, glob):
     """Get a list of directories under that directory, matching those globs"""
     result = []
     for name in get_names_in(directory):
+        if name in ('.git', '.idea', '.venv', '.tox'):
+            continue
         path = os.path.join(directory, name)
         if os.path.isdir(path):
-            if name == '.git':
+            if os.path.realpath(directory).startswith(os.path.realpath(path)):
                 continue
             more = get_paths_under(path, glob)
             result.extend(more)
@@ -177,10 +179,10 @@ def get_files_in(directory, globs):
 
 def get_files(directory, globs, recursive):
     """Get a list of files under that directory, matching those globs"""
-    get_some_files = recursive and get_files_under or get_files_in
+    get_paths = recursive and get_files_under or get_files_in
     result = []
     for glob in globs:
-        result.extend(get_some_files(directory, glob))
+        result.extend(get_paths(directory, glob))
     return result
 
 
@@ -190,18 +192,27 @@ def remove_files(files, quiet, trial_run):
     Print out each file removed, unless quiet is True
     Do not actually delete if trial_run is True
     """
+    dirs = set()
     result = os.EX_OK
     for a_file in files:
         try:
             if not trial_run:
-                # Files can be temp, and gone since we found them
                 if os.path.isfile(a_file):
                     os.remove(a_file)
+                    dirs.add(os.path.dirname(a_file))
             if not quiet:
                 print(a_file)
         except (IOError, OSError) as e:
             print(e)
             result = os.EX_IOERR
+    for a_dir in dirs:
+        if not os.listdir(a_dir):
+            try:
+                os.removedirs(a_dir)
+            except NotADirectoryError:
+                continue
+            if not quiet:
+                print(a_dir)
     return result
 
 

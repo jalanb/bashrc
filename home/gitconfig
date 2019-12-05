@@ -3,9 +3,6 @@
     email = github@al-got-rhythm.net
 [credential]
     helper = store
-[github]
-    user = jalanb
-    token = 112879b850edd91a06ef96bf6e990ced
 [pager]
     diff =
 [core]
@@ -35,13 +32,13 @@
     lf = log --stat --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
     lp = log -p --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
     ll = log --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s' --no-color
-    lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
+    lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
+    li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s %Creset' 
     lh = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' 
-    li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s ' 
     lt = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --tags
     mo = merge origin/master
     pr = pull --rebase
-    pu = push
+    pf = push --force-with-rebase
     re = rebase
     st = status
     standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Mon == $(date +%a) ]] && echo last friday || echo yesterday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
@@ -78,3 +75,8 @@
     keepBackup = false
 [icdiff]
     options = --highlight --line-numbers
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

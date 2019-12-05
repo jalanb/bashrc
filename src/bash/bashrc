@@ -26,19 +26,18 @@ _bashrc () {
     WELCOME_BYE=
     local_rc $_home_user && _local_cd=$LOCAL_CD
     # set +x
-    local _bashrc_cd=~/jab
-    [[ -e $_local_cd ]] && _bashrc_cd="$_local_cd"
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     # set -x
     sp green
-    # echo === bashrc 31
     # echo $PATH | tr ':' '\n'
-    # /usr/bin/say -v Moira I want a Slack bot, ..., that says the build channel &
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    local _bashrc_cd=~/jab
+    [[ -e $_local_cd ]] && _bashrc_cd="$_local_cd"
     # set -x
+    # PUDB_CD=1 PYTHONPATH=~/hub/pysyte cde $_bashrc_cd # >/dev/null 2>&1
+    # echo cde $_bashrc_cd # >/dev/null 2>&1
     cde $_bashrc_cd # >/dev/null 2>&1
     # set +x
-    # echo === bashrc 38
     # echo $PATH | tr ':' '\n'
 }
 
@@ -53,7 +52,7 @@ vbb () {
         vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log "$@" +/"WELCOME_BYE="
         ls  ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log
     )
-    [[ -f $_log ]] && mv $_log ~/log
+    [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
 }
 
 vbl () {

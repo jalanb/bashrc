@@ -23,12 +23,14 @@
 #
 # Developers temporary files
 #
+.cd
 *.fail
 *.history
 *.ilk
 *.kate-swp
 *.part
 *.pyproj
+.colours/
 [a-z.]*-[a-z.]*.html
 #
 # Developers' data
@@ -53,7 +55,6 @@
 .svn
 .settings
 .eggs
-.cd
 #
 # Names
 #

@@ -7,16 +7,32 @@ realdir () {
     done
 }
 
-. ~/jab/src/bash/welcome.sh
+. ~/bash/welcome.sh
+. ~/bash/add_to_a_path.sh
+
+. ~/bash/coloured.sh
+source_pythonpath () {
+    . "$1"
+    show_pythonpath "$1"
+}
+
+show_pythonpath () {
+    show_green_line PYTHONPATH==$PYTHONPATH after "$1"
+}
 
 Welcome_to $BASH_SOURCE
 
 . ~/hub/whyp/whyp.sh
 . ~/jab/src/bash/hub.sh
-. ~/hub/vimack/vimack.sh
-. ~/hub/cde/cde.sh
-. ~/hub/whyp/whyp.sh
-. ~/hub/pyth/pyth.sh
+export ACKVIM=~/hub/ackvim/ackvim
+. $ACKVIM.sh
+export CDE=~/hub/cde/cde
+. $CDE.sh
+. ~/bash/coloured.sh
+export WHYP=~/hub/whyp/whyp
+. $WHYP.sh
+export PYTH=~/hub/pyth/pyth
+. $PYTH.sh
 
 _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 

@@ -17,21 +17,49 @@ v. () {
     v .
 }
 
+# va
+
 vb () {
     vim -p "$@"
 }
 
 vc () {
-    # https://www.reddit.com/r/vim/comments/53mhut/using_vim_like_awk/d7ude9m
-    vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
+    local _files=
+    [[ -f .cd ]] && _files=.cd
+    v $_files $CDE.sh ~/hub/cde "$@"
 }
 
 vd () {
     vim_diff "$1" "$2" "$3" -O
 }
 
+# ve
+# vf
+
+vj () {
+    (cd ~/jab; v. gsi)
+}
+
+vk () {
+    vim -p ~/keys "$@"
+}
+
+vo () {
+    local _command=$(history -p !-1)
+    vim -p $($_command 2>/dev/null)
+}
+
+vr () {
+    local _command=$(history -p !-1)
+    vim -p $($_command >/dev/null)
+}
+
 vq () {
     vim -p "$@"
+}
+
+vt () {
+    pyth ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vu () {
@@ -42,9 +70,11 @@ vu () {
 }
 
 vv () {
-    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
-    sai pyithonise VIM &
-    vb "$@"
+    v ~/.vimrc "$@"
+}
+
+vw () {
+    v $WHYP.sh "$@"
 }
 
 # vv () {
@@ -52,7 +82,25 @@ vv () {
 #     [[ -z $* ]] && vvu || vvv "$@"
 # }
 
+vy () {
+    v $(ls *.py | grep -v '__*.py*')
+}
+
 # xxx
+
+VIM () {
+    sudo vim -p "$@"
+}
+
+# vaf
+
+vat () {
+    vimcat "$@"
+}
+
+vd1 () {
+    vd ~/one "$@"
+}
 
 vdd () {
     local _vim_mark=_vim_
@@ -98,8 +146,34 @@ vdf () {
     [[ -f ~/tmp/fred.vim ]] && vd ~/tmp/fred.vim "$1"
 }
 
+ved () {
+    # https://www.reddit.com/r/vim/comments/53mhut/using_vim_like_awk/d7ude9m
+    vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
+}
+
+vfd () {
+    vim -p $(fd "$@")
+}
+
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
+}
+
+vlo () {
+    v_safely $(locate "$@")
+}
+
+vtc () {
+    vtr -c
+}
+
+vtr () {
+    python ~/jab/src/python/tracebacks.py -e "$@"
+}
+
+vtt () {
+    local _crappy_program_py=$1
+    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
 vvb () {
@@ -132,26 +206,34 @@ vvu () {
 
 vvv () {
     (cd ~/jab/vim
-    vim -p "$@"
+    vim -p . "$@"
     gsi)
 }
 
 # xxxx
 
 hd12 () {
-    hd ~/tmp/one ~/tmp/two
+    hd ~/one ~/two
 }
 
 vd12 () {
-    vd ~/tmp/one ~/tmp/two
+    vd ~/one ~/two
 }
 
 vd13 () {
-    vd ~/tmp/one ~/tmp/three
+    vd ~/one ~/three
 }
 
 vd23 () {
-    vd ~/tmp/two ~/tmp/three
+    vd ~/two ~/three
+}
+
+vims () {
+    whiches vim
+}
+
+vini () {
+    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
 }
 
 vvpj () {
@@ -203,7 +285,7 @@ v_safely () {
 # xxxxxxxx
 
 vd123 () {
-    vd ~/tmp/one ~/tmp/two ~/tmp/three
+    vd ~/one ~/two ~/three
 }
 
 # xxxxx

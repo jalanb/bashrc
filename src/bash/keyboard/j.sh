@@ -7,13 +7,15 @@
 
 j () {
     cde ~/jab
+    clear
+    lo
 }
-
-jj () {
-    c ~/src/git/jalanb "$@"
-}
-
 
 # xx
+
+jj () {
+    . ~/jab/__init__.sh
+}
+
 # xxx
 

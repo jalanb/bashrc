@@ -8,9 +8,9 @@ import argparse
 from bdb import BdbQuit
 
 try:
-    from pysyte.paths import pwd
+    from pysyte.types.paths import pwd
 except ImportError:
-    from pysyte.paths import pwd
+    from pysyte.types.paths import pwd
 
 
 __version__ = '0.1.0'

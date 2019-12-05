@@ -24,7 +24,11 @@ h1 () {
 
 hg () {
     local __doc__="grep in history"
-    history_parse | grep -v '^hg ' | grep --color "$@"
+    [[ $1 =~(-h|--help) ]] && ww hg && return 0
+    local _back=
+    [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
+    local _sought="$@"
+    history_parse | grep --color $_back "${_sought/ /.}"
 }
 
 alias hh="history_head"
@@ -78,7 +82,7 @@ alias hnt=history_count
 
 
 history_parse () {
-    HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "\<\(history\|[tg]h\)\>" 
+    HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "^\<\(history\(_[a-z-]*\)*\|[Hh][Gghnt]\)\> " 
 }
 
 history_count () {

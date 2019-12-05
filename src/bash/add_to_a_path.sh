@@ -16,7 +16,7 @@ add_to_a_path () {
         echo "  e.g. add_to_a_path PYTHONPATH /path/to/pylibs"
     else
         DOT_PY=~/jab/src/python/add_to_a_path.py
-        local _new_paths=$(python $DOT_PY "$@")
+        local _new_paths=$($PYTHON $DOT_PY "$@")
         for word in "$@"; do
             [[ $1 =~ - ]] || break
             local _shifts=
@@ -31,6 +31,21 @@ add_to_a_path () {
             echo $_new_paths
         fi
     fi
+}
+
+PYTHON=$(which python)
+
+add_to_PATH () {
+    add_to_a_path PATH "$@"
+}
+
+add_dir_to_a_path () {
+    [[ -d "$2" ]] || return 1
+    add_to_a_path "$@"
+}
+
+add_dir_to_PATH () {
+    add_dir_to_a_path PATH "$@"
 }
 
 show_value () {
@@ -76,6 +91,6 @@ path () {
     show_path "$@" -q
 }
 
-phow_ppath () {
+show_ppath () {
     show_a_path PYTHONPATH "$@"
 }

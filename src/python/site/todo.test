@@ -1,0 +1,29 @@
+The todo module
+===============
+
+    >>> import random
+
+    >>> import todo
+    >>> from pysyte.colours import texts
+
+For bin/todo
+============
+
+The mmodule should provide a program
+
+    >>> from todo import main
+
+That reads and shows items
+
+    >>> items = todo.read_items()
+    >>> assert getattr(todo, 'show_item', False)
+
+Items have text and priority
+    >>> item = random.choice(items)
+    >>> assert item.text and item.priority
+
+Priorities have names and colours
+    >>> priorities = todo.priorities()
+    >>> urgent = priorities[0]
+    >>> assert urgent.name == 'bug'
+    >>> assert urgent.colour == 'red'

@@ -6,9 +6,9 @@ import sys
 from collections import deque
 
 from pysyte import debuggers
-from pysyte import dictionaries
-from pysyte import getch
-from pysyte.paths import path as makepath
+from pysyte.types import dictionaries
+from pysyte.oss import getch
+from pysyte.types.paths import path as makepath
 from pysyte import scripts
 
 __version__ = '0.1.0'

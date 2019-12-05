@@ -1,11 +1,22 @@
 #! /bin/bash
 
-copy () {
-    echo "Digger, Thumber, Tarzan, Climber" | /usr/bin/pbcopy
+_the_clipboard () {
+    /usr/bin/pbcopy
+}
+
+
+copy_dig () {
+    echo "Digger, Thumber, Tarzan, Climber" | _the_clipboard
+}
+
+copy_doo () {
+    echo '][-091qAz' | _the_clipboard
+    say Boom
 }
 
 main () {
-    [[ "$@" == "Thumber Tarzan Climber" ]] && copy
+    [[ "$@" == "Thumber Tarzan Climber" ]] && copy_dig
+    [[ "$@" == 'a spreading chestnut tree' ]] && copy_doo
 }
 
 main "$@"

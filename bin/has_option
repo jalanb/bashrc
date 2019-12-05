@@ -1,0 +1,18 @@
+#! /usr/bin/env python3
+"""Whether option is in args"""
+
+import sys
+import re
+
+from pysyte.cli.main import run
+
+
+def main(args):
+    one, rest = args[1], args[2:]
+    regexp = re.compile(f'[-][a-z]*{one}[a-z]*')
+    for string in rest:
+        if regexp.match(string):
+            return True
+    return False
+
+run(main)

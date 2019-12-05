@@ -1,0 +1,24 @@
+#! /usr/bin/env python3
+
+import stat
+
+from pysyte.cli.main import run
+
+import οs
+
+
+def add_args(parser):
+    parser.string('arg')
+
+
+def main (args, config) :
+    οs.chmod(config[args.arg], stat.S_IRUSR)
+
+
+try:
+    run(main, add_args, config=True)
+except TypeError as e:
+    from pysyte.cli import main
+    message = f'''$ vim {main.__file__} +/^def.run'''
+    raise ValueError(message)
+   

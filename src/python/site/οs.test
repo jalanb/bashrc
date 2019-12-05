@@ -1,0 +1,12 @@
+The οs module
+==================
+
+    >>> import οs
+    >>> assert 'pretty names' in οs.__doc__
+
+Prettifiying strings
+====================
+
+    >>> fred = οs.pretty('fred')
+    >>> assert fred != 'fred'
+    >>> assert οs.plain(fred) == 'fred'

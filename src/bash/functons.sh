@@ -5,31 +5,29 @@ Welcome_to $BASH_SOURCE
 # set -e
 
 . ~/jab/bin/first_dir.sh
+. ~/bash/coloured.sh
+. ~/bash/pong.sh
 . ~/bash/python.sh
 
 # Called functons.sh because "functions" is ... something else
 
 # sorted by strcmp of function name, underscores following
 # x
-# _
-# xx
-# _x
-# xxx
-# _xx
 
+Y () {
+    local __doc__="""Colourize a command and it's streams"""
+    local _bin=~/jab/bin
+    $_bin/BLUE '$ '"$@"
+    echo
+    ( set -x; "$@" )  > >($_bin/GREEN) 2> >($_bin/RED)
+}
+
+# _
 # x
 
 
-,. () {
-    cde . "$@"
-}
-
 b () {
-    if [[ -f ./build.sh ]]; then
-        bash ./build.sh
-    elif [[ -f Makefile ]]; then
-        make
-    fi
+    211
 }
 
 g () {
@@ -43,6 +41,16 @@ x () {
 y () {
     clear
     pyth ~/jab/src/python/y.py "$@"
+}
+
+# _x
+
+,. () {
+    [[ -f .cd ]] && . .cd
+}
+
+,, () {
+    cde . "$@"
 }
 
 # xx
@@ -72,10 +80,6 @@ y () {
         dir=
     fi
     3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
-}
-
-add () {
-    echo $($1 + $2)
 }
 
 ag () {
@@ -123,6 +127,10 @@ gg () {
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
+gv () {
+    g -v "$@"
+}
+
 hd () {
     vim_diff "$1" "$2" "$3" -o
 }
@@ -158,28 +166,17 @@ pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
-dir () {
-    local _where=.
-    [[ -n "$@" ]] && _where="$@"
-    say $(short_dir $_where)
-}
-
-
 pt () {
     ptpython "$@"
 }
 
-envv () {
-    env | g VIRTUAL_ENV= | g '=.*'
+ra () {
+    ranger "$@"
 }
 
-
-keys () {
-    . ~/bash/keyboard/*.sh
-}
-
-popq () {
-    popd >/dev/null 2>&1
+rg () {
+    [[ "$@" ]] && c "$@"
+    ranger 
 }
 
 ru () {
@@ -262,10 +259,6 @@ yt () {
     )
 }
 
-zm () {
-    du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g"
-}
-
 # xxx
 
 add () {
@@ -276,6 +269,20 @@ ask () {
     local _answer=
     read -e -n1 -p "$1 " _answer
     echo $_answer
+}
+
+dir () {
+    local _where=.
+    [[ -n "$@" ]] && _where="$@"
+    say $(short_dir $_where)
+}
+
+envv () {
+    env | g VIRTUAL_ENV= | g '=.*'
+}
+
+fdv () {
+    vim -p $(fd "$@")
 }
 
 fgg () {
@@ -356,6 +363,10 @@ jjb () {
 
 jjy () {
     kk ~/jab/src/python "$@"
+}
+
+keys () {
+    . ~/bash/keyboard/__init__.sh
 }
 
 kpj () {
@@ -487,17 +498,26 @@ mkd () {
     fi
 }
 
+nat () {
+    local _cmd=cat
+    is-file bat && _cmd=bat
+    is-file kat && $(kat "$@" >~/fd/1 2>~/fd/2) && _cmd=kat
+    $_cmd "$@"
+}
+
 num () {
     vim ~/jab/local/numbers.txt
 }
 
 pi2 () {
-    IPYTHON="/usr/local/bin/python2 /usr/local/bin/ipython2"; pii 2 "$@"
+    IPYTHON="/usr/local/bin/ipython2" pii "$@"
+    IPYTHON=
 }
 alias pi1=pi2 # I keept typo-ing on that
 
 pi3 () {
     IPYTHON=ipython3; pii "$@"
+    IPYTHON=
 }
 
 ps3 () {
@@ -542,6 +562,12 @@ sai () {
     ( { { /usr/bin/say $_voices $_dir $_message >&2; } 2>&3- & } 3>&2 2>/dev/null )
 }
 
+ses () {
+    local _old="$1"; shift
+    local _new="$1"; shift
+    echo "$@" | sed -e "s:$_old:$_new:"
+}
+
 sib () {
     . ~/.bashrc
 }
@@ -570,7 +596,11 @@ tma () {
 }
 
 tmp () {
-    pushq $(pyth ~/hub/cde/cd.py ~/tmp "$@")
+    cde ~/tmp
+}
+
+tti () {
+    tty | cut -d'/' -f3
 }
 
 vaf () {
@@ -612,6 +642,22 @@ vlf () {
     _edit_locals functons.sh
 }
 
+vla () {
+    _edit_locals aliases.sh
+}
+
+vwa () {
+    _edit_work aliases.sh
+}
+
+vwe () {
+    _edit_work environ.sh
+}
+
+vwf () {
+    _edit_work functons.sh
+}
+
 vlo () {
     v_safely $(locate "$@")
 }
@@ -635,22 +681,6 @@ vtr () {
 
 VIM () {
     sudo vim "$@"
-}
-
-wtX () {
-    . ~/hub/SH.sh
-}
-
-wvX () {
-    vim -p ~/hub/SH.sh "$@"
-}
-
-wta () {
-    . ~/hub/vimack/vimack.sh
-}
-
-wva () {
-    vim -p ~/hub/vimack/vimack.sh "$@"
 }
 
 wtb () {
@@ -682,6 +712,10 @@ xib () {
 }
 
 # xxxx
+
+back () {
+    tput rmcup
+}
 
 bins () {
     local _name="$1"; shift
@@ -744,7 +778,7 @@ bump () {
     local _config=
     [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
     [[ -n $_config ]] && shift
-    local _bump_root=$(git_root -v $_bump_dir)
+    local _bump_root=$(git_root $_bump_dir)
     local _part=${1:-patch}; shift
     if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
@@ -890,9 +924,20 @@ dihh () {
     COMMAND_FOR_SAME_FILES=hd _dixx "$@"
 }
 
+diic () {
+    COMMAND_FOR_SAME_FILES=icdiff _dixx "$@"
+}
+
 divv () {
-    COMMAND_FOR_SAME_FILES=vd
-    _dixx "$@"
+    COMMAND_FOR_SAME_FILES=vd _dixx "$@"
+}
+
+over () {
+    tput smcup
+}
+
+popq () {
+    popd >/dev/null 2>&1
 }
 
 this () {
@@ -966,12 +1011,17 @@ hello () {
 }
 
 jalanb () {
-    cd ~/src/git/jalanb
-    bash for_all.sh
-}
-
-LetGo () {
-    echo 'Digger, Thumber, Tarzan, Climber'
+    local _root=~/src/git/jalanb
+    for repo in $(readlink -f $_root/*); do 
+        [[ -d $repo ]] || continue
+        git_dirty $repo || continue
+        echo
+        show_green_line $repo
+        git -C $repo branch
+        git -C $repo lg -n 3
+        git -C $repo status | grep 'Your branch'
+        git -C $repo status -s
+    done
 }
 
 paste () {
@@ -1152,20 +1202,6 @@ tailer () {
     tail -n 1 "$@"
 }
 
-online_all () {
-    online_destination www.google.com
-    online_destination $(worker www)
-    online_destination $(worker tools)
-    online_destination $(worker wmp)
-    online_destination $(worker eop)
-    online_destination $(worker tooltest)
-}
-
-is_online () {
-    online_destination "$@" >/dev/null 2>&1 && return 0
-    return 1
-}
-
 show_line () {
     local _prefix=$1; shift
     local _ip=
@@ -1181,29 +1217,26 @@ show_line () {
     echo "$_prefix $_server$_suffix"
 }
 
-online () {
-    if [[ -n "$@" ]]; then
-        online_destination "$@"
-        return 0
-    fi
-    online_all
-    return 0
-}
 
-online_destination () {
-    if quick_ping "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
-        show_pass "$@" online
-        return 0
-    else
-        show_fail "$@" offline
-        return 1
-    fi
+online_all () {
+    is_online www.google.com
+    is_online $(worker bots)
+    is_online $(worker git)
+    is_online $(worker wmp)
+    is_online $(worker eop)
+    is_online $(worker dupont)
+    is_online $(worker corteva)
+    is_online $(worker eopdev)
+    is_online mac.local
+    is_online book.local
+    is_online mini.local
 }
 
 please () {
-    local last=$(history -p !-1)
-    echo "sudo $last"
-    sudo $last
+    local _command=$(history -p !-1)
+    [[ "$@" ]] && _command="$@"
+    green_line "$ sudo $_command"
+    sudo $_command
 }
 
 qwerty  () {
@@ -1226,9 +1259,15 @@ run_as () {
 # xxxxxxx
 
 aliases () {
-    local _local=
-    [[ $1 == -l ]] && _local="/local"
-    echo "$HOME/bash${_local}/aliases.sh"
+    local _sub_dir=
+    [[ $1 == -l ]] && _sub_dir="local"
+    [[ $1 == -w ]] && _sub_dir="work"
+    echo "$HOME/jab/${_sub_dir}/aliases.sh"
+}
+
+clearly () {
+    clear
+    l
 }
 
 has_ext () {
@@ -1246,6 +1285,11 @@ playbook () {
 
 relpath () {
     python ~/jab/src/python/relpath.py "$@"
+}
+
+ssh_host () {
+    local __doc__="""Get a server name from the hostname in ~/.ssh/config"""
+    ssh -G $1 | grep hostname.*$1 | cut -d' ' -f2
 }
 
 whiches () {
@@ -1270,9 +1314,11 @@ umports () {
 # xxxxxxxx
 
 functons () {
-    local _local=
-    [[ $1 == -l ]] && _local="/local"
-    echo "$HOME/bash${_local}/functons.sh"
+    local _sub_dir="src/bash"
+    [[ $1 == -g ]] && _sub_dir="$_sub_dir/git"
+    [[ $1 == -l ]] && _sub_dir="local"
+    [[ $1 == -w ]] && _sub_dir="work"
+    echo "$HOME/jab/${_sub_dir}/functons.sh"
 }
 
 jostname () {
@@ -1299,9 +1345,13 @@ maketest () {
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
 
+pong_work () {
+    pong -t3 $1.$(work $1)
+}
+
 ssh_tippy () {
     at_home tippy
-    vagrant status | grep -q 'poweroff' && vagrant up
+    vagrant status 2>&1 | grep -q -e 'poweroff' -e 'Run .vagrant up' && vagrant up
     vagrant ssh
 }
 
@@ -1334,14 +1384,6 @@ todo_edit () {
     fi
 }
 
-todo_show () {
-    local todo_txt="~/jab/todo.txt"
-    if [[ -f todo.txt ]]; then todo_txt=todo.txt
-    elif [[ -f TODO.md ]]; then todo_txt=TODO.md
-    fi
-    python3 ~/jab/src/python/todo.py $todo_txt
-}
-
 files_dirs () {
     local __doc__="""echo all args' directories"""
     local _result=1
@@ -1366,18 +1408,21 @@ dirnames () {
 
 twkgit00 () {
     is_a_file .git/config || return 1
-    sed -i -e s/$(worker twkgit20)/$(worker git)/ .git/config
-    sed -i -e s/$(worker twkgit30)/$(worker git)/ .git/config
-    sed -i -e 's!http://$(worker git)!https://$(worker git)!' .git/config
+    sed -i -e s/$(work twkgit30)/$(work git)/ .git/config
+    sed -i -e s/$(work twkgit20)/$(work bots)/ .git/config
+    sed -i -e s/$(work twkgit31)/$(work bots)/ .git/config
+    sed -i -e 's!https://$(work git)!https://$(work git)!' .git/config
+    sed -i -e 's!http://$(work bots)!https://$(work bots)!' .git/config
 }
 
 twkgit30 () {
     is_a_file .git/config || return 1
-    sed -i -e s/$(worker git)/$(worker twkgit30)/ .git/config
-    sed -i -e s/$(worker twkgit20)/$(worker twkgit30)/ .git/config
-    sed -i -e s/$(worker tools)/$(worker twkgit30)/ .git/config
-    sed -i -e s/$(worker tooltest)/$(worker twkgit30)/ .git/config
-    sed -i -e 's!http://$(worker twkgit30)!https://$(worker twkgit30)!' .git/config
+    local _twkgit30=$(work twkgit30)
+    sed -i -e s/$(work git)/${_twkgit30}/ .git/config
+    sed -i -e s/$(work twkgit20)/${_twkgit30}/ .git/config
+    sed -i -e s/$(work tools)/${_twkgit30}/ .git/config
+    sed -i -e s/$(work tooltest)/${_twkgit30}/ .git/config
+    sed -i -e 's!http://${_twkgit30}!https://${_twkgit30}!' .git/config
 }
 
 # xxxxxxxxx
@@ -1427,23 +1472,41 @@ _like_duck () {
     has_py "$*"
 }
 
+al_email () {
+    echo "$@@al-got-rhythm.net"
+}
+
+
 continuing () {
     local _answer=$(ask "Continue ?")
     [[ $_answer =~ [yY] ]]
+}
+
+jab_hub () {
+    local _dir=
+    local _dirs=
+    [[ $1 == -d ]] && _dirs=1
+    [[ $1 == -D ]] && _dirs=2
+    (
+        cd ~/hub; 
+        local _result=$(
+        grep slack -H */.travis.yml | \
+            sed -e "s/:.*//" -e "s:..travis.yml::" | \
+            grep -v -e old -e master -e suds | \
+            sort | uniq
+        )
+        [[ $_dirs == 1 ]] && for _dir in $_result; do short_dir $_dir; done
+        [[ $_dirs == 2 ]] && for _dir in $_result; do rlf $_dir; done
+        [[ $_dirs ]] || echo $_result | spaces_to_lines
+    )
 }
 
 jab_scripts () {
     pyth ~/jab/src/python/scripts.py "$@"
 }
 
-quick_ping () {
-    if ping -c 1 -w 1 -W 1 "$@" 2>&1 | grep -q -e usage -e illegal -e invalid; then
-        # looks like OS X
-        ping -c 1 -t 1 -W 1 "$@"
-    else
-        # make sure we return correctly
-        ping -c 1 -w 1 -W 1 "$@"
-    fi
+make_it_so () {
+    please "$@"
 }
 
 thirty_two () {
@@ -1491,6 +1554,9 @@ vim_diff () {
 
 # xxxxxxxxxxx
 
+spaces_to_lines () {
+    tr ' ' '\n'
+}
 lines_to_spaces () {
     tr '\n' ' '
 }
@@ -1668,6 +1734,12 @@ _edit_locals () {
     _edit_source $local_dir/$1
 }
 
+_edit_work () {
+    local local_dir=~/jab/work
+    [[ -d "$local_dir" ]] || mkdir -p $local_dir
+    _edit_source $local_dir/$1
+}
+
 _divv_get_difference () {
     local _source_dir="$1"
     local _destination_dir="$2"
@@ -1724,3 +1796,8 @@ copy_from_work_server () {
 }
 
 Bye_from $BASH_SOURCE
+jalanb_hub () 
+{ 
+    ( cd ~/hub;
+    grep slack -H */.travis.yml | sed -e "s/:.*//" -e "s:..travis.yml::" | grep -v -e old -e master -e suds | sort | uniq )
+}

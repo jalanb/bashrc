@@ -14,8 +14,8 @@ except ImportError:
 
 
 try:
-    from pysyte.lists import de_duplicate
-    from pysyte.paths import tab_complete
+    from pysyte.types.lists import de_duplicate
+    from pysyte.types.paths import tab_complete
 except ImportError:
     sys.stderr.write('Import Error with %s\n' % sys.executable)
     sys.exit(1)
@@ -197,16 +197,9 @@ def missing_extension(string):
     return string[-1] == '.'
 
 
-def extend(string):
-    source_code_extensions = ['py', 'sh', 'c', 'cpp', ]
-    for extension in source_code_extensions:
-        extended_string = '%s%s' % (string, extension)
-        yield extended_string
-
-
 def realify(path_to_file):
     """Get the real path to the source text file"""
-    return os.path.realpath(script_paths.pyc_to_py(path_to_file))
+    return os.path.realpath(paths.pyc_to_py(path_to_file))
 
 
 def get_globs(directory, glob):
@@ -337,13 +330,32 @@ def separate_options(strings):
     return result
 
 
+def vim_tab_complete(string):
+    if is_option(string):
+        return string
+    if not missing_extension(string):
+        return string
+    return tab_complete(string)
+
+
+def expand(string):
+    """Expand the string with some known source extensions
+
+    >>> freds = list(expand('fred'))
+    >>> assert 'fred.py' in freds and 'fred.sh' in freds
+    """
+    source_code_extensions = ['py', 'sh', 'c', 'cpp', ]
+    stem = string[:-1] if string[-1] == '.' else string
+    return ['.'.join(stem, e) for e in source_code_extensions]
+
+
 def interpret_sys_argv():
     """Interpret the args from a command line"""
-    options, not_options = divide(strip_puv(sys.argv[1:]), is_option)
+    options, not_options = divide(strip_puv_options(sys.argv[1:]), is_option)
     options = separate_options(options)
-    args = de_duplicate([tab_complete(a) for a in not_options])
-    paths = script_paths.arg_paths(args) or map(
-        script_paths.pyc_to_py, map(tab_complete, args))
+    args = de_duplicate([tab_complete(a, expand) for a in not_options])
+    paths = script_paths.arg_paths(args) or [
+        paths.pyc_to_py(a) for a in tab_complete(args, expand)]
     return paths, options
 
 
@@ -391,7 +403,7 @@ def vimmable_files(text_files, source):
     return result
 
 
-def strip_puv(args):
+def strip_puv_options(args):
     result = []
     for arg in args:
         if arg in ['--use_debugger', '--version', '--tabs']:

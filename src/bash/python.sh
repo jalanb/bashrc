@@ -8,13 +8,11 @@ Welcome_to $BASH_SOURCE
 # xx
 
 pi () {
-    local _version=; if [[ $1 == 2 ]]; then _version=2; shift; fi
-    pith $_version install "$@"
+    ppip install "$@"
 }
 
 pu () {
-    local _version=; if [[ $1 == 2 ]]; then _version=2; shift; fi
-    pith $_version uninstall "$@"
+    ppip uninstall "$@"
 }
 
 py () {
@@ -36,57 +34,149 @@ py () {
 
 # xxx
 
-pir () {
-    pipr "$@"
-}
-
-piu () {
-    pipu "$@"
-}
-
-# xxxx
-
-pipp () {
-    local __doc__="""pip install stuff, then update pip if needed"""
-    pi "$@" 2>&1 | tee /tmp/pipp.log
-    grep 'pip install --upgrade pip' /tmp/pipp.log && pipu
-}
-
-pipr () {
-    pi -r requirements.txt
-}
-
-pipu () {
-    pi --upgrade pip
-}
-
-pith () {
-    # set -x
-    local __doc__="""Run a pip command [pip]"""
-    local _executable=pip
-    if [[ $1 == 2 ]]; then
-        _executable=pip2
-        shift
-    fi
-    pypath $_executable "$@"
-    # set +x
-}
-
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
     pypath $_ipython "$@"
 }
 
-pypd () {
-    pypp develop "$@"
+# xxxx
+
+ppip () {
+    python -m pip "$@"
 }
 
-pypp () { 
-    pyth setup.py "$@"
+pipd () {
+    local __doc__="""pip install a directory for development"
+    _pipy develop "$@"
 }
 
+_pipy_vim () {
+    local _dir="$1"; shift
+    local _vim="$1"; shift
+    (
+        cd $_dir
+        local _setups=
+        [[ -f setup.py ]] && _setups=setup.py
+        [[ -f requirements.txt ]] && _setups="$_setups requirements.txt"
+        [[ -d requirements ]] && _setups="$_setups requirements"
+        [[ $_vim ]] && $_vim $_setups
+    )
+}
+
+_pipy_setup () {
+    local _dir="$1"; shift
+    local _force="$1"; shift
+    (
+        cd $_dir
+        local _dev=
+        if [[ -f requirements.txt || -d requirements ]]; then
+            (
+                [[ -d requirements ]] && cd requirements
+                [[ $1 == "-d" && -f development.txt ]] && pi $_force -r development.txt
+                pi $_force -r requirements.txt
+            )
+        fi
+        [[ $_force ]] && _force="--force"
+        local _script_dir=
+        local _command=develop
+        local _which_python=$(short_dir $(which python))
+        if [[ $_which_python =~ ^/usr/local ]]; then
+            _script_dir="--script-dir=/usr/local/bin"
+            _command=install
+        elif [[ $_which_python =~ ^/ ]]; then
+            show_error Cannot pipy $(which python)
+            return 1
+        fi
+        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
+        [[ -f setup.py ]] || return 1
+        set -x
+        python setup.py $_command $_force $_script_dir
+        set +x
+    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
+}
+
+pipy () {
+    local __doc__="""Install a python project dir
+
+    [path] : path to the project (defaults to \$PWD)
+    -v : edit the setup files first
+    -V : only edit the setup files
+    -f : force 
+    -u : upgrade
+    """
+    piup >/dev/null 2>&1
+    local _dir=$PWD
+    [[ -d "$1" ]] && _dir="$1" && shift
+    local _vim=
+    [[ $1 =~ -[vV] ]] && _vim="vim -p"
+    local _vvim=
+    [[ $1 == -V ]] && _vvim=1
+    [[ $_vim ]] && shift
+    local _force=
+    [[ $1 == "-u*fu*" ]] && _force=--force-reinstall
+    [[ $1 =~ "-f*uf*" ]] && _force="$_force --upgrade"
+    [[ $_force ]] && shift
+    [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
+    _pipy_vim $_dir $_vim
+    [[ $_vvim ]] && return 0
+    _pipy_setup $_dir $_force
+}
+
+pirr () {
+    pi -r requirements.txt
+}
+
+piup () {
+    pi --upgrade pip
+}
+
+vipy () {
+    pipy -V "$@"
+}
+
+# _xxxx
+
+_pipy () {
+    piup >/dev/null 2>&1
+    local _install=$1; shift
+    local _dir=.
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+        (
+            cd $_dir
+            local _edit=
+            [[ $_install == "develop" ]] && _edit=-e
+            local _force=
+            [[ $1 == "-f" ]] && _force=--force-reinstall
+            local _pip=ppip
+            [[ -f requirements.txt ]] && $_pip install $_force -r requirements.txt
+            if [[ -f setup.py ]]; then
+                if [[ $_force ]]; then
+                    _force=--force
+                    [[ $_install == "develop" ]] && _force=--upgrade
+                fi
+                local _python=python
+                $_python setup.py $_force $_install $_edit .
+            fi
+        ) 2>&1 | grep -v already.satisfied
+    fi
+}
 # xxxxxxx
+pythoni () {
+    python -c "import $1; print($1.__file__)"
+}
+
+pythonv () {
+    python -V "$@"
+}
+
+pythonvv () {
+    python -m .venv
+    sed -i -e /activate/d .cd 
+    echo "activate_python_here" >> .cd
+}
 
 pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
@@ -96,7 +186,7 @@ pylinum () {
 install_develop () {
     [[ -f setup.py ]] || echo "setup.py is not a file" >&2
     [[ -f setup.py ]] || return 1
-    local _pip=pip
+    local _pip=ppip
     [[ $1 =~ 2 ]] && _pip=pip2
     [[ -f requirements.txt ]] && $_pip install -r requirements.txt
     $_pip install -e .

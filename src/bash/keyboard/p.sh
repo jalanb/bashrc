@@ -17,12 +17,18 @@ p () {
 
 # xx
 
-pp () {
-    pyth pudb "$@"
+pd () {
+    python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$@"
 }
 
 # xxx
 
 ppp () {
     pyth pai "$@"
+}
+
+# xxxx
+
+pypu () {
+    pyth pudb "$@"
 }

@@ -32,6 +32,10 @@ sla () {
     s $(aliases -l)
 }
 
+sgf () {
+    s $(functons -g)
+}
+
 slf () {
     s $(functons -l)
 }

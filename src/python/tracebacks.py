@@ -23,7 +23,7 @@ import os
 import sys
 
 from pysyte import debuggers
-from pysyte import text_streams
+from pysyte.cli import streams
 from pysyte import tracebacks
 
 
@@ -71,11 +71,11 @@ def show(lines, args):
 def main(args):
     """Run the script"""
     args = parse_args()
-    streams = text_streams.args(args, 'file')
+    streams = streams.args(args, 'file')
     if not streams:
         print('No file specified', file=sys.stderr)
         return not os.EX_OK
-    lines = map(tracebacks.parse_line, text_streams.full_lines(streams[0]))
+    lines = map(tracebacks.parse_line, streams.full_lines(streams[0]))
     show([_ for _ in lines if _], args)
     return os.EX_OK
 

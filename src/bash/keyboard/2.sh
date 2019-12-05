@@ -2,65 +2,112 @@
 
 Welcome_to $BASH_SOURCE
 
-at_home () {
-    local _doc="""Try $1 as a directory in, or under, $HOME"""
-    if [[ -z "$@" ]]; then
-        c ~
-        return 0
-    fi
-    # set -x
-    local _name=$1; shift
-    local _homed=~/$_name
-    [[ -d $_homed ]] || return 1
-    local _undername=$1; shift
-    [[ $_undername ]] || _undername=$_name
-    # Args should overwrite defaults
+home_echo () {
+    local _named=$1; shift
+    local _named_too=$1; shift
     local _match_dir=$( (
-        cd $_homed
-        for _arg_path in $_undername "$@"; do
+        cd $_named
+        for _arg_path in $_named_too "$@"; do
             if [[ -d $_arg_path ]]; then
                 readlink -f $_arg_path
                 break
             fi
         done
     ) )
-    local _dir=$_homed
+    local _dir=$_named
     [[ -d "$_match_dir" ]] && _dir="$_match_dir"
     [[ -d "$_dir" ]] || return 1
-    CDE_header=$( (cd $_dir; l -d ${_name}* 2>/dev/null ) ) cde $_dir
+    echo $_dir
+}
+
+count_dirs () {
+    local _count=0
+    (
+        cd
+        local _arg=
+        for _arg in "$@"; do
+            [[ $_arg =~ -[ev] ]] && continue
+            [[ -d $_arg ]] || continue
+            _count=$(( $_count + 1 ))
+            cd "$_arg"
+        done
+        echo $_count
+    )
+}
+
+cd_home_dirs () {
+    local _count=0
+    local _cd=
+    local _echo=
+    local _arg=
+    cd
+    while [[ $# > 0 ]]
+    do
+        _arg="$1"
+        [[ "$_arg" ]] || break 
+        if [[ "$_arg" =~ -[ve] ]]; then
+            [[ $_arg == -v ]] && _echo=1
+            [[ $_arg == -e ]] && _cd=cde
+            shift
+            continue
+        fi
+        [[ -d "$_arg" ]] || continue
+        _count=$(( $_count + 1 ))
+        cd "$_arg"
+        [[ $_echo ]] && pwd
+        shift
+    done
+    [[ $_echo ]] && pwd
+    return $_count
+}
+
+home_ls () {
+    local _doc="""Try $1, and $1/$2 as a directory under $HOME"""
+    local $_dir=$(cd_home_dirs "$@" && pwd)
+    CDE_header=$( ls -1 -d $ $_dir * 2>/dev/null )
     # set +x
 }
 
-_2 () {
-    at_home bash
+home_cd () {
+    local _return=$(count_dirs "$@")
+    cd_home_dirs "$@"
+    [[ $? > 0 ]]
 }
 
-_21 () {
-    at_home tools "$@"
+home_cde () {
+    home_cd -e "$@"
 }
 
-_22 () {
-    at_home jab "$@"
+home_range () {
+    cd_home_dirs "$@"
+    ranger
 }
 
-_23 () {
-    at_home waas "$@"
+home_echo () {
+    (
+        home_cd -v "$@"
+    )
 }
 
-_24 () {
-    at_home saas "$@"
+in_home () {
+    local _shifts=$(count_dirs "$@")
+    (
+        home_cd "$@"
+        shift $?
+        "$@"
+    )
+    return $_shifts
 }
 
-_25 () {
-    at_home tippy "$@"
+home_fd () {
+    (
+        home_cd "$@"
+        shift $?
+        fd "$@"
+    )
 }
 
-_26 () {
-    at_home /tmp
+home_vim () {
+    vim -p $(home_fd "$@")    
 }
 
-_27 () {
-    at_home /tmp
-}
-
-Bye_from $BASH_SOURCE

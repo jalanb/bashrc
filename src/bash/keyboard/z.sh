@@ -4,13 +4,12 @@ Welcome_to $BASH_SOURCE
 
 
 # x
-
-z () {
-    Digger Thumber Tarzan Climber
-}
-
 # _
 # xx
+
+zm () {
+    du -cms "$1" | sort -n | sed -e "s/\t/    /" -e "s/    / Mb /g"
+}
 
 zz () {
     du -sh "$*"

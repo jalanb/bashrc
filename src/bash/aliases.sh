@@ -60,12 +60,9 @@ alias Z='set +x'
 
 # xx
 
-alias ,,='cdp'
 alias ..='cdup'
-
-alias ef="echo False"
-alias eg="env | g "
-alias et="echo True"
+alias .c='. $CDE.sh'
+alias .w='. $WHYP.sh'
 
 alias p-="echo $OLDPWD"
 
@@ -84,6 +81,7 @@ alias doc="cde ~/Documents"
 
 alias gti=git
 
+alias jab=j
 alias jlf="sst jlfieblu jlf.ie"
 
 

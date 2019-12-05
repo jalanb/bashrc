@@ -1,0 +1,15 @@
+#! /bin/bash
+
+if [[ "$@" ]]; then
+    if [[ $NO_COLOUR ]]; then
+        printf "$LIGHT_BLUE"
+        echo -n "$@"
+        printf "$NO_COLOUR"
+    else
+        printf "blue: ""$@"
+    fi
+else
+    printf "$LIGHT_BLUE"
+    cat
+    printf "$NO_COLOUR"
+fi
