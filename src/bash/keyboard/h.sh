@@ -16,7 +16,7 @@ h () {
 # _x
 # xx
 
-alias HG=$(which hg) # With apologies, but don't really use it
+alias HG=$(which hg 2>/dev/null) # With apologies, but don't really use it
 
 h1 () {
     history_tail 2 | head -n 1
