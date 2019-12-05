@@ -287,7 +287,7 @@ gla () {
 }
 
 glf () {
-    GIT_LOG_ALIAS=lf git_log_lines_to_screen -l 3 "$@"
+    GIT_LOG_ALIAS=lf git_log_lines_to_screen -n 3 "$@"
 }
 
 glg () {
@@ -1093,7 +1093,7 @@ git_log_lines_to_screen () {
     show_run_command git status --short
     show_command git $_log_cmd -n $_number_of_commits "$@"
     # set -x
-    git_log_to_screen $_log_cmd -n $_number_of_commits -l $_number_of_lines "$@" | trim_git_lines
+    git_log_to_screen $_log_cmd -n $_number_of_commits "$@" | trim_git_lines
     # set +x
 }
 
