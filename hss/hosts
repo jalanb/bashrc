@@ -15,7 +15,12 @@
 # 
 # WWTS
 #
-Host bots builder
+Host bots 
+    Hostname 172.25.32.74
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
+
+Host builder
     Hostname 172.25.32.74
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
@@ -40,6 +45,11 @@ Host digger twkgit31
 #     Hostname 172.25.32.74
 #     User worker
 #     IdentityFile ~/.ssh/work/bots/worker.key
+
+Host git
+    Hostname 172.25.32.115
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
 
 Host bolder
     Hostname 172.25.32.115
