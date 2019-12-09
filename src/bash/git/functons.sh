@@ -361,6 +361,11 @@ goo () {
 }
 
 gor () {
+    if git_changed; then
+        show_red_line "Please handle changes first" >&2
+        git status --short
+        return 1
+    fi
     for branch in "$@"; do
         go "$branch"
         gr
@@ -699,9 +704,7 @@ gomb () {
 }
 
 gomr () {
-    git_stash
     gor master
-    git_stash_pop
     bump show
 }
 
