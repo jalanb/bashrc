@@ -287,7 +287,7 @@ gla () {
 }
 
 glf () {
-    GIT_LOG_ALIAS=lf git_log_lines_to_screen -l 3 "$@"
+    GIT_LOG_ALIAS=lf git_log_lines_to_screen -n 3 "$@"
 }
 
 glg () {
@@ -361,6 +361,11 @@ goo () {
 }
 
 gor () {
+    if git_changed; then
+        show_red_line "Please handle changes first" >&2
+        git status --short
+        return 1
+    fi
     for branch in "$@"; do
         go "$branch"
         gr
@@ -699,9 +704,7 @@ gomb () {
 }
 
 gomr () {
-    git_stash
     gor master
-    git_stash_pop
     bump show
 }
 
@@ -1093,7 +1096,7 @@ git_log_lines_to_screen () {
     show_run_command git status --short
     show_command git $_log_cmd -n $_number_of_commits "$@"
     # set -x
-    git_log_to_screen $_log_cmd -n $_number_of_commits -l $_number_of_lines "$@" | trim_git_lines
+    git_log_to_screen $_log_cmd -n $_number_of_commits "$@" | trim_git_lines
     # set +x
 }
 

@@ -92,7 +92,7 @@ history_count () {
 history_view () {
     local __doc__="view history"
     local _viewer=
-    whyp-executable "$1" && _viewer="$1"
+    whyp_executable "$1" && _viewer="$1"
     [[ $_viewer ]] && shift || _viewer=tail
     local _options="-n $(( $LINES - 7 ))"
     [[ $1 == -n ]] && shift

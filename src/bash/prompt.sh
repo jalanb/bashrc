@@ -182,7 +182,7 @@ export_prompt_colour () {
 _pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
-    (whyp-whyp -q py_cd && py_cd --add . >/dev/null 2>&1)
+    (whyp_whyp -q py_cd && py_cd --add . >/dev/null 2>&1)
     history -a
 }
 

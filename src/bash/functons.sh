@@ -255,7 +255,8 @@ yt () {
     # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
     ( cd ~/Downloads/youtube.dl
     youtube-dl $_options "$@"
-    ll *.mp3| tail -n 3
+    pwd
+    ll *.mp3| tail -n 7
     )
 }
 
