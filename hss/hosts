@@ -15,7 +15,7 @@
 # 
 # WWTS
 #
-Host bots 
+Host twkgit31
     Hostname 172.25.32.74
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
@@ -29,11 +29,6 @@ Host jenkins
     Hostname 172.25.32.74
     User jenkins
     IdentityFile ~/.ssh/work/bots/jenkins.key
-
-Host digger twkgit31
-    Hostname 172.25.32.74
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
 
 # 
 # Host master
