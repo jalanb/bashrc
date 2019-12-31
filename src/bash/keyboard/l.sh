@@ -27,8 +27,9 @@ lh () {
 ll () {
     local _options=-l
     if [[ -d "$1" ]]; then
-        [[ "$1" =~ /$ ]] && _option=a || _option=d
-        _options="${_options}$_option"
+        local _dir_option=d
+        [[ "$1" =~ /$ ]] && _dir_option=a
+        _options="${_options}$_dir_option"
     fi
     l $_options "$@"
 }
