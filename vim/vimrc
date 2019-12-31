@@ -186,7 +186,8 @@ nnoremap L <C-F>zz
  noremap T :!tags
  noremap U :redo<cr>
 "noremap V - linewise visual
- noremap W :wa!<cr>:qa!<cr>
+ noremap W :wa!<cr>
+ noremap WW :wa!<cr>:qa!<cr>
  noremap X :wa!<cr>
 "noremap Y - aka yy
  noremap Z XC
