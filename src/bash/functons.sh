@@ -26,21 +26,12 @@ Y () {
 # x
 
 
-b () {
-    211
-}
-
 g () {
     $(which egrep) --color "$@"
 }
 
 x () {
     exit 1
-}
-
-y () {
-    clear
-    pyth ~/jab/src/python/y.py "$@"
 }
 
 # _x
@@ -125,6 +116,10 @@ gg () {
     sought="$1"
     shift
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+}
+
+gsj () {
+    git -C ~/hub/jab status
 }
 
 gv () {
@@ -364,6 +359,10 @@ jjb () {
 
 jjy () {
     kk ~/jab/src/python "$@"
+}
+
+gsij () {
+    gsi ~/jab
 }
 
 keys () {

@@ -52,5 +52,6 @@ rr.. () {
     cd ..
     /bin/rm -rf "$directory_here"
 }
+alias rr,,=rr..
 
 Bye_from $BASH_SOURCE
