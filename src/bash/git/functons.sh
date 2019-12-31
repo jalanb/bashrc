@@ -398,7 +398,7 @@ gpo () {
 }
 
 gpp () {
-    gp "$@" && gpt
+    gpf "$@" && gpt
 }
 
 gps () {
@@ -1047,6 +1047,7 @@ clean_clone() {
     show_run_command git reset head .
     show_run_command git checkout .
     show_run_command git clean -f -d -f
+    show_run_command git fetch --all
     show_run_command git checkout master
     for branch in $(git branch | grep -v -e master -e deployed-to); do
         [[ -f $branch ]] && continue
