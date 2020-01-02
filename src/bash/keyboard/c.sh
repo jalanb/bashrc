@@ -79,15 +79,18 @@ clf () {
 }
 
 cla () {
-    cl -a "$@"
+    clear
+    la "$@"
 }
 
 clo () {
-    cl -1 "$@"
+    clear
+    lo "$@"
 }
 
 cloa () {
-    clo -a "$@"
+    clear
+    loa "$@"
 }
 
 cloo () {
