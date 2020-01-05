@@ -16,11 +16,13 @@ cb () {
     cde ~/bash/
 }
 
-unalias cc 2>/dev/null
+if [[ ! $ALIAS_CC ]]; then
+    unalias cc 2>/dev/null
 
-cc () {
-    c $CDE.sh
-}
+    cc () {
+        c $CDE.sh
+    }
+fi
 
 cg () {
     local _where=.
