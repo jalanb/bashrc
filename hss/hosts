@@ -15,8 +15,9 @@
 # 
 # WWTS
 #
-Host twkgit31
+Host bots
     Hostname 172.25.32.74
+    Hostname twkgit31
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
