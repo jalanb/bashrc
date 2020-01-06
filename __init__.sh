@@ -30,6 +30,7 @@ export CDE=~/hub/cde/cde
 . $CDE.sh
 . ~/bash/coloured.sh
 export WHYP=~/hub/whyp/whyp
+export ALIAS_CC=1
 . $WHYP.sh
 export PYTH=~/hub/pyth/pyth
 . $PYTH.sh

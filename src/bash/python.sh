@@ -66,7 +66,7 @@ _pipy_vim () {
 
 _pipy_setup () {
     local _dir="$1"; shift
-    local _force="$1"; shift
+    local _force="$@"; shift
     (
         cd $_dir
         local _dev=
@@ -77,23 +77,23 @@ _pipy_setup () {
                 pi $_force -r requirements.txt
             )
         fi
-        [[ $_force ]] && _force="--force"
         local _script_dir=
-        local _command=develop
-        local _which_python=$(short_dir $(which python))
+        local _mode=--editable
+        local _which_python=$(which python)
         if [[ $_which_python =~ ^/usr/local ]]; then
             _script_dir="--script-dir=/usr/local/bin"
-            _command=install
-        elif [[ $_which_python =~ ^/ ]]; then
-            show_error Cannot pipy $(which python)
+            _mode=
+        elif [[ ! $_which_python =~ ^$HOME ]]; then
+            show_error Cannot pipy $(which python), which is outside $HOME
             return 1
         fi
         [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
         [[ -f setup.py ]] || return 1
+        echo pip install $_force $_mode $_script_dir $_dir
         set -x
-        python setup.py $_command $_force $_script_dir
+        pip install $_force $_mode $_script_dir $_dir
         set +x
-    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$' -e setup.py
+    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
 }
 
 pipy () {
@@ -114,8 +114,8 @@ pipy () {
     [[ $1 == -V ]] && _vvim=1
     [[ $_vim ]] && shift
     local _force=
-    [[ $1 == "-u*fu*" ]] && _force=--force-reinstall
-    [[ $1 =~ "-f*uf*" ]] && _force="$_force --upgrade"
+    [[ $1 =~ -u*fu* ]] && _force=--force-reinstall
+    [[ $1 =~ -f*uf* ]] && _force="$_force --upgrade"
     [[ $_force ]] && shift
     [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
     _pipy_vim $_dir $_vim

@@ -25,13 +25,14 @@ lh () {
 }
 
 ll () {
-    local _options=-l
+    local _long_option=-l
+    local _dir_option=
     if [[ -d "$1" ]]; then
-        local _dir_option=d
+        _dir_option=d
         [[ "$1" =~ /$ ]] && _dir_option=a
-        _options="${_options}$_dir_option"
+        [[ "$1" =~ ^[.]*$ ]] && _dir_option=a
     fi
-    l $_options "$@"
+    l $_long_option $_dir_option "$@"
 }
 
 lo () {
