@@ -24,9 +24,9 @@ vb () {
 }
 
 vc () {
-    local _files=
-    [[ -f .cd ]] && _files=.cd
-    v $_files $CDE.sh ~/hub/cde "$@"
+    local _c_files="$CDE.sh ~/hub/cde ~/keys/c.sh"
+    [[ -f .cd ]] && _c_files=".cd $_c_files"
+    vim -p $_c_files "$@"
 }
 
 vd () {
@@ -40,9 +40,7 @@ vj () {
     (cd ~/jab; v. gsi)
 }
 
-vk () {
-    vim -p ~/keys "$@"
-}
+alias vk=vim_keyboard
 
 vo () {
     local _command=$(history -p !-1)
