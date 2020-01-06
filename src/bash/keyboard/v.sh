@@ -24,9 +24,9 @@ vb () {
 }
 
 vc () {
-    local _files=
-    [[ -f .cd ]] && _files=.cd
-    v $_files $CDE.sh ~/hub/cde "$@"
+    local _dot_cd
+    [[ -f .cd ]] && _dot_cd=.cd
+    vim -p $_dot_cd $CDE.sh ~/hub/cde ~/keys/c.sh
 }
 
 vd () {
@@ -38,10 +38,6 @@ vd () {
 
 vj () {
     (cd ~/jab; v. gsi)
-}
-
-vk () {
-    vim -p ~/keys "$@"
 }
 
 vo () {

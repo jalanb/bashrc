@@ -947,7 +947,7 @@ git_root () {
     [[ -d "$_git_dir" ]] || echo "Not a dir '$_git_dir'"
     [[ -d "$_git_dir" ]] || return 1
     local _full_dir=$(readlink -f $_git_dir)
-    Quietly git -C "$_full_dir" rev-parse --git-dir || return 1
+    quiet_out git -C "$_full_dir" rev-parse --git-dir || return 1
     local _show=
     [[ $_verbose ]] && _show=show_run_command
     [[ $_quiet ]] && _show=
