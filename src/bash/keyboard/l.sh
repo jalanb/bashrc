@@ -3,7 +3,7 @@
 # x
 
 l () {
-    $(_ls_command) "$@"
+    show_run_command $(_ls_command) "$@"
 }
 
 # xx
@@ -28,9 +28,9 @@ ll () {
     local _long_option=-l
     local _dir_option=
     if [[ -d "$1" ]]; then
-        _dir_option=d
-        [[ "$1" =~ /$ ]] && _dir_option=a
-        [[ "$1" =~ ^[.]*$ ]] && _dir_option=a
+        _dir_option=-d
+        [[ "$1" =~ /$ ]] && _dir_option=-a
+        [[ "$1" =~ ^[.]*$ ]] && _dir_option=-a
     fi
     l $_long_option $_dir_option "$@"
 }

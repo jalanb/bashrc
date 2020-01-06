@@ -346,11 +346,8 @@ hub () {
         _directory=$(clone -n $_remote)
     fi
     [[ -d $_directory ]] && cde $_directory
-    if [[ $(rlf $_directory) == $(rlf ~/hub) ]]; then
-        lo
-    else
-        cdra $_directory
-    fi
+    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
+    cdra $_directory
 }
 
 jjb () {

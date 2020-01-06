@@ -4,10 +4,13 @@ Welcome_to $BASH_SOURCE
 
 _KEYBOARD_DIR=~/bash/keyboard
 
-for _script in $(ls $_KEYBOARD_DIR/*.sh); do
-    [[ $(readlink -f $BASH_SOURCE) == $(readlink -f $_script) ]] && continue
-    . $_script
-done
+source_keyboard () {
+    for _script in $(ls $_KEYBOARD_DIR/*.sh); do
+        [[ $(readlink -f $BASH_SOURCE) == $(readlink -f $_script) ]] && continue
+        . $_script
+    done
+}
+
 
 vim_keyboard () {
     local _files= _key= _options=
@@ -19,7 +22,12 @@ vim_keyboard () {
     done
     [[ $_files ]] || _files=.
     vim -p $_files $_options
-    . $_KEYBOARD_DIR/__init__.sh
+    source_keyboard
 }
+
+source_keyboard
+
+alias vk=vim_keyboard
+alias sk=source_keyboard
 
 Bye_from $BASH_SOURCE
