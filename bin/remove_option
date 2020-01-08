@@ -7,8 +7,8 @@ from pysyte.cli.main import run
 
 
 def add_args(parser):
-    parser.string('option')
-    parser.string('string')
+    parser.positional('option')
+    parser.positional('string')
 
 
 def main(args):

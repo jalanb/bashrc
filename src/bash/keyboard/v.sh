@@ -26,7 +26,7 @@ vb () {
 vc () {
     local _dot_cd
     [[ -f .cd ]] && _dot_cd=.cd
-    vim -p $_dot_cd $CDE.sh ~/hub/cde ~/keys/c.sh
+    vim -p $CDE.sh ~/hub/cde/cde/ ~/keys/c.sh $_dot_cd
 }
 
 vd () {

@@ -22,7 +22,7 @@ show_pythonpath () {
 
 Welcome_to $BASH_SOURCE
 
-export ALIAS_CC=1 # for cde and whyp
+# export ALIAS_CC=1 # for cde and whyp
 
 . ~/hub/whyp/whyp.sh
 . ~/jab/src/bash/hub.sh

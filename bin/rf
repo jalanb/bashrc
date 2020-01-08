@@ -15,6 +15,6 @@ def add_args(parser):
         ('all', 'remove all (%s)' % all_glob_names),
         ('recursive', 'remove from subdirectories too'),
         ('quiet', 'do not show files being removed'),
-    p.boolean('Trial-Run', 'show which files would be removed, but do nothing'),
+    p.boolean('-T', 'Trial-Run', 'show which files would be removed, but do nothing'),
 
 run(rf.main, add_args)

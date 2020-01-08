@@ -10,7 +10,7 @@ def add_args(parser):
     p.boolean('-a', '--ab13173')
     p.boolean('-b', '--builder')
     p.boolean('-r', '--root')
-    p.string('server')
+    p.positional('server')
     return parser
 
 

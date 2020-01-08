@@ -94,9 +94,9 @@ def parse_traceback_lines(lines):
 def parse_args():
     """Parse out command line arguments"""
     parser = arguments.parser(__doc__)
-    parser.arg('file', help='File with traceback data')
-    parser.true('-p', '--paste', help='Paste text from clipboard')
-    parser.true('-i', '--stdin', help='Wait for text from stdin')
+    parser.positional('file', help='File with traceback data')
+    parser.boolean('-p', '--paste', help='Paste text from clipboard')
+    parser.boolean('-i', '--stdin', help='Wait for text from stdin')
     return parser.parse_args()
 
 

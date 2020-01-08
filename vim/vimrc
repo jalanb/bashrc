@@ -168,7 +168,7 @@ cnoremap w!! w !sudo tee %
 nnoremap B :vsplit
 nnoremap C <esc>:qa!<CR>
 "noremap D d$
-    nmap E WQ
+nnoremap E :wa<cr>:qa<cr>
 "noremap F f backwards
 "noremap G goto line (default last)
 nnoremap H <C-B>zz
@@ -187,7 +187,7 @@ nnoremap L <C-F>zz
  noremap U :redo<cr>
 "noremap V - linewise visual
  noremap W :wa!<cr>
- noremap WW :wa!<cr>:qa!<cr>
+ noremap WW :w !sudo tee % >/dev/null<cr>
  noremap X :wa!<cr>
 "noremap Y - aka yy
  noremap Z XC
