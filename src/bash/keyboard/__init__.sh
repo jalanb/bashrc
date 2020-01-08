@@ -14,6 +14,10 @@ source_keyboard () {
 
 vim_keyboard () {
     local _files= _key= _options=
+    if [[ ! "$@" ]]; then
+        vim $_KEYBOARD_DIR
+        return $?
+    fi
     for _key in "$@"; do
         local _path=$_KEYBOARD_DIR/$_key
         [[ -f ${_path} ]] && _file=${_path}
