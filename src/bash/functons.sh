@@ -1267,6 +1267,10 @@ clearly () {
     l
 }
 
+doctest () {
+    python3 -m doctest "$@"
+}
+
 has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
 }
