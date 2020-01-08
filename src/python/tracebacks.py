@@ -43,14 +43,14 @@ def as_vim_command(lines, use_splits):
 def parse_args():
     """Parse out command line arguments"""
     parser = arguments.parser(__doc__)
-    parser.arg('file', help='File with traceback data')
-    parser.true('-e', '--edit', help='Show a vim command using tabs')
-    parser.true('-s', '--splits', help='Show a vim command using splits')
-    parser.true('-d', '--ipdb', help='Show an ipdb command')
-    parser.true('-u', '--pudb', help='Show a pudb command')
-    parser.true('-y', '--pym', help='Show a pym command')
-    parser.true('-p', '--paste', help='Paste text from clipboard')
-    parser.true('-i', '--stdin', help='Wait for text from stdin')
+    parser.positional('file', help='File with traceback data')
+    parser.boolean('-e', '--edit', help='Show a vim command using tabs')
+    parser.boolean('-s', '--splits', help='Show a vim command using splits')
+    parser.boolean('-d', '--ipdb', help='Show an ipdb command')
+    parser.boolean('-u', '--pudb', help='Show a pudb command')
+    parser.boolean('-y', '--pym', help='Show a pym command')
+    parser.boolean('-p', '--paste', help='Paste text from clipboard')
+    parser.boolean('-i', '--stdin', help='Wait for text from stdin')
     return parser.parse_args()
 
 

@@ -8,17 +8,17 @@ import οs
 
 
 def add_args(parser):
-    parser.string('arg')
+    parser.positionals('strings')
 
 
-def main (args, config) :
-    οs.chmod(config[args.arg], stat.S_IRUSR)
+def main(args, config):
+    string = args.strings[0]
+    οs.chmod(config[string], stat.S_IRUSR)
 
 
 try:
     run(main, add_args, config=True)
-except TypeError as e:
+except TypeError:
     from pysyte.cli import main
     message = f'''$ vim {main.__file__} +/^def.run'''
     raise ValueError(message)
-   
