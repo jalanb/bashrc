@@ -50,7 +50,7 @@ vbb () {
         local _local=
         test -f local/__init__.sh && _local=local/__init__.sh
         vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log "$@" +/"WELCOME_BYE="
-        ls  ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log
+        readlink -f  ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log
     )
     [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
 }

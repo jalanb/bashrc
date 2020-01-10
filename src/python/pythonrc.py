@@ -22,7 +22,7 @@ def _path_to_history(os):
     home = os.path.expanduser('~')
     path_to_history = os.path.join(home, '.pythonhistory')
     if not os.path.isfile(path_to_history):
-        file(path_to_history, 'w').close()
+        open(path_to_history, 'w').close()
     return path_to_history
 
 
