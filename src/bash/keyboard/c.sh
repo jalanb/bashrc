@@ -6,7 +6,7 @@ Welcome_to $BASH_SOURCE
 # x
 
 c () {
-    cdi "$@"
+    cde "$@"
 }
 
 # _
@@ -19,9 +19,9 @@ cb () {
 if [[ ! $ALIAS_CC ]]; then
     unalias cc 2>/dev/null
 
-    cc () {
-        c $CDE.sh
-    }
+cc () {
+    c $CDE.sh
+}
 fi
 
 cg () {

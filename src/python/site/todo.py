@@ -96,7 +96,7 @@ def priority_colour(priority_number):
 def show_item(item):
     """Show the item on screen, coloured by it's priority"""
     colour = priority_colour(item.priority)
-    print(texts.colour_text(item.text, colour))
+    print(texts.colour_text(colour, item.text))
 
 
 def main():
