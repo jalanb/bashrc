@@ -123,8 +123,15 @@ pipy () {
     _pipy_setup $_dir $_force
 }
 
+pirr_ () {
+    [[ -d requirements ]] && pi -r requirements/development.txt
+    [[ -f requirements.txt ]] && pi -r requirements.txt
+}
+
 pirr () {
-    pi -r requirements.txt
+    local _in_dir=
+    [[ -d "$1" ]] && _in_dir="ind $1"
+    $_in_dir pirr_
 }
 
 piup () {
@@ -172,6 +179,8 @@ pythonv () {
     python -V "$@"
 }
 
+# xxxxxxx
+
 pythonvv () {
     python -m .venv
     sed -i -e /activate/d .cd 
@@ -182,6 +191,8 @@ pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
     [[ $string != "# pylint: disable=No" ]] && echo $string
 }
+
+# xxxxxxx*
 
 install_develop () {
     [[ -f setup.py ]] || echo "setup.py is not a file" >&2
