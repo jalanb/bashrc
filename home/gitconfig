@@ -15,7 +15,6 @@
     co = checkout
     df = diff --name-only
     dh = difftool -y --extcmd=\"vim -d -o\"
-    dump = cat-file -p
     di = difftool -y --extcmd=\"icdiff --line-numbers\"
     dk = difftool -y -t Kaleidoscope
     dm = difftool -y --extcmd=\"~/bin/meld  \"
@@ -26,6 +25,7 @@
     dr = rerere diff
     ds = diff --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
+    dump = cat-file -p
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
     ld = log --pretty=format:'%Cgreen%ci %C(auto)%h %C(blue)%an %Creset %s'
