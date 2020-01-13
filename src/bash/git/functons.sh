@@ -213,6 +213,10 @@ gdd () {
     gdi .
 }
 
+gdf () {
+    git df "$@"
+}
+
 gdi () {
     local __doc__="""git di args"""
     git di "$@"
