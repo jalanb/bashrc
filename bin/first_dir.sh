@@ -2,7 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
-_reuse_path () {
+__reuse_path () {
     [[ -n $path && -d "$path" ]] && return 0
     _shift_path "$@"
     return $?
@@ -25,13 +25,13 @@ _python_realpath () {
     python -c"import os; print(os.path.realpath('""$@""'))"
 }
 
-_reuse_dir () {
+__reuse_dir () {
     [[ -n $dir && -d "$dir" ]] && return 0
     _first_arg_dir "$@"
     return $?
 }
 
-_all_dir_args () {
+__all_dir_args () {
     dir=
     dirr=   # bash is using "dirs" 
     [[ -z "$*" ]] && return 1
@@ -45,7 +45,7 @@ _all_dir_args () {
     [[ $dir ]]
 }
 
-_any_dir_arg () {
+__any_dir_arg () {
     dir=
     [[ -z "$*" ]] && return 1
     for _arg in "$@"; do
@@ -86,7 +86,7 @@ shift_dir () {
     [[ $dir ]]
 }
 
-_echo_shift_dir () {
+__echo_shift_dir () {
     shift_dir "$@" || return 1
     echo $dir
     [[ $dir ]]
