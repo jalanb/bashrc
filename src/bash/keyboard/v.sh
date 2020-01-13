@@ -66,7 +66,9 @@ vu () {
 }
 
 vv () {
-    v ~/.vimrc "$@"
+    (cd ~/jab/vim
+    vim -p vimrc "$@"
+    gsi)
 }
 
 vw () {
