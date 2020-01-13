@@ -1722,7 +1722,7 @@ _edit_source () {
         v_safely $filepath "$@"
         popq
     fi
-    if echo $filepath | grep -q alias; then
+    if [[ $filepath =~ alias ]]; then
         source_aliases $filepath
     else
         . $filepath "$@"
