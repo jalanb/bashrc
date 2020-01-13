@@ -4,7 +4,6 @@ Welcome_to $BASH_SOURCE
 
 # set -e
 
-. ~/jab/bin/first_dir.sh
 . ~/bash/coloured.sh
 . ~/bash/pong.sh
 . ~/bash/python.sh

@@ -2,6 +2,7 @@
 
 Welcome_to $BASH_SOURCE
 
+
 __reuse_path () {
     [[ -n $path && -d "$path" ]] && return 0
     _shift_path "$@"
@@ -56,33 +57,8 @@ __any_dir_arg () {
     [[ $dir ]]
 }
 
-_show_arg_dir () {
-    [[ "$*" ]] || return 1
-    [[ -d "$1" ]] || return 1
-    _python_realpath "$1"
-    [[ $1 ]]
-}
-
 _first_arg_dir () {
     dir=$(_show_arg_dir "$@")
-    [[ $dir ]]
-}
-
-_show_arg_dir_or_here () {
-    local _dir=
-    if [[ "$@" ]]; then
-        _dir=$(_show_arg_dir "$@")
-    else
-        _dir=$(_show_arg_dir $(pwd))
-    fi
-    [[ -d $_dir ]] || return 1
-    echo $_dir
-    dir="$_dir"
-    true
-}
-
-shift_dir () {
-    dir=$(_show_arg_dir_or_here "$@")
     [[ $dir ]]
 }
 
@@ -90,6 +66,13 @@ __echo_shift_dir () {
     shift_dir "$@" || return 1
     echo $dir
     [[ $dir ]]
+}
+
+_show_arg_dir () {
+    [[ "$*" ]] || return 1
+    [[ -d "$1" ]] || return 1
+    _python_realpath "$1"
+    [[ $1 ]]
 }
 
 Bye_from $BASH_SOURCE

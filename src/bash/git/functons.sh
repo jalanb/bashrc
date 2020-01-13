@@ -2,7 +2,6 @@
 
 Welcome_to $BASH_SOURCE
 
-. ~/jab/bin/first_dir.sh
 . ~/jab/environ.d/colour.sh
 . ~/jab/src/bash/coloured.sh
 . ~/jab/src/bash/keyboard/r.sh
@@ -410,7 +409,7 @@ gpt () {
 }
 
 gs__quiet () {
-    first_arg_dir_or_here "$@" && shift
+    shift_dir "$@" && shift
     _do_git_status $dir "$@"
 }
 
@@ -539,7 +538,7 @@ gtl () {
 
 gvd () {
     local __doc__="""vim diff all changed files"""
-    first_arg_dir_or_here "$@" && shift
+    shift_dir "$@" && shift
     for f in $(git_status_line_dir $dir | grep "^ M" | cut -dM -f2)
     do
         git dv $f
@@ -559,7 +558,7 @@ gxi () {
     local _response=$1; shift
     local _responded=
     _stashed=
-    first_arg_dir_or_here "$@" && shift
+    shift_dir "$@" && shift
     GXI_QUERY=
     show_green remote
     glf 1
@@ -849,7 +848,7 @@ gurl () {
 }
 
 gvsd () {
-    first_arg_dir_or_here "$@" && shift
+    shift_dir "$@" && shift
     for _file in $(git_status_line_dir $dir); do
         _gvi_vim "$_file"
     done
