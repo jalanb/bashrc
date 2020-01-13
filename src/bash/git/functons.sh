@@ -508,6 +508,10 @@ git_stash () {
     show_run_command git stash "$@"
 }
 
+gso () {
+    git_stash_and go "$@"
+}
+
 gsp () {
     local __doc__="""Porcelain status"""
     gs --porcelain
