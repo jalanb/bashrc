@@ -8,7 +8,7 @@ Welcome_to $BASH_SOURCE
 # x
 
 h () {
-    local __doc__="tail history"
+    local __doc__="tail history for half a screen"
     local _options=$(( $LINES / 2 ))
     history_tail "$@" $_options
 }
@@ -22,33 +22,15 @@ h1 () {
     history_tail 2 | head -n 1
 }
 
-hg () {
-    local __doc__="grep in history"
-    [[ $1 =~(-h|--help) ]] && ww hg && return 0
-    local _back=
-    [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
-    local _sought="$@"
-    history_parse | grep --color $_back "${_sought/ /.}"
-}
-
-alias hh="history_head"
+alias hg=history_grep
+alias hh=history_head
 
 hl () {
     h "$@" | less
 }
 
-alias ht="history_tail"
-
-hv () {
-    local __doc__="edit history"
-    history_parse "$@" > ~/tmp/history.tmp
-    local _vim_suffix=+
-    if [[ -n $* ]]; then
-        _vim_suffix=+/"$@"
-        [[ "$@" =~ ^+ ]] && _vim_suffix="$@"
-    fi
-    vim ~/tmp/history.tmp $_vim_suffix
-}
+alias ht=history_tail
+alias hh=history_vim
 
 # xxx
 
@@ -57,7 +39,6 @@ hgt () {
     hg "$@" | tail
 }
 
-Bye_from $BASH_SOURCE
 hgv () 
 { 
     local __doc__="edit history";
@@ -72,21 +53,10 @@ hgv ()
 }
 
 
-# premature abbreviations
-
-alias hn=history_count
-alias hnh="history_count head"
-alias hnt=history_count
-
 # history_xxxx+
-
 
 history_parse () {
     HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "^\<\(history\(_[a-z-]*\)*\|[Hh][Gghnt]\)\> " 
-}
-
-history_count () {
-    history_view "$@" | cat -n
 }
 
 history_view () {
@@ -107,6 +77,28 @@ history_head () {
     history_view head "$@"
 }
 
+history_grep () {
+    local __doc__="grep in history"
+    [[ $1 =~ (-h|--help) ]] && ww hg && return 0
+    local _back=
+    [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
+    local _sought="$@"
+    history_parse | grep --color $_back "${_sought/ /.}"
+}
+
 history_tail () {
     history_view tail "$@"
 }
+
+history_vim () {
+    local __doc__="edit history"
+    history_parse "$@" > ~/tmp/history.tmp
+    local _vim_suffix=+
+    if [[ -n $* ]]; then
+        _vim_suffix=+/"$@"
+        [[ "$@" =~ ^+ ]] && _vim_suffix="$@"
+    fi
+    vim ~/tmp/history.tmp $_vim_suffix
+}
+
+Bye_from $BASH_SOURCE
