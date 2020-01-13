@@ -335,7 +335,7 @@ gmt () {
 }
 
 gob () {
-    local _new_branch=$1; shift
+    local _new_branch=$(_to_branch "$1" | tr ' ' '_'); shift
     [[ $_new_branch ]] || return 1
     local _old_commit=$1; shift
     [[ $_old_commit ]] || _old_commit=$(get_branch)
@@ -988,6 +988,11 @@ local_gcu () {
     git config --local user.email "$_email"
 }
 
+# _xxxxxxxxx
+
+_to_branch () {
+    echo "$1" | tr ' ' '_' | tr "[:upper:]" "[:lower:]"
+}
 # xxxxxxxxxx
 
 _mastered () {
