@@ -43,7 +43,7 @@ pii () {
 # xxxx
 
 ppip () {
-    python -m pip "$@"
+    show_run_command python -m pip "$@"
 }
 
 pipd () {
