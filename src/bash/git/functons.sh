@@ -487,6 +487,10 @@ grs () {
     show_run_command git rebase --skip
 }
 
+gsa () {
+    git_stash_and "$@"
+}
+
 gsg () {
     gs
     glg
