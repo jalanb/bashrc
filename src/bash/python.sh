@@ -1,5 +1,6 @@
 #! /bin/cat
 
+. ~/bash/paths.sh
 . ~/bash/welcome.sh
 
 Welcome_to $BASH_SOURCE
@@ -47,53 +48,38 @@ ppip () {
 }
 
 pipd () {
-    local __doc__="""pip install a directory for development"
-    _pipy develop "$@"
+    _pip_install_develop "$@"
 }
 
-_pipy_vim () {
-    local _dir="$1"; shift
-    local _vim="$1"; shift
-    (
-        cd $_dir
-        local _setups=
-        [[ -f setup.py ]] && _setups=setup.py
-        [[ -f requirements.txt ]] && _setups="$_setups requirements.txt"
-        [[ -d requirements ]] && _setups="$_setups requirements"
-        [[ $_vim ]] && $_vim $_setups
-    )
+pipv () {
+    local _dir=$PWD _setups=
+    [[ -d "$1" ]] && _dir="$1" && shift
+    [[ -f $_dir/setup.py ]] && _setups=$_dir/setup.py
+    [[ -f $_dir/setup.cfg ]] && _setups=$_dir/setup.cfg
+    [[ -f $_dir/requirements.txt ]] && _setups="$_setups $_dir/requirements.txt"
+    [[ -d $_dir/requirements ]] && _setups="$_setups $_dir/requirements/*"
+    vim -p $_setups "$@"
 }
 
 _pipy_setup () {
-    local _dir="$1"; shift
-    local _force="$@"; shift
-    (
-        cd $_dir
-        local _dev=
-        if [[ -f requirements.txt || -d requirements ]]; then
-            (
-                [[ -d requirements ]] && cd requirements
-                [[ $1 == "-d" && -f development.txt ]] && pi $_force -r development.txt
-                pi $_force -r requirements.txt
-            )
-        fi
-        local _script_dir=
-        local _mode=--editable
-        local _which_python=$(which python)
-        if [[ $_which_python =~ ^/usr/local ]]; then
-            _script_dir="--script-dir=/usr/local/bin"
-            _mode=
-        elif [[ ! $_which_python =~ ^$HOME ]]; then
-            show_error Cannot pipy $(which python), which is outside $HOME
-            return 1
-        fi
-        [[ -f setup.py ]] || echo "$_dir/setup.py is not a file" >&2
-        [[ -f setup.py ]] || return 1
-        echo pip install $_force $_mode $_script_dir $_dir
-        set -x
-        pip install $_force $_mode $_script_dir $_dir
-        set +x
-    ) 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
+    local _dir="$1" _force="$2"; shift 2
+    local _dev=
+    _install_requirements_there $_dir "$_force"
+    local _script_dir=
+    local _mode=--editable
+    local _which_python=$(which python)
+    if [[ $_which_python =~ ^/usr/local ]]; then
+        _script_dir="--script-dir=/usr/local/bin"
+        _mode=
+    elif [[ ! $_which_python =~ ^$HOME ]]; then
+        show_error Cannot pipy $(which python), which is outside $HOME
+        return 1
+    fi
+    [[ -f $_dir/setup.py ]] || echo "$_dir/setup.py is not a file" >&2
+    [[ -f $_dir/setup.py ]] || return 1
+    set -x
+    pip install $_force $_mode $_script_dir $_dir
+    set +x
 }
 
 pipy () {
@@ -102,36 +88,22 @@ pipy () {
     [path] : path to the project (defaults to \$PWD)
     -v : edit the setup files first
     -V : only edit the setup files
-    -f : force 
+    -f : force
     -u : upgrade
     """
     piup >/dev/null 2>&1
     local _dir=$PWD
     [[ -d "$1" ]] && _dir="$1" && shift
-    local _vim=
-    [[ $1 =~ -[vV] ]] && _vim="vim -p"
-    local _vvim=
-    [[ $1 == -V ]] && _vvim=1
-    [[ $_vim ]] && shift
     local _force=
     [[ $1 =~ -u*fu* ]] && _force=--force-reinstall
     [[ $1 =~ -f*uf* ]] && _force="$_force --upgrade"
     [[ $_force ]] && shift
-    [[ ! -d $_dir && -d "$1" ]] && _dir="$1" && shift
-    _pipy_vim $_dir $_vim
-    [[ $_vvim ]] && return 0
-    _pipy_setup $_dir $_force
-}
-
-pirr_ () {
-    [[ -d requirements ]] && pi -r requirements/development.txt
-    [[ -f requirements.txt ]] && pi -r requirements.txt
+    [[ -d "$1" ]] && _dir="$1" && shift
+    _pipy_setup $_dir $_force 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
 }
 
 pirr () {
-    local _in_dir=
-    [[ -d "$1" ]] && _in_dir="ind $1"
-    $_in_dir pirr_
+    _install_requirements_there "$@"
 }
 
 piup () {
@@ -144,32 +116,26 @@ vipy () {
 
 # _xxxx
 
-_pipy () {
-    piup >/dev/null 2>&1
-    local _install=$1; shift
-    local _dir=.
-    if [[ -d "$1" ]]; then
-        _dir="$1"
-        shift
-        (
-            cd $_dir
-            local _edit=
-            [[ $_install == "develop" ]] && _edit=-e
-            local _force=
-            [[ $1 == "-f" ]] && _force=--force-reinstall
-            local _pip=ppip
-            [[ -f requirements.txt ]] && $_pip install $_force -r requirements.txt
-            if [[ -f setup.py ]]; then
-                if [[ $_force ]]; then
-                    _force=--force
-                    [[ $_install == "develop" ]] && _force=--upgrade
+_install_requirements_here () {
+    local _force=$1 _name=
+    if [[ -d requirements ]]; then
+        (cd requirements
+            for _name in development testing requirements; do
+                if [[ -f ${_name}.txt ]]; then
+                    pi $_force -r ${_name}.txt
+                    return
                 fi
-                local _python=python
-                $_python setup.py $_force $_install $_edit .
-            fi
-        ) 2>&1 | grep -v already.satisfied
+            done
+        )
     fi
+    [[ -f requirements.txt ]] && pi $_force -r requirements.txt
 }
+
+_install_requirements_there () {
+    local _dir="$1"; shift
+    same_dir "$_dir" . && _install_requirements_here "$@" || (cd $_dir; _install_requirements_here "$@")
+}
+
 # xxxxxxx
 pythoni () {
     python -c "import $1; print($1.__file__)"
@@ -183,7 +149,7 @@ pythonv () {
 
 pythonvv () {
     python -m .venv
-    sed -i -e /activate/d .cd 
+    sed -i -e /activate/d .cd
     echo "activate_python_here" >> .cd
 }
 
@@ -198,9 +164,26 @@ install_develop () {
     [[ -f setup.py ]] || echo "setup.py is not a file" >&2
     [[ -f setup.py ]] || return 1
     local _pip=ppip
-    [[ $1 =~ 2 ]] && _pip=pip2
     [[ -f requirements.txt ]] && $_pip install -r requirements.txt
     $_pip install -e .
+}
+
+_pip_install_develop () {
+    local __doc__="""pip install a directory for development"
+    piup >/dev/null 2>&1
+    local _install=develop; shift
+    local _dir=.
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+        local _force=
+        [[ $1 == "-f" ]] && _force=--force-reinstall
+        _install_requirements_there $_dir $_force
+        if [[ -f setup.py ]]; then
+            [[ $_force ]] && _force=--upgrade
+            ppip install $_force -e .
+        fi
+    fi 2>&1 | grep -v already.satisfied
 }
 
 Bye_from $BASH_SOURCE
