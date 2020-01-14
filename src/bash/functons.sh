@@ -1313,6 +1313,10 @@ umports () {
 
 # xxxxxxxx
 
+doctests () {
+    py.test --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests
+}
+
 functons () {
     local _sub_dir="src/bash"
     [[ $1 == -g ]] && _sub_dir="$_sub_dir/git"

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cde_activate_venv .virtualenvs/jab3
+cde_activate_venv .venv
 cde_bin_PATH
 cde_show_git_was_here
 todo
