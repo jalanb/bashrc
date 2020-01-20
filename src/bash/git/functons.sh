@@ -4,6 +4,7 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/environ.d/colour.sh
 . ~/jab/src/bash/coloured.sh
+. ~/jab/src/bash/arg_dirs.sh
 . ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
@@ -125,6 +126,7 @@ tc () {
     local _local_config=; test -f .git/config && _local_config=.git/config
     local _local_ignore=; test -f .gitignore && _local_ignore=.gitignore
     local _local_creds=; test -f ~/.git-credentials && _local_creds=~/.git-credentials
+    test -f ~/.git-credentials.more && _local_creds="$_local_creds ~/.git-credentials.more"
     vim -p $_global_config $_global_ignore $_local_ignore $_local_config $_local_creds
 }
 
@@ -254,7 +256,7 @@ gfm () {
 }
 
 gft () {
-    show_run_command git fetch --tags --force 
+    show_run_command git fetch --tags --force
 }
 
 ggi () {
@@ -387,7 +389,7 @@ gpf () {
     show_command "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
-            local _command=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force:")
+            local _command=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
             show_run_command $_command
         else
             show_error "$MSG"
@@ -631,7 +633,7 @@ gbac () {
 
 gbdd () {
     local _branch=
-    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do
         if _mastered $_branch; then
             gbd $_branch
         fi
@@ -873,7 +875,7 @@ gfff () {
     bump show
     local _lines=5
     [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
-    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch' 
+    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch'
 }
 
 clone () {
@@ -1004,7 +1006,7 @@ _to_branch () {
 # xxxxxxxxxx
 
 _mastered () {
-    git branch --contains $1 | grep -q master 
+    git branch --contains $1 | grep -q master
 }
 
 git_stash_and () {

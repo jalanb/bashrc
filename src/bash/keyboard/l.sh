@@ -40,7 +40,7 @@ lo () {
 }
 
 lr () {
-    ll -tr "$@"
+    l -tr "$@"
 }
 
 lt () {
@@ -83,50 +83,67 @@ llg () {
 }
 
 lll () {
-    ll -a "$@"
+    ll -tr "$@"
 }
 
 llr () {
-    show_run_command lr "$@"
+    lr -l "$@"
 }
 
 ltr () {
-    lr -t "$@"
+    lt -r "$@"
 }
 
 loa () {
     lo -a
 }
 
+# xxxx
+
+llll () {
+    lll -a "$@"
+}
+
+# _xxxxxxxxx
+
+_ls_option () {
+    $(_ls_program)  --help 2>/dev/null | grep -q -- $1
+}
+
 # _xxxxxxxxxx
 
 _ls_command () {
-    local _options="-h -1"
-    if _is_ls_option --color; then
-        _options="$_options --color"
-    elif _is_ls_option -G; then
-        _options="$_options -G"
-    fi
-    if _is_ls_option --classify; then
-        _options="$_options --classify"
-    elif _is_ls_option -F; then
-        _options="$_options -F"
-    fi
-    _is_ls_option --group-directories-first && _options="$_options --group-directories-first"
-    echo "$(_ls_program) $_options"
+    # echo "$(_ls_program)"      "$(_ls_options)"
+      echo "  $LS_PROGRAM "      "  $LS_OPTIONS "
+    # echo "  $LS_PROGRAM " "$@" "  $LS_OPTIONS "
 }
 
 _ls_program () {
+    local __doc__="""Use ls by default, or gls if available (e.g. macOS)"""
     if [[ -z $LS_PROGRAM ]]; then
         LS_PROGRAM=$(which ls 2>/dev/null)
         local _gls=$(which gls 2>/dev/null)
         [[ -x "$_gls" ]] && LS_PROGRAM="$_gls"
-        export LS_PROGRAM
     fi
     echo $LS_PROGRAM
-    return 0
 }
 
-_is_ls_option () {
-    $(_ls_program)  --help 2>/dev/null | grep -q -- $1
+_ls_options () {
+    local __doc__="""Use available options"""
+    if [[ -z $LS_OPTIONS ]]; then
+        LS_OPTIONS="-h -1"
+        if _ls_option --color; then
+            LS_OPTIONS="$LS_OPTIONS --color"
+            _ls_option --group-directories-first && LS_OPTIONS="$LS_OPTIONS --group-directories-first"
+            _ls_option --classify && LS_OPTIONS="$LS_OPTIONS --classify"
+        else
+            # BSD / macOS has older names for --color and --classify
+            _ls_option -G && LS_OPTIONS="$LS_OPTIONS -G"
+            _ls_option -F && LS_OPTIONS="$LS_OPTIONS -F"
+        fi
+    fi
+    echo $LS_OPTIONS
 }
+
+export LS_PROGRAM=$(LS_PROGRAM= _ls_program)
+export LS_OPTIONS=$(LS_OPTIONS= _ls_options)
