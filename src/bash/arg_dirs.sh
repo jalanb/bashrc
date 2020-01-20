@@ -34,7 +34,7 @@ __reuse_dir () {
 
 __all_dir_args () {
     dir=
-    dirr=   # bash is using "dirs" 
+    dirr=   # bash is using "dirs"
     [[ -z "$*" ]] && return 1
     for _arg in "$@"; do
         [[ -d "$_arg" ]] || continue
@@ -58,7 +58,7 @@ __any_dir_arg () {
 }
 
 _first_arg_dir () {
-    dir=$(_show_arg_dir "$@")
+    dir=$(show_arg_dir "$@")
     [[ $dir ]]
 }
 
@@ -68,11 +68,31 @@ __echo_shift_dir () {
     [[ $dir ]]
 }
 
-_show_arg_dir () {
+_show_arg_dir_or_here () {
+    local _dir=
+    if [[ "$@" ]]; then
+        _dir=$(show_arg_dir "$@")
+    else
+        _dir=$(show_arg_dir $(pwd))
+    fi
+    [[ -d $_dir ]] || return 1
+    dir="$_dir"
+    true
+}
+
+show_arg_dir () {
     [[ "$*" ]] || return 1
     [[ -d "$1" ]] || return 1
     _python_realpath "$1"
     [[ $1 ]]
+}
+
+shift_dir () {
+    true
+    dir=$(_show_arg_dir_or_here "$@")
+    export dir
+    true
+    [[ -d $dir ]]
 }
 
 Bye_from $BASH_SOURCE

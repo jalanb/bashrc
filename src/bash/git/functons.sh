@@ -4,6 +4,7 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/environ.d/colour.sh
 . ~/jab/src/bash/coloured.sh
+. ~/jab/src/bash/arg_dirs.sh
 . ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
@@ -254,7 +255,7 @@ gfm () {
 }
 
 gft () {
-    show_run_command git fetch --tags --force 
+    show_run_command git fetch --tags --force
 }
 
 ggi () {
@@ -631,7 +632,7 @@ gbac () {
 
 gbdd () {
     local _branch=
-    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do
         if _mastered $_branch; then
             gbd $_branch
         fi
@@ -873,7 +874,7 @@ gfff () {
     bump show
     local _lines=5
     [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
-    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch' 
+    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch'
 }
 
 clone () {
@@ -1004,7 +1005,7 @@ _to_branch () {
 # xxxxxxxxxx
 
 _mastered () {
-    git branch --contains $1 | grep -q master 
+    git branch --contains $1 | grep -q master
 }
 
 git_stash_and () {
