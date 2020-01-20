@@ -248,9 +248,9 @@ yt () {
     local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
     # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
     ( cd ~/Downloads/youtube.dl
-    youtube-dl $_options "$@"
+    [[ "$@" ]] && youtube-dl $_options "$@"
     pwd
-    ll *.mp3| tail -n 7
+    llr *.mp3 | tail -n 7
     )
 }
 
@@ -335,9 +335,8 @@ hub () {
     [[ $1 =~ http.*git ]] && _remote="$1" && shift
     local _destination=
     if [[ -n "$@" ]]; then
-        if cde_ok "$@"; then
-            cde "$@"
-            return
+        if cde_ok ~/hub "$@"; then
+            _directory=$(cde_first ~/hub "$@")
         fi
     fi
     if [[ $_remote =~ http ]]; then
@@ -1267,7 +1266,7 @@ clearly () {
 }
 
 doctest () {
-    python3 -m doctest "$@"
+    python -m doctest "$@"
 }
 
 has_ext () {
