@@ -126,6 +126,7 @@ tc () {
     local _local_config=; test -f .git/config && _local_config=.git/config
     local _local_ignore=; test -f .gitignore && _local_ignore=.gitignore
     local _local_creds=; test -f ~/.git-credentials && _local_creds=~/.git-credentials
+    test -f ~/.git-credentials.more && _local_creds="$_local_creds ~/.git-credentials.more"
     vim -p $_global_config $_global_ignore $_local_ignore $_local_config $_local_creds
 }
 
@@ -388,7 +389,7 @@ gpf () {
     show_command "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
-            local _command=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force:")
+            local _command=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
             show_run_command $_command
         else
             show_error "$MSG"
