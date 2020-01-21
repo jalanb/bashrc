@@ -49,7 +49,7 @@ except ImportError:
 def line(s):
     sys.stdout.write('%s\n' % s)
 
-line('import os, re, sys, pysyte%s' %and_requests)
+line('import os, re, sys, pysyte%s' % and_requests)
 if see:
     line('from see import see, see_attributes, see_methods, spread')
     line('from see_code import code, highlight, see_code, see_highlight')
