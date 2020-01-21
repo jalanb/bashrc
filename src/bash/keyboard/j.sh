@@ -14,6 +14,10 @@ j () {
 # xx
 
 jj () {
+    cde_activate_venv ~/jab/.venv
+}
+
+jjj () {
     . ~/jab/__init__.sh
 }
 

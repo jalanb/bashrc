@@ -160,7 +160,7 @@ Host twkwbe96 wmpdev
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe95 wmptest
+Host wmptest
     Hostname 172.25.32.95
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
@@ -229,6 +229,10 @@ Host twkwbe65
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
+Host twkwbe95
+    Hostname 172.25.32.95
+    User ab13173
+    IdentityFile ~/.ssh/work/ab13173.key
 
 Host default
   HostName 127.0.0.1

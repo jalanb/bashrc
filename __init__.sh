@@ -42,4 +42,7 @@ _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 . ~/jab/src/bash/__init__.sh
 . ~/jab/local/__init__.sh optional
 
+cde_activate_venv ~/jab/.venv
+ACTIVE_PYTHON=$(which python)
+
 Bye_from $BASH_SOURCE
