@@ -143,6 +143,11 @@ gs_ () {
 
 # xxx
 
+dit () {
+    git -C $JIT_DIR
+}
+export JIT_DIR=$(git_root $BASH_SOURCE)
+
 egi () {
     GIT_EDITOR=true gi "$@"
 }
@@ -245,13 +250,25 @@ gfa () {
     show_run_command git fetch --prune --all
 }
 
-gff () {
+gfe () {
     gfa
     grup
 }
 
+gff () {
+    gcu
+    git_root -o
+    gfe | grep -v 'Fetching'
+    gor master 2>/dev/null | grep -v "up to date"
+    gb
+    bump show
+    local _lines=5
+    [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
+    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch'
+}
+
 gfm () {
-    gff
+    gfe
     gomr
 }
 
@@ -260,7 +277,7 @@ gft () {
 }
 
 ggi () {
-    local __doc__=""""""
+    local __doc__="""Me neither"""
     gxi _gdis _ggi_response "$@"
 }
 
@@ -292,7 +309,9 @@ gla () {
 }
 
 glf () {
-    GIT_LOG_ALIAS=lf git_log_lines_to_screen -n 3 "$@"
+    local _number='-n 3'
+    [[ "$@" =~ -n ]] && _number=
+    git lf $_number "$@"
 }
 
 glg () {
@@ -567,8 +586,8 @@ gxi () {
     local _show_diff=$1; shift
     local _response=$1; shift
     local _responded=
+    dir=$(show_arg_dir_or_here "$1") && shift
     _stashed=
-    shift_dir "$@" && shift
     GXI_QUERY=
     show_green remote
     glf 1
@@ -598,6 +617,11 @@ gxi () {
     git dn --staged
     git status
 }
+
+sit () {
+    show_run_command git "$@"
+}
+
 
 # xxxx
 
@@ -865,18 +889,6 @@ gvsd () {
 }
 
 # xxxxx
-
-gfff () {
-    gcu
-    git_root -o
-    gff | grep -v 'Fetching'
-    gor master 2>/dev/null | grep -v "up to date"
-    gb
-    bump show
-    local _lines=5
-    [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
-    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch'
-}
 
 clone () {
     local _range=
@@ -1187,16 +1199,16 @@ show_git_time () {
 
 _any_git_changes () {
     local __doc__="whether the current dir has modified or untacked files"
-    local dir=$1
-    [[ -z $dir ]] && dir=$PWD
+    local _dir=$1
+    [[ -z $_dir ]] && _dir=$PWD
     if [[ -d "${dir}/.git" ]]; then
-        git -C $dir status --porcelain | gre "$_git_status_regexp"
+        git -C $_dir status --porcelain | gre "$_git_status_regexp"
     fi
 }
 
 _has_git_changes () {
-    local dir=$1
-    local _files=$(_any_git_changes $dir)
+    local _dir=$1
+    local _files=$(_any_git_changes $_dir)
     [[ -n $_files ]]
 }
 

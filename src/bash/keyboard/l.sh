@@ -104,6 +104,10 @@ llll () {
     lll -a "$@"
 }
 
+lotr () {
+    lo -tr "$@"
+}
+
 # _xxxxxxxxx
 
 _ls_option () {

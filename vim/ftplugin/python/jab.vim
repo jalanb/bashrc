@@ -3,26 +3,21 @@ if exists("g:loaded_jab_python")
 endif
 let g:loaded_jab_python = "v001"
 
-noremap } :cn<cr>
-noremap { :cp<cr>
+nnoremap } :cn<cr>
+nnoremap { :cp<cr>
 
-noremap D Oimport pudb; pudb.set_trace()  # pylint: disable=multiple-statements<esc>j
-noremap tf :Fix<cr>
-noremap tm :Mash<cr>
-noremap tt :MashTry<cr>
-noremap tr :Try<cr>
-noremap tp :Pylint<cr>
-noremap <S-F9> :call WritePEP()<cr>
-noremap <leader><space> :%s/\s\+$//<cr>
-noremap <leader>;   :s/:$//<cr>
-noremap <leader>:   :s/$/:/<cr>
-noremap <leader>8   b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
-noremap <leader>c   ?^\s*class \zs\i<cr>*
-noremap <leader>d   ?^\s*def \i\+\zs.*<cr>*zv
-noremap <leader>o   O<esc>
-noremap <leader>e   ?^\s*def \zs\i<cr>*#zv
-noremap <leader>k   $%a<cr><esc
-noremap <leader>8   call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
+nnoremap D Oimport pudb; pudb.set_trace()  # pylint: disable=multiple-statements<esc>j
+nnoremap tr :Try<cr>
+nnoremap tt :MashTry<cr>
+nnoremap <S-F9> :call WritePEP()<cr>
+nnoremap <leader><space> :%s/\s\+$//<cr>
+nnoremap <leader>8   b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
+nnoremap <leader>8   call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
+nnoremap <leader>c   ?^\s*class \zs\i<cr>*
+nnoremap <leader>d   ?^\s*def \i\+\zs.*<cr>*zv
+nnoremap <leader>e   ?^\s*def \zs\i<cr>*#zv
+nnoremap <leader>k   $%a<cr><esc
+nnoremap <leader>o   O<esc>
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 

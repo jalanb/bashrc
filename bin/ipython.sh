@@ -1,4 +1,15 @@
 #! /usr/bin/env bash
 
-export PYTHONPATH=/Users/jab/src/git/hub/jab/src/python/site
- /Users/jab/src/git/hub/jab/.venv/bin/ipython3 --no-confirm-exit 
+# fred () {
+#      echo "Hello World"
+#
+#
+#
+#
+# }
+#
+
+mysyte=~/jab/python/site/
+cd ~/jab/.venv/bin/
+source ./activate
+PYTHONPATH=$mysyte ./ipython3 --no-confirm-exit

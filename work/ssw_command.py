@@ -7,9 +7,9 @@ import work
 
 def add_args(parser):
     p = parser
-    p.boolean('-a', '--ab13173')
-    p.boolean('-b', '--builder')
-    p.boolean('-r', '--root')
+    p.boolean('', 'ab13173')
+    p.boolean('', 'builder')
+    p.boolean('', 'root')
     p.positional('server')
     return parser
 
@@ -70,4 +70,4 @@ def main(args):
         return True
 
 
-run(main, add_args)
+run(main, add_args=add_args)

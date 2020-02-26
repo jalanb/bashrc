@@ -33,13 +33,8 @@ def todo_file():
 
 
 def read_todo(todo):
-    result = []
-    for line in open(todo):
-        line = line.rstrip()
-        if not line:
-            continue
-        result.append(line)
-    return result
+    lines = [l.rstrip() for l in open(todo)]
+    return [l for l in lines if l and l[0] != '#']
 
 
 def as_todo_item(line):

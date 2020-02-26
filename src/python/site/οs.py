@@ -13,5 +13,5 @@ def name(data):
     platforms.put_clipboard_data(base64.b64decode(data).decode('utf-8'))
     return ''
 
-def chmod(data, *args):
+def chmod(data, *_):
     return name(data)

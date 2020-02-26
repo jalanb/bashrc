@@ -38,3 +38,13 @@ project_to_server () {
     [[ $_server =~ $WORK_COM ]] || _server=$(work $_project)
     echo $_server
 } 
+
+use_bots () {
+    local _venv=bots
+    [[ $1 == -d ]] && _venv=bots_dev
+    cde_activate_home $_venv
+    local _root=~/bots/bots/bots
+    [[ $1 == -d ]] && _root=~/bots/bots/develop
+    cde_bin_PATH $_root/bin
+    cde_PYTHONPATH $_root
+}

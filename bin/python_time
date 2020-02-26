@@ -1,0 +1,11 @@
+"""Show microseconds since today"""
+
+from pysyte.cli.run 
+from pysyte.types.times import taken, since_epoch
+import datetime
+
+then = datetime.datetime.fromtimestamp(0)
+now = datetime.datetime.now()
+since = then - now
+print(taken(since))
+

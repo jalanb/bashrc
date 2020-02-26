@@ -68,7 +68,7 @@ __echo_shift_dir () {
     [[ $dir ]]
 }
 
-_show_arg_dir_or_here () {
+show_arg_dir_or_here () {
     local _dir=
     if [[ "$@" ]]; then
         _dir=$(show_arg_dir "$@")
@@ -89,7 +89,7 @@ show_arg_dir () {
 
 shift_dir () {
     true
-    dir=$(_show_arg_dir_or_here "$@")
+    dir=$(show_arg_dir_or_here "$@")
     export dir
     true
     [[ -d $dir ]]

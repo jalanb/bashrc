@@ -40,4 +40,8 @@ slf () {
     s $(functons -l)
 }
 
+swf () {
+    s $(functons -v)
+}
+
 Bye_from $BASH_SOURCE
