@@ -66,12 +66,14 @@ vu () {
 }
 
 vv () {
-    (cd ~/jab/vim
-    vim -p vimrc "$@"
-    gsi)
+    vim -p ~/.vimrc "$@"
 }
 
 vw () {
+    v $WHYP.sh "$@"
+}
+
+vz () {
     v $WHYP.sh "$@"
 }
 

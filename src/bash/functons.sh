@@ -170,7 +170,7 @@ ra () {
 
 rg () {
     [[ "$@" ]] && c "$@"
-    ranger 
+    ranger
 }
 
 ru () {
@@ -245,12 +245,20 @@ sz () {
 }
 
 yt () {
-    local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
     # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
-    ( cd ~/Downloads/youtube.dl
+    local _dir=~/Downloads/youtube.dl
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+    elif [[ -d "$_dir/$1" ]]; then
+        _dir="$_dir/$1"
+        shift
+    fi
+    local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
+    ( cd $_dir
     [[ "$@" ]] && youtube-dl $_options "$@"
     pwd
-    llr *.mp3 | tail -n 7
+    ll -htr
     )
 }
 
@@ -485,12 +493,20 @@ lyy () {
 }
 
 mkd () {
-    local __doc__='make a directory'
-    if [[ -d "$@" ]]; then
-        echo Directory existed "$@" >&2
+    local __doc__='make a directory' _error=0
+    if [[ -d "$1" ]]; then
+        [[ $# > 1 ]] || echo Directory existed "$@" >&2
+        _error=1
     else
-        mkdir -p "$@"
+        mkdir -p "$1"
     fi
+    [[ $# > 1 ]] || return $_error
+    (cd "$1"
+        shift
+        for x in "$@"; do [[ -e "$x" ]] || touch "$x"; done
+        _error=$?
+    )
+    return $_error
 }
 
 nat () {
@@ -814,6 +830,10 @@ down () {
     l -tr . | tail
 }
 
+hhhh () {
+    echo '#' | clip_in
+}
+
 init () {
     local __doc__="""LOok for __init__.sh here, there, or below and source it if found"""
     local _init=./__init__.sh
@@ -845,9 +865,13 @@ mine () {
 
 mkcd () {
     local __doc__='make a directory and start using it';
-    mkd "$@"
+    mkd "$1"
     [[ -d "$@" ]] || return 1
     cd "$@"
+}
+
+mkdp () {
+    mkd "$1" __init__.py
 }
 
 mkv3 () {
@@ -1007,7 +1031,7 @@ hello () {
 
 jalanb () {
     local _root=~/src/git/jalanb
-    for repo in $(readlink -f $_root/*); do 
+    for repo in $(readlink -f $_root/*); do
         [[ -d $repo ]] || continue
         git_dirty $repo || continue
         echo
@@ -1491,7 +1515,7 @@ jab_hub () {
     [[ $1 == -d ]] && _dirs=1
     [[ $1 == -D ]] && _dirs=2
     (
-        cd ~/hub; 
+        cd ~/hub;
         local _result=$(
         grep slack -H */.travis.yml | \
             sed -e "s/:.*//" -e "s:..travis.yml::" | \
@@ -1572,7 +1596,27 @@ blank_script () {
     echo "" >> $1
 }
 
+project_root () {
+    git_root "$@" 2>/dev/null && return 0
+    local _arg= _file= _path=
+    for _arg in "$@"; do
+        for _path in $(~/jab/bin/parents $_arg); do
+            for _file in .bumpversion.cfg .gitignore .travis.tml setup.py requirements.txt README.rst readme.md LICENSE tox.ini; do
+                if [[ -f $_path/$_file ]]; then
+                    echo $_path
+                    return 1
+                fi
+            done
+        done
+    done
+    return 1
+}
+
 # xxxxxxxxxxxxx
+
+disable_spctl () {
+    sudo spctl --master-disable
+}
 
 show_functions () {
     _all_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
@@ -1799,8 +1843,8 @@ copy_from_work_server () {
 }
 
 Bye_from $BASH_SOURCE
-jalanb_hub () 
-{ 
+jalanb_hub ()
+{
     ( cd ~/hub;
     grep slack -H */.travis.yml | sed -e "s/:.*//" -e "s:..travis.yml::" | grep -v -e old -e master -e suds | sort | uniq )
 }

@@ -3,27 +3,27 @@
 scriptencoding 'utf-8'
 " Keyboard {{{1
 " function keys {{{2
- noremap <F1>      :help<cr>
- noremap <F2>      :ls<CR>:b<Space>
- noremap <F3>      :map <F3>
+nnoremap <F1>      :help<cr>
+nnoremap <F2>      :ls<CR>:b<Space>
+nnoremap <F3>      :map <F3>
 inoremap <F3>      <esc>:w!<CR>
- noremap <F4>      <c-w>w
- noremap <F5>      :map <F6>
-    nmap <F6>      WQ
- noremap <F7>      :set list!<CR>
- noremap <F8>      O<esc>:w!<CR>:Limelight<cr>
- noremap <F9>      :w!<CR>:Limelight<cr>
- noremap <F9>      :map <F9>
+nnoremap <F4>      <c-w>w
+nnoremap <F5>      :map <F6>
+nnoremap <F6>      WQ
+nnoremap <F7>      :set list!<CR>
+nnoremap <F8>      O<esc>:w!<CR>:Limelight<cr>
+nnoremap <F9>      :w!<CR>:Limelight<cr>
+nnoremap <F9>      :map <F9>
 inoremap <F9>      <esc>:w!<CR>
- noremap <F10>      :map <F10>
- noremap <F10>      k\mdndnddn.
- noremap <F11>      :map <F11>
- noremap <F12>      :map <F12>
+nnoremap <F10>      :map <F10>
+nnoremap <F10>      k\mdndnddn.
+nnoremap <F11>      :map <F11>
+nnoremap <F12>      :map <F12>
 
 " modifier keys {{{2
- noremap <S-F4>     <C-W>p
+nnoremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
- noremap <S-F5>     <C-W>=
+nnoremap <S-F5>     <C-W>=
 
 
 " ordinary keys {{{2
@@ -56,8 +56,8 @@ nnoremap & J
 nnoremap £ :nnoremap £
 "noremap @ execute contents of register
 "noremap ! shell
- noremap !! :noremap @@
- noremap ££ :noremap @@<up>
+nnoremap !! :noremap @@
+nnoremap ££ :noremap @@<up>
 "noremap ±
 " letters {{{3
 "a-y {{{4
@@ -70,74 +70,74 @@ nnoremap £ :nnoremap £
 "noremap f - to next char
 "noremap g - many actions
 "noremap h - go left
+"noremap h :call AfterPressing("h")<CR>
 "noremap i - insert
- noremap j jzz
- noremap k kzz
+nnoremap j jzz
+nnoremap k kzz
 "noremap l - go right
+"noremap l :call AfterPressing("l")<CR>
 "noremap m
 nnoremap n nzvzz
 "noremap o - open new line
 "noremap p - paste
- noremap q :q<CR>
+nnoremap q :q<CR>
 "noremap r - change one char
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 noremap tf :tabnew ~/tmp/fred.txt
 noremap tn :tabnew<Space>
- noremap tq <esc>;iq<CR>
- noremap ttq <esc>;iqa!<CR>
- noremap tw <esc>;iwa!<CR>qa!<CR>
- noremap tz :! /Users/jab/src/git/hub/jab/bin/Digging "Thumber Tarzan Climber"<cr>
- noremap tzx :! /Users/jab/src/git/hub/jab/bin/Under "a spreading chest tree"<cr>
+nnoremap tq <esc>;iq<CR>
+nnoremap ttq <esc>;iqa!<CR>
+nnoremap tw <esc>;iwa!<CR>qa!<CR>
+nnoremap tz :! /Users/jab/src/git/hub/jab/bin/Digging "Thumber Tarzan Climber"<cr>
+nnoremap tzx :! /Users/jab/src/git/hub/jab/bin/Under "a spreading chest tree"<cr>
 "noremap u - undo
 "noremap v - start visual
 "noremap w - forword
-" Next one is from http://vi.stackexchange.com/a/479/182
-cnoremap w!! w !sudo tee %
 "noremap x - remove char
 "noremap y - yank
- noremap yb byw
+nnoremap yb byw
 "z {{{4
 " /map \zsz\([<][^ ]*\|[^ ]\)
 "noremap z - folds. centering, ...
- noremap z+ zO
- noremap z= zo
- noremap z- zc
- noremap z_ zC
- noremap zq zC
- noremap zQ zc
- noremap zw zO
- noremap zW zo
+nnoremap z+ zO
+nnoremap z= zo
+nnoremap z- zc
+nnoremap z_ zC
+nnoremap zq zC
+nnoremap zQ zc
+nnoremap zw zO
+nnoremap zW zo
 "noremap ze
 "noremap zr
 "noremap zt
 "noremap zy
- noremap za z<cr>
- noremap zs jzck
+nnoremap za z<cr>
+nnoremap zs jzck
 "noremap zd
 "noremap zf
 "noremap zh
 "noremap zj
 "noremap zk
 "noremap zl
- noremap zx jzoz<cr>
- noremap zX jzOz<cr>
- noremap zn nzMzvzz
- noremap zN NzMzvzz
- noremap z/ /<cr>zMzvzz
- noremap z? ?<cr>zMzvzz
- noremap z<up> zM
- noremap z<right> zczoz<cr>
- noremap z<left> zm
- noremap z<down> zR
+nnoremap zx jzoz<cr>
+nnoremap zX jzOz<cr>
+nnoremap zn nzMzvzz
+nnoremap zN NzMzvzz
+nnoremap z/ /<cr>zMzvzz
+nnoremap z? ?<cr>zMzvzz
+nnoremap z<up> zM
+nnoremap z<right> zczoz<cr>
+nnoremap z<left> zm
+nnoremap z<down> zR
 " Punctuation {{{3
- noremap ] <C-]>
- noremap [ <C-T>
- noremap ; q:
- noremap ' :nohl<cr>
- noremap " m'
+nnoremap ] <C-]>
+nnoremap [ <C-T>
+nnoremap ; q:
+nnoremap ' bp
+nnoremap " m'
 "noremap \ - leader
- noremap , .n
+nnoremap , .n
 "noremap . - repeat
 "noremap / - search
 "noremap `
@@ -145,6 +145,7 @@ cnoremap w!! w !sudo tee %
 "noremap {
 "noremap }
 "noremap : - command line
+nnoremap " bn
 "noremap "
 "noremap |
 "noremap < -
@@ -171,35 +172,35 @@ nnoremap C <esc>:qa!<CR>
 nnoremap E :wa<cr>:qa<cr>
 "noremap F f backwards
 "noremap G goto line (default last)
-nnoremap H <C-B>zz
-"noremap I - Insert
+nnoremap H gT
+"noremap I
 nnoremap J <PageDown>zz
 nnoremap K <PageUp>zz
-nnoremap L <C-F>zz
+nnoremap L gt
 "noremap M - To Middle of window
- noremap N :cn<cr>zMzvzz
+nnoremap N :cn<cr>zMzvzz
 "noremap O - Open line above
 "noremap P - paste forward
- noremap Q <esc>:qa!<CR>
+nnoremap Q <esc>:qa!<CR>
 "noremap R - Replace
- noremap S :%s:::<Left><Left>
- noremap T :!tags
- noremap U :redo<cr>
+nnoremap S :%s,,,<Left><Left>
+nnoremap T :!tags
+nnoremap U :redo<cr>
 "noremap V - linewise visual
- noremap W :wa!<cr>
- noremap WW :w !sudo tee % >/dev/null<cr>
- noremap X :wa!<cr>
+nnoremap W :wa!<cr>
+nnoremap WW :w !sudo tee % >/dev/null<cr>
+nnoremap X :wa!<cr>
 "noremap Y - aka yy
- noremap Z XC
+nnoremap Z XC
 " ordinary keys for movement {{{2
- noremap <Space><Space>  <PageDown>zz
- noremap t<left>  :tabprev<cr>
- noremap t<right> :tabnext<cr>
- noremap th       :tabprev<cr>
- noremap tl       :tabnext<cr>
-" 
+nnoremap <Space><Space>  <PageDown>zz
+nnoremap t<left>  gT
+nnoremap t<right> gt
+nnoremap th       gT
+nnoremap tl       gt
+"
 " Arrows
-" 
+"
 nnoremap <up>               ?<cr>zv
 nnoremap <down>             /<cr>zv
 nnoremap <right>            *zv
@@ -207,7 +208,7 @@ nnoremap <PageUp>           <C-B>
 nnoremap <PageDown>         <C-F>
 "
 " More Arrows
-" 
+"
 " nnoremap <up><up>           ?<cr>
 " nnoremap <down><down>       /<cr>
 " nnoremap <left><left>         #zv
@@ -217,10 +218,10 @@ nnoremap <PageDown>         <C-F>
 "
 nnoremap <s-up>             <C-B>
 nnoremap <s-down>           <C-F>
-nnoremap <s-left>           :tabprev<cr>
-nnoremap <s-right>          :tabnext<cr>
-"noremap <s-left>           :tabprev<cr>
-"noremap <s-right>          :tabnext<cr>
+nnoremap <s-left>           gT
+nnoremap <s-right>          gt
+"noremap <s-left>           gT
+"noremap <s-right>          gt
 "
 " Normal Control Arrows
 "
@@ -241,65 +242,80 @@ inoremap <c-left>           <Esc>bi
 inoremap <c-right>          <Esc>lwi
 
 " Other Control Keys {{{2
- noremap    <C-d> :qa<CR>
- noremap    <C-n> :next<CR>
- noremap    <C-p> :prev<CR>
- noremap    <C-q> :qa!<CR>
- noremap    <C-h> <c-w><c-h>
- noremap    <C-j> <c-w><c-j>
- noremap    <C-k> <c-w><c-k>
- noremap    <C-l> <c-w><c-l>
+nnoremap    <C-d> :qa<CR>
+nnoremap    <C-n> :next<CR>
+nnoremap    <C-p> :prev<CR>
+nnoremap    <C-q> :qa!<CR>
+nnoremap    <C-h> <c-w><c-h>
+nnoremap    <C-j> <c-w><c-j>
+nnoremap    <C-k> <c-w><c-k>
+nnoremap    <C-l> <c-w><c-l>
      map    <C-b> dndndndd/<cr>
      map    <C-m> dd/<cr>dndd/<cr>
      map    <C-n> dndd/<cr>dd/<cr>
 inoremap    <C-d> <esc>:qa<CR>
 inoremap    <C-q> <Esc>:qa!<CR>
 " Alt keys {{{2
- noremap    <A-q>      :qa!<CR>
- noremap <A-Right>      :tabnext<Cr>
- noremap <A-Left>      :tabprev<Cr>
+nnoremap    <A-q>      :qa!<CR>
+nnoremap <A-Right>      :tabnext<Cr>
+nnoremap <A-Left>      :tabprev<Cr>
 inoremap    <A-q> <Esc>:qa!<CR>
 inoremap <A-Right> <Esc>:tabnext<CR>
 inoremap <A-Left> <Esc>:tabprev<CR>
 " Leader keys {{{2
- noremap <leader>a :call SetAbsoluteNumber()<cr>
+"noremap <leader>"
+nnoremap <leader>' :call Unsearch()<cr><c-l>
+"noremap <leader>(
+"noremap <leader>)
+"noremap <leader>/
+"noremap <leader>,
+"noremap <leader>.
+"noremap <leader>
+"noremap <leader>9
+"noremap <leader>?
+"noremap <leader><
+"noremap <leader>>
+nnoremap <leader>: :wa<cr>
+nnoremap <leader>; :w<cr>
+nnoremap <leader>P :wa<cr>qa<cr>
+nnoremap <leader>[ :cn<cr>zMzvzz
+nnoremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
+nnoremap <leader>] :cp<cr>zMzvzz
+
+nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
-"noremap <leader>c used by ftplugin/jab/python
-"noremap <leader>d used by ftplugin/jab/python
+"noremap <leader>c used by ftplugin/python/jab
+"noremap <leader>d used by ftplugin/python/jab
 "noremap <leader>e used by plugin/EasyMotion.vim
 "noremap <leader>f used by plugin/EasyMotion.vim
 "noremap <leader>g
-"noremap <leader>h
+nnoremap <leader>h :call AfterPressing("h")<CR>
+nnoremap <leader>l :call AfterPressing("l")<CR>
 "noremap <leader>i
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
-"noremap <leader>l
- noremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
- noremap <leader>n :call ChangeNumber()<cr>
-"noremap <leader>o used by ftplugin/jab/python
- noremap <leader>p :set paste<cr>
- noremap <leader>q :qa!<cr>
- noremap <leader>r :set wrap!<cr>
-"noremap <leader>s
- noremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
- noremap <leader>u :GundoToggle<CR>
- noremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
- noremap <leader>w :w !sudo tee % >/dev/null<cr>
- noremap <leader>x :call RangerExplorer()<cr>
+nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
+nnoremap <leader>n :call ChangeNumber()<cr>
+"noremap <leader>o used by ftplugin/python/jab
+nnoremap <leader>p :set paste<cr>
+nnoremap <leader>q :qa!<cr>
+nnoremap <leader>r :set wrap!<cr>
+nnoremap <leader>s :w<cr>
+nnoremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
+nnoremap <leader>u :GundoToggle<CR>
+nnoremap <leader>v mm:w!<cr>:source $MYVIMRC<cr>`m
+" Next one is from http://vi.stackexchange.com/a/479/182
+nnoremap <leader>w :w !sudo tee % >/dev/null<cr>L<cr>
+nnoremap <leader>x :call RangerExplorer()<cr>
 "noremap <leader>y
 "noremap <leader>z
 
- noremap <leader>P :set ft=python<cr>
- noremap <leader>W :w !sudo tee % >/dev/null<cr>
+"noremap <leader>{
+"noremap <leader>| don't do this
+"noremap <leader>}
 
- noremap <leader>] :cn<cr>zMzvzz
- noremap <leader>[ :cp<cr>zMzvzz
- noremap <leader>: q:
-nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
- noremap <leader>' :call SearchXxx()<cr><c-l>
- noremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
- noremap <leader><Left>     <<
- noremap <leader><Right>    >>
+nnoremap <leader><Left>     <<
+nnoremap <leader><Right>    >>
 " Kinda keys {{{2
 set backspace=eol,start,indent
 set autoindent smartindent
@@ -404,6 +420,105 @@ endfunction
 
 autocmd BufEnter * call EnterBuffer()
 autocmd BufLeave * call LeaveBuffer()
+
+function HereIs(sentinel_line, sentinel_col)
+    return line('.') == a:sentinel_line && col('.') == a:sentinel_col
+endfunction
+
+function AtStart()
+    return HereIs(1, 1)
+endfunction
+
+function AtEnd()
+    return HereIs(line('$'), col('$') - 1)
+endfunction
+
+function OnStart()
+    return line('.') == 1
+endfunction
+
+function OnEnd()
+    return line('.') == line('$')
+endfunction
+
+function AtEnds()
+    return AtStart() || AtEnd()
+endfunction
+
+function OnEnds()
+    return OnStart() || OnEnd()
+endfunction
+
+function CheckHere()
+    if AtEnd()
+        echo "At End"
+    else
+        echo "Not End"
+    endif
+    if AtStart()
+        echo "At Start"
+    else
+        echo "Not Start"
+    endif
+endfunction
+
+"
+" 'ttimeoutlen' is the time in milliseconds that is waited for a key code or mapped key sequence to complete.
+" :set ttm=200
+"
+function AfterPressing(pressed_key) abort
+    echo 'AfterPressing('. a:pressed_key . ')'
+    if ! OnEnds()
+        echo "Try gg or G first"
+        return
+    elseif OnStart() && ! AtStart() && a:pressed_key == 'h'
+        echo "Try 0 first"
+        return
+    elseif OnEnd() && ! AtEnd() && a:pressed_key == 'l'
+        echo "Try $ first"
+        return
+    endif
+    let time_out = &ttimeoutlen
+    let start_time = reltime()
+    let time_left = time_out
+    let indent = 2
+    let i = 1
+    while reltimefloat(reltime(start_time)) < time_out
+        let user_nr = getchar(0)
+        if user_nr == 0
+            let hide = i % indent
+            if ! hide
+                echo i
+                let indent *= 2
+            endif
+            let i += 1
+            continue
+        endif
+        let user_key = nr2char(user_nr)
+        echo "user_key = " . user_key . ".\n"
+        echo "if '" . user_key . "' == a:pressed_key('" . a:pressed_key . "')"
+        if user_key == a:pressed_key
+            echo "double " . a:pressed_key
+            ", switch buffers"
+            " call feedkeys(a:pressed_key == 'h' ? ":bp\<CR>" : ":bn\<CR>", 't')
+        else
+            echo "else " . user_key
+            " Switch tabs and replay what they typed"
+            " call feedkeys((a:pressed_key == 'h' ? 'gT' : 'gt') . user_key, 't')
+        endif
+        return
+    endwhile
+    echo " The user didn't press anything"
+    call CheckHere()
+    ". Switch Tabs"
+    " call feedkeys((a:pressed_key == 'h' ? 'gT' : 'gt'), 't')
+endfunction
+
+"   The timeout only happens when the 'timeout' and 'ttimeout' options
+"   tell so.  A useful setting would be
+"           :set timeout timeoutlen=3000 ttimeoutlen=100
+
+set timeout timeoutlen=3000 ttimeoutlen=100
 
 " diff to when I started editting
 if !exists(':DiffOrig')
@@ -513,8 +628,12 @@ set number    " Start with line numbers
 :set grepprg=grep\ -nH
 " <leader>\ is bound to calling ToggleHighlightSearch
 "   The leader key is also \, so really \\ calls this
-function SearchXxx()
-    normal /Xxx<cr>
+function Unsearch()
+    set nohlsearch
+    normal /,,,<cr>
+    if &hlsearch
+        set hlsearch
+    endif
 endfunction
 
 function ToggleHighlightSearch()

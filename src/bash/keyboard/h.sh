@@ -30,7 +30,7 @@ hl () {
 }
 
 alias ht=history_tail
-alias hh=history_vim
+alias hv=history_vim
 
 # xxx
 
@@ -56,7 +56,7 @@ hgv ()
 # history_xxxx+
 
 history_parse () {
-    HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "^\<\(history\(_[a-z-]*\)*\|[Hh][Gghnt]\)\> " 
+    HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v -e "^\<\(history\(_[a-z-]*\)*\|[Hh][Gghnt]\|h [0-9][0-9]*$\)\> "
 }
 
 history_view () {
@@ -83,7 +83,7 @@ history_grep () {
     local _back=
     [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
     local _sought="$@"
-    history_parse | grep --color $_back "${_sought/ /.}"
+    history_parse | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
 }
 
 history_tail () {

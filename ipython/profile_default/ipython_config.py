@@ -197,7 +197,7 @@ c.TerminalInteractiveShell.colors = 'Linux'
 # it is not applied if there are no more arguments on the line, and '2' for
 # 'full' autocall, where all callable objects are automatically called (even if
 # no arguments are present).
-c.TerminalInteractiveShell.autocall = 2
+c.TerminalInteractiveShell.autocall = 1
 
 # Number of lines of your screen, used to control printing of very long strings.
 # Strings longer than this number of lines will be sent through a pager instead

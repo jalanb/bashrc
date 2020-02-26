@@ -8,7 +8,7 @@ pprintpp
 pre-commit
 pudb
 pym
-pysyte>=0.7.30
+pysyte>=0.7.32
 pytest
 pyyaml
 sh
