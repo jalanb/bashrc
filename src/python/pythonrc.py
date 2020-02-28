@@ -2,7 +2,6 @@
 
 from __future__ import print_function
 
-
 try:
     see
 except (NameError):
@@ -19,8 +18,7 @@ except (NameError):
 
 def _path_to_history(os):
     """Get the path to our history file - hidden in the home directory"""
-    home = os.path.expanduser('~')
-    path_to_history = os.path.join(home, '.pythonhistory')
+    path_to_history = os.path.expanduser('~/.pythonhistory')
     if not os.path.isfile(path_to_history):
         open(path_to_history, 'w').close()
     return path_to_history
@@ -40,7 +38,10 @@ def _read_history(readline):
     path_to_history = _path_to_history(os)
     if os.path.isfile(path_to_history):
         _write_time_stamp(path_to_history)
-        readline.read_history_file(path_to_history)
+        try:
+            readline.read_history_file(path_to_history)
+        except IOError:
+            pass
     atexit.register(readline.write_history_file, path_to_history)
 
 
@@ -55,7 +56,15 @@ def complete():
               file=sys.stderr)
 
 
+def set_prompt():
+    """set shell prompt"""
+    import sys
+    sys.ps1 = '\033[1;32m>>>\033[0m '
+    sys.ps2 = '\033[1;34m...\033[0m '
+
+
 complete()
+set_prompt()
 
 # https://www.reddit.com/r/Python/comments/4ivd2k/what_is_your_favorite_python_error_message/d329j8l
 q = type('', (), {'__repr__': lambda _: exit()})()

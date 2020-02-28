@@ -22,6 +22,10 @@ work_email () {
     echo "$@"@"${WORK_COM}"
 }
 
+is_work_server () {
+    [[ "$1" =~ wwts[.]com$ ]]
+}
+
 server_to_project () {
     local _one=$1 && shift
     [[ $_one =~ wmp ]] && echo wmp

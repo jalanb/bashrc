@@ -41,7 +41,7 @@ slf () {
 }
 
 swf () {
-    s $(functons -v)
+    s $(functons -w)
 }
 
 Bye_from $BASH_SOURCE

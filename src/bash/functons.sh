@@ -1058,7 +1058,7 @@ clipvim () {
 
 clip_in () {
     pbcopy
-    echo "$(clipout)" | sed -e "s:^:# :"
+    [[ "$@" =~ -q ]] || (echo "$(clipout)" | sed -e "s:^:# :")
 }
 
 clipout () {
@@ -1308,11 +1308,6 @@ playbook () {
 
 relpath () {
     python ~/jab/src/python/relpath.py "$@"
-}
-
-ssh_host () {
-    local __doc__="""Get a server name from the hostname in ~/.ssh/config"""
-    ssh -G $1 | grep hostname.*$1 | cut -d' ' -f2
 }
 
 whiches () {

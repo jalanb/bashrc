@@ -68,18 +68,6 @@ __echo_shift_dir () {
     [[ $dir ]]
 }
 
-show_arg_dir_or_here () {
-    local _dir=
-    if [[ "$@" ]]; then
-        _dir=$(show_arg_dir "$@")
-    else
-        _dir=$(show_arg_dir $(pwd))
-    fi
-    [[ -d $_dir ]] || return 1
-    dir="$_dir"
-    true
-}
-
 show_arg_dir () {
     [[ "$*" ]] || return 1
     [[ -d "$1" ]] || return 1

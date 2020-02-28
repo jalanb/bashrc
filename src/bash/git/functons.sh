@@ -4,7 +4,7 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/environ.d/colour.sh
 . ~/jab/src/bash/coloured.sh
-. ~/jab/src/bash/arg_dirs.sh
+. ~/jab/src/bash/shift_dir.sh
 . ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
@@ -118,6 +118,7 @@ gt () {
     for _tag in "$@"; do
         show_run_command git tag $_tag
     done
+    [[ $_tag ]] || git tag | sort
 }
 
 tc () {
@@ -433,11 +434,6 @@ gpt () {
     gpo --tags
 }
 
-gs__quiet () {
-    shift_dir "$@" && shift
-    _do_git_status $dir "$@"
-}
-
 _show_pre_loop () {
     show_green local
     show_this_branch
@@ -657,8 +653,8 @@ gbac () {
 
 gbdd () {
     local _branch=
-    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do
-        if _mastered $_branch; then
+    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+        if mastered $_branch; then
             gbd $_branch
         fi
     done
@@ -869,8 +865,11 @@ git_stash_pop () {
 alias gstp=git_stash_pop
 
 gtdd () {
-    gtd "$@"
-    gtD "$@"
+    local _tag=
+    for _tag in "$@"; do
+        gtd "$_tag"
+        gtD "$_tag"
+    done
 }
 
 gtlg () {
@@ -939,6 +938,10 @@ _git_kd () {
     cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
 }
 
+mastered () {
+    has_branch master "$1" master || has_branch master origin/$1 
+}
+
 verbosity () {
     local _stdout=
     for word in "$@"; do
@@ -972,7 +975,12 @@ git_root () {
     [[ -d "$_git_dir" ]] || echo "Not a dir '$_git_dir'"
     [[ -d "$_git_dir" ]] || return 1
     local _full_dir=$(readlink -f $_git_dir)
-    quiet_out git -C "$_full_dir" rev-parse --git-dir || return 1
+    if ! git -C "$_full_dir" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
+        [[ $_quiet ]] && return 1
+        cat /tmp/fd1
+        cat /tmp/fd2 >&2
+        return 1
+    fi
     local _show=
     [[ $_verbose ]] && _show=show_run_command
     [[ $_quiet ]] && _show=
@@ -1017,8 +1025,8 @@ _to_branch () {
 }
 # xxxxxxxxxx
 
-_mastered () {
-    git branch --contains $1 | grep -q master
+has_branch () {
+    git branch --contains $1 2>/dev/null | grep -q $2
 }
 
 git_stash_and () {
@@ -1071,6 +1079,10 @@ git_branch () {
     $_show git rev-parse --abbrev-ref HEAD
 }
 
+sed_origin () {
+    git remote set-url origin $(git remote get-url origin | sed "$@")
+}
+
 # xxxxxxxxxxx
 
 clean_clone() {
@@ -1103,6 +1115,10 @@ _gxi_request () {
 git_status_line_dir_changes () {
     local _dir="$1"; shift
     git_status_line_dir "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
+}
+
+https_origin () {
+    sed_origin -e s,http:,https:,
 }
 
 # xxxxxxxxxxxxx
