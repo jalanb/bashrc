@@ -413,11 +413,6 @@ gpt () {
     gpo --tags
 }
 
-gs__quiet () {
-    shift_dir "$@" && shift
-    _do_git_status $dir "$@"
-}
-
 _show_pre_loop () {
     show_green local
     show_this_branch
@@ -959,7 +954,12 @@ git_root () {
     [[ -d "$_git_dir" ]] || echo "Not a dir '$_git_dir'"
     [[ -d "$_git_dir" ]] || return 1
     local _full_dir=$(readlink -f $_git_dir)
-    quiet_out git -C "$_full_dir" rev-parse --git-dir || return 1
+    if ! git -C "$_full_dir" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
+        [[ $_quiet ]] && return 1
+        cat /tmp/fd1
+        cat /tmp/fd2 >&2
+        return 1
+    fi
     local _show=
     [[ $_verbose ]] && _show=show_run_command
     [[ $_quiet ]] && _show=
