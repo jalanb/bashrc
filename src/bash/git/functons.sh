@@ -629,7 +629,7 @@ gbac () {
 gbdd () {
     local _branch=
     for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
-        if _mastered $_branch; then
+        if mastered $_branch; then
             gbd $_branch
         fi
     done
@@ -925,6 +925,10 @@ _git_kd () {
     cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
 }
 
+mastered () {
+    has_branch master "$1" master || has_branch master origin/$1 
+}
+
 verbosity () {
     local _stdout=
     for word in "$@"; do
@@ -1008,8 +1012,8 @@ _to_branch () {
 }
 # xxxxxxxxxx
 
-_mastered () {
-    git branch --contains $1 | grep -q master 
+has_branch () {
+    git branch --contains $1 2>/dev/null | grep -q $2
 }
 
 git_stash_and () {
