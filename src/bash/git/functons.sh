@@ -1058,6 +1058,10 @@ git_branch () {
     $_show git rev-parse --abbrev-ref HEAD
 }
 
+sed_origin () {
+    git remote set-url origin $(git remote get-url origin | sed "$@")
+}
+
 # xxxxxxxxxxx
 
 clean_clone() {
@@ -1090,6 +1094,10 @@ _gxi_request () {
 git_status_line_dir_changes () {
     local _dir="$1"; shift
     git_status_line_dir "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
+}
+
+https_origin () {
+    sed_origin -e s,http:,https:,
 }
 
 # xxxxxxxxxxxxx
