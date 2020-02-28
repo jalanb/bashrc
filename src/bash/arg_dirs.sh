@@ -58,7 +58,7 @@ __any_dir_arg () {
 }
 
 _first_arg_dir () {
-    dir=$(_show_arg_dir "$@")
+    dir=$(show_arg_dir "$@")
     [[ $dir ]]
 }
 
@@ -68,7 +68,7 @@ __echo_shift_dir () {
     [[ $dir ]]
 }
 
-_show_arg_dir () {
+show_arg_dir () {
     [[ "$*" ]] || return 1
     [[ -d "$1" ]] || return 1
     _python_realpath "$1"

@@ -30,7 +30,7 @@ hl () {
 }
 
 alias ht=history_tail
-alias hh=history_vim
+alias hv=history_vim
 
 # xxx
 

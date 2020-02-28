@@ -4,6 +4,7 @@ Welcome_to $BASH_SOURCE
 
 . ~/jab/environ.d/colour.sh
 . ~/jab/src/bash/coloured.sh
+. ~/jab/src/bash/shift_dir.sh
 . ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
