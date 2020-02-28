@@ -118,6 +118,7 @@ gt () {
     for _tag in "$@"; do
         show_run_command git tag $_tag
     done
+    [[ $_tag ]] || git tag | sort
 }
 
 tc () {
@@ -839,8 +840,11 @@ git_stash_pop () {
 alias gstp=git_stash_pop
 
 gtdd () {
-    gtd "$@"
-    gtD "$@"
+    local _tag=
+    for _tag in "$@"; do
+        gtd "$_tag"
+        gtD "$_tag"
+    done
 }
 
 gtlg () {
