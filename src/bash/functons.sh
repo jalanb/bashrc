@@ -538,6 +538,20 @@ ps3 () {
     fi
 }
 
+pyt () {
+    local __doc__="""Run py.test with args, or default to doctests"""
+    local _pythonpath=$(readlink -f .) _options="--doctest-modules --doctest-glob=*.test --doctest-glob=*.tests"
+    if [[ $@ ]]; then
+        if [[ $1 =~ -[d] ]]; then
+            shift
+        else
+            _options=
+        fi
+    fi
+    [[ $PYTHONPATH ]] && _pythonpath="$_pythonpath:$PYTHONPATH"
+    PYTHONPATH="$_pythonpath" py.test $_options "$@"
+}
+
 raj () {
     pushq ~/jab
     range "$@"
@@ -1290,7 +1304,10 @@ clearly () {
 }
 
 doctest () {
-    python -m doctest "$@"
+    local __doc__="""doctest args"""
+    local _pythonpath=$(readlink -f .) 
+    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    (PYTHONPATH="$_pythonpath" python -m doctest "$@")
 }
 
 has_ext () {
