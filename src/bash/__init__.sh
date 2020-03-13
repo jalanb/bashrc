@@ -31,7 +31,7 @@ local_rc () {
 . ~/bash/tput.sh
 . ~/bash/aliases.sh
 . ~/bash/asserts.sh
-. ~/bash/coloured.sh
+. ~/bash/crayons.sh
 . ~/bash/functons.sh
 . ~/bash/github.sh
 . ~/bash/hosts.sh

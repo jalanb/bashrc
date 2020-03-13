@@ -4,7 +4,7 @@ Welcome_to $BASH_SOURCE
 
 # set -e
 
-. ~/bash/coloured.sh
+. ~/bash/crayons.sh
 . ~/bash/pong.sh
 . ~/bash/python.sh
 
