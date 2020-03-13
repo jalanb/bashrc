@@ -8,12 +8,12 @@ _echo () {
 
 Welcome_to () {
     local _welcome_time=$(python_time $1)
-    _echo Welcome to $1 
+    _echo Welcome to $1 at $_welcome_time
 }
 
 Bye_from () {
     local _bye_time=$(python_time $1)
-    _echo Bye from  $1
+    _echo Bye from  $1 at $_bye_time
 }
 
 
