@@ -1,46 +1,48 @@
-_echo () {
+[[ -f /tmp/welcomes ]] || touch /tmp/welcomes
+
+echo_host () {
     [[ -z $WELCOME_BYE ]] && return
-    echo "$1 $2 to $3 on $(hostname -f)" | grep --color "[/][^/]* "
-    # [[ $4 ]] || return
-    # local _start=0 _end=$4
-    # echo $(( $_end - $_start ))
+    local _arg="$1"
+    shift
+    echo "$_arg $(hostname -f): ""$*"
 }
 
 Welcome_to () {
-    local _welcome_time=$(python_time $1)
-    _echo Welcome to $1 at $_welcome_time
+    local _welcome_time=$(error_free_time)
+    echo "$1:$_welcome_time" >> /tmp/welcomes
+    # echo_host "Welcome to" $1
 }
 
 Bye_from () {
-    local _bye_time=$(python_time $1)
-    _echo Bye from  $1 at $_bye_time
+    local _welcome_time=$(grep $1 /tmp/welcomes | sed -e s,.*:,, )
+    local _bye_time=$(error_free_time)
+    local _name=${1//\//.}
+    [[ $_name ]] && sed -i -e /$_name/d /tmp/welcomes
+    local _diff=$(( $_bye_time - $_welcome_time ))
+    [[ $_diff == 0 ]] && return 0
+    echo "$_diff seconds: $1"
 }
 
 
+error_free_time () {
+    python_time 2>/dev/null
+}
+
 python_time () {
-    local _key=$1
     python << EOP
 import datetime
 
 def taken(diff, days=True):
-    seconds = diff.seconds * 1_000 + diff.microseconds
-    if days:
+    seconds = diff.seconds
+    if not days:
         return seconds
     result = abs(diff.days * 24 * 60 * 60 + seconds)
     return result
 
 then = datetime.datetime.fromtimestamp(0)
 now = datetime.datetime.now()
-since = then - now
+since = now - then
 print(taken(since))
 EOP
 
-}
-
-time_name () {
-    sed -e "s:[/ ]*:_:g"
-}
-
-welcome_time () {
-    local _key=$(time_name "$1") _value=$(python_time)
 }
