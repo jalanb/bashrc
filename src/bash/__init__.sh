@@ -40,11 +40,11 @@ local_rc () {
 . ~/bash/prompt.sh
 . ~/bash/pt.sh
 . ~/bash/pym.sh
-. ~/bash/rf.sh
 . ~/bash/python.sh
+. ~/bash/rf.sh
 . ~/bash/virtualenvwrapper.sh
 . ~/bash/work.sh
-. ~/bash/keyboard/__init__.sh
+. ~/bash/keys.sh
 . ~/bash/git/__init__.sh
 . ~/bash/zzz_renames.sh optional
 
