@@ -143,11 +143,6 @@ gs_ () {
 
 # xxx
 
-dit () {
-    git -C $JIT_DIR
-}
-export JIT_DIR=$(git_root $BASH_SOURCE)
-
 egi () {
     GIT_EDITOR=true gi "$@"
 }
