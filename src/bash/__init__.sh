@@ -31,7 +31,7 @@ local_rc () {
 . ~/bash/tput.sh
 . ~/bash/aliases.sh
 . ~/bash/asserts.sh
-. ~/bash/coloured.sh
+. ~/bash/crayons.sh
 . ~/bash/functons.sh
 . ~/bash/github.sh
 . ~/bash/hosts.sh
@@ -40,11 +40,11 @@ local_rc () {
 . ~/bash/prompt.sh
 . ~/bash/pt.sh
 . ~/bash/pym.sh
-. ~/bash/rf.sh
 . ~/bash/python.sh
+. ~/bash/rf.sh
 . ~/bash/virtualenvwrapper.sh
 . ~/bash/work.sh
-. ~/bash/keyboard/__init__.sh
+. ~/bash/keys.sh
 . ~/bash/git/__init__.sh
 . ~/bash/zzz_renames.sh optional
 

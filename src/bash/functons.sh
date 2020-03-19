@@ -4,7 +4,7 @@ Welcome_to $BASH_SOURCE
 
 # set -e
 
-. ~/bash/coloured.sh
+. ~/bash/crayons.sh
 . ~/bash/pong.sh
 . ~/bash/python.sh
 
@@ -536,6 +536,20 @@ ps3 () {
         ps axf | vim - +
     else ps axf | vim - +/"$*"
     fi
+}
+
+pyt () {
+    local __doc__="""Run py.test with args, or default to doctests"""
+    local _pythonpath=$(readlink -f .) _options="--doctest-modules --doctest-glob=*.test --doctest-glob=*.tests"
+    if [[ $@ ]]; then
+        if [[ $1 =~ -[d] ]]; then
+            shift
+        else
+            _options=
+        fi
+    fi
+    [[ $PYTHONPATH ]] && _pythonpath="$_pythonpath:$PYTHONPATH"
+    PYTHONPATH="$_pythonpath" py.test $_options "$@"
 }
 
 raj () {
@@ -1290,7 +1304,10 @@ clearly () {
 }
 
 doctest () {
-    python -m doctest "$@"
+    local __doc__="""doctest args"""
+    local _pythonpath=$(readlink -f .) 
+    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    (PYTHONPATH="$_pythonpath" python -m doctest "$@")
 }
 
 has_ext () {

@@ -6,7 +6,6 @@ _KEYBOARD_DIR=~/bash/keyboard
 
 source_keyboard () {
     for _script in $(ls $_KEYBOARD_DIR/*.sh); do
-        [[ $(readlink -f $BASH_SOURCE) == $(readlink -f $_script) ]] && continue
         . $_script
     done
 }

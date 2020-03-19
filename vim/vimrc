@@ -618,7 +618,9 @@ function CycleNumber() " {{{3
         set number norelativenumber
     elseif &number == 1 && &relativenumber == 0
         set nonumber relativenumber
-    elseif &number == 0 && &relativenumber == 1
+    " elseif &number == 0 && &relativenumber == 1
+    "     set number relativenumber
+    elseif &number == 1 && &relativenumber == 1
         set nonumber norelativenumber
     endif
 endfunction

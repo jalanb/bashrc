@@ -4,10 +4,12 @@
 
 Welcome_to $BASH_SOURCE
 
+. ~/jab/environ.d/colour.sh
+
 # xxxxxxxx
 
 show_red () {
-    show_colour "${RED}""$*"
+    show_colour $RED "$*"
 }
 
 # xxxxxxxxxx
@@ -18,13 +20,18 @@ show_error () {
 }
 
 show_green () {
-    show_colour "${GREEN}""$*"
+    show_colour $GREEN "$*"
 }
 
 # xxxxxxxxxxx
 
 show_colour () {
-    printf "$*""${NO_COLOUR}" >&2
+    local _line=
+    if [[ $1 =~ -n ]]; then
+        _line="\n"
+        shift
+    fi
+    printf "$*""${NO_COLOUR}${_line}"
 }
 
 # xxxxxxxxxxxx
@@ -36,7 +43,7 @@ show_command () {
 # xxxxxxxxxxxxx
 
 show_red_line () {
-    show_colour_line "${RED}""$*"
+    show_colour_line $RED "$*"
 }
 alias red_line=show_red_line
 alias show_fail=show_red_line
@@ -44,12 +51,12 @@ alias show_fail=show_red_line
 # xxxxxxxxxxxxxxx
 
 show_blue_line () {
-    show_colour_line "${LIGHT_BLUE}""$*"
+    show_colour_line $LIGHT_BLUE "$*"
 }
 # xxxxxxxxxxxxxxx
 
 show_green_line () {
-    show_colour_line "${GREEN}""$*"
+    show_colour_line $GREEN "$*"
 }
 alias green_line=show_green_line
 alias show_pass=show_green_line
