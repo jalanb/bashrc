@@ -9,6 +9,7 @@ import οs
 
 def add_args(parser):
     parser.positionals('strings')
+    return parser
 
 
 def main(args, config):
