@@ -15,7 +15,9 @@ Welcome_to () {
 
 Bye_from () {
     local _welcome_time=$(grep $1 /tmp/welcomes | sed -e s,.*:,, )
+    [[ $_welcome_time ]] || return 1
     local _bye_time=$(error_free_time)
+    [[ $_bye_time ]] || return 1
     local _name=${1//\//.}
     [[ $_name ]] && sed -i -e /$_name/d /tmp/welcomes
     local _diff=$(( $_bye_time - $_welcome_time ))
