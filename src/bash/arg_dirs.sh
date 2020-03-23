@@ -72,7 +72,13 @@ show_arg_dir () {
     [[ "$*" ]] || return 1
     [[ -d "$1" ]] || return 1
     _python_realpath "$1"
-    [[ $1 ]]
+    return 0
+}
+
+show_arg_dir_or_here () {
+    local _result=$(show_arg_dir "$@")
+    [[ $_result ]] || _result=$(readlink -f .)
+    echo $_result
 }
 
 shift_dir () {
