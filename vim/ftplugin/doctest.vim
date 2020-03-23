@@ -11,7 +11,7 @@ set shiftwidth=4
 
 function DocTest()
     write
-    let command = '! TERM=linux && python -m doctest -f -o REPORT_ONLY_FIRST_FAILURE ' . expand('%') . ' | grep -v -e DocTestRunner'
+    let command = '! TERM=linux && python -m doctest ' . expand('%') . ' | grep -v -e DocTestRunner'
     exec command
 endfunction
 
