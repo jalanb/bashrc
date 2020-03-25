@@ -467,14 +467,9 @@ grm () {
         [[ $_one_branch ]] && _branch="$_one_branch"
         [[ $_one_branch ]] && shift
     fi
-    local _options="$@"
-#   if [[ $1 == "theirs" || $1 == "t" ]]; then
-#       shift
-#       _options="-X theirs ""$@"
-#   fi
     local _upstream=master
     gor $_upstream
-    show_run_command git rebase $_options $_upstream $_branch
+    show_run_command git rebase $_upstream $_branch
 }
 
 gro () {

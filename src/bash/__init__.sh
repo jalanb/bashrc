@@ -38,7 +38,6 @@ local_rc () {
 . ~/bash/history.sh
 . ~/bash/jabnet.sh
 . ~/bash/prompt.sh
-. ~/bash/pt.sh
 . ~/bash/pym.sh
 . ~/bash/python.sh
 . ~/bash/rf.sh
