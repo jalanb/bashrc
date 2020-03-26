@@ -11,16 +11,6 @@ Welcome_to $BASH_SOURCE
 # Called functons.sh because "functions" is ... something else
 
 # sorted by strcmp of function name, underscores following
-# x
-
-Y () {
-    local __doc__="""Colourize a command and it's streams"""
-    local _bin=~/jab/bin
-    $_bin/BLUE '$ '"$@"
-    echo
-    ( set -x; "$@" )  > >($_bin/GREEN) 2> >($_bin/RED)
-}
-
 # _
 # x
 
