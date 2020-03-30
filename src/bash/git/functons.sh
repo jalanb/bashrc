@@ -497,6 +497,10 @@ grs () {
     show_run_command git rebase --skip
 }
 
+gru () {
+    show_run_command git remote get-url origin
+}
+
 gsa () {
     git_stash_and "$@"
 }
