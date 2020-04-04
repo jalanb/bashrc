@@ -247,7 +247,7 @@ if !exists("Try")
             let l:exec_command = l:try_command . " > " . l:tempfile_ . " 2>&1 || true"
         else
             let l:temped = 0
-            let l:exec_command = l:try_command
+            let l:exec_command = l:try_command . " || true"
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
         try
