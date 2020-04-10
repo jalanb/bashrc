@@ -7,8 +7,8 @@ nnoremap } :cn<cr>
 nnoremap { :cp<cr>
 
 nnoremap D Oimport pudb; pudb.set_trace()  # pylint: disable=multiple-statements<esc>j
-nnoremap tr :Try<cr>
-nnoremap tt :MashTry<cr>
+nnoremap tt :Try<cr>
+nnoremap tm :MashTry<cr>
 nnoremap <S-F9> :call WritePEP()<cr>
 nnoremap <leader><space> :%s/\s\+$//<cr>
 nnoremap <leader>8   b"aye<c-o>/\(def\\|class\) <c-r>a(<cr>
@@ -208,7 +208,7 @@ if !exists("Try")
         endif
         let l:python_test_command = ""
         if PythonTwo()
-            let l:python_test_command = '! TERM=linux && python -m doctest '
+            let l:python_test_command = '! TERM=linux python -m doctest '
         else
             let l:try_py = ''
             if filereadable('./try.py')
@@ -226,28 +226,30 @@ if !exists("Try")
                 endif
             endif
             if filereadable(l:try_py)
-                let l:python_test_command = "! TERM=linux && " . l:try_py . " -qa "
+                let l:python_test_command = "! TERM=linux " . l:try_py . " -qa "
             endif
         endif
-        if ! l:python_test_command
-            " echoerr "No try command available"
+        if len(l:python_test_command) == 0
+            echoerr "No try command available"
             return
         endif
         let l:try_this_file = expand('%')
         let l:try_command = l:python_test_command . l:try_this_file
-        let l:quieter_command = l:try_command . " | grep -v -e DocTestRunner.merge -e Found.*scripts"
-        return l:quieter_command
+        return l:try_command
     endfunction
 
     function TryTest(quietly)
         let l:try_command = TryCommand()
+        if len(l:try_command) == 0
+            return
+        endif
         if a:quietly
             let l:tempfile_ = tempname()
             let l:temped = 1
             let l:exec_command = l:try_command . " > " . l:tempfile_ . " 2>&1 || true"
         else
             let l:temped = 0
-            let l:exec_command = l:try_command
+            let l:exec_command = l:try_command . " || true"
         endif
         let s:file_fail = substitute(s:file_py,'\.py$','.fail',"")
         try

@@ -4,4 +4,4 @@ nose-pudb
 ipython
 pudb
 pprintpp
-pysyte>=0.7.30
+pysyte>=0.7.37

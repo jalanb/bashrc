@@ -291,7 +291,7 @@ nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>g
 nnoremap <leader>h :call AfterPressing("h")<CR>
 nnoremap <leader>l :call AfterPressing("l")<CR>
-"noremap <leader>i
+nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
@@ -303,7 +303,7 @@ nnoremap <leader>r :set wrap!<cr>
 nnoremap <leader>s :w<cr>
 nnoremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
 nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>v mm:w!<cr>:source $MYVIMRC<cr>`m
+nnoremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
 " Next one is from http://vi.stackexchange.com/a/479/182
 nnoremap <leader>w :w !sudo tee % >/dev/null<cr>L<cr>
 nnoremap <leader>x :call RangerExplorer()<cr>
