@@ -152,16 +152,16 @@ def get_paths_under(directory, glob):
     """Get a list of directories under that directory, matching those globs"""
     result = []
     for name in get_names_in(directory):
-        if name in ('.git', '.idea', '.venv', '.tox'):
+        if name in ('.git', '.idea', '.venv', '.tox', '.pytest_cache'):
             continue
         path = os.path.join(directory, name)
-        if os.path.isdir(path):
+        if fnmatch.fnmatch(name, glob):
+            result.append(path)
+        elif os.path.isdir(path):
             if os.path.realpath(directory).startswith(os.path.realpath(path)):
                 continue
             more = get_paths_under(path, glob)
             result.extend(more)
-        if fnmatch.fnmatch(name, glob):
-            result.append(path)
     return result
 
 

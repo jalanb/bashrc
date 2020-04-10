@@ -52,7 +52,7 @@ stash_herman () {
 }
 
 rr () {
-    local _interactive=
+    local _interactive= _path= _options=
     if [[ "$1" == '-i' ]]; then
         _interactive=1
         shift
@@ -66,35 +66,24 @@ rr () {
         scalp_hermann 
         return 1
     fi
-    local _punchline=
-    local _paths=
-    local _sep=
     for p in "$@"; do
         if [[ "$p" == "/" ]];  then
-            _punchline=$_chewed
-            continue
+            echo $_chewed
+            return
         fi
-        if [[ -e $p ]]; then
+        if [[ -e "$p" ]]; then
             _paths="${_paths}${_sep}${p}"
-            _sep=' '
-            _punchline=
-        fi
-    done
-    if [[ -n $_punchline ]]; then
-        echo $_punchline
-        return 1
-    fi
-    for p in $_paths; do
-        local _path=$(realpath "$p")
-        if [[ "$_path" == $(realpath $HOME) ]]; then
-            scalp_hermann
-        fi
-        local _options=
-        [[ -d $_path ]] && _options='-r'
-        if [[ -n $_interactive ]]; then
-            chewed_rri $_options $_path
-        elif [[ -e $_path ]]; then
-            rm -f $_options $_path
+            _path=$(realpath "$p")
+            [[ -e "$_path" ]] || continue
+            if [[ "$_path" == "$_real_home" ]]; then
+                scalp_hermann
+            fi
+            [[ -d "$_path" ]] && _options='-r'
+            if [[ -n $_interactive ]]; then
+                chewed_rri $_options "$_path"
+            else
+                rm -f $_options "$p"
+            fi
         fi
     done
 }
