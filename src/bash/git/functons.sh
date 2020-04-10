@@ -1141,15 +1141,15 @@ git_log_lines_to_screen () {
 }
 
 git_log_to_screen () {
+    local _log_cmd=$1; shift
     local _number_of_lines=
-    if [[ $1 =~ ^-[l] ]]; then
+    if [[ $1 =~ ^-[ln] ]]; then
         shift
         if [[ $1 =~ ^-?[0-9]+$ ]]; then
             _number_of_lines=$1
             shift
         fi
     fi
-    local _log_cmd=$1; shift
     local _vertical_lines=${LINES:-$(screen_height)}
     local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
     local _lines=${_number_of_lines:-$_one_third_of_vertical}
