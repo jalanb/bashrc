@@ -68,7 +68,6 @@ Welcome_to $BASH_SOURCE
     done
     unset i
     echo Bye from /etc/profile.d/
-    [[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 fi
 
 if [[ \$- == *i* ]]; then
@@ -88,7 +87,6 @@ else
         umask 022
 fi
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /etc/bashrc << EOB
@@ -103,7 +101,6 @@ Welcome_to $BASH_SOURCE
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-[[ -n $WELCOME_BYE ]] && echo Bye from $(basename_ $BASH_SOURCE) in $(dirname_ $(readlink -f $BASH_SOURCE)) on $(hostname -f)
 EOB
 
 cat > /etc/aliases << EOB
