@@ -2,9 +2,6 @@
 
 Welcome_to $BASH_SOURCE
 
-BASH_CD=~/bash/_cd.in
-BASH_RC=~/bash/_rc.sh
-
 dirname_ () {
     local _result=1
     for _arg in "$@"; do

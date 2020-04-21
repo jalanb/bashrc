@@ -1113,34 +1113,6 @@ range () {
     return 0
 }
 
-start () {
-    local __doc__="$ start dir [commands] # for next session"
-    local _d="$1"
-    if [[ ! -d $_d ]]; then echo "! -d "'$1'" ($1)"; return 1; fi
-    shift
-    local _cdd=$_d
-    local _rc="$@"
-    if [[ -z $BASH_CD ]]; then echo "-z $ BASH_CD-'$BASH_CD'-" >&2; fi
-    local _cdf=$BASH_CD
-    if [[ -z $BASH_RC ]]; then echo "-z $ BASH_RC-'$BASH_RC'" >&2; fi
-    local _rcf=$BASH_RC
-    (cd ~/bash
-        if [[ ! -d $_cdd ]]; then echo "! -d "'$_cdd'" ($_cdd)"; return 1; fi
-        [[ -d $_cdd ]] || return 1
-        echo "echo $_cdd > $_cdf"
-        echo "$_cdd" > $_cdf
-        if [[ ! -f hash_bang.sh ]]; then echo "! -f ~/bash/hash_bang.sh" >&2; return 2; fi
-        echo 'Write "'$_rc'" to'" $_rcf"
-        [[ -f $_rcf ]] && chmod u+w $_rcf
-        cp hash_bang.sh $_rcf
-        chmod u+w $_rcf
-        echo $_rc > $_rcf
-        chmod u-w $_rcf
-        # ls -l $_rcf
-        # cat $_rcf
-    )
-}
-
 taocl () {
     curl -s https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md |
     pandoc -f markdown -t html |

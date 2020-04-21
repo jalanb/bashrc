@@ -24,9 +24,6 @@ _bashrc () {
     source $_home_user/__init__.sh
     WELCOME_BYE=
     clean_welcomes
-    source_whyp $_home_user/_rc.sh optional
-    local _local_rc= _local_cd=
-    local_rc $_home_user && _local_cd=$LOCAL_CD
     # set +x
     export PS1="\$? [\u@\h:\$PWD]\n$ "
     # set -x
@@ -35,7 +32,6 @@ _bashrc () {
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     # set -x
     local _bashrc_cd=~/jab
-    [[ -e $_local_cd ]] && _bashrc_cd="$_local_cd"
     # set -x
     # PUDB_CD=1 PYTHONPATH=~/hub/pysyte cde $_bashrc_cd # >/dev/null 2>&1
     # echo cde $_bashrc_cd # >/dev/null 2>&1
