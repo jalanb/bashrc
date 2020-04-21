@@ -874,8 +874,9 @@ mkcd () {
     cd "$@"
 }
 
-mkdp () {
-    mkd "$1" __init__.py
+mkpy () {
+    mkd "$1"
+    touch "$1"/__init__.py
 }
 
 mkv3 () {

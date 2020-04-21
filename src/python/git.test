@@ -1,0 +1,54 @@
+The bash.git module
+===================
+
+    >>> from pysyte.bash import git
+    >>> assert 'cover many git commands' in git.__doc__
+
+More modules for test support
+-----------------------------
+
+    >>> import os
+
+Root of a clone
+---------------
+
+Get root of the current clone from the module under test
+    (Note that module under test is 2 sub-dirs under the root)
+    >>> pysyte_root = git.root_from(git.__file__)
+
+That is a directory
+    >>> assert os.path.isdir(pysyte_root)
+
+It is called "pysyte"
+    >>> assert os.path.basename(pysyte_root) == 'pysyte'
+
+And being a python project, it has an eponymous sub-dir
+    >>> assert os.path.isdir(os.path.join(pysyte_root, 'pysyte'))
+
+Similar method, but gets root from current directory
+    >>> os.chdir(os.path.dirname(git.__file__))
+    >>> assert pysyte_root == git.root()
+
+git commands
+------------
+
+Get most recent log here
+    >>> assert git.log('.', number=1).startswith('commit')
+
+Trying to get a rubbish revsion gets nothing
+    >>> assert not git.log('lkjoioij')
+
+Get checked out branch
+    >>> current_branch = git.branch()
+
+Or all local branches
+    >>> local_branches = git.branches()
+    >>> assert current_branch in local_branches
+
+Or remote branches
+    >>> assert 'remotes/origin/master' in git.branches(remotes=True)
+
+Or branches containing a commit
+    This test assumes current branch is derived from latest master
+    which is good practice, but not guaranteed
+    >>> assert current_branch in git.branches_containing('master')

@@ -823,7 +823,6 @@ grmt () {
 
 grup () {
     show_run_command git remote update origin --prune
-    gbdd
     git branch | grep -q fred && gbD fred
     show_run_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     show_run_command git gc 2>&1 | grep -v -e objects -e ' reused '
