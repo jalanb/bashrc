@@ -1,11 +1,7 @@
-"""Show microseconds since today"""
+#! /usr/bin/env python3
+"""Show seconds since epoch"""
 
-from pysyte.cli.run 
-from pysyte.types.times import taken, since_epoch
-import datetime
+from pysyte.types import times
 
-then = datetime.datetime.fromtimestamp(0)
-now = datetime.datetime.now()
-since = then - now
-print(taken(since))
 
+print(times.seconds_since_epoch())

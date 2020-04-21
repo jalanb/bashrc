@@ -29,22 +29,3 @@ Bye_from () {
 error_free_time () {
     python_time 2>/dev/null
 }
-
-python_time () {
-    python << EOP
-import datetime
-
-def taken(diff, days=True):
-    seconds = diff.seconds
-    if not days:
-        return seconds
-    result = abs(diff.days * 24 * 60 * 60 + seconds)
-    return result
-
-then = datetime.datetime.fromtimestamp(0)
-now = datetime.datetime.now()
-since = now - then
-print(taken(since))
-EOP
-
-}

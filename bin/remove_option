@@ -2,18 +2,16 @@
 """Remove an option from args"""
 
 import re
-
-from pysyte.cli.main import run
-
-
-def add_args(parser):
-    parser.positional('option')
-    parser.positional('string')
+import sys
 
 
-def main(args):
-    result = re.sub(args.option, '', args.string)
+def main():
+    option, *rest = sys.argv[1:]
+    arguments = ' '.join(rest)
+    result = re.sub(f'-{option}', '', arguments)
     print('' if result == '-' else result)
     return True
 
-run(main, add_args=add_args)
+
+if __name__ == '__main__':
+    main()
