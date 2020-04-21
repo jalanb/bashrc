@@ -3,7 +3,7 @@ TMP_WELCOMES=/tmp/welcomes
 [[ -f $TMP_WELCOMES ]] || touch $TMP_WELCOMES
 
 echo_host () {
-    [[ -z $WELCOME_BYE ]] && return
+    [[ $WELCOME_BYE ]] || return
     local _arg="$1"
     shift
     echo "$_arg $(hostname -f): ""$*"
@@ -24,6 +24,7 @@ Bye_from () {
     [[ $_bye_time ]] || return 1
     local _diff=$(( $_bye_time - $_welcome_time ))
     [[ $_diff == 0 ]] && return 0
+    # echo_host "Bye from" $1
     echo "$_diff seconds: $1"
 }
 

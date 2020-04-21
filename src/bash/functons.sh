@@ -706,10 +706,6 @@ wvb () {
     vim -p ~/bash "$@"
 }
 
-wtj () {
-    WELCOME_BYE=$1 . ~/jab/__init__.sh
-}
-
 wvj () {
     vim -p ~/jab/__init__.sh "$@"
 }

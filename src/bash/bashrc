@@ -1,7 +1,5 @@
 #! /bin/bash -x
 
-[[ -n $WELCOME_BYE ]] && echo Welcome to ~/.bashrc on $(hostname -f)
-
 _set_path () {
     LOCAL=/usr/local
     LOCALS="$LOCAL/bin"
@@ -20,7 +18,7 @@ _set_path () {
 _home_user=$HOME/jab
 
 _bashrc () {
-    WELCOME_BYE=
+    WELCOME_BYE=1
     source $_home_user/__init__.sh
     WELCOME_BYE=
     clean_welcomes
@@ -49,8 +47,8 @@ vbb () {
         cd $_home_user
         local _local=
         test -f local/__init__.sh && _local=local/__init__.sh
-        vim -p ~/.bashrc ~/.vimrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log "$@" +/"WELCOME_BYE="
-        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local $_log
+        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log "$@" +/"WELCOME_BYE="
+        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log
     )
     [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
 }
@@ -82,5 +80,4 @@ main () {
 main  "$@"
 # log_main "$@"
 
-[[ -n $WELCOME_BYE ]] && echo Bye from ~/.bashrc on $(hostname -f)
 set +x
