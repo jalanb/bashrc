@@ -54,7 +54,7 @@ lx () {
 ly () {
     local _dir=.
     [[ -d "$1" ]] && _dir="$1" 
-    lx ${_dir}/*.py
+    l ${_dir}/*.py
 }
 
 # xxx
