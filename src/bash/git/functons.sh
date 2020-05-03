@@ -638,7 +638,11 @@ _gbd () {
             show_error Please checkout another branch before deleting master
             return 1
         fi
-        read -p "OK to remove $_current_branch [y]? " -n1 answer
+        if [[ $_current_branch == "fred" ]]; then
+            answer=Y
+        else
+            read -p "OK to remove $_current_branch [y]? " -n1 answer
+        fi
         [[ -n $answer && ! $answer =~ [yY] ]] && return 1
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
