@@ -460,15 +460,25 @@ gri () {
 }
 
 grm () {
+    local _upstream=master
     local _branch=$(get_branch)
     if [[ $1 ]]; then
         local _one=$1
         local _one_branch=$(git branch | grep "^[ ]*[^ ]*$_one[^ ]*$" | head -n 1)
-        [[ $_one_branch ]] && _branch="$_one_branch"
-        [[ $_one_branch ]] && shift
+        if [[ ! $_one_branch ]]; then
+            local _one_remote=$(git branch --remotes | sed -e "s:origin/::" | grep $_one | head -n1)
+            if [[ $_one_remote ]]; then
+                _one_branch=$_one_remote
+                git co $_one_branch
+            fi
+        fi
+        if [[ $_one_branch ]]; then
+            _branch="$_one_branch"
+            shift
+        fi
     fi
-    local _upstream=master
-    gor $_upstream
+    [[ $_branch == $_upstream ]] && echo "Already on $_upstream" >&2
+    [[ $_branch == $_upstream ]] && return 1
     show_run_command git rebase $_upstream $_branch
 }
 
