@@ -810,12 +810,12 @@ gls1 () {
 }
 
 gpod () {
-    local _arg=
-    local _branch=
+    local _arg= _branch= _branches=
     for _arg in "$@"; do
         _branch=$(echo $_arg | sed -e "s:.*origin/::")
-        gpo --delete $_branch
+        _branches="$_branches $_branch"
     done
+    gpo --delete $_branches
 }
 
 gpff () {
