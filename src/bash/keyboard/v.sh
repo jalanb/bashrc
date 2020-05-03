@@ -206,7 +206,7 @@ vvu () {
 
 vvv () {
     (cd ~/jab/vim
-    vim -p . "$@"
+    vim -p "$@" .
     gsi)
 }
 
