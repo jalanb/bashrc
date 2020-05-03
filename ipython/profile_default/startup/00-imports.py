@@ -7,6 +7,7 @@
 import os
 import re
 import sys
+from importlib import reload
 
 try:
     import requests
