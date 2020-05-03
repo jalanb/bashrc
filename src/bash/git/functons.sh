@@ -355,7 +355,7 @@ gmt () {
 }
 
 gob () {
-    local _new_branch=$(_to_branch "$1" | tr ' ' '_') _old_commit=$2
+    local _new_branch=$(_to_branch "$1") _old_commit=$2
     shift 2
     [[ $_new_branch ]] || return 1
     [[ $_old_commit ]] || _old_commit=$(get_branch)
@@ -1013,7 +1013,7 @@ local_gcu () {
 # _xxxxxxxxx
 
 _to_branch () {
-    echo "$1" | tr ' ' '_' | tr "[:upper:]" "[:lower:]"
+    echo "$1" | tr ' ' '_'
 }
 # xxxxxxxxxx
 
