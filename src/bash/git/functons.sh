@@ -74,7 +74,7 @@ go () {
     local __doc__="git checkout"
     local _stashed=
     local _current_branch=$(get_branch)
-    [[ "$@" == $_current_branch ]] && show_error "Already on $_current_branch)"
+    [[ "$@" == $_current_branch ]] && show_error "Already on $_current_branch"
     [[ "$@" == $_current_branch ]] && return 0
     show_command "git checkout $@"
     if git checkout -q "$@" 2>&1 | grep -q fred; then
