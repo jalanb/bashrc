@@ -63,22 +63,22 @@ Host thumber
 #     User builder
 #     IdentityFile ~/.ssh/work/bots/builder.key
 # 
-Host twkwbe54
+Host twkwbe54 tmptest
     Hostname 172.25.32.105
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host twkwbe55
+Host twkwbe55 tmpdev
     Hostname 172.25.32.106
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host twkwbe56
+Host twkwbe56 tmpstage
     Hostname 172.25.32.107
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host twkwbe57
+Host twkwbe57 tmp
     Hostname 172.25.32.108
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
