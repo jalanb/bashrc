@@ -74,7 +74,7 @@ go () {
     local __doc__="git checkout"
     local _stashed=
     local _current_branch=$(get_branch)
-    [[ "$@" == $_current_branch ]] && show_error "Already on $_current_branch)"
+    [[ "$@" == $_current_branch ]] && show_error "Already on $_current_branch"
     [[ "$@" == $_current_branch ]] && return 0
     show_command "git checkout $@"
     if git checkout -q "$@" 2>&1 | grep -q fred; then
@@ -355,7 +355,7 @@ gmt () {
 }
 
 gob () {
-    local _new_branch=$(_to_branch "$1" | tr ' ' '_') _old_commit=$2
+    local _new_branch=$(_to_branch "$1") _old_commit=$2
     shift 2
     [[ $_new_branch ]] || return 1
     [[ $_old_commit ]] || _old_commit=$(get_branch)
@@ -460,15 +460,25 @@ gri () {
 }
 
 grm () {
+    local _upstream=master
     local _branch=$(get_branch)
     if [[ $1 ]]; then
         local _one=$1
         local _one_branch=$(git branch | grep "^[ ]*[^ ]*$_one[^ ]*$" | head -n 1)
-        [[ $_one_branch ]] && _branch="$_one_branch"
-        [[ $_one_branch ]] && shift
+        if [[ ! $_one_branch ]]; then
+            local _one_remote=$(git branch --remotes | sed -e "s:origin/::" | grep $_one | head -n1)
+            if [[ $_one_remote ]]; then
+                _one_branch=$_one_remote
+                git co $_one_branch
+            fi
+        fi
+        if [[ $_one_branch ]]; then
+            _branch="$_one_branch"
+            shift
+        fi
     fi
-    local _upstream=master
-    gor $_upstream
+    [[ $_branch == $_upstream ]] && echo "Already on $_upstream" >&2
+    [[ $_branch == $_upstream ]] && return 1
     show_run_command git rebase $_upstream $_branch
 }
 
@@ -628,7 +638,11 @@ _gbd () {
             show_error Please checkout another branch before deleting master
             return 1
         fi
-        read -p "OK to remove $_current_branch [y]? " -n1 answer
+        if [[ $_current_branch == "fred" ]]; then
+            answer=Y
+        else
+            read -p "OK to remove $_current_branch [y]? " -n1 answer
+        fi
         [[ -n $answer && ! $answer =~ [yY] ]] && return 1
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
@@ -796,12 +810,12 @@ gls1 () {
 }
 
 gpod () {
-    local _arg=
-    local _branch=
+    local _arg= _branch= _branches=
     for _arg in "$@"; do
         _branch=$(echo $_arg | sed -e "s:.*origin/::")
-        gpo --delete $_branch
+        _branches="$_branches $_branch"
     done
+    gpo --delete $_branches
 }
 
 gpff () {
@@ -825,7 +839,8 @@ grup () {
     show_run_command git remote update origin --prune
     git branch | grep -q fred && gbD fred
     show_run_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
-    show_run_command git gc 2>&1 | grep -v -e objects -e ' reused '
+    show_run_command git gc --prune --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    show_run_command git repack -a -d 2>&1
 }
 
 gsri () {
@@ -1013,7 +1028,7 @@ local_gcu () {
 # _xxxxxxxxx
 
 _to_branch () {
-    echo "$1" | tr ' ' '_' | tr "[:upper:]" "[:lower:]"
+    echo "$1" | tr ' ' '_'
 }
 # xxxxxxxxxx
 

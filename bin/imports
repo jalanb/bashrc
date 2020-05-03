@@ -6,23 +6,24 @@ import linecache
 import sys
 from collections import defaultdict
 from pysyte import imports
-from pysyte import scripts
+from pysyte.cli.main import run
 
 __version__ = '0.2.0'
 
 
 def add_args(parser):
     """Parse out command line arguments"""
-    parser.add_argument('source',
-                        help='path to source(s) to be checked')
-    parser.add_argument('-e', '--edit', action='store_true',
-                        help='Show a command for editing')
-    parser.add_argument('-m', '--multiple', action='store_true',
-                        help='Show multiple imports')
-    parser.add_argument('-u', '--unused', action='store_true',
-                        help='Show unused imports')
-    parser.add_argument('-t', '--tmp', action='store_true',
-                        help='Write to /tmp/imports.txt (not stdout)')
+    parser.positional('source', help='path to source(s) to be checked')
+    parser.add_option(
+        '-e', '--edit', action='store_true', help='Show a command for editing')
+    parser.add_option(
+        '-m', '--multiple', action='store_true', help='Show multiple imports')
+    parser.add_option(
+        '-u', '--unused', action='store_true', help='Show unused imports')
+    parser.add_option(
+        '-t', '--tmp', action='store_true',
+        help='Write to /tmp/imports.txt (not stdout)')
+    return parser
 
 
 def gather_lines(method):
@@ -65,7 +66,7 @@ def show_multiple(visitor, stream):
 
 
 def script(args):
-    visitor = imports.extract_imports(args.source)
+    visitor = imports.extract_imports(args.source[0])
     stream = open('/tmp/imports.txt', 'w') if args.tmp else sys.stdout
     modules = []
     if args.multiple:
@@ -74,10 +75,9 @@ def script(args):
         modules.extend(show_unused(visitor, stream))
     if args.edit and modules:
         vim = 'vim -p /tmp/imports.txt' if args.tmp else 'vim'
-        print('\n%s %s +/"\<%s\>"' % (
-            vim, visitor.path, r'\>\|\<'.join(modules)))
+        search = r'\|'.join((rf'\<{_}\>' for _ in modules))
+        print(f'\n{vim} {visitor.path} +/"{search}"')
     return bool(modules)
 
 
-if __name__ == '__main__':
-    sys.exit(scripts.main(script, add_args, __version__, __doc__))
+run(script, add_args)

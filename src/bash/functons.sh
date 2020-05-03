@@ -1251,7 +1251,7 @@ run_as () {
 # xxxxxxx
 
 aliases () {
-    local _sub_dir=
+    local _sub_dir="src/bash"
     [[ $1 == -l ]] && _sub_dir="local"
     [[ $1 == -w ]] && _sub_dir="work"
     echo "$HOME/jab/${_sub_dir}/aliases.sh"
