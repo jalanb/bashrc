@@ -82,20 +82,17 @@ gm () {
 go () {
     local __doc__="git checkout"
     local _stashed=
-    local _current_branch=$(get_branch)
-    [[ "$@" == $_current_branch ]] && show_error "Already on $_current_branch"
-    [[ "$@" == $_current_branch ]] && return 0
-    show_command "git checkout $@"
-    if git checkout -q "$@" 2>&1 | grep -q fred; then
-        if _has_git_changes; then
-            stash_herman || return 1
-            _stashed=1
-        fi
-        show_command "git checkout $@"
-        git checkout -q "$@"
-        # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
-        [[ -n $_stashed ]] && echo "Cairo: git stash pop"
+    local _current_branch=$(get_branch) _wanted_branch="${@//origin\/}"
+    [[ "$_wanted_branch" == $_current_branch ]] && show_error "Already on $_current_branch"
+    [[ "$_wanted_branch" == $_current_branch ]] && return 0
+    show_command "git checkout $_wanted_branch"
+    if _any_git_changes .; then
+        show_error "Cannot checkout $_wanted_branch"
+        show_error "Please clean the index first:"
+        git status
+        return 1
     fi
+    git checkout -q "$_wanted_branch" 
     return 0
 }
 
