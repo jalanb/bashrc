@@ -41,16 +41,6 @@ scalp_hermann () {
     ) 
 }
 
-stash_herman () {
-    read -p "Stash? [Y]" reply
-    [[ -z $reply || $reply =~ "[yY]" ]] || return 1
-    echo "Aldo: Stash Herman"
-    git stash
-    chew
-    echo "Cairo: git stash pop" # https://www.reddit.com/r/ProgrammerHumor/comments/2nvs4c/how_to_hunt_elephants/
-    # http://lmgtfy.com/?q=%22How+To+Hunt+Elephants%22+-%22Kettering%22
-}
-
 rr () {
     local _interactive= _path= _options=
     if [[ "$1" == '-i' ]]; then

@@ -160,10 +160,10 @@ Host twkwbe96 wmpdev
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host wmptest
-    Hostname 172.25.32.95
+Host twkwbe95 wmptest
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
+    Hostname 172.25.32.95
 
 Host twkwbe34 wmpstage
     Hostname 172.25.32.147

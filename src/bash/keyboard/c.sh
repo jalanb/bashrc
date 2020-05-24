@@ -13,7 +13,7 @@ c () {
 # xx
 
 cb () {
-    cde ~/bash/
+    cde ~/bots/bots/bots
 }
 
 if [[ ! $ALIAS_CC ]]; then

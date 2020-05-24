@@ -123,6 +123,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .crt          01;36
 .original     01;36
 .key          01;36
+.pub          01;36
 .pem          01;36
 .sf           01;36
 
