@@ -28,10 +28,19 @@ ga () {
 }
 
 gb () {
-    local _sought="$@"
-    [[ $_sought ]] || _sought=.
-    show_command "git branch $GIT_BRANCH_OPTION | grep $_sought"
-    git branch $GIT_BRANCH_OPTION 2>&1 | grep -v -e warning | grep --color $_sought
+    local _sought= _option=
+    if [[ $1 =~ ^- ]]; then
+        _option=$1
+        shift
+    fi
+    _sought="$@"
+    if [[ $_sought ]]; then
+        show_command "git branch $_option | grep $_sought"
+        git branch $_option 2>&1 | grep -v -e warning | grep --color $_sought
+    else
+        show_command "git branch $_option"
+        git branch $_option 2>&1 | grep -v -e warning
+    fi
 }
 
 gd () {
@@ -162,7 +171,7 @@ gai () {
 }
 
 gba () {
-    GIT_BRANCH_OPTION=-a gb "$@"
+    gb -a "$@"
 }
 
 gbb () {
@@ -174,7 +183,7 @@ gbc () {
 }
 
 gbr () {
-    GIT_BRANCH_OPTION=-r gb "$@"
+    gb -r "$@"
 }
 
 gbt () {
