@@ -1300,7 +1300,13 @@ _gdis () {
 
 _gsi_show_diff () {
     if _git_untracked "$1"; then
-        kat -n "$1"
+        if [[ -d "$1" ]]; then
+            find "$1" -type f -print
+        elif [[ -f "$1" ]]; then
+            kat -n "$1"
+        else
+            echo "Cannot handle $1"
+        fi
         return 0
     fi
     if _git_modified "$1"; then
