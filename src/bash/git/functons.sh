@@ -634,8 +634,12 @@ _gbd () {
     local _current_branch=$(get_branch)
     if [[ "$@" =~ $_current_branch ]]; then
         if [[ "$@" == "master" ]]; then
-            show_error Please checkout another branch before deleting master
-            return 1
+            git checkout $(git tag --list  | sort -V | head -n1)
+            _current_branch=$(get_branch)
+            if [[ $_current_branch == "master" ]]; then
+                show_error Please checkout another branch before deleting master
+                return 1
+            fi
         else
             gom
         fi
@@ -643,8 +647,7 @@ _gbd () {
         if [[ $_current_branch == "master" ]]; then
             show_error Please checkout another branch before deleting master
             return 1
-        fi
-        if [[ $_current_branch == "fred" ]]; then
+        elif [[ $_current_branch == "fred" ]]; then
             answer=Y
         else
             read -p "OK to remove $_current_branch [y]? " -n1 answer
