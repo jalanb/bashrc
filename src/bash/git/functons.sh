@@ -848,7 +848,7 @@ grup () {
     show_run_command git remote update origin --prune
     git branch | grep -q fred && gbD fred
     show_run_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
-    show_run_command git gc --prune --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    show_run_command git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
     show_run_command git repack -a -d 2>&1
 }
 
@@ -1233,9 +1233,8 @@ _any_git_changes () {
     local __doc__="whether the current dir has modified or untacked files"
     local _dir=$1
     [[ -z $_dir ]] && _dir=$PWD
-    if [[ -d "${dir}/.git" ]]; then
-        git -C $_dir status --porcelain | gre "$_git_status_regexp"
-    fi
+    [[ -d "${dir}/.git" ]] || return 1
+    git -C $_dir status --porcelain | grep "$_git_status_regexp"
 }
 
 _has_git_changes () {
@@ -1250,7 +1249,7 @@ _has_git_changes () {
 
 git_simple_status () {
     local arg_dir="${1:-$PWD}"
-    _has_git_changes $arg_dir || return
+    _has_git_changes $arg_dir || return 1
     local _git_dir=$(git_root "$arg_dir")
     [[ -d $_git_dir ]] && git_status_line_dir "$_git_dir" 2> ~/bash/fd/2 | grep "$_git_status_regexp"
 }
