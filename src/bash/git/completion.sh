@@ -1,4 +1,4 @@
-# bash/zsh completion support for core Git.
+# bashcompletion support for core Git.
 #
 # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
 # Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).
@@ -17,7 +17,7 @@
 # To use these routines:
 #
 #    1) Copy this file to somewhere (e.g. ~/.git-completion.sh).
-#    2) Add the following line to your .bashrc/.zshrc:
+#    2) Add the following line to your .bashrc
 #        source ~/.git-completion.sh
 #    3) Consider changing your PS1 to also show the current branch,
 #       see git-prompt.sh for details.
@@ -2573,70 +2573,6 @@ __gitk_main ()
     esac
     __git_complete_revlist
 }
-
-if [[ -n ${ZSH_VERSION-} ]]; then
-    echo "WARNING: this script is deprecated, please see git-completion.zsh" 1>&2
-
-    autoload -U +X compinit && compinit
-
-    __gitcomp ()
-    {
-        emulate -L zsh
-
-        local cur_="${3-$cur}"
-
-        case "$cur_" in
-        --*=)
-            ;;
-        *)
-            local c IFS=$' \t\n'
-            local -a array
-            for c in ${=1}; do
-                c="$c${4-}"
-                case $c in
-                --*=*|*.) ;;
-                *) c="$c " ;;
-                esac
-                array[${#array[@]}+1]="$c"
-            done
-            compset -P '*[=:]'
-            compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
-            ;;
-        esac
-    }
-
-    __gitcomp_nl ()
-    {
-        emulate -L zsh
-
-        local IFS=$'\n'
-        compset -P '*[=:]'
-        compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
-    }
-
-    __gitcomp_file ()
-    {
-        emulate -L zsh
-
-        local IFS=$'\n'
-        compset -P '*[=:]'
-        compadd -Q -p "${2-}" -f -- ${=1} && _ret=0
-    }
-
-    _git ()
-    {
-        local _ret=1 cur cword prev
-        cur=${words[CURRENT]}
-        prev=${words[CURRENT-1]}
-        let cword=CURRENT-1
-        emulate ksh -c __${service}_main
-        let _ret && _default && _ret=0
-        return _ret
-    }
-
-    compdef _git git gitk
-    return
-fi
 
 __git_func_wrap ()
 {
