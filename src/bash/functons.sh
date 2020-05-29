@@ -1191,17 +1191,10 @@ tailer () {
 
 show_line () {
     local _prefix=$1; shift
-    local _ip=
-    local _server=
-    local _suffix=
-    if [[ -n $2 ]]; then
-        _ip="$2"
-        _suffix=", $_ip"
-        _server=$1
-    fi
-    [[ -n $1 ]] && _server=$1
-
-    echo "$_prefix $_server$_suffix"
+    local _server= _suffix=
+    [[ $1 ]] && _server=$1
+    [[ $2 ]] && _suffix=", $2"
+    echo "$_prefix ${_server}$_suffix"
 }
 
 
