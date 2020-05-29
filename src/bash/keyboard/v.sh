@@ -1,17 +1,12 @@
 #! /bin/cat
 
+. ~/keys/m.sh
 
 # x
 
 v () {
     vim -p "$@"
 }
-
-# v () {
-#     [[ -z $1 ]] && vim_none || vim_some "$@"
-# }
-# 
-# xx
 
 v. () {
     v .
@@ -30,19 +25,39 @@ vc () {
 }
 
 vd () {
-    vim_diff "$1" "$2" "$3" -O
+    vim_diff -O "$@"
 }
 
 # ve
 # vf
+# vg
+# vh
+# vi
 
 vj () {
-    (cd ~/jab; v. gsi)
+    (cd ~/jab; vm ~/jab; gsi)
 }
+
+# vk
+# vl
+
+type mvim >/dev/null 2>&1 || . ~/keys/m.sh
+
+vm () {
+    mvim "$@"
+}
+
+# vn
 
 vo () {
     local _command=$(history -p !-1)
     vim -p $($_command 2>/dev/null)
+}
+
+# vp
+
+vq () {
+    vim -p "$@"
 }
 
 vr () {
@@ -50,12 +65,10 @@ vr () {
     vim -p $($_command >/dev/null)
 }
 
-vq () {
-    vim -p "$@"
-}
+# vs
 
 vt () {
-    pyth ~/jab/src/python/vim_traceback.py "$@"
+    python ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vu () {
@@ -73,18 +86,13 @@ vw () {
     v $WHYP.sh "$@"
 }
 
-vz () {
-    v $WHYP.sh "$@"
-}
-
-# vv () {
-#     local __doc__="""Edit vim files"""
-#     [[ -z $* ]] && vvu || vvv "$@"
-# }
+# vx
 
 vy () {
     v $(ls *.py | grep -v '__*.py*')
 }
+
+# vz
 
 # xxx
 
@@ -242,60 +250,74 @@ vvpj () {
 
 # xxxxx
 
-old_v () {
+vimpy () {
     if [[ -z $* ]]; then
-        echo "" > ~/tmp/fred
-        $EDITOR ~/tmp/fred
-    else
-        script=$(pyth ~/jab/src/python/vim.py "$@")
-        status=$?
-        if [[ $status == 0 ]]; then
-            if [[ -n $script ]]; then
-                if [[ -f "$script" ]]; then
-                    bash $script
-                    #rr $script
-                else
-                    echo $script is not a file >&2
-                fi
-            else
-                pyth ~/jab/src/python/vim.py -U "$@"
-            fi
-        else
-            echo Python error: $status
-            if [[ -n $script ]]; then
-                echo Script produced you could run it with
-                echo "  bash $script"
-                echo or debug the problem with
-                echo "  pyth ~/jab/src/python/vim.py -U" "$@"
-            else
-                echo No script produced please try
-                echo pyth ~/jab/src/python/vim.py -U "$@"
-            fi
-        fi
+        vim_none
+        return 0
     fi
+    local _script=$(python ~/jab/src/python/vim.py "$@")
+    status=$?
+    if [[ $status == 0 && -f "$_script" ]]; then
+        bash $_script
+        return $?
+    fi
+    [[ $status == 0 ]] || echo Python error: $status
+    if [[ -f $_script ]]; then
+        echo "Script produced, you could run it with"
+        echo "    bash $_script"
+        echo "or debug the problem with"
+        echo "    pudb ~/jab/src/python/vim.py" "$@"
+    else
+        echo "No script produced please try"
+        echo "    pudb ~/jab/src/python/vim.py" "$@"
+    fi
+    return 1
 }
+
+vd123 () {
+    vd ~/one ~/two ~/three
+}
+
 # xxxxxx
+# xxxxxxx
+# xxxxxxxx
+
+vim_diff () {
+    local one_ ="$1" two_="$2" three_= edit_opts= opt_=
+    shift 2
+    (
+        EDITOR="vim -d "
+        for opt_ in "$@"
+        do
+            [[ $opt_ =~ ^-.* ]] && edit_opts="$edit_opts $opt_" && continue
+            [[ ! $three_ ]] && [[ -e "$opt" ]] && three_=$opt_
+        done
+        if ! _any_diff "$one_ " "$two_" "$three_"; then
+            echo same
+            return 0
+        fi
+        $EDITOR "$one_ " "$two_" "$three_"
+    )
+}
 
 v_safely () {
     local __doc__="""Use a safe vim function"""
     vim -p "$@"
 }
 
-# xxxxxxx
-# xxxxxxxx
 
-vd123 () {
-    vd ~/one ~/two ~/three
-}
+# v () {
+#     [[ $1 ]] && vim_none || vim_some "$@"
+# }
+#
 
-# xxxxx
 vim_none () {
     (echo "" > ~/tmp/fred
     $EDITOR ~/tmp/fred)
 }
 
 vim_some () {
-    script=$(pyth ~/jab/src/python/vim.py "$@")
+    script=$(python ~/jab/src/python/vim.py "$@")
     status=$?
     if [[ $status == 0 ]]; then
         if [[ -n $script ]]; then
@@ -306,7 +328,7 @@ vim_some () {
                 echo $script is not a file >&2
             fi
         else
-            pyth ~/jab/src/python/vim.py -U "$@"
+            python ~/jab/src/python/vim.py -U "$@"
         fi
     else
         echo Python error: $status
@@ -314,14 +336,10 @@ vim_some () {
             echo Script produced you could run it with
             echo "  bash $script"
             echo or debug the problem with
-            echo "  pyth ~/jab/src/python/vim.py -U" "$@"
+            echo "  pudb ~/jab/src/python/vim.py" "$@"
         else
             echo No script produced please try
-            echo pyth ~/jab/src/python/vim.py -U "$@"
+            echo pudb ~/jab/src/python/vim.py "$@"
         fi
     fi
-}
-
-_vim_recover () {
-    [[ -f ~/tmp/fred.vim ]] && vd ~/tmp/fred.vim ~/bash/functons.sh
 }

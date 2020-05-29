@@ -44,8 +44,7 @@ post_vimming () {
 #
 # This function is called after editting, arguments are same as vim got
 #
-    local arg
-    local end_options=
+    local arg= end_options=
     for arg in "$@"
     do
         [[ $arg == "--" ]] && end_options="--"

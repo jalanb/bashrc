@@ -7,18 +7,11 @@ import re
 import sys
 from fnmatch import fnmatch
 import tempfile
-try:
-    from subprocess import getoutput
-except ImportError:
-    from commands import getoutput
+from subprocess import getoutput
 
 
-try:
-    from pysyte.types.lists import de_duplicate
-    from pysyte.types.paths import tab_complete
-except ImportError:
-    sys.stderr.write('Import Error with %s\n' % sys.executable)
-    sys.exit(1)
+from pysyte.types.lists import de_duplicate
+from pysyte.types import paths
 
 
 import script_paths
@@ -335,7 +328,7 @@ def vim_tab_complete(string):
         return string
     if not missing_extension(string):
         return string
-    return tab_complete(string)
+    return paths.tab_complete(string)
 
 
 def expand(string):
@@ -346,17 +339,17 @@ def expand(string):
     """
     source_code_extensions = ['py', 'sh', 'c', 'cpp', ]
     stem = string[:-1] if string[-1] == '.' else string
-    return ['.'.join(stem, e) for e in source_code_extensions]
+    return ['.'.join((stem, e)) for e in source_code_extensions]
 
 
 def interpret_sys_argv():
     """Interpret the args from a command line"""
     options, not_options = divide(strip_puv_options(sys.argv[1:]), is_option)
     options = separate_options(options)
-    args = de_duplicate([tab_complete(a, expand) for a in not_options])
-    paths = script_paths.arg_paths(args) or [
-        paths.pyc_to_py(a) for a in tab_complete(args, expand)]
-    return paths, options
+    args = de_duplicate([paths.tab_complete(a, expand) for a in not_options])
+    args_paths = script_paths.arg_paths(args) or [
+        paths.pyc_to_py(a) for a in paths.tab_complete(args, expand)]
+    return args_paths, options
 
 
 def _vim_options(text_files, options):
