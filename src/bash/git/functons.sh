@@ -315,8 +315,10 @@ glf () {
 }
 
 glg () {
-    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@"
+    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@" 2>/dev/null
+    local result_=$?
     echo
+    return result
 }
 
 gll () {
@@ -1049,7 +1051,7 @@ _gxi_menu () {
 }
 
 get_branch () {
-    git_branch -q "$@" 2>/dev/null
+    git rev-parse --abbrev-ref HEAD 2> /dev/null || return 1
 }
 
 git_branch () {
