@@ -1,10 +1,11 @@
 #! /bin/cat
 
 
-. ~/jab/src/bash/arg_dirs.sh
-. ~/jab/src/bash/crayons.sh
-. ~/jab/src/bash/git/status.sh
-. ~/jab/src/bash/keyboard/r.sh
+. ~/bash/arg_dirs.sh
+. ~/bash/crayons.sh
+. ~/bash/git/gsi.sh
+. ~/bash/git/status.sh
+. ~/bash/keyboard/r.sh
 
 # functons.sh for git
 
@@ -511,11 +512,6 @@ gsg () {
     glg
 }
 
-gsi () {
-    local _doc___="""Menu to help clearing git status"""
-    gxi gsi_show_diff_ gsi_response_ "$@"
-}
-
 gss () {
     local _doc___="""git short status"""
     gs --short "$@"
@@ -561,15 +557,6 @@ gvd () {
     [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
-gvi () {
-    local _doc___="""Menu to help vimming git status"""
-    gxi gvi_show_diff_ gvi_response_ "$@"
-}
-
-gut ()
-{
-    [[ $1 =~ [-][v] ]] && git --version || dit "$@"
-}
 gxi () {
     local _doc___=""""""
     local show_diff_=$1; shift
@@ -605,10 +592,6 @@ gxi () {
     [[ -n $stashed_ ]] && git_stash_pop
     git dn --staged
     git status
-}
-
-sit () {
-    git "$@"
 }
 
 
@@ -1087,13 +1070,16 @@ gxi_menu_ () {
 }
 
 get_branch () {
-    git rev-parse --abbrev-ref HEAD 2> /dev/null || return 1
+    git_branch -q "$@"
 }
 
 git_branch () {
     local show_=show_run_command
     [[ $1 == -q ]] && show_=
-    $show_ git rev-parse --abbrev-ref HEAD
+    [[ $1 == -q ]] && shift
+    [[ $1 == -v ]] && show_=show_run_command
+    [[ $1 == -v ]] && shift
+    $show_ git rev-parse --abbrev-ref $( [[ $@ ]] && echo "$@" || "HEAD") 2> /dev/null || return 1
 }
 
 sed_origin () {
@@ -1121,18 +1107,6 @@ git_changed () {
 }
 
 # xxxxxxxxxxxx
-
-gxi_request_ () {
-    gxi_menu_ $1
-    read -e -n1 -p " " answer
-    [[ $answer =~ [qQ] ]] && return 1
-    return 0
-}
-
-git_status_line_dir_changes () {
-    local dir_="$1"; shift
-    git_status_line_dir "$dir_" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
-}
 
 https_origin () {
     sed_origin -e s,http:,https:,
@@ -1222,6 +1196,10 @@ do_git_status_ () {
 
 in_repo () {
     git rev-parse --is-inside-work-tree
+}
+
+show_branch () {
+    git_branch -v "$@"
 }
 
 show_git_time () {
@@ -1322,48 +1300,11 @@ gdis_ () {
     git status --short $1
 }
 
-gsi_show_diff_ () {
-    if stat_untracked "$1"; then
-        if [[ -d "$1" ]]; then
-            find "$1" -type f -print
-        elif [[ -f "$1" ]]; then
-            kat -n "$1"
-        else
-            echo "Cannot handle $1"
-        fi
-        return 0
-    fi
-    if stat_modified "$1"; then
-        local lines_=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $lines_ < $LINES ]]; then
-            git di "$1"
-        else
-            gdi "$1"
-        fi
-    fi
-    git status --short $1
-}
-
-gvi_show_diff_ () {
-    git diff "$1"
-    git status --short $1
-}
-
 ggi_response_ () {
     [[ $answer =~ [rR] ]] && gsi_drop_ "$1" && return 0
     [[ $answer =~ [lL] && -f $1 ]] && rm -f "$1" && return 0
     [[ $answer =~ [vV] ]] && gsi_vim_ "$1" && return 0
     gxi_response_ "$@"
-}
-
-gsi_response_ () {
-    [[ $answer =~ [yY] ]] && ga "$1" && return 0
-    ggi_response_ "$@"
-}
-
-gvi_response_ () {
-    [[ $answer =~ [yY] ]] && ga "$1" && return 0
-    ggi_response_ "$@"
 }
 
 gxi_response_ () {
@@ -1406,19 +1347,6 @@ status_line_ () {
 
 status_chars_ () {
     git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
-}
-
-gxi_stash_ () {
-    if [[ -z $stashed_ ]]; then
-        stashed_=gxi
-        git stash
-    fi
-}
-
-gxi_grep_ () {
-    local file_=$1; shift
-    [[ -z "$@" ]] && return 0
-    grep -q "$@" $file_
 }
 
 gsi_drop_ () {

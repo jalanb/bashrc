@@ -270,19 +270,6 @@ gsij () {
     gsi ~/jab
 }
 
-kad () {
-    head -n1 | grep -q '#!' || return;
-    kat -f '{$' -l '^}' "$@" | bat -l bash
-}
-
-key () {
-    . ~/bash/keyboard/$1.sh
-}
-
-kpj () {
-    rsync -a -e "ssh -i $HOME/.ssh/id_jab" "$@"
-}
-
 l1d () {
     ld -1 "$@"
 }
@@ -748,10 +735,6 @@ init () {
     [[ -f $_init ]] || _init=bash/__init__.sh
     [[ -f $_init ]] || _init=src/bash/__init__.sh
     [[ -f $_init ]] && . $_init
-}
-
-keys () {
-    . ~/keys/__init__.sh
 }
 
 lkra () {
