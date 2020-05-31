@@ -114,10 +114,6 @@ gv () {
     g -v "$@"
 }
 
-hd () {
-    vim_diff "$1" "$2" "$3" -o
-}
-
 
 _free_line_here () {
     :
@@ -1195,17 +1191,10 @@ tailer () {
 
 show_line () {
     local _prefix=$1; shift
-    local _ip=
-    local _server=
-    local _suffix=
-    if [[ -n $2 ]]; then
-        _ip="$2"
-        _suffix=", $_ip"
-        _server=$1
-    fi
-    [[ -n $1 ]] && _server=$1
-
-    echo "$_prefix $_server$_suffix"
+    local _server= _suffix=
+    [[ $1 ]] && _server=$1
+    [[ $2 ]] && _suffix=", $2"
+    echo "$_prefix ${_server}$_suffix"
 }
 
 
@@ -1523,28 +1512,6 @@ _any_diff () {
     _diff_two_files $1 $3 && return 0
     _diff_two_files $2 $3 && return 0
     return 1
-}
-
-vim_diff () {
-    local _first_file="$1"
-    shift
-    second_file="$1"
-    shift
-    third_file=
-    editor_command="vim -d "
-    for arg in "$@"
-    do
-        [[ $arg =~ ^-.* ]] && editor_command="$editor_command $arg" && continue
-        [[ -z $third_file ]] && third_file=$arg
-    done
-    if ! _any_diff "$_first_file" "$second_file" "$third_file"; then
-        echo same
-        return 0
-    fi
-    if [[ -n $third_file ]]; then
-        $editor_command "$_first_file" "$second_file" "$third_file"
-    else $editor_command "$_first_file" "$second_file"
-    fi
 }
 
 # xxxxxxxxxx

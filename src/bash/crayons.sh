@@ -3,7 +3,7 @@
 . ~/bash/welcome.sh
 
 
-. ~/jab/environ.d/colour.sh
+[[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
 # xxxxxxxx
 

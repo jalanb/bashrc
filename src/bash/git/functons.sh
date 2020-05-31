@@ -939,14 +939,6 @@ gorll () {
 
 # xxxxxx
 # xxxxxxx
-
-_show_git_here () {
-    git_root -q . || return
-    local days=${1:-5}
-    local _log=$(git -C $PWD log -n 1)
-    [[ $? ]] && git -C $PWD lg --since="$days days ago"
-}
-
 # xxxxxxxx
 
 _git_kd () {
@@ -957,14 +949,8 @@ mastered () {
     has_branch master "$1" master || has_branch master origin/$1 
 }
 
-verbosity () {
-    local _stdout=
-    for word in "$@"; do
-        [[ $word =~ -[qQ] ]] && _stdout=off
-        [[ $word =~ -[vV] ]] && _stdout=on
-    done
-    echo $_stdout
-    true
+get_root () {
+    git_root -q "$@" 2>/dev/null
 }
 
 git_root () {
@@ -991,31 +977,11 @@ git_root () {
     [[ -d "$_git_dir" ]] || return 1
     local _full_dir=$(readlink -f $_git_dir)
     if ! git -C "$_full_dir" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
-        [[ $_quiet ]] && return 1
         cat /tmp/fd1
         cat /tmp/fd2 >&2
         return 1
     fi
-    local _show=
-    [[ $_verbose ]] && _show=show_run_command
-    [[ $_quiet ]] && _show=
-    local _short=$(short_dir $_git_dir)
-    [[ $_show ]] && show_command git -C "$_full_dir" rev-parse --show-toplevel
-    local _toplevel_dir=$(git -C "$_full_dir" rev-parse --show-toplevel | head -n 1)
-    [[ ! "$_toplevel_dir" ]] && _toplevel_dir=$(readlink -f .)
-    [[ -d $_toplevel_dir ]] || echo "Not a dir: '$_toplevel_dir'"
-    [[ -d $_toplevel_dir ]] || return 1
-    local _root_dir=$(readlink -f $_toplevel_dir)
-    [[ -d $_root_dir ]] || echo "Not a dir: '$_root_dir'"
-    [[ -d $_root_dir ]] || return 1
-    [[ $_stdout == off ]] && return
-    echo $_root_dir
-    if [[ $_origin ]]; then
-        _short=$(short_dir $_root_dir)
-        show_command git -C $_full_dir remote get-url origin
-        git -C $_full_dir remote get-url origin
-    fi
-    return 0
+    $_show git -C "$_full_dir" rev-parse --show-toplevel
 }
 
 # xxxxxxxxx
@@ -1083,9 +1049,7 @@ _gxi_menu () {
 }
 
 get_branch () {
-    git branch > /dev/null 2>&1 || return 1
-    git status >/dev/null 2>&1 || return 1
-    git_branch -q 2>/dev/null || return 1
+    git_branch -q "$@" 2>/dev/null
 }
 
 git_branch () {

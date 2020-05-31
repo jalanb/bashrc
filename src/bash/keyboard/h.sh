@@ -1,6 +1,7 @@
 #! /usr/bin/env kat -n
 
 . ~/bash/history.sh
+. ~/bash/keyboard/v.sh
 
 
 # _
@@ -19,6 +20,10 @@ alias HG=$(which hg 2>/dev/null) # With apologies, but don't really use it
 
 h1 () {
     history_tail 2 | head -n 1
+}
+
+hd () {
+    vim_diff -o "$@"
 }
 
 alias hg=history_grep

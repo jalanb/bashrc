@@ -1,0 +1,12 @@
+
+" vim:fdm=marker
+"
+" MacVim.app {{{1
+"
+" vim {{{ 3
+
+set nocompatible
+
+" screen {{{2 
+set fullscreen
+
