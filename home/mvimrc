@@ -1,0 +1,16 @@
+
+" vim:fdm=marker
+"
+" MacVim.app {{{1
+"
+" vim {{{ 3
+
+set nocompatible
+
+" screen {{{2 
+set fullscreen
+
+" Keyboard {{{1
+" ordinary keys {{{2
+" LETTERS {{{3
+nnoremap Q <esc>:q!<CR>
