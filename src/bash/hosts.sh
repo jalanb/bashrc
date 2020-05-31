@@ -26,4 +26,3 @@ vhosts () {
     . ~/jab/src/bash/jabnet.sh
 }
 
-Bye_from $BASH_SOURCE

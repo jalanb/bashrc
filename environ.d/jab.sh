@@ -57,4 +57,3 @@ _main () {
 
 _main
 
-Bye_from $BASH_SOURCE

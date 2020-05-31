@@ -11,4 +11,3 @@ g () {
 }
 
 
-Bye_from $BASH_SOURCE

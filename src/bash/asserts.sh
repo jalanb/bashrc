@@ -179,4 +179,3 @@ _assert_source-whyp () {
 }
 
 
-Bye_from $BASH_SOURCE

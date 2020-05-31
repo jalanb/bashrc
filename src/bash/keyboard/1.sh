@@ -141,4 +141,3 @@ alias 2444="244; gfff"
 alias 2544="254; gfff"
 # xxxx
 
-Bye_from $BASH_SOURCE

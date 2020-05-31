@@ -73,4 +73,3 @@ _source_jab_environ () {
 
 _source_jab_environ
 
-Bye_from $BASH_SOURCE

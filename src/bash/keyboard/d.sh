@@ -13,4 +13,3 @@ ddf () {
     ( shopt -s extdebug; declare -F "$1" )
 }
 
-Bye_from $BASH_SOURCE

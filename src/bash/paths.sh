@@ -1,6 +1,5 @@
 #! /bin/cat
 
-. ~/bash/welcome.sh
 
 
 # x

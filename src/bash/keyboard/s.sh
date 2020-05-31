@@ -43,4 +43,3 @@ swf () {
     s $(functons -w)
 }
 
-Bye_from $BASH_SOURCE

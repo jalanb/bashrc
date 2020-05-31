@@ -53,4 +53,3 @@ rr.. () {
 }
 alias rr,,=rr..
 
-Bye_from $BASH_SOURCE

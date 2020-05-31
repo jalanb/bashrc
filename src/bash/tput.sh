@@ -19,4 +19,3 @@ screen_width () {
     tput cols
 }
 
-Bye_from $BASH_SOURCE

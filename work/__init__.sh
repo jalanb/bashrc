@@ -8,5 +8,4 @@
 
 export _WORK_DIR=~/jab/work
 
-Bye_from $BASH_SOURCE
 

@@ -7,8 +7,8 @@
 
 # functons.sh for git
 
-_git_status_char_regexp="[ MADRCU]"
-_git_status_regexp="^${_git_status_char_regexp}${_git_status_char_regexp}"
+git_status_char_regexp_="[ MADRCU]"
+git_status_regexp_="^${git_status_char_regexp_}${git_status_char_regexp_}"
 # sorted by strcmp of function name
 
 # x
@@ -27,18 +27,18 @@ ga () {
 }
 
 gb () {
-    local _sought= _option=
+    local sought_= option_=
     if [[ $1 =~ ^- ]]; then
-        _option=$1
+        option_=$1
         shift
     fi
-    _sought="$@"
-    if [[ $_sought ]]; then
-        show_command "git branch $_option | grep $_sought"
-        git branch $_option 2>&1 | grep -v -e warning | grep --color $_sought
+    sought_="$@"
+    if [[ $sought_ ]]; then
+        show_command "git branch $option_ | grep $sought_"
+        git branch $option_ 2>&1 | grep -v -e warning | grep --color $sought_
     else
-        show_command "git branch $_option"
-        git branch $_option 2>&1 | grep -v -e warning
+        show_command "git branch $option_"
+        git branch $option_ 2>&1 | grep -v -e warning
     fi
 }
 
@@ -56,14 +56,14 @@ GI () {
 }
 
 gi () {
-    local __doc__="git in"
+    local _doc___="git in"
     if [[ "$@" ]]; then
-        local _storage=/tmp/gi.sh
+        local storage_=/tmp/gi.sh
         show_command "$@"
-        python -c "print('git commit -m\"$*\"')" > $_storage
-        cat $_storage
-        bash $_storage
-        rr $_storage
+        python -c "print('git commit -m\"$*\"')" > $storage_
+        cat $storage_
+        bash $storage_
+        rr $storage_
     else
         show_run_command git commit --verbose
     fi
@@ -79,19 +79,19 @@ gm () {
 }
 
 go () {
-    local __doc__="git checkout"
-    local _stashed=
-    local _current_branch=$(get_branch) _wanted_branch="${@//origin\/}"
-    [[ "$_wanted_branch" == $_current_branch ]] && show_error "Already on $_current_branch"
-    [[ "$_wanted_branch" == $_current_branch ]] && return 0
-    show_command "git checkout $_wanted_branch"
-    if _any_git_changes .; then
-        show_error "Cannot checkout $_wanted_branch"
+    local _doc___="git checkout"
+    local stashed_=
+    local current_branch_=$(get_branch) wanted_branch_="${@//origin\/}"
+    [[ "$wanted_branch_" == $current_branch_ ]] && show_error "Already on $current_branch_"
+    [[ "$wanted_branch_" == $current_branch_ ]] && return 0
+    show_command "git checkout $wanted_branch_"
+    if any_git_changes_ .; then
+        show_error "Cannot checkout $wanted_branch_"
         show_error "Please clean the index first:"
         git status
         return 1
     fi
-    git checkout -q "$_wanted_branch" 
+    git checkout -q "$wanted_branch_" 
     return 0
 }
 
@@ -99,8 +99,8 @@ gp () {
     show_command "git push $@"
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
-            local _command=$(echo "$MSG" | grep set-upstream)
-            show_run_command $_command
+            local command_=$(echo "$MSG" | grep set-upstream)
+            show_run_command $command_
         else
             show_error "$MSG"
             return 1
@@ -113,36 +113,36 @@ gr () {
 }
 
 gs () {
-    local __doc__="""git status front end"""
+    local _doc___="""git status front end"""
     gs_ "$@"
 }
 
 gt () {
-    local _tag=
-    for _tag in "$@"; do
-        show_run_command git tag $_tag
+    local tag_=
+    for tag_ in "$@"; do
+        show_run_command git tag $tag_
     done
-    [[ $_tag ]] || git tag | sort
+    [[ $tag_ ]] || git tag | sort
 }
 
 tc () {
-    local _global_config=; test -f ~/.gitconfig && _global_config=~/.gitconfig
-    local _global_ignore=; test -f ~/.gitignore_global && _global_ignore=~/.gitignore_global
-    local _local_config=; test -f .git/config && _local_config=.git/config
-    local _local_ignore=; test -f .gitignore && _local_ignore=.gitignore
-    local _local_creds=; test -f ~/.git-credentials && _local_creds=~/.git-credentials
-    test -f ~/.git-credentials.more && _local_creds="$_local_creds ~/.git-credentials.more"
-    vim -p $_global_config $_global_ignore $_local_ignore $_local_config $_local_creds
+    local global_config_=; test -f ~/.gitconfig && global_config_=~/.gitconfig
+    local global_ignore_=; test -f ~/.gitignore_global && global_ignore_=~/.gitignore_global
+    local local_config_=; test -f .git/config && local_config_=.git/config
+    local local_ignore_=; test -f .gitignore && local_ignore_=.gitignore
+    local local_creds_=; test -f ~/.git-credentials && local_creds_=~/.git-credentials
+    test -f ~/.git-credentials.more && local_creds_="$local_creds_ ~/.git-credentials.more"
+    vim -p $global_config_ $global_ignore_ $local_ignore_ $local_config_ $local_creds_
 }
 
 ts () {
     tig status
 }
 
-# _xx
+# xx_
 
 gs_ () {
-    local __doc__="""git status back end"""
+    local _doc___="""git status back end"""
     show_run_command git status "$@"
 }
 
@@ -162,7 +162,7 @@ gac () {
 }
 
 gai () {
-    local __doc__="""Add args interactively"""
+    local _doc___="""Add args interactively"""
     show_run_command git add --patch "$@"
 }
 
@@ -188,11 +188,11 @@ gbt () {
 }
 
 gbd () {
-    _gbd -d "$@"
+    gbd_ -d "$@"
 }
 
 gbD () {
-    _gbd -D "$@"
+    gbd_ -D "$@"
 }
 
 gbo () {
@@ -225,7 +225,7 @@ gdf () {
 }
 
 gdi () {
-    local __doc__="""git di args"""
+    local _doc___="""git di args"""
     git di "$@"
 }
 
@@ -262,9 +262,9 @@ gff () {
     gor master 2>/dev/null | grep -v "up to date"
     gb
     bump show
-    local _lines=5
-    [[ $1 =~ [0-9]+ ]] && _lines=$(( $1 + 3 ))
-    glg $_lines | grep -v -e 'nothing to commit' -e 'On branch'
+    local lines_=5
+    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
+    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
 }
 
 gfm () {
@@ -277,8 +277,8 @@ gft () {
 }
 
 ggi () {
-    local __doc__="""Me neither"""
-    gxi _gdis _ggi_response "$@"
+    local _doc___="""Me neither"""
+    gxi gdis_ ggi_response_ "$@"
 }
 
 gia () {
@@ -300,7 +300,7 @@ gl1 () {
 }
 
 glone () {
-    local __doc__="""pronounced 'g l one'"""
+    local _doc___="""pronounced 'g l one'"""
     gl --oneline "$@"
 }
 
@@ -309,13 +309,13 @@ gla () {
 }
 
 glf () {
-    local _number='-n 3'
-    [[ "$@" =~ -n ]] && _number=
-    git lf $_number "$@"
+    local number_='-n 3'
+    [[ "$@" =~ -n ]] && number_=
+    git lf $number_ "$@"
 }
 
 glg () {
-    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@" 2>/dev/null
+    git_log_lines_to_screen -n $number_of_commits_ "$@" 2>/dev/null
     local result_=$?
     echo
     return result
@@ -350,10 +350,10 @@ gma () {
 }
 
 gmm () {
-    local _branch=$(get_branch)
+    local branch_=$(get_branch)
     go master
     grr
-    go $_branch
+    go $branch_
     gm master
 }
 
@@ -362,11 +362,11 @@ gmt () {
 }
 
 gob () {
-    local _new_branch=$(_to_branch "$1") _old_commit=$2
+    local new_branch_=$(to_branch_ "$1") old_commit_=$2
     shift 2
-    [[ $_new_branch ]] || return 1
-    [[ $_old_commit ]] || _old_commit=$(get_branch)
-    show_run_command git checkout -b $_new_branch $_old_commit
+    [[ $new_branch_ ]] || return 1
+    [[ $old_commit_ ]] || old_commit_=$(get_branch)
+    show_run_command git checkout -b $new_branch_ $old_commit_
 }
 
 gof () {
@@ -410,8 +410,8 @@ gpf () {
     show_command "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
-            local _command=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
-            show_run_command $_command
+            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
+            show_run_command $command_
         else
             show_error "$MSG"
             return 1
@@ -435,7 +435,7 @@ gpt () {
     gpo --tags
 }
 
-_show_pre_loop () {
+show_pre_loop_ () {
     show_green local
     show_this_branch
     show_green status
@@ -460,39 +460,39 @@ grh () {
 }
 
 gri () {
-    local __doc__="""Rebase args interactively"""
-    local _args="HEAD~2"
-    [[ "$@" ]] && _args="$@"
-    show_run_command git rebase --interactive $_args
+    local _doc___="""Rebase args interactively"""
+    local args_="HEAD~2"
+    [[ "$@" ]] && args_="$@"
+    show_run_command git rebase --interactive $args_
 }
 
 grm () {
-    local _upstream=master
-    local _branch=$(get_branch)
+    local upstream_=master
+    local branch_=$(get_branch)
     if [[ $1 ]]; then
-        local _one=$1
-        local _one_branch=$(git branch | grep "^[ ]*[^ ]*$_one[^ ]*$" | head -n 1)
-        if [[ ! $_one_branch ]]; then
-            local _one_remote=$(git branch --remotes | sed -e "s:origin/::" | grep $_one | head -n1)
-            if [[ $_one_remote ]]; then
-                _one_branch=$_one_remote
-                git co $_one_branch
+        local one_=$1
+        local one_branch_=$(git branch | grep "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
+        if [[ ! $one_branch_ ]]; then
+            local one_remote_=$(git branch --remotes | sed -e "s:origin/::" | grep $one_ | head -n1)
+            if [[ $one_remote_ ]]; then
+                one_branch_=$one_remote_
+                git co $one_branch_
             fi
         fi
-        if [[ $_one_branch ]]; then
-            _branch="$_one_branch"
+        if [[ $one_branch_ ]]; then
+            branch_="$one_branch_"
             shift
         fi
     fi
-    [[ $_branch == $_upstream ]] && echo "Already on $_upstream" >&2
-    [[ $_branch == $_upstream ]] && return 1
-    show_run_command git rebase $_upstream $_branch
+    [[ $branch_ == $upstream_ ]] && echo "Already on $upstream_" >&2
+    [[ $branch_ == $upstream_ ]] && return 1
+    show_run_command git rebase $upstream_ $branch_
 }
 
 gro () {
-    local _origin=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
-    if [[ -n $_origin ]]; then
-        echo $_origin
+    local origin_=$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))
+    if [[ -n $origin_ ]]; then
+        echo $origin_
         return 0
     fi
     show_error No origin
@@ -528,17 +528,17 @@ gsg () {
 }
 
 gsi () {
-    local __doc__="""Menu to help clearing git status"""
-    gxi _gsi_show_diff _gsi_response "$@"
+    local _doc___="""Menu to help clearing git status"""
+    gxi gsi_show_diff_ gsi_response_ "$@"
 }
 
 gss () {
-    local __doc__="""git short status"""
+    local _doc___="""git short status"""
     gs --short "$@"
 }
 
 git_stash () {
-    local __doc__="""git stash"""
+    local _doc___="""git stash"""
     show_run_command git stash "$@"
 }
 
@@ -547,7 +547,7 @@ gso () {
 }
 
 gsp () {
-    local __doc__="""Porcelain status"""
+    local _doc___="""Porcelain status"""
     gs --porcelain
 }
 
@@ -572,7 +572,7 @@ gtl () {
 }
 
 gvd () {
-    local __doc__="""vim diff all changed files"""
+    local _doc___="""vim diff all changed files"""
     shift_dir "$@" && shift
     for f in $(git_status_line_dir $dir | grep "^ M" | cut -dM -f2)
     do
@@ -583,43 +583,43 @@ gvd () {
 }
 
 gvi () {
-    local __doc__="""Menu to help vimming git status"""
-    gxi _gvi_show_diff _gvi_response "$@"
+    local _doc___="""Menu to help vimming git status"""
+    gxi gvi_show_diff_ gvi_response_ "$@"
 }
 
 gxi () {
-    local __doc__=""""""
-    local _show_diff=$1; shift
-    local _response=$1; shift
-    local _responded=
+    local _doc___=""""""
+    local show_diff_=$1; shift
+    local response_=$1; shift
+    local responded_=
     dir=$(show_arg_dir_or_here "$1") && shift
-    _stashed=
+    stashed_=
     GXI_QUERY=
     show_green remote
     glf 1
     glg
     show_this_branch -r
-    _show_pre_loop
+    show_pre_loop_
     while git status --short "$dir"; do
         show_green staged
         git di --staged
         show_green files
-        _responded=
-        for _file in $(git_status_line_dir_changes "$dir"); do
-            [[ -n "$_file" ]] || continue
-            _gxi_grep $_file $GXI_QUERY || continue
-            $_show_diff "$_file"
-            _gxi_request "$_file" || break
-            $_response "$_file" && _responded=1
+        responded_=
+        for file_ in $(git_status_line_dir_changes "$dir"); do
+            [[ -n "$file_" ]] || continue
+            gxi_grep_ $file_ $GXI_QUERY || continue
+            $show_diff_ "$file_"
+            gxi_request_ "$file_" || break
+            $response_ "$file_" && responded_=1
         done
-        [[ $answer =~ [qQ] || -z $_responded ]] && break
-        [[ $answer =~ [sS] ]] && _gxi_stash
+        [[ $answer =~ [qQ] || -z $responded_ ]] && break
+        [[ $answer =~ [sS] ]] && gxi_stash_
         gi
         git status -v | g -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
-        _show_pre_loop
+        show_pre_loop_
     done
-    [[ -n $_stashed ]] && git_stash_pop
+    [[ -n $stashed_ ]] && git_stash_pop
     git dn --staged
     git status
 }
@@ -631,13 +631,13 @@ sit () {
 
 # xxxx
 
-_gbd () {
-    local _current_branch=$(get_branch)
-    if [[ "$@" =~ $_current_branch ]]; then
+gbd_ () {
+    local current_branch_=$(get_branch)
+    if [[ "$@" =~ $current_branch_ ]]; then
         if [[ "$@" == "master" ]]; then
             git checkout $(git tag --list  | sort -V | tail -n1)
-            _current_branch=$(get_branch)
-            if [[ $_current_branch == "master" ]]; then
+            current_branch_=$(get_branch)
+            if [[ $current_branch_ == "master" ]]; then
                 show_error Please checkout another branch before deleting master
                 return 1
             fi
@@ -645,20 +645,20 @@ _gbd () {
             gom
         fi
     elif [[ "$@" =~ ^-[dD]$ ]]; then
-        if [[ $_current_branch == "master" ]]; then
+        if [[ $current_branch_ == "master" ]]; then
             show_error Please checkout another branch before deleting master
             return 1
-        elif [[ $_current_branch == "fred" ]]; then
+        elif [[ $current_branch_ == "fred" ]]; then
             answer=Y
         else
-            read -p "OK to remove $_current_branch [y]? " -n1 answer
+            read -p "OK to remove $current_branch_ [y]? " -n1 answer
         fi
         [[ -n $answer && ! $answer =~ [yY] ]] && return 1
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
         fi
         gom
-        show_run_command git branch "$@" $_current_branch
+        show_run_command git branch "$@" $current_branch_
         return 0
     fi
     show_run_command git branch "$@"
@@ -669,10 +669,10 @@ gbac () {
 }
 
 gbdd () {
-    local _branch=
-    for _branch in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
-        if mastered $_branch; then
-            gbd $_branch
+    local branch_=
+    for branch_ in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+        if mastered $branch_; then
+            gbd $branch_
         fi
     done
 }
@@ -683,9 +683,9 @@ gbdr () {
 }
 
 gbDD () {
-    local _current_branch=$(get_branch)
-    [[ "$@" ]] && _current_branch="$@"
-    gbD "$@" && gpod $_current_branch
+    local current_branch_=$(get_branch)
+    [[ "$@" ]] && current_branch_="$@"
+    gbD "$@" && gpod $current_branch_
 }
 
 gaai () {
@@ -733,7 +733,7 @@ gipf () {
     gpf
 }
 
-glgg () {
+glggggggg () {
     tput smcup
     show_command git lg "$@"
     git lg "$@"
@@ -820,12 +820,12 @@ gls1 () {
 }
 
 gpod () {
-    local _arg= _branch= _branches=
-    for _arg in "$@"; do
-        _branch=$(echo $_arg | sed -e "s:.*origin/::")
-        _branches="$_branches $_branch"
+    local arg_= branch_= branches_=
+    for arg_ in "$@"; do
+        branch_=$(echo $arg_ | sed -e "s:.*origin/::")
+        branches_="$branches_ $branch_"
     done
-    gpo --delete $_branches
+    gpo --delete $branches_
 }
 
 gpff () {
@@ -841,8 +841,8 @@ gpsu () {
 }
 
 grmt () {
-    local _current_branch=$(get_branch)
-    show_run_command git rebase master $_current_branch -X theirs
+    local current_branch_=$(get_branch)
+    show_run_command git rebase master $current_branch_ -X theirs
 }
 
 grup () {
@@ -858,16 +858,16 @@ gsri () {
 }
 
 git_status_line_dir () {
-    local _dir="$1"; shift
-    _status_line -C $_dir "$@"
+    local dir_="$1"; shift
+    status_line_ -C $dir_ "$@"
 }
 alias gssd=git_status_line_dir
 
 git_stash_branch () {
-    local _branch=$1
-    [[ $_branch ]] || _branch=fred && shift
-    [[ $_branch == 'fred' ]] && QUietly git branch -D fred
-    show_run_command git stash branch $_branch "$@"
+    local branch_=$1
+    [[ $branch_ ]] || branch_=fred && shift
+    [[ $branch_ == 'fred' ]] && QUietly git branch -D fred
+    show_run_command git stash branch $branch_ "$@"
 }
 alias gstb=git_stash_branch
 
@@ -882,10 +882,10 @@ git_stash_pop () {
 alias gstp=git_stash_pop
 
 gtdd () {
-    local _tag=
-    for _tag in "$@"; do
-        gtd "$_tag"
-        gtD "$_tag"
+    local tag_=
+    for tag_ in "$@"; do
+        gtd "$tag_"
+        gtD "$tag_"
     done
 }
 
@@ -899,34 +899,34 @@ gurl () {
 
 gvsd () {
     shift_dir "$@" && shift
-    for _file in $(git_status_line_dir $dir); do
-        _gvi_vim "$_file"
+    for file_ in $(git_status_line_dir $dir); do
+        gvi_vim_ "$file_"
     done
 }
 
 # xxxxx
 
 clone () {
-    local _range=
-    [[ "$1" == "-r" ]] && _range=ranger
-    local _remote=
-    [[ -n $1 ]] && _remote=$1 && shift
-    local _local=
-    [[ -n $1 ]] && _local=$1 && shift
+    local range_=
+    [[ "$1" == "-r" ]] && range_=ranger
+    local remote_=
+    [[ -n $1 ]] && remote_=$1 && shift
+    local local_=
+    [[ -n $1 ]] && local_=$1 && shift
 
-    local _clone_log=/tmp/_clone.log
-    echo "" > $_clone_log
-    show_run_command git clone $_remote $_local > $_clone_log 2>&1
-    if grep -q fatal $_clone_log; then
-        # kat -n $_clone_log
-        cat -n $_clone_log
+    local clone_log_=/tmp/clone_.log
+    echo "" > $clone_log_
+    show_run_command git clone $remote_ $local_ > $clone_log_ 2>&1
+    if grep -q fatal $clone_log_; then
+        # kat -n $clone_log_
+        cat -n $clone_log_
     else
-        cd $(grep Cloning.into $_clone_log | sed -e "s/Cloning into '//" -e "s/'.*//")
-        if [[ $_remote =~ $(work) ]]; then
+        cd $(grep Cloning.into $clone_log_ | sed -e "s/Cloning into '//" -e "s/'.*//")
+        if [[ $remote_ =~ $(work) ]]; then
             git config --local user.name "Alan Brogan"
             git config --local user.email $(work_email alan.brogan)
         fi
-        runnable $_range && $_range
+        runnable $range_ && $range_
     fi
 }
 
@@ -943,7 +943,7 @@ gorll () {
 # xxxxxxx
 # xxxxxxxx
 
-_git_kd () {
+git_kd_ () {
     cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
 }
 
@@ -956,34 +956,34 @@ get_root () {
 }
 
 git_root () {
-    local _stdout=$(verbosity "$@")
-    local _git_dir=
-    local _origin=
-    local _quiet=
-    local _verbose=
-    for _arg in $*; do
-        if [[ -e "$_arg" ]]; then
-            _git_dir="$_arg"
+    local stdout_=$(verbosity "$@")
+    local git_dir_=
+    local origin_=
+    local quiet_=
+    local verbose_=
+    for arg_ in $*; do
+        if [[ -e "$arg_" ]]; then
+            git_dir_="$arg_"
             shift
             break
         fi
-        [[ $_arg == -o ]] && _origin=yes
-        [[ $_arg == -q ]] && _quiet=yes
-        [[ $_arg == -v ]] && _verbose=yes
+        [[ $arg_ == -o ]] && origin_=yes
+        [[ $arg_ == -q ]] && quiet_=yes
+        [[ $arg_ == -v ]] && verbose_=yes
     done
-    [[ $_origin ]] && _verbose=yes
-    [[ $_verbose ]] && _quiet=
-    [[ $_git_dir ]] || _git_dir=$(readlink -f .)
-    [[ -f "$_git_dir" ]] && _git_dir=$(dirname_ $_git_dir)
-    [[ -d "$_git_dir" ]] || echo "Not a dir '$_git_dir'"
-    [[ -d "$_git_dir" ]] || return 1
-    local _full_dir=$(readlink -f $_git_dir)
-    if ! git -C "$_full_dir" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
+    [[ $origin_ ]] && verbose_=yes
+    [[ $verbose_ ]] && quiet_=
+    [[ $git_dir_ ]] || git_dir_=$(readlink -f .)
+    [[ -f "$git_dir_" ]] && git_dir_=$(dirname_ $git_dir_)
+    [[ -d "$git_dir_" ]] || echo "Not a dir '$git_dir_'"
+    [[ -d "$git_dir_" ]] || return 1
+    local full_dir_=$(readlink -f $git_dir_)
+    if ! git -C "$full_dir_" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
         cat /tmp/fd1
         cat /tmp/fd2 >&2
         return 1
     fi
-    $_show git -C "$_full_dir" rev-parse --show-toplevel
+    $show_ git -C "$full_dir_" rev-parse --show-toplevel
 }
 
 # xxxxxxxxx
@@ -993,17 +993,17 @@ git_dirty () {
 }
 
 local_gcu () {
-    local _name="$1"
+    local name_="$1"
     shift
-    local _email="$1"
+    local email_="$1"
     shift
-    git config --local user.name "$_name"
-    git config --local user.email "$_email"
+    git config --local user.name "$name_"
+    git config --local user.email "$email_"
 }
 
-# _xxxxxxxxx
+# xxxxxxxxx_
 
-_to_branch () {
+to_branch_ () {
     echo "$1" | tr ' ' '_'
 }
 # xxxxxxxxxx
@@ -1013,41 +1013,41 @@ has_branch () {
 }
 
 git_stash_and () {
-    local _stashed=
+    local stashed_=
     if git_changed; then
         show_command git stash
         git stash -q
-        _stashed=1
+        stashed_=1
     fi
     "$@"
-    local _result=$?
-    if [[ $_stashed == 1 ]]; then
+    local result_=$?
+    if [[ $stashed_ == 1 ]]; then
         git_stash_pop -q
     fi
-    return $_result
+    return $result_
 }
 
-_gxi_menu () {
+gxi_menu_ () {
     GSI_MENU=
     suffix=", "
     red_one "/"
     red_one q uit
     red_one a dd
-    _git_modified $1 && red_two in t eractive
+    stat_modified $1 && red_two in t eractive
     red_two a m end
     red_two am e dit
     red_two sta g ed
     red_one s tash
-    _git_modified $1 && red_one d iff
+    stat_modified $1 && red_one d iff
     red_two d r op
     red_two de l ete
     [[ -n $GIT_ADDED ]] && red_one f asten
     red_two comm i t
     red_one v im
-    _git_modified $1 && red_one p atch
+    stat_modified $1 && red_one p atch
     suffix=";"
     red_one space " next"
-    echo -n -e "$(_status_chars $1) $1: $GSI_MENU"
+    echo -n -e "$(status_chars_ $1) $1: $GSI_MENU"
 }
 
 get_branch () {
@@ -1055,9 +1055,9 @@ get_branch () {
 }
 
 git_branch () {
-    local _show=show_run_command
-    [[ $1 == -q ]] && _show=
-    $_show git rev-parse --abbrev-ref HEAD
+    local show_=show_run_command
+    [[ $1 == -q ]] && show_=
+    $show_ git rev-parse --abbrev-ref HEAD
 }
 
 sed_origin () {
@@ -1081,21 +1081,21 @@ clean_clone() {
 git_changed () {
     local git_dir=$(git_root "$1")
     [[ -n $git_dir ]] || return 1
-    git -C $git_dir status --porcelain | grep -q "$_git_status_regexp"
+    git -C $git_dir status --porcelain | grep -q "$git_status_regexp_"
 }
 
 # xxxxxxxxxxxx
 
-_gxi_request () {
-    _gxi_menu $1
+gxi_request_ () {
+    gxi_menu_ $1
     read -e -n1 -p " " answer
     [[ $answer =~ [qQ] ]] && return 1
     return 0
 }
 
 git_status_line_dir_changes () {
-    local _dir="$1"; shift
-    git_status_line_dir "$_dir" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
+    local dir_="$1"; shift
+    git_status_line_dir "$dir_" | grep "^\([MDU ][MAU]\|??\)" | sed -e "s/^...//"
 }
 
 https_origin () {
@@ -1105,7 +1105,7 @@ https_origin () {
 # xxxxxxxxxxxxx
 
 trim_git_lines () {
-    _call_me_alan -e "s/ ago//"
+    call_me_alan_ -e "s/ ago//"
 }
 
 git_log_lines_to_screen () {
@@ -1115,47 +1115,46 @@ git_log_lines_to_screen () {
         _number_of_commits=$1
         shift
         if [[ $1 =~ ^-?[0-9]+$ ]]; then
-            _number_of_commits=$1
+            number_of_commits_=$1
             shift
         fi
     fi
     # set +x
-    local _log_cmd=lg
-    [[ -n $GIT_LOG_ALIAS ]] && _log_cmd=$GIT_LOG_ALIAS
+    local log_cmd_=lg
     show_run_command git status --short
-    show_command git $_log_cmd -n $_number_of_commits "$@"
+    show_command git $log_cmd_ -n $number_of_commits_ "$@"
     # set -x
-    git_log_to_screen $_log_cmd -n $_number_of_commits "$@" | trim_git_lines
+    git_log_to_screen $log_cmd_ -n $number_of_commits_ "$@" | trim_git_lines
     # set +x
 }
 
 git_log_to_screen () {
-    local _log_cmd=$1; shift
-    local _number_of_lines=
+    local log_cmd_=$1; shift
+    local number_of_lines_=
     if [[ $1 =~ ^-[ln] ]]; then
         shift
         if [[ $1 =~ ^-?[0-9]+$ ]]; then
-            _number_of_lines=$1
+            number_of_lines_=$1
             shift
         fi
     fi
-    local _vertical_lines=${LINES:-$(screen_height)}
-    local _one_third_of_vertical=$(( $_vertical_lines / 3 ))
-    local _lines=${_number_of_lines:-$_one_third_of_vertical}
-    git $_log_cmd --color "$@" | head -n $_lines
+    local vertical_lines_=${LINES:-$(screen_height)}
+    local one_third_of_vertical_=$(( $vertical_lines_ / 3 ))
+    local lines_=${number_of_lines_:-$one_third_of_vertical_}
+    git $log_cmd_ --color "$@" | head -n $lines_
 }
 
 untracked () {
-    local _path="$1"; shift
-    ( test -d "$_path" && git_status_line_dir "$_path" || _status_line "$_path" ) | grep "??" | cut -d' ' -f2
+    local path_="$1"; shift
+    ( test -d "$path_" && git_status_line_dir "$path_" || status_line_ "$path_" ) | grep "??" | cut -d' ' -f2
 }
 
-_do_git_status () {
-    local __doc__="get the status from git"
-    local _root=$(git_root "$1")
-    if [[ $_root ]]; then
+do_git_status_ () {
+    local _doc___="get the status from git"
+    local root_=$(git_root "$1")
+    if [[ $root_ ]]; then
         shift
-        git -C $_root status "$@"
+        git -C $root_ status "$@"
     else
         show_error "Fail: git_root $@"
         return 1
@@ -1169,23 +1168,23 @@ in_repo () {
 }
 
 show_git_time () {
-    local _arg_dir="${1:-$PWD}"
-    git_dir=$(git_root "$_arg_dir")
-    [[ $git_dir == $_arg_dir ]] && _arg_dir=
+    local arg_dir_="${1:-$PWD}"
+    git_dir=$(git_root "$arg_dir_")
+    [[ $git_dir == $arg_dir_ ]] && arg_dir_=
     if [[ -n $git_dir ]]; then
         echo
         return 1
     fi
-    local _log=
+    local log_=
     local period=
     local lines_left=$(( ${LINES:-$(screen_height)} / 2 ))
     for period in seconds minutes hours days weeks "month | grep -v year" year
     do
         regexp=$period.ago
-        _log=$(_show_git_time_log $regexp $_arg_dir)
-        if [[ -n $_log ]]; then
-            period_lines=$(_show_git_time_log $regexp $_arg_dir | wc -l)
-            _show_git_time_log $regexp $_arg_dir | trim_git_lines | head -n $lines_left
+        log_=$(show_git_time_log_ $regexp $arg_dir_)
+        if [[ -n $log_ ]]; then
+            period_lines=$(show_git_time_log_ $regexp $arg_dir_ | wc -l)
+            show_git_time_log_ $regexp $arg_dir_ | trim_git_lines | head -n $lines_left
             [[ $period_lines -gt $lines_left ]] && break
             lines_left=$(( lines_left - $period_lines ))
         fi
@@ -1195,18 +1194,18 @@ show_git_time () {
 
 # xxxxxxxxxxxxxxx
 
-_any_git_changes () {
-    local __doc__="whether the current dir has modified or untacked files"
-    local _dir=$1
-    [[ -z $_dir ]] && _dir=$PWD
+any_git_changes_ () {
+    local _doc___="whether the current dir has modified or untacked files"
+    local dir_=$1
+    [[ -z $dir_ ]] && dir_=$PWD
     [[ -d "${dir}/.git" ]] || return 1
-    git -C $_dir status --porcelain | grep "$_git_status_regexp"
+    git -C $dir_ status --porcelain | grep "$git_status_regexp_"
 }
 
-_has_git_changes () {
-    local _dir=$1
-    local _files=$(_any_git_changes $_dir)
-    [[ -n $_files ]]
+has_git_changes_ () {
+    local dir_=$1
+    local files_=$(any_git_changes_ $dir_)
+    [[ -n $files_ ]]
 }
 
 # xxxxxxxxxxxxxxxx
@@ -1215,12 +1214,12 @@ _has_git_changes () {
 
 git_simple_status () {
     local arg_dir="${1:-$PWD}"
-    _has_git_changes $arg_dir || return 1
-    local _git_dir=$(git_root "$arg_dir")
-    [[ -d $_git_dir ]] && git_status_line_dir "$_git_dir" 2> ~/bash/fd/2 | grep "$_git_status_regexp"
+    has_git_changes_ $arg_dir || return 1
+    local git_dir_=$(git_root "$arg_dir")
+    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> ~/bash/fd/2 | grep "$git_status_regexp_"
 }
 
-_show_git_time_log () {
+show_git_time_log_ () {
     if [[ -z $2 ]]; then
         git -C $git_dir lg > /dev/null | grep $1
     else
@@ -1230,7 +1229,7 @@ _show_git_time_log () {
 
 # xxxxxxxxxxxxxxxxxxxxxx
 
-_call_me_alan () {
+call_me_alan_ () {
     sed \
         -e "s/.*al-got-rhythm.net/jalanb/" \
         -e "s/$(work_email '.*')/Alan Brogan/" \
@@ -1240,8 +1239,8 @@ _call_me_alan () {
 
 grep_git_log_for_python_test_file ()
 {
-    local _number=$1; shift;
-    gl --stat -n $_number | grep test_[a-z_]*.py | sed -e "s/\.py .*/.py/"
+    local number_=$1; shift;
+    gl --stat -n $number_ | grep test_[a-z_]*.py | sed -e "s/\.py .*/.py/"
 }
 
 log_test_file ()
@@ -1249,15 +1248,15 @@ log_test_file ()
     grep_git_log_for_python_test_file 3
 }
 
-_gdis () {
-    local __doc__="""git di args; git short status"""
-    if _git_untracked "$1"; then
+gdis_ () {
+    local _doc___="""git di args; git short status"""
+    if stat_untracked "$1"; then
         kat -n "$1"
         return 0
     fi
-    if _git_modified "$1"; then
-        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $_lines < $LINES ]]; then
+    if stat_modified "$1"; then
+        local lines_=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $lines_ < $LINES ]]; then
             git di "$1"
         else
             gdi "$1"
@@ -1266,8 +1265,8 @@ _gdis () {
     git status --short $1
 }
 
-_gsi_show_diff () {
-    if _git_untracked "$1"; then
+gsi_show_diff_ () {
+    if stat_untracked "$1"; then
         if [[ -d "$1" ]]; then
             find "$1" -type f -print
         elif [[ -f "$1" ]]; then
@@ -1277,9 +1276,9 @@ _gsi_show_diff () {
         fi
         return 0
     fi
-    if _git_modified "$1"; then
-        local _lines=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $_lines < $LINES ]]; then
+    if stat_modified "$1"; then
+        local lines_=$(wc -l "$1" | cut -d ' ' -f1)
+        if [[ $lines_ < $LINES ]]; then
             git di "$1"
         else
             gdi "$1"
@@ -1288,38 +1287,38 @@ _gsi_show_diff () {
     git status --short $1
 }
 
-_gvi_show_diff () {
+gvi_show_diff_ () {
     git diff "$1"
     git status --short $1
 }
 
-_ggi_response () {
-    [[ $answer =~ [rR] ]] && _gsi_drop "$1" && return 0
+ggi_response_ () {
+    [[ $answer =~ [rR] ]] && gsi_drop_ "$1" && return 0
     [[ $answer =~ [lL] && -f $1 ]] && rm -f "$1" && return 0
-    [[ $answer =~ [vV] ]] && _gsi_vim "$1" && return 0
-    _gxi_response "$@"
+    [[ $answer =~ [vV] ]] && gsi_vim_ "$1" && return 0
+    gxi_response_ "$@"
 }
 
-_gsi_response () {
+gsi_response_ () {
     [[ $answer =~ [yY] ]] && ga "$1" && return 0
-    _ggi_response "$@"
+    ggi_response_ "$@"
 }
 
-_gvi_response () {
+gvi_response_ () {
     [[ $answer =~ [yY] ]] && ga "$1" && return 0
-    _ggi_response "$@"
+    ggi_response_ "$@"
 }
 
-_gxi_response () {
+gxi_response_ () {
     if [[ $answer =~ [iIgGdDpPtT] ]]; then
         [[ $answer =~ [iI] ]] && gi
         [[ $answer =~ [gG] ]] && git diff --staged
-        if _git_modified "$1" ; then
+        if stat_modified "$1" ; then
             [[ $answer =~ [dD] ]] && git di "$1"
             [[ $answer =~ [pP] ]] && git diff --patch "$1"
             [[ $answer =~ [tT] ]] && gai "$1"
         fi
-        _gxi_request "$1"
+        gxi_request_ "$1"
         return 0
     fi
     [[ $answer =~ [aA] ]] && ga "$1" && return 0
@@ -1344,78 +1343,65 @@ red_two () {
     GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
 }
 
-_status_line () {
+status_line_ () {
     [[ -n "$*" ]] && git status --short . || git status --short "$@"
 }
 
-_status_chars () {
+status_chars_ () {
     git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
-_git_modified () {
-    [[ $(_status_chars $1) == " M" ]]
-}
-
-_git_added () {
-    [[ $(_status_chars $1) == " A" ]]
-}
-
-_git_untracked () {
-    [[ $(_status_chars $1) == "??" ]]
-}
-
-_gxi_stash () {
-    if [[ -z $_stashed ]]; then
-        _stashed=gxi
+gxi_stash_ () {
+    if [[ -z $stashed_ ]]; then
+        stashed_=gxi
         git stash
     fi
 }
 
-_gxi_grep () {
-    local _file=$1; shift
+gxi_grep_ () {
+    local file_=$1; shift
     [[ -z "$@" ]] && return 0
-    grep -q "$@" $_file
+    grep -q "$@" $file_
 }
 
-_gsi_drop () {
+gsi_drop_ () {
     if [[ $answer =~ [rR] ]]; then
-        _git_modified "$1" && go "$1"
-        _git_untracked "$1" && rm -i "$1"
+        stat_modified "$1" && go "$1"
+        stat_untracked "$1" && rm -i "$1"
     fi
 }
 
-_gvi_drop () {
+gvi_drop_ () {
     if [[ $answer =~ [rR] ]]; then
-        _git_modified "$1" && go "$1"
-        _git_untracked "$1" && rm -f "$1"
+        stat_modified "$1" && go "$1"
+        stat_untracked "$1" && rm -f "$1"
     fi
 }
 
-_gvi_git_dv () {
-    local _one="$1"
+gvi_git_dv_ () {
+    local one_="$1"
     shift
-    _gvi_other_vim
-    if _git_modified "$1"; then
+    gvi_other_vim_
+    if stat_modified "$1"; then
         git dv $(echo "$1" | cut -dM -f2)
     else
-        _gvi_vim "$1"
+        gvi_vim_ "$1"
     fi
 }
 
-_gvi_vim () {
-    if _git_untracked "$1"; then
-        v $(_status_line "$1" | grep "??" | cut -d' ' -f2)
-    elif _git_modified "$1"; then
+gvi_vim_ () {
+    if stat_untracked "$1"; then
+        v $(status_line_ "$1" | grep "??" | cut -d' ' -f2)
+    elif stat_modified "$1"; then
         v $(echo "$1" | cut -dM -f2)
-    elif _git_added "$1"; then
+    elif stat_added "$1"; then
         v  $(echo "$1" | cut -dA -f2)
     fi
-    _status_line "$1"
+    status_line_ "$1"
 }
 
-_gsi_vim () {
-    _git_modified "$1" && git dv "$1" || git diff "$1" | vin
+gsi_vim_ () {
+    stat_modified "$1" && git dv "$1" || git diff "$1" | vin
 }
 
 
-Bye_from $BASH_SOURCE

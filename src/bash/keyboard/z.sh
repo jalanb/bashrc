@@ -24,4 +24,3 @@ zzz () {
     df -h
 }
 
-Bye_from $BASH_SOURCE

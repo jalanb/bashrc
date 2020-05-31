@@ -15,4 +15,3 @@ ipp () {
         console_title_off "${me}@${here}"
 }
 
-Bye_from $BASH_SOURCE

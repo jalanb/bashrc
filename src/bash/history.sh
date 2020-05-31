@@ -86,4 +86,3 @@ set_history_file () {
 
 [[ $HISTFILE =~ eternal ]] || set_history_file
 
-Bye_from $BASH_SOURCE

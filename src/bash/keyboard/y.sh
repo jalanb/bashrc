@@ -8,4 +8,3 @@
 
 alias y=echo
 
-Bye_from $BASH_SOURCE

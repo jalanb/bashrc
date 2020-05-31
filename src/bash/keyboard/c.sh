@@ -114,4 +114,3 @@ clean () {
 # xxxxxx
 # _xxxxx
 
-Bye_from $BASH_SOURCE

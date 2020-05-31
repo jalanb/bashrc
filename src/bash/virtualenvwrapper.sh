@@ -10,5 +10,4 @@ for vew_dir in /usr/local/bin $HOME/.local/bin; do
     break
 done
 
-Bye_from $BASH_SOURCE
 

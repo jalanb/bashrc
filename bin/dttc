@@ -1,7 +1,6 @@
 #! /bin/bash
 
 . ~/hub/whyp/whyp.sh
-. ~/bash/welcome.sh
 . ~/jab/src/bash/functons.sh
 . ~/jab/local/functons.sh optional
 

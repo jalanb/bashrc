@@ -10,4 +10,3 @@ ENVIRON_DIR=~/jab/environ.d
 . $ENVIRON_DIR/ssh_completion.sh
 . $ENVIRON_DIR/travis.sh
 
-Bye_from $BASH_SOURCE

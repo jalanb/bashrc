@@ -1,7 +1,6 @@
 #! /bin/cat
 
 . ~/bash/paths.sh
-. ~/bash/welcome.sh
 
 
 # x
