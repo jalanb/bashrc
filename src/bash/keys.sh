@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 _KEYBOARD_DIR=~/bash/keyboard
 

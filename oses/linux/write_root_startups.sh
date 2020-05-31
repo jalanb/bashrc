@@ -3,7 +3,6 @@
 cat > /root/.bash_profile << EOB
 # .bash_profile
 
-Welcome_to $BASH_SOURCE
 
 # Get the aliases and functions
 [[ -f "~/.bashrc" ]] && source ~/.bashrc
@@ -25,7 +24,6 @@ cat > /root/.bashrc << EOB
 # If not running interactively, don't do anything
 [[ \$- != *i* ]] || return
 
-Welcome_to $BASH_SOURCE
 
 [[ -f "~/jab/environ.d/colour.sh"" ]] && source ~/jab/environ.d/colour.sh"
 [[ -f "~/jab/src/bash/prompt.sh" ]] && source ~/jab/src/bash/prompt.sh red

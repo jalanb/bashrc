@@ -1,6 +1,5 @@
 #! /bin/bash
 
-Welcome_to $BASH_SOURCE
 
 set_paths () {
     OLD_PATH=$PATH

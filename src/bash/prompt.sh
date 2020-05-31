@@ -1,6 +1,5 @@
 #! /bin/cat -n
 
-Welcome_to $BASH_SOURCE
 
 
 export FAIL_COLOUR=red

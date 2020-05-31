@@ -2,7 +2,6 @@
 
 . ~/bash/history.sh
 
-Welcome_to $BASH_SOURCE
 
 # _
 # x

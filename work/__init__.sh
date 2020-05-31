@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 . ~/jab/work/aliases.sh
 . ~/jab/work/environ.sh

@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 _GIT_DIR=~/jab/src/bash/git
 

@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 _re_source () {
     SRC_BASH=$(realdir $BASH_SOURCE) && export SRC_BASH  # ; echo "SRC_BASH = $SRC_BASH"
