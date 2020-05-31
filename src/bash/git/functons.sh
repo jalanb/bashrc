@@ -633,7 +633,7 @@ _gbd () {
     local _current_branch=$(get_branch)
     if [[ "$@" =~ $_current_branch ]]; then
         if [[ "$@" == "master" ]]; then
-            git checkout $(git tag --list  | sort -V | head -n1)
+            git checkout $(git tag --list  | sort -V | tail -n1)
             _current_branch=$(get_branch)
             if [[ $_current_branch == "master" ]]; then
                 show_error Please checkout another branch before deleting master
