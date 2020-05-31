@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 """Find imports in python files"""
-from __future__ import print_function
 
 import linecache
 import sys
@@ -37,9 +36,12 @@ def gather_lines(method):
 def texter(visitor):
 
     def text(line):
-        return '% 4d: %s' % (line, linecache.getline(path, line).rstrip())
+        string = '% 4d: %s' % (
+            line, 
+            linecache.getline(visitor.path, line)
+        )
+        return string.rstrip()
 
-    path = visitor.path
     return text
 
 
@@ -56,12 +58,14 @@ def show_unused(visitor, stream):
     return visitor.unused().keys()
 
 
-def show_multiple(visitor, stream):
-    text = texter(visitor)
+def show_duplicates(visitor):
     multiples = visitor.multiples()
+    if multiples:
+        print('Duplicates:')
     for name, lines in multiples.items():
-        instances = [text(_) for _ in lines]
-        print('%s\n%s' % (name, '\n'.join(instances)), file=stream)
+        instances = [visitor.line(_, True) for _ in lines]
+        lines = [name] + instances
+        print('\n'.join(lines))
     return multiples.keys()
 
 
