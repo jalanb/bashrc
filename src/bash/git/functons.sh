@@ -315,6 +315,7 @@ glf () {
 }
 
 glg () {
+    local number_of_commits_=8
     git_log_lines_to_screen -n $number_of_commits_ "$@" 2>/dev/null
     local result_=$?
     echo
@@ -1110,8 +1111,9 @@ trim_git_lines () {
 
 git_log_lines_to_screen () {
     local number_of_commits_=7
-    local shifts_=0
-    if [[ $1 =~ ^-[n] ]]; then
+    local number_of_commits_=15
+    if [[ $1 =~ ^-?[0-9]+$ ]]; then
+        number_of_commits_=$1
         shift
         if [[ $1 =~ ^-?[0-9]+$ ]]; then
             number_of_commits_=$1
