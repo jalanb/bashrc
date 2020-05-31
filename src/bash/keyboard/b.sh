@@ -9,4 +9,3 @@
 alias b=echo
 alias bt="set -eu; source ~/bash/bashtrace.sh"
 
-Bye_from $BASH_SOURCE

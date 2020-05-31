@@ -1779,7 +1779,6 @@ copy_from_work_server () {
     rsync -av $_server_name:"$_source" "$_here_path"
 }
 
-Bye_from $BASH_SOURCE
 jalanb_hub ()
 {
     ( cd ~/hub;

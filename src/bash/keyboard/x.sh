@@ -11,4 +11,3 @@ x () {
 }
 
 
-Bye_from $BASH_SOURCE

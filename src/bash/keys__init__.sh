@@ -141,7 +141,6 @@ alias 2444="244; gfff"
 alias 2544="254; gfff"
 # xxxx
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -397,7 +396,6 @@ alias 2444="244; gfff"
 alias 2544="254; gfff"
 # xxxx
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -579,7 +577,6 @@ avv () {
 }
 
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -591,7 +588,6 @@ Bye_from $BASH_SOURCE
 alias b=echo
 alias bt="set -eu; source ~/bash/bashtrace.sh"
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -708,7 +704,6 @@ clean () {
 # xxxxxx
 # _xxxxx
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -724,7 +719,6 @@ ddf () {
     ( shopt -s extdebug; declare -F "$1" )
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -957,7 +951,6 @@ g () {
 }
 
 
-Bye_from $BASH_SOURCE
 #! /usr/bin/env kat -n
 
 . ~/bash/history.sh
@@ -1065,7 +1058,6 @@ history_vim () {
     vim ~/tmp/history.tmp $_vim_suffix
 }
 
-Bye_from $BASH_SOURCE
 #! /usr/bin/env kat -n
 
 . ~/bash/history.sh
@@ -1322,7 +1314,6 @@ mvv () {
     mvm "$@" $args_
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -1333,7 +1324,6 @@ Bye_from $BASH_SOURCE
 
 alias n=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -1344,7 +1334,6 @@ Bye_from $BASH_SOURCE
 
 alias o=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 # _x
@@ -1574,7 +1563,6 @@ swf () {
     s $(functons -w)
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 # x
@@ -1613,7 +1601,6 @@ tx () {
 
 alias u=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 type mvv >/dev/null 2>&1 || . ~/keys/m.sh
@@ -2037,7 +2024,6 @@ vim_some () {
 #     fi)
 # }
 
-Bye_from  $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2051,7 +2037,6 @@ x () {
 }
 
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2062,7 +2047,6 @@ Bye_from $BASH_SOURCE
 
 alias y=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2089,7 +2073,6 @@ zzz () {
     df -h
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2159,7 +2142,6 @@ avv () {
 }
 
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2171,7 +2153,6 @@ Bye_from $BASH_SOURCE
 alias b=echo
 alias bt="set -eu; source ~/bash/bashtrace.sh"
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2288,7 +2269,6 @@ clean () {
 # xxxxxx
 # _xxxxx
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2304,7 +2284,6 @@ ddf () {
     ( shopt -s extdebug; declare -F "$1" )
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2537,7 +2516,6 @@ g () {
 }
 
 
-Bye_from $BASH_SOURCE
 #! /usr/bin/env kat -n
 
 . ~/bash/history.sh
@@ -2645,7 +2623,6 @@ history_vim () {
     vim ~/tmp/history.tmp $_vim_suffix
 }
 
-Bye_from $BASH_SOURCE
 #! /usr/bin/env kat -n
 
 . ~/bash/history.sh
@@ -2902,7 +2879,6 @@ mvv () {
     mvm "$@" $args_
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2913,7 +2889,6 @@ Bye_from $BASH_SOURCE
 
 alias n=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -2924,7 +2899,6 @@ Bye_from $BASH_SOURCE
 
 alias o=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 # _x
@@ -3154,7 +3128,6 @@ swf () {
     s $(functons -w)
 }
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 # x
@@ -3193,7 +3166,6 @@ tx () {
 
 alias u=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 type mvv >/dev/null 2>&1 || . ~/keys/m.sh
@@ -3617,7 +3589,6 @@ vim_some () {
 #     fi)
 # }
 
-Bye_from  $BASH_SOURCE
 #! /bin/cat
 
 
@@ -3631,7 +3602,6 @@ x () {
 }
 
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -3642,7 +3612,6 @@ Bye_from $BASH_SOURCE
 
 alias y=echo
 
-Bye_from $BASH_SOURCE
 #! /bin/cat
 
 
@@ -3669,4 +3638,3 @@ zzz () {
     df -h
 }
 
-Bye_from $BASH_SOURCE

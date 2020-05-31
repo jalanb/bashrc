@@ -13,4 +13,3 @@ mvim () {
     ([[ "$@" ]] && $_mvim --remote-tab -p "$@" || $_mvim --remote) > ~/log/mv.log 2> ~/log/mv.err
 }
 
-Bye_from $BASH_SOURCE

@@ -45,4 +45,3 @@ _ssj () {
     [[ $(hostname) == $_server ]] || sst jab $_server -q "$@"
 }
 
-Bye_from $BASH_SOURCE

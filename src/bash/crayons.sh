@@ -1,6 +1,5 @@
 #! /bin/cat
 
-. ~/bash/welcome.sh
 
 
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh

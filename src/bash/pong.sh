@@ -92,4 +92,3 @@ quick_pong () {
     fi
 }
 
-Bye_from $BASH_SOURCE

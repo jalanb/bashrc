@@ -7,7 +7,6 @@ realdir () {
     done
 }
 
-. ~/bash/welcome.sh
 . ~/bash/add_to_a_path.sh
 . ~/bash/crayons.sh
 

@@ -79,4 +79,3 @@
 #     fi)
 # }
 
-Bye_from  $BASH_SOURCE

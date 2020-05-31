@@ -24,4 +24,3 @@ __version__=0.7.36
 
 export _BASH_DIR=~/bash
 
-Bye_from $BASH_SOURCE

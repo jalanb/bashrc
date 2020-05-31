@@ -105,4 +105,3 @@ history_vim () {
     vim ~/tmp/history.tmp $_vim_suffix
 }
 
-Bye_from $BASH_SOURCE

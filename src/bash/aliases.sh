@@ -127,4 +127,3 @@ alias stopwatch="killall -9 watch"
 
 alias update_hosts="sudo python ~/jab/src/python/update_hosts.py"
 
-Bye_from $BASH_SOURCE

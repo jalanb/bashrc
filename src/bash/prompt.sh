@@ -204,4 +204,3 @@ export_pses () {
 
 export_prompt_colour "$@"
 [[ "$PROMPT_COLOUR" == "None" ]] && export PS1="\$? [\u@\h:\$PWD]\n$ " || export PROMPT_COMMAND='export_pses $?'
-Bye_from $BASH_SOURCE

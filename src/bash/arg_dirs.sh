@@ -88,4 +88,3 @@ shift_dir () {
     [[ -d $dir ]]
 }
 
-Bye_from $BASH_SOURCE

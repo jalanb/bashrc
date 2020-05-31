@@ -19,4 +19,3 @@ add_to_a_path PYTHON_SOURCE_PATH ~/jab/src/python
 [[ -f ~/jab/src/python/pythonrc.py ]] && export PYTHONSTARTUP=~/jab/src/python/pythonrc.py
 
 
-Bye_from $BASH_SOURCE

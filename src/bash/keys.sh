@@ -32,4 +32,3 @@ source_keyboard
 alias vk=vim_keyboard
 alias sk=source_keyboard
 
-Bye_from $BASH_SOURCE

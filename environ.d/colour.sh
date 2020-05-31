@@ -40,4 +40,3 @@ export          LIGHT_GRAY="\033[0;37m"
 export                GRAY="\033[1;38m"
 export            GRAY_TOO="\033[0;38m"
 
-Bye_from $BASH_SOURCE
