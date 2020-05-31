@@ -1039,6 +1039,14 @@ jalanb () {
     done
 }
 
+ncduhd () {
+    sudo ncdu -x /Volumes/Macintosh\ HD/
+}
+
+ncduru () {
+    sudo ncdu -x /
+}
+
 paste () {
     if [[ -z "$*" ]]; then
         echo "$ $(pbpaste)"

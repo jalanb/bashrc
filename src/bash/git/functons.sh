@@ -1109,9 +1109,10 @@ trim_git_lines () {
 }
 
 git_log_lines_to_screen () {
-    local number_of_commits_=7
-    local shifts_=0
-    if [[ $1 =~ ^-[n] ]]; then
+    local _number_of_commits=7
+    local _number_of_commits=15
+    if [[ $1 =~ ^-?[0-9]+$ ]]; then
+        _number_of_commits=$1
         shift
         if [[ $1 =~ ^-?[0-9]+$ ]]; then
             number_of_commits_=$1

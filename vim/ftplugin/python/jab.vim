@@ -415,3 +415,22 @@ if !exists("PPP")
     command -nargs=0 PPP :call WritePEP()
     command -nargs=0 PPA :call AddDocstrings()
 endif
+
+if !exists("SaveOther")
+    function SaveOther(first, last, name)
+        let l:command = ':' . a:first . ',' . a:last ' w! ~/one'
+        exec l:command
+    endfunction
+    function SaveOne(first, last)
+        SaveOther(first, last, '~/one')
+    endfunction
+    function SaveTwo(first, last)
+        SaveOther(first, last, '~/two')
+    endfunction
+    function SaveThree(first, last)
+        SaveOther(first, last, '~/three')
+    endfunction
+    command -nargs=+ One :call SaveOne()
+    command -nargs=+ Two :call SaveTwo()
+    command -nargs=+ Three :call SaveThree()
+endif
