@@ -315,8 +315,10 @@ glf () {
 }
 
 glg () {
-    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@"
+    GIT_LOG_ALIAS=lg git_log_lines_to_screen -n $_number_of_commits "$@" 2>/dev/null
+    local result_=$?
     echo
+    return result
 }
 
 gll () {
