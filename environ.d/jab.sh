@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 dirname_ () {
     local _result=1

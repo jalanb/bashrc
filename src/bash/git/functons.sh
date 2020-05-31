@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 . ~/jab/src/bash/crayons.sh
 . ~/jab/src/bash/arg_dirs.sh

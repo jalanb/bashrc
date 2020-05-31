@@ -1,6 +1,5 @@
 #! /bin/bash
 
-Welcome_to $BASH_SOURCE
 
 
 __reuse_path () {

@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 ipp () {
     local __doc__="Run ipython with tab title"

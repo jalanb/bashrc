@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 home_echo () {
     local _named=$1; shift

@@ -2,7 +2,6 @@
 
 . ~/bash/welcome.sh
 
-Welcome_to $BASH_SOURCE
 
 . ~/jab/environ.d/colour.sh
 
@@ -76,4 +75,3 @@ show_this_branch () {
     git branch $1 | grep --colour -B3 -A 3 $(get_branch)
 }
 
-Bye_from $BASH_SOURCE

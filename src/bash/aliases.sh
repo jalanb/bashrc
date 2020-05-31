@@ -1,6 +1,5 @@
 #! /bin/cat -n
 
-Welcome_to $BASH_SOURCE
 
 # all alan"s aliases
 #   as ordered by strcmp()

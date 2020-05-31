@@ -3,7 +3,6 @@
 . ~/bash/paths.sh
 . ~/bash/welcome.sh
 
-Welcome_to $BASH_SOURCE
 
 # x
 # xx
@@ -186,4 +185,3 @@ _pip_install_develop () {
     fi 2>&1 | grep -v already.satisfied
 }
 
-Bye_from $BASH_SOURCE

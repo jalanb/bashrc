@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 # Based on an answer in StackOverflow:
 #   http://apple.stackexchange.com/a/168168/4180

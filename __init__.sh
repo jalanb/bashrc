@@ -20,7 +20,6 @@ show_pythonpath () {
     show_green_line PYTHONPATH==$PYTHONPATH after "$1"
 }
 
-Welcome_to $BASH_SOURCE
 
 # export ALIAS_CC=1 # for cde and whyp
 
@@ -44,4 +43,3 @@ _out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 cde_activate_venv ~/jab/.venv
 ACTIVE_PYTHON=$(which python)
 
-Bye_from $BASH_SOURCE

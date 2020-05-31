@@ -1,6 +1,5 @@
 #! /bin/bash
 
-Welcome_to $BASH_SOURCE
 
 
 PYTHON=${PYTHON:-$(pypath which python 2> ~/bash/fd/2)}

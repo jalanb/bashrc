@@ -1,6 +1,5 @@
 #! /bin/cat
 
-Welcome_to $BASH_SOURCE
 
 ENVIRON_DIR=~/jab/environ.d
 . $ENVIRON_DIR/jab.sh
