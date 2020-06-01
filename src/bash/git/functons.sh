@@ -315,7 +315,7 @@ glf () {
 }
 
 glg () {
-    local number_of_commits_=8
+    local number_of_commits_=16
     git_log_lines_to_screen -n $number_of_commits_ "$@" 2>/dev/null
     local result_=$?
     echo
