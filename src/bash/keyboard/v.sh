@@ -283,20 +283,26 @@ vd123 () {
 # xxxxxxxx
 
 vim_diff () {
-    local one_ ="$1" two_="$2" three_= edit_opts= opt_=
-    shift 2
+    local one_= two_= three_= diff_opts_= edit_opts_= arg_=
+    if [[ $1 =~ -[dD] ]]; then
+        diff_opts_=$1; shift 
+    fi
+    if [[ $1 =~ -[oO] ]]; then
+        diff_opts_="$diff_opts_ $1"; shift
+    fi
+    one_="$1" two_="$2" three_="$3"
     (
-        EDITOR="vim -d "
-        for opt_ in "$@"
+        for arg_ in "$@"
         do
-            [[ $opt_ =~ ^-.* ]] && edit_opts="$edit_opts $opt_" && continue
-            [[ ! $three_ ]] && [[ -e "$opt" ]] && three_=$opt_
+            [[ $arg_ =~ ^-.* ]] && edit_opts_="$edit_opts_ $arg_" && continue
+            [[ ! $three_ ]] && [[ -e "$opt" ]] && three_=$arg_
         done
         if ! _any_diff "$one_ " "$two_" "$three_"; then
             echo same
             return 0
         fi
-        $EDITOR "$one_ " "$two_" "$three_"
+        [[ $diff_opts_ =~ -d ]] || diff_opts_="-d $diff_opts_"
+        vim $diff_opts_ $edit_opts_ $one_  $two_ $three_
     )
 }
 
@@ -313,7 +319,7 @@ v_safely () {
 
 vim_none () {
     (echo "" > ~/tmp/fred
-    $EDITOR ~/tmp/fred)
+    vim ~/tmp/fred)
 }
 
 vim_some () {
