@@ -1,13 +1,10 @@
-#! /bin/cat
+#! /usr/bin/env bat
 
 
-# _
-# x
-# _x
-# xx
+# See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
+#   Allows cutting stuff out of stderr
 
 g () {
-    $(which egrep) --color "$@"
+    local grep_="$(which egrep) --color"
+    ($grep_ "$@" 3>&1 1>&2 2>&3 | sed -e "/Is a directory/d") 3>&1 1>&2 2>&3
 }
-
-
