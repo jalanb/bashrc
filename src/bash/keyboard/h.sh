@@ -105,3 +105,16 @@ history_vim () {
     vim ~/tmp/history.tmp $_vim_suffix
 }
 
+hgf () {
+    local sought_="$1"; shift
+    local message_="$1"; shift
+    (history | head -n 31 | grep --color $sought_ ) && show_fail "$message_"
+}
+
+close_kaufman () {
+    hgf jeffkaufman "Close window"
+}
+
+hgg () {
+    close_kaufman "$@"
+}
