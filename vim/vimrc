@@ -295,7 +295,7 @@ nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
-nnoremap <leader>n :call ChangeNumber()<cr>
+nnoremap <leader>n :call ToggleNumber()<cr>
 "noremap <leader>o used by ftplugin/python/jab
 nnoremap <leader>p :set paste<cr>
 nnoremap <leader>q :qa!<cr>
@@ -576,7 +576,6 @@ function! RetabAndStripTrailingWhitespace()
 endfunction
 
 " Showing numbers in left-hand gutter {{{2
-" <leader>n is bound (above) to ChangeNumber()
 function! SetRelativeNumber() " {{{3
     if exists('&relativenumber') && (&relativenumber == 0)
         set relativenumber
@@ -595,6 +594,8 @@ function! ChangeNumber() " {{{3
     endif
 endfunction
 
+" <leader>n is bound (above) to ToggleNumber()
+"
 function! ToggleNumber() " {{{3
     if &number == 1
         set nonumber

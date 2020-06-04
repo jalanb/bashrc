@@ -354,8 +354,8 @@ gsij () {
     gsi ~/jab
 }
 
-keys () {
-    . ~/bash/keyboard/__init__.sh
+key () {
+    . ~/bash/keyboard/$1.sh
 }
 
 kpj () {
@@ -837,6 +837,10 @@ init () {
     [[ -f $_init ]] || _init=bash/__init__.sh
     [[ -f $_init ]] || _init=src/bash/__init__.sh
     [[ -f $_init ]] && . $_init
+}
+
+keys () {
+    . ~/bash/keyboard/__init__.sh
 }
 
 lkra () {
