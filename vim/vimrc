@@ -105,7 +105,7 @@ nnoremap z= zo
 nnoremap z- zc
 nnoremap z_ zC
 nnoremap zq zC
-nnoremap zQ zc
+"noremap zQ zc
 nnoremap zw zO
 nnoremap zW zo
 "noremap ze
@@ -181,7 +181,7 @@ nnoremap L gt
 nnoremap N :cn<cr>zMzvzz
 "noremap O - Open line above
 "noremap P - paste forward
-nnoremap Q <esc>:qa!<CR>
+"noremap Q <esc>:qa!<CR>
 "noremap R - Replace
 nnoremap S :%s,,,<Left><Left>
 nnoremap T :!tags

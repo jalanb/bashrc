@@ -22,6 +22,9 @@ command! -narg=0 ZoomOut   :call ZoomOut()
 command! -narg=0 ZoomReset :call ZoomReset()
 
 " keys {{{3
+
+"noremap Q <esc>:q!<CR>
+
 noremap <leader>= :call ZoomReset()<CR>
 noremap <leader>+ :call ZoomIn()<CR>
 noremap <leader>- :call ZoomOut()<CR>
