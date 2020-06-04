@@ -7,7 +7,12 @@
 import os
 import re
 import sys
-from importlib import reload
+try:
+    from importlib import reload
+except ImportError:
+    def reload(x):
+        raise NotImplementedError('importlib.reload is not available')
+        return reloaded(x)
 
 try:
     import requests

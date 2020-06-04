@@ -7,6 +7,7 @@ The script contains a known list of globs for temporary files
 
 from __future__ import print_function
 import os
+import bdb
 import sys
 import argparse
 import fnmatch
@@ -230,8 +231,12 @@ def script(paths, args, globs):
 def main():
     """Run the program"""
     try:
+        breakpoint()
         paths, args, globs = parse_options()
+    except bdb.BdbQuit:
+        return 0
     except NotImplementedError as e:
+        breakpont()
         print(e, file=sys.stderr)
         return os.EX_USAGE
     return script(paths, args, globs)
