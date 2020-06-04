@@ -945,7 +945,7 @@ gorll () {
 # xxxxxxxx
 
 git_kd_ () {
-    cde "$@" > ~/bash/fd/1 2> ~/bash/fd/2
+    cde "$@" > /tmp/std/out 2> /tmp/std/err
 }
 
 mastered () {
@@ -1217,7 +1217,7 @@ git_simple_status () {
     local arg_dir="${1:-$PWD}"
     has_git_changes_ $arg_dir || return 1
     local git_dir_=$(git_root "$arg_dir")
-    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> ~/bash/fd/2 | grep "$git_status_regexp_"
+    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> /tmp/std/err | grep "$git_status_regexp_"
 }
 
 show_git_time_log_ () {

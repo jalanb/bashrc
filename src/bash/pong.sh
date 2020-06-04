@@ -64,7 +64,7 @@ pingable () {
 # xxxxxxxxx
 
 is_online () {
-    if quick_pong "$@" > ~/bash/fd/1 2> ~/bash/fd/2; then
+    if quick_pong "$@" > /tmp/std/out 2> /tmp/std/err; then
         show_pass $(pong "$@")
         return 0
     else

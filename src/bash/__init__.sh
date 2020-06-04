@@ -20,7 +20,6 @@ __version__=0.8.0
 . ~/bash/work.sh
 . ~/bash/keys.sh
 . ~/bash/git/__init__.sh
-. ~/bash/zzz_renames.sh optional
 
 export _BASH_DIR=~/bash
 
