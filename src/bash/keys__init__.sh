@@ -1510,7 +1510,7 @@ rri () {
 
 rrr () {
     # Scalp Hans too
-    sudo rm -rf "$@" 2> ~/bash/fd/2
+    sudo rm -rf "$@" 2> /tmp/std/err
 }
 #! /bin/cat
 
@@ -3075,7 +3075,7 @@ rri () {
 
 rrr () {
     # Scalp Hans too
-    sudo rm -rf "$@" 2> ~/bash/fd/2
+    sudo rm -rf "$@" 2> /tmp/std/err
 }
 #! /bin/cat
 

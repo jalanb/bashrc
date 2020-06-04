@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-_set_path () {
+    _set_path () {
     LOCAL=/usr/local
     LOCALS="$LOCAL/bin"
     [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCALS"
@@ -15,28 +15,24 @@ _set_path () {
     fi
 }
 
-_home_user=$HOME/jab
+home_user=$HOME/jab
 
 _bashrc () {
-    WELCOME_BYE=1
-    source $_home_user/__init__.sh
-    WELCOME_BYE=
-    clean_welcomes
+    local init_=$home_user_/__init__.sh
+    if [[ -f $init_ ]]; then
+        echo "PATH is (echo $PATH | tr ':' '\n')"
+        echo "PSI is $PS1"
+        echo "Here is $(readlink -f .)"
+        source $init_
+        echo "PATH is (echo $PATH | tr ':' '\n')"
+        echo "PSI is $PS1"
+        echo "Here is $(readlink -f .)"
+    fi
     # set +x
-    export PS1="\$? [\u@\h:\$PWD]\n$ "
+        export PS1="\$? [\u@\h:\$PWD]\n$ "
+        sp green
     # set -x
-    sp green
-    # echo $PATH | tr ':' '\n'
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
-    # set -x
-    local _bashrc_cd=~/jab
-    # set -x
-    # PUDB_CD=1 PYTHONPATH=~/hub/pysyte cde $_bashrc_cd # >/dev/null 2>&1
-    # echo cde $_bashrc_cd # >/dev/null 2>&1
-    # set -x
-    cde $_bashrc_cd # >/dev/null 2>&1
-    # set +x
-    # echo $PATH | tr ':' '\n'
 }
 
 BASHRC_LOG=~/log/bashrc.log
@@ -44,10 +40,10 @@ vbb () {
     local _log=
     test -f $BASHRC_LOG && _log=$BASHRC_LOG
     (
-        cd $_home_user
+        cd $home_user
         local _local=
         test -f local/__init__.sh && _local=local/__init__.sh
-        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log "$@" +/"WELCOME_BYE="
+        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log "$@"
         readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log
     )
     [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
@@ -65,13 +61,13 @@ log_main () {
 }
 
 _local () {
-    . $_home_user/local/__init__.sh optional
+    . $home_user/local/__init__.sh optional
 }
 
 main () {
     [[ $- =~ i ]] || return
     _set_path
-    _bashrc $_home_user
+    _bashrc $home_user
     _local
     set +m
 }

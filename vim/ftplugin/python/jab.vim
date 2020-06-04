@@ -8,7 +8,7 @@ let g:pymode_doc = 0
 nnoremap } :cn<cr>
 nnoremap { :cp<cr>
 
-nnoremap D Oimport pudb; pudb.set_trace()  # pylint: disable=multiple-statements<esc>j
+nnoremap D Obreakpoint()<esc>
 nnoremap tt :Try<cr>
 nnoremap tm :MashTry<cr>
 nnoremap <S-F9> :call WritePEP()<cr>

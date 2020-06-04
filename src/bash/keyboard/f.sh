@@ -49,6 +49,11 @@ fff () {
     freds | tr ' ' '\n'
 }
 
+fdg () {
+    local name_="$1"; shift
+    fd "$name_" "$@" | g "$name_"
+}
+
 fll () {
     $(freds --list)
 }

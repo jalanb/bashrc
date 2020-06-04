@@ -6,38 +6,33 @@ export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
 
-get_git_branch () {
-    git branch > /dev/null 2>&1 || return 1
-    git status >/dev/null 2>&1 || return 1
-    git rev-parse --abbrev-ref HEAD 2>/dev/null
-}
-
 get_git_status() {
-    local _branch=$1; shift
-    local _bump_version=$1; shift
-    local _branch_at="$_branch"
-    [[ $_bump_version =~ [0-9] ]] && _branch_at="$_branch v$_bump_version"
-    local _modified=$(quietly git status --porcelain | wc -l | tr -d ' ')
-    local remote="$(\git config --get branch.${_branch}.remote 2>/dev/null)"
-    local _remote_branch="$(\git config --get branch.${_branch}.merge)"
-    local _pushes=$(git rev-list --count ${_remote_branch/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
-    [[ -z $_pushes ]] && _pushes=?
-    local _pulls=$(git rev-list --count HEAD..${_remote_branch/refs\/heads/refs\/remotes\/$remote} 2>/dev/null)
-    [[ -z $_pulls ]] && _pulls=?
-    if [[ $_modified == 0 && $_pushes == 0 && $_pulls == 0 ]]; then
-        echo $_branch_at
+    local branch_=$1; shift
+    local bump_version_=$1; shift
+    [[ $bump_version_ =~ [0-9] ]] && branch_="$branch_ v$bump_version_"
+    local modified_=$(quietly git status --porcelain | wc -l | tr -d ' ')
+    local remote="$(git config --get branch.${branch_}.remote 2>/dev/null)"
+    local remote_branch_="$(git config --get branch.${branch_}.merge)"
+    local pushes_=$(git rev-list --count ${remote_branch_/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
+    [[ -z $pushes_ ]] && pushes_=?
+    local pulls_=$(git rev-list --count HEAD..${remote_branch_/refs\/heads/refs\/remotes\/$remote} 2>/dev/null)
+    [[ -z $pulls_ ]] && pulls_=?
+    local short_branch_=$branch_
+    [[ $branch_ =~ [A-Z][A-Z][A-Z][A-Z][-] ]] && short_branch_=$(echo $branch | sed -e "s,\(....-[0-9]*\).*,\1,")
+    if [[ $modified_ == 0 && $pushes_ == 0 && $pulls_ == 0 ]]; then
+        echo $short_branch_
         return 0
     fi
-    if [[ $_pulls == 0 ]]; then
-        if [[ $_pushes == 0 ]]; then
-            _branch_at="$_branch_at $_modified"
+    if [[ $pulls_ == 0 ]]; then
+        if [[ $pushes_ == 0 ]]; then
+            short_branch_="$short_branch_ $modified_"
         else
-            _branch_at="$_branch_at $_modified+$_pushes"
+            short_branch_="$short_branch_ $modified_+$pushes_"
         fi
     else
-        _branch_at="$_branch_at $_modified+$pushes-$_pulls"
+        short_branch_="$short_branch_ $modified_+$pushes-$pulls_"
     fi
-    echo $_branch_at
+    echo $short_branch_
     return 0
 }
 

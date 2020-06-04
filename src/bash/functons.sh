@@ -288,6 +288,7 @@ fgt () {
 ftt () {
     fgv *.test *.tests "$@"
 }
+
 ght () {
     gh "$@" | tel
 }
@@ -353,8 +354,8 @@ gsij () {
     gsi ~/jab
 }
 
-keys () {
-    . ~/bash/keyboard/__init__.sh
+key () {
+    . ~/bash/keyboard/$1.sh
 }
 
 kpj () {
@@ -497,7 +498,7 @@ mkd () {
 nat () {
     local _cmd=cat
     is-file bat && _cmd=bat
-    is-file kat && $(kat "$@" >~/fd/1 2>~/fd/2) && _cmd=kat
+    is-file kat && $(kat "$@" >/tmp/std/out 2>/tmp/std/err) && _cmd=kat
     $_cmd "$@"
 }
 
@@ -747,7 +748,7 @@ bool () {
             [[ $_result == 0 ]] && echo True || echo False
             return $_result
         else
-            "$@" 2> ~/bash/fd/2 && echo True && return 0
+            "$@" 2> /tmp/std/err && echo True && return 0
         fi
         echo False; return 1
     fi
@@ -836,6 +837,10 @@ init () {
     [[ -f $_init ]] || _init=bash/__init__.sh
     [[ -f $_init ]] || _init=src/bash/__init__.sh
     [[ -f $_init ]] && . $_init
+}
+
+keys () {
+    . ~/bash/keyboard/__init__.sh
 }
 
 lkra () {
@@ -1627,7 +1632,7 @@ source_aliases () {
 console_title_on () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
-    elif env | grep -iq konsole 2> ~/bash/fd/2; then
+    elif env | grep -iq konsole 2> /tmp/std/err; then
         #dcop $KONSOLE_DCOP_SESSION renameSession $1
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/21380108/500942
     elif env | grep -iq gnome.terminal; then
@@ -1655,7 +1660,7 @@ show_functons_in ()
 console_title_off () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "]0;$1"
-    elif env | grep -iq konsole 2> ~/bash/fd/2; then
+    elif env | grep -iq konsole 2> /tmp/std/err; then
         dcop $KONSOLE_DCOP_SESSION renameSession $1
     elif env | grep -iq gnome.terminal; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
@@ -1755,7 +1760,7 @@ _divv_get_difference () {
         --exclude=.gitignore \
         $_source_gitignore \
         $destination_gitignore \
-    "$_source_dir" "$_destination_dir" 2> ~/bash/fd/2
+    "$_source_dir" "$_destination_dir" 2> /tmp/std/err
 }
 
 unremembered () {

@@ -2,7 +2,7 @@
 
 
 
-PYTHON=${PYTHON:-$(pypath which python 2> ~/bash/fd/2)}
+PYTHON=${PYTHON:-$(pypath which python 2> /tmp/std/err)}
     
 export PIP_REQUIRE_VIRTUALENV=false
 export PIP_RESPECT_VIRTUALENV=true
@@ -19,3 +19,4 @@ add_to_a_path PYTHON_SOURCE_PATH ~/jab/src/python
 [[ -f ~/jab/src/python/pythonrc.py ]] && export PYTHONSTARTUP=~/jab/src/python/pythonrc.py
 
 
+export PYTHONBREAKPOINT="pudb.set_trace"

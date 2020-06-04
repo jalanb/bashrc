@@ -1,17 +1,17 @@
+#! /bin/bash -x
+
 cd "/Users/jab/Music/iTunes/iTunes Music"
 REMOTE=/Volumes/Phone64Gb2/music
 SOURCE="/Volumes/Music/iTunes/iTunes Music"
 
 make_dir () {
-    [[ -d "$1" ]] || mkdir -p "$1"
 }
 
 copy () {
     local _path="$@"
-    local _source="$SOURCE"/"$_path"
-    local _dir=$(dirname $_path)
-    local _remote="$REMOTE"/"$_dir"
-    make_dir "$_remote"
+    local _source="$SOURCE/$_path"
+    local _remote="$REMOTE/$(dirname $_path)"
+    [[ -d "$_remote" ]] || mkdir -p "$_remote"
     cp "$_source" "$_remote"
 }
 
@@ -46,13 +46,16 @@ copy 16 Horsepower/Sackcloth 'n' Ashes/08 Heel on the Shovel.mp3
 copy 16 Horsepower/Sackcloth 'n' Ashes/09 American Wheeze.mp3
 copy 16 Horsepower/Sackcloth 'n' Ashes/10 Red Neck Reel.mp3
 copy 2 Star Tabernacle/Ramblin' Man/01 Ramblin' Man.mp3
+copy 3 Mustaphas 3/Bam! Big Mustaphas Play Stereolocalmusic/04 Mehmeteli.mp3
 copy 3 Mustaphas 3/Bam! Big Mustaphas Play Stereolocalmusic/06 Thalasso P'Ola Ta Nera.mp3
 copy 3 Mustaphas 3/Bam! Big Mustaphas Play Stereolocalmusic/09 Hora Lui Marin.mp3
 copy 3 Mustaphas 3/Bam! Big Mustaphas Play Stereolocalmusic/10 Besarabia.mp3
 copy 3 Mustaphas 3/Bam! Big Mustaphas Play Stereolocalmusic/12 Ainy La La _ Ah Ya Assmar El Lawn.mp3
 copy 3 Mustaphas 3/Bam! Big Mustaphas Play Stereolocalmusic/15 Bam!.mp3
 copy 3 Mustaphas 3/Bam! Mustaphas Play Stereo/Belz.mp3
+copy 3 Mustaphas 3/Bam! Mustaphas Play Stereo/Mehmeteli.mp3
 copy 3 Mustaphas 3/Bam! Mustaphas Play Stereo/Thallaso P'Ola Ta Nora.mp3
+copy 3 Mustaphas 3/Friends, Fiends & Fronds/02 !Starehe Mustapha! I, II & III.mp3
 copy 3 Mustaphas 3/Friends, Fiends & Fronds/04 Linda, Linda (Ach ya Linda).mp3
 copy 3 Mustaphas 3/Friends, Fiends & Fronds/08 Bukë E Kripë Në Vatër Tonë _ Kalaxhojnë.mp3
 copy 3 Mustaphas 3/Friends, Fiends & Fronds/09 Anapse To Cigaro.mp3
@@ -72,11 +75,13 @@ copy 3 Mustaphas 3/Soup Of The Century/01 Bukë E Kripë Në Vatër Tonë K
 copy 3 Mustaphas 3/Soup Of The Century/02 Zohar No  2.mp3
 copy 3 Mustaphas 3/Soup Of The Century/09 Lipovacko Kolo.mp3
 copy 3epkano/3epkano/05 The Man Who Fell From Grace....mp3
+copy 3epkano/3epkano/06 Gretchensong.mp3
 copy 99 Posse/Cerco Tiempo/06 La Gatta Mammona.mp3
 copy 99 Posse/Cerco Tiempo/08 Facendo La Storia_Making History....mp3
 copy 99 Posse/Cerco Tiempo/09 Spara.mp3
 copy 99 Posse/Corto Circuito/07 Vulesse.mp3
 copy 99 Posse/Corto Circuito/10 Nell'era della confusione semiotica.mp3
+copy 99 Posse/Corto Circuito/12 Pagherete caro.mp3
 copy 99 Posse/Curre Curre Guaglio'/01 Esodo.mp3
 copy 99 Posse/Curre Curre Guaglio'/03 Salario Qawali.mp3
 copy 99 Posse/Curre Curre Guaglio'/04 O' Documento.mp3
@@ -118,12 +123,14 @@ copy Aco Bocina/Aco Bocina/Emociòn.mp3
 copy Aco Bocina/Aco Bocina/Opop.mp3
 copy Aco Bocina/Aco Bocina/Rumba del Sol.mp3
 copy Aco Bocina/Aco Bocina/Split my Love.mp3
+copy Aco Bocina/Futuro Flamenco/Rumba del Sol (Martin Morales & Mikey Benn Mix).mp3
 copy Aco Bocina/Futuro Flamenco/Rumba del Sol (Radio edit).mp3
 copy Adam and the Ants/Kings of the Wild Frontier/1-01 Dog Eat Dog.mp3
 copy Adam and the Ants/Kings of the Wild Frontier/1-02 Antmusic.mp3
 copy Adam and the Ants/Kings of the Wild Frontier/2-13 Antmusic (Alternate Mix).mp3
 copy Adam and the Ants/Prince Charming/1-04 Five Guns West.mp3
 copy Adam and the Ants/Prince Charming/1-06 Stand And Deliver.mp3
+copy Adana Twins/YouTube/Strange (Original Mix).mp3
 copy Adele/19 (Deluxe Edition)/08 Right As Rain.mp3
 copy Adele/21/01 Rolling In The Deep.mp3
 copy Adele/21/02 Rumour Has It.mp3
@@ -143,18 +150,28 @@ copy Alabama 3 Unplugged/The Radcliffe and Maconie Show/Woke Up This Morning, Al
 copy Alabama 3 Unplugged/Versions Podcast/01 Folsom Prison Blues.mp3
 copy Alabama 3/Ain't Goin' To Goa (Cds2)/04 Ain't Goin' To Goa (Trouser Enthusiasts Transcendental 7_ Edit).mp3
 copy Alabama 3/Ain't Goin' To Goa (Cds2)/07 Ain't Goin' To Goa (Motiv 8 Radio Mix).mp3
+copy Alabama 3/Analogue On The Delta/01 Hypo Full Of Love.mp3
+copy Alabama 3/Analogue On The Delta/02 Mao Tse Tung Said.mp3
+copy Alabama 3/Analogue On The Delta/03 Woke Up This Morning.mp3
+copy Alabama 3/Analogue On The Delta/04 Speed Of The Sound Of Loneliness.mp3
 copy Alabama 3/Analogue On The Delta/06 Sister Rosetta.mp3
 copy Alabama 3/Analogue On The Delta/07 You Don't Dance To Techno.mp3
 copy Alabama 3/Analogue On The Delta/08 Night We Nearly Got Busted.mp3
+copy Alabama 3/Analogue On The Delta/09 Converted.mp3
 copy Alabama 3/Arseholed on Cold Harbour Lane/03 Speed.mp3
 copy Alabama 3/Arseholed on Cold Harbour Lane/04 Woke Up This Morning.mp3
 copy Alabama 3/Arseholed on Cold Harbour Lane/08 Mao Tse Tung Said.mp3
+copy Alabama 3/Arseholed on Cold Harbour Lane/09 Hypo Full Of Love (The 12 Step Plan).mp3
+copy Alabama 3/Arseholed on Cold Harbour Lane/10 Whores of Babylon (Fruity Fetish Mix).mp3
+copy Alabama 3/Arseholed on Cold Harbour Lane/12 Converted (If I Could Dream Mix).mp3
 copy Alabama 3/Before The Effect ( The Futech Mixes )/06 Let The Caged Bird Sing ( Red Enzyme Mix ).mp3
 copy Alabama 3/Before The Effect ( The Futech Mixes )/09 The Bama Boys Of Brixton.mp3
 copy Alabama 3/Converted/01 Converted (Pump Friction & Precious Paul's Radio Edit).mp3
 copy Alabama 3/Converted/02 Converted (Handbaggers Remix).mp3
 copy Alabama 3/Converted/02 Converted (Perverted Mix).mp3
 copy Alabama 3/Exile On Coldharbour Lane (Remix Bonus CD)/01 Woke Up This Morning (Urban Takeover Mix).mp3
+copy Alabama 3/Exile On Coldharbour Lane (Remix Bonus CD)/06 Ain't Goin' To Goa (US Mix).mp3
+copy Alabama 3/Exile On Coldharbour Lane (Remix Bonus CD)/07 Ain't Goin' To Goa (Long Version).mp3
 copy Alabama 3/Exile on Coldharbour Lane/01 Converted.MP3
 copy Alabama 3/Exile on Coldharbour Lane/02 Speed of the Sound of Loneliness.MP3
 copy Alabama 3/Exile on Coldharbour Lane/03 Woke Up This Morning.MP3
@@ -189,8 +206,10 @@ copy Alabama 3/Live At Glastonbury/03 Ain't Going To Goa.MP3
 copy Alabama 3/Live At Glastonbury/04 U Don't Danse 2 Tekno.MP3
 copy Alabama 3/Live At Glastonbury/07 Have You Seen Bruce Reynolds _.MP3
 copy Alabama 3/Live At Glastonbury/09 Up Above My Head.MP3
+copy Alabama 3/Live At Glastonbury/10 Hypo Full Of Love.MP3
 copy Alabama 3/Live In Bournemouth/08 Two Heads.mp3
 copy Alabama 3/Live In Bournemouth/10 Terra Firma Cowboy Blues.mp3
+copy Alabama 3/Live In Dublin/06 Mao Tse Tung Said.MP3
 copy Alabama 3/M.O.R. Drive Time/01 Work It.mp3
 copy Alabama 3/M.O.R. Drive Time/09 If I Should Die Tonight.mp3
 copy Alabama 3/M.O.R. Drive Time/10 Amos Moses.mp3
@@ -201,8 +220,11 @@ copy Alabama 3/Manifesto/01 I Was A Bad Girl (A Coordinator of Women).mp3
 copy Alabama 3/Manifesto/02 Necrophilia Blues.mp3
 copy Alabama 3/Manifesto/03 Inlaws.mp3
 copy Alabama 3/Manifesto/05 Thats Where The Lord Stepped In.mp3
+copy Alabama 3/Outlaw Remixes/02 M. I. A..MP3
+copy Alabama 3/Outlaw Remixes/07 Johnny Cash (Know His Name).MP3
 copy Alabama 3/Outlaw Remixes/08 Let It Slide.MP3
 copy Alabama 3/Outlaw Remixes/10 Terra Firma.MP3
+copy Alabama 3/Outlaw Remixes/11 The Wild Bunch.MP3
 copy Alabama 3/Outlaw Remixes/Hello, I'm Johnny Cash (Captain Paranoid Mix).mp3
 copy Alabama 3/Outlaw/02 Last Train To Mashville.MP3
 copy Alabama 3/Outlaw/03 Terra Firma Cowboy Blues.MP3
@@ -211,17 +233,24 @@ copy Alabama 3/Outlaw/08 Have You Seen Bruce Richard Reynolds_.MP3
 copy Alabama 3/Power in the Blood/02 Power in the Blood.MP3
 copy Alabama 3/Power in the Blood/04 Woody Guthrie.MP3
 copy Alabama 3/Remixes/01 Cocaine killed my community.mp3
+copy Alabama 3/Remixes/02 Mansion On The Hill (Arthur Baker Remix).mp3
+copy Alabama 3/Remixes/03 Travelling shoes.mp3
 copy Alabama 3/Remixes/07 Elvis on a motorbike.mp3
 copy Alabama 3/Revolver Soul/11 Vietnamistan.mp3
 copy Alabama 3/Serious Repercussions (The Futech Mixes)/04 Speed Of The Sound Of Loneliness (Harpo Jaws Mix).mp3
 copy Alabama 3/Serious Repercussions (The Futech Mixes)/05 Doghouse Chronicles (Boned Mix).mp3
 copy Alabama 3/Serious Repercussions (The Futech Mixes)/10 Lord Have Mercy (Astro Clyde's Mix).mp3
 copy Alabama 3/Serious Repercussions (The Futech Mixes)/12 Woke Up This Morning (Had A 9in Nail In My Eye Mix).mp3
+copy Alabama 3/Speed Of The Sound Of Loneliness/02 Speed of the Sound of Loneliness (self preservation society cained club mix).mp3
+copy Alabama 3/Speed Of The Sound Of Loneliness/03 Speed Of The Sound Of Loneliness (Tony De Vit Remix).mp3
 copy Alabama 3/The Ministers At Work/01 Love Will Tear Us Apart.mp3
 copy Alabama 3/The Ministers At Work/03 If You Could Love Me.mp3
 copy Alabama 3/The Radcliffe and Maconie Show/Vietnamistan.mp3
 copy Alabama 3/Too Sick To Pray (Don't Call The Doctor)/01 Too Sick To Pray (Don't Call The Doctor) (radio edit).mp3
+copy Alabama 3/Transfusion/02 Power In The Blood.mp3
 copy Alabama 3/Transfusion/04 Flag.mp3
+copy Alabama 3/Transfusion/05 Devil Went Down To Ibiza.mp3
+copy Alabama 3/Transfusion/07 REHAB.mp3
 copy Alabama 3/Transfusion/11 Lord Have Mercy.mp3
 copy Alabama 3/Unknown Album/Devil.mp3
 copy Alabama 3/Unknown Album/No Submission.mp3
@@ -229,6 +258,7 @@ copy Alabama 3/Versions Podcast/02 Speed Of The Sound Of Loneliness.mp3
 copy Alabama 3/WWW/The Wild Bunch.mp3
 copy Alabama 3/Woke Up This Morning/02 Converted [Last Supper Mix].mp3
 copy Alabama 3/Woke Up This Morning/03 Woke Up This Morning [Drillaz in the Church Mix].mp3
+copy Alabama 3/Woke Up This Morning/04 Woke Up This Morning [Volume Mix].mp3
 copy Alabama 3/Zero Tolerance/11 God's Unchanging Hand (The Steam Rooms Mix).mp3
 copy Alan Jackson/Don't Rock The Jukebox/Don't Rock The Jukebox.mp3
 copy Alan Jackson/When Somebody Loves You/It's Alright To Be A Redneck.mp3
@@ -305,6 +335,7 @@ copy Altered Images/Happy Birthday_ The Best of Altered Images/1-01 Happy Birthd
 copy Altered Images/Happy Birthday_ The Best of Altered Images/1-02 Dead Pop Stars.mp3
 copy Altered Images/Happy Birthday_ The Best of Altered Images/1-06 Legionnaire.mp3
 copy Altered Images/Happy Birthday_ The Best of Altered Images/1-11 A Day's Wait.mp3
+copy Altered Images/Happy Birthday_ The Best of Altered Images/2-18 Happy Birthday [Dance Mix].mp3
 copy Alternate Earth/[solstice]/Superfuzz.mp3
 copy Althea & Donna/Uptown Top Ranking/02 Jah Rastafari.mp3
 copy Althea & Donna/Uptown Top Ranking/05 Uptown Top Ranking.mp3
@@ -347,6 +378,7 @@ copy Amsterdam Klezmer Band/Limonchiki/08 Der Mame Ist Gegangen.mp3
 copy Amsterdam Klezmer Band/Limonchiki/09 De Vuurvreter van Sassari.mp3
 copy Amsterdam Klezmer Band/Remixed/02 Terk.mp3
 copy Amsterdam Klezmer Band/Remixed/03 Constantinopel Babes.mp3
+copy Amsterdam Klezmer Band/Remixed/06 Pluk-a-Dub.mp3
 copy Amsterdam Klezmer Band/Remixed/11 Immigrant Song.mp3
 copy Amsterdam Klezmer Band/Remixed/13 Odessa's Blast Out.mp3
 copy Amy Winehouse/Back To Black/01 Rehab.m4a
@@ -358,6 +390,7 @@ copy Angelo Badalamenti/Blue Velvet/12 In Dreams.mp3
 copy Angelo Badalamenti/Fire Walk With Me/03 Sycamore Trees.mp3
 copy Angelo Badalamenti/Fire Walk With Me/05 A Real Indication.mp3
 copy Angelo Badalamenti/Fire Walk With Me/07 The Pink Room.mp3
+copy Angelo Badalamenti/Fire Walk With Me/10 Moving Through Time.mp3
 copy Angelo Badalamenti/Fire Walk With Me/12 The Voice of Love.mp3
 copy Angelo Badalamenti/Lost Highway/12 Apple Of Sodom.mp3
 copy Angelo Badalamenti/Lost Highway/14 Something Wicked This Way Comes (Edit).mp3
@@ -368,6 +401,7 @@ copy Angelo Badalamenti/Lost Highway/20 Heirate Mich (Edit).mp3
 copy Angelo Badalamenti/Music From Twin Peaks/Falling.mp3
 copy Angelo Badalamenti/Music From Twin Peaks/Laura Palmer's Theme.mp3
 copy Angelo Badalamenti/Music From Twin Peaks/Twin Peaks Theme.mp3
+copy Angelo Badalamenti/The Straight Story/13 Montage.mp3
 copy Angelo Badalamenti/Wild At Heart/03 Cool Cat Walk.mp3
 copy Angelo Badalamenti/Wild At Heart/04 Love Me.mp3
 copy Angelo Badalamenti/Wild At Heart/05 Baby Please Don't Go.mp3
@@ -383,14 +417,19 @@ copy Anima Sound System/Gipsy Sound Clash/07 Cimbalom.mp3
 copy Anima Sound System/Gipsy Sound Clash/08 Sinsemilla.mp3
 copy Anima Sound System/Gipsy Sound Clash/12 Tekerd.mp3
 copy Anima Sound System/Gipsy Sound Clash/13 Tilos.mp3
+copy Anima Sound System/Hungarian Astronaut/07 Csángó.mp3
 copy Anima Sound System/Hungarian Astronaut/08 Dubsax.mp3
 copy Anima Sound System/Hungarian Astronaut/09 Fight.mp3
 copy Anima Sound System/Hungarian Astronaut/10 Rakjuk a tüzet.mp3
 copy Anima Sound System/Közel A Szerelemhez/09 The End.mp3
 copy Anima Sound System/Mutiny On The Ship/12 World At War.mp3
 copy Anima Sound System/Mutiny On The Ship/15 Take The Power Back.mp3
+copy Anima Sound System/Shalom/03 Hajnal Volt.mp3
 copy Anima Sound System/Shalom/08 Fuck The Racist (Cosmopolitan Mix).mp3
+copy Anima Sound System/Shalom/10 Hajnal Volt (Dub Version).mp3
 copy Anima Sound System/Shalom/11 Roma Reggae (Unplugged Version).mp3
+copy Anima Sound System/Upload _ Download/04 Shalom (Pozvakowski version).mp3
+copy Anima Sound System/Upload _ Download/06 World At War (Tigrics 'or just you and mix').mp3
 copy Anima Sound System/Upload _ Download/11 Trubul Ek Vorba (Jutasi Betyárvizit rmx).mp3
 copy Anima Sound System/We Strike!/01 Get up.mp3
 copy Anima Sound System/We Strike!/03 World at War.mp3
@@ -409,10 +448,12 @@ copy Arctic Monkeys/Favourite Worst Nightmare/01 Brianstorm.mp3
 copy Arctic Monkeys/Favourite Worst Nightmare/05 Flourescent Adolescent.mp3
 copy Arctic Monkeys/Humbug/02 Crying Lightning 1.mp3
 copy Aretha Franklin/Unforgettable_ A Tribute to Dinah Washington/11 Lee Cross.mp3
+copy Art Of Noise/Moments In Love/01 Moments In Love (Beaten).mp3
 copy Art Of Noise/Moments In Love/02 Moments In Love.mp3
 copy Art Of Noise/Moments In Love/03 Beatbox Diversion 10.mp3
 copy Art Of Noise/The Best of The Art Of Noise/32 Kiss.mp3
 copy Art Of Noise/The Best of The Art Of Noise/Peter Gunn.mp3
+copy Art Of Noise/the seduction of claude debussy/01 il pleure (at the turn of the century).MP3
 copy Art Of Noise/the seduction of claude debussy/04 on being blue.MP3
 copy Art Of Noise/the seduction of claude debussy/11 approximate mood swing no_ 2.MP3
 copy Arthur 'Guitar Boogie' Smith/Here Comes The Boogie Man/01 The Darktown Strutters' Ball.mp3
@@ -450,6 +491,7 @@ copy Associates/Perhaps/Schampout.mp3
 copy Associates/Perhaps/The Stranger In Your Voice.mp3
 copy Associates/Perhaps/Thirteen Feelings.mp3
 copy Associates/Perhaps/Those First Impressions.mp3
+copy Associates/Perhaps/Waiting For The Loveboat.mp3
 copy Associates/Sulk/12 Club Country.mp3
 copy Associates/Sulk/12 Nothinginsomethingparticular.mp3
 copy Associates/Sulk/12 Party Fears Two.mp3
@@ -459,10 +501,14 @@ copy Associates/The Glamour Chase/Heaven's Blue.mp3
 copy Associates/The Glamour Chase/The Rhythm Divine.mp3
 copy Associates/Wild And Lonely/02 Fever.mp3
 copy Associates/Wild And Lonely/10 Wild And Lonely.mp3
+copy Astral Projection/Trust in Trance/111 Butterfly Trip !.mp3
 copy Astral Projection/Trust in Trance/Force Fields.mp3
 copy Astral Projection/Trust in Trance/Sativa.mp3
 copy Astral Projection/Trust in Trance/Visions Of Nasca.mp3
+copy Astralasia/Seven Pointed Star/01 The Seven Pointed Star.mp3
+copy Astralasia/Seven Pointed Star/03 Four Moons.mp3
 copy Astralasia/White Bird/01 Special World.mp3
+copy Astralasia/White Bird/10 Special World (Astral Dub).mp3
 copy Authority Zero/Andiamo/09 Mexican Radio.mp3
 copy BBC Radiophonic Workshop/Dr Who/Dr Who Original Theme.mp3
 copy BBC/What Is Reality_/What Is Reality_.mp3
@@ -512,45 +558,119 @@ copy Balkan Beat Box/Nu-Made_ Remixes and Videos/11 Ramallah-Tel Aviv.mp3
 copy Balkan Beat Box/SoundCloud/Adir Adirim ( J.Nasty Tribute to Middle East Remix).mp3
 copy Balkan Beat Box/SoundCloud/Adir Adirim (Rüstico Mashup).mp3
 copy Balkan Beat Box/SoundCloud/Adir Adirim Refix.mp3
+copy Banco de Gaia/10 Years Remixed/01 Lai Lah (Eat Static Kitchen Sink Remix).mp3
+copy Banco de Gaia/10 Years Remixed/04 Sakarya (Loop Guru Fairground Strawberry Illumination Remix).mp3
 copy Banco de Gaia/10 Years Remixed/06 Soufie (HIA Remix).mp3
 copy Banco de Gaia/10 Years Remixed/12 Sunspot (100th Monkey And Mr Noisy Return To Qurna Remix).mp3
+copy Banco de Gaia/10 Years Remixed/How Much Reality Can You Take_ (Jamie Hickey Remix).mp3
+copy Banco de Gaia/10 Years/03 Shanti (Black Mountain Mix).mp3
 copy Banco de Gaia/10 Years/09 Sakarya.mp3
+copy Banco de Gaia/10 Years/Amber (Insect Intelligence).mp3
 copy Banco de Gaia/10 Years/I Love Baby Cheesy (Skippy Mix).mp3
+copy Banco de Gaia/Acid Planet/Ynys Elen (Dream Trance Mix).mp3
+copy Banco de Gaia/Apollo/02 Wimble Toot.mp3
 copy Banco de Gaia/Apollo/05 Apollon.mp3
+copy Banco de Gaia/Apollo/06 Hu!.mp3
+copy Banco de Gaia/Big Men Cry/01 Drippy.MP3
+copy Banco de Gaia/Big Men Cry/03 Drunk As A Monk.MP3
 copy Banco de Gaia/Big Men Cry/04 Big Men Cry.mp3
 copy Banco de Gaia/Big Men Cry/05 Gates Does Windows.mp3
 copy Banco de Gaia/Deep Live/03 Desert Wind.mp3
+copy Banco de Gaia/Deep Live/04 Lai Lah.mp3
+copy Banco de Gaia/Deep Live/05 Data Inadequate.mp3
 copy Banco de Gaia/Deep Live/07 Anger!.mp3
 copy Banco de Gaia/Deep Live/09 Gamelah.mp3
+copy Banco de Gaia/Desert Wind/03 Shanti (Soupdragon Mix).mp3
 copy Banco de Gaia/Farewell Ferengistan/01 Farewell Ferengistan.mp3
+copy Banco de Gaia/Farewell Ferengistan/02 Ynys Elen.mp3
 copy Banco de Gaia/Farewell Ferengistan/03 Chingiz.mp3
+copy Banco de Gaia/Farewell Ferengistan/04 Kara Kum.mp3
+copy Banco de Gaia/Freeform Flutes & Fading Tibetans/02 Lai Lah.mp3
+copy Banco de Gaia/Heliopolis (The City Of The Sun Mixes)/01 Heliopolis (Eedupolis Dog Mix).mp3
 copy Banco de Gaia/Heliopolis (The City Of The Sun Mixes)/03 Heliopolis (Redwood Mix).mp3
 copy Banco de Gaia/I Love Baby Cheesy/05 I Love Baby Cheesy (The Afro-European Remix).mp3
+copy Banco de Gaia/Igizeh/01 Seti I.mp3
 copy Banco de Gaia/Igizeh/03 Creme Egg.mp3
+copy Banco de Gaia/Igizeh/06 How much reality can you take_.mp3
 copy Banco de Gaia/Igizeh/07 B2.mp3
 copy Banco de Gaia/Kara Kum Remixes/04 Kara Kum (Bombay Dub's Spaghetti Eastern Mix).mp3
+copy Banco de Gaia/Last Train To Lhasa/1-02 Kuos.MP3
+copy Banco de Gaia/Last Train To Lhasa/1-03 China (clouds not mountains).MP3
+copy Banco de Gaia/Last Train To Lhasa/1-04 Amber.MP3
+copy Banco de Gaia/Last Train To Lhasa/1-05 Kincajou.MP3
 copy Banco de Gaia/Last Train To Lhasa/1-06 White Paint.mp3
+copy Banco de Gaia/Last Train To Lhasa/3-01 China (Follow The Red Brick Road Mix).mp3
+copy Banco de Gaia/Last Train to Lhasa 20th Anniversary EP/02 Last Train to Lhasa (AstroPilot Remix).mp3
+copy Banco de Gaia/Live at Glastonbury/02 Mafich Arabi.MP3
+copy Banco de Gaia/Live at Glastonbury/03 Amber.MP3
+copy Banco de Gaia/Live at Glastonbury/04 White Paint.MP3
+copy Banco de Gaia/Live at Glastonbury/05 Kincajou.MP3
 copy Banco de Gaia/Live at Glastonbury/06 Kuos.MP3
+copy Banco de Gaia/Live at Sankey's Soap/Amber.mp3
+copy Banco de Gaia/Live at Sankey's Soap/Drippy.mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/01 Heliopolis.mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/02 Mafich Arabi.mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/03 Sunspot.mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/07 Lai Lah (v1.infinity).mp3
 copy Banco de Gaia/Maya (20th Anniversary Edition)/10 Heliopolis (Aethereal Mix).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/11 Mafich Arabi (Original Demo).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/12 Sunspot (Unpeeled Mix).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/13 Gamelah (Live at Oxcillate 1994).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/14 Qurna (Livemix #2-4 Edit).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/15 Sheesha (Green Tractor Mix).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/16 Lai Lah (Marine Mix).mp3
 copy Banco de Gaia/Maya (20th Anniversary Edition)/19 Mafich Arabi (Templehedz Remix).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/22 Qurna (Haj Ali_s Birthday Mix).mp3
+copy Banco de Gaia/Maya (20th Anniversary Edition)/25 Shanti (Live in a Field in Oxford 1993).mp3
+copy Banco de Gaia/Maya/01 Heliopolis.MP3
+copy Banco de Gaia/Maya/02 Mafich Arabi.MP3
+copy Banco de Gaia/Maya/05 Qurna (mister christian on the decks).mp3
+copy Banco de Gaia/Maya/07 Lai Lah (v1.infinity).MP3
+copy Banco de Gaia/Maya/09 Maya.mp3
 copy Banco de Gaia/Medium/01 The Final Frontier.mp3
 copy Banco de Gaia/Medium/08 Befe.mp3
+copy Banco de Gaia/Medium/09 Mafich Arabi (Nin).mp3
 copy Banco de Gaia/Medium/10 Anger! (Jimi's Revenge).mp3
+copy Banco de Gaia/Memories Dreams Reflections/08 Indecision.mp3
+copy Banco de Gaia/Memories Dreams Reflections/09 Soufie (Blue Mix).mp3
+copy Banco de Gaia/Memories Dreams Reflections/10 Qurna.mp3
+copy Banco de Gaia/Memories Dreams Reflections/11 China.mp3
 copy Banco de Gaia/Memories Dreams Reflections/13 How Much Reality Can You Take_.mp3
+copy Banco de Gaia/Memories Dreams Reflections/14 No Rain.mp3
+copy Banco de Gaia/Memories Dreams Reflections/16 Last Train To Lhasa.mp3
+copy Banco de Gaia/Memories Dreams Reflections/2-07 Analogique.mp3
+copy Banco de Gaia/Northern Exposure/11 Last Train To Lhasa (Sasha and John Digweed Mix).mp3
+copy Banco de Gaia/Obsidian (Remixes)/01 Obsidian (Fluke Mix).mp3
+copy Banco de Gaia/Obsidian (Remixes)/03 Obsidian (Remixed By The Light Vs. PFN).mp3
+copy Banco de Gaia/Obsidian (Remixes)/04 Obsidian (The Slinky Kink Mix).mp3
+copy Banco de Gaia/Ollopa_ Apollo Remixed/01 Acquiescence (Tripswitch Remix).mp3
 copy Banco de Gaia/Ollopa_ Apollo Remixed/08 Wimble Toot (Eat Static Remix).mp3
 copy Banco de Gaia/Ollopa_ Apollo Remixed/09 Lamentations (Gaudi Remix).mp3
+copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/03 Wimble Toot (100th Monkey Remix).mp3
 copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/04 Apollon (Dr Trippy Remix).mp3
 copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/05 Kara Kum (Thehickstar Remix).mp3
+copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/06 Farewell Ferengistan (Levente Remix).mp3
+copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/07 Zeus No Like Techno (Overfunkt Remix).mp3
 copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/11 Oreia (International Observer's Monkey Forest Dub).mp3
+copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/12 Hu! (E.R.S. Remix).mp3
+copy Banco de Gaia/Rewritten Histories Vol.3 2002-2013/19 Eternal Sunshine (Ozclipse Mix).mp3
 copy Banco de Gaia/Six Degrees 100/02 A Loop in Time [Banco de Gaia Remix].mp3
 copy Banco de Gaia/Songs From The Silk Road/01 Farewell Ferengistan.mp3
+copy Banco de Gaia/Songs From The Silk Road/10 Touching The Void (Smells Like Salvation).mp3
 copy Banco de Gaia/Songs From The Silk Road/11 Desert Wind (El Ahram Mix).mp3
+copy Banco de Gaia/Songs From The Silk Road/12 Data Inadequate (Live '93).mp3
 copy Banco de Gaia/The Magical Sounds of Banco De Gaia (20th Anniversary Edition)/1-01 I Love Baby Cheesy.mp3
 copy Banco de Gaia/The Magical Sounds of Banco de Gaia/01 I Love Baby Cheesy.MP3
+copy Banco de Gaia/The Magical Sounds of Banco de Gaia/02 Harvey and the Old Ones.MP3
+copy Banco de Gaia/The Magical Sounds of Banco de Gaia/08 No Rain.MP3
+copy Banco de Gaia/Two Thousand And 4/01 How Much Reality Can You Take_.mp3
 copy Banco de Gaia/Two Thousand And 4/02 Zeus No Like Techno.mp3
 copy Banco de Gaia/Two Thousand And 4/03 Last Train To Lhasa.mp3
 copy Banco de Gaia/Two Thousand And 4/10 Obsidian.mp3
+copy Banco de Gaia/Unknown Album/Eternal Sunshine (Ozclipse Mix).mp3
 copy Banco de Gaia/You Are Here/02 Zeus No Like Techno.mp3
+copy Banco de Gaia/You Are Here/03 Waking Up In Waco.mp3
+copy Banco de Gaia/Zeus No Like Techno _ Gray Over Gray/04 Zeus No Like Techno (Overfunkt Remix).mp3
 copy Band Aid/Do They Know It's Christmas _ Feed The World/01 Do They Know It's Christmas_.mp3
 copy Band Aid/NOW That_s What I Call Christmas 2014/1-08 Do They Know It's Christmas_.mp3
 copy Basement Jaxx/The Singles/Bingo Bango.mp3
@@ -561,6 +681,9 @@ copy Baskery/Fall Among Thieves/05 Out-Of-Towner.mp3
 copy Baskery/Fall Among Thieves/07 Here To Pay My Dues.mp3
 copy Baskery/Fall Among Thieves/10 Why Don't Ya.mp3
 copy Baskery/Fall Among Thieves/11 I Haunt You.mp3
+copy Battles/B EP/01 SZ2.mp3
+copy Battles/Dross Glop/01 Wall Street (Gui Boratto Remix).mp3
+copy Battles/Dross Glop/02 Sweetie & Shag (The Field Remix).mp3
 copy Battles/Dross Glop/03 Futura (The Alchemist Remix).mp3
 copy Battles/Dross Glop/07 Toddler (Kangding Ray Remix).mp3
 copy Battles/Dross Glop/12 Sundome (Yakatama Eye Remix).mp3
@@ -570,13 +693,17 @@ copy Battles/Gloss Drop/03 Futura.mp3
 copy Battles/Gloss Drop/04 Inchworm.mp3
 copy Battles/Gloss Drop/07 Dominican Fade.mp3
 copy Battles/Gloss Drop/11 White Electric.mp3
+copy Battles/Gloss Drop/12 Sundome (Feat. Yamantaka Eye).mp3
+copy Battles/La Di Da Di/01 The Yabba.mp3
 copy Battles/La Di Da Di/02 Dot Net.mp3
 copy Battles/La Di Da Di/06 Non-Violence.mp3
 copy Battles/La Di Da Di/08 Tyne Wear.mp3
 copy Battles/La Di Da Di/10 Megatouch.mp3
 copy Battles/Mirrored/01 Race_ In.mp3
 copy Battles/Mirrored/03 Ddiamondd.mp3
+copy Battles/Mirrored/04 Tonto.mp3
 copy Battles/Mirrored/07 Bad Trails.mp3
+copy Battles/Tonto+/03 Tonto (Four Tet Remix).mp3
 copy Bauhaus/1979-1983_ Volume One/08 St. Vitus Dance.mp3
 copy Bauhaus/1979-1983_ Volume Two/02 Hollow Hills.mp3
 copy Bauhaus/1979-1983_ Volume Two/04 Ziggy Stardust.mp3
@@ -585,6 +712,7 @@ copy Bauhaus/1979-1983_ Volume Two/09 Third Uncle.mp3
 copy Bauhaus/1979-1983_ Volume Two/11 All We Ever Wanted Was Everything.mp3
 copy Bauhaus/1979-1983_ Volume Two/14 The Sanity Assassin.mp3
 copy Bauhaus/1979-1983_ Volume Two/16 Satori.mp3
+copy Bauhaus/Bela Lugosi's Dead/01 Bela Lugosi's Dead.mp3
 copy Beastie Boys/Licensed to Ill/01 Rhymin & Stealin.mp3
 copy Beastie Boys/Licensed to Ill/07 Fight for Your Right.mp3
 copy Beastie Boys/Paul's Boutique/03 Johnny Ryall.mp3
@@ -598,6 +726,7 @@ copy Beats Antique/Collide/07 Caterpillar.mp3
 copy Beats Antique/Collide/09 Sweet Demure.mp3
 copy Beats Antique/Collide/10 Milieu.mp3
 copy Bee Gees/Bee Gees Greatest/1-03 Tragedy.mp3
+copy Bee Gees/Bee Gees Greatest/1-12 Stayin' Alive (Promo 12_ Version).mp3
 copy Beirut/Elephant Gun/01 Elephant Gun.mp3
 copy Beirut/Elephant Gun/03 Le Moribond _ My Family_s Role In The World Revolution.mp3
 copy Beirut/Gulag Orkestar/02 Prenzlauerberg.mp3
@@ -609,6 +738,7 @@ copy Beirut/The Flying Club Cup/04 Guyamas Sonora.mp3
 copy Beirut/The Flying Club Cup/09 In The Mausoleum.mp3
 copy Beirut/The Flying Club Cup/12 St Apollonia.mp3
 copy Belle Epoque/Black Is Black/05 Black Is Black.mp3
+copy Bellini/Samba De Janeiro - Remixes/01 John Acquaviva Remix.mp3
 copy Bellini/Samba De Janeiro - Remixes/03 Vanity Frontroom Remix.mp3
 copy Bellini/Samba De Janeiro - Remixes/04 Nightbreed Remix.mp3
 copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/02 Samba De Janeiro.mp3
@@ -617,9 +747,11 @@ copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/05 Bum Bum.mp3
 copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/07 Gol.mp3
 copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/08 Cafe Do Brasil.mp3
 copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/09 Catch Da Samba.mp3
+copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/10 Oi Harry.mp3
 copy Bellini/Samba de Janeiro - Non-Stop Best Of Bellini/11 Samba De Janeiro (Reprise).mp3
 copy Bersuit Vergarabat/Hijos del Culo/02 La del toro.mp3
 copy Bersuit Vergarabat/Hijos del Culo/06 Porteño de ley.mp3
+copy Bersuit Vergarabat/La Argentinidad Al Palo/2-08 Y no está solo.mp3
 copy Bersuit Vergarabat/La Argentinidad Al Palo/2-11 El viento trae una copla.mp3
 copy Beyoncé/I Am ... Sasha Fierce/Single Ladies.mp3
 copy Big Audio Dynamite/No. 10, Upping St_/09 Sightsee M.C.!.mp3
@@ -690,6 +822,7 @@ copy Bill Nelson/Quit Dreaming And Get On The Beam/02 Living In My Limousine.mp3
 copy Bill Nelson/Quit Dreaming And Get On The Beam/10 Do You Dream In Colour.mp3
 copy Bill Nelson/Quit Dreaming And Get On The Beam/11 U.H.F..mp3
 copy Bill Nelson/Quit Dreaming And Get On The Beam/13 Quit Dreaming And Get On The Beam.mp3
+copy Bill Whelan/Riverdance_ Music From The Show/01 Reel Around The Sun.mp3
 copy Bill Whelan/Riverdance_ Music From The Show/08 Riverdance.mp3
 copy Bill Whelan/Riverdance_ Music From The Show/09 American Wake (The Nova Scotia Set).mp3
 copy Bill Whelan/Riverdance_ Music From The Show/12 Marta's Dance_The Russian Dervish.mp3
@@ -710,6 +843,7 @@ copy Birthday Party/Release The Bats Tour, Haçienda/Release The Bats.mp3
 copy Black Grape/Stupid Stupid Stupid/02 Squeaky.MP3
 copy Black Grape/Stupid Stupid Stupid/03 Marbles.MP3
 copy Black Grape/Stupid Stupid Stupid/04 Dadi Waz a Badi.MP3
+copy Black Market/Bowie In Dub/06 Let's Dance (Dub Remix).mp3
 copy Black Rebel Motorcycle Club/American X_ Baby 81 Sessions/01 The Likes Of You.mp3
 copy Black Rebel Motorcycle Club/American X_ Baby 81 Sessions/04 MK Ultra.mp3
 copy Black Rebel Motorcycle Club/B.R.M.C_/12 Red Eyes And Tears.mp3
@@ -722,6 +856,7 @@ copy Black Rebel Motorcycle Club/Baby 81/04 Windows.mp3
 copy Black Rebel Motorcycle Club/Baby 81/07 Not What You Wanted.mp3
 copy Black Rebel Motorcycle Club/Baby 81/09 Lien On Your Dreams.mp3
 copy Black Rebel Motorcycle Club/Baby 81/10 Need Some Air.mp3
+copy Black Rebel Motorcycle Club/Baby 81/12 American X.mp3
 copy Black Rebel Motorcycle Club/Beat The Devil's Tattoo/02 Conscience Killer.mp3
 copy Black Rebel Motorcycle Club/Beat The Devil's Tattoo/06 Evol.mp3
 copy Black Rebel Motorcycle Club/Beat The Devil's Tattoo/07 Mama Taught Me Better.mp3
@@ -740,6 +875,7 @@ copy Black Rebel Motorcycle Club/Specter At the Feast/01 Fire Walker.mp3
 copy Black Rebel Motorcycle Club/Specter At the Feast/02 Let the Day Begin.mp3
 copy Black Rebel Motorcycle Club/Specter At the Feast/05 Hate the Taste.mp3
 copy Black Rebel Motorcycle Club/Specter At the Feast/07 Teenage Disease.mp3
+copy Black Rebel Motorcycle Club/Specter At the Feast/11 Sell It.mp3
 copy Black Rebel Motorcycle Club/Take Them On, On Your Own/01 Stop.mp3
 copy Black Rebel Motorcycle Club/Take Them On, On Your Own/04 In Like The Rose.mp3
 copy Black Rebel Motorcycle Club/Take Them On, On Your Own/05 Ha Ha High Babe.mp3
@@ -768,6 +904,7 @@ copy Blake Edwards/The Great Race/I'm Seasick.mp3
 copy Blake Edwards/The Great Race/Pull Me Beard Out Right By The Roots.mp3
 copy Blake Edwards/The Great Race/Push The Button Max.mp3
 copy Blake Edwards/The Great Race/We're Going To Win Max.mp3
+copy Blank & Jones/Monument/06 A Forest.mp3
 copy Blondie/Greatest Hits/04 Heart Of Glass.mp3
 copy Blondie/Greatest Hits/07 Hanging On The Telephone.mp3
 copy Blondie/Greatest Hits/09 Rapture.mp3
@@ -804,6 +941,7 @@ copy Bo Diddley/The Chess Box/2-16 You Can't Judge A Book By It's Cover.mp3
 copy Bo Diddley/The Chess Box/2-18 The Greatest Lover in the World.mp3
 copy Bob Dylan/Bringing It All Back Home/01 Subterranean Homesick Blues.mp3
 copy Bob Dylan/The Freewheelin' Bob Dylan/01 Blowin' In The Wind.mp3
+copy Bob Dylan/The Freewheelin' Bob Dylan/06 A Hard Rain's A-Gonna Fall.mp3
 copy Bob Dylan/The Freewheelin' Bob Dylan/07 Don't Think Twice, It's All Right.mp3
 copy Bob Dylan/The Freewheelin' Bob Dylan/10 Talking World War III Blues.mp3
 copy Bob Dylan/The Freewheelin' Bob Dylan/13 I Shall Be Free.mp3
@@ -913,11 +1051,19 @@ copy Bobby Darin/The Bobby Darin Collection/4-27 Simple Song Of Freedom (Live).m
 copy Bobby Day/Unknown Album/Rockin Robin.mp3
 copy Bobby McFerrin/Do not Worry, Be Happy/Do not Worry, Be Happy.mp3
 copy Bomb The Bass/Into the Dragon/Beat Dis.mp3
+copy Bombay Dub Orchestra/3 Cities In Dub/01 Egypt By Air (Bombay Dub's Funky Old Medina Remix).mp3
 copy Bombay Dub Orchestra/3 Cities In Dub/03 Journey (Rise Ashen Nataraj Dub).mp3
+copy Bombay Dub Orchestra/3 Cities In Dub/05 Junoon (Bombay Dub's Jaipur Active Remix).mp3
 copy Bombay Dub Orchestra/3 Cities In Dub/07 Junoon (Alpha & Omega Dub 3).mp3
+copy Bombay Dub Orchestra/3 Cities In Dub/08 Monsoon Malabar (Bombay Dub Orchestra's Dub Mix).mp3
+copy Bombay Dub Orchestra/3 Cities/05 Spiral.mp3
 copy Bombay Dub Orchestra/3 Cities/09 Monsoon Malabar.mp3
+copy Bombay Dub Orchestra/3 Cities/10 Feasting With Panthers.mp3
+copy Bombay Dub Orchestra/3 Cities/11 Amina.mp3
+copy Bombay Dub Orchestra/Bombay Dub Orchestra Remixed EP/03 To The Shore (Spider Remix).mp3
 copy Bombay Dub Orchestra/Bombay Dub Orchestra Remixed EP/04 Mumtaz (DJ Drez Jahta Mix).mp3
 copy Bombay Dub Orchestra/Bombay Dub Orchestra/2-03 Beauty and the East [The Marine Drive Traffic Jam].mp3
+copy Bombay Dub Orchestra/Bombay Dub Orchestra/2-06 Compassion [the Continental Drift Mix].mp3
 copy Bonde do Rolê/Marina Gasolina/01 Marina Gasolina (Radio Edit).mp3
 copy Bonde do Rolê/Marina Gasolina/05 Marina Gasolina (Fake Blood Remix).mp3
 copy Bonde do Rolê/Marina Gasolina/06 Marina Gasolina (Peaches Remix).mp3
@@ -945,6 +1091,7 @@ copy Bostich+Fussible/Nortec Collective Presents_ Bulevar 2000 (Deluxe Edition)/
 copy Bothy Band/After Hours/08 The Priest, Mary Willie's, This Is My Love, Do You Like Her_.mp3
 copy Bothy Band/After Hours/10 Rosie Filln's Favourite, Over the Water to Charlie, The Kid on the Mountain.mp3
 copy Bothy Band/After Hours/11 The Green Groves of Erin, The Flowers of Red Hill.mp3
+copy Bowie & Eno meet Glass/Heroes - Low Symphonies/04 Sons of the Silent Age.mp3
 copy Brenda Lee/Brenda Lee/03 Emotions.mp3
 copy Brenda Lee/Brenda Lee/06 Dum Dum.mp3
 copy Brenda Lee/Brenda Lee/07 Jambalaya.mp3
@@ -962,6 +1109,9 @@ copy Brian Eno & Jah Wobble/Spinner/04 Garden Recalled.mp3
 copy Brian Eno & Jah Wobble/Spinner/05 Marine Radio.mp3
 copy Brian Eno & Jah Wobble/Spinner/06 Unusual Balance.mp3
 copy Brian Eno & Jah Wobble/Spinner/08 Spinner.mp3
+copy Brian Eno & Jah Wobble/Spinner/11 Unnamed.mp3
+copy Brian Eno/Ambient 1 Music For Airports/02 2_1.mp3
+copy Brian Eno/Ambient 4 On Land/08 Dunwich Beach, Autumn, 1960.mp3
 copy Brian Eno/Apollo_ Atmospheres and Soundtracks/An Ending (ascent).mp3
 copy Brian Eno/More Music For Films/25 Two Rapid Formations.mp3
 copy Brian Eno/Music For Films/06 Sparrowfall (1).mp3
@@ -977,6 +1127,7 @@ copy Brian Setzer/'68 Comeback Special Ignition!/07 Rooster Rock.MP3
 copy Brian Setzer/'68 Comeback Special Ignition!/14 Malagueña.MP3
 copy Brian Setzer/Boogie Woogie Christmas/Blue Christmas.mp3
 copy Brian Setzer/Boogie Woogie Christmas/The Man With The Bag.mp3
+copy Brian Setzer/Boogie Woogie Christmas/The Nutcracker Suite.mp3
 copy Brian Setzer/Nitro Burnin' Funny Daddy/01 Sixty Years.mp3
 copy Brian Setzer/Vavoom/01 Pennsylvania 6-5000.MP3
 copy Brian Setzer/Vavoom/03 Americano.MP3
@@ -1038,6 +1189,7 @@ copy C-Mon & Kypski/Static Traveller/06 Money Money.mp3
 copy C-Mon & Kypski/Where the Wild Things Are/03 Circus Cmon & Kypski (feat Amsterdam Klezmer Band).mp3
 copy C-Mon & Kypski/Where the Wild Things Are/04 Make My Day (feat Pete Philly).mp3
 copy C2C/Tetra/07 Happy Feat Derek Martin.mp3
+copy Cabaret Voltaire/Drinking Gasoline/05 Kino.mp3
 copy Cabaret Voltaire/Mix-Up/01 Kirlian Photograph.mp3
 copy Cabaret Voltaire/Mix-Up/02 No Escape.mp3
 copy Cabaret Voltaire/Mix-Up/03 Fourth Shot.mp3
@@ -1048,7 +1200,9 @@ copy Cabaret Voltaire/Mix-Up/07 On Every Other Street.mp3
 copy Cabaret Voltaire/Mix-Up/08 Expect Nothing.mp3
 copy Cabaret Voltaire/Mix-Up/09 Capsules.mp3
 copy Cabaret Voltaire/Technology_ Western Re-Works/06 Kino.mp3
+copy Cabaret Voltaire/The Conversation/1-04 Let's Start.mp3
 copy Cabaret Voltaire/The Living Legends/04 The Set Up.mp3
+copy Cabaret Voltaire/The Original Sound of Sheffield '83_'87/05 James Brown [12 MX].mp3
 copy Café Orchestra/FeelGood/03 Two gypsys.mp3
 copy Café Orchestra/FeelGood/05 Morning Lullaby.mp3
 copy Café Orchestra/FeelGood/09 Megan's Bittersweet Waltz.mp3
@@ -1100,14 +1254,28 @@ copy Carbon Based Lifeforms/Endospore/01 Endospore.mp3
 copy Carbon Based Lifeforms/Endospore/03 Silent Running (Carbonator RMX).mp3
 copy Carbon Based Lifeforms/Endospore/04 Epicentre Second Movement.mp3
 copy Carbon Based Lifeforms/Endospore/05 MOS 6581.mp3
+copy Carbon Based Lifeforms/Endospore/08 Metrosat 4.mp3
 copy Carbon Based Lifeforms/Endospore/09 Reaktion.mp3
+copy Carbon Based Lifeforms/Fahrenheit Project - Part Three/10 Metrosat 4.mp3
 copy Carbon Based Lifeforms/Fahrenheit Project Part Five/08 T-Rex Echoes.mp3
+copy Carbon Based Lifeforms/Hydroponic Garden/01 Central Plains.MP3
+copy Carbon Based Lifeforms/Hydroponic Garden/03 MOS 6581 (Album Version).MP3
+copy Carbon Based Lifeforms/Hydroponic Garden/06 Hydroponic Garden.MP3
 copy Carbon Based Lifeforms/Interloper/01 Interloper.mp3
+copy Carbon Based Lifeforms/Interloper/02 Right Where It Ends.mp3
+copy Carbon Based Lifeforms/Interloper/03 Central Plain.mp3
+copy Carbon Based Lifeforms/Interloper/04 Supersede.mp3
+copy Carbon Based Lifeforms/Interloper/05 Init.mp3
+copy Carbon Based Lifeforms/Interloper/06 Euphotic.mp3
 copy Carbon Based Lifeforms/Interloper/08 M.mp3
+copy Carbon Based Lifeforms/Interloper/09 20 Minutes.mp3
+copy Carbon Based Lifeforms/Interloper/10 Polyrytmi.mp3
 copy Carbon Based Lifeforms/Refuge OST/02 Birdie.mp3
 copy Carbon Based Lifeforms/Refuge OST/03 RCA (-).mp3
 copy Carbon Based Lifeforms/Refuge OST/05 Lost.mp3
 copy Carbon Based Lifeforms/Refuge OST/06 Escape.mp3
+copy Carbon Based Lifeforms/Twentythree/01 Arecibo.mp3
+copy Carbon Based Lifeforms/Twentythree/03 Somewhere In Russia.mp3
 copy Carbon Based Lifeforms/World of Sleepers/03 Photosynthesis.MP3
 copy Carbon Based Lifeforms/World of Sleepers/05 Gryning.MP3
 copy Carl Orff/Carmina Burana/01 O Fortuna.mp3
@@ -1165,6 +1333,8 @@ copy Cherry Poppin' Daddies/Zoot Suit Riot/Pink Elephant.mp3
 copy Cherry Poppin' Daddies/Zoot Suit Riot/Zoot Suit Riot.mp3
 copy Chet Atkins & Jerry Reed/Me & Jerry/01 Tennessee Stud.mp3
 copy Chic/C'est Chic/Le Freak.mp3
+copy Chic/Dance Dance Dance The Best Of Chic/01 Dance Dance Dance (Yowsah Yowsah Yowsah).mp3
+copy Chic/Dance Dance Dance The Best Of Chic/07 Good Times.mp3
 copy Chris Isaak/Wicked Game/Wicked Game.mp3
 copy Chris Rea/NOW That_s What I Call Christmas 2014/1-07 Driving Home for Christmas.mp3
 copy Chris Rea/New Light Through Old Windows/Driving Home For Christmas.mp3
@@ -1212,6 +1382,7 @@ copy Chuck Willis/Wails The Blues/10 Search My Heart.mp3
 copy Chuck Willis/Wails The Blues/11 Love-Struck.mp3
 copy Chumbawamba/Singsong And A Scrap/Bella Ciao.mp3
 copy Chumbawamba/Tubthumper/01 Tubthumping.mp3
+copy Chumbawamba/Uneasy Listening/20 We Don't Go To God's House Anymore.mp3
 copy Ciccone Youth/The Whitey Album/01 Needle Gun.mp3
 copy Ciccone Youth/The Whitey Album/05 Macbeth.mp3
 copy Ciccone Youth/The Whitey Album/11 Addicted To Love.mp3
@@ -1250,6 +1421,7 @@ copy Compilations/101 Classical Greats/1-02 Carmina Burana, O (Fortuna).mp3
 copy Compilations/101 Classical Greats/1-04 Hungarian Dance No. 5.mp3
 copy Compilations/101 Classical Greats/1-06 Adagio For Strings Op. 11.mp3
 copy Compilations/101 Classical Greats/1-07 Piano Sonata No. 14 In C# Minor. Op. 27 No 2 Moonlight (Adagio_Presto).mp3
+copy Compilations/101 Classical Greats/1-08 Piano Concerto No. 2 In C Minor Op. 18 (adagio Sostenuto).mp3
 copy Compilations/101 Classical Greats/1-12 Orchestral Suite No. 2 In B Minor (Badinerie).mp3
 copy Compilations/101 Classical Greats/1-14 Overture_ William Tell.mp3
 copy Compilations/101 Classical Greats/1-18 Romeo And Juliet Op. 64 (Montagues And Capulets).mp3
@@ -1447,26 +1619,35 @@ copy Compilations/Arabica - A North African Voyage Into Sound/08 Ehad.mp3
 copy Compilations/Arabica - A North African Voyage Into Sound/10 Nouar.mp3
 copy Compilations/Arabica - A North African Voyage Into Sound/12 Tiziri (Mandalay remix).mp3
 copy Compilations/Arabica - A North African Voyage Into Sound/13 Didi (Didi Funk Club remix).mp3
+copy Compilations/Arabica - A North African Voyage Into Sound/14 Keep On.mp3
+copy Compilations/Arabica - Voyages Into North African Sound III/02 Hojar.mp3
 copy Compilations/Arabica - Voyages Into North African Sound III/03 Ja Vidi.mp3
 copy Compilations/Arabica - Voyages Into North African Sound III/08 The Far East Coast.mp3
 copy Compilations/Arabica - Voyages Into North African Sound III/10 Mi Corazon (Smokers Mix).mp3
 copy Compilations/Arabica - Voyages Into North African Sound III/13 A Muey A Muey.mp3
 copy Compilations/Arabica - Voyages Into North African Sound/01 Hayati.mp3
 copy Compilations/Arabica - Voyages Into North African Sound/04 Arabiant.mp3
+copy Compilations/Arabica - Voyages Into North African Sound/05 Deep Throat.mp3
 copy Compilations/Arabica - Voyages Into North African Sound/07 Amulet (Aywah Remix).mp3
+copy Compilations/Arabica - Voyages Into North African Sound/08 Digital Garab-Ministry of Bullshit (The Steve Hillage Remix).mp3
 copy Compilations/Arabica - Voyages Into North African Sound/09 Fantasy.mp3
 copy Compilations/Arabica - Voyages Into North African Sound/10 Barra Barra.mp3
+copy Compilations/Arabica - Voyages Into North African Sound/11 Fonkarabic (Digital Bled Remix).mp3
 copy Compilations/Arabica - Voyages Into North African Sound/14 Salam.mp3
 copy Compilations/Arabica/12 Hope.mp3
 copy Compilations/Are You Being Served/Leave My Pussy Alone.mp3
 copy Compilations/Asia Lounge - Asian Flavoured Club Tunes/1-04 Fever [Steve Hillage Remix].mp3
 copy Compilations/Asia Lounge - Asian Flavoured Club Tunes/1-10 Sand and Stones and Bricks and Rocks.mp3
+copy Compilations/Asia Lounge - Asian Flavoured Club Tunes/2-03 I'm the Instrument.mp3
 copy Compilations/Asia Lounge - Asian Flavoured Club Tunes/2-06 Yeman Cutta Connection Dub.mp3
+copy Compilations/Asia Lounge - Asian Flavoured Club Tunes/2-09 Star Rise [Talvin Singh-My Heart My Life Remix].mp3
+copy Compilations/Asian Chill/01 Ganga Dev.mp3
 copy Compilations/Asian Chill/02 Ali Mola.mp3
 copy Compilations/Asian Chill/05 Colours Of Punjab.mp3
 copy Compilations/Atlantic Rhythm & Blues 1947-1974 [Disc 7]/7-10 (Sittin' On) The Dock Of The Bay.mp3
 copy Compilations/Atlantic Rhythm & Blues 1947-1974 [Disc 7]/7-11 Tighten Up.mp3
 copy Compilations/Atlantic Rhythm & Blues 1947-1974 [Disc 7]/7-12 Slip Away.mp3
+copy Compilations/Atlantic Rhythm & Blues 1947-1974 [Disc 7]/7-19 The Ghetto.mp3
 copy Compilations/Ayobaness EP (The Sound Of South African House)/01 Ayobaness.mp3
 copy Compilations/Ayobaness EP (The Sound Of South African House)/03 Just In Time.mp3
 copy Compilations/Ayobaness EP (The Sound Of South African House)/04 Ungazocala.mp3
@@ -1604,9 +1785,11 @@ copy Compilations/Bear in the Big Blue House/I Was Just About To Look At Some Di
 copy Compilations/Bear in the Big Blue House/Ooh I Like It.mp3
 copy Compilations/Bear in the Big Blue House/The Way You're Doing It Is Wrong, Wrong, Wrong.mp3
 copy Compilations/Bear in the Big Blue House/What's That Smell  Uphhh, I Know That Smell.mp3
+copy Compilations/Beats & Bobs Volume 4/01 In The Party.mp3
 copy Compilations/Beats & Bobs Volume 4/08 High Noon (JDS Mix).mp3
 copy Compilations/Beats & Bobs Volume 4/09 Put Up Your Hands.mp3
 copy Compilations/Bedouin Café_ 3 CD's of Sublime Bedouin Beats (disc 1)/02 Cold Sea (Chill Ocean mix).mp3
+copy Compilations/Bedouin Café_ 3 CD's of Sublime Bedouin Beats (disc 3)/08 Krishna (Verity mix).mp3
 copy Compilations/Beginner's Guide To Americana/1-03 Bull Dog Sal.mp3
 copy Compilations/Beginner's Guide To Americana/1-04 I'll Be Rested (When The Roll Is Called).mp3
 copy Compilations/Beginner's Guide To Americana/1-06 Bob McKinney.mp3
@@ -1675,6 +1858,7 @@ copy Compilations/Body Of Lies/A Mother Is Worth More Than Anything They Have To
 copy Compilations/Body Of Lies/Guys From The Future Find It Very Hard To See You.mp3
 copy Compilations/Body Of Lies/Leave This Office Immediately.mp3
 copy Compilations/Body Of Lies/People Are Stupid.mp3
+copy Compilations/Bombay Beats - CD1/02 Stotinki.mp3
 copy Compilations/Bop Boogie In The Dark/06 Little Girl Of Mine (Inst).mp3
 copy Compilations/Breakdown/05 Time To Burn.MP3
 copy Compilations/Bucovina Club Vol. 2/11 Hoçemo li u Sabac.mp3
@@ -1790,6 +1974,7 @@ copy Compilations/Christmas/The Merry Christmas Polka.mp3
 copy Compilations/Christmas/Twistin' Bells.mp3
 copy Compilations/Christmas/Winter Wonderland.mp3
 copy Compilations/Civil Revolución!/1-06 Civil Revolución!.mp3
+copy Compilations/Classical Music From Vienna/01 An der Schoenen Blauen Donau.mp3
 copy Compilations/Classical Music From Vienna/05 HereinSpaziert.mp3
 copy Compilations/Classical Music From Vienna/08 Gruss aus Wein.mp3
 copy Compilations/Classical Music From Vienna/12 Unter Donner und Blitz op. 324.mp3
@@ -1897,9 +2082,11 @@ copy Compilations/Django Unchained/This Is The Skull Of Old Ben.mp3
 copy Compilations/Django Unchained/You Wouldn't Pay No Nevermind To $300.mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/1-04 Circles.mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/1-07 Organ Donor (Extended Overhaul).mp3
+copy Compilations/Do Androids Dream Of Electric Beats_/1-14 Battle (UNKLE Remix).mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/2-04 Mind Set to Cycle.mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/2-07 Empty Love.mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/2-11 Fairytale.mp3
+copy Compilations/Do Androids Dream Of Electric Beats_/3-08 Hey Jack (UNKLE Metamorphosis Remix).mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/3-12 Holes (Unknown Remix).mp3
 copy Compilations/Do Androids Dream Of Electric Beats_/3-16 Rabbit In Your Headlights (UNKLEsounds Edit).mp3
 copy Compilations/Do I Love You (Indeed I Do)/01 Do I Love You (Indeed I Do).mp3
@@ -2012,6 +2199,7 @@ copy Compilations/Electric Gypsyland 2/1-08 A Rom And A Home.mp3
 copy Compilations/Electric Gypsyland 2/1-09 Maxutu (Cibelle Remix).mp3
 copy Compilations/Electric Gypsyland 2/1-12 Neacsu in Africa.mp3
 copy Compilations/Electric Gypsyland 2/2-01 Cudna zena.mp3
+copy Compilations/Electric Gypsyland 2/2-06 Cind Eram La '48.mp3
 copy Compilations/Electric Gypsyland 2/2-12 Soldier Tufaiev Gets Married.mp3
 copy Compilations/Electric Gypsyland/03 Usti, Usti Baba.mp3
 copy Compilations/Electric Gypsyland/07 Siki, Siki Baba.mp3
@@ -2020,6 +2208,7 @@ copy Compilations/Electric Gypsyland/09 L'orient Est Roots.mp3
 copy Compilations/Electric Gypsyland/11 Mugur Mugurel.mp3
 copy Compilations/Electro Swing Fever/06 Hand Brake Jam.mp3
 copy Compilations/Electro Swing Fever/06 The Beat Goes On.mp3
+copy Compilations/Electro Swing Fever/07 Coming Home Baby.mp3
 copy Compilations/Electro Swing Fever/08 Love To Hate War (Dusty Remix).mp3
 copy Compilations/Electro Swing Fever/11 Bei Mir Bist Du Schon.mp3
 copy Compilations/Electro Swing Fever/12 Matador.mp3
@@ -2233,6 +2422,8 @@ copy Compilations/Girls With Guitars/18 Take My Hand.mp3
 copy Compilations/Girls With Guitars/20 Guitars, Guitars, Guitars.mp3
 copy Compilations/Girls With Guitars/21 V.I.P..mp3
 copy Compilations/Give 'Em The Boot/Policeman.mp3
+copy Compilations/Goa 2011 Vol. 3/1-07 FC Music United.mp3
+copy Compilations/Goa 2011 Vol. 3/1-09 Drive.mp3
 copy Compilations/Going Underground/1-18 Money.mp3
 copy Compilations/Going Underground/2-04 Up The Junction.mp3
 copy Compilations/Going Underground/2-22 I Am The Fly.mp3
@@ -2336,6 +2527,7 @@ copy Compilations/Heroes of Country Music, Vol. 1_ Legends of Western Swing/08 T
 copy Compilations/Heroes of Country Music, Vol. 1_ Legends of Western Swing/09 Southern Belle (From Nashville, Tennessee).MP3
 copy Compilations/Heroes of Country Music, Vol. 1_ Legends of Western Swing/16 Steelin' Home.MP3
 copy Compilations/Hits +/07 Where The Wild Roses Grow.mp3
+copy Compilations/Hits +/16 Take Me With You.mp3
 copy Compilations/Hotel Marrakesh_ The Arabica Bar and Cafe/09 Running Away.mp3
 copy Compilations/House of Cards/Do You Have A Few Minutes_.mp3
 copy Compilations/House of Cards/I Don't Want Aversion, I Want A Vision.mp3
@@ -2450,11 +2642,14 @@ copy Compilations/Investigation of a Citizen Above Suspicion/Repression Is Civil
 copy Compilations/Istanbul Twilight/1-02 Ab-ı Beste.mp3
 copy Compilations/Istanbul Twilight/1-03 Cecom.mp3
 copy Compilations/Istanbul Twilight/1-10 Gözyaşı.mp3
+copy Compilations/Istanbul Twilight/2-07 Gara Guna.mp3
+copy Compilations/Istanbul Twilight/2-09 Bağlama Solo.mp3
 copy Compilations/It's Never Too Late/It Has To Stop Stromwell, It Has To Stop, Now.mp3
 copy Compilations/It's Never Too Late/You Blew It You Jerks.mp3
 copy Compilations/Italian Musical Odyssey/04 Il Battagliero.mp3
 copy Compilations/Italian Musical Odyssey/07 Attinde.mp3
 copy Compilations/Italian Musical Odyssey/09 Franziska.mp3
+copy Compilations/Italo Disco (Remix, MIx & Remake)/01 Right in the night (Flamenco remix).mp3
 copy Compilations/Italo Disco (Remix, MIx & Remake)/03 Ring my bell (rap remix).mp3
 copy Compilations/Italo Disco (Remix, MIx & Remake)/04 Smalltown Boy (Techno Remix).mp3
 copy Compilations/Italo Disco (The Sweetest Hits)/09 Fade to gray.mp3
@@ -2488,6 +2683,7 @@ copy Compilations/John Peel Festive Fifty 1982/36 Pass the Dutchie.mp3
 copy Compilations/John Peel Festive Fifty 1982/47 Conspiracy.mp3
 copy Compilations/John Peel Festive Fifty 1983/03 Age Of Consent.mp3
 copy Compilations/John Peel Festive Fifty 1983/07 A New England.mp3
+copy Compilations/John Peel Festive Fifty 1983/08 Eat Yourself Fitter.mp3
 copy Compilations/John Peel Festive Fifty 1983/11 Good Technology.mp3
 copy Compilations/John Peel Festive Fifty 1983/13 Incubus Succubus.mp3
 copy Compilations/John Peel Festive Fifty 1983/18 Your Silent Face.mp3
@@ -2497,6 +2693,7 @@ copy Compilations/John Peel Festive Fifty 1983/45 The Village.mp3
 copy Compilations/John Peel Festive Fifty 1984/02 Pearly-Dewdrops' Drops.mp3
 copy Compilations/John Peel Festive Fifty 1984/09 Lay Of The Land.mp3
 copy Compilations/John Peel Festive Fifty 1984/10 Keep On Keepin On.mp3
+copy Compilations/John Peel Festive Fifty 1984/11 Saint Huck.mp3
 copy Compilations/John Peel Festive Fifty 1984/13 Between The Wars.mp3
 copy Compilations/John Peel Festive Fifty 1984/20 Murder.mp3
 copy Compilations/John Peel Festive Fifty 1984/21 Kangaroo.mp3
@@ -2531,6 +2728,7 @@ copy Compilations/John Peel Festive Fifty 1987/19 Stop Killing Me.mp3
 copy Compilations/John Peel Festive Fifty 1987/20 You Sexy Thing.mp3
 copy Compilations/John Peel Festive Fifty 1987/22 Big Rock Candy Mountain.mp3
 copy Compilations/John Peel Festive Fifty 1987/33 Blow Up.mp3
+copy Compilations/John Peel Festive Fifty 1987/47 Considering A Move To Memphis.mp3
 copy Compilations/John Peel Festive Fifty 1987/48 Breaking Hands.mp3
 copy Compilations/John Peel Festive Fifty 1988/27 Kurious Oranj.mp3
 copy Compilations/John Peel Festive Fifty 1988/34 On Tape.mp3
@@ -2541,12 +2739,15 @@ copy Compilations/John Peel Festive Fifty 1989/22 Pacific State.mp3
 copy Compilations/John Peel Festive Fifty 1989/28 Hollow Heart.mp3
 copy Compilations/John Peel Festive Fifty 1989/38 Dead Beat Descendent.mp3
 copy Compilations/John Peel Festive Fifty 1989/40 Paradise.mp3
+copy Compilations/John Peel Festive Fifty 1989/41 Don't Let Our Youth Go To Waste.mp3
+copy Compilations/John Peel Festive Fifty 1990/14 Big.mp3
 copy Compilations/John Peel Festive Fifty 1990/19 The Ship Song.mp3
 copy Compilations/John Peel Festive Fifty 1990/20 Heather.mp3
 copy Compilations/John Peel Festive Fifty 1990/26 Kill Your Television.mp3
 copy Compilations/John Peel Festive Fifty 1990/33 Blues For Ceaucescu.mp3
 copy Compilations/John Peel Festive Fifty 1990/34 Pro-Gen.mp3
 copy Compilations/John Peel Festive Fifty 1990/44 Groove Is In The Heart.mp3
+copy Compilations/John Peel Festive Fifty 1990/46 Stepping Stone.mp3
 copy Compilations/John Peel Festive Fifty 1991/09 A Lot Of Wind.mp3
 copy Compilations/John Peel Festive Fifty 1991/13 Some Fools Mess.mp3
 copy Compilations/John Peel Festive Fifty 1991/21 Happy Shopper.mp3
@@ -2705,6 +2906,7 @@ copy Compilations/Made In Turkey 5/2-14 Haydi Barikata.mp3
 copy Compilations/Made In Turkey 5/2-15 March Of The Sultans.mp3
 copy Compilations/Magik Four A New Adventure/04 Easter Island [Cygnus X Mix].mp3
 copy Compilations/Magik Four A New Adventure/08 Your Own Reality [Tracid Mix].mp3
+copy Compilations/Magik Four A New Adventure/09 We Came.mp3
 copy Compilations/Magik Four A New Adventure/10 Trommelmaschine.mp3
 copy Compilations/Magik Four A New Adventure/11 Sparkles.mp3
 copy Compilations/Magik Four A New Adventure/13 We Ran at Dawn.mp3
@@ -2739,9 +2941,12 @@ copy Compilations/Miedzy Nami Cafe (in Roma)/10 La Dolce Vita  (finale).mp3
 copy Compilations/Million Dollar Baby/And Then He Walked Out.mp3
 copy Compilations/Million Dollar Baby/No Matter Where He Is.mp3
 copy Compilations/Million Dollar Baby/Some Things People Just Don't Want To Hear.mp3
+copy Compilations/Ministry Of Sound Presents Masterpiece/1-01 A Love From Outer Space.mp3
 copy Compilations/Ministry Of Sound Presents Masterpiece/1-03 Sleighride_Blizzard (Andrew Weatherall Remix).mp3
 copy Compilations/Ministry Of Sound Presents Masterpiece/1-06 Bursting Through.mp3
 copy Compilations/Ministry Of Sound Presents Masterpiece/1-09 Danca.mp3
+copy Compilations/Ministry Of Sound Presents Masterpiece/1-11 Crossing (Andrew Weatherall Remix).mp3
+copy Compilations/Ministry Of Sound Presents Masterpiece/3-06 Ur Oskunni.mp3
 copy Compilations/Mojo Presents Cohen Covered/08 Hallelujah.mp3
 copy Compilations/Mojo_ Let's Shake Hands/03 Hey Gyp (Dig The Slowness).mp3
 copy Compilations/Mojo_ Let's Shake Hands/04 Neverending Hum.mp3
@@ -2754,6 +2959,7 @@ copy Compilations/Motown 50 Yesterday, Today, Forever/10 My Girl.mp3
 copy Compilations/Motown 50 Yesterday, Today, Forever/11 This Old Heart Of Mine (Is Weak For You).mp3
 copy Compilations/Motown 50 Yesterday, Today, Forever/15 Heaven Must Have Sent You.mp3
 copy Compilations/Motown 50 Yesterday, Today, Forever/17 The Tears of A Clown.mp3
+copy Compilations/Motown 50 Yesterday, Today, Forever/18 Papa Was A Rollin'stone.mp3
 copy Compilations/Motown 50 Yesterday, Today, Forever/25 Stoned Love.mp3
 copy Compilations/Motown 50 Yesterday, Today, Forever/26 Baby Love.mp3
 copy Compilations/Motown 50 Yesterday, Today, Forever/39 War.mp3
@@ -2785,6 +2991,7 @@ copy Compilations/Mulholland Drive/11 Llorando (Crying).mp3
 copy Compilations/Muppet Mashup/01 The Muppet Strut (The Muppet Show Theme vs The Stray Cats).mp3
 copy Compilations/Muppet Mashup/02 Jam On Sesame Street (Sesame Street Theme vs Newcleus).mp3
 copy Compilations/Muppet Mashup/03 Scooter And The Computer Worms (Scooter vs L Bit).mp3
+copy Compilations/Muppet Mashup/04 Manha Manha (Dunproofin Remix).mp3
 copy Compilations/Muppet Mashup/05 I'm Happy (On Sesame Street) (India from Sesame Street vs Edwinn Starr vs Big Bird, Snuffy and Prarie Dawn vs Lou Rawls, Animal and Floyd vs John Bonham vs Baby Bear).mp3
 copy Compilations/Muppet Mashup/08 Five Song (Song of Five) (McSleazy Remix).mp3
 copy Compilations/Music Inspired By Oh! Brother, Where Art Thou_/1-01 You Are My Sunshine.mp3
@@ -2854,6 +3061,7 @@ copy Compilations/New World Classics_ Cover Versions of Popular Hits/1-01 If you
 copy Compilations/New World Classics_ Cover Versions of Popular Hits/1-08 Bullet the blue sky.mp3
 copy Compilations/New World Classics_ Cover Versions of Popular Hits/2-03 Africain à Paris.mp3
 copy Compilations/New World Classics_ Cover Versions of Popular Hits/2-06 I was made for lovin' you.mp3
+copy Compilations/New World Classics_ Cover Versions of Popular Hits/2-08 I was a ye-ye girl (Radio New Vocal).mp3
 copy Compilations/New World Classics_ Cover Versions of Popular Hits/2-09 Hit the road Jack (Pé Na Éstrada).mp3
 copy Compilations/New World Classics_ Cover Versions of Popular Hits/2-10 Rum 'n CocaCola (Shake it up well) (Radio Mix).mp3
 copy Compilations/New World Classics_ Cover Versions of Popular Hits/2-12 Shaft (Orientale Version).mp3
@@ -2887,6 +3095,7 @@ copy Compilations/Nu Jazz Essentials/4-04 Bossa Per Due.mp3
 copy Compilations/Nu Jazz Essentials/4-05 Cantaloupe Island (Reduced Piano Edit).mp3
 copy Compilations/Nu Jazz Essentials/4-07 Anytime Swingers.mp3
 copy Compilations/Nu Jazz Essentials/4-08 Locomotive.mp3
+copy Compilations/Nu Jazz Essentials/4-12 Rose Rouge (Original Mix).mp3
 copy Compilations/Nu Swing Club/06 Rising For the Moon (Original Mix).mp3
 copy Compilations/Nu Swing Club/09 Tu Vuo Fa L'Americano (Original Mix).mp3
 copy Compilations/Nu Swing Club/12 Lollobrigida (Original Mix).mp3
@@ -2997,6 +3206,7 @@ copy Compilations/Porky Pig/That's Silly.mp3
 copy Compilations/Porky Pig/What's The Matter With You, Bewitched Or Soemthing.mp3
 copy Compilations/Porky Pig/Why You Poor Unsanitary Old Underprivileged Mongerel You.mp3
 copy Compilations/Porky Pig/You Try That Again And I'll Put Your Tail In The Pencil Sharpener.mp3
+copy Compilations/Primary/04 Luther Perkins, Know His Name Too.mp3
 copy Compilations/Primary/05 Short Break In Cambodia.mp3
 copy Compilations/Pulp Fiction/01 Comanche.mp3
 copy Compilations/Pulp Fiction/01 Pumpkin and Honey Bunny (Dialogue)_Misirlou.mp3
@@ -3025,6 +3235,7 @@ copy Compilations/Putumayo Presents_ A Jewish Odyssey/01 Di Golden Pave.mp3
 copy Compilations/Putumayo Presents_ A Jewish Odyssey/02 Rad Halaila.mp3
 copy Compilations/Putumayo Presents_ Afro Latino/01 Me Vuelvo Guajiro.mp3
 copy Compilations/Putumayo Presents_ Afro Latino/07 Mujer Magica.mp3
+copy Compilations/Putumayo Presents_ Afro Latino/08 Mueve La Cintura Mulata.mp3
 copy Compilations/Putumayo Presents_ Arabic Groove/05 Intil Waheeda.mp3
 copy Compilations/Putumayo Presents_ Arabic Groove/06 Hely Meli.mp3
 copy Compilations/Putumayo Presents_ Arabic Groove/07 Mani.mp3
@@ -3066,8 +3277,10 @@ copy Compilations/Rabbit Fire/You're Despicable.mp3
 copy Compilations/Rabbit Fire/duckSeasonFire.mp3
 copy Compilations/Radio Clerkenwell/01 I Love The Rain (Trumpet Mix).mp3
 copy Compilations/Radio Clerkenwell/05 The Life And Times Of The Clerkenwell Kid.mp3
+copy Compilations/Radio Clerkenwell/At The Home Of The Clerkenwell Kid.mp3
 copy Compilations/Radio Clerkenwell/At the Chime Of A Clerkenwell Clock.mp3
 copy Compilations/Radio Clerkenwell/Crazy In Love.mp3
+copy Compilations/Radio Clerkenwell/Nightingales in the Wasteland.mp3
 copy Compilations/RadioLab/01 Alan And I Have Absolutely Nothing in Common.mp3
 copy Compilations/RadioLab/01 I Really Like The X Part.mp3
 copy Compilations/RadioLab/01 No Explanations, Pretty Sounds.mp3
@@ -3200,6 +3413,8 @@ copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/
 copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/07 Simpra Oilor.mp3
 copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/16 Hora Pacurarului.mp3
 copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/17 Sipotul Zdirnaita In Doi.mp3
+copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/19 Turceasca.mp3
+copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/20 Rind De Hore.mp3
 copy Compilations/Romania - Wild Sounds from Transylvania, Wallachia & Moldavia/23 Ciocarlia.mp3
 copy Compilations/Rory Gallagher/03 I Fall Apart.mp3
 copy Compilations/Ryan Tubridy/John Banville vs The Sopranos.mp3
@@ -3208,6 +3423,7 @@ copy Compilations/SXSW 2009 Showcasing Artists/One Horse Down.mp3
 copy Compilations/Saint Germain des Pres Café/01 Round Midnight.mp3
 copy Compilations/Saint Germain des Pres Café/05 Chok-A-Block Avenue.mp3
 copy Compilations/Saint Germain des Pres Café/07 Lo-fi Nu Jazz #13.mp3
+copy Compilations/Saint Germain des Pres Café/12 G.U.B.N.U.F..mp3
 copy Compilations/Salon Oriental 4 (disc 1)/04 Radio Bagdad Kemper.mp3
 copy Compilations/Saturday Night Fever/01 Stayin' Alive.mp3
 copy Compilations/Saturday Night Fever/03 Night Fever.mp3
@@ -3219,7 +3435,9 @@ copy Compilations/Scarface/I Told You Man, But You Wouldn't Listen.mp3
 copy Compilations/Scarface/You Callin Me A Liar  That What You Calling Me.mp3
 copy Compilations/Scarface/You Can't Lose Money No Way.mp3
 copy Compilations/Secondary/01 If I Do Da Department.mp3
+copy Compilations/Secondary/02 Ok, Ok, I'm Not Dancing.mp3
 copy Compilations/Secondary/03 There'll Be Honey In Milhaven Tonight.mp3
+copy Compilations/Secondary/07 Deveneramur Ex Machina.mp3
 copy Compilations/Secret Window/I Think You Have A Real Good Idea.mp3
 copy Compilations/Secrets From Another Place - Creating Twin Peaks/OK, Let's Do This Then.mp3
 copy Compilations/Serpico/Hey, Love My Garden.mp3
@@ -3246,6 +3464,7 @@ copy Compilations/Shameless/People That Stand Up In A Talk Show.mp3
 copy Compilations/Shorts_ What's Up, Doc_/01 It Seemed As Though Bugs Bunny Was Trying To Save His Life.mp3
 copy Compilations/Shorts_ What's Up, Doc_/01 That Was All One Guy_.mp3
 copy Compilations/Shorts_ What's Up, Doc_/01 The Resurrection Of Mel Blanc.mp3
+copy Compilations/Showgirl_ Homecoming Live/1-06 Shocked _ Spinning Around.mp3
 copy Compilations/Shtetl Super Stars - Funky Jewish Sounds From Around The World/02 Hassidish.mp3
 copy Compilations/Shtetl Super Stars - Funky Jewish Sounds From Around The World/05 Havana Nagila.mp3
 copy Compilations/Shtetl Super Stars - Funky Jewish Sounds From Around The World/09 This And That.mp3
@@ -3274,6 +3493,7 @@ copy Compilations/Sin City_ A Dame To Kill For/It's Bad To Forget You Medicine W
 copy Compilations/Sin City_ A Dame To Kill For/Just One More Time.mp3
 copy Compilations/Sin City_ A Dame To Kill For/Something Hits Me Square In The Chest.mp3
 copy Compilations/Singing In The Rain/01 Singing In The Rain.MP3
+copy Compilations/Singles from the 60's/03 Papa's Got A Brand New Bag, Pts 1, 2 & 3.mp3
 copy Compilations/Smash Hits 1981/07 Can Can.mp3
 copy Compilations/Smash Hits 1981/14 Is Vic There _.mp3
 copy Compilations/Solid Gold/01 Paralysed.mp3
@@ -3330,6 +3550,7 @@ copy Compilations/Straight to Hell/08 Ambush At Mystery Rock.mp3
 copy Compilations/Straight to Hell/10 The Killers.mp3
 copy Compilations/Straight to Hell/11 Danny Boy.mp3
 copy Compilations/Summer of Love 2008/03 Black Acieed.mp3
+copy Compilations/Summer of Love 2008/06 Land Of Oz (Summer Of Love mix).mp3
 copy Compilations/Superman _ Batman_ Public Enemies/Between You And Me; I Hate That.mp3
 copy Compilations/Superman _ Batman_ Public Enemies/Do Us Both A Favour And Buy One.mp3
 copy Compilations/Sympathy For Lady Vengance/Come To Church; I'm A Buddhist Now.mp3
@@ -3351,7 +3572,10 @@ copy Compilations/Tantra Lounge 2/15 You Are We Am I (Red Mix).mp3
 copy Compilations/Tantra Lounge 2/16 Eastern Dawn.mp3
 copy Compilations/Tantra Lounge 2/17 Matter.mp3
 copy Compilations/Tantra Lounge 3/09 So Much Class.mp3
+copy Compilations/Tantra Lounge 3/10 Rebirth.mp3
 copy Compilations/Tantra Lounge 3/13 Belly Disco.mp3
+copy Compilations/Tantra Lounge Volume 4/02 Ohm (Transfix mix).mp3
+copy Compilations/Tantra Lounge Volume 4/14 Beauty and the East.mp3
 copy Compilations/Tantra Lounge/01 Brand New Delhi.mp3
 copy Compilations/Tantra Lounge/04 Vanilka.mp3
 copy Compilations/Tantra Lounge/05 Trip Indiano.mp3
@@ -3363,6 +3587,7 @@ copy Compilations/Tattoo/02 Cradle Rock.mp3
 copy Compilations/Tattoo/03 20_20 Vision.mp3
 copy Compilations/Tattoo/04 They Don't Make Them Like You Anymore.mp3
 copy Compilations/Tattoo/06 Sleep On A Clothes-Line.mp3
+copy Compilations/Tattoo/11 Just A Little Bit.mp3
 copy Compilations/Teenage Kicks/03 Police and Thieves.MP3
 copy Compilations/Teenage Kicks/03 Watching The Detectives.MP3
 copy Compilations/Teenage Kicks/08 Blank Generation.MP3
@@ -3398,6 +3623,7 @@ copy Compilations/The Arabian Club Night #03/1-03 Baghdad (Original Mix).mp3
 copy Compilations/The Arabian Club Night #03/1-10 Middle East (Strict Border Afrikaan Mix).mp3
 copy Compilations/The Arabian Club Night #03/1-11 Under the Beirut Sun (Dance Version).mp3
 copy Compilations/The Arabian Club Night #03/1-12 Malyka.mp3
+copy Compilations/The Arabian Club Night #03/2-02 Ae & MCY - Oriental (Club Mix).mp3
 copy Compilations/The Arabian Club Night #03/2-03 Arabian Legend (Extented DJ Version).mp3
 copy Compilations/The Arabian Club Night #03/2-05 Out of Cairo (Original).mp3
 copy Compilations/The Arabian Club Night #03/2-12 Emigration Movement.mp3
@@ -3436,12 +3662,16 @@ copy Compilations/The Balkan Club Night 2/1-16 Milioni.mp3
 copy Compilations/The Balkan Club Night 2/2-02 Black Moon (Original Club Mix).mp3
 copy Compilations/The Balkan Club Night 2/2-03 Tigani (Fred Berthet Mix).mp3
 copy Compilations/The Balkan Club Night 2/2-04 Sujo.mp3
+copy Compilations/The Balkan Club Night 2/2-06 Olé (Mastiksoul Classic Remix).mp3
+copy Compilations/The Balkan Club Night 2/2-07 Gypsy Love.mp3
 copy Compilations/The Balkan Club Night 2/2-10 Vino Vino (Lukas Lehmann remix).mp3
+copy Compilations/The Balkan Club Night 2/2-11 My Maya (The Garden of Zephirus Mix).mp3
 copy Compilations/The Balkan Club Night 2/2-14 Balkan Beat.mp3
 copy Compilations/The Balkan Club Night 2/2-16 Zsa Manca (Dapayk Remix).mp3
 copy Compilations/The Balkan Club Night/1-01 Bucovina (Juan Magan & Marcos Rodrigue Rmx).mp3
 copy Compilations/The Balkan Club Night/1-03 Dance with Me.mp3
 copy Compilations/The Balkan Club Night/1-04 Betyár A Holdon.mp3
+copy Compilations/The Balkan Club Night/1-05 Zsa Mo (Alpaca Heads Rmx).mp3
 copy Compilations/The Balkan Club Night/1-08 Rindzi.mp3
 copy Compilations/The Balkan Club Night/1-10 The Man Who Drinks.mp3
 copy Compilations/The Balkan Club Night/1-13 Goldregen (Noha-Mix).mp3
@@ -3451,6 +3681,7 @@ copy Compilations/The Balkan Club Night/2-18 Demo Mamo.mp3
 copy Compilations/The Balkan Club Night/2-19 Djeli Mara.mp3
 copy Compilations/The Best Of Grieg/04 Peer Gynt Suite #1, Op. 46 - Morning.mp3
 copy Compilations/The Best Of Grieg/05 Peer Gynt Suite #1, Op. 46 - Anitra's Dance.mp3
+copy Compilations/The Best Of Rimsky-Korsakov/02 Capriccio Espagnol, Op. 34 - Variazioni_ Andante Con Moto.mp3
 copy Compilations/The Best Of Rimsky-Korsakov/10 Sadko - Hindu Song.mp3
 copy Compilations/The Best Of The 3 Tenors/02 Funiculi, Funicula.mp3
 copy Compilations/The Best Of The 3 Tenors/03 Libiamo Ne' Lieti Calici (Brindisi).mp3
@@ -3538,6 +3769,7 @@ copy Compilations/The Departed/Who The Fuck Are You.mp3
 copy Compilations/The Departed/Whoop Di Fucking Do.mp3
 copy Compilations/The Departed/You Got Any Suits At Home.mp3
 copy Compilations/The Departed/You Must Be The Other Guy.mp3
+copy Compilations/The Desert Lounge/02 Sound of Civilization.mp3
 copy Compilations/The Desert Lounge/07 Son Nefes (Deep mix).mp3
 copy Compilations/The Diamond Mountain Sessions/02 The Galway Girl.mp3
 copy Compilations/The Diamond Mountain Sessions/07 Say You Love Me.mp3
@@ -3549,9 +3781,11 @@ copy Compilations/The Dogs Are Parading/1-08 69 Police.mp3
 copy Compilations/The Dogs Are Parading/1-13 Don't Die Just Yet.mp3
 copy Compilations/The Dogs Are Parading/1-15 Gone.mp3
 copy Compilations/The Dogs Are Parading/2-01 The Ballad Of Sarah And Jack (Geese Remix).mp3
+copy Compilations/The Dogs Are Parading/2-04 Living Room (Kevin Shields Remix).mp3
 copy Compilations/The Dogs Are Parading/2-05 My Mate Paul (Major Force Remix).mp3
 copy Compilations/The Dogs Are Parading/2-06 Little Short One (Part 1).mp3
 copy Compilations/The Dogs Are Parading/2-11 Don't Die Just Yet (Mogwai Mix).mp3
+copy Compilations/The Dogs Are Parading/2-12 Smoaked Oak.mp3
 copy Compilations/The Ducksters/32 Teeth.mp3
 copy Compilations/The Ducksters/Aren't We Gruesome.mp3
 copy Compilations/The Ducksters/Aw I'm Sorry.mp3
@@ -3987,6 +4221,7 @@ copy Compilations/The Trojan Story/36 King Without a Throne.mp3
 copy Compilations/The Trojan Story/46 Pressure Drop.mp3
 copy Compilations/The Two Ronnies/A Larger Gin And Tonic.mp3
 copy Compilations/The Unquiet Mind/01 I'm Kidding.mp3
+copy Compilations/The Very Best Of Euphoria/1-01 Children (Dream Version).MP3
 copy Compilations/The Very Best Of Euphoria/1-05 Sandstorm (Original Mix).MP3
 copy Compilations/The Very Best Of Euphoria/2-05 Time To Burn (Original 12_ Mix).MP3
 copy Compilations/The Very Best Of Euphoria/2-09 The Launch (Original Mix).MP3
@@ -4034,6 +4269,7 @@ copy Compilations/This Is Radio Strummer/02 Baby What You Want Me To Do.mp3
 copy Compilations/This Is Radio Strummer/08 Lawdy Miss Clawdy.mp3
 copy Compilations/This Is Radio Strummer/09 It Wasn't God Who Made Honky Tonk Angels.mp3
 copy Compilations/This Is Radio Strummer/14 Pennsylvania 6-5000.mp3
+copy Compilations/This Is Radio Strummer/15 Rez.mp3
 copy Compilations/This Is Rockabilly Clash/02 Career Opportunities.mp3
 copy Compilations/This Is Rockabilly Clash/08 Jimmy Jazz.mp3
 copy Compilations/This Is Rockabilly Clash/09 What's My Name_.mp3
@@ -4047,7 +4283,11 @@ copy Compilations/Torchwood_ Children of Earth/You Never Told Me.mp3
 copy Compilations/Toy Story/You Are A Sad, Strange Little Man.mp3
 copy Compilations/Toy Story/You Are A Toy.mp3
 copy Compilations/Trance Europe Express, Vol. 1/1-02 Gravity Pull.mp3
+copy Compilations/Trance Europe Express, Vol. 1/1-04 Desir.mp3
+copy Compilations/Trance Europe Express, Vol. 1/2-04 Majestic.mp3
+copy Compilations/Trance Europe Express, Vol. 1/2-07 Washed Over By Mastemah.mp3
 copy Compilations/Trans Slovenia Express, Volume 2/05 Computer Love.mp3
+copy Compilations/Trans Slovenia Express, Volume 2/09 Home Computer.mp3
 copy Compilations/Trans Slovenia Express, Volume 2/13 Metropolis.mp3
 copy Compilations/Trans Slovenia Express/02 The Robots.mp3
 copy Compilations/Trans Slovenia Express/07 Ohm Sweet Ohm.mp3
@@ -4072,6 +4312,7 @@ copy Compilations/Trojan Roots Box Set/2-07 African People.mp3
 copy Compilations/Trojan Roots Box Set/2-10 Jah Fire.mp3
 copy Compilations/Trojan Roots Box Set/2-12 Talk About It.mp3
 copy Compilations/Trojan Roots Box Set/2-16 Keep Cool Babylon.mp3
+copy Compilations/Trojan Roots Box Set/3-13 Words.mp3
 copy Compilations/Trojan Rude Boy Box Set/1-04 The Preacher.mp3
 copy Compilations/Trojan Rude Boy Box Set/Beware.mp3
 copy Compilations/Trojan Rude Boy Box Set/Cool Down.mp3
@@ -4338,6 +4579,7 @@ copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/
 copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/1-06 Shake Ya Boogie.mp3
 copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/1-07 Artichaut.mp3
 copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/1-08 Dibidy Dop.mp3
+copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/1-11 Swing Bop.mp3
 copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/1-13 Touch My Horn.mp3
 copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/2-02 A Bunch Of Rhythm.mp3
 copy Compilations/White Mink Black Cotton (Electro Swing versus Speakeasy Jazz)/2-03 It Ain't Right.mp3
@@ -4364,10 +4606,12 @@ copy Compilations/Wild At Heart/Wild Heart And Weird On Top.mp3
 copy Compilations/Wild At Heart/You Can't Just Play Dark Notes.mp3
 copy Compilations/Wish You Were Here Again/2-11 Shine On You Crazy Diamond (Part One).mp3
 copy Compilations/Wish You Were Here Again/2-12 Welcome To The Machine.mp3
+copy Compilations/Wish You Were Here Again/2-15 Shine On You Crazy Diamond (Part Two).mp3
 copy Compilations/With Tommy Tiernan/Fuck Off.mp3
 copy Compilations/World Is India/03 Mehbooba, Mehbooba.mp3
 copy Compilations/World Is India/05 Ram Balram.mp3
 copy Compilations/World Is India/08 Beware of the Boys (Mundian to Bach Ke).mp3
+copy Compilations/World Is India/10 Chaiyya Chaiyya.mp3
 copy Compilations/Yosemite Sam & Bugs Bunny/If There's Anything I Hate More Than A Rabbit, It's Two Rabbits.mp3
 copy Compilations/Yosemite Sam & Bugs Bunny/Say Your Prayers Varmint ........ Amen.mp3
 copy Compilations/Yosemite Sam/Adios You Chicken Pluckin Little Stinker.mp3
@@ -4393,6 +4637,7 @@ copy Compilations/Yosemite Sam/You Long-Eared, Fur-Bearing, Flat-Footed Varmint.
 copy Compilations/You Are Not So Smart/A Constant Characterisation Of How We Would Like To Be Seen By Other People.mp3
 copy Compilations/YouTube/Adama.mp3
 copy Compilations/YouTube/Alan, Alan, Alan.mp3
+copy Compilations/YouTube/Alice (Remix).mp3
 copy Compilations/YouTube/Alice Cooper vs Earth, Wind & Fire.mp3
 copy Compilations/YouTube/Alice.mp3
 copy Compilations/YouTube/Another Girl, Another Planet.mp3
@@ -4400,6 +4645,7 @@ copy Compilations/YouTube/Az Haramsara Ta Amesterdam.mp3
 copy Compilations/YouTube/Batman Is A Conservative's Wet Dream.mp3
 copy Compilations/YouTube/Bei Mir Bist Du Scheen.mp3
 copy Compilations/YouTube/Black History Month.mp3
+copy Compilations/YouTube/Bongo Bong (Mathias Wolf Remix).mp3
 copy Compilations/YouTube/Cocaine Blues.mp3
 copy Compilations/YouTube/Das Model (Provo One Remix_Beat Remake).mp3
 copy Compilations/YouTube/Deep Feer vs KLF.mp3
@@ -4430,6 +4676,8 @@ copy Compilations/YouTube/Ich Bin Nicht Euer Superstar.mp3
 copy Compilations/YouTube/In Einem Kühlen Grunde.mp3
 copy Compilations/YouTube/It's OK To Not Like Things.mp3
 copy Compilations/YouTube/It's The End Of The World As We Know It.mp3
+copy Compilations/YouTube/Keyboard Milk.mp3
+copy Compilations/YouTube/Kind Of Latin Rhythm - Smoove remix.mp3
 copy Compilations/YouTube/La Vie En Rose.mp3
 copy Compilations/YouTube/Laleh.mp3
 copy Compilations/YouTube/Love Me Two Times (Infected Mushroom Rmx).mp3
@@ -4451,6 +4699,7 @@ copy Compilations/YouTube/Rapture Riders.mp3
 copy Compilations/YouTube/Rattle.mp3
 copy Compilations/YouTube/Riders On The Storm [HQ] 2009.mp3
 copy Compilations/YouTube/Riff on The Tempest.mp3
+copy Compilations/YouTube/Rock The Casbah (Rhythm Scholar Boogie Bombs Remix).mp3
 copy Compilations/YouTube/Round Round.mp3
 copy Compilations/YouTube/Seamus Just Wants To Be Famous.mp3
 copy Compilations/YouTube/She's Lost Control (Trentemoller edit).mp3
@@ -4461,6 +4710,7 @@ copy Compilations/YouTube/Stop The Calvary (Vindaloo Version).mp3
 copy Compilations/YouTube/Stylo Vs Feel Good Inc  Vs I Feel Love.mp3
 copy Compilations/YouTube/Summertime Blues.mp3
 copy Compilations/YouTube/Sweet Dreams are Made of Seven Nation Army.mp3
+copy Compilations/YouTube/Swing Bop.mp3
 copy Compilations/YouTube/Tantzstanze.mp3
 copy Compilations/YouTube/Tap Moi La.mp3
 copy Compilations/YouTube/The Model  (Orso Manzoneta mix).mp3
@@ -4469,8 +4719,10 @@ copy Compilations/YouTube/The Model.mp3
 copy Compilations/YouTube/The New Mamarama.mp3
 copy Compilations/YouTube/Tubthumping.mp3
 copy Compilations/YouTube/Via Con Me (DoRush BOOTLEG).mp3
+copy Compilations/YouTube/Weightless.mp3
 copy Compilations/YouTube/Who's Afraid Of The Big Bad Wolf.mp3
 copy Compilations/YouTube/Whole Lotta Sabbath (Led Zeppelin vs Black Sabbath Mashup).mp3
+copy Compilations/YouTube/Woke Up This Mountain.mp3
 copy Compilations/YouTube/You Can't Judge A Book By The Cover.mp3
 copy Compilations/YouTube/You Would Hope The Intellect Says _Oh_.mp3
 copy Compilations/YouTube/Zilberne Khasene.mp3
@@ -4519,6 +4771,7 @@ copy Csókolom/May I Kiss Your Hand/19 Jánoska - Szatmári.mp3
 copy Cult Hero/Seventeen Seconds Deluxe Edition/02 I Dig You.mp3
 copy Culture/Harder Than The Rest/02 Holy Mountain Zion.MP3
 copy Culture/Harder Than The Rest/04 Iron Sharpening Iron.MP3
+copy Curve/Chinese Burn - EP/03 Chinese Burn (Lunatic Calm Remix).mp3
 copy Curve/Chinese Burn - EP/06 Chinese Burn (Steve Osborne Full Length Mix).mp3
 copy Curve/Come Clean/06 Dirty High.mp3
 copy Curve/Come Clean/08 Sweetback.mp3
@@ -4531,6 +4784,7 @@ copy Curve/Gift/08 My Tiled White Floor.mp3
 copy Curve/Open Day At The Hate Fest/08 Storm.mp3
 copy Curve/Open Day At The Hate Fest/09 Caught In The Alleyway.mp3
 copy Curve/The New Adventures Of Curve/01 Answers.mp3
+copy Curve/The New Adventures Of Curve/02 Till The Cows Come Home.mp3
 copy Curve/The New Adventures Of Curve/08 Sinner.mp3
 copy D Liang & D Johnston/Cafe Lounge Presents Shanghai Lounge_ Hosted by the Shanghai Restoration Project/10 Antidote - Swing.mp3
 copy DJ Balloon/Pussy Lovers/Pussy Lovers.mp3
@@ -4541,6 +4795,7 @@ copy DJ Russ Jones and Felix B/Gypsy Beats and Balkan Bangers Too/01 Sahib Balka
 copy DJ Russ Jones and Felix B/Gypsy Beats and Balkan Bangers Too/04 Mozzarella.mp3
 copy DJ Russ Jones and Felix B/Gypsy Beats and Balkan Bangers Too/05 Goldregen.mp3
 copy DJ Russ Jones and Felix B/Gypsy Beats and Balkan Bangers Too/06 Romano Hip Hop.mp3
+copy DJ Russ Jones and Felix B/Gypsy Beats and Balkan Bangers Too/12 Dunkelbunt Dub.mp3
 copy DJ Russ Jones and Felix B/Gypsy Beats and Balkan Bangers Too/13 Mozzarella.mp3
 copy DJ Rüstico/SoundCloud/Cumbia for Boban.mp3
 copy DJ Sammy/Project Underground Chapter One/02 I Like To Move It ( Dhol Mix ).mp3
@@ -4551,6 +4806,7 @@ copy Daft Punk/Random Access Memories/13 Contact.mp3
 copy Dan Deacon/Gliss Riffer/02 Sheathed Wings.mp3
 copy Dan Deacon/Gliss Riffer/03 When I Was Done Dying.mp3
 copy Dan Deacon/Gliss Riffer/05 Mind On Fire.mp3
+copy Dan Deacon/Gliss Riffer/06 Learning To Relax.mp3
 copy Dan Hicks and The Hot Licks/Beatin' The Heat/The Piano Has Been Drinking (Not Me).mp3
 copy Dana Lyons/The Cow Pie Nation Cowpilation/01 Cows with Guns.MP3
 copy Danger Mouse & Sparklehorse/Dark Night Of The Soul/08 Everytime I'm With You.mp3
@@ -4564,6 +4820,7 @@ copy Daniel-B/Daniel-B Remixes/03 Blender_Do It_Desire (Millenium Mix).mp3
 copy Daniel-B/Daniel-B Remixes/07 Magic Blue.mp3
 copy Daniel-B/Daniel-B Remixes/08 The Race (Transatlantic Mix).mp3
 copy Dao Kolbeinsson, Richard Tchaikovsky; Petri Sakari_ Iceland Symphony Orchestra/Sibelius_ Finlandia, Karelia Suite, Lemminkainen Suite/02 Sibelius_ Karelia Suite, Op. 11 - Intermezzo.mp3
+copy Dao Kolbeinsson, Richard Tchaikovsky; Petri Sakari_ Iceland Symphony Orchestra/Sibelius_ Finlandia, Karelia Suite, Lemminkainen Suite/07 Sibelius_ Lemminkainen Suite - The Swan Of Tuonela.mp3
 copy Darts/White Christmas _ Sh-boom/White Christmas.mp3
 copy Dave Dudley/Six Days On The Road/01 Six Days On The Road.MP3
 copy Dave Greenfield & Jean-Jacques Burnel/Fire & Water/03 Vladimir & Sergei.mp3
@@ -4737,6 +4994,7 @@ copy Denki Groove/Yellow/11 Fake It!.mp3
 copy Der Dritte Raum/Rosa Rausch/05 Swing Bop.mp3
 copy Der Dritte Raum/Rosa Rausch/08 Blautaut.mp3
 copy Der Dritte Raum/Rosa Rausch/10 Kleine Freiluftschleife.mp3
+copy Der Dritte Raum/Swing Bop/04 Random Rag.mp3
 copy Derrick Morgan And The Aces/Tougher Than Tough (Rudie In Court)/01 Tougher Than Tough (Rudie In Court).mp3
 copy Deutsch Amerikanische Freundschaft/Alles Ist Gut/02 Der Mussolini.mp3
 copy Deutsch Amerikanische Freundschaft/Funfzehn Neue Daf Lieder/01 Der Sheriff - Anti-Amerikanisches Lied.mp3
@@ -4777,6 +5035,7 @@ copy Die Antwoord/$O$/02 WAT KYK JY.mp3
 copy Die Antwoord/$O$/03 Enter The Ninja.mp3
 copy Die Antwoord/$O$/04 Wat Pomp (Feat. Jack Parow).mp3
 copy Die Antwoord/$O$/06 Rich Bitch.mp3
+copy Die Antwoord/$O$/13 Beat Boy.mp3
 copy Die Antwoord/5 (EP)/02 Wat Kyk Jy.mp3
 copy Die Antwoord/5 (EP)/05 Enter The Ninja (DJ Fish Sticks Remix).mp3
 copy Die Antwoord/Ten$ion/05 Fatty Boom Boom.mp3
@@ -4809,6 +5068,7 @@ copy Dolly Parton/The Grass Is Blue/09 Train, Train.mp3
 copy Dolly Parton/The Grass Is Blue/10 I Wonder Where You Are Tonight.mp3
 copy Dolly Parton/The Grass Is Blue/11 Will He Be Waiting For Me.mp3
 copy Dolly Parton/The Grass Is Blue/12 The Grass Is Blue.mp3
+copy Donal Lunny/Journey/04 Tribute to Peadar O'Donnell.mp3
 copy Donal Lunny/Journey/08 Gleaisaigi (Tog Out).mp3
 copy Donal Lunny/Journey/09 Cathain.mp3
 copy Donal Lunny/Journey/11 Maltreath.mp3
@@ -4840,6 +5100,10 @@ copy Dr. John/The Very Best Of Dr. John/01 Right Place, Wrong Time.mp3
 copy Dr. John/The Very Best Of Dr. John/02 Such A Night.mp3
 copy Dreadful Shadows/Unknown Album/Twist In My Sobriety.mp3
 copy Dreadzone/360/01 House Of Dread.mp3
+copy Dreadzone/360/02 Love.mp3
+copy Dreadzone/360/04 The Good The Bad And The Dread.mp3
+copy Dreadzone/360/05 The Warning.mp3
+copy Dreadzone/360/07 Far Encounter.mp3
 copy Dreadzone/360/08 Skeleton At The Feast.mp3
 copy Dreadzone/Biological Radio/01 Biological Radio.MP3
 copy Dreadzone/Biological Radio/02 Moving On.MP3
@@ -4849,12 +5113,17 @@ copy Dreadzone/Escapades/06 Fire In The Dark.mp3
 copy Dreadzone/Escapades/07 Too Late.mp3
 copy Dreadzone/Eye on the Horizon/04 American Dread.mp3
 copy Dreadzone/Eye on the Horizon/06 Gangster.mp3
+copy Dreadzone/Live At Sunrise/01 Return Of The Dread.mp3
+copy Dreadzone/Live At Sunrise/05 Captain Dread.mp3
+copy Dreadzone/Live At Sunrise/07 Dread'Pon Sound.mp3
 copy Dreadzone/Live At Sunrise/08 Dancehall.mp3
 copy Dreadzone/Once Upon A Time/02 King Dub Rock.mp3
 copy Dreadzone/Once Upon A Time/03 Once Upon A Time (In Jamaica).mp3
+copy Dreadzone/Once Upon A Time/05 Ska Con Queso.mp3
 copy Dreadzone/Once Upon A Time/06 Elevate.mp3
 copy Dreadzone/Once Upon A Time/08 I Know.mp3
 copy Dreadzone/Once Upon A Time/11 Dancehall Priority.mp3
+copy Dreadzone/Once Upon A Time/12 First Steps.mp3
 copy Dreadzone/Second Light/01 Life, Love And Unity.MP3
 copy Dreadzone/Second Light/02 Little Britain.MP3
 copy Dreadzone/Second Light/05 Cave Of Angels.MP3
@@ -4865,10 +5134,12 @@ copy Dreadzone/Sound/02 Crazy Knowledge.mp3
 copy Dreadzone/Sound/03 Mean Old World.mp3
 copy Dreadzone/Sound/04 Black Rock And Roll.mp3
 copy Dreadzone/Sound/05 Straight To A Soundboy.mp3
+copy Dreadzone/Sound/07 Different Planets.mp3
 copy Dreadzone/Sound/08 Dread'pon Sound.mp3
 copy Dreadzone/Sound/3-12 Believing In It.mp3
 copy Dreadzone/The Radio One Sessions/01 Sound Man.MP3
 copy Dreadzone/The Radio One Sessions/03 Out Of The East.MP3
+copy Dreadzone/The Radio One Sessions/05 Maximum.MP3
 copy Dreadzone/The Radio One Sessions/07 The Good The Bad & The Dread.MP3
 copy Dreadzone/The Radio One Sessions/09 Captain Dread.MP3
 copy Dreadzone/The Radio One Sessions/12 Moving On.MP3
@@ -4978,6 +5249,13 @@ copy Echo & The Bunnymen/Porcupine/02 Back Of Love.mp3
 copy Echo & The Bunnymen/Porcupine/03 My White Devil.mp3
 copy Echo & The Bunnymen/Porcupine/10 In Bluer Skies.mp3
 copy Echo And The Bunnymen/Meteorites/03 Constantinople.mp3
+copy Eclectic Turkey/Land/01 Mooster.mp3
+copy Eclectic Turkey/Land/05 Space.mp3
+copy Eclectic Turkey/Land/08 Planetfall.mp3
+copy Eclectic Turkey/Tuesday/01 Arboreal.mp3
+copy Eclectic Turkey/Tuesday/02 180!.mp3
+copy Eclectic Turkey/Tuesday/03 Double Oh Semen.mp3
+copy Eclectic Turkey/Tuesday/06 Ritual.mp3
 copy Eclectic Turkey/Tuesday/07 3 Bears.mp3
 copy Eclectic Turkey/Tuesday/08 Jam_ 2.mp3
 copy Eddie Cochran/25th Anniversary Album/01 Summertime Blues.mp3
@@ -5110,6 +5388,7 @@ copy Emir Kusturica & The No Smoking Orchestra/Chat Noir Chat Blanc/15 Hunting.m
 copy Emir Kusturica & The No Smoking Orchestra/Chat Noir Chat Blanc/16 Dejo Dance.mp3
 copy Emir Kusturica & The No Smoking Orchestra/Chat Noir Chat Blanc/17 Bulgarian Dance.mp3
 copy Emir Kusturica & The No Smoking Orchestra/Chat Noir Chat Blanc/19 Black Cat White Cat 1.mp3
+copy Emir Kusturica & The No Smoking Orchestra/Chat Noir Chat Blanc/19 Black Cat White Cat.mp3
 copy Emir Kusturica & The No Smoking Orchestra/La Vie Est Un Miracle/01 In the Beginning.mp3
 copy Emir Kusturica & The No Smoking Orchestra/La Vie Est Un Miracle/05 Moldavian Song.mp3
 copy Emir Kusturica & The No Smoking Orchestra/La Vie Est Un Miracle/12 Karakaj.mp3
@@ -5139,6 +5418,7 @@ copy Ennio Morricone/A Fistful of Sounds/2-12 Jill's America.mp3
 copy Ennio Morricone/The Good, The Bad And The Ugly/01 The Good, The Bad And The Ugly.mp3
 copy Ennio Morricone/The Good, The Bad And The Ugly/10 The Ecstasy Of Gold.mp3
 copy Eric B & Rakim/Paid in Full/04 I Know You Got Soul.mp3
+copy Eric B & Rakim/Paid in Full/06 Paid in Full 2.mp3
 copy Eric B & Rakim/Paid in Full/06 Paid in Full.mp3
 copy Eric Idle/Eric Idle sings Monthy Python/03 Money Song.mp3
 copy Eric Idle/Eric Idle sings Monthy Python/05 Accountancy Shanty.mp3
@@ -5149,6 +5429,7 @@ copy Eric Idle/Eric Idle sings Monthy Python/18 The Galaxy Song.mp3
 copy Eric Idle/Eric Idle sings Monthy Python/20 Always Look On The Bright Side Of Life.mp3
 copy Eric Idle/Eric Idle sings Monthy Python/21 (Encore) Lumberjack Song.mp3
 copy Eric More Morillo/Madagascar/02 I Like To Move It.mp3
+copy Eric Prydz Vs. Pink Floyd/Floyd Remixes/Proper Education (Pig & Dan Remix).mp3
 copy Erik Satie/Gymnopdies, Etc_/17 Gymnopédies No. 1.mp3
 copy Erik Satie/Gymnopdies, Etc_/18 Gymnopédies No. 2.mp3
 copy Esma Redzepova/Chaje Shukarije/09 Nahtareja Mo Ilo Danljan.mp3
@@ -5190,6 +5471,7 @@ copy Faithless/Sunday 8pm/Buddha Bar.mp3
 copy Fanfare Ciocărlia/Baro Biao_ World Wide Wedding/05 Mariana.mp3
 copy Fanfare Ciocărlia/Baro Biao_ World Wide Wedding/09 Doină și cîntec.mp3
 copy Fanfare Ciocărlia/Baro Biao_ World Wide Wedding/12 Piece de Tarita.mp3
+copy Fanfare Ciocărlia/Baro Biao_ World Wide Wedding/13 Lume, lume și hora.mp3
 copy Fanfare Ciocărlia/Baro Biao_ World Wide Wedding/16 Manea țiganilor.mp3
 copy Fanfare Ciocărlia/Gili Garabdi_ Ancient Secrets of Gypsy Brass/01 007 (James Bond Theme).mp3
 copy Fanfare Ciocărlia/Gili Garabdi_ Ancient Secrets of Gypsy Brass/03 Sîrba moldovenească.mp3
@@ -5240,13 +5522,20 @@ copy FatBoy Slim/Right Here, Right Now (SKINT 46CD)/02 Don't Forget Your Teeth.m
 copy FatBoy Slim/The Greatest Hits - Remixed/01 Right Here Right Now (Redanka Mix).mp3
 copy FatBoy Slim/The Greatest Hits - Remixed/04 Weapon Of Choice (Junkie Xl Mix).mp3
 copy FatBoy Slim/The Greatest Hits - Remixed/05 The Rockafeller Skank (Mulders Urban Takeover Mix).mp3
+copy FatBoy Slim/The Greatest Hits - Remixed/08 Sunset Bird Of Prey (Darren Emerson Mix).mp3
 copy FatBoy Slim/The Greatest Hits - Remixed/09 Love Island (Manumission Mix).mp3
+copy FatBoy Slim/The Greatest Hits - Remixed/15 The Journey (The Fantastic Plastic Machine Red Special Remix).mp3
+copy FatBoy Slim/The Greatest Hits - Remixed/16 Jin Go Lo Ba (Jon Carter Remix).mp3
+copy FatBoy Slim/The Rockafella Skank (SkINT 35cD)/02 The Rockafeller Skank.mp3
+copy FatBoy Slim/Unknown Album/I'm A Rainbow Too (Techno Mix).mp3
 copy FatBoy Slim/You've Come A Long Way, Baby/1-01 Right Here, Right Now.MP3
+copy FatBoy Slim/You've Come A Long Way, Baby/1-02 The Rockafeller Skank.MP3
 copy FatBoy Slim/You've Come A Long Way, Baby/1-03 Fucking In Heaven.MP3
 copy FatBoy Slim/You've Come A Long Way, Baby/1-04 Gangster Tripping.mp3
 copy FatBoy Slim/You've Come A Long Way, Baby/1-06 Kalifornia.MP3
 copy FatBoy Slim/You've Come A Long Way, Baby/1-07 Soul Surfing.MP3
 copy FatBoy Slim/You've Come A Long Way, Baby/1-10 Love Island.MP3
+copy FatBoy Slim/You've Come A Long Way, Baby/1-11 Acid 8000.MP3
 copy FatBoy Slim/You've Come A Long Way, Baby/2-02 Radioactivity.mp3
 copy FatBoy Slim/You've Come A Long Way, Baby/2-03 Because We Can.mp3
 copy FatBoy Slim/You've Come A Long Way, Baby/2-04 Always Read The Label.mp3
@@ -5254,8 +5543,11 @@ copy FatBoy Slim/You've Come A Long Way, Baby/2-06 The World Went Down.mp3
 copy FatBoy Slim/You've Come A Long Way, Baby/2-10 Lounge Island.mp3
 copy Fats Domino/Blueberry Hill _ I'm Gonna Be A Wheel Someday/01 Blueberry Hill.mp3
 copy Fats Domino/I'm In Love Again/01 I'm In Love Again.mp3
+copy Fever Ray/If I Had A Heart (Promo)/03 If I Had A Heart (Fuck Buttons Remix).mp3
 copy Fields Of The Nephilim/Earth Inferno/04 Preacher Man.mp3
 copy Fields Of The Nephilim/Earth Inferno/05 Love Under Will.mp3
+copy Fields Of The Nephilim/Earth Inferno/08 Psychonaut.mp3
+copy Fields Of The Nephilim/Mourning Sun/03 New Gold Dawn.mp3
 copy Fields Of The Nephilim/Revelations/02 Chord Of Souls.MP3
 copy Fields Of The Nephilim/Revelations/04 Preacher Man.MP3
 copy Fields Of The Nephilim/Revelations/05 Love Under Will.MP3
@@ -5360,6 +5652,7 @@ copy Franz Schubert/Symphony No  1 in D/04 Allegro vivace.mp3
 copy Franz Schubert/Symphony No  2 in B flat/03 Menuetto  Allegro vivace.mp3
 copy Franz Schubert/Symphony No  2 in B flat/04 Presto.mp3
 copy Franz Schubert/Symphony No  3 in D/04 Presto Vivace.mp3
+copy Franz Schubert/Symphony No  4 in C minor/04 Allegro.mp3
 copy Fred Eaglesmith/50-Odd Dollars/03 Ten Ton Chain.mp3
 copy Fred Eaglesmith/50-Odd Dollars/07 Georgia Overdrive.mp3
 copy Fred Eaglesmith/50-Odd Dollars/08 Steel Guitar.mp3
@@ -5395,7 +5688,12 @@ copy Fred Eaglesmith/Tinderbox/12 Wheels.mp3
 copy Fred Eaglesmith/Tinderbox/13 Killing Me II.mp3
 copy Fritz Von Runte/Bowie2001_ The Remix Album/07 The Man Who Sold The World Riddle.mp3
 copy Fuck Buttons/Bright Tomorrow 7_/01 Bright Tomorrow.mp3
+copy Fuck Buttons/Colours Move/03 Sweet Love For Planet Earth (Andrew Weatherall Remix).mp3
+copy Fuck Buttons/Slow Focus/1-01 Brainfreeze.mp3
+copy Fuck Buttons/Street Horrrsing/01 Sweet Love for Planet Earth.mp3
+copy Fuck Buttons/Street Horrrsing/06 Colours Move.mp3
 copy Fuck Buttons/Surf Solar/02 New Crossbow.mp3
+copy Fuck Buttons/Tarot Sport/07 Flight Of The Feathered Serpent.mp3
 copy Fun Lovin' Criminals/100% Columbian/02 Love Unlimited.MP3
 copy Fun Lovin' Criminals/100% Columbian/04 Korean Bodega.MP3
 copy Fun Lovin' Criminals/100% Columbian/06 10th Street.MP3
@@ -5471,6 +5769,8 @@ copy George Thorogood & The Destroyers/Born To Be Bad/03 Highway 49.mp3
 copy George Thorogood & The Destroyers/Born To Be Bad/08 I Really Like Girls.mp3
 copy George Thorogood & The Destroyers/Born To Be Bad/10 I'm Moving On.mp3
 copy George Thorogood & The Destroyers/George Thorogood & The Destroyers/02 Madison Blues.mp3
+copy George Thorogood & The Destroyers/George Thorogood & The Destroyers/03 One Bourbon, One Scotch, One Beer.mp3
+copy George Thorogood & The Destroyers/George Thorogood & The Destroyers/10 Delaware Slide.mp3
 copy George Thorogood & The Destroyers/Maverick/03 Willie And The Hand Jive.mp3
 copy George Thorogood & The Destroyers/Move It on Over/01 Move It On Over.mp3
 copy George Thorogood & The Destroyers/Move It on Over/02 Who Do You Love_.mp3
@@ -5512,10 +5812,12 @@ copy Gogol Bordello/Gypsy Punks Underdog World Strike/08 Oh No.mp3
 copy Gogol Bordello/Gypsy Punks Underdog World Strike/09 Start Wearing Purple.mp3
 copy Gogol Bordello/Gypsy Punks Underdog World Strike/10 Think Locally, Fuck Globally.mp3
 copy Gogol Bordello/Gypsy Punks Underdog World Strike/12 Illumination.mp3
+copy Gogol Bordello/Gypsy Punks Underdog World Strike/15 Mishto.mp3
 copy Gogol Bordello/Multi Kontra Culti Vs Irony/02 Occurrence On The Border (Hopping On A Pogo-Gypsy Stick).mp3
 copy Gogol Bordello/Multi Kontra Culti Vs Irony/10 Hats Off To Kolpakoff.mp3
 copy Gogol Bordello/Super Taranta!/04 Supertheory Of Supereverything.mp3
 copy Gogol Bordello/Super Taranta!/13 American Wedding.mp3
+copy Gogol Bordello/Super Taranta!/14 Super Taranta!.mp3
 copy Gogol Bordello/Trans-Continental Hustle/01 Pala Tute.mp3
 copy Gogol Bordello/Trans-Continental Hustle/02 My Companjera.mp3
 copy Gogol Bordello/Trans-Continental Hustle/05 Immigraniada (We Comin_ Rougher).mp3
@@ -5532,6 +5834,7 @@ copy Goran Bregović/Alkohol_ Šljivovica & Champagne/05 Imagine.mp3
 copy Goran Bregović/Alkohol_ Šljivovica & Champagne/06 Truckers' Song.mp3
 copy Goran Bregović/Alkohol_ Šljivovica & Champagne/09 For Esma.mp3
 copy Goran Bregović/Alkohol_ Šljivovica & Champagne/12 Na'tan Ixara Oikopedo.mp3
+copy Goran Bregović/Alkohol_ Šljivovica & Champagne/13 Tis Agapis Sou to Risko.mp3
 copy Goran Bregović/Arizona Dream/01 In the Death Car.mp3
 copy Goran Bregović/Arizona Dream/02 Dreams.mp3
 copy Goran Bregović/Arizona Dream/03 Old Home Movie.mp3
@@ -5572,6 +5875,9 @@ copy Gorillaz/G-Sides/01 19-2000 (Soul Child Remix).mp3
 copy Gorillaz/Gorillaz/05 Clint Eastwood.mp3
 copy Gorillaz/Gorillaz/09 Double Bass.mp3
 copy Gorillaz/Gorillaz/M1 A2.mp3
+copy Grace Jones vs Hell/I've Seen That Face Before/01 I've Seen That Face Before Berlin Mix.mp3
+copy Grace Jones vs Hell/I've Seen That Face Before/02 I've Seen That Face Before Vienna Mix.mp3
+copy Grace Jones/Island Life/01 Vie en Rose.mp3
 copy Grace Jones/Island Life/06 I've Seen That Face Before (Libertango).MP3
 copy Grace Jones/Island Life/07 Pull Up To The Bumper.MP3
 copy Grace Jones/Island Life/08 Walking In The Rain.MP3
@@ -5585,6 +5891,7 @@ copy Grace Jones/Nightclubbing/06 I've Seen That Face Before (Libertango).mp3
 copy Grace Jones/Slave To The Rhythm/01 Jones The Rhythm.mp3
 copy Grace Jones/Warm Leatherette/01 Warm Leatherette.mp3
 copy Grace Jones/Warm Leatherette/02 Private Life.mp3
+copy Grace Jones/Warm Leatherette/04 Love Is The Drug.mp3
 copy Graham Parker and The Rumour/Howlin' Wind/Don't Ask Me Questions.mp3
 copy Graham Parker and The Rumour/Stick To Me/06 The New York Shuffle.mp3
 copy Graham Parker/Passion Is No Ordinary Word_ The Graham Parker Anthology 1976-1991/09 Hold Back the Night.mp3
@@ -5624,6 +5931,7 @@ copy Half Man Half Biscuit/Let's Not/02 Our Tune.mp3
 copy Half Man Half Biscuit/McIntyre, Treadmore and Davitt/01 Outbreak Of Vitas Gerulatis.mp3
 copy Half Man Half Biscuit/McIntyre, Treadmore and Davitt/10 Everything's A.O.R..mp3
 copy Half Man Half Biscuit/The Trumpton Riots E.P_/01 The Trumpton Riots.mp3
+copy Hallucinogen/Twisted/06 Shamanix.mp3
 copy Handsome Family/Odessa/03 Pony.mp3
 copy Handsome Family/Odessa/06 Giant Ant.mp3
 copy Handsome Family/Odessa/09 The Last.mp3
@@ -5638,6 +5946,7 @@ copy Hank Williams III/Damn Right Rebel Proud/04 Six Pack Of Beer.mp3
 copy Hank Williams III/Damn Right Rebel Proud/06 If You Can't Help Your Own.mp3
 copy Hank Williams III/Damn Right Rebel Proud/12 3 Shades of Black.mp3
 copy Hank Williams III/Damn Right Rebel Proud/13 Workin Man.mp3
+copy Hank Williams III/Ghost to a Ghost/05 Ray Lawrence Jr..mp3
 copy Hank Williams III/Ghost to a Ghost/08 Troopers Hollar.mp3
 copy Hank Williams III/Gutter Town/02 Gutter Stomp.mp3
 copy Hank Williams III/Gutter Town/06 Dyin Day.mp3
@@ -5646,6 +5955,7 @@ copy Hank Williams III/Gutter Town/13 Chaos Queen.mp3
 copy Hank Williams III/Gutter Town/14 Thunderpain.mp3
 copy Hank Williams III/Gutter Town/15 Fadin Moon.mp3
 copy Hank Williams III/Gutter Town/17 I_ll Save My Tears.mp3
+copy Hank Williams III/Gutter Town/19 With the Ship.mp3
 copy Hank Williams III/Hillbilly Joker/01 Hillbilly Joker.mp3
 copy Hank Williams III/Hillbilly Joker/03 Life Of Sin.mp3
 copy Hank Williams III/Hillbilly Joker/09 Drink It, Drug It.mp3
@@ -5709,6 +6019,7 @@ copy Hank Williams/Men With Broken Hearts/09 Where The Soul Of Man Never Dies.mp
 copy Happy Mondays/Bummed (2007 - Collector's Edition)/103 Fat Cyril.mp3
 copy Happy Mondays/Bummed (2007 - Collector's Edition)/107 Wrote For Luck.mp3
 copy Happy Mondays/Bummed (2007 - Collector's Edition)/203 Wrote For Luck (12' Version).mp3
+copy Happy Mondays/Bummed (2007 - Collector's Edition)/206 WFL (Think About The Future).mp3
 copy Happy Mondays/Bummed (2007 - Collector's Edition)/209 WFL (Vince Clarke 12_ Mix).mp3
 copy Happy Mondays/Loads/01 Step On.MP3
 copy Happy Mondays/Loads/02 W.F.L. (Vince Clarke Remix).MP3
@@ -5743,8 +6054,11 @@ copy Heaven 17/Penthouse And Pavement/01 (We Don't Need This) Fascist Groove Tha
 copy Heinz Egon/Unknown Album/10 Eine Nacht In Monte Carlo.mp3
 copy Heinz Rühmann/1930 - 1940/48 Wozu Ist Die Straße Da_.mp3
 copy Herbert von Karajan, Berliner Philhrmonica/Die 4 Sinfonien/1-03 No.1 c-moll op.68 III. Un poco Allegretto e grazioso.mp3
+copy Herbert von Karajan, Berliner Philhrmonica/Die 4 Sinfonien/1-06 No.3 F-Dur op.90 II. Andante.mp3
 copy Herbert von Karajan, Berliner Philhrmonica/Die 4 Sinfonien/2-03 No.2 D-Dur op.73 III. Allegro grazioso (Quasi Andantino)-Presto ma non assai-Tempo I.mp3
+copy Herbert von Karajan, Berliner Philhrmonica/Die 4 Sinfonien/2-04 No.2 D-Dur op.73 IV. Allegro con spirito.mp3
 copy Herbert von Karajan, Berliner Philhrmonica/Die 4 Sinfonien/2-07 No.4 e-moll op.98 III. Allegro giocoso-Poco meno presto-Tempo I.mp3
+copy Herbert von Karajan, Berliner Philhrmonica/Die 4 Sinfonien/2-08 No.4 e-moll op.98 IV. Allegro energico e passionato-Piщ Allegro.mp3
 copy Heroin and Your Veins/Dead People's Trails/01 The First Pain.Mp3
 copy Heroin and Your Veins/Dead People's Trails/02 Diet And Cancer.Mp3
 copy Heroin and Your Veins/Dead People's Trails/06 The Death Of A Lover.Mp3
@@ -5753,6 +6067,7 @@ copy Heroin and Your Veins/Nausea/09 The Chase.Mp3
 copy Heroin and Your Veins/Nausea/10 The Gutter.Mp3
 copy Heroin and Your Veins/Regret/03 In Dreams I Offend Myself.mp3
 copy Heroin and Your Veins/Regret/07 Your Kicks and What_.mp3
+copy Heroin and Your Veins/Regret/11 Snow Will Cover My Footsteps.mp3
 copy Hilari Scarl/All in the Mind/So Much More Than A Few Words Could Express.mp3
 copy Honolulu Mountain Daffodils/Aloha Sayonara/01 Avenues And Alleyways.mp3
 copy Honolulu Mountain Daffodils/Aloha Sayonara/04 Drug Girl Dog.mp3
@@ -5769,6 +6084,7 @@ copy Honolulu Mountain Daffodils/Tequila Dementia/06 Death Bed Bimbo.mp3
 copy Hope Sandoval & The Warm Inventions/Bavarian Fruit Bread/04 On the Low.mp3
 copy Hope Sandoval & The Warm Inventions/Bavarian Fruit Bread/08 Clear Day.mp3
 copy Hope Sandoval & The Warm Inventions/Bavarian Fruit Bread/10 Bavarian Fruit Bread.mp3
+copy Hope Sandoval & The Warm Inventions/Bavarian Fruit Bread/12 Lose Me on the Way.mp3
 copy Hope Sandoval & The Warm Inventions/Through The Devil Softly/01 Blanchard.mp3
 copy Hope Sandoval & The Warm Inventions/Through The Devil Softly/03 For The Rest Of Your Life.mp3
 copy Hope Sandoval & The Warm Inventions/Through The Devil Softly/05 Sets The Blaze.mp3
@@ -5782,6 +6098,7 @@ copy Horslips/Greatest Hits/02 Dearg Doom.MP3
 copy Horslips/Greatest Hits/10 King of the Fairies.MP3
 copy Horslips/Greatest Hits/11 An Bratach Bán.MP3
 copy Hossam Ramzy/Kouhail - Traditional Saaidi Dance Music/06 Faris El-Foursan.mp3
+copy Hossam Ramzy/Kouhail - Traditional Saaidi Dance Music/08 Raqset El-Assaya.mp3
 copy Hot Club of Belgrade/Unknown Album/Makedonsko devojce.mp3
 copy House of Pain/House Of Pain/02 Jump Around.mp3
 copy House of Pain/House Of Pain/04 Top O' The Morning To Ya.mp3
@@ -5876,7 +6193,10 @@ copy Imelda May/Mayhem/11 Too Sad To Cry.mp3
 copy Imelda May/Mayhem/12 I'm Alive.mp3
 copy Imelda May/Mayhem/14 Tainted Love.mp3
 copy Imelda May/Mayhem/15 Johnny Got A Boom Boom (Remix).mp3
+copy Infected Mushroom/Vicious Delicious/03 Vicious Delicious.mp3
+copy Infected Mushroom/Vicious Delicious/04 Heavyweight.mp3
 copy Infected Mushroom/Vicious Delicious/05 Suliman.mp3
+copy Infected Mushroom/Vicious Delicious/11 Before.mp3
 copy Instituto Mexicano del Sonido/Mejico Maxico/01 Bienvenidos a mi Disco.mp3
 copy Instituto Mexicano del Sonido/Mejico Maxico/03 Mirando a las Muchachas.mp3
 copy Instituto Mexicano del Sonido/Mejico Maxico/08 Juan Rulfo.mp3
@@ -5902,10 +6222,12 @@ copy Jackson 5/NOW That's What I Call Merry Christmas/19 Santa Claus Is Coming T
 copy Jacqueline Taieb/YouTube/7 Heure du Matin.mp3
 copy James Brown/Greatest Hits/02 Its A Man's Man's Man's World.mp3
 copy James Brown/Greatest Hits/03 I Got You (I Feel Good).mp3
+copy James Brown/Greatest Hits/07 Funky Drummer - Pt 1.mp3
 copy James Brown/Greatest Hits/08 Talking Loud and Saying Nothing - Pt. 1.mp3
 copy James Brown/Greatest Hits/12 Get Up (I Feel Like Being a) Sex Machine.mp3
 copy Janis Joplin/Unknown Album/Oh Lord Won't You Buy Me.mp3
 copy Jarlath O'Regan/An Irishman Abroad/There Are People With Self Control.mp3
+copy Jean-Michel Jarre/Oxygene/02 Oxygene 2.mp3
 copy Jean-Michel Jarre/Oxygene/04 Oxygene 4.mp3
 copy Jean-Michel Jarre/The Complete Oxygene/2-08 Oxygène, Pt. VIII Dado's Ethnic Remix_(Remixed By F. Dado & R. Gallo Salsotto).mp3
 copy Jean-Michel Jarre/The Complete Oxygene/2-14 Oxygène, Pt. VII Sash! RMX Single Edit (Remixed By Tokapi).mp3
@@ -5916,6 +6238,7 @@ copy Jerry Lee Lewis/LIve At The Star Club, Hamburg/08 Good Golly Miss Molly.mp3
 copy Jerry Lee Lewis/LIve At The Star Club, Hamburg/11 Hound Dog.mp3
 copy Jerry Lee Lewis/LIve At The Star Club, Hamburg/13 Whole Lotta Shakin' Goin' On.mp3
 copy Jessie Close/All in the Mind/Don't Be Sorry.mp3
+copy Jessye Norman/Diva/10 Berlioz - Romeo et Juliette; Premiers transports que nul n'oublie!.mp3
 copy Jessye Norman/Jessye Norman Collection - Her Greatest Performances in Opera & Song/1-06 Ellens Gesang III (_Ave Maria_).mp3
 copy Jessye Norman/Jessye Norman Collection - Her Greatest Performances in Opera & Song/1-07 Amazing Grace.mp3
 copy Jessye Norman/Jessye Norman Collection - Her Greatest Performances in Opera & Song/2-01 Le nozze di Figaro (The Marriage of Figaro), opera, K. 492 Dove Sono I Bei Momenti.mp3
@@ -5939,6 +6262,7 @@ copy Joe Strummer & Latino Rockabilly War/Rock Against The Rich/If I Should Fall
 copy Joe Strummer & the Mescaleros/Global a Go-Go/01 Johnny Appleseed.mp3
 copy Joe Strummer & the Mescaleros/Global a Go-Go/08 Mondo Bongo.mp3
 copy Joe Strummer and The Mescaleros/Rock Art And the X-Ray Style/04 Techno D-Day.mp3
+copy Joe Strummer and The Mescaleros/Rock Art And the X-Ray Style/09 Yalla Yalla.mp3
 copy Joe Strummer and The Mescaleros/Streetcore/02 Get Down Moses.mp3
 copy Joe Strummer and The Mescaleros/Streetcore/06 Redemption Song.mp3
 copy Joe Strummer and The Mescaleros/Streetcore/07 All In a Day.mp3
@@ -5949,17 +6273,22 @@ copy Joe Strummer/Walker/06 Nica Libre.mp3
 copy Joe Strummer/Walker/08 The Unknown Immortal.mp3
 copy Joe Strummer/Walker/09 Musket Waltz.mp3
 copy Joe Strummer/Walker/11 Tennesse Rain.mp3
+copy Joe Walsh/But Seriously, Folks/08 Life's Been Good.mp3
 copy Johann Sebastian Bach/Best of Johann Sebastian Bach/04 Brandenburg Concerto No. 3 in G Major, BWV 1048 Allegro.mp3
 copy Johann Sebastian Bach/Best of Johann Sebastian Bach/07 Suite No. 3 in D major, BWV 1068 Air.mp3
 copy Johann Sebastian Bach/Best of Johann Sebastian Bach/10 Suite No. 2 in B minor, BWV 1067 Badinerie.mp3
 copy Johann Sebastian Bach/Best of Johann Sebastian Bach/15 Brandenburg Concerto No. 2 in F major, BWV 1047 Allegro Assai.mp3
+copy Johann Sebastian Bach/Best of Johann Sebastian Bach/16 Double Concerto in D minor, BWV 1043 Largo ma non Tanto.mp3
 copy Johann Sebastian Bach/Best of Johann Sebastian Bach/18 Toccata and Fugue in D minor, BWV 565 Toccata.mp3
 copy Johann Sebastian Bach/Brandenburg Concertos/01 Brandenburg Concerto No. 1 in F major, BWV1046 I , Allegro.mp3
 copy Johann Sebastian Bach/Brandenburg Concertos/03 Brandenburg Concerto No. 1 in F major, BWV1046 III , Allegro.mp3
 copy Johann Sebastian Bach/Brandenburg Concertos/06 Brandenburg Concerto No. 2 in F major, BWV1047 I , Allegro.mp3
+copy Johann Sebastian Bach/Brandenburg Concertos/10 Brandenburg Concerto No. 3 in G major, BWV1048 II , Adagio.mp3
+copy Johann Sebastian Bach/Brandenburg Concertos/11 Brandenburg Concerto No. 4 in G major, BWV1049 I , Allegro.mp3
 copy Johann Sebastian Bach/Brandenburg Concertos/19 Brandenburg Concerto No. 6 in B flat major, BWV1051 III, Allegro.mp3
 copy Johann Sebastian Bach/Harpsichord Concertos/02 Concerto for violin, oboe & strings in C minor, BWV1060 II, Adagio.mp3
 copy Johann Sebastian Bach/Harpsichord Concertos/06 Concerto for flute and strings in G minor, BWV1056 III, Presto.mp3
+copy Johann Strauss II/Vienna Waltzes/05 Kunstlerben op 316.mp3
 copy Johann Strauss II/Vienna Waltzes/06 Éljen a Magyar! op 332.mp3
 copy John Cale/Helen Of Troy/1-15 Pablo Picasso.mp3
 copy John Cale/Helen Of Troy/10 Baby What You Want Me To Do.mp3
@@ -6213,17 +6542,29 @@ copy Julie London/Unknown Album/31 The End Of The World.mp3
 copy Julie London/Your Number Please/Makin' Whoopee.mp3
 copy Junior Kimbrough & The Soul Blues Boys/All Night Long/02 Do The Romp.mp3
 copy Junior Kimbrough & The Soul Blues Boys/All Night Long/08 I Feel Alright.mp3
+copy Junior Kimbrough/Most Things Haven't Worked Out/06 Leave Her Alone.mp3
+copy Junior Kimbrough/Most Things Haven't Worked Out/07 I Love Ya Baby.mp3
+copy Juno Reactor/Bible Of Dreams/03 God Is God.mp3
+copy Juno Reactor/Bible Of Dreams/04 Komit.mp3
+copy Juno Reactor/Gods & Monsters/05 Immaculate Cruxifiction.mp3
 copy Juno Reactor/Hotaka/01 Hotaka (Radio Edit).mp3
+copy Juno Reactor/Hotaka/03 Hotaka (Thomas P. Heckman remix).mp3
+copy Juno Reactor/Inside The Reactor/03 Rotorblade (Perfect Stranger Remix).mp3
 copy Juno Reactor/Inside The Reactor/07 Hotaka (Uber Tmar Remix).mp3
+copy Juno Reactor/Inside The Reactor/09 The Heavens (Juno Reactor Lost 1995 Mix).mp3
 copy Juno Reactor/Inside The Reactor/10 Guardian Angel (Dino Psaras Remix).mp3
 copy Juno Reactor/Labyrinth/01 Conquistador I.mp3
 copy Juno Reactor/Labyrinth/02 Conquistador II.mp3
+copy Juno Reactor/Labyrinth/09 Navras.mp3
 copy Juno Reactor/Pistolero/01 Pistolero (Radio Edit).mp3
 copy Juno Reactor/Pistolero/02 Pistolero (Juno Reactor Mix).mp3
 copy Juno Reactor/Pistolero/03 Pistolero (Fluke Hang 'Em High).mp3
 copy Juno Reactor/Pistolero/05 Pistolero (Man With No Name).mp3
 copy Juno Reactor/Shango/01 Pistolero.mp3
 copy Juno Reactor/Shango/05 Masters Of The Universe.mp3
+copy Juno Reactor/The Golden Sun of the Great East/02 Invisible.mp3
+copy Juno Reactor/The Golden Sun of the Great East/03 Guillotine.mp3
+copy Juno Reactor/The Golden Sun of the Great East/04 Trans Siberian.mp3
 copy Juno Reactor/The Golden Sun of the Great East/07 Zombie.mp3
 copy K Foundation/The Red Army Choir Performing/K Cera Cera (War Is Over If You Want It).mp3
 copy K'naan/Country, God or the Girl/03 Waiting Is a Drug.mp3
@@ -6242,6 +6583,7 @@ copy K'naan/Troubadour/05 Bang Bang (feat. Adam Levine).mp3
 copy K'naan/Troubadour/10 Fatima.mp3
 copy K'naan/Troubadour/12 Take a Minute.mp3
 copy KLF Communications/The History of The JAMs a.k.a. The Timelords/02 Don't Take Five (Take What You Want).mp3
+copy KLF Communications/The History of The JAMs a.k.a. The Timelords/03 Whitney joins The JAMS.mp3
 copy KLF Communications/The History of The JAMs a.k.a. The Timelords/05 Downtown.mp3
 copy KLF Communications/The History of The JAMs a.k.a. The Timelords/08 Doctorin' The Tardis.mp3
 copy KLF Communications/The History of The JAMs a.k.a. The Timelords/09 Gary In The Tardis.mp3
@@ -6281,6 +6623,7 @@ copy Kenny Rogers And The First Edition/Ruby, Don't Take Your Love To Town/01 Ru
 copy Keny Arkana/Desobeissance/02 Réveillez-vous.mp3
 copy Keny Arkana/Desobeissance/03 Ordre mondial.mp3
 copy Keny Arkana/Desobeissance/07 Terre Mère n'est pas à vendre.mp3
+copy Keny Arkana/Desobeissance/09 Cinquième soleil.mp3
 copy Keny Arkana/Entre Ciment Et Belle Étoile/03 J'Viens De L'Incendie.mp3
 copy Keny Arkana/Entre Ciment Et Belle Étoile/05 La Mère Des Enfants Perdus.mp3
 copy Keny Arkana/Entre Ciment Et Belle Étoile/07 Eh Connard.mp3
@@ -6294,6 +6637,7 @@ copy Keny Arkana/L'esquisse/07 Style Libre.mp3
 copy Keny Arkana/L'esquisse/08 J'ai Besoin D'air.mp3
 copy Keny Arkana/L'esquisse/10 Jeunesse De l'Occident.mp3
 copy Keny Arkana/L'esquisse/13 J'lève Ma Rime.mp3
+copy Keny Arkana/L'esquisse/14 De l'Opéra À La Plaine.mp3
 copy Keny Arkana/Tout Tourne Autour Du Soleil/01 Intro _ Tout tourne autour du soleil.mp3
 copy Keny Arkana/Tout Tourne Autour Du Soleil/02 Esprits Libres.mp3
 copy Keny Arkana/Tout Tourne Autour Du Soleil/03 Le Syndrome De L'Exclu.mp3
@@ -6324,6 +6668,7 @@ copy Kiril Dzajkovski/Bal-Can-Can/03 The Legend of Trendafil Karanfilov.mp3
 copy Kiril Dzajkovski/Bal-Can-Can/14 Blue Idols.mp3
 copy Kiril Dzajkovski/Religion & Sex/06 Convoy (Moody Mix).mp3
 copy Kiril Dzajkovski/Religion & Sex/08 Blueuropa (Piano Mix).mp3
+copy Kiril Dzajkovski/Religion & Sex/09 Blueuropa (Jam In).mp3
 copy Kirsty MacColl/Galore/There's A Guy Works Down The Chip Shop Swears He's Elvis.mp3
 copy Kissogram/defDrive/My Friend Is A Seahorse (Ladytron mix).mp3
 copy Klaxons/Myths Of The Near Future/06 Isle Of Her.mp3
@@ -6336,6 +6681,7 @@ copy Klezmer Juice/Klezmer Juice 2 Yiddish Lidele/15 Yiddish Lidele.mp3
 copy Klezmer Juice/Klezmer Juice 2 Yiddish Lidele/16 Bonus Track1.mp3
 copy Kočani Orkestar/A Gypsy Brass Band/01 Solo tapan.mp3
 copy Kočani Orkestar/A Gypsy Brass Band/05 Kerta mangae Dae.mp3
+copy Kočani Orkestar/A Gypsy Brass Band/06 Trepaza.mp3
 copy Kočani Orkestar/A Gypsy Brass Band/10 Bulgarska Oro.mp3
 copy Kočani Orkestar/Alone At My Wedding/01 Siki, Siki Baba.mp3
 copy Kočani Orkestar/Alone At My Wedding/07 Stamena.mp3
@@ -6346,10 +6692,19 @@ copy Kočani Orkestar/Gypsy Mambo/05 Agonija.mp3
 copy Kočani Orkestar/Gypsy Mambo/07 Turkish Pop.mp3
 copy Kočani Orkestar/Gypsy Mambo/12 Oro Indi.mp3
 copy Kočani Orkestar/Gypsy Mambo/14 Techno Kocani.mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/02 Flaschenpost.mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/03 Blau Kick.mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/04 Lapacha (Original Live Mix).mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/05 Elemental Pleasures.mp3
 copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/06 Holunderbaum.mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/07 Grillen Im Garten (Gerberei Version).mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/08 Blutsbrüder.mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/09 Luechtoorn.mp3
+copy Kollektiv Turmstrasse/Musik Gewinnt Freunde Collection [MGF023] WEB/11 Holunderbaum (Rumpel Mix).mp3
 copy Kraftwerk/Autobahn/03 Kometenmelodie 2.mp3
 copy Kraftwerk/Computer World/01 Computer World.mp3
 copy Kraftwerk/Computer World/02 Pocket Calculator.mp3
+copy Kraftwerk/Computer World/05 Computer Love.mp3
 copy Kraftwerk/Computer World/06 Home Computer.mp3
 copy Kraftwerk/Computer World/07 It's More Fun To Compute.mp3
 copy Kraftwerk/Computerwelt/06 Heimcomputer.mp3
@@ -6359,32 +6714,47 @@ copy Kraftwerk/Das Model EP/02 Neonlicht (Edit).mp3
 copy Kraftwerk/Das Model EP/04 Trans Europa Express (Edit).mp3
 copy Kraftwerk/Die Mensch-Maschine/01 Die Roboter.mp3
 copy Kraftwerk/Die Mensch-Maschine/04 Das Model.mp3
+copy Kraftwerk/Die Mensch-Maschine/05 Neonlicht.mp3
+copy Kraftwerk/Die Mix/01 Die Roboter.mp3
 copy Kraftwerk/Die Mix/02 Computer Liebe.mp3
+copy Kraftwerk/Die Mix/05 Autobahn.mp3
+copy Kraftwerk/Die Mix/06 Radioaktivität.mp3
 copy Kraftwerk/Die Mix/09 Metall Auf Metall.mp3
+copy Kraftwerk/Die Mix/10 Heimcomputer.mp3
 copy Kraftwerk/Die Mix/11 Music Non Stop.mp3
+copy Kraftwerk/Electric Cafe/04 The Telephone Call.mp3
+copy Kraftwerk/Expo Remix/03 Expo2000 (Kling Klang mix 2000).mp3
 copy Kraftwerk/Radio-Aktivität 12_/Radioaktivitat Kevorkian.mp3
 copy Kraftwerk/Remixes/Tour de France (Thumper).mp3
 copy Kraftwerk/Techno Pop/04 Der Telefon Anruf.mp3
 copy Kraftwerk/The Man Machine/02 Spacelab.mp3
 copy Kraftwerk/The Man Machine/04 The Model.mp3
+copy Kraftwerk/The Mix/01 The Robots.mp3
 copy Kraftwerk/The Mix/04 Dentaku.mp3
+copy Kraftwerk/The Mix/06 Radioactivity.mp3
 copy Kraftwerk/The Mix/09 Metal On Metal.mp3
+copy Kraftwerk/The Mix/10 Homecomputer.mp3
 copy Kraftwerk/Toccata Electronica/04 Metropolis (Live in Utrecht 10.12.81).mp3
 copy Kraftwerk/Toccata Electronica/08 Zehn kleine Negerlein.mp3
+copy Kraftwerk/Toccata Electronica/09 Radioactivity (Kevorkian 12_ remix).mp3
 copy Kraftwerk/Toccata Electronica/10 Die Roboter Demo (Kling-Klang mix).mp3
 copy Kraftwerk/Toccata Electronica/12 Dentaku (1981 extended mix).mp3
 copy Kraftwerk/Tokyo 1981/An die Freude.mp3
 copy Kraftwerk/Tour De France Soundtracks/09 Elektro Kardiogramm.mp3
 copy Kraftwerk/Tour De France Soundtracks/12 Tour De France.mp3
+copy Kraftwerk/Trans Europa Express/01 Europa Endlos.mp3
 copy Kraftwerk/Trans Europa Express/03 Schaufensterpuppen.mp3
 copy Kraftwerk/Trans Europa Express/04 Trans Europa Express.mp3
 copy Kraftwerk/Trans Europa Express/05 Metall Auf Metall.mp3
 copy Kraftwerk/Trans-Europe Express/04 Trans-Europe Express.mp3
+copy Kraftwerk/Trans-Europe Express/05 Metal On Metal.mp3
 copy Kraftwerk/Trans-Europe Express/07 Endless Endless.mp3
+copy Kraftwerk/Tribal Gathering/03 Radioactivity.mp3
 copy Kraftwerk/Tribal Gathering/07 The Robots II.mp3
 copy Kraftwerk/Ultra Rare Trax Volume 02/01 Tour De France (Kervorkian remix).mp3
 copy Kraftwerk/Ultra Rare Trax Volume 02/04 Les Mannequins.mp3
 copy Kraftwerk/Ultra Rare Trax/01 Computer World (Klick mix).mp3
+copy Kraftwerk/Ultra Rare Trax/04 Trans Europe Express (T.E.E. mix).mp3
 copy Kraftwerk/Ultra Rare Trax/09 The Model (Catbonic mix).mp3
 copy Kraftwerk/Ultra Rare Trax/11 Showroom Dummies (M.C.M.G. mix).mp3
 copy Kris Kristofferson/Full Moon/I Heard The Bluebirds Sing.mp3
@@ -6425,6 +6795,7 @@ copy Lajkó Félix/Točkovi OST/31 Motel 'Točak'.mp3
 copy Lana Del Rey/Born To Die/01 Born To Die.mp3
 copy Lana Del Rey/Born To Die/04 Video Games.mp3
 copy Lana Del Rey/Born To Die/05 Diet Mountain Dew.mp3
+copy Laraaji/Ambient 3 - Day of Radiance/01 The Dance #1.mp3
 copy Las Ketchup/Unknown Album/The Ketchup Song (Aserje).mp3
 copy Laura Cantrell/Humming By The Flowered Vine/08 Poor Ellen Smith.mp3
 copy Laura Marling/I Speak Because I Can/24 What He Wrote.mp3
@@ -6451,8 +6822,14 @@ copy Leadbelly/Alabama Bound/12 Rock Island Line.mp3
 copy Lecuona Cuban Boys/Unknown Album/11 Rumba Tambah.mp3
 copy Led Zeppelin/Led Zeppelin IV/01 Black Dog.mp3
 copy Led Zeppelin/Led Zeppelin IV/02 Rock And Roll.mp3
+copy Led Zeppelin/Led Zeppelin IV/04 Stairway To Heaven.mp3
+copy Leftfield/Alternative Light Source/02 Universal Everything.mp3
 copy Leftfield/Alternative Light Source/04 Head And Shoulders.mp3
 copy Leftfield/Alternative Light Source/06 Little Fish.mp3
+copy Leftfield/Leftism/01 Release The Pressure.MP3
+copy Leftfield/Leftism/02 Afro-Left.MP3
+copy Leftfield/Leftism/07 Space Shanty.MP3
+copy Leftfield/Leftism/10 Open Up.MP3
 copy Lefty Frizzell/Look What Thoughts Will Do/03 Shine, Shave, Shower (It's Saturday).mp3
 copy Lefty Frizzell/Look What Thoughts Will Do/07 I Want to Be With You Always.mp3
 copy Lefty Frizzell/Look What Thoughts Will Do/10 Always Late (With Your Kisses).mp3
@@ -6465,10 +6842,17 @@ copy Lefty Frizzell/Look What Thoughts Will Do/17 She's Gone, Gone, Gone.mp3
 copy Lemmy, Slim Jim & Danny B/Lemmy, Slim Jim & Danny B/17 True Love Ways.mp3
 copy Lemmy, Slim Jim & Danny B/Lemmy, Slim Jim & Danny B/18 Heartbreak Hotel.mp3
 copy Lemon Jelly/'64 - '95/02 '88 aka Come Down On Me.MP3
+copy Lemon Jelly/'64 - '95/04 '93 aka Don't Stop Now.MP3
 copy Lemon Jelly/'64 - '95/07 '75 aka Stay With You.MP3
 copy Lemon Jelly/'64 - '95/10 '64 aka Go.MP3
+copy Lemon Jelly/Lost Horizons/01 Elements.MP3
+copy Lemon Jelly/Lost Horizons/02 Space Walk.MP3
+copy Lemon Jelly/Lost Horizons/03 Ramblin' Man.MP3
 copy Lemon Jelly/Lost Horizons/05 Nice Weather For Ducks.MP3
 copy Lemon Jelly/lemonjelly.ky/01 In The Bath.MP3
+copy Lemon Jelly/lemonjelly.ky/03 A Tune For Jack.MP3
+copy Lemon Jelly/lemonjelly.ky/04 His Majesty King Raam.MP3
+copy Lemon Jelly/lemonjelly.ky/06 Homage To Patagonia.MP3
 copy Leonard Bernstein/West Side Story/02 Prologue.mp3
 copy Leonard Bernstein/West Side Story/03 Jet Song.mp3
 copy Leonard Bernstein/West Side Story/05 Dance At The Gym.mp3
@@ -6494,6 +6878,7 @@ copy Leonard Cohen/New Skin For The Old Ceremony/04 Field Commander Cohen.mp3
 copy Leonard Cohen/New Skin For The Old Ceremony/05 Why Don't You Try.mp3
 copy Leonard Cohen/New Skin For The Old Ceremony/09 Who By Fire.mp3
 copy Leonard Cohen/Old Ideas/1-01 Going Home.mp3
+copy Leonard Cohen/Old Ideas/1-02 Amen.mp3
 copy Leonard Cohen/Popular Problems/01 Slow.mp3
 copy Leonard Cohen/Popular Problems/02 Almost Like The Blues.mp3
 copy Leonard Cohen/Popular Problems/06 My Oh My.mp3
@@ -6510,6 +6895,7 @@ copy Leonard Cohen/Songs Of Leonard Cohen/07 Hey, That's No Way To Say Goodbye.m
 copy Leonard Cohen/Songs Of Leonard Cohen/08 Stories Of The Street.mp3
 copy Leonard Cohen/Songs Of Leonard Cohen/09 Teachers.mp3
 copy Leonard Cohen/The Future/05 Anthem.mp3
+copy Leonard Cohen/The Future/06 Democracy.MP3
 copy Leonard Cohen/Various Positions/01 Dance Me To the End Of Love.MP3
 copy Leonard Cohen/Various Positions/03 The Law.MP3
 copy Leonard Cohen/Various Positions/04 Night Comes On.MP3
@@ -6572,6 +6958,7 @@ copy Linton Kwesi Johnson/Independant Intavenshan/11 Forces of Vicktry.mp3
 copy Linton Kwesi Johnson/Independant Intavenshan/12 Victorious Dub.mp3
 copy Linton Kwesi Johnson/Independant Intavenshan/13 Time Come.mp3
 copy Linton Kwesi Johnson/Independant Intavenshan/20 Di Black Petty Booshwah (Dub).mp3
+copy Linton Kwesi Johnson/Independant Intavenshan/27 Di Eagle An' Di Bear (12in Version).mp3
 copy Linton Kwesi Johnson/Independant Intavenshan/30 Insoreckshan Dub.mp3
 copy Linton Kwesi Johnson/Independant Intavenshan/31 Making History.mp3
 copy Linton Kwesi Johnson/Independant Intavenshan/33 Reggae Fi Radni.mp3
@@ -6587,6 +6974,7 @@ copy Little Richard/Here's Little Richard/10 Rip It Up.mp3
 copy Little Richard/Little Richard/01 Ain't nothin' happenin'.mp3
 copy Little Richard/Unknown Album/Good Golly, Miss Molly.mp3
 copy Little Richard/Unknown Album/Lucille.mp3
+copy Liza Minnelli/Losing My Mind/02 Losing My Mind (extended remix).mp3
 copy Liza Minnelli/Results/01 I Want You Now.mp3
 copy Liza Minnelli/Results/02 Losing My Mind.mp3
 copy Liza Minnelli/Results/04 So Sorry, I Said.mp3
@@ -6612,6 +7000,7 @@ copy Loop Guru/amrita ... all these and the japanese soup warriors/04 Soulus.mp3
 copy Loop Guru/amrita ... all these and the japanese soup warriors/05 Papasus.mp3
 copy Loop Guru/amrita ... all these and the japanese soup warriors/07 Sun.mp3
 copy Loop Guru/amrita ... all these and the japanese soup warriors/08 Epic Song.mp3
+copy Loop/A Gilded Eternity/07 Be Here Now.mp3
 copy Loop/Fade Out/03 Fever Knife.mp3
 copy Loop/Fade Out/07 Vision Strain.mp3
 copy Loop/Fade Out/10 Crawling Heart.mp3
@@ -6650,6 +7039,7 @@ copy Louis Armstrong/Disney Songs The Satchmo Way/04 The Bare Necessities.mp3
 copy Louis Armstrong/Disney Songs The Satchmo Way/05 Zip-A-Dee-Doo-Dah.mp3
 copy Louis Armstrong/Disney Songs The Satchmo Way/06 When You Wish Upon a Star.mp3
 copy Louis Armstrong/Disney Songs The Satchmo Way/09 Heigh-Ho (The Dwarfs' Marching Song).mp3
+copy Louis Armstrong/Louis Armstrong Plays W.C.Handy/1-01 St. Louis Blues.mp3
 copy Louis Armstrong/Louis Armstrong Plays W.C.Handy/1-02 Yellow Dog Blues.mp3
 copy Louis Armstrong/Louis Armstrong Plays W.C.Handy/1-05 Long Gone (From Bowling Green).mp3
 copy Louis Armstrong/Louis Armstrong Plays W.C.Handy/1-10 Hesitating Blues.mp3
@@ -6682,15 +7072,24 @@ copy Luciano Pavarotti/Pavarotti's Greatest Hits/2-14 Santa Lucia.mp3
 copy Luciano Pavarotti/Pavarotti's Greatest Hits/2-18 Volare.mp3
 copy Luciano Pavarotti/Ti Adoro/01 Ti Adoro.mp3
 copy Ludwig van Beethoven/Piano Concertos/1-10 Für Elise.mp3
+copy Ludwig van Beethoven/Symphonien Nos. 1, 4 (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/01 Symphonie No. 1 C-dur, Op. 21_ I. Adagio molto - Allegro con brio.mp3
 copy Ludwig van Beethoven/Symphonien Nos. 1, 4 (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/04 Symphonie No. 1 C-dur, Op. 21_ IV. Adagio - Allegro molto e vivace.mp3
 copy Ludwig van Beethoven/Symphonien Nos. 1, 4 (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/07 Symphonie No. 4 B-dur, Op. 60_ III. Allegro vivace.mp3
+copy Ludwig van Beethoven/Symphonien Nos. 2, 7 (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/06 Symphonie No. 7 A-dur, Op. 92_ II. Allegretto.mp3
+copy Ludwig van Beethoven/Symphonies Nos. 5 & 8 _ Overture, Op. 72b _Fidelio_ (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/01 Symphony No. 5 in C minor, Op. 67_ I. Allegro con brio.mp3
+copy Ludwig van Beethoven/Symphonies Nos. 5 & 8 _ Overture, Op. 72b _Fidelio_ (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/04 Symphony No. 5 in C minor, Op. 67_ IV. Allegro.mp3
 copy Ludwig van Beethoven/Symphonies Nos. 5 & 8 _ Overture, Op. 72b _Fidelio_ (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/06 Symphony No. 8 in F major, Op. 93_ II. Allegretto scherzando.mp3
 copy Ludwig van Beethoven/Symphonies Nos. 5 & 8 _ Overture, Op. 72b _Fidelio_ (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/07 Symphony No. 8 in F major, Op. 93_ III. Tempo di Menuetto.mp3
+copy Ludwig van Beethoven/Symphonies Nos. 5 & 8 _ Overture, Op. 72b _Fidelio_ (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/09 Overture, Op. 72b _Fidelio__ Allegro.mp3
 copy Ludwig van Beethoven/Symphony No. 6 _Pastoral_ _ Overtures (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/03 Symphony No. 6 in F major, Op. 68 _Pastoral__ III. Merry Gathering of Country Folk. Allegro.mp3
+copy Ludwig van Beethoven/Symphony No. 6 _Pastoral_ _ Overtures (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/05 Symphony No. 6 in F major, Op. 68 _Pastoral__ V. Shepherd's Song_ Happy and Thankful Feelings to the Deity After the Storm. Allegretto.mp3
 copy Ludwig van Beethoven/Symphony No. 6 _Pastoral_ _ Overtures (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/07 Overture, Op. 43 _The Creatures of Prometheus__ Adagio - Allegro molto con brio.mp3
 copy Ludwig van Beethoven/Symphony No. 9 (Berliner Philharmoniker feat. conductor_ Herbert von Karajan)/04 Symphony No. 9 in D minor, Op. 125_ IV. Presto.mp3
 copy Ludwig van Beethoven/The Piano Concertos (Chicago Symphony Orchestra feat. conductor_ Sir Georg Solti, piano_ Vladimir Ashkenazy)/1-08 Six Bagatelles, Op. 126 No. 5_ Quasi allegretto.mp3
+copy Ludwig van Beethoven/The Piano Concertos (Chicago Symphony Orchestra feat. conductor_ Sir Georg Solti, piano_ Vladimir Ashkenazy)/2-03 Piano Concerto No. 3 in C minor, Op. 37_ III. Rondo_ Allegro.mp3
 copy Ludwig van Beethoven/The Piano Concertos (Chicago Symphony Orchestra feat. conductor_ Sir Georg Solti, piano_ Vladimir Ashkenazy)/2-05 Piano Concerto No. 4 in G major, Op. 58_ Andante con moto.mp3
+copy Ludwig van Beethoven/The Piano Concertos (Chicago Symphony Orchestra feat. conductor_ Sir Georg Solti, piano_ Vladimir Ashkenazy)/3-02 Concerto for Piano and Orchestra No. 5 in E-flat major, Op. 73 _Emperor__ II. Adagio un poco mosso.mp3
+copy Ludwig van Beethoven/The Piano Concertos (Chicago Symphony Orchestra feat. conductor_ Sir Georg Solti, piano_ Vladimir Ashkenazy)/3-05 Concerto for Piano and Orchestra No. 2 in B-flat major, Op. 19_ II. Adagio.mp3
 copy Ludwig van Beethoven/The Piano Concertos (Chicago Symphony Orchestra feat. conductor_ Sir Georg Solti, piano_ Vladimir Ashkenazy)/3-06 Concerto for Piano and Orchestra No. 2 in B-flat major, Op. 19_ III. Rondo. Molto allegro.mp3
 copy Luigi Bernauer/Unknown Album/62 Nachts Ging Das Telefon.mp3
 copy Luke Kelly/Luke Kelly Collection/1-01 The Molly Maguires.mp3
@@ -6834,6 +7233,7 @@ copy Mahogany Men/Unknown Album/Hello How Are You I Am God.mp3
 copy Malia & Boris Blank/Convergence/01 Celestial Echo.mp3
 copy Mamani Keita/Yelema/04 Djama Nyemao.mp3
 copy Mamani Keita/Yelema/07 Kedide.mp3
+copy Mamani Keita/Yelema/08 Tamala.mp3
 copy Mando Diao/Give Me Fire/09 Crystal.mp3
 copy Mando Diao/Give Me Fire/11 Go Out Tonight.mp3
 copy Mando Diao/Ode To Ochrasy/03 Long Before Rock 'N' Roll.mp3
@@ -6860,6 +7260,7 @@ copy Manu Chao/Baionarena/1-10 El Viento.mp3
 copy Manu Chao/Baionarena/2-02 A Cosa.mp3
 copy Manu Chao/Baionarena/2-07 Machine Gun.mp3
 copy Manu Chao/Baionarena/2-09 Radio Bemba _ Eldorado 1997.mp3
+copy Manu Chao/Baionarena/2-13 Forzando Maquina _ Mr. Bobby.mp3
 copy Manu Chao/Baionarena/2-14 Me Quedo Contigo (Si Me Das Elegir).mp3
 copy Manu Chao/Baionarena/2-16 L'hiver Est Là.mp3
 copy Manu Chao/Clandestino/01 Clandestino.mp3
@@ -6927,6 +7328,7 @@ copy Marc Almond/Tenement Symphony/11 Tenement Symphony VI - My Hand Over My Hea
 copy Marc Almond/The Stars We Are/01 The Stars We Are.mp3
 copy Marc Almond/The Stars We Are/07 Tears Run Rings.mp3
 copy Marc Almond/The Stars We Are/08 Something's Gotten Hold Of My Heart.mp3
+copy Marc Almond/Unknown Album/Ruby Red (extended).mp3
 copy Marc Almond/Unknown Album/Something's Gotten Hold Of My Heart.mp3
 copy Marc Almond/Unknown Album/Tears Run Rings.mp3
 copy Marc Almond/Varieté/02 Bread and circus.mp3
@@ -6951,6 +7353,7 @@ copy Marianne Faithfull/Broken English/01 Broken English.mp3
 copy Marianne Faithfull/Broken English/05 The Ballad of Lucy Jordan.mp3
 copy Marianne Faithfull/Broken English/06 What's the Hurry_.mp3
 copy Marianne Faithfull/Broken English/07 Working Class Hero.mp3
+copy Marianne Faithfull/Broken English/08 Why d'Ya Do It_.mp3
 copy Marina and the Diamonds/Mowgli's Road/2-01 Space and the Woods.mp3
 copy Marina and the Diamonds/The Family Jewels/05 Mowgli's Road.mp3
 copy Marina and the Diamonds/The Family Jewels/06 Obsessions.mp3
@@ -7110,6 +7513,7 @@ copy Ministry/Greatest Fits/08 Jesus Built My Hotrod.MP3
 copy Ministry/The Mind Is A Terrible Thing To Taste/02 Burning Inside.MP3
 copy Ministry/The Mind Is A Terrible Thing To Taste/03 Never Believe.MP3
 copy Ministry/The Mind Is A Terrible Thing To Taste/05 Breathe.MP3
+copy Ministry/The Mind Is A Terrible Thing To Taste/06 So What.MP3
 copy Ministry/Twitch/My Posession.mp3
 copy Mob Hits/Unknown Album/The Godfather Theme.mp3
 copy Moby/18/02 In This World.mp3
@@ -7183,6 +7587,8 @@ copy Monty Python/The Meaning Of Life/04 Birth.mp3
 copy Monty Python/The Meaning Of Life/14 Accountancy Shanty.mp3
 copy Mooji/YouTube/Natural Noticing.mp3
 copy Moon Duo/Circles/01 Sleepwalker.mp3
+copy Moon Duo/Escape/01 Motorcycle, I Love You.mp3
+copy Moon Duo/Escape/02 In the Trees.mp3
 copy Moon Duo/Mazes Remixed/01 Scars [Sonic Boom Remix].mp3
 copy Moon Duo/Mazes Remixed/03 Run Around (Organ Desert Mix) [Cave Remix].mp3
 copy Moon Duo/Mazes Remixed/06 Fallout [Sonic Boom Remix].mp3
@@ -7193,6 +7599,7 @@ copy Moon Duo/Mazes/04 Fallout.mp3
 copy Moon Duo/Mazes/05 When You Cut.mp3
 copy Moon Duo/Mazes/06 Run Around.mp3
 copy Moon Duo/Mazes/07 In The Sun.mp3
+copy Moon Duo/Mazes/08 Goners.mp3
 copy Motörhead/Ace Of Spades/01 Ace Of Spades.mp3
 copy Motörhead/Ace Of Spades/06 (We Are) The Road Crew.mp3
 copy Motörhead/Ace of Spades - Collection/14 Louie Louie.mp3
@@ -7201,6 +7608,10 @@ copy Motörhead/Motörhead/01 Motörhead.mp3
 copy Motörhead/No Sleep 'Til Hammersmith/01 Ace Of Spades.mp3
 copy Motörhead/No Sleep 'Til Hammersmith/11 Motorhead.mp3
 copy Motörhead/Unknown Album/Eat The Rich.mp3
+copy Mountain Of Love/Love at the Donkey/02 River Runs Deep.mp3
+copy Mountain Of Love/Love at the Donkey/03 Things and Thoughts.mp3
+copy Mountain Of Love/Love at the Donkey/05 Set You Free.mp3
+copy Mountain Of Love/Love at the Donkey/06 Another Man Done Gone.mp3
 copy Mountain Of Love/Mountain Of Love/01 Mountain Of Love.mp3
 copy Mountain Of Love/Mountain Of Love/02 Another Man Done Gone.mp3
 copy Mountain Of Love/Mountain Of Love/05 River Runs Deep.mp3
@@ -7211,7 +7622,17 @@ copy Mountain Of Love/Mountain Of Love/10 Talking Your Language.mp3
 copy Mountain Of Love/Mountain Of Love/11 Set You Free.mp3
 copy Mountain Of Love/The Tour With No Name, Birmingham/01 Another Man Done Gone.mp3
 copy Mountain Of Love/The Tour With No Name, Cardiff/Who Am I_.mp3
+copy Mountain Of Love/The Tour With No Name, Dublin/High On The Mountain Of Love.mp3
+copy Mountain Of Love/The Tour With No Name, Manchester/01 Another Man Done Gone.mp3
+copy Mountain Of Love/The Tour With No Name, Manchester/02 High On The Mountain Of Love.mp3
+copy Mountain Of Love/The Tour With No Name, Manchester/03 Who Am I_.mp3
 copy Mountain Of Love/The Tour With No Name, Manchester/04 Where You Come From Is Gone.mp3
+copy Mountain Of Love/The Tour With No Name, Nottingham/01 Another Man Done Gone.mp3
+copy Mountain Of Love/The Tour With No Name, Nottingham/02 High On The Mountain Of Love.mp3
+copy Mountain Of Love/The Tour With No Name, Nottingham/03 Where You Come From Is Gone.mp3
+copy Mountain Of Love/The Tour With No Name, Nottingham/03 Who Am I_.mp3
+copy Mountain Of Love/The Tour With No Name, Nottingham/05 Untitled.mp3
+copy Mountain Of Love/Windmill, Brixton/Get Up, Stand Up (Live).mp3
 copy Moving Hearts/Dark End of the Street/03 All I Remember.mp3
 copy Moving Hearts/Dark End of the Street/06 Downtown.mp3
 copy Moving Hearts/Dark End of the Street/07 Allende.mp3
@@ -7221,7 +7642,9 @@ copy Moving Hearts/Moving Hearts/02 Irish Ways And Irish Laws.mp3
 copy Moving Hearts/Moving Hearts/03 McBrides.mp3
 copy Moving Hearts/Moving Hearts/06 Category.mp3
 copy Moving Hearts/Moving Hearts/07 Faithful Departed.mp3
+copy Moving Hearts/Moving Hearts/09 No Time For Love.mp3
 copy Moving Hearts/The Storm/03 The Storm.mp3
+copy Moving Hearts/The Storm/05 Tribute to Peadar O'Donnell.mp3
 copy Moving Hearts/The Storm/06 May Morning Dew.mp3
 copy Mozaik/Changing Trains/04 Rueben's Transatlantic Express.mp3
 copy Mozaik/Changing Trains/07 Mary Rogers, Siún ní Dhuidhir.mp3
@@ -7235,6 +7658,7 @@ copy Muddy Waters/Hard Again/05 I Can't Be Satisfied.mp3
 copy Muddy Waters/Hard Again/06 The Blues Had A Baby And They Named It Rock And Roll #2.mp3
 copy Muddy Waters/Hard Again/07 Deep Down In Florida.mp3
 copy Muddy Waters/Hard Again/08 Crosseyed Cat.mp3
+copy Muddy Waters/Hard Again/09 Little Girl.mp3
 copy Muddy Waters/Hard Again/10 Walking Through The Park [bonus track].mp3
 copy Muddy Waters/I'm Ready/12 I'm Ready.mp3
 copy Muddy Waters/I'm Ready/14 Young Fashioned Ways.mp3
@@ -7263,11 +7687,14 @@ copy Munly & The Lee Lewis Harlots/Munly & The Lee Lewis Harlots/08 Goose Walkin
 copy Munly & The Lee Lewis Harlots/Munly & The Lee Lewis Harlots/10 A Gentle Man's Jihad.mp3
 copy Munly & The Lee Lewis Harlots/Munly & The Lee Lewis Harlots/12 Of Silas Fauntleroys Willingness to Impress the Panel.mp3
 copy Munly & The Lee Lewis Harlots/Munly & The Lee Lewis Harlots/14 My Second Salvation Army Choir.mp3
+copy Munly & The Lee Lewis Harlots/Munly & The Lee Lewis Harlots/15 River Forktine Tippecanoe.mp3
 copy Muslimgauze/Suns Of Arqa Re-Mixs Muslimgauze/12 Where's The Missing Chord.mp3
+copy Muslimgauze/Zul'm/01 Fakir.mp3
 copy Mustafa Sandal/Karizma/04 Ateş Et ve Unut.mp3
 copy My Bloody Valentine/Isn't Anything/08 Sueisfine.mp3
 copy My Bloody Valentine/Loveless/06 I Only Said.mp3
 copy My Bloody Valentine/Loveless/08 Sometimes.mp3
+copy My Bloody Valentine/Loveless/11 Soon.mp3
 copy My Bloody Valentine/M B V/02 Only Tomorrow.mp3
 copy My Bloody Valentine/M B V/08 nothing is.mp3
 copy My Chemical Romance/The Black Parade/11 Teenagers.mp3
@@ -7278,7 +7705,9 @@ copy N.W.A/Straight Outta Compton/06 8 Ball [Remix].mp3
 copy N.W.A/Straight Outta Compton/10 I Ain't Tha 1.mp3
 copy N.W.A/Straight Outta Compton/11 Dopeman [Remix].mp3
 copy N.W.A/Straight Outta Compton/17 A Bitch Is a Bitch.mp3
+copy Nadia Ali/Queen of Clubs Trilogy_ Onyx Edition (Extended Mixes) WEB/17 Something to Lose (Cedric Gervais Extended Mix).mp3
 copy Nakinyko/Unknown Album/Casbah Circulation.mp3
+copy Naomi/Avenue L'amour/01 Avenue L'amour.mp3
 copy Napoleon XIV/They're Coming To Take Me Away, Ha-Haaa !/They're Coming To Take Me Away, Ha-Haaa !.mp3
 copy Nasim Rai/Viva! Beats Presents Istanbul Cafe/11 Sseif Kittar.mp3
 copy Natacha Atlas/Ayeshteni/08 Rah.mp3
@@ -7290,7 +7719,9 @@ copy Natacha Atlas/Halim/02 Moustahil.MP3
 copy Natacha Atlas/Halim/03 Amulet.MP3
 copy Natacha Atlas/Halim/04 Leyli.MP3
 copy Natacha Atlas/Halim/06 Sweeter than any Sweets.MP3
+copy Natacha Atlas/Halim/07 Ya Weledi.MP3
 copy Natacha Atlas/Halim/08 Enogoom Wil Amar.MP3
+copy Natacha Atlas/Halim/12 Agib.MP3
 copy Natacha Atlas/Mish Maoul/04 Ghanwa Bossanova.mp3
 copy Natacha Atlas/Mish Maoul/08 Haram Aleyk.mp3
 copy Natacha Atlas/Mish Maoul/09 La Lil Khowf.mp3
@@ -7298,12 +7729,17 @@ copy Natacha Atlas/Something Dangerous/04 Janamaan.mp3
 copy Natacha Atlas/The Remix Collection/02 Yalla Chant (Youth Remix).mp3
 copy Natacha Atlas/The Remix Collection/05 Yalla Chant (Transglobal Underground Remix).mp3
 copy Natacha Atlas/Yalla Chant/03 Yalla Chant (Latvian Shade).mp3
+copy Neil Young & Crazy Horse/Re-ac-tor/03 T-Bone.mp3
 copy Neil Young & Crazy Horse/Re-ac-tor/04 Get Back On It.mp3
 copy Neil Young & Crazy Horse/Re-ac-tor/05 South-ern Pac-i-fic.mp3
 copy Neil Young & Crazy Horse/Re-ac-tor/06 Mo-tor Cit-y.mp3
+copy Neil Young & Crazy Horse/Re-ac-tor/08 Shots.mp3
 copy Neil Young & Crazy Horse/Weld/1-01 Hey Hey, My My (Into The Black).mp3
 copy Neil Young & Crazy Horse/Weld/1-02 Crime In The City.mp3
+copy Neil Young & Crazy Horse/Weld/1-04 Welfare Mothers.mp3
+copy Neil Young & Crazy Horse/Weld/1-08 F_!#in' Up.mp3
 copy Neil Young & Crazy Horse/Weld/2-02 Powderfinger.mp3
+copy Neil Young & Crazy Horse/Weld/2-04 Rockin' In The Free World.mp3
 copy Neil Young & Crazy Horse/Weld/2-06 Farmer John.mp3
 copy Neil Young & the Shocking Pinks/Everybody's Rockin'/03 Payola Blues.mp3
 copy Neil Young & the Shocking Pinks/Everybody's Rockin'/05 Kinda Fonda Wanda.mp3
@@ -7316,7 +7752,9 @@ copy Neil Young/After The Gold Rush/05 Till The Morning Comes.mp3
 copy Neil Young/Decade/2-01 Ohio.mp3
 copy Neil Young/Decade/2-07 Star Of Bethlehem.mp3
 copy Neil Young/Decade/2-12 For The Turnstiles.mp3
+copy Neil Young/Decade/2-15 Like A Hurricane.mp3
 copy Neil Young/Decade/2-19 Long May You Run.mp3
+copy Neil Young/Freedom/02 Crime In The City (Sixty to Zero Part I).mp3
 copy Neil Young/Freedom/05 Eldorado.mp3
 copy Neil Young/Freedom/06 The Ways Of Love.mp3
 copy Neil Young/Freedom/12 Rockin' In The Free World.mp3
@@ -7334,6 +7772,8 @@ copy Neil Young/Harvest/09 The Needle And The Damage Done.mp3
 copy Neil Young/Live Rust/05 My My, Hey Hey (Out Of The Blue).mp3
 copy Neil Young/Live Rust/10 Sedan Delivery.mp3
 copy Neil Young/Live Rust/15 Hey Hey, My My (Into The Black).mp3
+copy Neil Young/Live Rust/16 Tonight's The Night.mp3
+copy Neil Young/Mirror Ball/03 I'm The Ocean.mp3
 copy Neil Young/Rust Never Sleeps/01 My My, Hey Hey (Out Of The Blue).mp3
 copy Neil Young/Rust Never Sleeps/04 Pocahontas.mp3
 copy Neil Young/Rust Never Sleeps/06 Powderfinger.mp3
@@ -7343,6 +7783,9 @@ copy Neil Young/Silver & Gold/01 Good To See You.mp3
 copy Neil Young/Unplugged/09 Harvest Moon.MP3
 copy Neil Young/Unplugged/11 Unknown Legend.MP3
 copy Neil Young/Unplugged/14 From Hank To Hendrix.MP3
+copy Neil Young/Zuma/08 Cortez The Killer.mp3
+copy Neu!/Neu!/03 Weissensee.mp3
+copy Neu!/Neu!/05 Negativland.mp3
 copy New Model Army/51st State/02 10 Commandments.mp3
 copy New Model Army/No Rest For The Wicked/07 No Rest.mp3
 copy New Model Army/No Rest For The Wicked/08 Young, Gifted And Skint.mp3
@@ -7387,7 +7830,9 @@ copy Nick Cave & The Bad Seeds/B-Sides & Rarities/3-18 She's Leaving You.mp3
 copy Nick Cave & The Bad Seeds/Dig, Lazarus Dig!!!/01 Dig, Lazarus, Dig!!!.mp3
 copy Nick Cave & The Bad Seeds/Dig, Lazarus Dig!!!/06 We Call Upon The Author.mp3
 copy Nick Cave & The Bad Seeds/Dig, Lazarus Dig!!!/09 Jesus Of The Moon.mp3
+copy Nick Cave & The Bad Seeds/Dig, Lazarus Dig!!!/11 More News From Nowhere.mp3
 copy Nick Cave & The Bad Seeds/From Her To Eternity/04 From Her To Eternity.mp3
+copy Nick Cave & The Bad Seeds/From Her To Eternity/07 Saint Huck.mp3
 copy Nick Cave & The Bad Seeds/From Her To Eternity/10 From Her To Eternity (1987 Version).mp3
 copy Nick Cave & The Bad Seeds/Henry's Dream/01 Papa Won't Leave You, Henry.mp3
 copy Nick Cave & The Bad Seeds/Henry's Dream/02 I Had a Dream, Joe.mp3
@@ -7415,9 +7860,12 @@ copy Nick Cave & The Bad Seeds/Let Love In/32 Ain't Gonna Rain Anymore.mp3
 copy Nick Cave & The Bad Seeds/Let Love In/32 I Let Love In.mp3
 copy Nick Cave & The Bad Seeds/Let Love In/Do You Love Me.mp3
 copy Nick Cave & The Bad Seeds/Let Love In/Red Right Hand.mp3
+copy Nick Cave & The Bad Seeds/Live Admiralspalast, Berlin/04 Jubilee Street.mp3
+copy Nick Cave & The Bad Seeds/Live Admiralspalast, Berlin/08 Higgs Boson Blues.mp3
 copy Nick Cave & The Bad Seeds/Live Admiralspalast, Berlin/09 Push The Sky Away.mp3
 copy Nick Cave & The Bad Seeds/Live Admiralspalast, Berlin/14 Deanna.mp3
 copy Nick Cave & The Bad Seeds/Live Admiralspalast, Berlin/17 The Mercy Seat.mp3
+copy Nick Cave & The Bad Seeds/Live Admiralspalast, Berlin/18 Stagger Lee.mp3
 copy Nick Cave & The Bad Seeds/Live At The Royal Albert Hall/03 Red Right Hand.mp3
 copy Nick Cave & The Bad Seeds/Live At The Royal Albert Hall/04 I Let Love In.mp3
 copy Nick Cave & The Bad Seeds/Live At The Royal Albert Hall/05 Brompton Oratory.mp3
@@ -7432,9 +7880,11 @@ copy Nick Cave & The Bad Seeds/Live Seeds/09 The Weeping Song.mp3
 copy Nick Cave & The Bad Seeds/Live Seeds/The Good Son.mp3
 copy Nick Cave & The Bad Seeds/Live at Zenith, Paris/01 Overture.mp3
 copy Nick Cave & The Bad Seeds/Live at Zenith, Paris/03 Jesus Alone.mp3
+copy Nick Cave & The Bad Seeds/Live at Zenith, Paris/07 Tupelo.mp3
 copy Nick Cave & The Bad Seeds/Live at Zenith, Paris/10 Into My Arms.mp3
 copy Nick Cave & The Bad Seeds/Live at Zenith, Paris/11 Girl In Amber.mp3
 copy Nick Cave & The Bad Seeds/Live at Zenith, Paris/15 The Mercy Seat.mp3
+copy Nick Cave & The Bad Seeds/Live from KCRW/01 Higgs Boson Blues.mp3
 copy Nick Cave & The Bad Seeds/Live from KCRW/02 Far from Me.mp3
 copy Nick Cave & The Bad Seeds/Live from KCRW/04 The Mercy Seat.mp3
 copy Nick Cave & The Bad Seeds/Live from KCRW/05 And No More Shall We Part.mp3
@@ -7446,8 +7896,10 @@ copy Nick Cave & The Bad Seeds/More Pricks Than Kicks/02 Rye Whiskey.mp3
 copy Nick Cave & The Bad Seeds/Murder Ballads/02 Stagger Lee.mp3
 copy Nick Cave & The Bad Seeds/Murder Ballads/04 Lovely Creature.mp3
 copy Nick Cave & The Bad Seeds/Murder Ballads/05 Where The Wild Roses Grow.mp3
+copy Nick Cave & The Bad Seeds/Murder Ballads/06 The Curse Of Millhaven.mp3
 copy Nick Cave & The Bad Seeds/Murder Ballads/10 Death Is Not The End.mp3
 copy Nick Cave & The Bad Seeds/No More Shall We Part/01 As I Sat Sadly By Her Side.mp3
+copy Nick Cave & The Bad Seeds/No More Shall We Part/03 Hallelujah.MP3
 copy Nick Cave & The Bad Seeds/No More Shall We Part/05 Fifteen Feet Of Pure White Snow.MP3
 copy Nick Cave & The Bad Seeds/No More Shall We Part/06 God Is In The House.MP3
 copy Nick Cave & The Bad Seeds/Nocturama/04 Bring it on.mp3
@@ -7455,12 +7907,16 @@ copy Nick Cave & The Bad Seeds/Nocturama/08 Rock of Gibraltar.mp3
 copy Nick Cave & The Bad Seeds/Primavera, Barcelona/Do You Love Me_.mp3
 copy Nick Cave & The Bad Seeds/Push the Sky Away/01 We No Who U R.mp3
 copy Nick Cave & The Bad Seeds/Push the Sky Away/02 Wide Lovely Eyes.mp3
+copy Nick Cave & The Bad Seeds/Push the Sky Away/08 Higgs Boson Blues.mp3
 copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-01 Jesus Alone.mp3
+copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-04 From Her to Eternity.mp3
 copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-05 Loverman.mp3
 copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-06 Red Right Hand.mp3
 copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-08 Into My Arms.mp3
+copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-11 Jubilee Street.mp3
 copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/1-13 The Weeping Song.mp3
 copy Nick Cave & The Bad Seeds/Royal Hospital Kilmainham, Dublin/2-06 Red Right Hand.mp3
+copy Nick Cave & The Bad Seeds/Scream 2_ Music From The Dime/Red Right Hand.mp3
 copy Nick Cave & The Bad Seeds/Skeleton Tree/01 Jesus Alone.mp3
 copy Nick Cave & The Bad Seeds/Skeleton Tree/03 Girl in Amber.mp3
 copy Nick Cave & The Bad Seeds/Skeleton Tree/05 Anthrocene.mp3
@@ -7486,6 +7942,7 @@ copy Nick Cave & The Bad Seeds/The Boatman's Call/05 There Is A Kingdom.mp3
 copy Nick Cave & The Bad Seeds/The Boatman's Call/06 (Are You) The One That I've Been Waiting For_.mp3
 copy Nick Cave & The Bad Seeds/The Boatman's Call/07 Where Do We Go Now But Nowhere_.mp3
 copy Nick Cave & The Bad Seeds/The Boatman's Call/10 Idiot Prayer.mp3
+copy Nick Cave & The Bad Seeds/The Firstborn Is Dead/01 Tupelo.mp3
 copy Nick Cave & The Bad Seeds/The Firstborn Is Dead/06 Wanted Man.mp3
 copy Nick Cave & The Bad Seeds/The Firstborn Is Dead/07 Blind Lemon Jefferson.mp3
 copy Nick Cave & The Bad Seeds/The Firstborn Is Dead/09 Tupelo (Single Version).mp3
@@ -7496,8 +7953,10 @@ copy Nick Cave & The Bad Seeds/The Good Son/05 The Ship Song.mp3
 copy Nick Cave & The Bad Seeds/The Good Son/07 Lament.mp3
 copy Nick Cave & The Bad Seeds/Unknown Album/Disco 2000.mp3
 copy Nick Cave & The Bad Seeds/Your Funeral ... My Trial/01 Your Funeral My Trial.mp3
+copy Nick Cave & The Bad Seeds/Your Funeral ... My Trial/04 The Carny.mp3
 copy Nick Cave & The Bad Seeds/Your Funeral ... My Trial/07 Sad Waters.mp3
 copy Nicolas Jaar/Marks & Angles/03 Materials.mp3
+copy Nicolas Jaar/Russian Dolls EP/02 Russian Dolls (Ryan Crosson Remix).mp3
 copy Nicolas Jaar/Time For Us Ep/02 Mi Mujer.mp3
 copy Nicolas Jaar/YouTube/El Bandido.mp3
 copy Nicolas Jaar/YouTube/Encore.mp3
@@ -7522,6 +7981,7 @@ copy Nigel Kennedy/Nigel Kennedy's Greatest Hits/1-03 Gymnopédie No 1.mp3
 copy Nigel Kennedy/Nigel Kennedy's Greatest Hits/1-05 The Girl With The Flaxen Hair.mp3
 copy Nigel Kennedy/Nigel Kennedy's Greatest Hits/1-11 Melody in the Wind.mp3
 copy Nigel Kennedy/Nigel Kennedy's Greatest Hits/1-13 Summer.mp3
+copy Nigel Kennedy/Nigel Kennedy's Greatest Hits/2-02 Violin Conserto No 1.mp3
 copy Nigel Kennedy/Unknown Album/Dafino.mp3
 copy Nina Simone/The very Best Of Nina Simone/01 Ain't Got No, I Got Life.mp3
 copy Nina Simone/The very Best Of Nina Simone/02 My Baby Just Cares For Me.mp3
@@ -7542,6 +8002,7 @@ copy Nortec Collective Presents_ Bostich+Fussible/Tijuana Sound Machine/11 Cetro
 copy Nortec Collective/Panoptica Orchestra/03 Tu Sabes feat. Cucu Diamantes.mp3
 copy Nortec Collective/Panoptica Orchestra/06 Tj Tango.mp3
 copy Nortec Collective/Panoptica Orchestra/13 Acelerina.mp3
+copy Nortec Collective/Tijuana Sessions Vol 1/01 Polaris.mp3
 copy Nortec Collective/Tijuana Sessions Vol 1/04 El Vergel.mp3
 copy Nortec Collective/Tijuana Sessions Vol 1/07 Cantamar '72.mp3
 copy Nortec Collective/Tijuana Sessions Vol 1/08 Trip To Ensenada.mp3
@@ -7553,6 +8014,7 @@ copy Nortec Collective/Tijuana Sessions Vol 1/14 Tepache Jam.mp3
 copy Nortec Collective/Tijuana Sessions Vol 3/01 Tengo La Voz.mp3
 copy Nortec Collective/Tijuana Sessions Vol 3/02 Tijuana Makes Me Happy.mp3
 copy Nortec Collective/Tijuana Sessions Vol 3/05 Olvídela Compa.mp3
+copy Nortec Collective/Tijuana Sessions Vol 3/06 Autobanda.mp3
 copy Nortec Collective/Tijuana Sessions Vol 3/07 Dandy Del Sur.mp3
 copy Nortec Collective/Tijuana Sessions Vol 3/09 Colorado.mp3
 copy Nortec Collective/Tijuana Sessions Vol 3/12 Bar Infierno.mp3
@@ -7622,10 +8084,15 @@ copy O.M.F.O_/We are the Shepherds/07 Azerbaijan.mp3
 copy O.M.F.O_/We are the Shepherds/08 Tequila Gang Bang.mp3
 copy O.M.F.O_/We are the Shepherds/09 Dagistan.mp3
 copy Oasis/Definitely Maybe/32 Rock and Roll Star.mp3
+copy Omar Bashir/Al Andalous/04 My Favourite Dance.mp3
+copy Omar Bashir/To My Father/02 Taqassim Maqam Nahawand (Turkish Folk).mp3
 copy Orbital/Altogether/09 Waving Not Drowning.mp3
 copy Orbital/In Sides/32 Halcyon (Live).mp3
+copy Orbital/Peel Sessions/01 Lush (euro-tunnel disaster '94).mp3
+copy Orbital/Peel Sessions/04 Attached.mp3
 copy Orbital/Snivilisation/04 Crash And Carry.MP3
 copy Orbital/Snivilisation/08 Quality Seconds.MP3
+copy Orbital/Unknown Album/Trainspotting Theme.mp3
 copy Orchester Barnabas Von Geczy/Unknown Album/68 Puszta-Fox.mp3
 copy Original Soundtrack/Adventures of Ford Fairlane/09 Unbelievable.mp3
 copy Orthodox Celts/A Moment Like the Longest Day/08 Front Row Theme.mp3
@@ -7638,18 +8105,23 @@ copy Orthodox Celts/Orthodox Celts/01 Bog Down in the Valleyo.mp3
 copy Orthodox Celts/Orthodox Celts/02 Weila Waila.mp3
 copy Orthodox Celts/Orthodox Celts/06 Poor Old Dicey Riley.mp3
 copy Orthodox Celts/Orthodox Celts/17 Waxie's Dargle _ Big Strong Man.mp3
+copy Orthodox Celts/The Celts Strike Again/16 Medley.mp3
 copy Os Mutantes/Os Mutantes/02 A Minha Menina.mp3
 copy Os Mutantes/Os Mutantes/08 Le Premier Bonheur du Jour.mp3
 copy Otis Spann (with Fleetwood Mac)/The Biggest Thing Since Colossus/02 Walkin'.mp3
+copy Ott/Mir/01 One Day I Wish To Have This Kind Of Time.mp3
+copy Ott/Mir/05 A Nice Little Place.mp3
 copy Oui 3/Unknown Album/For What It's Worth.mp3
 copy Oumou Sangaré/Ko Sira/02 Sigi Kuruni.mp3
 copy Oumou Sangaré/Ko Sira/06 Bi Furu.mp3
 copy Oumou Sangaré/Oumou/02 Wayeina.mp3
+copy Oumou Sangaré/Oumou/06 SaaMagni.mp3
 copy Oumou Sangaré/Oumou/08 Yala.mp3
 copy Oumou Sangaré/Oumou/09 Djorolen(rmx).mp3
 copy Oumou Sangaré/Worotan/02 N'Guatu.mp3
 copy Oumou Sangaré/Worotan/05 Denw.mp3
 copy Oumou Sangaré/Worotan/06 N'Diya Ni.mp3
+copy Oumou Sangaré/Worotan/10 Djorolen.mp3
 copy Outkast/ATLiens/03 ATLiens.mp3
 copy Outkast/ATLiens/04 Wheelz Of Steel.mp3
 copy Outkast/ATLiens/07 Ova Da Wudz.mp3
@@ -7664,6 +8136,7 @@ copy Outkast/Stankonia/02 Gasoline Dreams.mp3
 copy Outkast/Stankonia/15 Humble Mumble.mp3
 copy Outkast/Stankonia/20 Gangsta Shit.mp3
 copy PADUC/Boucles d'or/Lestat's Dance.mp3
+copy PADUC/Little Stories/Freedom (A musical theme).mp3
 copy PADUC/Little Stories/Karin's Life.mp3
 copy PADUC/SuBurBan Bolero/SuBurBan Bolero.mp3
 copy PJ Harvey/To Bring You My Love/1-01 To Bring You My Love.mp3
@@ -7741,6 +8214,7 @@ copy Parov Stelar/The Princess/11 All Night (Extended Club Version).mp3
 copy Parov Stelar/The Princess/12 A Song for You.mp3
 copy Parov Stelar/The Princess/12 Song for the Crickets.mp3
 copy Parov Stelar/The Princess/13 Jimmy's Gang (Enzo Siffredi Remix) (Bonus Track).mp3
+copy Pat Metheny Group/(R) This Is Not America Vol. 1/11 Chris (12'' Mix).mp3
 copy Patsy Cline/A Portrait of Patsy Cline/03 When You Need A Laugh.mp3
 copy Patsy Cline/A Portrait of Patsy Cline/05 Always.mp3
 copy Patsy Cline/A Portrait of Patsy Cline/07 Blue Moon Of Kentucky.mp3
@@ -7821,6 +8295,8 @@ copy Pepe & The Bottle Blondes/Latenight Betty/11 Sing Sing Sing.MP3
 copy Pepe & The Bottle Blondes/Pambrosia/08 Russian Love.mp3
 copy Pepe & The Bottle Blondes/Pambrosia/11 Unnamed.mp3
 copy Percy Mayfield/Percy Mayfield Sings Percy Mayfield/05 You Wear Your Hair Too Long.mp3
+copy Pere Ubu/Song of the Bailing Man/08 A Day Such As This 1.mp3
+copy Pere Ubu/Song of the Bailing Man/08 A Day Such As This.mp3
 copy Pere Ubu/The Art of Walking/05 Misery Goats.mp3
 copy Pere Ubu/The Art of Walking/07 Rounder.mp3
 copy Pere Ubu/The Modern Dance/01 Non-Alignment Pact.mp3
@@ -7847,7 +8323,10 @@ copy Pet Shop Boys/Alternative/2-09 Shameless.mp3
 copy Pet Shop Boys/Alternative/2-10 Too Many People.mp3
 copy Pet Shop Boys/Alternative/2-14 Euroboy.mp3
 copy Pet Shop Boys/Behaviour CD2 [Further Listening 1990-1991]/02 So hard (extended dance mix).mp3
+copy Pet Shop Boys/Behaviour CD2 [Further Listening 1990-1991]/06 We all feel better in the dark (extended mix).mp3
+copy Pet Shop Boys/Behaviour CD2 [Further Listening 1990-1991]/11 Was it worth it_ (12-inch mix).mp3
 copy Pet Shop Boys/Behaviour CD2 [Further Listening 1990-1991]/12 Music for boys (ambient mix).mp3
+copy Pet Shop Boys/Behaviour/01 Being Boring.mp3
 copy Pet Shop Boys/Behaviour/04 How Can You Expect To Be Taken Seriously_.MP3
 copy Pet Shop Boys/Being Boring Remixed/02 We All Feel Better In The Dark (After Hours Climax).mp3
 copy Pet Shop Boys/Bilingual/01 Discoteca.MP3
@@ -7865,10 +8344,13 @@ copy Pet Shop Boys/Closer To Heaven/1-18 Closer To Heaven (Album Version).mp3
 copy Pet Shop Boys/Closer To Heaven/1-19 Positive Role Model (Demo Version).mp3
 copy Pet Shop Boys/Closer To Heaven/2-01 Positive Role Model (studio version).mp3
 copy Pet Shop Boys/Closer To Heaven/2-03 Shameless [Alternative version].mp3
+copy Pet Shop Boys/Concrete_ In Concert At The Mermaid Theatre/01 Left To My Own Devices.mp3
 copy Pet Shop Boys/Concrete_ In Concert At The Mermaid Theatre/08 Integral.mp3
 copy Pet Shop Boys/Concrete_ In Concert At The Mermaid Theatre/14 Dreaming Of The Queen.mp3
 copy Pet Shop Boys/Concrete_ In Concert At The Mermaid Theatre/15 It's A Sin.mp3
 copy Pet Shop Boys/DJ Culture (Maxi)/02 Music for boys.mp3
+copy Pet Shop Boys/DJ Culture (Maxi)/03 DJ Culture (extended mix).mp3
+copy Pet Shop Boys/Did You See Me Coming/04 The Way It Used To Be (Richard X Mix).mp3
 copy Pet Shop Boys/Did You See Me Coming/06 Up And Down.mp3
 copy Pet Shop Boys/Disco 2/02 I wouldn't normally do this kind of thing (Beatmasters Extended Nude mix).mp3
 copy Pet Shop Boys/Disco 2/04 Go west (Farley & Heller mix).mp3
@@ -7882,7 +8364,11 @@ copy Pet Shop Boys/Disco 3/02 Positive Role Model.mp3
 copy Pet Shop Boys/Disco 3/06 Here.mp3
 copy Pet Shop Boys/Disco 3/09 Home And Dry.mp3
 copy Pet Shop Boys/Disco/01 In the Night.mp3
+copy Pet Shop Boys/Disco/02 Suburbia.mp3
 copy Pet Shop Boys/Disco/03 Opportunities.mp3
+copy Pet Shop Boys/Disco/04 Paninaro.mp3
+copy Pet Shop Boys/Disco/05 Love Comes Quickly.mp3
+copy Pet Shop Boys/Disco/06 West End Girls.mp3
 copy Pet Shop Boys/Electric/07 Shouting In The Evening.mp3
 copy Pet Shop Boys/Electric/09 Vocal.mp3
 copy Pet Shop Boys/Elysium Further Listening 2011-2012 (CD2 - Further Listening 2011-2012)/2-02 She Pops (Demo).mp3
@@ -7899,9 +8385,14 @@ copy Pet Shop Boys/Fundamental_ Special Edition/01 Psychological.mp3
 copy Pet Shop Boys/Fundamental_ Special Edition/02 The Sodom and Gomorrah show.mp3
 copy Pet Shop Boys/Fundamental_ Special Edition/04 Minimal.mp3
 copy Pet Shop Boys/Fundamental_ Special Edition/12 Integral.mp3
+copy Pet Shop Boys/Fundamental_ Special Edition/14 Sodom (Trentmoller Remix).mp3
 copy Pet Shop Boys/Fundamental_ Special Edition/19 Minimal (Lobe Remix).mp3
 copy Pet Shop Boys/Further Listening 1984 - 1986/06 West End girls (dance mix).mp3
+copy Pet Shop Boys/Further Listening 1984 - 1986/11 Suburbia (The full horror).mp3
+copy Pet Shop Boys/Further Listening 1990 - 1991/07 Where the streets have no name (I can't take my eyes off you) (extended mix).mp3
+copy Pet Shop Boys/Further Listening 1990 - 1991/11 Was it worth it (twelve-ich mix).mp3
 copy Pet Shop Boys/Further Listening 1990 - 1991/12 Music For Boys (Ambient Mix).mp3
+copy Pet Shop Boys/Further Listening 1992-1994/01 Go West (1992 twelve-inch mix).MP3
 copy Pet Shop Boys/Further Listening 1992-1994/05 Shameless.mp3
 copy Pet Shop Boys/Further Listening 1992-1994/06 Too many people.MP3
 copy Pet Shop Boys/Further Listening 1992-1994/07 I wouldn't normally do this kind of thing (seven-inch version).MP3
@@ -7912,13 +8403,17 @@ copy Pet Shop Boys/Further Listening 1995 - 1997/07 Delusions Of Grandeur.MP3
 copy Pet Shop Boys/Further Listening 1995 - 1997/10 Discoteca (New Version).MP3
 copy Pet Shop Boys/Further Listening 1995 - 1997/11 The Boy Who Couldn't Keep His Clothes On.MP3
 copy Pet Shop Boys/Further Listening 1995 - 1997/12 A Red Letter Day (Expanded Single Version).MP3
+copy Pet Shop Boys/I Wouldn't Normally Do This Kind Of Thing/02 I Wouldn't Normally Do This Kind Of Thing - Extended Nude Mix.mp3
 copy Pet Shop Boys/Inner Sanctum (Live At The Royal Opera House 2018)/10 West End Girls.mp3
 copy Pet Shop Boys/Inner Sanctum (Live At The Royal Opera House 2018)/13 It's a Sin.mp3
 copy Pet Shop Boys/Introspective/02 I want a dog.MP3
+copy Pet Shop Boys/Introspective/04 I'm not scared.MP3
+copy Pet Shop Boys/Introspective/05 Always on my mind _ In my house.MP3
 copy Pet Shop Boys/John Peel Session/01 Try It (I'm In Love With A Married Man).mp3
 copy Pet Shop Boys/John Peel Session/A Powerful Friend.mp3
 copy Pet Shop Boys/Leaving/1-01 Leaving.mp3
 copy Pet Shop Boys/Love Is a Bourgeois Construct/1-01 Love Is a Bourgeois Construct (Nighttime Radio Edit).mp3
+copy Pet Shop Boys/Love Is a Bourgeois Construct/2-01 Love Is a Bourgeois Construct (The Penelopes Remix).mp3
 copy Pet Shop Boys/Love Is a Bourgeois Construct/2-04 Love Is a Bourgeois Construct (Dave Audé Big Dirty Dub).mp3
 copy Pet Shop Boys/Megamix/08 One More Chance (Remix 05).mp3
 copy Pet Shop Boys/Memory of the Future Remixed - EP/04 Memory of the Future (Digital Dog Club Mix).mp3
@@ -7927,6 +8422,7 @@ copy Pet Shop Boys/Miracles Pt 1/We're The Pet Shop Boys.mp3
 copy Pet Shop Boys/Miracles Pt 2/Miracles (Lemon Jelly Remix).mp3
 copy Pet Shop Boys/Mix Culture/05 Music For Boys (Hot Tracks Remix).mp3
 copy Pet Shop Boys/Nightlife Extra/2-01 The Ghost Of Myself.mp3
+copy Pet Shop Boys/Nightlife Extra/2-06 I Don't Know What You Want But I Can't Give It Any More [the morales remix].mp3
 copy Pet Shop Boys/Nightlife Extra/2-09 New York City Boy [the almighty definitive mix].mp3
 copy Pet Shop Boys/Nightlife/1-01 For Your Own Good.MP3
 copy Pet Shop Boys/Nightlife/1-03 I Don't Know What You Want But I Can't Give It Any More.MP3
@@ -7941,6 +8437,7 @@ copy Pet Shop Boys/Pandemonium/08 New York City Boy.mp3
 copy Pet Shop Boys/Pandemonium/13 Suburbia.mp3
 copy Pet Shop Boys/Pandemonium/16 Being Boring.mp3
 copy Pet Shop Boys/Paninaro '95/01 Paninaro '95.MP3
+copy Pet Shop Boys/Paninaro '95/02 Tin Tin Out Mix.MP3
 copy Pet Shop Boys/Paninaro '95/03 Girls & Boys (Live In Rio).MP3
 copy Pet Shop Boys/Please/02 West End girls.MP3
 copy Pet Shop Boys/Please/03 Opportunities (Let's make lots of money).MP3
@@ -7967,11 +8464,13 @@ copy Pet Shop Boys/Release_ Further Listening 2001 - 2004/3-15 Alone Again, Natu
 copy Pet Shop Boys/Relentless/01 My Head is Spinning.mp3
 copy Pet Shop Boys/Relentless/02 Forever in Love.mp3
 copy Pet Shop Boys/Relentless/06 One Thing Leads to Another.mp3
+copy Pet Shop Boys/So Hard/03 So Hard (Dub).mp3
 copy Pet Shop Boys/The Battleship Potemkin/13 Full Steam Ahead.mp3
 copy Pet Shop Boys/The Battleship Potemkin/14 The Squadron.mp3
 copy Pet Shop Boys/The Most Incredible Thing/1-03 Act One - The Challenge.mp3
 copy Pet Shop Boys/The Most Incredible Thing/1-12 Act Two - The Clock 10-11-12.mp3
 copy Pet Shop Boys/Unknown Album/01 Canon in D.mp3
+copy Pet Shop Boys/Very-Relentless/My Head Is Spinning (Electro Set Mix).mp3
 copy Pet Shop Boys/Very/01 Can you forgive  her _.mp3
 copy Pet Shop Boys/Very/02 I wouldn't normally do this kind of thing.mp3
 copy Pet Shop Boys/Very/05 Dreaming of the queen.mp3
@@ -7980,7 +8479,9 @@ copy Pet Shop Boys/Very/11 One in a million.MP3
 copy Pet Shop Boys/Very/12 Go West.MP3
 copy Pet Shop Boys/Where The Streets Have No Name (I Can't Take My Eyes Off You) - Remixes/03 How Can You Expect To Be Taken Seriously_ (Ragga Zone Remix).mp3
 copy Pet Shop Boys/Where The Streets Have No Name (I Can't Take My Eyes Off You) [US]/01 Where The Streets Have No Name (I Can't Take My Eyes Off You) [Original 7_ Mix].mp3
+copy Pet Shop Boys/Where The Streets Have No Name (I Can't Take My Eyes Off You) [US]/02 Where The Streets Have No Name (I Can't Take My Eyes Off You) [12_ Dance Mix].mp3
 copy Pet Shop Boys/Where The Streets Have No Name (I Can't Take My Eyes Off You) [US]/03 Where The Streets Have No Name (I Can't Take My Eyes Off You) [Red Zone Mix].mp3
+copy Pet Shop Boys/Where The Streets Have No Name/Where The Streets Have No Name 7.mp3
 copy Pet Shop Boys/Where The Streets Have No Name/Where The Streets Have No Name.mp3
 copy Pet Shop Boys/Winner Remixed/02 Winner (John Dahlback Remix).mp3
 copy Pet Shop Boys/Winner/02 A Certain _Je ne sais quoi_.mp3
@@ -8012,6 +8513,7 @@ copy Peter Fox/Stadtaffe/09 Stadtaffe.mp3
 copy Peter Fox/Stadtaffe/11 Schuettel Deinen Speck.mp3
 copy Peter Fox/Stadtaffe/12 Zucker (Feat. Vanessa Mason).mp3
 copy Peter Gabriel/Scratch My Back/05 Listening Wind.mp3
+copy Peter Gabriel/Unknown Album/Sledgehammer (12in).mp3
 copy Peter Igelhoff/Unknown Album/79 Der Onkel Doktor Hat Gesagt.mp3
 copy Phil RetroSpector/Unknown Album/The Boys Are Back In Heaven.mp3
 copy Phil Spector/The Phil Spector Christmas Album/04 Santa Claus Is Coming To Town.mp3
@@ -8029,12 +8531,21 @@ copy Pink Floyd/Animals (Limited Edition Trance Remix)/01 Pigs On The Wing (Part
 copy Pink Floyd/Animals/05 Pigs On The Wing Part 2.mp3
 copy Pink Floyd/Atom Heart Mother Suite/06 Remergence.mp3
 copy Pink Floyd/Atom Heart Mother/02 If.mp3
+copy Pink Floyd/Dark Side Of The Moon (Limited Edition Trance Remix)/03 Time.mp3
+copy Pink Floyd/Dark Side Of The Moon (Limited Edition Trance Remix)/05 Money.mp3
+copy Pink Floyd/Dark Side Of The Moon (Limited Edition Trance Remix)/06 Us And Them.mp3
+copy Pink Floyd/Dark Side Of The Moon (Limited Edition Trance Remix)/07 Any Colour You Like.mp3
 copy Pink Floyd/Live at Pompeii/105 One of These Days.mp3
+copy Pink Floyd/Out There/01 Another Brick In The Wall (Pink Coffee Remix).mp3
+copy Pink Floyd/Out There/03 Lunatic (Jonathan Peters Mix).mp3
 copy Pink Floyd/Out There/04 Is There Anybody Out There (Techno Remix).mp3
 copy Pink Floyd/The Dark Side of the Moon/05 Money.MP3
+copy Pink Floyd/The Dark Side of the Moon/06 Us And Them.MP3
 copy Pink Floyd/The Dark Side of the Moon/07 Any Colour You Like.MP3
 copy Pink Floyd/The Dark Side of the Moon/08 Brain Damage.MP3
 copy Pink Floyd/The Delicate Sound of Thunder/2-01 One of These Days.mp3
+copy Pink Floyd/The Division Bell (Limited Edition Trance Remix)/01 Cluster One.mp3
+copy Pink Floyd/The Division Bell (Limited Edition Trance Remix)/06 Wearing The Inside Out.mp3
 copy Pink Floyd/The Final Cut/04 When The Tigers Broke Free [Bonus Track].mp3
 copy Pink Floyd/The Piper At The Gates Of Dawn/06 Take Up Thy Stethoscope And Walk.mp3
 copy Pink Floyd/The Piper At The Gates Of Dawn/11 Bike.mp3
@@ -8042,6 +8553,9 @@ copy Pink Floyd/The Wall/1-05 Another Brick in the Wall (Part II).MP3
 copy Pink Floyd/The Wall/1-12 Another Brick in the Wall (Part III).MP3
 copy Pink Floyd/The Wall/2-06 Comfortably Numb.MP3
 copy Pink Floyd/The Wall/2-08 In The Flesh.MP3
+copy Pink Floyd/The Wall/Another Brick in the Wall (Parts I, II, III).mp3
+copy Pink Floyd/Ummagumma - Live Album/02 Careful With That Axe, Eugene.mp3
+copy Pink Floyd/Wish You Were Here (Limited Edition Trance Remix)/03 Have A Cigar (Take A Joint).mp3
 copy Pink Floyd/Wish You Were Here (Limited Edition Trance Remix)/04 Wish You Were Here (Atmosfear).mp3
 copy Pink Floyd/Wish You Were Here II/01 Shine On You Crazy Diamond I.I.mp3
 copy Pink Floyd/Wish You Were Here II/02 Shine On You Crazy Diamond (Part II).mp3
@@ -8052,6 +8566,8 @@ copy Pink Floyd/Wish You Were Here II/06 Shine On You Crazy Diamond II.II.mp3
 copy Pink Floyd/Wish You Were Here II/07 Shine On You Crazy Diamond (Part VII).mp3
 copy Pink Floyd/Wish You Were Here II/08 Shine On You Crazy Diamond (Part VIII).mp3
 copy Pink Floyd/Wish You Were Here II/09 Shine On You Crazy Diamond (Part IX).mp3
+copy Pink Floyd/Wish You Were Here/02 Welcome To The Machine 1.mp3
+copy Pink Floyd/Wish You Were Here/02 Welcome To The Machine.mp3
 copy Pink Floyd/Wish You Were Here/03 Have A Cigar 1.mp3
 copy Pink Floyd/Wish You Were Here/03 Have A Cigar.mp3
 copy Pink Floyd/Wish You Were Here/04 Wish You Were Here 1.mp3
@@ -8061,6 +8577,7 @@ copy Pink Martini & Saori Yuki/1969/04 Puff, The Magic Dragon.mp3
 copy Pink Martini & Saori Yuki/1969/05 Ii Janaino Shiawase Naraba (It's Okay If I'm Happy).mp3
 copy Pink Martini & Saori Yuki/1969/09 Is That All There Is_.mp3
 copy Pink Martini/A Retrospective/12 Lilly.mp3
+copy Pink Martini/A Retrospective/21 Una Notte A Napoli (DJ Johnny Dynell Remix).mp3
 copy Pink Martini/Discover The World/04 The Flying Squirrel.mp3
 copy Pink Martini/Discover The World/06 Dosvedanya Mio Bambino.mp3
 copy Pink Martini/Discover The World/09 Una Notte A Napoli.mp3
@@ -8074,6 +8591,7 @@ copy Pink Martini/Hey Eugene/11 Dosvedanya Mio Bombino.mp3
 copy Pink Martini/Joy To The World/02 White Christmas (Part II).mp3
 copy Pink Martini/Joy To The World/03 Shchedryk (Ukranian Bell Carol).mp3
 copy Pink Martini/Joy To The World/13 Silent Night.mp3
+copy Pink Martini/Reno NV/1-02 Bolero.mp3
 copy Pink Martini/Reno NV/1-10 Andalucia.mp3
 copy Pink Martini/Reno NV/2-04 Dosvedanya Mio Bombino.mp3
 copy Pink Martini/Reno NV/2-08 U Plavu Zoru.mp3
@@ -8154,6 +8672,7 @@ copy Pop Will Eat Itself/Dos Dedos Mis Amigos/1-01 Ich Bin Ein Auslander.mp3
 copy Pop Will Eat Itself/Dos Dedos Mis Amigos/1-03 Familus Horribilus.mp3
 copy Pop Will Eat Itself/Dos Dedos Mis Amigos/1-08 Menofearthereaper.mp3
 copy Pop Will Eat Itself/Dos Dedos Mis Amigos/1-09 Everything's Cool.mp3
+copy Pop Will Eat Itself/Get The Girl! Kill The Baddies! (Cds)/03 Get The Girl! Kill The Baddies! (Sherwood Dub Mix).mp3
 copy Pop Will Eat Itself/Love Missile F1 11 (7'')/02 Orgone Accumulatator.mp3
 copy Pop Will Eat Itself/Now For A Feast/06 Sweet Sweet Pie.mp3
 copy Pop Will Eat Itself/Now For A Feast/12 Candydiosis.mp3
@@ -8166,7 +8685,9 @@ copy Pop Will Eat Itself/This Is The Day... This Is The Hour... This Is This!/1-
 copy Pop Will Eat Itself/This Is The Day... This Is The Hour... This Is This!/1-09 Def. Con. One.mp3
 copy Pop Will Eat Itself/This Is The Day... This Is The Hour... This Is This!/1-11 Shortwave Transmission On _up To The Minuteman Nine_.mp3
 copy Pop Will Eat Itself/Two Fingers My Friends/08 Menofearthereaper (The Concrete No Fee, No Fear Mix).mp3
+copy Pop Will Eat Itself/Two Fingers My Friends/17 Cape Connection (Tgu Aliens, Bodacious Aliens Mix).mp3
 copy Pop Will Eat Itself/Two Fingers My Friends/18 Everything's Cool (Youth's Dragonfly Mix).mp3
+copy Pop Will Eat Itself/Two Fingers My Friends/20 Cape Connection (Secret Knowledge Trousered Up Mix).mp3
 copy Pride Of The Cross/Tom's Blue Valentine/01 Tommy's Blue Valentine.mp3
 copy Primal Scream/Beautiful Future/01 Beautiful Future.mp3
 copy Primal Scream/Beautiful Future/02 Can't Go Back.mp3
@@ -8190,6 +8711,7 @@ copy Primal Scream/Give Out But Don't Give Up/01 Jailbird.mp3
 copy Primal Scream/Give Out But Don't Give Up/02 Rocks.mp3
 copy Primal Scream/Glastonbury/Swastika Eyes.mp3
 copy Primal Scream/Jools Holland 2nd May 2000/Swastika Eyes.mp3
+copy Primal Scream/More Light/1-01 2013.mp3
 copy Primal Scream/More Light/1-07 Goodbye Johnny.mp3
 copy Primal Scream/More Light/1-08 Sideman.mp3
 copy Primal Scream/More Light/1-09 Elimination Blues.mp3
@@ -8204,6 +8726,8 @@ copy Primal Scream/PRML SCRM Live In Japan/15 Medication.mp3
 copy Primal Scream/Paris/Crowd Noises.mp3
 copy Primal Scream/Paris/Jailbird.mp3
 copy Primal Scream/Paris/Kill All Hippies.mp3
+copy Primal Scream/Paris/Loaded.mp3
+copy Primal Scream/Paris/Swastika Eyes.mp3
 copy Primal Scream/Primal Scream Riot City Blues Tour/Swastika Eyes.mp3
 copy Primal Scream/Riot City Blues/01 Country Girl.mp3
 copy Primal Scream/Riot City Blues/03 Suicide Sally & Johnny Guitar.mp3
@@ -8213,9 +8737,12 @@ copy Primal Scream/Riot City Blues/09 Hell's Comin' Down.mp3
 copy Primal Scream/Riot City Blues/10 Sometimes I Feel So Lonely.mp3
 copy Primal Scream/Screamadelica/01 Movin' On Up.mp3
 copy Primal Scream/Screamadelica/02 Slip Inside This House.mp3
+copy Primal Scream/Screamadelica/07 Loaded.mp3
+copy Primal Scream/Vanishing Point/01 Burning Wheel.mp3
 copy Primal Scream/Vanishing Point/02 Get Duffy.mp3
 copy Primal Scream/Xtrmntr/01 Kill All Hippies.mp3
 copy Primal Scream/Xtrmntr/03 Exterminator.mp3
+copy Primal Scream/Xtrmntr/04 Swastika Eyes.mp3
 copy Primal Scream/Xtrmntr/09 MBV Arkestra (If They Move Kill Them).mp3
 copy Primal Scream/Xtrmntr/10 Swastika Eyes (Chemical Brothers Mix).mp3
 copy Professor Longhair/Rock 'n' Roll Gumbo/02 Junco Partner.mp3
@@ -8230,6 +8757,7 @@ copy Propellerheads/Decksandrumsandrockandroll/03 Velvet Pants.MP3
 copy Propellerheads/Decksandrumsandrockandroll/06 History Repeating.MP3
 copy Propellerheads/Decksandrumsandrockandroll/08 Bang On!.MP3
 copy Psychic - Darkside (WEB) 2013 Album @ Mp3/Psychic/03 Heart.mp3
+copy Psychic - Darkside (WEB) 2013 Album @ Mp3/Psychic/05 The Only Shrine I've Seen.mp3
 copy Psychic - Darkside (WEB) 2013 Album @ Mp3/Psychic/06 Freak, Go Home.mp3
 copy Public Enemy/Apocalypse 91 ... The Enemy Strikes Black/04 Can't Truss It.mp3
 copy Public Enemy/Apocalypse 91 ... The Enemy Strikes Black/09 1 Million Bottlebags.mp3
@@ -8276,6 +8804,7 @@ copy Public Image Ltd_/Greatest Hits So Far/06 This is Not a Love Song.mp3
 copy Public Image Ltd_/Greatest Hits So Far/07 Rise.mp3
 copy Public Image Ltd_/Metal Box/02 Memories.mp3
 copy Public Image Ltd_/Metal Box/03 Swan Lake.mp3
+copy Public Image Ltd_/Metal Box/04 Poptones.mp3
 copy Public Image Ltd_/Metal Box/05 Careering.mp3
 copy Public Image Ltd_/Metal Box/08 The Suit.mp3
 copy Public Image Ltd_/Metal Box/09 Bad Baby.mp3
@@ -8283,8 +8812,10 @@ copy Public Image Ltd_/Metal Box/10 Socialist.mp3
 copy Public Image Ltd_/Metal Box/11 Chant.mp3
 copy Public Image Ltd_/Metal Box/12 Radio 4.mp3
 copy Public Image Ltd_/Paris Au Printemps/02 Chant.mp3
+copy Public Image Ltd_/Paris Au Printemps/03 Careering.mp3
 copy Public Image Ltd_/Paris Au Printemps/05 Low Life.mp3
 copy Public Image Ltd_/Plastic Box/09 Poptones (BBC Session).mp3
+copy Public Image Ltd_/Plastic Box/10 Careering (BBC Session).mp3
 copy Public Image Ltd_/Plastic Box/11 Chant (BBC Session).mp3
 copy Public Service Broadcasting/Every Valley/01 Every Valley.mp3
 copy Public Service Broadcasting/Every Valley/02 The Pit.mp3
@@ -8329,6 +8860,7 @@ copy R.L. Burnside/A Bothered Mind/12 Stole My Check.mp3
 copy R.L. Burnside/A Bothered Mind/13 Detroit Boogie Part 2.mp3
 copy R.L. Burnside/Burnside On Burnside/09 Jumper on the Line.mp3
 copy R.L. Burnside/Burnside On Burnside/10 Goin' Down South.mp3
+copy R.L. Burnside/Burnside On Burnside/12 Snake Drive.mp3
 copy R.L. Burnside/Come On In/05 It's Bad You Know.mp3
 copy R.L. Burnside/Let My Baby Ride/01 Let My Baby Ride.mp3
 copy R.L. Burnside/Mr. Wizard/02 Alice Mae.mp3
@@ -8355,9 +8887,13 @@ copy Rachid Taha/Diwan/01 Ya Rayah.mp3
 copy Rachid Taha/Diwan/10 Malheureux Toujours.mp3
 copy Rachid Taha/Made In Medina/01 Barra Barra.mp3
 copy Rachid Taha/Made In Medina/03 Medina.mp3
+copy Rachid Taha/Made In Medina/11 Garab.mp3
 copy Rachid Taha/Olé Olé/05 Boire.mp3
 copy Rachid Taha/Olé Olé/08 Non Non Non multinat. Version.mp3
+copy Rachid Taha/Rachid Taha Live/06 Bent Sahra.mp3
 copy Rachid Taha/Rachid Taha Live/07 Barra Barra.mp3
+copy Rachid Taha/Rachid Taha Live/10 Voilà Voilà.mp3
+copy Rachid Taha/Rachid Taha Live/11 Garab.mp3
 copy Rachid Taha/Tekitoi/01 Tekitoi_.mp3
 copy Rachid Taha/Tekitoi/02 Rock el Casbah.mp3
 copy Rachid Taha/Tekitoi/04 H'asbu-Hum.mp3
@@ -8492,6 +9028,7 @@ copy Rodrigo y Gabriela/Rodrigo y Gabriela/01 Tamacun.mp3
 copy Rodrigo y Gabriela/Rodrigo y Gabriela/02 Diablo Rojo.mp3
 copy Rolf Harris/Stairway To Heaven/StairWay To Heaven.mp3
 copy Rory Gallagher/Live In Europe/05 Going To My Home Town.mp3
+copy Rory Gallagher/Live In Europe/09 Bulfrog Blues.mp3
 copy Rotfront/Emigrantski Raggamuffin/01 Intro.mp3
 copy Rotfront/Emigrantski Raggamuffin/02 B-Style.mp3
 copy Rotfront/Emigrantski Raggamuffin/03 Zhiguli.mp3
@@ -8503,6 +9040,7 @@ copy Rotfront/Emigrantski Raggamuffin/12 Rotfront FM.mp3
 copy Rotfront/Emigrantski Raggamuffin/15 Emigrantski Raggamuffin.mp3
 copy Roxy Music/For Your Pleasure/01 Do The Strand.mp3
 copy Roxy Music/For Your Pleasure/05 In Every Dream Home A Heartache.mp3
+copy Roxy Music/For Your Pleasure/06 The Bogus Man.mp3
 copy Roxy Music/Roxy Music/01 Re-Make_re-Model.mp3
 copy Roxy Music/Roxy Music/02 Ladytron.mp3
 copy Roxy Music/Roxy Music/03 If There Is Something.mp3
@@ -8520,6 +9058,7 @@ copy Roy Orbison/The Best Of The Sun Years/2-07 Claudette.mp3
 copy Royal Ballet Sinfonia/The BBC Radio 4 UK Theme/Sailing By.mp3
 copy Röyksopp/Melody A.M_/01 So Easy.mp3
 copy Röyksopp/Melody A.M_/Eple.mp3
+copy Röyksopp/Senior/02 Tricky Two.mp3
 copy Rudi Schuricke/Unknown Album/93 Eine Insel Aus Tr_umen Geboren.mp3
 copy Rudi Schuricke/Unknown Album/94 Man Kann Sein Herz Nur Einmal Versche.mp3
 copy Rufus Wainwright/Rufus Does Judy At Carnegie Hall [CD2]/01 That's Entertainment.mp3
@@ -8554,12 +9093,15 @@ copy Ryan Bingham/Tomorrowland/13 Too Deep To Fill.mp3
 copy Sacred Spirit/Bluesy Chill Out/04 Black Rain.mp3
 copy Sacred Spirit/Bluesy Chill Out/08 That's Right.mp3
 copy Sacred Spirit/Bluesy Chill Out/10 Oh Yeah.mp3
+copy Sacred Spirit/Chants And Dances Of The Native Americans/1-02 Tor-cheney-nahana.mp3
 copy Sacred Spirit/Chants And Dances Of The Native Americans/1-03 Ly-o-lay-ale loya.mp3
 copy Sacred Spirit/Chants And Dances Of The Native Americans/1-06 Gitchi-manidoo.mp3
 copy Sacred Spirit/Chants And Dances Of The Native Americans/1-08 Ta-was-ne.mp3
 copy Sacred Spirit/Chants And Dances Of The Native Americans/1-11 Yo-hey-o-hee.mp3
 copy Sacred Spirit/Classical Spirit/05 Adagio (S. Barber).mp3
+copy Sacred Spirit/Classical Spirit/10 Organ Concerto (J.S. Bach).mp3
 copy Sacred Spirit/Culture Clash_Indigo Spirit/02 Culture Clash.mp3
+copy Sacred Spirit/Culture Clash_Indigo Spirit/05 Legends.mp3
 copy Sacred Spirit/Culture Clash_Indigo Spirit/06 No More Cotton - Interlude 'To be a Slave'.mp3
 copy Sacred Spirit/Culture Clash_Indigo Spirit/08 Black Progress.mp3
 copy Sacred Spirit/Culture Clash_Indigo Spirit/09 Roots.mp3
@@ -8571,6 +9113,7 @@ copy Sacred Spirit/More Chants And Dances Of The Native Americans/2-03 Dela Dela
 copy Sacred Spirit/More Chants And Dances Of The Native Americans/2-11 That Noble Dream.mp3
 copy Sacred Spirit/Moroccan Spirit/02 Jilala I - Nocturnal Ritual.mp3
 copy Sacred Spirit/Moroccan Spirit/09 Jilala II - Nocturnal Ritual.mp3
+copy Sacred Spirit/Moroccan Spirit/10 La Mamounia.mp3
 copy Sacred Spirit/Music of Fading Cultures (Pieces of Time)/05 Medunya (Dancing in the Rain).mp3
 copy Sacred Spirit/Music of Fading Cultures (Pieces of Time)/09 É Souber Son (7 days of songs and dances with nomads of the desert).mp3
 copy Sacred Spirit/Palermo Nuevo/05 The Gaucho's Pain.mp3
@@ -8669,6 +9212,7 @@ copy Shantel/Planet Paprika/08 Usti, Usti Baba.mp3
 copy Shantel/Planet Paprika/11 Beauties form Athina.mp3
 copy Shantel/Planet Paprika/12 Ex Oriente Lux.mp3
 copy Sharon Shannon & Big Band/Live at Dolans/2-03 The Donegal Kid.mp3
+copy Sharon Shannon & Big Band/Live at Dolans/2-04 Time To Time.mp3
 copy Sharon Shannon & Big Band/Live at Dolans/2-07 Say You Love Me.mp3
 copy Sharon Shannon & Big Band/Live at Dolans/2-08 Come Down From The Mountain Katie Daly.mp3
 copy Sharon Shannon & Big Band/Live at Dolans/2-12 The Bag Of Cats.mp3
@@ -8715,6 +9259,11 @@ copy Shpongle/Nothing Lasts/08 ... But Nothing Is Lost.mp3
 copy Shpongle/Nothing Lasts/10 The Stamen Of The Shaman.mp3
 copy Shpongle/Nothing Lasts/11 Circuits Of The Imagination.mp3
 copy Shpongle/Nothing Lasts/13 Mentalism.mp3
+copy Shpongle/Tales of the Inexpressible/01 Dorset Perception.mp3
+copy Shpongle/Tales of the Inexpressible/05 My Head Feels Like A Frisbee.mp3
+copy Shpongle/The Remixes/A New Way To Say Hooray (Prometheus rmx).mp3
+copy Shpongle/The Remixes/And The Day Turned To Fright (Eat Static rmx).mp3
+copy Shpongle/The Remixes/Dorset Perception (Total Eclipse rmx).mp3
 copy Shriekback/My Spine is the Grapevine (EP)/02 Tiny Birds.mp3
 copy Shrink/Nervous Breakdown/01 Nervous Breakdown.mp3
 copy Sign _☮_ the Times/Unknown Album/Sign _☮_ the Times.mp3
@@ -8745,6 +9294,7 @@ copy Sinead O'Connor/How About I Be Me (And You Be You)/01 4th And Vine.mp3
 copy Sinead O'Connor/How About I Be Me (And You Be You)/03 Old Lady.mp3
 copy Sinead O'Connor/How About I Be Me (And You Be You)/05 Back Where You Belong.mp3
 copy Sinead O'Connor/How About I Be Me (And You Be You)/07 Queen Of Denmark.mp3
+copy Sinead O'Connor/I Do Not Want What I Haven't Got/1-01 Feel So Different.mp3
 copy Sinead O'Connor/I Do Not Want What I Haven't Got/1-02 I Am Stretched On Your Grave.mp3
 copy Sinead O'Connor/I Do Not Want What I Haven't Got/1-03 Three Babies.mp3
 copy Sinead O'Connor/I Do Not Want What I Haven't Got/1-05 Black Boys On Mopeds.mp3
@@ -8777,6 +9327,7 @@ copy Siouxsie and The Banshees/The Best Of Siouxsie & The Banshees/1-02 Hong Kon
 copy Siouxsie and The Banshees/The Best Of Siouxsie & The Banshees/1-10 Christine.mp3
 copy Siouxsie and The Banshees/The Best Of Siouxsie & The Banshees/1-13 Arabian Knights.mp3
 copy Siouxsie and The Banshees/The Best Of Siouxsie & The Banshees/1-14 The Killing Jar.mp3
+copy Siouxsie and The Banshees/The Best Of Siouxsie & The Banshees/2-03 Kiss Them For Me.mp3
 copy Ska Cubano/Ajiaco! The Remix Album/03 Yiri Yiri Bon (DJ Panko Remix).mp3
 copy Ska Cubano/Ajiaco! The Remix Album/05 Cumbia En Do Menor (Spiritual South Remix).mp3
 copy Ska Cubano/Ajiaco! The Remix Album/06 Ay Caramba (Milf Remix).mp3
@@ -8806,12 +9357,15 @@ copy Slim Cessna's Auto Club/Always Say Please & Thank You/05 Cold Cold Eyes.mp3
 copy Slim Cessna's Auto Club/Always Say Please & Thank You/06 Last Song About Satan.mp3
 copy Slim Cessna's Auto Club/Always Say Please & Thank You/07 Pine Box.mp3
 copy Slim Cessna's Auto Club/Always Say Please & Thank You/10 Mother's Daughter.mp3
+copy Slim Cessna's Auto Club/Always Say Please & Thank You/13 Hold My Head.mp3
 copy Slim Cessna's Auto Club/Cipher/03 All About the Bullfrog In Three Verses.mp3
 copy Slim Cessna's Auto Club/Cipher/06 Children of the Lord.mp3
 copy Slim Cessna's Auto Club/Cipher/07 Scac 101.mp3
 copy Slim Cessna's Auto Club/Cipher/10 An Introduction to the Power of Braces_ Teeth.mp3
 copy Slim Cessna's Auto Club/Cipher/11 Jesus Is In My Body - My Body Has Let Me Down.mp3
 copy Slim Cessna's Auto Club/Cipher/12 Red Pirate of the Prairie.mp3
+copy Slim Cessna's Auto Club/Cipher/13 Everyone Is Guilty #2.mp3
+copy Slim Cessna's Auto Club/Cipher/15 That Fierce Cow Is Common Sense In a Country Dress.mp3
 copy Slim Cessna's Auto Club/Crossbreeding Begins At Home/02 Shady Lane.mp3
 copy Slim Cessna's Auto Club/Crossbreeding Begins At Home/03 Sister's Husband.mp3
 copy Slim Cessna's Auto Club/Crossbreeding Begins At Home/04 Cranston.mp3
@@ -8831,8 +9385,10 @@ copy Sly and Robbie/RIDDIM The Best of Sly & Robbie In Dub 1978 to 1985/2-06 Cra
 copy Sly and Robbie/RIDDIM The Best of Sly & Robbie In Dub 1978 to 1985/2-20 Rock me in Dub.mp3
 copy Smart E's/Sesame's Treet/Sesame's Treet.mp3
 copy Snoop Dogg/Ego Trippin/16 My Medicine.mp3
+copy Soft Cell/Bedsitter/01 Bedsitter.mp3
 copy Soft Cell/Down In The Subway/01 Down In The Subway.mp3
 copy Soft Cell/Heat (The Remixes)/1-01 Memorabilia (Cicada Remix).mp3
+copy Soft Cell/Heat (The Remixes)/1-02 Bedsitter (Manhattan Clique Remix).mp3
 copy Soft Cell/Heat (The Remixes)/1-03 Tainted Love (Dakeyne Remix).mp3
 copy Soft Cell/Heat (The Remixes)/1-05 Torch (Manhattan Clique Remix - Edit).mp3
 copy Soft Cell/Heat (The Remixes)/1-08 Say Hello, Wave Goodbye (Marcas Lancaster Remix).mp3
@@ -8844,6 +9400,8 @@ copy Soft Cell/Heat (The Remixes)/2-15 Meet Murder My Angel (Marc Almond & Kinky
 copy Soft Cell/Heat (The Remixes)/2-17 Baby Doll (Nitewreckers Remix).mp3
 copy Soft Cell/Heat (The Remixes)/2-21 Surrender To A Stranger (MHC Remix - Edit).mp3
 copy Soft Cell/Heat (The Remixes)/2-26 Martin (Nitewreckers Remix).mp3
+copy Soft Cell/Memorabilia/01 Memorabilia (Long Version).mp3
+copy Soft Cell/Memorabilia/13 Say Hello Wave Goodbye 12'.mp3
 copy Soft Cell/Non Stop Ecstatic Dancing/01 Memorabilia.mp3
 copy Soft Cell/Non Stop Ecstatic Dancing/02 Where Did Our Love Go_.mp3
 copy Soft Cell/Non Stop Ecstatic Dancing/03 What!.mp3
@@ -8861,22 +9419,33 @@ copy Soft Cell/Non-Stop Erotic Cabaret/11 Where Did Our Love Go_.mp3
 copy Soft Cell/Non-Stop Erotic Cabaret/15 Torch.mp3
 copy Soft Cell/Non-Stop Erotic Cabaret/17 What_.mp3
 copy Soft Cell/Say Hello Wave Goodbye '91/01 Say Hello Wave Goodbye '91.mp3
+copy Soft Cell/Say Hello Wave Goodbye '91/02 Memorabilia '91 (Extended Grid Remix).mp3
+copy Soft Cell/Say Hello Wave Goodbye '91/03 Say Hello Wave Goodbye '91 (The Long Goodbye Extended Mendelsohn Remix).mp3
+copy Soft Cell/Say Hello Wave Goodbye/01 Say Hello Wave Goodbye (Extended Version).mp3
 copy Soft Cell/Soul Inside/02 Loving You - Hating Me.mp3
 copy Soft Cell/Tainted Love '91 (Limited Edition) (12'')/02 Tainted Love '91 (The Grid Remix).mp3
 copy Soft Cell/Tainted Love '91 (Limited Edition) (12'')/10 Tainted Love '91.mp3
 copy Soft Cell/Tainted Love/01 Tainted Love (Radio Version).mp3
+copy Soft Cell/Tainted Love/02 Tainted Love (Club 69 Future Mix - Part 1).mp3
 copy Soft Cell/Tainted Love/03 Tainted Love (Club 69 Future Mix - Part 2).mp3
+copy Soft Cell/Tainted Love/04 Tainted Love (Club 69 Future Beats).mp3
+copy Soft Cell/Tainted Love_ Where Did Our Love Go/01 Tainted Love_ Where Did Our Love Go.mp3
+copy Soft Cell/Tainted Love_ Where Did Our Love Go/02 Tainted Dub (Incorp.  Where Did Our Love Go).mp3
 copy Soft Cell/The Art Of Falling Apart/01 Forever The Same.mp3
 copy Soft Cell/The Art Of Falling Apart/02 Where The Heart Is.mp3
 copy Soft Cell/The Art Of Falling Apart/03 Numbers.mp3
 copy Soft Cell/The Art Of Falling Apart/04 Heat.mp3
 copy Soft Cell/The Art Of Falling Apart/05 Kitchen Sink Drama.mp3
+copy Soft Cell/The Art Of Falling Apart/06 Baby Doll.mp3
 copy Soft Cell/The Art Of Falling Apart/08 The Art of Falling Apart.mp3
 copy Soft Cell/The Singles/11 Down In The Subway.mp3
+copy Soft Cell/The Twelve Inch Singles/06 Down In The Subway.MP3
+copy Soft Cell/The Twelve Inch Singles/12 Home Is Where The Hurt Is '91.MP3
 copy Soft Cell/This Last Night ... In Sodom/01 Mr Self Destruct.mp3
 copy Soft Cell/This Last Night ... In Sodom/02 Slave to This.mp3
 copy Soft Cell/This Last Night ... In Sodom/03 Little Rough Rhinestone.mp3
 copy Soft Cell/This Last Night ... In Sodom/04 Meet Murder My Angel.mp3
+copy Soft Cell/This Last Night ... In Sodom/06 L'Esqualita.mp3
 copy Soft Cell/This Last Night ... In Sodom/07 Down in the Subway.mp3
 copy Soft Cell/This Last Night ... In Sodom/08 Surrender to a Stranger.mp3
 copy Soft Cell/This Last Night ... In Sodom/09 Soul Inside.mp3
@@ -8884,6 +9453,7 @@ copy Soft Cell/This Last Night ... In Sodom/10 Where Was Your Heart (When You Ne
 copy Soft Cell/This Last Night ... In Sodom/12 Born to Lose.mp3
 copy Soft Cell/This Last Night ... In Sodom/14 007 Theme.mp3
 copy Soft Cell/What!/01 What!.mp3
+copy Soft Cell/Where The Heart Is/01 Where The Heart Is.mp3
 copy Son House/Father of Folk Blues/04 John The Revelator.mp3
 copy Sonic Youth/Sonic Youth (Extended)/08 The Burning Spear (Live 1981_09_18).mp3
 copy Sonic Youth/Sonic Youth (Extended)/09 Cosmopolitan Girl (Live 1981_09_18).mp3
@@ -8896,6 +9466,7 @@ copy Sparkle Moore/Good Girls Gone Bad/Killer.mp3
 copy Sparks/Kimono My House/This Town Ain't Big Enough For Both Of Us.mp3
 copy Spice Girls/Spiceworld/01 Spice Up Your Life.mp3
 copy Spiritualized/Ladies And Gentlemen We Are Floating In Space/02 Come Together.mp3
+copy Spiritualized/Ladies And Gentlemen We Are Floating In Space/03 I Think I'm in Love.mp3
 copy Spiritualized/Ladies And Gentlemen We Are Floating In Space/05 Stay With Me.mp3
 copy Spiritualized/Ladies And Gentlemen We Are Floating In Space/09 Broken Heart.mp3
 copy Spiritualized/Let It Come Down/01 On Fire.mp3
@@ -8907,6 +9478,7 @@ copy Squirrel Nut Zippers/The Best of Squirrel Nut Zippers as Chronicled by Shor
 copy Squirrel Nut Zippers/The Best of Squirrel Nut Zippers as Chronicled by Shorty Brown/06 Put a Lid on It.mp3
 copy Stan Ridgway/Snakebite/15 Talkin' Wall Of Voodoo Blues Part 1.mp3
 copy Stan Ridgway/Songs That Made This Country Great/05 Can't Complain.mp3
+copy Stan Ridgway/Songs That Made This Country Great/08 Camouflage.mp3
 copy Stan Ridgway/Songs That Made This Country Great/11 Cannon Song (aka Army Song).mp3
 copy Steeleye Span/NOW That_s What I Call Christmas 2014/06 Gaudete.mp3
 copy Stephen Fry/A Bit Of Fry & Laurie/Language Is The Breath Of God.mp3
@@ -8993,6 +9565,7 @@ copy Suede/Suede/02 Animal Nitrate.mp3
 copy Suede/Suede/07 Sleeping Pills.mp3
 copy Suede/Suede/08 Breakdown.mp3
 copy Suede/Suede/09 Metal Mickey.mp3
+copy Sugababes/Hole In The Head/03 Hole In The Head (Full Intention Vocal Mix).mp3
 copy Sugababes/Overloaded/03 Red Dress.mp3
 copy Sugababes/Overloaded/14 Hole In The Head.mp3
 copy Sugar/Copper Blue/02 A Good Idea.mp3
@@ -9017,13 +9590,27 @@ copy Swing Republic/Electro Swing Republic/08 Tiger Rag (feat. Alvino Rey).mp3
 copy Swing Republic/Electro Swing Republic/09 Crying At Daybreak (feat. Howlin' Wolf).mp3
 copy Swing Republic/Midnight Calling/01 Fall.mp3
 copy Swing Republic/Midnight Calling/09 High Hat.mp3
+copy System 7/777/04 On The Seventh Night.mp3
+copy System 7/777/05 Sinbad.mp3
 copy System 7/777/06 Quest (Moon Mix).mp3
+copy System 7/777/08 Faydeaudeau.mp3
+copy System 7/Golden Section/01 Rite of Spring.mp3
+copy System 7/Golden Section/07 Sinom X Files.mp3
 copy System 7/Golden Section/09 Y2K (Back to the Future).mp3
+copy System 7/Golden Section/10 Borobudur.mp3
+copy System 7/Phoenix/02 Space Bird (Collaboration with Jam El Mar).mp3
+copy System 7/Phoenix/03 Scramble (Collaboration with Slackbaba).mp3
+copy System 7/Phoenix/05 Song For The Phoenix.mp3
+copy System 7/Phoenix/08 Makimura - Space Pilot (Collaboration with Mito).mp3
+copy System 7/Point 3 Fire Album/08 Jupiter!.mp3
+copy System 7/Point 3 Water Album/04 Mysterious Traveller (Dust Devils Mix).mp3
 copy System 7/Power of Seven/01 Interstate.mp3
 copy System 7/Power of Seven/02 Civilization.mp3
 copy System 7/System 7/07 Dog.mp3
+copy System 7/System 7/11 Miracle.mp3
 copy System F Ft. Marc Almond/A State Of Trance/Soul On Soul.mp3
 copy T Bone Burnett/The True False Identity/04 There Would Be Hell To Pay.mp3
+copy T Bone Burnett/The True False Identity/05 Every Time I Feel The Shift.mp3
 copy T Bone Burnett/Tooth Of Crime/01 Anything I Say Can And Will Be Used Against You.mp3
 copy T Bone Burnett/Tooth Of Crime/03 The Slowdown.mp3
 copy T Bone Burnett/Tooth Of Crime/07 Swizzle Stick.mp3
@@ -9051,10 +9638,13 @@ copy THePETEBOX/Future Loops/04 Panther Dance.mp3
 copy THePETEBOX/Future Loops/05 Where Is My Mind.mp3
 copy THePETEBOX/Future Loops/07 Lithium.mp3
 copy THePETEBOX/Future Loops/09 I Get Around.mp3
+copy Tabla Beat Science/Tala Matrix/06 Devotional.mp3
 copy Taha, Khaled and Faudel/1, 2, 3 Soleils/01 Khalliouni Khalliouni.mp3
 copy Taha, Khaled and Faudel/1, 2, 3 Soleils/07 Omri.mp3
 copy Taha, Khaled and Faudel/1, 2, 3 Soleils/09 Indie.mp3
 copy Taha, Khaled and Faudel/1, 2, 3 Soleils/16 Abdel Kader.mp3
+copy Taha, Khaled and Faudel/1, 2, 3 Soleils/17 Bent Sahra.mp3
+copy Taha, Khaled and Faudel/1, 2, 3 Soleils/21 Ya Rayah.mp3
 copy Taj Mahal/The Real Thing/07 Tom And Sally Drake.mp3
 copy Talking Heads/Fear of Music/04 Cities.mp3
 copy Talking Heads/Fear of Music/05 Life During Wartime.mp3
@@ -9119,6 +9709,7 @@ copy Talking Heads/The Name of This Band is Talking Heads/2-01 Psycho Killer.mp3
 copy Talking Heads/The Name of This Band is Talking Heads/2-04 Cities.mp3
 copy Talking Heads/The Name of This Band is Talking Heads/2-05 I Zimbra.mp3
 copy Talking Heads/The Name of This Band is Talking Heads/2-07 Once In A Lifetime.mp3
+copy Talking Heads/The Name of This Band is Talking Heads/2-09 House In Motion.mp3
 copy Talking Heads/The Name of This Band is Talking Heads/2-12 Life During Wartime.mp3
 copy Talking Heads/The Name of This Band is Talking Heads/2-14 The Great Curve.mp3
 copy Talking Heads/True Stories/01 Love For Sale.mp3
@@ -9139,6 +9730,8 @@ copy Tarantella/Esqueletos/05 Elder Tree.mp3
 copy Tarantella/Esqueletos/07 Misa Gringa.mp3
 copy Tarantella/Esqueletos/11 Bonus Track 1.mp3
 copy Tarantism/Excursions into the Fluff Zone/01 I'll Drink my Lager Mix.mp3
+copy Tarantism/Six Miles Below/04 Step it up Mary & The Drunken Piper.mp3
+copy Tarantism/Six Miles Below/05 Feel it in Your Stomach.mp3
 copy Tarja/YouTube/Smells Like Two Times.mp3
 copy Tarsis/Unknown Album/Bulls Run.mp3
 copy Ted Meissner/Present Moment Mindfulness/04 If Everybody is Emphasizing Prayer, I Need To Go The Way of Meditation.mp3
@@ -9239,6 +9832,7 @@ copy The Beatles/Beatles For Sale/08 Eight Days a Week.mp3
 copy The Beatles/Hank Handy Beatles Mashup/Hank Handy Beatles Mash Up Medley.mp3
 copy The Beatles/Help!/07 Ticket to Ride.mp3
 copy The Beatles/Help!/Love Me Do.mp3
+copy The Beatles/Hey Jude/01 Hey Jude.mp3
 copy The Beatles/Magical Mystery Tour/07 Hello Goodbye.mp3
 copy The Beatles/Sergeant Pepper/09 When I'm Sixty-Four.mp3
 copy The Beatles/The Beatles/01 Back in the U.S.S.R..mp3
@@ -9322,11 +9916,14 @@ copy The Chieftains/The Chieftains 3/05 March of the King of Laois (or Ruairí 
 copy The Chieftains/The Chieftains 3/07 Tom Billy's Reel - The Road to Lisdoonvarna - The Merry Sisters (reels).mp3
 copy The Chieftains/The Chieftains 4/01 Drowsy Maggie.mp3
 copy The Chieftains/The Chieftains 4/04 Bucks of Oranmore (reel).mp3
+copy The Chieftains/The Chieftains 4/05 The Battle Of Aughrim.mp3
 copy The Chieftains/The Chieftains 4/06 The Morning Dew.mp3
 copy The Chieftains/The Chieftains 4/12 O'Keefe's Slide - An Suisin Ban (The White Blanket) (set dance) - The Star Above The Garter - The Weaver's Slide (slides).mp3
 copy The Chieftains/The Chieftains 5/01 The Timpán Reel.mp3
 copy The Chieftains/The Chieftains 5/02 Tabhair dom do Lámh (Give me your Hand).mp3
 copy The Chieftains/The Chieftains 5/03 Three Kerry Polkas.mp3
+copy The Chieftains/The Chieftains 5/05 The Chieftains' Knock on the Door.mp3
+copy The Chieftains/The Chieftains 5/08 The Humours of Carolan.mp3
 copy The Chieftains/The Chieftans 7/01 Away We Go Again.MP3
 copy The Chieftains/The Chieftans 7/06 No 6 The Coombe.MP3
 copy The Chips/Rubber Biscuits & Ramma Lama Ding Dongs/Rubber Biscuit.mp3
@@ -9364,6 +9961,7 @@ copy The Clash/Black Market Clash/02 The Prisoner.MP3
 copy The Clash/Black Market Clash/03 Pressure Drop.MP3
 copy The Clash/Black Market Clash/07 Bank Robber_Robber Dub.MP3
 copy The Clash/Black Market Clash/08 Armagideon Time.MP3
+copy The Clash/Black Market Clash/09 Justice Tonight_Kick It Over.MP3
 copy The Clash/Combat Rock (Sound System)/01 Know Your Rights.mp3
 copy The Clash/Combat Rock (Sound System)/02 Car Jamming.mp3
 copy The Clash/Combat Rock (Sound System)/03 Should I Stay Or Should I Go.mp3
@@ -9396,6 +9994,7 @@ copy The Clash/Extras (Sound System)/2-05 The Cool Out.mp3
 copy The Clash/Extras (Sound System)/2-06 This Is Radio Clash.mp3
 copy The Clash/Extras (Sound System)/2-10 Long Time Jerk.mp3
 copy The Clash/Extras (Sound System)/2-13 Ghetto Defendant (Extended Unedited Version).mp3
+copy The Clash/Extras (Sound System)/2-16 Straight to Hell (Extended Unedited Version).mp3
 copy The Clash/Extras (Sound System)/3-01 I'm So Bored with the USA (Beaconsfield Film School Session).mp3
 copy The Clash/Extras (Sound System)/3-02 London's Burning (Beaconsfield Film School Session).mp3
 copy The Clash/Extras (Sound System)/3-03 White Riot (Beaconsfield Film School Session).mp3
@@ -9418,11 +10017,13 @@ copy The Clash/From Here To Eternity Live/13 The Guns Of Brixton (Live) [13 Jun 
 copy The Clash/From Here To Eternity Live/14 The Magnificent Seven (Live) [7 Sep 82, Boston].MP3
 copy The Clash/From Here To Eternity Live/15 Know Your Rights (Live) [7 Sep 82, Boston].MP3
 copy The Clash/From Here To Eternity Live/16 Should I Stay Or Should I Go_ (Live) [8 Sep 82, Boston].MP3
+copy The Clash/From Here To Eternity Live/17 Straight To Hell (Live) [8 Sep 82, Boston].MP3
 copy The Clash/From London To Jamaica/01 Introduction.MP3
 copy The Clash/From London To Jamaica/04 Guns Of Brixton.MP3
 copy The Clash/From London To Jamaica/06 Armagideon Time.MP3
 copy The Clash/From London To Jamaica/07 Magnificent Seven(Reprise).MP3
 copy The Clash/From London To Jamaica/12 Bankrobber.MP3
+copy The Clash/From London To Jamaica/17 Straight To Hell.MP3
 copy The Clash/Give 'Em Enough Rope (Sound System)/01 Safe European Homes.mp3
 copy The Clash/Give 'Em Enough Rope (Sound System)/03 Tommy Gun.mp3
 copy The Clash/Give 'Em Enough Rope (Sound System)/04 Julie's Been Working On The Drug Squad.mp3
@@ -9461,6 +10062,7 @@ copy The Clash/Rat Patrol From Fort Bragg/05 Know Your Rights.mp3
 copy The Clash/Rat Patrol From Fort Bragg/06 Red Angel Dragnet.mp3
 copy The Clash/Rat Patrol From Fort Bragg/10 Innoculated City.mp3
 copy The Clash/Rat Patrol From Fort Bragg/13 Atom Tan.mp3
+copy The Clash/Rat Patrol From Fort Bragg/18 Straight to Hell (Extended Mix).mp3
 copy The Clash/Return To Brixton/01 Return To Brixton.mp3
 copy The Clash/Return To Brixton/02 Return To Brixton (Extended Mix).mp3
 copy The Clash/Sandinista! (Sound System)/1-01 The Magnificent Seven.mp3
@@ -9499,6 +10101,7 @@ copy The Clash/Super Black Market Clash/01 1977.MP3
 copy The Clash/Super Black Market Clash/02 Listen.MP3
 copy The Clash/Super Black Market Clash/10 Capital Radio Two.MP3
 copy The Clash/Super Black Market Clash/11 Time Is Tight.MP3
+copy The Clash/Super Black Market Clash/12 Justice Tonight_Kick It Over.MP3
 copy The Clash/Super Black Market Clash/13 Robber Dub.MP3
 copy The Clash/Super Black Market Clash/14 The Cool Out.MP3
 copy The Clash/Super Black Market Clash/16 The Magnificent Dance.MP3
@@ -9557,6 +10160,7 @@ copy The Cure/Boys Don't Cry/01 Boys Don't Cry.mp3
 copy The Cure/Boys Don't Cry/03 10.15 Saturday Night.mp3
 copy The Cure/Boys Don't Cry/06 Jumping Someone Else's Train.mp3
 copy The Cure/Boys Don't Cry/08 Killing an Arab.mp3
+copy The Cure/Disintegration/02 Pictures Of You.mp3
 copy The Cure/Disintegration/04 Love Song.mp3
 copy The Cure/Disintegration/06 Lullaby.mp3
 copy The Cure/Faith Deluxe Edition/2-10 The Funeral Party (Live).mp3
@@ -9575,10 +10179,16 @@ copy The Cure/Kiss Me, Kiss Me, Kiss Me/02 Catch.mp3
 copy The Cure/Kiss Me, Kiss Me, Kiss Me/05 Why Can't I Be You.mp3
 copy The Cure/Kiss Me, Kiss Me, Kiss Me/08 Hey You.mp3
 copy The Cure/Kiss Me, Kiss Me, Kiss Me/09 Just Like Heaven.mp3
+copy The Cure/Mixed Up/01 Lullaby (Extended Mix).mp3
 copy The Cure/Mixed Up/02 Close To Me (Closer Mix).mp3
+copy The Cure/Mixed Up/03 Fascination Street (Extended Mix).mp3
 copy The Cure/Mixed Up/05 Lovesong (Extended Mix).mp3
+copy The Cure/Mixed Up/07 Pictures Of You (Extended Mix).mp3
+copy The Cure/Mixed Up/08 Hot Hot Hot!!! (Extended Mix).mp3
 copy The Cure/Mixed Up/09 The Caterpillar (Flicker Mix).mp3
 copy The Cure/Mixed Up/10 Inbetween Days (Shiver Mix).mp3
+copy The Cure/Mixed Up/A Forest (Tree Mix).mp3
+copy The Cure/Pornography Deluxe Edition/2-06 One Hundred Years (Studio Demo).mp3
 copy The Cure/Pornography/01 One Hundred Years.mp3
 copy The Cure/Pornography/03 The Hanging Garden.mp3
 copy The Cure/Seventeen Seconds Deluxe Edition/10 M (Live).mp3
@@ -9607,6 +10217,7 @@ copy The Damned/Phantasmagoria/06 Grimly Fiendish.mp3
 copy The Damned/Strawberries/12 Don't Bother Me.mp3
 copy The Dead South/Good Company/The Dead South - Good Company - 11 That Bastard Son.mp3
 copy The Dead South/Illusion and Doubt/09 Time For Crawlin'.mp3
+copy The Dead South/Illusion and Doubt/12 Gunslinger's Glory.mp3
 copy The Dead Weather/Horehound/04 So Far From Your Weapon.mp3
 copy The Dead Weather/Horehound/05 Treat Me Like Your Mother.mp3
 copy The Dead Weather/Horehound/06 Rocking Horse.mp3
@@ -9628,7 +10239,9 @@ copy The Doors/Absolutely Live/06 Five To One.MP3
 copy The Doors/L.A. Woman/01 The Changeling.MP3
 copy The Doors/L.A. Woman/02 Love Her Madly.MP3
 copy The Doors/L.A. Woman/03 Been Down So Long.MP3
+copy The Doors/L.A. Woman/05 L.A. Woman.MP3
 copy The Doors/L.A. Woman/09 The Wasp (Texas Radio and the Big Beat).MP3
+copy The Doors/L.A. Woman/10 Riders On The Storm.MP3
 copy The Doors/Morrison Hotel/01 Roadhouse Blues.MP3
 copy The Doors/Morrison Hotel/04 Peace Frog.MP3
 copy The Doors/Morrison Hotel/06 Ship Of Fools.MP3
@@ -9639,6 +10252,7 @@ copy The Doors/Strange Days/03 Love Me Two Times.MP3
 copy The Doors/Strange Days/07 People Are Strange.MP3
 copy The Doors/The Doors/01 Break On Through (To The Other Side).mp3
 copy The Doors/The Doors/05 Alabama song.MP3
+copy The Doors/The Doors/06 Light My Fire.MP3
 copy The Drifters/Unknown Album/Under the Boardwalk.mp3
 copy The Dubliners/A Drop of the Hard Stuff/13 Black Velvet Band.mp3
 copy The Dubliners/Drinkin' and Courtin'/06 Dirty Old Town.mp3
@@ -9682,9 +10296,11 @@ copy The Fall/The Frenz Experiment/Oswald Defence Lawyer.mp3
 copy The Fall/The Frenz Experiment/Victoria.mp3
 copy The Fall/The Wonderful and Frightening World of… The Fall/01 Lay of the Land.mp3
 copy The Fall/The Wonderful and Frightening World of… The Fall/08 Clear Off!.mp3
+copy The Fall/The Wonderful and Frightening World of… The Fall/16 No Bulbs.mp3
 copy The Fall/This Nation_s Saving Grace/06 L.A..mp3
 copy The Fall/This Nation_s Saving Grace/10 I Am Damo Suzuki.mp3
 copy The Features/Exhibit A/Me And The Skirts.mp3
+copy The Feelies/Crazy Rhythms/04 Forces At Work.mp3
 copy The Feelies/Crazy Rhythms/09 Crazy Rhythms.mp3
 copy The Feelies/Crazy Rhythms/10 Paint It Black.mp3
 copy The Feelies/Four Free Feelies Songs/02 Dancing Barefoot.mp3
@@ -9741,6 +10357,7 @@ copy The Fratellis/Costello Music/12 Got Ma Nuts From A Hippy.mp3
 copy The Fratellis/Here We Stand/01 My Friend John.mp3
 copy The Fratellis/Here We Stand/08 Babydoll.mp3
 copy The Fratellis/In Your Own Sweet Time/10 Indestructible.mp3
+copy The Fratellis/In Your Own Sweet Time/11 I Am That.mp3
 copy The Fratellis/The Fratellis EP/12 Creepin Up The Backstairs  (Acoustic).mp3
 copy The Gardiner Street Gospel Choir/One Love/One Love.mp3
 copy The Gladiators/Trenchtown MixUp/08 Rude Boy Ska.MP3
@@ -9752,8 +10369,13 @@ copy The Grid/Doppelgänger/08 Saturday.mp3
 copy The Grid/Doppelgänger/10 Three Floors Above You.mp3
 copy The Grid/Evolver/06 Shapes of Sleep.mp3
 copy The Grid/Evolver/08 Texas Cowboys.mp3
+copy The Grid/Evolver/10 Golden Dawn.mp3
+copy The Grid/Music For Dancing/01 Floatation.MP3
 copy The Grid/Music For Dancing/02 Crystal Clear.MP3
 copy The Grid/Music For Dancing/04 Figure Of 8.MP3
+copy The Grid/Music For Dancing/05 Rollercoaster.MP3
+copy The Grid/Music For Dancing/07 Swamp Thing.MP3
+copy The Grid/Music For Dancing/08 Crystal Clear (Prankster Prophet Mix).MP3
 copy The Grid/Music For Dancing/09 Figure of 8 (Todd's Master Dub).MP3
 copy The Grid/Music For Dancing/10 Diabolo.mp3
 copy The Gun Club/Fire Of Love/Cool Drink Of Water.mp3
@@ -9774,6 +10396,8 @@ copy The Handsome Family/Through The Trees/10 The Woman Downstairs.mp3
 copy The Handsome Family/Through The Trees/My Sister's Tiny Hands.mp3
 copy The Hives/Barely Legal/13 The Stomp.mp3
 copy The Hives/a.k.a. I-D-I-O-T/32 Fever.mp3
+copy The Horrors/Primary Colours/07 I Only Think Of You.mp3
+copy The Horrors/Primary Colours/10 Sea Within A Sea.mp3
 copy The Horrors/Strange House/02 Count In Fives.mp3
 copy The Horrors/Strange House/06 Little Victories.mp3
 copy The Horrors/Strange House/10 Gil Sleeping.mp3
@@ -9847,11 +10471,14 @@ copy The Jesus and Mary Chain/The Sound Of Speed/15 Little Red Rooster.MP3
 copy The Jesus and Mary Chain/The Sound Of Speed/17 Lowlife.MP3
 copy The Jesus and Mary Chain/The Sound Of Speed/18 Deviant Slice.MP3
 copy The Jesus and Mary Chain/The Sound Of Speed/19 Reverberation.MP3
+copy The Jesus and Mary Chain/The Sound Of Speed/20 Sidewalking.MP3
 copy The Johnny Otis Show/Live at Monterey!/19 Boogie Woogie Bye Bye.mp3
 copy The Juju Orchestra/Bossa Nova Is Not A Crime/01 This Is Not A Tango.mp3
+copy The Juju Orchestra/Bossa Nova Is Not A Crime/03 Kind of Latin Rhythm.mp3
 copy The Juju Orchestra/Bossa Nova Is Not A Crime/04 Take Four.mp3
 copy The Juju Orchestra/Bossa Nova Is Not A Crime/07 Nâo Posso Demorar.mp3
 copy The Juju Orchestra/Bossa Nova Is Not A Crime/08 Funky Nassau.mp3
+copy The KLF/Chill out - ODC1 remixes/08 Beaumont Somewhen Out of 3 A.M..mp3
 copy The KLF/Doctorin' The Tardis/Doctorin' The Tardis (Club Mix).mp3
 copy The KLF/Doctorin' The Tardis/Doctorin' The Tardis.mp3
 copy The KLF/Justified and Ancient/Justified and Ancient (stand by the jams - 12in version).mp3
@@ -9874,6 +10501,7 @@ copy The KLF/This Is What The KLF Is About/06 3 AM Eternal [1989].mp3
 copy The KLF/This Is What The KLF Is About/07 Last Train To Trancentral [l].mp3
 copy The KLF/This Is What The KLF Is About/08 Last Train To Trancentral [h].mp3
 copy The KLF/This Is What The KLF Is About/11 Justified And Ancient [jams].mp3
+copy The KLF/This Is What The KLF Is About/13 Justified And Ancient [mu mu].mp3
 copy The KLF/This Is What The KLF Is About/14 Justified And Ancient [99].mp3
 copy The KLF/This Is What The KLF Is About/15 Justified And Ancient.mp3
 copy The KLF/This Is What The KLF Is About/16 America What Time Is Love (Radio Edit).mp3
@@ -9994,8 +10622,10 @@ copy The Modern Lovers/The Modern Lovers/1-11 Pablo Picasso.mp3
 copy The Monkees/I'm A Believer/01 I'm A Believer.mp3
 copy The Mothers of Invention/Freak Out/12 Trouble Every Day.mp3
 copy The Orb/Little Fluffy Clouds/04 Little Fluffy Clouds (Cumulonimbus Mix).mp3
+copy The Orb/Little Fluffy Clouds/Little Fluffy Clouds (Dance Mk 2).mp3
 copy The Orb/Peel Sessions/02 Toxygene.mp3
 copy The Orb/Peel Sessions/04 Delta Mk II.mp3
+copy The Orb/The Orb's Adventures Beyond The Ultraworld/01 Perpetual Dawn.MP3
 copy The Passmore Sisters/Unknown Album/Every Child In Heaven.mp3
 copy The Pogues & The Dubliners/The Irish Rover/01 The Irish Rover.mp3
 copy The Pogues & The Dubliners/The Irish Rover/02 The Rare Ould Mountain Dew.mp3
@@ -10083,6 +10713,7 @@ copy The Pogues/Rum, Sodomy & The Lash/07 A Pistol For Paddy Garcia.mp3
 copy The Pogues/Rum, Sodomy & The Lash/08 Dirty Old Town.mp3
 copy The Pogues/Rum, Sodomy & The Lash/11 Billy's Bones.mp3
 copy The Pogues/Rum, Sodomy & The Lash/12 The Gentleman Soldier.mp3
+copy The Pogues/Rum, Sodomy & The Lash/13 And The Band Played Waltzing Matilda.mp3
 copy The Pogues/Unknown Album/32 Whiskey in the Jar.mp3
 copy The Pogues/Waiting For Herb/06 Drunken Boat.mp3
 copy The Pogues/Waiting For Herb/10 Pachinko.mp3
@@ -10103,6 +10734,7 @@ copy The Prodigy/Invaders Must Die/07 Run With the Wolves.mp3
 copy The Prodigy/Invaders Must Die/11 Stand Up.mp3
 copy The Prodigy/Music for the Jilted Generation/05 Voodoo People.mp3
 copy The Prodigy/Music for the Jilted Generation/12 The Narcotic Suite_ Skylined.mp3
+copy The Prodigy/The Dirtchamber Sessions, Volume One/01 Section 1_ Intro Beats _ Punk Shock _ Untitled _ Chemical Beats _ Kool Keith Housing Things _ Sport (feat. Jalal) _ Give the Drummer Some _ Wildstyle.mp3
 copy The Prodigy/The Fat Of The Land/01 Smack My Bitch Up.mp3
 copy The Prodigy/The Fat Of The Land/10 Fuel My Fire.mp3
 copy The Psychedelic Furs/The Psychedelic Furs/01 India.mp3
@@ -10118,6 +10750,7 @@ copy The Puppini Sisters/The Rise and Fall of Ruby Woo/13 We Have All The Time I
 copy The Purple Helmets/Ride Again/05 Baby Please Don't Go.mp3
 copy The Purple Helmets/Rise Again/03 Rosalyn.mp3
 copy The Purple Helmets/Rise Again/04 She's Not There.mp3
+copy The Radiators/Live, Hawkins, Dublin, 1987/Faithful Departed.mp3
 copy The Radiators/Live, Hawkins, Dublin, 1987/Johnny Jukebox.mp3
 copy The Radiators/Live, Hawkins, Dublin, 1987/Under Cleary's Clock.mp3
 copy The Ramrods/(Ghost) Riders in the Sky/01 (Ghost) Riders in the Sky.mp3
@@ -10166,6 +10799,7 @@ copy The Real Tuesday Weld/Acid Planet/Bathtime in Clerkenwell (Loopy Jig Mix).m
 copy The Real Tuesday Weld/Acid Planet/Bathtime in Clerkenwell (Wash Mix).mp3
 copy The Real Tuesday Weld/Acid Planet/Bathtime in Clerkenwell - MJ's Ruber Ducky Mix.mp3
 copy The Real Tuesday Weld/Acid Planet/Bathtime in Clerkenwell - Power Swing Mix.mp3
+copy The Real Tuesday Weld/Acid Planet/Bathtime in Clerkenwell - Stomp Mix.mp3
 copy The Real Tuesday Weld/Backspin_ A Six Degrees 10 Year Anniversary Project/The Day Before You Came.mp3
 copy The Real Tuesday Weld/Christmas/A Christmas Wish-XM61J6cO-j4.mp3
 copy The Real Tuesday Weld/I, Lucifer/02 Bathtime in Clerkenwell.MP3
@@ -10217,6 +10851,7 @@ copy The Redskins/Neither Washington Nor Moscow/02 Kick Over The Statues!.mp3
 copy The Redskins/Neither Washington Nor Moscow/04 It Can Be Done.mp3
 copy The Redskins/Neither Washington Nor Moscow/05 Keep On Keepin' On!.mp3
 copy The Redskins/Neither Washington Nor Moscow/07 Hold On!.mp3
+copy The Redskins/Neither Washington Nor Moscow/11 Lean On Me!.mp3
 copy The Redskins/Neither Washington Nor Moscow/12 Keep On Keepin' On! (Ted de Bono 12' Mix).mp3
 copy The Redskins/Neither Washington Nor Moscow/13 16 Tons.mp3
 copy The Redskins/Neither Washington Nor Moscow/14 Reds Strike The Blues.mp3
@@ -10247,6 +10882,7 @@ copy The Rolling Stones/Honky Tonk Women/Honky Tonk Women.mp3
 copy The Rolling Stones/Jumpin' Jack Flash/01 Jumpin' Jack Flash.mp3
 copy The Rolling Stones/Let It Bleed/01 Gimme Shelter.mp3
 copy The Rolling Stones/Let It Bleed/03 Country Honk.mp3
+copy The Rolling Stones/Let It Bleed/06 Midnight Rambler.mp3
 copy The Rolling Stones/Metamorphosis/01 Out Of Time.mp3
 copy The Rolling Stones/Out of Our Heads Singles/01 The Last Time.mp3
 copy The Rolling Stones/Out of Our Heads Singles/03 (I Can't Get No) Satisfaction.mp3
@@ -10280,10 +10916,12 @@ copy The Rootsman/Roots Bloody Rootsman/08 Fittest Of The Fittest.mp3
 copy The Rootsman/Roots Bloody Rootsman/09 Ta Travudia.mp3
 copy The Rootsman/Roots Bloody Rootsman/10 The Truth.mp3
 copy The Rootsman/Roots Bloody Rootsman/12 We Nuh Rap (Remix By El Jethoor).mp3
+copy The Rootsman/Roots Bloody Rootsman/13 Hard Fi Dead (Remix By Jammin' Unit).mp3
 copy The Rootsman/Roots Bloody Rootsman/14 Destiny (Remix By Rasbors Inc).mp3
 copy The Rootsman/Roots Bloody Rootsman/15 Tremors (Remix By Space Activator Hole).mp3
 copy The Rosinators/Unknown Album/Old Joe Clark.mp3
 copy The Ruts/The Crack/01 Babylon's Burning.MP3
+copy The Ruts/The Crack/08 Jah War.MP3
 copy The Ruts/The Crack/09 Criminal Mind.MP3
 copy The Screaming Blue Messiahs/Bikini Red/02 Bikini Red.mp3
 copy The Screaming Blue Messiahs/Bikini Red/03 Too Much Love.mp3
@@ -10311,6 +10949,7 @@ copy The Screaming Blue Messiahs/Live in Concert/05 Jerry's Electric Church 1.mp
 copy The Screaming Blue Messiahs/Live in Concert/07 I Wanna Be a Flintstone.mp3
 copy The Screaming Blue Messiahs/Live in Concert/09 Holiday Head 1.mp3
 copy The Screaming Blue Messiahs/The Mean Fiddler 2-9-88/09 I Wanna Be A Flintstone.mp3
+copy The Screaming Blue Messiahs/The Mean Fiddler 2-9-88/11 Tracking The Dog.mp3
 copy The Screaming Blue Messiahs/The Mean Fiddler 2-9-88/12 Good And Gone.mp3
 copy The Screaming Blue Messiahs/The Mean Fiddler 2-9-88/14 Happy Home.mp3
 copy The Screaming Blue Messiahs/The Peel Sessions/01 Good And Gone.mp3
@@ -10333,15 +10972,20 @@ copy The Selecter/Too Much Pressure/11 Carry Go Bring Come.mp3
 copy The Selecter/Too Much Pressure/13 James Bond.mp3
 copy The Selector/Unknown Album/Three Minute Hero.mp3
 copy The Shangri-Las/Unknown Album/Leader Of The Pack.mp3
+copy The Sisterhood/Gift/32 Finland Red Egypt White.mp3
 copy The Sisterhood/Gift/Jihad.mp3
 copy The Sisters Of Mercy/7_ & 12_ Collection/06 Vision Thing (Radio Edit).mp3
 copy The Sisters Of Mercy/Alice/01 Alice.mp3
 copy The Sisters Of Mercy/Alice/02 Floorshow.mp3
+copy The Sisters Of Mercy/Alice/03 Phantom.mp3
 copy The Sisters Of Mercy/Alice/04 1969.mp3
 copy The Sisters Of Mercy/Before the Flood/03 Lights.mp3
 copy The Sisters Of Mercy/Body And Soul/01 Body And Soul.mp3
 copy The Sisters Of Mercy/Body Electric/01 Body Electric.mp3
 copy The Sisters Of Mercy/Doctor Jeep/01 Doctor Jeep [Radio Edit].mp3
+copy The Sisters Of Mercy/Doctor Jeep/02 Doctor Jeep [Extended Version].mp3
+copy The Sisters Of Mercy/Doctor Jeep/03 Knockin' on Heaven's Door [Live Bootleg Recording].mp3
+copy The Sisters Of Mercy/Dominion/01 Dominion.mp3
 copy The Sisters Of Mercy/Dominion/03 Sandstorm.mp3
 copy The Sisters Of Mercy/First And Last And Always/1-01 Black Planet.MP3
 copy The Sisters Of Mercy/First And Last And Always/1-02 Walk Away.MP3
@@ -10352,24 +10996,35 @@ copy The Sisters Of Mercy/First And Last And Always/1-06 First And Last And Alwa
 copy The Sisters Of Mercy/First And Last And Always/1-07 Possession.MP3
 copy The Sisters Of Mercy/First And Last And Always/1-08 Nine While Nine.MP3
 copy The Sisters Of Mercy/First And Last And Always/1-09 Amphetamine Logic.mp3
+copy The Sisters Of Mercy/Floodland/1-01 Dominion - Mother Russia.mp3
+copy The Sisters Of Mercy/Floodland/1-03 Lucretia My Reflection.mp3
+copy The Sisters Of Mercy/Floodland/1-06 Flood II.mp3
 copy The Sisters Of Mercy/Floodland/2-09 Torch.mp3
 copy The Sisters Of Mercy/Floodnight/01 Flood I.mp3
 copy The Sisters Of Mercy/Floodnight/02 Flood II.mp3
 copy The Sisters Of Mercy/Germany 1990/01 First and Last and Always.mp3
 copy The Sisters Of Mercy/Germany 1990/02 Lucretia My Reflection.mp3
+copy The Sisters Of Mercy/Germany 1990/06 Dominion - Mother Russia.mp3
 copy The Sisters Of Mercy/Germany 1990/08 Valentine.mp3
 copy The Sisters Of Mercy/Germany 1990/09 Heartland.mp3
 copy The Sisters Of Mercy/Germany 1990/10 Doctor Jeep.mp3
 copy The Sisters Of Mercy/Germany 1990/11 Amphetamine Logic.mp3
 copy The Sisters Of Mercy/Germany 1990/12 Gimme Shelter.mp3
+copy The Sisters Of Mercy/Germany 1990/13 This Corrosion.mp3
 copy The Sisters Of Mercy/Germany 1990/14 Jolene.mp3
+copy The Sisters Of Mercy/Life/02 Ghostriderz.mp3
+copy The Sisters Of Mercy/Lucretia My Reflection/01 Lucretia My Reflection.mp3
+copy The Sisters Of Mercy/More/02 More (Extended Version).mp3
 copy The Sisters Of Mercy/No Time To Cry/01 No Time to Cry.mp3
+copy The Sisters Of Mercy/Rare Obscurities/03 Teachers - Adrenochrome.mp3
 copy The Sisters Of Mercy/Rare Obscurities/04 Red Skies Disappear.mp3
 copy The Sisters Of Mercy/Rare Obscurities/05 Good Things (demo).mp3
 copy The Sisters Of Mercy/Rare Obscurities/08 Body Electric (rough mix).mp3
 copy The Sisters Of Mercy/Rare Obscurities/09 No Time To Cry (alternative studio version).mp3
 copy The Sisters Of Mercy/Rare Obscurities/10 First and Last and Always (alternative studio version).mp3
 copy The Sisters Of Mercy/Rare Obscurities/11 A Rock and A Hard Place.mp3
+copy The Sisters Of Mercy/Sins and Secrets (7-inch)/01 Knocking On Heaven's Door.mp3
+copy The Sisters Of Mercy/Sins and Secrets (7-inch)/02 Emma (demo 1985).mp3
 copy The Sisters Of Mercy/Sister Ray/01 Burn.mp3
 copy The Sisters Of Mercy/Sister Ray/06 Floorshow.mp3
 copy The Sisters Of Mercy/Sister Ray/07 Adrenochrome.mp3
@@ -10378,13 +11033,17 @@ copy The Sisters Of Mercy/Sister Ray/10 Gimme Shelter.mp3
 copy The Sisters Of Mercy/Sister Ray/12 Temple Of Love.mp3
 copy The Sisters Of Mercy/Sister Ray/14 First and Last and Always.mp3
 copy The Sisters Of Mercy/Sister Ray/15 Gimme, Gimme, Gimme.mp3
+copy The Sisters Of Mercy/Temple Of Love/01 Temple of Love [Extended Version].mp3
 copy The Sisters Of Mercy/Temple Of Love/02 Heartland.mp3
 copy The Sisters Of Mercy/Temple Of Love/03 Gimme Shelter.mp3
+copy The Sisters Of Mercy/Temple of Love (1992)/01 Temple Of Love (1992) Touched By The Hand Of Ofra Haza.mp3
+copy The Sisters Of Mercy/Temple of Love (1992)/03 Vision Thing (Canadian Club Remix).mp3
 copy The Sisters Of Mercy/Temple of Love (1992)/04 When You Don't See Me.mp3
 copy The Sisters Of Mercy/The Damage Done/01 Adrenochrome.mp3
 copy The Sisters Of Mercy/The Darks Were In Milan/01 First and Last and Always.mp3
 copy The Sisters Of Mercy/The Darks Were In Milan/03 Marian.mp3
 copy The Sisters Of Mercy/The Darks Were In Milan/06 Walk Away.mp3
+copy The Sisters Of Mercy/The Darks Were In Milan/07 Emma.mp3
 copy The Sisters Of Mercy/The Darks Were In Milan/09 A Rock and A Hard Place.mp3
 copy The Sisters Of Mercy/The Darks Were In Milan/10 Floor Show.mp3
 copy The Sisters Of Mercy/The Darks Were In Milan/11 Alice.mp3
@@ -10395,6 +11054,7 @@ copy The Sisters Of Mercy/The Good, The Bad And The Ugly/1-01 1969.mp3
 copy The Sisters Of Mercy/The Good, The Bad And The Ugly/1-09 Knockin' On Heaven's Door.mp3
 copy The Sisters Of Mercy/The Good, The Bad And The Ugly/2-01 He's Got The Whole World In His Hands.mp3
 copy The Sisters Of Mercy/The Peel Sessions/04 Alice.mp3
+copy The Sisters Of Mercy/The Peel Sessions/08 Emma.mp3
 copy The Sisters Of Mercy/The Reptile House/05 Burn.mp3
 copy The Sisters Of Mercy/The Reptile House/06 Kiss The Carpet (Reprise).mp3
 copy The Sisters Of Mercy/Under The Gun/02 Alice (1993).mp3
@@ -10403,10 +11063,13 @@ copy The Sisters Of Mercy/Vision Thing/02 Ribbons.mp3
 copy The Sisters Of Mercy/Vision Thing/03 Detonation Boulevard.mp3
 copy The Sisters Of Mercy/Vision Thing/05 When You Don't See Me.mp3
 copy The Sisters Of Mercy/Vision Thing/06 Doctor Jeep.mp3
+copy The Sisters Of Mercy/Vision Thing/07 More.mp3
 copy The Sisters Of Mercy/Walk Away/03 On the Wire.mp3
 copy The Sisters Of Mercy/Wide receiver/08 Temple of Love.mp3
+copy The Sisters Of Mercy/Wide receiver/10 Train.mp3
 copy The Sisters Of Mercy/Wide receiver/12 Marian.mp3
 copy The Sisters Of Mercy/Wide receiver/15 Jolene.mp3
+copy The Sisters Of Mercy/Wide receiver/16 Ghostriders.mp3
 copy The Skatalites/Hi-Bop Ska/01 Guns Of Navarone.mp3
 copy The Skatalites/Hi-Bop Ska/09 Renewal.mp3
 copy The Skatalites/Hi-Bop Ska/12 Ska Ska Ska.mp3
@@ -10416,6 +11079,7 @@ copy The Smiths/Louder Than Bombs/15 Oscillate Wildly.mp3
 copy The Smiths/Louder Than Bombs/21 Please, Please, Please, Let Me Get What I Want.mp3
 copy The Smiths/The Sound Of The Smiths/1-03 What Difference Does It Make [Peel Sessions Version].mp3
 copy The Smiths/Unknown Album/01 This Charming Man.mp3
+copy The Smiths/Unknown Album/How Soon Is Now_.MP3
 copy The Specials/More Specials/05 Pearl's Cafe.mp3
 copy The Specials/More Specials/32 Ghost Town.mp3
 copy The Specials/More Specials/32 Hey Little Rich Girl.mp3
@@ -10462,8 +11126,10 @@ copy The Steeldrivers/The Steeldrivers/10 To Be With You Again.mp3
 copy The Stone Roses/The Stone Roses/01 I Wanna Be Adored.MP3
 copy The Stone Roses/The Stone Roses/02 She Bangs The Drums.MP3
 copy The Stone Roses/The Stone Roses/03 Waterfall.MP3
+copy The Stone Roses/The Stone Roses/11 I Am The Resurrection.MP3
 copy The Stooges/Fun House/05 1970.mp3
 copy The Stooges/The Stooges/02 I Wanna Be Your Dog.mp3
+copy The Stranglers/All Twelve Inches/03 No Mercy (Cement Mix).mp3
 copy The Stranglers/All Twelve Inches/04 Let Me Down Easy (Extended Version).mp3
 copy The Stranglers/All Twelve Inches/07 Big In America (Texas Mix).mp3
 copy The Stranglers/All Twelve Inches/09 All Day And All Of The Night (Jeff Remix).mp3
@@ -10486,6 +11152,7 @@ copy The Stranglers/IV (Rattus Norvegicus)/05 Hanging Around.mp3
 copy The Stranglers/IV (Rattus Norvegicus)/06 Peaches.mp3
 copy The Stranglers/IV (Rattus Norvegicus)/07 (Get A) Grip (On Yourself).mp3
 copy The Stranglers/IV (Rattus Norvegicus)/08 Ugly.mp3
+copy The Stranglers/IV (Rattus Norvegicus)/09 Down In The Sewer.mp3
 copy The Stranglers/La Folie/06 The Men They Love To Hate.mp3
 copy The Stranglers/La Folie/08 It Only Takes Two To Tango.mp3
 copy The Stranglers/La Folie/09 Golden Brown.mp3
@@ -10511,6 +11178,7 @@ copy The Stranglers/The Hit Men/01 Grip '89.mp3
 copy The Stranglers/The Raven/07 Shah Shah A Go Go.mp3
 copy The Stranglers/The Raven/09 Duchess.mp3
 copy The Streets/A Grand Don't Come for Free/07 Fit But You Know It.mp3
+copy The Streets/All Got Our Runnins/06 Weak Become Heroes (Ashley Beedle's Love Bug Vocal).mp3
 copy The Streets/Original Pirate Material/01 turn the page.mp3
 copy The Streets/Original Pirate Material/05 same old thing.mp3
 copy The Streets/Original Pirate Material/08 Too Much Brandy.mp3
@@ -10580,18 +11248,24 @@ copy The Undertones/The Undertones/1-14 I Know a Girl.mp3
 copy The Undertones/The Undertones/2-21 Mars Bars.mp3
 copy The Undertones/The Undertones/2-23 One Way Love.mp3
 copy The Upsetters/Sipple Out Deh/02 Revelation Dub.mp3
+copy The Velvet Underground/1969_ Velvet Underground Live/1-01 I'm Waiting For The Man.mp3
+copy The Velvet Underground/1969_ Velvet Underground Live/1-10 Heroin.mp3
+copy The Velvet Underground/1969_ Velvet Underground Live/2-07 White Light_White Heat.mp3
 copy The Velvet Underground/Another View/02 I'm Gonna Move Right In.mp3
 copy The Velvet Underground/Another View/06 Guess I'm Falling in Love [Instrumental Version].mp3
 copy The Velvet Underground/Another View/07 Hey Mr. Rain [Version II].mp3
 copy The Velvet Underground/Loaded/03 Rock & Roll.mp3
 copy The Velvet Underground/The Velvet Underground & Nico/02 I'm Waiting For The Man.mp3
 copy The Velvet Underground/The Velvet Underground & Nico/05 Run Run Run.mp3
+copy The Velvet Underground/The Velvet Underground & Nico/07 Heroin.mp3
+copy The Velvet Underground/The Velvet Underground & Nico/11 European Son.mp3
 copy The Velvet Underground/The Velvet Underground/04 Pale Blue Eyes.mp3
 copy The Velvet Underground/The Velvet Underground/10 After Hours.mp3
 copy The Velvet Underground/VU/01 I Can't Stand It.mp3
 copy The Velvet Underground/VU/05 Ocean.mp3
 copy The Velvet Underground/VU/10 I'm Sticking With You.mp3
 copy The Velvet Underground/White Light_White Heat/01 White Light_White Heat.mp3
+copy The Velvet Underground/White Light_White Heat/02 The Gift.mp3
 copy The Ventures/Hawaii Five-O/Hawaii Five-O.mp3
 copy The Ventures/The Ventures Play the _Batman_ Theme/01 Theme From _Batman_.mp3
 copy The Ventures/The Ventures Play the _Batman_ Theme/04 The Cape.mp3
@@ -10648,6 +11322,7 @@ copy These New Puritans/Hidden/06 Fire-Power.mp3
 copy Thin Lizzy/Bad Reputation/05 Dancing in the Moonlight (It's Caught Me in Its Spotlight).mp3
 copy Thin Lizzy/Black Rose_ A Rock Legend/01 Do Anything You Want To.mp3
 copy Thin Lizzy/Black Rose_ A Rock Legend/06 Got to Give It Up.mp3
+copy Thin Lizzy/Black Rose_ A Rock Legend/09 Roísín Dubh (Black Rose)_ A Rock Legend.mp3
 copy Thin Lizzy/Chinatown/02 Chinatown.mp3
 copy Thin Lizzy/Chinatown/04 Sugar Blues.mp3
 copy Thin Lizzy/Fighting/03 Suicide.mp3
@@ -10737,6 +11412,7 @@ copy Tom Waits/Heartattack and Vine/01 Heartattack and Vine.mp3
 copy Tom Waits/Massey Hall. Toronto, Canada/Papa's Got A Brand New Bag.mp3
 copy Tom Waits/Mule Variations/01 Big in Japan.mp3
 copy Tom Waits/Mule Variations/03 Hold On.mp3
+copy Tom Waits/Mule Variations/04 Get Behind the Mule.mp3
 copy Tom Waits/Mule Variations/06 Cold Water.mp3
 copy Tom Waits/Mule Variations/08 What's He Building_.mp3
 copy Tom Waits/Mule Variations/10 Eyeball Kid.mp3
@@ -10751,6 +11427,7 @@ copy Tom Waits/Night on Earth/13 Helsinki Mood.mp3
 copy Tom Waits/Nighthawks at the Diner/02 Emotional Weather Report.mp3
 copy Tom Waits/Nighthawks at the Diner/14 Spare Parts I (A Nocturnal Emission).mp3
 copy Tom Waits/On Broadway/03 Romeo Is Bleeding.mp3
+copy Tom Waits/On Broadway/05 With a Suitcase _ Jitterbug Boy _ Better Off Without a Wife.mp3
 copy Tom Waits/On Broadway/07 When the Saints Go Marching In.mp3
 copy Tom Waits/One from the Heart/06 I Beg Your Pardon.mp3
 copy Tom Waits/One from the Heart/10 This One's from the Heart.mp3
@@ -10803,12 +11480,14 @@ copy Tomar Yosef/Laughing Underground/13 In The Water.mp3
 copy Tommy Lee Jones/The Sunset Limited/Suppose I Were To Give You My Word.mp3
 copy Tommy Lee Jones/The Sunset Limited/The Ultimate Horror.mp3
 copy Tommy Makem & Liam Clancy/The Makem & Clancy Collection/Red Is The Rose.mp3
+copy Tone396/Rewind The Remix/05 Vs Sabres Of Paradise Smokebelch Ii.mp3
 copy Tone396/Stuff & Nonsense Vol-1/03 Take A Look At Me Now Jimmy Dean.mp3
 copy Tone396/Stuff & Nonsense Vol-1/07 Cream A Cab.mp3
 copy Tone396/Stuff & Nonsense Vol-1/08 Coffee Interlude.mp3
 copy Tone396/Stuff & Nonsense Vol-1/12 Indie Boot.mp3
 copy Tone396/Stuff & Nonsense Vol-1/14 A Burning Forest (V2).mp3
 copy Tone396/Unknown Album/Somebody Told Me.mp3
+copy Tone396/tone396@the controls/ting un stuff.mp3
 copy Tony Bennett/I Left My Heart In San Francisco/01 I Left My Heart In San Francisco.mp3
 copy Tony Bennett/I Left My Heart In San Francisco/02 Once Upon A Time.mp3
 copy Tony Bennett/I Left My Heart In San Francisco/04 Smile.mp3
@@ -10822,8 +11501,10 @@ copy Tony Bennett/The Incomparable/04 Are You Having Any Fun.mp3
 copy Tony Bennett/The Incomparable/06 Jeepers Creepers.mp3
 copy Tony Bennett/The Incomparable/08 With Plenty Of Money And You.mp3
 copy Trans-Siberian Orchestra/The Lost Christmas Eve/04 Wizards In Winter.mp3
+copy Transglobal Underground/Backpacking On The Graves Of Our Ancestors/Lookee Here (Dreadzone At The Controls).mp3
 copy Transglobal Underground/Backpacking On The Graves Of Our Ancestors/This Is The Army Of Forgotten Souls.mp3
 copy Transglobal Underground/Moonshout/10 Elena.mp3
+copy Transglobal Underground/Yes Boss Food Corner/03 Scorch.MP3
 copy Transglobal Underground/Yes Boss Food Corner/10 One Of Our Dholkas Is Missing.MP3
 copy Transvision Vamp/Baby I Don't Care/01 I Want Your Love.mp3
 copy Traveling Wilburys/End Of The Line/End Of The Line.mp3
@@ -10836,6 +11517,7 @@ copy Trio/Da Da Da/14 Da Da Da I Don't Love You You Don't Love Me Aha Aha Aha Lo
 copy Tubeway Army/Replicas/02 Are 'Friends' Electric_.mp3
 copy Tubeway Army/Replicas/03 The Machman.mp3
 copy U2/All That You Can't Leave Behind/01 Beautiful Day.MP3
+copy U2/Beautiful Day/Beautiful Day.mp3
 copy U2/Bono Works At McGonagle's/08 Boy Girl.mp3
 copy U2/Boy/01 I Will Follow.mp3
 copy U2/Boy/02 Twilight.mp3
@@ -10844,8 +11526,10 @@ copy U2/Boy/06 Stories For Boys.mp3
 copy U2/Boy/08 A Day Without Me.mp3
 copy U2/Boy/10 The Electric Co..mp3
 copy U2/How To Dismantle An Atomic Bomb/01 vertigo.mp3
+copy U2/Love_ Live From The Point Depot/01 (Intro) Auld Lang Syne - Where The Streets Have No Name.mp3
 copy U2/Love_ Live From The Point Depot/15 The Times, They Are Changing - New Year's Day.mp3
 copy U2/Love_ Live From The Point Depot/19 When Love Comes To Town.mp3
+copy U2/Melon/01 Lemon (The Perfecto Mix).mp3
 copy U2/Melon/06 Numb (The Soul Assassins Mix).mp3
 copy U2/Melon/08 Even Better Than The Real Thing (The Perfecto Mix).mp3
 copy U2/Pop/03 Mofo.mp3
@@ -10854,6 +11538,7 @@ copy U2/Pop/08 Miami.mp3
 copy U2/The Best Of 1980-1990/2-06 Dancing Barefoot.mp3
 copy U2/U22/2-07 Where the Streets Have No Name.mp3
 copy U2/U22/2-09 With or Without You.mp3
+copy U2/U22/2-10 Moment of Surrender.mp3
 copy U2/Under A Blood Red Sky/03 I Will Follow.MP3
 copy U2/War/02 Seconds.mp3
 copy U2/War/03 New Year's Day.mp3
@@ -10862,13 +11547,26 @@ copy UNKLE/Never, Never, Land/1-02 Eye For An Eye.mp3
 copy UNKLE/Never, Never, Land/1-04 I Safe In Mind (Please Get This Gun From Out My Face).mp3
 copy UNKLE/Psyence Fiction/04 Unreal.mp3
 copy Underworld/A Hundred Days Off/03 Twist.mp3
+copy Underworld/A Hundred Days Off/10 Luetin.mp3
+copy Underworld/Beaucoup Fish/08 Kittens.mp3
+copy Underworld/Beaucoup Fish/1-04 Shudder _ King of Snake.mp3
 copy Underworld/Born Slippy/1-01 Born Slippy .NUXX (short).mp3
 copy Underworld/Bruce Lee/1-01 Bruce Lee.mp3
 copy Underworld/Cowgirl/01 Cowgirl (live radio edit).mp3
+copy Underworld/Cowgirl/03 Cowgirl (Futureshock mix).mp3
+copy Underworld/Dubnobasswithmyheadman/Cowgirl.mp3
+copy Underworld/Dubnobasswithmyheadman/Dark & Long.mp3
+copy Underworld/Dubnobasswithmyheadman/Spoonman.mp3
+copy Underworld/Jumbo/01 Jumbo.mp3
 copy Underworld/Jumbo/05 Jumbo (Jedis Sugar Hit mix).mp3
+copy Underworld/Moaner/02 Moaner (album version).mp3
+copy Underworld/Oblivion With Bells/02 Beautiful Burnout.mp3
 copy Underworld/Pearl's Girl/08 Mosaic.mp3
 copy Underworld/Push Upstairs/02 Push Upstairs (Adam Beyer mix 1).mp3
+copy Underworld/Push Upstairs/05 Please Help Me.mp3
+copy Underworld/Second Toughest In The Infants/03 Confusion The Waitress.mp3
 copy Underworld/Second Toughest In The Infants/04 Rowla.mp3
+copy Underworld/Second Toughest In The Infants/06 Air Towel.mp3
 copy Unknown Artist/Unknown Album/3bells.wav
 copy Unknown Artist/Unknown Album/Guitar Duo.mp3
 copy Unknown Artist/Unknown Album/Guitar Solo 2.mp3
@@ -10891,6 +11589,7 @@ copy Us3/Questions/06 Cantaloop 2004 (Soul Mix).mp3
 copy Us3/Questions/12 Give Thanks.mp3
 copy Us3/Questions/13 The Healer.mp3
 copy Us3/Questions/14 Cantaloop 2004 (Bossa Mix).mp3
+copy Us3/Say What!_/09 The Day That I Died.mp3
 copy Us3/Say What!_/12 I'll Be Right Back.mp3
 copy VNV Nation/Empires/08 Legion.mp3
 copy VNV Nation/Matter+Form/04 Colours of Rain.mp3
@@ -10898,6 +11597,7 @@ copy VNV Nation/Matter+Form/05 Strata.mp3
 copy VNV Nation/Matter+Form/06 Interceptor.mp3
 copy Various Artists/100 Greatest Christmas Hits/040 - Judy Garland - Have Yourself a Merry Little Christmas.mp3
 copy Various Artists/Esl Remixed_ The 100th Release of Esl Music/09 Road To Benares (Bombay Dub Orchestra Remix).mp3
+copy Various Artists/Global Dancefloor_ A Collection Of Global Dance/06 Get Carter Theme (Get Dancing Remix).mp3
 copy Various Artists/Latin Travels 2/01 Montuno Skank.mp3
 copy Various Artists/Peaky Blinders OST/1-03 Loverman.mp3
 copy Various Artists/Peaky Blinders OST/1-13. Blue veins.mp3
@@ -10913,8 +11613,10 @@ copy Various Artists/To Life!_ Songs of Chanukah and Other Jewish Celebrations/1
 copy Various Artists/To Life!_ Songs of Chanukah and Other Jewish Celebrations/16 Hava Nagila.mp3
 copy Various Artists/To Life!_ Songs of Chanukah and Other Jewish Celebrations/17 Rabbi Elimeylekh.mp3
 copy Various Artists/ZZ Top – A Tribute from Friends/05 Cheap Sunglasses.mp3
+copy Various Artists/ZZ Top – A Tribute from Friends/11 La Grange.mp3
 copy Various/Electro Swing IV/14 St Louis Blues.mp3
 copy Version Big-Fi/Beats, Dubs & Everyting Else Vol.1/01 Top Of The World (Big-Fi Dub).mp3
+copy Version Big-Fi/Beats, Dubs & Everyting Else Vol.1/02 Rocket (Big-Fi Dub).mp3
 copy Version Big-Fi/Beats, Dubs & Everyting Else Vol.1/06 Time To Be Happy (Part 4).mp3
 copy Version Big-Fi/Beats, Dubs & Everyting Else Vol.1/07 Time To Be Happy (Part 5).mp3
 copy Version Big-Fi/Beats, Dubs & Everyting Else Vol.1/08 Chicken Shot (Remix).mp3
@@ -10937,8 +11639,23 @@ copy Version Big-Fi/Meets/03 Feel Like Jumping (Ft Marcia Griffiths).mp3
 copy Version Big-Fi/Meets/06 Dayne Tayne Ting (Ft Althea).mp3
 copy Version Big-Fi/Meets/07 Tribute (Ft Clint Eastwood & General Saint).mp3
 copy Version Big-Fi/Meets/08 Bring The Kutchie Come (Ft Reggae Crusaders).mp3
+copy Version Big-Fi/Meets/10 Maxi Tempo (Ft Anthony Red Rose).mp3
 copy Vibes Alive/The Best Of Cookin'/82 The Spoken Word.mp3
+copy Vibrasphere/Archipelago Remixed/03 Sweet September (Perfect Stranger Remix).mp3
+copy Vibrasphere/Archipelago Remixed/04 Landmark (Allaby Remix).mp3
+copy Vibrasphere/Archipelago Remixed/05 Morning Breeze (Atmos Remix).mp3
+copy Vibrasphere/Archipelago Remixed/06 Sudden Comfort (Decoy Remix).mp3
+copy Vibrasphere/Archipelago Remixed/08 Seven Days to Daylight (Unai Remix).mp3
+copy Vibrasphere/Archipelago/04 Landmark.mp3
+copy Vibrasphere/Archipelago/05 Seven Days to Daylight.mp3
+copy Vibrasphere/Archipelago/09 Late Winter Storms.mp3
 copy Vibrasphere/Exploring The Tributaries/09 Ensueño.mp3
+copy Vibrasphere/Landmark/03 Manzanilla (2005 Mix).mp3
+copy Vibrasphere/Selected Downbeats Vol.1/01 Forever Imaginary.mp3
+copy Vibrasphere/Selected Downbeats Vol.1/03 All Green Seasons.mp3
+copy Vibrasphere/Selected Downbeats Vol.1/05 Northern Sunsets.mp3
+copy Vibrasphere/Selected Downbeats Vol.1/07 The Big Sleep.mp3
+copy Vibrasphere/Selected Downbeats Vol.1/10 Buenos Aires (2004 Edit).mp3
 copy Victor Fedorov_ Red Army Choir/Russian Favourites/02 O, Field, My Field (Polyushko Polye).mp3
 copy Victor Fedorov_ Red Army Choir/Russian Favourites/06 There Marched The Soldiers.mp3
 copy Victor Fedorov_ Red Army Choir/Russian Favourites/07 In The Forest By The Combat Line.mp3
@@ -10963,6 +11680,7 @@ copy Violent Femmes/Crazy/Crazy.mp3
 copy Violent Femmes/Freak Magnet/02 Freak Magnet.mp3
 copy Violent Femmes/Freak Magnet/07 Rejoice And Be Happy.mp3
 copy Violent Femmes/Hallowed Ground/01 Country Death Song.mp3
+copy Violent Femmes/Hallowed Ground/03 Never Tell.mp3
 copy Violent Femmes/Hallowed Ground/04 Jesus Walking on the Water.mp3
 copy Violent Femmes/Hallowed Ground/09 It's Gonna Rain.mp3
 copy Violent Femmes/New Times/05 4 Seasons.mp3
@@ -10984,6 +11702,7 @@ copy Violent Femmes/Why Do Birds Sing/05 Hey Nonny Nonny.mp3
 copy Violent Femmes/Why Do Birds Sing/08 He Likes Me.mp3
 copy Violent Femmes/Why Do Birds Sing/11 Lack of Knowledge.mp3
 copy Virgin Prunes/A New Form of Beauty 2 [10_ single]/02 Sweet Home (under White Clouds).mp3
+copy Virgin Prunes/Pagan Lovesong/01 Pagan Lovesong (Vibe Akimbo).mp3
 copy Virgin Prunes/Pagan Lovesong/02 Pagan Lovesong.mp3
 copy Virgin Prunes/Pagan Lovesong/03 Dave-id Is Dead.mp3
 copy Virgin Prunes/_.. If I Die, I Die/03 Sweethome under White Clouds.mp3
@@ -11022,6 +11741,7 @@ copy Watcha Clan/Diaspora Remixed/02 balkan qoulou (shazalakazoo remix).mp3
 copy Watcha Clan/Diaspora Remixed/03 balkan qoulou (dunkelbunt remix).mp3
 copy Watcha Clan/Diaspora Remixed/07 tchiribim (balkan xpress soundsistema remix).mp3
 copy Watcha Clan/Diaspora Remixed/08 limu (mars exist remix).mp3
+copy Watcha Clan/Diaspora Remixed/09 goumari (dj click remix).mp3
 copy Watcha Clan/Diaspora Remixed/13 Les Courbes De Ton Corps (Stratman Remix).mp3
 copy Watcha Clan/Le Bastion/02 Limu.mp3
 copy Watcha Clan/Le Bastion/07 Diaspora Dub.mp3
@@ -11110,6 +11830,7 @@ copy Wire/The Peel Sessions Wire/05 The Other Window (Live).mp3
 copy Wizzard/NOW That_s What I Call Christmas 2014/1-05 I Wish It Could Be Christmas Everyday.mp3
 copy Wizzard/See My Baby Jive/See My Baby Jive.mp3
 copy Wooden Shjips/Streamed/01 We Ask You To Ride.mp3
+copy Wooden Shjips/Streamed/03 Losin' Time.mp3
 copy Wooden Shjips/Streamed/06 Shrinking Moon For You.mp3
 copy Wooden Shjips/Streamed/07 Clouds Over Earthquakes.mp3
 copy Wooden Shjips/Streamed/08 Sol '07 (part 2).mp3
@@ -11117,7 +11838,12 @@ copy Wooden Shjips/West/01 Black Smoke Rise.mp3
 copy Wooden Shjips/West/02 Crossing.mp3
 copy Wooden Shjips/West/03 Lazy Bones.mp3
 copy Wooden Shjips/West/04 Home.mp3
+copy Wooden Shjips/West/05 Flight.mp3
 copy Wooden Shjips/West/06 Looking Out.mp3
+copy Wooden Shjips/Wooden Shjips [Bonus Disc]/06 Dance, California.mp3
+copy Woven Hand/Blush music/05 My Russia (Standing on Hands).mp3
+copy Woven Hand/Blush music/08 Your Russia (Without hands).mp3
+copy Woven Hand/Blush music/09 Another White Bird.mp3
 copy Woven Hand/Mosaic/01 Breathing Bull.mp3
 copy Woven Hand/Mosaic/05 Whistling Girl.mp3
 copy Woven Hand/Mosaic/08 Dirty Blue.mp3
@@ -11128,6 +11854,7 @@ copy Yazoo/B-Sides And Remixes/05 Situation [US 12inch mix].mp3
 copy Yazoo/B-Sides And Remixes/06 Situation [original US dub].mp3
 copy Yazoo/B-Sides And Remixes/10 Nobody's Diary [extended version].mp3
 copy Yazoo/B-Sides And Remixes/11 State Farm [extended version].mp3
+copy Yazoo/B-Sides And Remixes/12 Situation [Re-Recorded Remix].mp3
 copy Yazoo/The Classic Techno Mixes/04 Nobody's Diary (12 Inch Mix).mp3
 copy Yazoo/The Classic Techno Mixes/07 Situation (US DubMix).mp3
 copy Yazoo/Upstairs At Eric's/01 Don't Go.mp3
@@ -11149,17 +11876,24 @@ copy Yello/1980-1985 The New Mix in One Go/17 Bostich.mp3
 copy Yello/Baby/03 Jungle Bill.mp3
 copy Yello/Baby/Blender.mp3
 copy Yello/Baby/On The Run.mp3
+copy Yello/Eccentric Remixes/07 On Track.mp3
 copy Yello/Eccentric Remixes/08 Vicious Games.mp3
 copy Yello/Eccentric Remixes/09 Rubberbandman.mp3
+copy Yello/Eccentric Remixes/Do It.mp3
 copy Yello/Eccentric Remixes/More.mp3
 copy Yello/Essential/03 Drive Driven.mp3
 copy Yello/Essential/Jungle bill.mp3
+copy Yello/Hands On Yello/Great Mission (Haus Mix).mp3
+copy Yello/Hands On Yello/Greater Mission.mp3
 copy Yello/Hands On Yello/Lost Again.mp3
 copy Yello/In The Movies/03 Oh Yeah (Indian Summer Version).mp3
 copy Yello/Jingle Bells (CD single)/Jingle Bells (movie version).mp3
 copy Yello/Jingle Bells (CD single)/Jingle Bells.mp3
 copy Yello/Motion Picture/01 Get On.mp3
 copy Yello/Motion Picture/07 Liquid Lies.mp3
+copy Yello/Motion Picture/08 Squeeze Please.mp3
+copy Yello/Oh Yeah 'Oh Six - The Remixes/03 Oh Yeah (Luetzenkirchen Remix).mp3
+copy Yello/Oh Yeah 'Oh Six - The Remixes/05 Oh Yeah (Sander Van Doorn Remix).mp3
 copy Yello/One Second/06 The Rhythm Divine.mp3
 copy Yello/One Second/Call It Love.mp3
 copy Yello/One Second/Dr van Steiner.mp3
@@ -11181,9 +11915,11 @@ copy Yello/Stella/07 Domingo.mp3
 copy Yello/Stella/08 Sometimes (Dr Hirsch).mp3
 copy Yello/Stella/Desert Inn.mp3
 copy Yello/The Eye/06 Tiger Dust.mp3
+copy Yello/The Flag/05 The Race.mp3
 copy Yello/The Flag/3rd Of June.mp3
 copy Yello/The Flag/Blazing Saddles.mp3
 copy Yello/The Flag/Otto Di Catania.mp3
+copy Yello/The Flag/The  Race.mp3
 copy Yello/The Flag/Tied Up In Gear.mp3
 copy Yello/The Flag/Tied Up.mp3
 copy Yello/The Race (Single)/01 The Race 2003.mp3
@@ -11193,6 +11929,7 @@ copy Yello/Touch Yello - Virtual Concert/06 Bostich (Reflected).mp3
 copy Yello/Touch Yello - Virtual Concert/09 Tiger Dust.mp3
 copy Yello/Touch Yello - Virtual Concert/11 Oh Yeah 2009.mp3
 copy Yello/Touch Yello - Virtual Concert/12 The Race 2008.mp3
+copy Yello/Tremendous Pain/05 Tremendous Pain (Suite 904 Alternative Vocal).mp3
 copy Yello/You Gotta Say Yes to Another Excess/01 I Love You.mp3
 copy Yello/You Gotta Say Yes to Another Excess/02 Lost Again.mp3
 copy Yello/You Gotta Say Yes to Another Excess/06 You Gotta Say Yes to Another Excess.mp3
@@ -11213,6 +11950,7 @@ copy Zarah Leander/Unknown Album/95 Yes, Sir.mp3
 copy Zed A Shaw/The ACL is Dead/Rockstar, Classic, Punk.mp3
 copy Zed A Shaw/The Web Will Die When OOP Dies/Bullshit.mp3
 copy Ziganamama/Ziganamama/05 Konyali.mp3
+copy Ziganamama/Ziganamama/09 Der yid in Yerusholayim.mp3
 copy Ziganamama/Ziganamama/10 Sirba de la Transylvania.mp3
 copy Ziggy Stardust/Ziggy Stardust Remixed/01 Stardust Kids (David Bowie Vs. MGMT).mp3
 copy Ziggy Stardust/Ziggy Stardust Remixed/03 Star Of The Party (David Bowie Vs. Jay-Z).mp3
@@ -11222,6 +11960,7 @@ copy Ziggy Stardust/Ziggy Stardust Remixed/11 Five Years (World Famous Audio Hac
 copy Zoran Simjanovic/Unknown Album/Tito i ja.mp3
 copy [dunkelbunt]/Morgenlandfahrt/02 La Revedere.mp3
 copy [dunkelbunt]/Morgenlandfahrt/07 Der Kicherer.mp3
+copy [dunkelbunt]/Morgenlandfahrt/15 Dunkelbunt Dub.mp3
 copy k.d. lang/Ingenue/01 Save Me.mp3
 copy k.d. lang/Ingenue/03 Miss Chatelaine.mp3
 copy k.d. lang/Ingenue/06 Still Thrives This Love.mp3
@@ -11233,6 +11972,7 @@ copy Γιώργος Νταλάρας & Goran Bregović/Thessaloniki - Yanne
 copy Γιώργος Νταλάρας & Goran Bregović/Thessaloniki - Yannena With Two Canvas Shoes/05 Night (Nihta).mp3
 copy Γιώργος Νταλάρας & Goran Bregović/Thessaloniki - Yannena With Two Canvas Shoes/09 Don't Give Up, Anna (Pou na 'se tora, Anna).mp3
 copy Γιώργος Νταλάρας & Goran Bregović/Thessaloniki - Yannena With Two Canvas Shoes/10 Confess (Martira ta (Lubenica)).mp3
+copy 䄀渀琀椀洀愀琀琀攀爀/Planetary Confinement/09 Eternity Part 24.mp3
 copy 梶芽衣子/Zenkyokushu/Hune ni Yurarete.mp3
 copy 梶芽衣子/Zenkyokushu/Meinichi.mp3
 copy 梶芽衣子/Zenkyokushu/Urami Bushi.mp3

@@ -19,7 +19,7 @@ py () {
     local _path=
     if [[ -n "$@" ]]; then
         local all_args="$*"
-        local _path=$(pyth ~/python/scripts.py -m "$@" 2> ~/bash/fd/2)
+        local _path=$(pyth ~/python/scripts.py -m "$@" 2> /tmp/std/err)
         if [[ "$all_args" =~ "--help" || "$all_args" =~ "-[hU]" || $? != 0 ]]; then
             _path=
         elif [[ -z $_path ]]; then

@@ -5,6 +5,10 @@
 # x
 
 v () {
+    vm "$@"
+}
+
+vv () {
     vim -p "$@"
 }
 
@@ -15,13 +19,13 @@ v. () {
 # va
 
 vb () {
-    vim -p "$@"
+    v "$@"
 }
 
 vc () {
     local _dot_cd
     [[ -f .cd ]] && _dot_cd=.cd
-    vim -p $CDE.sh ~/hub/cde/cde/ ~/keys/c.sh $_dot_cd
+    v $CDE.sh ~/hub/cde/cde/ ~/keys/c.sh $_dot_cd
 }
 
 vd () {
@@ -51,18 +55,18 @@ vm () {
 
 vo () {
     local _command=$(history -p !-1)
-    vim -p $($_command 2>/dev/null)
+    v $($_command 2>/dev/null)
 }
 
 # vp
 
 vq () {
-    vim -p "$@"
+    v "$@"
 }
 
 vr () {
     local _command=$(history -p !-1)
-    vim -p $($_command >/dev/null)
+    v $($_command >/dev/null)
 }
 
 # vs
@@ -75,11 +79,11 @@ vu () {
     __doc__="Edit vim files in ~/jab. Add home vim files if different"
     local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
     local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
-    vim -p $_vimrc $_vim
+    v $_vimrc $_vim
 }
 
 vv () {
-    vim -p ~/.vimrc "$@"
+    v ~/.vimrc "$@"
 }
 
 vw () {
@@ -160,7 +164,7 @@ ved () {
 }
 
 vfd () {
-    vim -p $(fd "$@")
+    v $(fd "$@")
 }
 
 vin () {
@@ -214,7 +218,7 @@ vvu () {
 
 vvv () {
     (cd ~/jab/vim
-    vim -p "$@" .
+    v "$@" .
     gsi)
 }
 
@@ -241,7 +245,7 @@ vims () {
 }
 
 vini () {
-    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
+    v $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
 }
 
 vvpj () {
@@ -308,7 +312,7 @@ vim_diff () {
 
 v_safely () {
     local __doc__="""Use a safe vim function"""
-    vim -p "$@"
+    v "$@"
 }
 
 
