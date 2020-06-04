@@ -1,8 +1,9 @@
 #! /bin/cat
 
 
-. ~/jab/src/bash/crayons.sh
 . ~/jab/src/bash/arg_dirs.sh
+. ~/jab/src/bash/crayons.sh
+. ~/jab/src/bash/git/status.sh
 . ~/jab/src/bash/keyboard/r.sh
 
 # functons.sh for git
@@ -319,7 +320,7 @@ glg () {
     git_log_lines_to_screen -n $number_of_commits_ "$@" 2>/dev/null
     local result_=$?
     echo
-    return result
+    return $result_
 }
 
 gll () {
@@ -957,7 +958,6 @@ get_root () {
 }
 
 git_root () {
-    local stdout_=$(verbosity "$@")
     local git_dir_=
     local origin_=
     local quiet_=
@@ -1122,7 +1122,6 @@ git_log_lines_to_screen () {
     fi
     # set +x
     local log_cmd_=lg
-    show_run_command git status --short
     show_command git $log_cmd_ -n $number_of_commits_ "$@"
     # set -x
     git_log_to_screen $log_cmd_ -n $number_of_commits_ "$@" | trim_git_lines

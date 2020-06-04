@@ -6,12 +6,6 @@ export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
 
-get_git_branch () {
-    git branch > /dev/null 2>&1 || return 1
-    git status >/dev/null 2>&1 || return 1
-    git rev-parse --abbrev-ref HEAD 2>/dev/null
-}
-
 get_git_status() {
     local _branch=$1; shift
     local _bump_version=$1; shift
