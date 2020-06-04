@@ -13,4 +13,5 @@ set fullscreen
 " Keyboard {{{1
 " ordinary keys {{{2
 " LETTERS {{{3
-nnoremap Q <esc>:q!<CR>
+"noremap Q <esc>:q!<CR>
+unmap Q

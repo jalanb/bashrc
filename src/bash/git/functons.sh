@@ -48,8 +48,54 @@ gd () {
 }
 
 gf () {
-    gfa
-    gft
+    gfa; gft
+}
+
+gpf () {
+    show_command "git push --force-with-lease $@"
+    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
+            show_run_command $command_
+        else
+            show_error "$MSG"
+            return 1
+        fi
+    fi
+}
+
+grf () {
+    gff "$@"
+}
+
+gdf () {
+    git df "$@"
+}
+
+grf () {
+    gcu
+    git_root -o
+    gfe | grep -v 'Fetching'
+    gor master 2>/dev/null | grep -v "up to date"
+    gb
+    bump show
+    local lines_=5
+    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
+    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
+}
+
+gof () {
+    gbD fred 2>/dev/null
+    gob fred "$@"
+}
+
+gipf () {
+    gi "$@"
+    gpf
+}
+
+gpff () {
+    gp --force "$@"
 }
 
 GI () {
@@ -221,10 +267,6 @@ gdd () {
     gdi .
 }
 
-gdf () {
-    git df "$@"
-}
-
 gdi () {
     local _doc___="""git di args"""
     git di "$@"
@@ -254,18 +296,6 @@ gfa () {
 gfe () {
     gfa
     grup
-}
-
-gff () {
-    gcu
-    git_root -o
-    gfe | grep -v 'Fetching'
-    gor master 2>/dev/null | grep -v "up to date"
-    gb
-    bump show
-    local lines_=5
-    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
-    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
 }
 
 gfm () {
@@ -307,12 +337,6 @@ glone () {
 
 gla () {
     git_log_to_screen lg --author=Alan.Brogan "$@"
-}
-
-glf () {
-    local number_='-n 3'
-    [[ "$@" =~ -n ]] && number_=
-    git lf $number_ "$@"
 }
 
 glg () {
@@ -371,11 +395,6 @@ gob () {
     show_run_command git checkout -b $new_branch_ $old_commit_
 }
 
-gof () {
-    gbD fred 2>/dev/null
-    gob fred "$@"
-}
-
 gog () {
     go "$@"; glg; bump show
 }
@@ -405,19 +424,6 @@ got () {
         gor "$@"
     else
         show_run_command git "$@"
-    fi
-}
-
-gpf () {
-    show_command "git push --force-with-lease $@"
-    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
-        if [[ $MSG =~ set-upstream ]]; then
-            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
-            show_run_command $command_
-        else
-            show_error "$MSG"
-            return 1
-        fi
     fi
 }
 
@@ -730,11 +736,6 @@ gdis () {
     gdi --staged "$@"
 }
 
-gipf () {
-    gi "$@"
-    gpf
-}
-
 glggggggg () {
     tput smcup
     show_command git lg "$@"
@@ -828,10 +829,6 @@ gpod () {
         branches_="$branches_ $branch_"
     done
     gpo --delete $branches_
-}
-
-gpff () {
-    gp --force "$@"
 }
 
 gppp () {
