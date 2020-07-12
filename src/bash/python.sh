@@ -1,7 +1,6 @@
 #! /bin/cat
 
-. ~/bash/paths.sh
-
+type same_dir >/dev/null 2>&1 || . ~/bash/paths.sh
 
 # x
 # xx
@@ -19,7 +18,7 @@ py () {
     local _path=
     if [[ -n "$@" ]]; then
         local all_args="$*"
-        local _path=$(pyth ~/python/scripts.py -m "$@" 2> /tmp/std/err)
+        local _path=$(pyth ~/python/scripts.py -m "$@" 2> ~/fd2)
         if [[ "$all_args" =~ "--help" || "$all_args" =~ "-[hU]" || $? != 0 ]]; then
             _path=
         elif [[ -z $_path ]]; then

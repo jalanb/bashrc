@@ -1,55 +1,46 @@
 #! /bin/bash -x
 
-    _set_path () {
-    LOCAL=/usr/local
-    LOCALS="$LOCAL/bin"
-    [[ -d $LOCAL/gnu ]] && LOCALS="$LOCAL/gnu:$LOCALS"
-    [[ -d $LOCAL/go/bin ]] && LOCALS="$LOCALS:$LOCAL/go/bin"
-    BINS=/usr/bin:/bin:/usr/sbin:/sbin
-    HOMES=$HOME/bin:$HOME/.local
-    PATH=$HOMES:$LOCALS:$BINS
-    export STDOUT=on
-    export STDERR=on
     if test -d $HOME/lib -a -n "$(find $HOME/lib -maxdepth 1 -name 'libpython*' -print -quit)"; then
         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     fi
 }
 
-home_user=$HOME/jab
+# set -x
 
 _bashrc () {
     local init_=$home_user_/__init__.sh
     if [[ -f $init_ ]]; then
-        echo "PATH is (echo $PATH | tr ':' '\n')"
-        echo "PSI is $PS1"
-        echo "Here is $(readlink -f .)"
+        # echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
+        # echo "PSI is $PS1"
+        # echo "Here is $(readlink -f .)"
         source $init_
-        echo "PATH is (echo $PATH | tr ':' '\n')"
-        echo "PSI is $PS1"
+        sp green
+        echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
+        # echo "PSI is $PS1"
         echo "Here is $(readlink -f .)"
     fi
     # set +x
-        export PS1="\$? [\u@\h:\$PWD]\n$ "
-        sp green
     # set -x
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
 }
 
 BASHRC_LOG=~/log/bashrc.log
 vbb () {
+    # set -x
     local _log=
     test -f $BASHRC_LOG && _log=$BASHRC_LOG
     (
         cd $home_user
-        local _local=
-        test -f local/__init__.sh && _local=local/__init__.sh
-        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log "$@"
-        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $_local ~/.vimrc $_log
+        local local__=
+        test -f local/__init__.sh && local__=local/__init__.sh
+        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local__ ~/.vimrc $_log "$@"
+        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local__ ~/.vimrc $_log
     )
     [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
 }
 
 vbl () {
+    # set -x
     [[ -f $BASHRC_LOG ]] || return 1
     vim $BASHRC_LOG
 }

@@ -142,14 +142,6 @@ red_python () {
     echo "${_colour_python}${_join}${_colour_venv}"
 }
 
-sp () {
-    source ~/bash/prompt.sh
-}
-
-vp () {
-    _edit_source ~/bash/prompt.sh +/^_colour_prompt
-}
-
 set_status_bit () {
     local __doc__="""Set the status bit from $?"""
     local _one=$1; shift

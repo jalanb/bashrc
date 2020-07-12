@@ -20,20 +20,13 @@ show_pythonpath () {
 }
 
 
-# export ALIAS_CC=1 # for cde and whyp
-
-. ~/hub/whyp/whyp.sh
-. ~/jab/src/bash/hub.sh
 export ACKVIM=~/hub/ackvim/ackvim
 . $ACKVIM.sh
 export CDE=~/hub/cde/cde
 . $CDE.sh
-export WHYP=~/hub/whyp/whyp
-. $WHYP.sh
+# . $WHYP.sh
 export PYTH=~/hub/pyth/pyth
 . $PYTH.sh
-
-_out_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
 
 . ~/jab/environ.d/__init__.sh
 . ~/jab/src/bash/__init__.sh

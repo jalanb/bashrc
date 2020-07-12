@@ -52,23 +52,10 @@ vm () {
 }
 
 # vn
-
-vo () {
-    local _command=$(history -p !-1)
-    v $($_command 2>/dev/null)
-}
-
+# vo
 # vp
-
-vq () {
-    v "$@"
-}
-
-vr () {
-    local _command=$(history -p !-1)
-    v $($_command >/dev/null)
-}
-
+# vq
+# vr
 # vs
 
 vt () {
@@ -164,7 +151,7 @@ ved () {
 }
 
 vfd () {
-    v $(fd "$@")
+    vim -p $(fd "$@")
 }
 
 vin () {
@@ -233,10 +220,6 @@ vd12 () {
 }
 
 vd13 () {
-    vd ~/one ~/three
-}
-
-vd23 () {
     vd ~/two ~/three
 }
 
@@ -289,7 +272,7 @@ vd123 () {
 vim_diff () {
     local one_= two_= three_= diff_opts_= edit_opts_= arg_=
     if [[ $1 =~ -[dD] ]]; then
-        diff_opts_=$1; shift 
+        diff_opts_=$1; shift
     fi
     if [[ $1 =~ -[oO] ]]; then
         diff_opts_="$diff_opts_ $1"; shift
