@@ -47,8 +47,8 @@ eft () {
 }
 
 etf () {
-    wtf $?
     local __doc__="""Errors from a status"""
+    wtf $?
 }
 
 ett () {
