@@ -8,29 +8,28 @@ import jab as src_python
 
 
 setup(
-    name=src_python.name,
-    packages=[src_python.name],
-    version=src_python.__version__,
-    url='https://github.com/jalanb/jab/tree/master/src/python/',
+    name="jab",
+    packages=["jab"],
+    version='0.8.0',
+    url='https://github.com/jalanb/jab/',
     license='MIT License',
     author='J Alan Brogan',
     author_email='github@al-got-rhythm.net',
-    description=src_python.__doc__,
+    description="Just jabs' stuff"
     platforms='any',
     classifiers=[
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.7',
         'Development Status :: 1 - Planning',
         'Natural Language :: English',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: Linux',
+        'Operating System :: Darwin',
     ],
     install_requires=['pysyte'],
-    test_suite='nose.collector',
-    tests_require=['nose'],
+    tests_require=['pytest'],
     extras_require={
-        'testing': ['nose'],
+        'testing': ['pytest'],
     }
 )
 
