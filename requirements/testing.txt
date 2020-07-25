@@ -1,0 +1,10 @@
+-r requirements.txt
+-r linting.txt
+
+bumpversion
+codecov
+coverage
+pinocchio
+pytest
+pytest-cov
+tox

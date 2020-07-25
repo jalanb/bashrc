@@ -29,6 +29,13 @@ kv () {
     return 0
 }
 
+ky () {
+    shift_dir "$@" && shift
+    dir=${dir:-~/jab/src/python}
+    cde $dir "$@"
+    y .
+}
+
 # xxx
 
 kkk () {

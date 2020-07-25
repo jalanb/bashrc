@@ -26,6 +26,7 @@ hd () {
     vim_diff -o "$@"
 }
 
+alias hb=big_history_grep
 alias hg=history_grep
 alias hh=history_head
 
@@ -35,6 +36,10 @@ hl () {
 
 alias ht=history_tail
 alias hv=history_vim
+alias vh="history_vim -[ 1"
+alias vhh="history_vim -[ 2"
+alias hhv="history_vim -h"
+
 
 # xxx
 
@@ -43,18 +48,6 @@ hgt () {
     hg "$@" | tail
 }
 
-hgv () 
-{ 
-    local __doc__="edit history";
-    local _vim_suffix=+
-    if [[ -n $* ]]; then
-        _vim_suffix=+/"$@";
-        [[ "$@" =~ ^+ ]] && _vim_suffix="$@";
-    fi
-    h "$@" > ~/tmp/history.tmp
-    vim ~/tmp/history.tmp $_vim_suffix;
-    rr ~/tmp/history.tmp
-}
 
 
 # history_xxxx+
@@ -63,10 +56,14 @@ history_parse () {
     HISTTIMEFORMAT= history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v -e "^\<\(history\(_[a-z-]*\)*\|[Hh][Gghnt]\|h [0-9][0-9]*$\)\> "
 }
 
+hyp_executable  () {
+    type "$@" > /dev/null 2>&1
+}
+
 history_view () {
     local __doc__="view history"
     local _viewer=
-    whyp_executable "$1" && _viewer="$1"
+    hyp_executable "$1" && _viewer="$1"
     [[ $_viewer ]] && shift || _viewer=tail
     local _options="-n $(( $LINES - 7 ))"
     [[ $1 == -n ]] && shift
@@ -79,6 +76,15 @@ history_view () {
 
 history_head () {
     history_view head "$@"
+}
+
+big_history_grep () {
+    local number_=32
+    if [[ $1 == "-n" && $2 =~ ^[0-9]*$ ]]; then
+        number_=$2
+        shift 2
+    fi
+    grep "$@" ~/.big_eternal_history | tail -n $number_ | g "$@"
 }
 
 history_grep () {
@@ -96,13 +102,16 @@ history_tail () {
 
 history_vim () {
     local __doc__="edit history"
-    history_parse "$@" > ~/tmp/history.tmp
-    local _vim_suffix=+
+    local command_= tmp_=~/tmp/history.tmp
+    [[ $1 == -[ ]] && shift && command_=$(history -p !-$1) && shift
+    [[ $1 == -h ]] && shift && command_=h
+    [[ $command_ ]] || command_=history_parse
+    $command_ "$@" > $tmp_
+    local vim_suffix_=+
     if [[ -n $* ]]; then
-        _vim_suffix=+/"$@"
-        [[ "$@" =~ ^+ ]] && _vim_suffix="$@"
+        [[ "$@" =~ ^+ ]] && vim_suffix_="$@" || vim_suffix_=+/"$@"
     fi
-    vim ~/tmp/history.tmp $_vim_suffix
+    vim $tmp_ $vim_suffix_
 }
 
 hgf () {

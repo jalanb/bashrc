@@ -3,6 +3,23 @@
 
 # _
 # x
+
+ab () {
+    ash "$@" ~/bash
+}
+
+ag () {
+    alias | grep "$@"
+}
+
+aj () {
+    ash "$@" ~/jab
+}
+
+ak () {
+    ash "$@" ~/keys
+}
+
 # _x
 # xx
 
@@ -25,6 +42,14 @@ _av () {
 # xxx
 
 # aaa also ackvim.sh
+
+aab () {
+    aash "$@" ~/bash
+}
+
+ajb () {
+    ash "$@" ~/jalanb
+}
 
 avb () {
     __doc__="vack all args in ~/jab/src/bash";
@@ -65,5 +90,6 @@ avv () {
     __doc__="vack all args in ~/jab/vim";
     _av ~/jab/vim "$@"
 }
+
 
 

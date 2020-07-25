@@ -20,6 +20,10 @@ f () {
 # _
 # xx
 
+fa () {
+    fv "$@"
+}
+
 ff () {
     local _dir=.
     [[ -d "$1" ]] && _dir="$1" && shift
@@ -34,11 +38,26 @@ fn () {
     f -name "$@"
 }
 
+fv () {
+    shift_dir "$@" && shift
+    if [[ -z "$@" ]]; then
+        echo Nothing to find
+    else
+        files=$(find $(realpath $dir) -name "$@")
+        if [[ -z $files ]]; then
+            echo "$@" not found
+        else
+            echo $files | lines_to_spaces | sed -e "s:^\./::"
+            vim -p $files
+        fi
+    fi
+}
+
 # _x
 # xxx
 
 fdd () {
-    $(freds --debug "$@")
+    "$@" 1> ~/fd1  2> ~/fd2
 }
 
 fee () {
@@ -78,7 +97,7 @@ vff () {
 # xxxx
 
 bash_null () {
-    echo ~/bash/null 
+    echo ~/bash/null
 }
 
 fynd () {
@@ -119,12 +138,21 @@ fynd.old () {
 # _xxx
 # xxxxx
 
+fdout () {
+    "$@" 1> ~/fd1
+}
+
+fderr () {
+    "$@" 2> ~/fd2
+}
+
 ffind () {
     local __doc__="ff $dir $filename # finds files with that name in that dir"
     shift_dir "$@" && shift
     filename=$1; shift
     find $dir -type f -name $filename "$@"
 }
-# _xxxx
-# xxxxxx
-# _xxxxx
+
+freds () {
+    python ~/jab/src/python/freds.py "$@"
+}

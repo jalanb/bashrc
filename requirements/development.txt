@@ -1,0 +1,6 @@
+-r testing.txt
+
+
+ipython
+pudb
+rich
