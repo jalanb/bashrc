@@ -11,7 +11,8 @@ import rf
 def add_args(parser):
     p.positional('files', help='files to show (or "-" for stdin)')
     p.string('', 'at', default="", help='Show line at the line number')
-    p.string('', 'first', default="1",
+    p.string('f', 'first', default="1")
+    something = (
         ('all', 'remove all (%s)' % all_glob_names),
         ('recursive', 'remove from subdirectories too'),
         ('quiet', 'do not show files being removed'),

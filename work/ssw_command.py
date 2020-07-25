@@ -70,4 +70,4 @@ def main(args):
         return True
 
 
-run(main, add_args=add_args)
+run(main, add_args)

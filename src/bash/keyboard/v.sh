@@ -279,13 +279,13 @@ vim_diff () {
     fi
     [[ $diff_opts_ ]] || diff_opts_=-dO
     [[ $diff_opts_ =~ -[Dd] ]] || diff_opts_="-dO $diff_opts_"
-    [[ -f "$1" ]] && one_="$1" && shift
+    [[ -e "$1" ]] && one_="$1" && shift
     if [[ ! $one_ ]]; then 
         echo none >&2
         return 1
     fi
-    [[ -f "$1" ]] && two_="$1" && shift
-    [[ -f "$1" ]] && three_="$1" && shift
+    [[ -e "$1" ]] && two_="$1" && shift
+    [[ -e "$1" ]] && three_="$1" && shift
     if ! _any_diff "$one_ " "$two_" "$three_"; then
         echo same 
         return 1

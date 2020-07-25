@@ -15,18 +15,14 @@ cb () {
     cde ~/bots/bots/bots
 }
 
-if [[ ! $ALIAS_CC ]]; then
-    unalias cc 2>/dev/null
-
 cc () {
-    c $CDE.sh
+    cde $CDE.sh
 }
-fi
 
 cg () {
     local _where=.
     [[ "$*" ]] && _where="$@"
-    c $(git -C "$_where" rev-parse --show-toplevel)
+    cde $(git -C "$_where" rev-parse --show-toplevel)
 }
 
 ch () {
@@ -38,12 +34,15 @@ cj () {
 }
 
 cl () {
-    clear
-    l "$@"
+    clean_clear_ls "$@"
 }
 
 cr () {
-    clear
+    clean_clear_ls --clean "$@"
+}
+
+cs () {
+    clean_clear_ls --clear "$@"
 }
 
 # cp is hashed (/usr/local/gnu/cp)
@@ -68,41 +67,31 @@ can () {
     cat -n "$@"
 }
 
-ib () { cn ~/.bashrc
-}
-
 cjy () {
     cd ~/jab/src/python "$@"
 }
 
-clf () {
-    cat ~/jab/local/functons.sh
+cla () {
+    clean_clear_ls --all "$@"
 }
 
-cla () {
-    clear
-    la "$@"
+cll () {
+    clean_clear_ls --long "$@"
 }
 
 clo () {
-    clear
-    lo "$@"
-}
-
-cloa () {
-    clear
-    loa "$@"
-}
-
-cloo () {
     cde $(locate "$@")
 }
 
-# xxxx
-calf () {
-    cat ~/jab/local/functons.sh
+cls () {
+    clean_clear_ls --wide "$@"
 }
 
+clla () {
+    clean_clear_ls --long --all "$@"
+}
+
+# xxxx
 # _xxx
 # xxxxx
 
@@ -113,4 +102,20 @@ clean () {
 # _xxxx
 # xxxxxx
 # _xxxxx
+
+clean_clear_ls () {
+    local __doc__="clean, clear, ls"
+    local dir_=. clear_=clear clean_= ls_options_=C
+    if [[ $1 =~ --clean ]]; then clean_=clean; shift; fi
+    if [[ $1 =~ --clear ]]; then clear_=; shift; fi
+    if [[ $1 =~ --all ]]; then ls_options_=${ls_options_}a; shift; fi
+    if [[ $1 =~ --long ]]; then ls_options_=${ls_options_}lhtr; shift; fi
+    if [[ $1 =~ --wide ]]; then ls_options_=${ls_options_}C; shift; fi
+    [[ $ls_options_ ]] || ls_options_=C
+    [[ -d "$1" ]] && dir_="$1"
+    [[ -d "$dir_" ]] || return 1
+    $clear_
+    $clean_
+    echo l -$ls_options_ "$dir_"
+}
 

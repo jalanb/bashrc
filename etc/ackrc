@@ -10,6 +10,7 @@
 --type-set=shell=.sh
 --type-set=snmp=.mib,.funcs
 --type-set=test=.test,.tests
+--type-set=text=.txt
 --ignore-dir=.venv
 --ignore-dir=.idea
 --ignore-dir=.tox

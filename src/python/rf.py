@@ -219,6 +219,7 @@ def remove_files(files, quiet, trial_run):
 
 def script(paths, args, globs):
     """Run the script"""
+    breakpoint()
     result = os.EX_OK
     for path in paths:
         files = get_files(path, globs, args.recursive)
@@ -231,9 +232,9 @@ def script(paths, args, globs):
 def main():
     """Run the program"""
     try:
-        breakpoint()
         paths, args, globs = parse_options()
     except bdb.BdbQuit:
+        breakpoint()
         return 0
     except NotImplementedError as e:
         breakpont()

@@ -68,6 +68,14 @@ fff () {
     freds | tr ' ' '\n'
 }
 
+fdd () {
+    fd_type d "$@"
+}
+
+fdf () {
+    fd_type f "$@"
+}
+
 fdg () {
     local name_="$1"; shift
     fd "$name_" "$@" | g "$name_"
@@ -93,9 +101,15 @@ vff () {
     $(freds --edit "$@")
 }
 
-# _xx
 # xxxx
 
+fd_type () {
+    local type_=$1 sought_=. dir_=.
+    [[ $2 ]] && sought_=$2
+    [[ $3 ]] && dir_=$3
+    fd -t $type_ $sought_ $dir_
+}
+    
 bash_null () {
     echo ~/bash/null
 }

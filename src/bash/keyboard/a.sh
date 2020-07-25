@@ -13,7 +13,7 @@ ag () {
 }
 
 aj () {
-    ash "$@" ~/jab
+    a "$@" ~/jalanb
 }
 
 ak () {
@@ -47,8 +47,12 @@ aab () {
     aash "$@" ~/bash
 }
 
-ajb () {
-    ash "$@" ~/jalanb
+aaj () {
+    aa "$@" ~/jalanb
+}
+
+ajj () {
+    a "$@" ~/jalanb/jab
 }
 
 avb () {
@@ -91,5 +95,9 @@ avv () {
     _av ~/jab/vim "$@"
 }
 
+
+aajj () {
+    aa "$@" ~/jalanb/jab
+}
 
 
