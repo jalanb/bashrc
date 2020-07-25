@@ -7,18 +7,20 @@
 import os
 import re
 import sys
+import inspect
 try:
     from importlib import reload
 except ImportError:
     def reload(x):
-        raise NotImplementedError('importlib.reload is not available')
-        return reloaded(x)
+        raise NotImplementedError("importlib.reload is not available")
+
+mores = []
 
 try:
     import requests
-    and_requests = ', requests'
+    mores += ["requests"]
 except ModuleNotFoundError:
-    and_requests = ''
+    pass
 
 try:
     import pysyte
@@ -28,7 +30,7 @@ except ImportError as e:
     try:
         import dotsite as pysyte
     except ImportError:
-        sys.stderr.write('pip install pysyte # please')
+        sys.stderr.write("pip install pysyte # please")
 
 try:
     from pathlib import Path
@@ -41,27 +43,24 @@ except ImportError:
         else:
             raise
 
+pyprint = print
+
 try:
-    from see import see
-    from see import see_attributes
-    from see import see_methods
-    from see import spread
-    from see_code import code
-    from see_code import highlight
-    from see_code import see_code
-    from see_code import see_highlight
+    from rich.console import Console
+    console = Console(color_system="standard")
+    print = console.print
+    mores += ["rich"]
 except ImportError:
-    see = False
+    pass
 
 
-def line(s):
-    sys.stdout.write('%s\n' % s)
 
-line('import os, re, sys, pysyte, paths, path, cli %s' % and_requests)
-if see:
-    line('from see import see, see_attributes, see_methods, spread')
-    line('from see_code import code, highlight, see_code, see_highlight')
 
-line('')
-line('%s %s' % (
-    sys.executable.replace(os.environ['HOME'], '~'), sys.version.split()[0]))
+more = ", ".join([" "] + mores) if mores else ""
+executable = sys.executable.replace(os.environ['HOME'], '~')
+version = sys.version.split()[0]
+stdout = lambda x: sys.stdout.write(f"{x}\n")
+
+stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
+stdout("")
+stdout(f"{executable} {version}")
