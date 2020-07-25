@@ -10,8 +10,9 @@ def nice(data):
 
 
 def name(data):
-    platforms.put_clipboard_data(base64.b64decode(data).decode('utf-8'))
-    return ''
+    return base64.b64decode(data).decode('utf-8')
+
 
 def chmod(data, *_):
-    return name(data)
+    platforms.put_clipboard_data(name(data))
+    return ''

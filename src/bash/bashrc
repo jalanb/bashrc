@@ -1,13 +1,57 @@
 #! /bin/bash -x
 
+lcolour () {
+    local colour_="[1;${1}m" no_colour_="[0m"
+    local text_="$@"
+    printf "$colour_$text_$no_colour_"
+}
+
+lred () {
+    lcolour 31 "$@"
+}
+
+lgreen () {
+    lcolour 32 "$@"
+}
+
+lblue () {
+    lcolour 34 "$@"
+}
+
+lwhite () {
+    lcolour 37 "$@"
+}
+
+lred_user () {
+    local _colour_username=$(lblue "${USER:-$(whoami)}")
+    local _colour_host=$(lred ${HOSTNAME:-$(hostname -s)})
+    echo "${_colour_username}@$_colour_host"
+}
+
+home_user=$HOME/jab
+pre_bashrc_ () {
+    local homes_=$home_user/bin:$HOME/bin:$HOME/.local local_=/usr/local
+    local locals_="$local_/gnu:$local_/bin:$local_/go/bin"
+    local bins_=/usr/bin:/bin:/usr/sbin:/sbin
+    local mysite_=/Users/jab/jab/src/python/site/
+
+    local all_="$homes_:$locals_:$bins_"
+    PATH=$all_; export PATH
+    PYTHONPATH=$mysite_:$PYTHONPATH;
+
     if test -d $HOME/lib -a -n "$(find $HOME/lib -maxdepth 1 -name 'libpython*' -print -quit)"; then
         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     fi
+    . ~/.aliases ~/.functions
 }
 
 # set -x
 
-_bashrc () {
+export home_user_=~/jab
+
+bashrc_ () {
+#   set -x
+    export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
     local init_=$home_user_/__init__.sh
     if [[ -f $init_ ]]; then
         # echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
@@ -51,15 +95,18 @@ log_main () {
     set +x
 }
 
-_local () {
+post_bashrc_ () {
+    # set +x
     . $home_user/local/__init__.sh optional
+    # set -x
 }
 
 main () {
+    # set -x
     [[ $- =~ i ]] || return
-    _set_path
-    _bashrc $home_user
-    _local
+    pre_bashrc_
+    bashrc_ $home_user
+    post_bashrc_
     set +m
 }
 

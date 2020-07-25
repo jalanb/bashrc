@@ -2,11 +2,11 @@ The οs module
 ==================
 
     >>> import οs
-    >>> assert 'pretty names' in οs.__doc__
+    >>> assert 'nice names' in οs.__doc__
 
 Prettifiying strings
 ====================
 
-    >>> fred = οs.pretty('fred')
+    >>> fred = οs.nice('fred')
     >>> assert fred != 'fred'
-    >>> assert οs.plain(fred) == 'fred'
+    >>> assert οs.name(fred) == 'fred', f"fred={fred!r} != 'fred'"

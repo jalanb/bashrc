@@ -2,10 +2,19 @@
 
 
 # set -e
+type fdd > /dev/null 2>&1 || . ~/keys/__init__.sh
 
+type_ () {
+    fdd typ "$1"
+}
 
+type_ show_green || . ~/bash/crayons.sh
+type_ pong || . ~/bash/pong.sh
+type_ pii || . ~/bash/python.sh
 
+# Called functons.sh because "functions" is ... something else
 
+# sorted by strcmp of function name, punctuation before letters
 
 
 # _x
@@ -71,7 +80,7 @@ _free_line_here () {
 ma () {
     local _storage=/tmp/fred.sh;
     if [[ -z "$@" ]]; then
-        pyth -c "print 'memo -a\"$*\"'" > $_storage;
+        python -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
         rr $_storage;
@@ -146,6 +155,8 @@ vf () {
     _edit_source $(functons) "$@"
 }
 
+vp () {
+    _edit_source ~/bash/prompt.sh +/^_colour_prompt
 }
 
 # xxx
@@ -160,10 +171,18 @@ ask () {
     echo $_answer
 }
 
+clf () {
+    cat ~/jab/local/functons.sh
+}
+
 dir () {
     local _where=.
     [[ -n "$@" ]] && _where="$@"
     say $(short_dir $_where)
+}
+
+calf () {
+    cat ~/jab/local/functons.sh
 }
 
 envv () {
@@ -253,6 +272,11 @@ jjy () {
 
 gsij () {
     gsi ~/jab
+}
+
+kad () {
+    head -n1 | grep -q '#!' || return;
+    kat -f '{$' -l '^}' "$@" | bat -l bash
 }
 
 key () {
@@ -535,7 +559,7 @@ vfh () {
 }
 
 vfr () {
-    pyth ~/jab/src/python/vim_traceback.py "$@"
+    python ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vgf () {
@@ -856,7 +880,7 @@ this () {
 }
 
 Tree () {
-    tree "$@" | more
+    tree "$@" | less -R
 }
 
 vims () {
@@ -908,10 +932,6 @@ fewer () {
     else
         cat -n
     fi
-}
-
-freds () {
-    pyth ~/jab/src/python/freds.py "$@"
 }
 
 hello () {
@@ -990,7 +1010,7 @@ range () {
     local destination=.
     if [[ -n "$*" ]]; then
         local cde_script=~/hub/cde/cd.py
-        if ! destination=$(PYTHONPATH=$python_directory pyth $cde_script "$@" 2>&1); then
+        if ! destination=$(PYTHONPATH=$python_directory python $cde_script "$@" 2>&1); then
             echo "$destination"
             return 1
         fi
@@ -1017,7 +1037,7 @@ taocl () {
 }
 
 ylint () {
-    pyth $HOME/jab/src/python/ylint.py "$@"
+    python $HOME/jab/src/python/ylint.py "$@"
 }
 
 # xxxxxx
@@ -1223,9 +1243,9 @@ maketest () {
     fi
     local filename=$(basename_ $path)
     local stem=${filename%.*}
-    local classname=$(pyth -c "print 'Test%s' % '$stem'.title()")
+    local classname=$(python -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
-    local test_file=$(pyth -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
+    local test_file=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
     if [[ -f "$test_file" ]]; then
         echo $test_file is already a file >&2
         return 1
@@ -1328,8 +1348,8 @@ basename_ () {
 }
 
 first_num () {
-    num=$(pyth ~/jab/src/python/first_num.py "$@")
-    args=$(pyth ~/jab/src/python/first_num.py --Invert "$@")
+    num=$(python ~/jab/src/python/first_num.py "$@")
+    args=$(python ~/jab/src/python/first_num.py --Invert "$@")
     [[ -n $num ]]
 }
 
@@ -1392,7 +1412,7 @@ jab_hub () {
 }
 
 jab_scripts () {
-    pyth ~/jab/src/python/scripts.py "$@"
+    python ~/jab/src/python/scripts.py "$@"
 }
 
 make_it_so () {
@@ -1468,8 +1488,8 @@ show_functions () {
 console_hello () {
     local me=$USER
     local here=$(jostname)
-    export PYTHON=${PYTHON:-pyth}
-    console_title_on "pyth@${here}" && \
+    export PYTHON=${PYTHON:-python}
+    console_title_on "python@${here}" && \
         $PYTHON "$@" && \
         console_title_off "${me}@${here}"
 }

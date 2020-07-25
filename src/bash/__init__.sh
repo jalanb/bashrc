@@ -18,8 +18,7 @@ __version__=0.8.0
 . ~/bash/rf.sh
 . ~/bash/virtualenvwrapper.sh
 . ~/bash/work.sh
-#. ~/bash/keys.sh
-. ~/keys/__init__.sh
+. ~/bash/keys.sh
 . ~/bash/git/__init__.sh
 
 export _BASH_DIR=~/bash

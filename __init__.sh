@@ -20,6 +20,8 @@ show_pythonpath () {
 }
 
 
+export WHYP=~/hub/whyp/whyp
+. $WHYP.sh
 export ACKVIM=~/hub/ackvim/ackvim
 . $ACKVIM.sh
 export CDE=~/hub/cde/cde
@@ -31,6 +33,7 @@ export PYTH=~/hub/pyth/pyth
 . ~/jab/environ.d/__init__.sh
 . ~/jab/src/bash/__init__.sh
 . ~/jab/local/__init__.sh optional
+. ~/jab/work/__init__.sh optional
 
 cde_activate_venv ~/jab/.venv
 ACTIVE_PYTHON=$(which python)

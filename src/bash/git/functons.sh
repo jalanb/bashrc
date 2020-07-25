@@ -23,7 +23,7 @@ ga () {
         show_error 'Did you mean "gaa" (add all) ?'
         return 1
     else
-        show_run_command git add "$@"
+        git add "$@"
     fi
 }
 
@@ -44,7 +44,7 @@ gb () {
 }
 
 gd () {
-    show_run_command git diff "$@"
+    dit "$@" diff
 }
 
 gf () {
@@ -56,7 +56,7 @@ gpf () {
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
-            show_run_command $command_
+            $command_
         else
             show_error "$MSG"
             return 1
@@ -64,12 +64,8 @@ gpf () {
     fi
 }
 
-grf () {
-    gff "$@"
-}
-
 gdf () {
-    git df "$@"
+    dit "$@" df
 }
 
 grf () {
@@ -112,17 +108,17 @@ gi () {
         bash $storage_
         rr $storage_
     else
-        show_run_command git commit --verbose
+        git commit --verbose
     fi
     GIT_ADDED=
 }
 
 gl () {
-    git log "$@"
+    dit "$@" log
 }
 
 gm () {
-    show_run_command git merge --no-ff --no-edit "$@"
+    git merge --no-ff --no-edit "$@"
 }
 
 go () {
@@ -147,7 +143,7 @@ gp () {
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream)
-            show_run_command $command_
+            $command_
         else
             show_error "$MSG"
             return 1
@@ -156,7 +152,7 @@ gp () {
 }
 
 gr () {
-    show_run_command git pull --rebase "$@"
+    git pull --rebase "$@"
 }
 
 gs () {
@@ -167,7 +163,7 @@ gs () {
 gt () {
     local tag_=
     for tag_ in "$@"; do
-        show_run_command git tag $tag_
+        git tag $tag_
     done
     [[ $tag_ ]] || git tag | sort
 }
@@ -190,7 +186,7 @@ ts () {
 
 gs_ () {
     local _doc___="""git status back end"""
-    show_run_command git status "$@"
+    dit "$@" status
 }
 
 # xxx
@@ -210,7 +206,7 @@ gac () {
 
 gai () {
     local _doc___="""Add args interactively"""
-    show_run_command git add --patch "$@"
+    git add --patch "$@"
 }
 
 gba () {
@@ -222,7 +218,7 @@ gbb () {
 }
 
 gbc () {
-    show_run_command git branch --contains "$@"
+    git branch --contains "$@"
 }
 
 gbr () {
@@ -247,15 +243,15 @@ gbo () {
 }
 
 gbm () {
-    show_run_command git branch -m "$@"
+    git branch -m "$@"
 }
 
 gbv () {
-    show_run_command git blame "$1" | vin
+    git blame "$1" | vin
 }
 
 gcp () {
-    show_run_command git cherry-pick -x --allow-empty "$@"
+    git cherry-pick -x --allow-empty "$@"
 }
 
 gcu () {
@@ -269,11 +265,11 @@ gdd () {
 
 gdi () {
     local _doc___="""git di args"""
-    git di "$@"
+    dit "$@" d
 }
 
 gdh () {
-    git dh "$@"
+    dit "$@" dh
 }
 
 gdl () {
@@ -286,11 +282,11 @@ gds () {
 }
 
 gdv () {
-    git dv "$@"
+    dit "$@" dv
 }
 
 gfa () {
-    show_run_command git fetch --prune --all
+    git fetch --prune --all
 }
 
 gfe () {
@@ -304,7 +300,7 @@ gfm () {
 }
 
 gft () {
-    show_run_command git fetch --tags --force
+    git fetch --tags --force
 }
 
 ggi () {
@@ -318,7 +314,7 @@ gia () {
 }
 
 gie () {
-    show_run_command git commit --amend --edit "$@"
+    git commit --amend --edit "$@"
 }
 
 gip () {
@@ -336,23 +332,23 @@ glone () {
 }
 
 gla () {
-    git_log_to_screen lg --author=Alan.Brogan "$@"
+    git_log_to_screen lg "$@" --author=Alan.Brogan
 }
 
 glg () {
     local number_of_commits_=16
-    git_log_lines_to_screen -n $number_of_commits_ "$@" 2>/dev/null
+    git_log_lines_to_screen "$@" -n $number_of_commits 2>/dev/null
     local result_=$?
     echo
     return $result_
 }
 
 gll () {
-    git ll "$@"
+    dit "$@" ll
 }
 
 gln () {
-    git_log_to_screen lg --name-only "$@"
+    git_log_to_screen lg "$@" --name-only 
 }
 
 glp () {
@@ -360,11 +356,11 @@ glp () {
 }
 
 gls () {
-    git_log_to_screen log --stat "$@"
+    git_log_to_screen log "$@" --stat 
 }
 
 glt () {
-    git_log_to_screen lt "$@"
+    git_log_to_screen lt "$@" 
 }
 
 glv () {
@@ -372,7 +368,7 @@ glv () {
 }
 
 gma () {
-    show_run_command git merge --abort
+    git merge --abort
 }
 
 gmm () {
@@ -384,7 +380,7 @@ gmm () {
 }
 
 gmt () {
-    show_run_command git merge --no-ff --no-edit -X theirs "$@"
+    git merge --no-ff --no-edit -X theirs "$@"
 }
 
 gob () {
@@ -392,7 +388,7 @@ gob () {
     shift 2
     [[ $new_branch_ ]] || return 1
     [[ $old_commit_ ]] || old_commit_=$(get_branch)
-    show_run_command git checkout -b $new_branch_ $old_commit_
+    git checkout -b $new_branch_ $old_commit_
 }
 
 gog () {
@@ -423,12 +419,12 @@ got () {
     if git branch -a | grep $1; then
         gor "$@"
     else
-        show_run_command git "$@"
+        git "$@"
     fi
 }
 
 gpo () {
-    show_run_command git push origin "$@"
+    git push origin "$@"
 }
 
 gpp () {
@@ -450,13 +446,13 @@ show_pre_loop_ () {
 }
 
 gra () {
-    show_run_command git rebase --abort
+    git rebase --abort
 }
 
 grc () {
     show_command git rebase --continue
     GIT_EDITOR=true git rebase --continue | g "skip this commit" || return
-    show_run_command git rebase --skip
+    git rebase --skip
 }
 
 grg () {
@@ -464,14 +460,14 @@ grg () {
 }
 
 grh () {
-    show_run_command git reset HEAD "$@"
+    git reset HEAD "$@"
 }
 
 gri () {
     local _doc___="""Rebase args interactively"""
     local args_="HEAD~2"
     [[ "$@" ]] && args_="$@"
-    show_run_command git rebase --interactive $args_
+    git rebase --interactive $args_
 }
 
 grm () {
@@ -494,7 +490,7 @@ grm () {
     fi
     [[ $branch_ == $upstream_ ]] && echo "Already on $upstream_" >&2
     [[ $branch_ == $upstream_ ]] && return 1
-    show_run_command git rebase $upstream_ $branch_
+    git rebase $upstream_ $branch_
 }
 
 gro () {
@@ -519,11 +515,11 @@ grr () {
 }
 
 grs () {
-    show_run_command git rebase --skip
+    git rebase --skip
 }
 
 gru () {
-    show_run_command git remote get-url origin
+    git remote get-url origin
 }
 
 gsa () {
@@ -547,7 +543,7 @@ gss () {
 
 git_stash () {
     local _doc___="""git stash"""
-    show_run_command git stash "$@"
+    dit "$@" stash
 }
 
 gso () {
@@ -564,7 +560,7 @@ gta () {
 }
 
 gtd () {
-    show_run_command git tag -d "$@"
+    git tag -d "$@"
 }
 
 gtD () {
@@ -633,7 +629,7 @@ gxi () {
 }
 
 sit () {
-    show_run_command git "$@"
+    git "$@"
 }
 
 
@@ -666,14 +662,14 @@ gbd_ () {
             gma
         fi
         gom
-        show_run_command git branch "$@" $current_branch_
+        git branch "$@" $current_branch_
         return 0
     fi
-    show_run_command git branch "$@"
+    git branch "$@"
 }
 
 gbac () {
-    show_run_command git branch --all --contains "$@"
+    git branch --all --contains "$@"
 }
 
 gbdd () {
@@ -732,15 +728,24 @@ gcuw () {
     local_gcu 'Alan Brogan' $(work_email ab13173)
 }
 
-gdis () {
-    gdi --staged "$@"
+gdil () {
+    gdi | less -R
 }
 
-glggggggg () {
-    tput smcup
-    show_command git lg "$@"
-    git lg "$@"
-    tput rmcup
+gdis () {
+    dit "$@" d --staged 
+}
+
+glgg () {
+    local stdout_=~/fd1 stderr_=~/fd2
+    show_command dit lg "$@" > $stdout_
+    dit "$@" lg >> $stdout_ 2> $stderr_ 
+    [[ $? == 0 ]] && (cat $stderr_; return 1)
+    local count_=$(wc -l $stdout_)
+    if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
+    elif [[ $count_ < 256 ]]; then less -R $stdout_
+    else tput smcup; dit "$@" lg; tput rmcup
+    fi
 }
 
 glgo () {
@@ -767,11 +772,11 @@ gorl () {
 }
 
 gcpa () {
-    show_run_command git cherry-pick --abort
+    git cherry-pick --abort
 }
 
 gcpe () {
-    show_run_command git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
+    git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
 }
 
 gcpc () {
@@ -779,7 +784,7 @@ gcpc () {
 }
 
 gcpe () {
-    show_run_command git cherry-pick --edit "$@"
+    git cherry-pick --edit "$@"
 }
 
 gdsi () {
@@ -836,20 +841,20 @@ gppp () {
 }
 
 gpsu () {
-    show_run_command git push --set-upstream origin "$@"
+    git push --set-upstream origin "$@"
 }
 
 grmt () {
     local current_branch_=$(get_branch)
-    show_run_command git rebase master $current_branch_ -X theirs
+    git rebase master $current_branch_ -X theirs
 }
 
 grup () {
-    show_run_command git remote update origin --prune
+    git remote update origin --prune
     git branch | grep -q fred && gbD fred
-    show_run_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
-    show_run_command git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
-    show_run_command git repack -a -d 2>&1
+    git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
+    git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    git repack -a -d 2>&1
 }
 
 gsri () {
@@ -866,17 +871,17 @@ git_stash_branch () {
     local branch_=$1
     [[ $branch_ ]] || branch_=fred && shift
     [[ $branch_ == 'fred' ]] && QUietly git branch -D fred
-    show_run_command git stash branch $branch_ "$@"
+    git stash branch $branch_ "$@"
 }
 alias gstb=git_stash_branch
 
 git_stash_list () {
-    show_run_command git stash list
+    git stash list
 }
 alias gstl=git_stash_list
 
 git_stash_pop () {
-    show_run_command git stash pop
+    git stash pop
 }
 alias gstp=git_stash_pop
 
@@ -915,7 +920,7 @@ clone () {
 
     local clone_log_=/tmp/clone_.log
     echo "" > $clone_log_
-    show_run_command git clone $remote_ $local_ > $clone_log_ 2>&1
+    git clone $remote_ $local_ > $clone_log_ 2>&1
     if grep -q fatal $clone_log_; then
         # kat -n $clone_log_
         cat -n $clone_log_
@@ -943,7 +948,7 @@ gorll () {
 # xxxxxxxx
 
 git_kd_ () {
-    cde "$@" > /tmp/std/out 2> /tmp/std/err
+    cde "$@" > ~/fd1 2> ~/fd2
 }
 
 mastered () {
@@ -1065,14 +1070,14 @@ sed_origin () {
 # xxxxxxxxxxx
 
 clean_clone() {
-    show_run_command git reset head .
-    show_run_command git checkout .
-    show_run_command git clean -f -d -f
-    show_run_command git fetch --all
-    show_run_command git checkout master
+    git reset head .
+    git checkout .
+    git clean -f -d -f
+    git fetch --all
+    git checkout master
     for branch in $(git branch | grep -v -e master -e deployed-to); do
         [[ -f $branch ]] && continue
-        show_run_command git branch -d $branch
+        git branch -d $branch
     done
 }
 
@@ -1119,9 +1124,8 @@ git_log_lines_to_screen () {
     fi
     # set +x
     local log_cmd_=lg
-    show_command git $log_cmd_ -n $number_of_commits_ "$@"
     # set -x
-    git_log_to_screen $log_cmd_ -n $number_of_commits_ "$@" | trim_git_lines
+    git_log_to_screen $log_cmd_ "$@" -n $number_of_commits_ | trim_git_lines
     # set +x
 }
 
@@ -1138,7 +1142,17 @@ git_log_to_screen () {
     local vertical_lines_=${LINES:-$(screen_height)}
     local one_third_of_vertical_=$(( $vertical_lines_ / 3 ))
     local lines_=${number_of_lines_:-$one_third_of_vertical_}
-    git $log_cmd_ --color "$@" | head -n $lines_
+    local options="$log_cmd_ --color"
+    dit "$@" $options_ | head -n $lines_
+}
+
+dit () {
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1" && shift
+    # show_command git -C "$dir_" "$@" 
+    # set -x
+    git -C "$dir_" "$@" 
+    # set +x
 }
 
 untracked () {
@@ -1213,7 +1227,7 @@ git_simple_status () {
     local arg_dir="${1:-$PWD}"
     has_git_changes_ $arg_dir || return 1
     local git_dir_=$(git_root "$arg_dir")
-    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> /tmp/std/err | grep "$git_status_regexp_"
+    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> ~/fd2 | grep "$git_status_regexp_"
 }
 
 show_git_time_log_ () {
@@ -1254,7 +1268,7 @@ gdis_ () {
     if stat_modified "$1"; then
         local lines_=$(wc -l "$1" | cut -d ' ' -f1)
         if [[ $lines_ < $LINES ]]; then
-            git di "$1"
+            git d "$1"
         else
             gdi "$1"
         fi

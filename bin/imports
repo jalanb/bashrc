@@ -49,6 +49,7 @@ def show_unused(visitor, stream):
     lines = gather_lines(visitor.unused)
     if not lines:
         return []
+    print('Unused:', file=stream)
     text = texter(visitor)
     for line in sorted(lines):
         names = lines[line]
@@ -58,14 +59,14 @@ def show_unused(visitor, stream):
     return visitor.unused().keys()
 
 
-def show_duplicates(visitor):
+def show_multiples(visitor, stream):
     multiples = visitor.multiples()
     if multiples:
-        print('Duplicates:')
+        print('Duplicates:', file=stream)
     for name, lines in multiples.items():
         instances = [visitor.line(_, True) for _ in lines]
         lines = [name] + instances
-        print('\n'.join(lines))
+        print('\n'.join(lines), file=stream)
     return multiples.keys()
 
 
@@ -74,7 +75,7 @@ def script(args):
     stream = open('/tmp/imports.txt', 'w') if args.tmp else sys.stdout
     modules = []
     if args.multiple:
-        modules.extend(show_multiple(visitor, stream))
+        modules.extend(show_multiples(visitor, stream))
     if args.unused:
         modules.extend(show_unused(visitor, stream))
     if args.edit and modules:
