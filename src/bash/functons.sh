@@ -2,15 +2,11 @@
 
 
 # set -e
-type fdd > /dev/null 2>&1 || . ~/keys/__init__.sh
+. ~/bash/types.sh
 
-type_ () {
-    fdd typ "$1"
-}
-
-type_ show_green || . ~/bash/crayons.sh
-type_ pong || . ~/bash/pong.sh
-type_ pii || . ~/bash/python.sh
+typed show_green || . ~/bash/crayons.sh
+typed pong || . ~/bash/pong.sh
+typed pii || . ~/bash/python.sh
 
 # Called functons.sh because "functions" is ... something else
 
