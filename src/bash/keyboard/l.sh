@@ -3,7 +3,7 @@
 # x
 
 l () {
-    show_run_command $(_ls_command) "$@"
+    $(_ls_command) "$@"
 }
 
 # xx

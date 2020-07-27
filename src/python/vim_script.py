@@ -14,7 +14,7 @@ from pysyte.types.lists import de_duplicate
 from pysyte.types import paths
 
 
-import script_paths
+import script_path
 
 
 def path_to_editor():
@@ -347,7 +347,7 @@ def interpret_sys_argv():
     options, not_options = divide(strip_puv_options(sys.argv[1:]), is_option)
     options = separate_options(options)
     args = de_duplicate([paths.tab_complete(a, expand) for a in not_options])
-    args_paths = script_paths.arg_paths(args) or [
+    args_paths = script_path.arg_paths(args) or [
         paths.pyc_to_py(a) for a in paths.tab_complete(args, expand)]
     return args_paths, options
 

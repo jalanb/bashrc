@@ -1,34 +1,82 @@
 #! /bin/cat
 
 
-_KEYBOARD_DIR=~/bash/keyboard
+key_path () {
+    echo ~/bash/keyboard/$1
+}
 
-source_keyboard () {
-    for _script in $(ls $_KEYBOARD_DIR/*.sh); do
-        . $_script
+echo_key () {
+    local files_=$(ls $(key_path $1) 2>/dev/null) || return 1
+    echo -n  $files_
+}
+
+echo_keys () {
+    local arg_= args_="$@"
+    [[ ! "$@" ]] && echo_key || for arg_ in "$args_"; do echo_key $arg_; done
+    echo
+}
+
+is_key_script () {
+    [[ -f $(echo_keys $1) ]]
+}
+
+key_script () {
+    is_key_script $1 || return 1
+    echo_keys $1
+}
+
+key_scripts () {
+    ls $(echo_keys '[a-z12].sh')
+}
+
+key_init () {
+    echo $(key_path __init__.sh)
+}
+
+same_path () {
+    [[ $(readlink -f "$1") == $(readlink -f "$2") ]]
+}
+
+is_init () {
+    same_path "$1" $(key_init)
+}
+
+write_keys () {
+    local init_=$(key_init) text_=
+    echo "#! /usr/bin/env bat" > $init_
+    for script_ in $(key_scripts); do
+        grep -v "^#!" $script_ >> $init_
     done
 }
 
+read_keys () {
+    write_keys
+    . $(key_init)
+}
 
 vim_keyboard () {
-    local _files= _key= _options=
+    local init_=$(key_init) files_=
     if [[ ! "$@" ]]; then
-        vim $_KEYBOARD_DIR
-        return $?
+        files_="$(echo_keys '[a-z12].sh')"
+        v $files_
+        return
     fi
-    for _key in "$@"; do
-        local _path=$_KEYBOARD_DIR/$_key
-        [[ -f ${_path} ]] && _file=${_path}
-        [[ -f ${_path}.sh ]] && _file=${_path}.sh
-        [[ -f $_file ]] && _files="$_files $_file" || _options="$_options $key"
+    local option_= path_= file_=
+    dir_=$(echo_keys)
+    for option_ in "$@"; do
+        path_=$dir_/$option_
+        [[ -f ${path_} ]] && file_=${path_}
+        [[ -f ${path_}.sh ]] && file_=${path_}.sh
+        [[ -f $file_ ]] && files_="$files_ $file_"
+        file_=
     done
-    [[ $_files ]] || _files=.
-    vim -p $_files $_options
-    source_keyboard
+    v $files_
+    read_keys
 }
 
-source_keyboard
-
+alias keys=read_keys
+alias rk=read_keys
+alias wk=write_keys
 alias vk=vim_keyboard
-alias sk=source_keyboard
 
+keys

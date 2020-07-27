@@ -12,7 +12,7 @@
 #
 # (Except we will hang on to '.' (which is set by whype.sh))
 
-_keep_dot=$(alias . | sed -e "s/.*=//" -e "s/'//g")  # parses out any alias of '.'
+_keep_dot=$(alias . 2>/dev/null | sed -e "s/.*=//" -e "s/'//g")  # parses out any alias of '.'
 unalias -a
 [[ -n "$_keep_dot" ]] && alias .=$_keep_dot
 

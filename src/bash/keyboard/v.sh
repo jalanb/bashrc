@@ -4,6 +4,7 @@
 
 # x
 
+unalias v >/dev/null 2>&1
 v () {
     vm "$@"
 }
@@ -39,10 +40,9 @@ vd () {
 # vi
 
 vj () {
-    (cd ~/jab; vm ~/jab; gsi)
+    (cd ~/jab; vm .; gsi)
 }
 
-# vk
 # vl
 
 type mvim >/dev/null 2>&1 || . ~/keys/m.sh
@@ -52,23 +52,10 @@ vm () {
 }
 
 # vn
-
-vo () {
-    local _command=$(history -p !-1)
-    v $($_command 2>/dev/null)
-}
-
+# vo
 # vp
-
-vq () {
-    v "$@"
-}
-
-vr () {
-    local _command=$(history -p !-1)
-    v $($_command >/dev/null)
-}
-
+# vq
+# vr
 # vs
 
 vt () {
@@ -164,7 +151,7 @@ ved () {
 }
 
 vfd () {
-    v $(fd "$@")
+    vim -p $(fd "$@")
 }
 
 vin () {
@@ -233,10 +220,6 @@ vd12 () {
 }
 
 vd13 () {
-    vd ~/one ~/three
-}
-
-vd23 () {
     vd ~/two ~/three
 }
 
@@ -288,26 +271,26 @@ vd123 () {
 
 vim_diff () {
     local one_= two_= three_= diff_opts_= edit_opts_= arg_=
-    if [[ $1 =~ -[dD] ]]; then
-        diff_opts_=$1; shift 
-    fi
+    [[ $1 =~ -[dD] ]] && diff_opts_=$1 && shift
     if [[ $1 =~ -[oO] ]]; then
-        diff_opts_="$diff_opts_ $1"; shift
+        [[ $1 =~ -o ]] && diff_opts_=-do
+        [[ $1 =~ -O ]] && diff_opts_=-dO
+        shift
     fi
-    one_="$1" two_="$2" three_="$3"
-    (
-        for arg_ in "$@"
-        do
-            [[ $arg_ =~ ^-.* ]] && edit_opts_="$edit_opts_ $arg_" && continue
-            [[ ! $three_ ]] && [[ -e "$opt" ]] && three_=$arg_
-        done
-        if ! _any_diff "$one_ " "$two_" "$three_"; then
-            echo same
-            return 0
-        fi
-        [[ $diff_opts_ =~ -d ]] || diff_opts_="-d $diff_opts_"
-        vim $diff_opts_ $edit_opts_ $one_  $two_ $three_
-    )
+    [[ $diff_opts_ ]] || diff_opts_=-dO
+    [[ $diff_opts_ =~ -[Dd] ]] || diff_opts_="-dO $diff_opts_"
+    [[ -e "$1" ]] && one_="$1" && shift
+    if [[ ! $one_ ]]; then 
+        echo none >&2
+        return 1
+    fi
+    [[ -e "$1" ]] && two_="$1" && shift
+    [[ -e "$1" ]] && three_="$1" && shift
+    if ! _any_diff "$one_ " "$two_" "$three_"; then
+        echo same 
+        return 1
+    fi
+    vim $diff_opts_ $one_  $two_ $three_"$@"
 }
 
 v_safely () {

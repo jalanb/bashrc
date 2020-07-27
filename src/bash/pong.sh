@@ -1,7 +1,7 @@
 #! /bin/cat
 
 
-. ~/bash/crayons.sh
+type show_pass >/dev/null 2>&1 || . ~/bash/crayons.sh
 
 # set -e
 
@@ -64,7 +64,7 @@ pingable () {
 # xxxxxxxxx
 
 is_online () {
-    if quick_pong "$@" > /tmp/std/out 2> /tmp/std/err; then
+    if quick_pong "$@" > ~/fd1 2> ~/fd2; then
         show_pass $(pong "$@")
         return 0
     else

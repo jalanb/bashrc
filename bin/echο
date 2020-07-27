@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import stat
+import sys
 
 from pysyte.cli.main import run
 
@@ -18,7 +19,7 @@ def main(args, config):
 
 
 try:
-    run(main, add_args, config=True)
+    run(main, add_args, config=sys.argv[0])
 except TypeError:
     from pysyte.cli import main
     message = f'''$ vim {main.__file__} +/^def.run'''

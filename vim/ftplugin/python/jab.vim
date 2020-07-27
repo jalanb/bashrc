@@ -9,6 +9,7 @@ nnoremap } :cn<cr>
 nnoremap { :cp<cr>
 
 nnoremap D Obreakpoint()<esc>
+nnoremap T Ofrom dataclasses import dataclass<cr>@dataclass<esc>
 nnoremap tt :Try<cr>
 nnoremap tm :MashTry<cr>
 nnoremap <S-F9> :call WritePEP()<cr>
@@ -19,7 +20,7 @@ nnoremap <leader>c   ?^\s*class \zs\i<cr>*
 nnoremap <leader>d   ?^\s*def \i\+\zs.*<cr>*zv
 nnoremap <leader>e   ?^\s*def \zs\i<cr>*#zv
 nnoremap <leader>k   $%a<cr><esc
-nnoremap <leader>o   O<esc>
+"noremap <leader>o   O<esc>
 
 call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
 
@@ -361,7 +362,7 @@ endfunction
 
 function WritePython()
     call ReSpacePython()
-    call Try(1)
+"   call Try(1)
 endfunction
 autocmd BufWritePost * call WritePython()
 

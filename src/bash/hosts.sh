@@ -14,7 +14,7 @@ hosts () {
 # xxxxxx
 
 vhosts () {
-    vim -p \
+    v \
         ~/.ssh/config \
         ~/.git-credentials \
         ~/jab/src/bash/jabnet.sh \

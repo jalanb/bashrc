@@ -484,11 +484,11 @@ c.TerminalInteractiveShell.confirm_exit = False
 # This generates simple wrappers of `%%script foo` as `%%foo`.
 #
 # If you want to add script magics that aren't on your path, specify them in
-# script_paths
+# script_path
 # c.ScriptMagics.script_magics = []
 
 # Dict mapping short 'ruby' names to full paths, such as '/opt/secret/bin/ruby'
 #
 # Only necessary for items in script_magics where the default path will not find
 # the right interpreter.
-# c.ScriptMagics.script_paths = {}
+# c.ScriptMagics.script_path = {}

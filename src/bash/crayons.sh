@@ -24,18 +24,28 @@ show_green () {
 # xxxxxxxxxxx
 
 show_colour () {
-    local _line=
+    local line_=
     if [[ $1 =~ -n ]]; then
-        _line="\n"
+        line_="\n"
         shift
     fi
-    printf "$*""${NO_COLOUR}${_line}"
+    if [[ "$@" ]];
+    then printf "$*""${NO_COLOUR}${line_}"
+    else printf "${GREEN}$(cat)${NO_COLOUR}${line_}"
+    fi
 }
 
 # xxxxxxxxxxxx
 
+is_command () {
+    type $1 >/dev/null 2>&1
+}
+
 show_command () {
-    show_blue_line '$ '"$*"
+    if is_command w
+    then w "$@"
+    else show_blue_line '$ '"$*"
+    fi
 }
 
 # xxxxxxxxxxxxx
@@ -62,10 +72,21 @@ alias show_pass=show_green_line
 # xxxxxxxxxxxxxxxx
 
 show_colour_line () {
-    printf "$*""${NO_COLOUR}\n" >&2
+    show_colour -n "$@"
 }
 
 show_run_command () {
+    show_command "$@"
+    echo
+    "$@" > ~/fd1 2> ~/fd2
+    if grep -q '0m' ~/fd1
+    then cat ~/fd1
+    else show_colour $LIGHT_GREEN $(cat ~/fd1)
+    fi
+    show_colour $RED $(cat ~/fd2)
+}
+
+show_run_command_old () {
     show_command "$@"
     "$@"
 }

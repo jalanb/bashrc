@@ -98,5 +98,5 @@ rri () {
 
 rrr () {
     # Scalp Hans too
-    sudo rm -rf "$@" 2> /tmp/std/err
+    sudo rm -rf "$@" 2> ~/fd2
 }

@@ -9,7 +9,7 @@ from bdb import BdbQuit
 
 from pysyte.bash import cmnds
 
-import script_paths
+import script_path
 
 __version__ = '0.1.0'
 
@@ -60,7 +60,7 @@ def lines(path_to_item):
 
 
 def script(args):
-    paths_to_items = script_paths.arg_paths(args.keys)
+    paths_to_items = script_path.arg_paths(args.keys)
     result = False
     for path_to_item in paths_to_items:
         if args.python:

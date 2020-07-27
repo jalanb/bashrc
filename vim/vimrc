@@ -31,7 +31,7 @@ nnoremap <S-F5>     <C-W>=
 "noremap <bs>
 "noremap =
 "noremap -
-"noremap 0
+"noremap 
 "noremap 9
 "noremap 8
 "noremap 7
@@ -42,6 +42,7 @@ nnoremap <S-F5>     <C-W>=
 "noremap 2
 "noremap 1
 inoremap § <esc>
+nnoremap § :q!<cr>
 " shifted number row {{{3
 "noremap <S-bs> doesn't work
 nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>jzO
@@ -56,6 +57,8 @@ nnoremap & J
 nnoremap £ :nnoremap £
 "noremap @ execute contents of register
 "noremap ! shell
+inoremap ± <esc>:qa!<cr>
+nnoremap ± :qa!<cr>
 nnoremap !! :noremap @@
 nnoremap ££ :noremap @@<up>
 "noremap ±
@@ -80,7 +83,7 @@ nnoremap k kzz
 nnoremap n nzvzz
 "noremap o - open new line
 "noremap p - paste
-nnoremap q :q<CR>
+nnoremap q :q<cr>
 "noremap r - change one char
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
@@ -153,7 +156,7 @@ nnoremap " bn
 "noremap ? -
 "noremap ~ -
 "noremap !
-"noremap @
+nnoremap @ :w !sudo tee % >/dev/null<cr>
 "noremap L
 "noremap $ -
 "noremap %
@@ -165,15 +168,14 @@ nnoremap " bn
 "noremap _
 "noremap +
 " LETTERS {{{3
-"noremap A - Append
+"noremap A - Append to line
 nnoremap B :vsplit
-nnoremap C <esc>:qa!<CR>
-"noremap D d$
-nnoremap E :wa<cr>:qa<cr>
+"noremap C 
+nnoremap E :wa!<cr>
 "noremap F f backwards
 "noremap G goto line (default last)
 nnoremap H gT
-"noremap I
+"noremap I insert at start of line
 nnoremap J <PageDown>zz
 nnoremap K <PageUp>zz
 nnoremap L gt
@@ -181,15 +183,14 @@ nnoremap L gt
 nnoremap N :cn<cr>zMzvzz
 "noremap O - Open line above
 "noremap P - paste forward
-"noremap Q <esc>:qa!<CR>
+nnoremap Q :qa!<CR>
 "noremap R - Replace
 nnoremap S :%s,,,<Left><Left>
 nnoremap T :!tags
 nnoremap U :redo<cr>
 "noremap V - linewise visual
-nnoremap W :wa!<cr>
-nnoremap WW :w !sudo tee % >/dev/null<cr>
-nnoremap X :wa!<cr>
+nnoremap W :w!<cr>
+nnoremap X :wa!<cr>:qa<cr>
 "noremap Y - aka yy
 nnoremap Z XC
 " ordinary keys for movement {{{2
@@ -282,6 +283,11 @@ nnoremap <leader>[ :cn<cr>zMzvzz
 nnoremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
 nnoremap <leader>] :cp<cr>zMzvzz
 
+nnoremap <leader>1 :w! ~/one<cr>
+nnoremap <leader>2 :w! ~/two<cr>
+nnoremap <leader>3 :w! ~/three<cr>
+nnoremap <leader>0 /xxx<cr>
+
 nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>b used by plugin/EasyMotion.vim
 "noremap <leader>c used by ftplugin/python/jab
@@ -296,7 +302,7 @@ nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>k used by plugin/EasyMotion.vim
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>n :call ToggleNumber()<cr>
-"noremap <leader>o used by ftplugin/python/jab
+nnoremap <leader>o :w! ~/one<cr>
 nnoremap <leader>p :set paste<cr>
 nnoremap <leader>q :qa!<cr>
 nnoremap <leader>r :set wrap!<cr>

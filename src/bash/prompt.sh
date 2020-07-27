@@ -37,24 +37,24 @@ get_git_status() {
 }
 
 _colour () {
-    local _one="$1"; shift
-    local _light=
-    local _hue=$_one
-    if [[ "$_one" =~ ^l_ ]]; then
-        _light="LIGHT_"
-        [[ $_one =~ l_red|green|blue ]] && _hue=${_one/l_/}
+    local one_="$1"; shift
+    local light_= no_colour_="\033[0m"
+    local hue_=$one_
+    if [[ "$one_" =~ ^l_ ]]; then
+        light_="LIGHT_"
+        [[ $one_ =~ l_red|green|blue ]] && hue_=${one_/l_/}
     fi
-    local _var=
-    if [[ $_hue =~ red|green|blue|cyan|magenta|yellow ]]; then
-        [[ $_hue == red ]] && _var="${_light}RED"
-        [[ $_hue == green ]] && _var="${_light}GREEN"
-        [[ $_hue == blue ]] && _var="${_light}BLUE"
-        [[ $_hue == cyan ]] && _var="${_light}CYAN"
-        [[ $_hue == magenta ]] && _var="${_light}MAGENTA"
-        [[ $_hue == yellow ]] && _var="${_light}YELLOW"
+    local var_=
+    if [[ $hue_ =~ red|green|blue|cyan|magenta|yellow ]]; then
+        [[ $hue_ == red ]] && var_="${light_}RED"
+        [[ $hue_ == green ]] && var_="${light_}GREEN"
+        [[ $hue_ == blue ]] && var_="${light_}BLUE"
+        [[ $hue_ == cyan ]] && var_="${light_}CYAN"
+        [[ $hue_ == magenta ]] && var_="${light_}MAGENTA"
+        [[ $hue_ == yellow ]] && var_="${light_}YELLOW"
     fi
-    local _hues=${!_var}
-    echo -n "$_hues""$@""$NO_COLOUR"
+    local hues_=${!var_}
+    echo -n "$hues_""$@""$no_colour_"
 }
 
 emoji_error () {
@@ -142,14 +142,6 @@ red_python () {
     echo "${_colour_python}${_join}${_colour_venv}"
 }
 
-sp () {
-    source ~/bash/prompt.sh
-}
-
-vp () {
-    _edit_source ~/bash/prompt.sh +/^_colour_prompt
-}
-
 set_status_bit () {
     local __doc__="""Set the status bit from $?"""
     local _one=$1; shift
@@ -161,16 +153,20 @@ set_status_bit () {
     export STATUS=$_status
 }
 
-export_prompt_colour () {
+echo_prompt_colour () {
     local __doc__="""Interpret first arg as main colour for the prompt"""
-    local _prompt_colour=
+    local prompt_colour_=
     case $1 in
-        green ) _prompt_colour="$GREEN";;
-        red ) _prompt_colour="$RED";;
-        blue ) _prompt_colour="$LIGHT_BLUE";;
+        green ) prompt_colour_="$LIGHT_GREEN";;
+          red ) prompt_colour_="$LIGHT_RED";;
+         blue ) prompt_colour_="$LIGHT_BLUE";;
     esac
-    [[ -n $_prompt_colour ]] && shift || _prompt_colour=None
-    export PROMPT_COLOUR=$_prompt_colour
+    [[ -n $prompt_colour_ ]] && shift || prompt_colour_=None
+    echo $prompt_colour_
+}
+
+export_prompt_colour () {
+     export PROMPT_COLOUR=$(echo_prompt_colour "$@")
 }
 
 _pre_pses () {

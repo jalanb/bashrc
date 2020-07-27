@@ -2,25 +2,16 @@
 
 
 # set -e
+. ~/bash/types.sh
 
-. ~/bash/crayons.sh
-. ~/bash/pong.sh
-. ~/bash/python.sh
+typed show_green || . ~/bash/crayons.sh
+typed pong || . ~/bash/pong.sh
+typed pii || . ~/bash/python.sh
 
 # Called functons.sh because "functions" is ... something else
 
-# sorted by strcmp of function name, underscores following
-# _
-# x
+# sorted by strcmp of function name, punctuation before letters
 
-
-g () {
-    $(which egrep) --color "$@"
-}
-
-x () {
-    exit 1
-}
 
 # _x
 
@@ -61,10 +52,6 @@ x () {
     3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
 }
 
-ag () {
-    alias | grep "$@"
-}
-
 IP () {
     local _break=yes
     if [[ $1 == all ]]; then
@@ -80,57 +67,16 @@ IP () {
     done
 }
 
-fa () {
-    fv "$@"
-}
-
-fv () {
-    shift_dir "$@" && shift
-    if [[ -z "$@" ]]; then
-        echo Nothing to find
-    else
-        files=$(find $(realpath $dir) -name "$@")
-        if [[ -z $files ]]; then
-            echo "$@" not found
-        else
-            echo $files | lines_to_spaces | sed -e "s:^\./::"
-            vim -p $files
-        fi
-    fi
-}
-
-gg () {
-    local readme="show grep results as vim commands"
-    sought="$1"
-    shift
-    grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
-}
-
-gsj () {
-    git -C ~/hub/jab status
-}
-
-gv () {
-    g -v "$@"
-}
-
 
 _free_line_here () {
     :
-}
-
-ky () {
-    shift_dir "$@" && shift
-    dir=${dir:-~/jab/src/python}
-    cde $dir "$@"
-    y .
 }
 
 
 ma () {
     local _storage=/tmp/fred.sh;
     if [[ -z "$@" ]]; then
-        pyth -c "print 'memo -a\"$*\"'" > $_storage;
+        python -c "print 'memo -a\"$*\"'" > $_storage;
         bash $_storage;
         cat $_storage;
         rr $_storage;
@@ -205,46 +151,8 @@ vf () {
     _edit_source $(functons) "$@"
 }
 
-vj () {
-    (cd ~/jab;
-        v.
-        gsi)
-}
-
-vy () {
-    v $(ls *.py | grep -v '__*.py*')
-}
-
-sq () {
-    . $GIT_BUCKET/qaz/src/bash/qazrc
-}
-
-sx () {
-    export PS4='+ [${BASH_SOURCE##*/}:${LINENO}]'
-    set -x
-}
-
-sz () {
-    set +x
-    export PS4=
-}
-
-yt () {
-    # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
-    local _dir=~/Downloads/youtube.dl
-    if [[ -d "$1" ]]; then
-        _dir="$1"
-        shift
-    elif [[ -d "$_dir/$1" ]]; then
-        _dir="$_dir/$1"
-        shift
-    fi
-    local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
-    ( cd $_dir
-    [[ "$@" ]] && youtube-dl $_options "$@"
-    pwd
-    ll -htr
-    )
+vp () {
+    _edit_source ~/bash/prompt.sh +/^_colour_prompt
 }
 
 # xxx
@@ -259,10 +167,18 @@ ask () {
     echo $_answer
 }
 
+clf () {
+    cat ~/jab/local/functons.sh
+}
+
 dir () {
     local _where=.
     [[ -n "$@" ]] && _where="$@"
     say $(short_dir $_where)
+}
+
+calf () {
+    cat ~/jab/local/functons.sh
 }
 
 envv () {
@@ -339,7 +255,7 @@ hub () {
     fi
     [[ -d $_directory ]] && cde $_directory
     [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
-    cdra $_directory
+    cde $_directory
 }
 
 jjb () {
@@ -352,6 +268,11 @@ jjy () {
 
 gsij () {
     gsi ~/jab
+}
+
+kad () {
+    head -n1 | grep -q '#!' || return;
+    kat -f '{$' -l '^}' "$@" | bat -l bash
 }
 
 key () {
@@ -498,7 +419,7 @@ mkd () {
 nat () {
     local _cmd=cat
     is-file bat && _cmd=bat
-    is-file kat && $(kat "$@" >/tmp/std/out 2>/tmp/std/err) && _cmd=kat
+    is-file kat && $(kat "$@" >~/fd1 2>~/fd2) && _cmd=kat
     $_cmd "$@"
 }
 
@@ -634,7 +555,7 @@ vfh () {
 }
 
 vfr () {
-    pyth ~/jab/src/python/vim_traceback.py "$@"
+    python ~/jab/src/python/vim_traceback.py "$@"
 }
 
 vgf () {
@@ -748,7 +669,7 @@ bool () {
             [[ $_result == 0 ]] && echo True || echo False
             return $_result
         else
-            "$@" 2> /tmp/std/err && echo True && return 0
+            "$@" 2> ~/fd2 && echo True && return 0
         fi
         echo False; return 1
     fi
@@ -811,16 +732,6 @@ bump () {
 }
 
 
-cdra () {
-    local _path=$(py_cp "$@")
-    cd $_path
-    ranger --choosedir=$HOME/.local/ranger.txt
-    local _ranged=
-    [[ -f $HOME/.local/ranger.txt ]] && _ranged=$(cat $HOME/.local/ranger.txt)
-    [[ -d $_ranged ]] || return
-    cd $_ranged
-}
-
 down () {
     cd ~/Downloads "$@"
     l -tr . | tail
@@ -840,7 +751,7 @@ init () {
 }
 
 keys () {
-    . ~/bash/keyboard/__init__.sh
+    . ~/keys/__init__.sh
 }
 
 lkra () {
@@ -965,7 +876,7 @@ this () {
 }
 
 Tree () {
-    tree "$@" | more
+    tree "$@" | less -R
 }
 
 vims () {
@@ -1017,10 +928,6 @@ fewer () {
     else
         cat -n
     fi
-}
-
-freds () {
-    pyth ~/jab/src/python/freds.py "$@"
 }
 
 hello () {
@@ -1099,7 +1006,7 @@ range () {
     local destination=.
     if [[ -n "$*" ]]; then
         local cde_script=~/hub/cde/cd.py
-        if ! destination=$(PYTHONPATH=$python_directory pyth $cde_script "$@" 2>&1); then
+        if ! destination=$(PYTHONPATH=$python_directory python $cde_script "$@" 2>&1); then
             echo "$destination"
             return 1
         fi
@@ -1126,7 +1033,7 @@ taocl () {
 }
 
 ylint () {
-    pyth $HOME/jab/src/python/ylint.py "$@"
+    python $HOME/jab/src/python/ylint.py "$@"
 }
 
 # xxxxxx
@@ -1265,7 +1172,7 @@ clearly () {
 
 doctest () {
     local __doc__="""doctest args"""
-    local _pythonpath=$(readlink -f .) 
+    local _pythonpath=$(readlink -f .)
     [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
     (PYTHONPATH="$_pythonpath" python -m doctest "$@")
 }
@@ -1332,9 +1239,9 @@ maketest () {
     fi
     local filename=$(basename_ $path)
     local stem=${filename%.*}
-    local classname=$(pyth -c "print 'Test%s' % '$stem'.title()")
+    local classname=$(python -c "print 'Test%s' % '$stem'.title()")
     local methodname="test_$stem"
-    local test_file=$(pyth -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
+    local test_file=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
     if [[ -f "$test_file" ]]; then
         echo $test_file is already a file >&2
         return 1
@@ -1437,8 +1344,8 @@ basename_ () {
 }
 
 first_num () {
-    num=$(pyth ~/jab/src/python/first_num.py "$@")
-    args=$(pyth ~/jab/src/python/first_num.py --Invert "$@")
+    num=$(python ~/jab/src/python/first_num.py "$@")
+    args=$(python ~/jab/src/python/first_num.py --Invert "$@")
     [[ -n $num ]]
 }
 
@@ -1501,7 +1408,7 @@ jab_hub () {
 }
 
 jab_scripts () {
-    pyth ~/jab/src/python/scripts.py "$@"
+    python ~/jab/src/python/scripts.py "$@"
 }
 
 make_it_so () {
@@ -1569,18 +1476,16 @@ disable_spctl () {
 }
 
 show_functions () {
-    _all_funcs=$(declare -f | grep "^[^ ]* ()" | wc -l)
-    _in_funcs=$(( $_all_funcs - $_out_funcs ))
-    echo $_all_funcs functions
-    echo $_out_funcs before '~/jab'
-    echo $_in_funcs in '~/jab'
+    local __doc__="""You're mad!!"""
+    echo all functions? here ye go
+    declare -f | grep "^[^ ]* ()"
 }
 
 console_hello () {
     local me=$USER
     local here=$(jostname)
-    export PYTHON=${PYTHON:-pyth}
-    console_title_on "pyth@${here}" && \
+    export PYTHON=${PYTHON:-python}
+    console_title_on "python@${here}" && \
         $PYTHON "$@" && \
         console_title_off "${me}@${here}"
 }
@@ -1632,7 +1537,7 @@ source_aliases () {
 console_title_on () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/6887306/500942
-    elif env | grep -iq konsole 2> /tmp/std/err; then
+    elif env | grep -iq konsole 2> ~/fd2; then
         #dcop $KONSOLE_DCOP_SESSION renameSession $1
         echo -e "\033]0;$1\007" # http://stackoverflow.com/a/21380108/500942
     elif env | grep -iq gnome.terminal; then
@@ -1660,7 +1565,7 @@ show_functons_in ()
 console_title_off () {
     if [[ -n $TERM_PROGRAM && $TERM_PROGRAM == "iTerm.app" ]]; then
         echo -e "]0;$1"
-    elif env | grep -iq konsole 2> /tmp/std/err; then
+    elif env | grep -iq konsole 2> ~/fd2; then
         dcop $KONSOLE_DCOP_SESSION renameSession $1
     elif env | grep -iq gnome.terminal; then
         echo -e "\033]0;$1\007" # http://askubuntu.com/a/22417/130752
@@ -1760,7 +1665,7 @@ _divv_get_difference () {
         --exclude=.gitignore \
         $_source_gitignore \
         $destination_gitignore \
-    "$_source_dir" "$_destination_dir" 2> /tmp/std/err
+    "$_source_dir" "$_destination_dir" 2> ~/fd2
 }
 
 unremembered () {

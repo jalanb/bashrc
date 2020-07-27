@@ -1,30 +1,29 @@
 #! /bin/cat
 
+[[ -f ~/whyp.sh ]] && . ~/whyp.sh
 
 # # x
 # 
 # w () {
-#     what_w "$@"
+#     local __doc__='Show whether the first argument is a text file, alias or function'
+#     if is_alias $1; then
+#         alias $1
+#     elif is_function $1; then
+#         _parse_function $1
+#         echo "$1 is a function in '$path_to_file':$line_number"
+#     elif is_executable $1; then
+#         real_path=$(type -p $1)
+#         real_name=$(basename "$real_path")
+#         [[ "$real_name" == "$1" ]] || echo "$1 is a file $real_path"
+#         ls -l $(realpath $(which $1))
+#     else
+#         type $1
+#     fi
 # }
 # 
 # # xx
 # 
 # ww () {
-#     what_ww "$@"
-# }
-# 
-# # xxx
-# 
-# www () {
-#     what_www "$@"
-# }
-# 
-# # xxxx
-# # xxxxx
-# # xxxxxx
-# 
-# what_ww () {
-# . ~/hub/whyp/whyp.sh
 #     local __doc__='whyp(all arguments (whether they like it or not))'
 #     PASS=0
 #     FAIL=1
@@ -36,41 +35,21 @@
 #     fi
 #     whype -v "$@" && return $PASS
 #     echo $1 not found
-#     what_ww ${1:0:${#1}-1} && return $PASS
+#     ww ${1:0:${#1}-1} && return $PASS
 #     return $FAIL
 # }
 # 
-# # xxxxxxx
+# # xxx
 # 
-# what_w () {
-# . ~/hub/whyp/whyp.sh
-#     local __doc__='Show whether the first argument is a text file, alias or function'
-#     if is_existing_alias $1; then
-#         alias $1
-#     elif is_existing_function $1; then
-#         _parse_function $1
-#         echo vim $path_to_file +$line_number "+/\"^$1 \""
-#     elif which $1 >/dev/null 2>&1; then
-#         real_file=$(realpath $(which $1))
-#         if [[ $real_file != $1 ]]; then
-#             echo "$1 -> $real_file"
-#         fi
-#         ls -l $(realpath $(which $1))
-#     else type $1
-#     fi
-# }
-# 
-# # xxxxxxxx
-# 
-# what_www () {
+# www () {
 #     . ~/hub/whyp/whyp.sh
 #     (DEBUGGING=www;
 #     local _command=$1; shift
 #     ww $_command;
 #     w $_command;
-#     if is_existing_function $_command; then
+#     if is_function $_command; then
 #         (set -x; $_command "$@")
-#     elif is_existing_alias $_command; then
+#     elif is_alias $_command; then
 #         (set -x; $_command "$@")
 #     elif file $_command  | grep -q -e script -e text; then
 #         what_wwm $_command "$@"
@@ -78,4 +57,8 @@
 #         echo 0
 #     fi)
 # }
-
+# # xxxx
+# # xxxxx
+# # xxxxxx
+# # xxxxxxx
+# # xxxxxxxx

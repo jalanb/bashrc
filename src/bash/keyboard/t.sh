@@ -9,6 +9,11 @@ t () {
 
 # xx
 
+tl () {
+    tree -d -L 1
+    l "$@"
+}
+    
 tt () {
     try .
 }

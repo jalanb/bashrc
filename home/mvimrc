@@ -8,10 +8,9 @@
 set nocompatible
 
 " screen {{{2 
-set fullscreen
+set no fullscreen
 
 " Keyboard {{{1
 " ordinary keys {{{2
 " LETTERS {{{3
 "noremap Q <esc>:q!<CR>
-unmap Q

@@ -5,9 +5,9 @@ from pysyte.types import paths
 
 args = {
     '2': ['~/jab/todo.txt', '~/python/todo.py'],
-    'scripts': ['~/python/scripts.py', '~/python/site/script_paths.py'],
+    'scripts': ['~/python/scripts.py', '~/python/site/script_path.py'],
     'try': ['~/python/testing/try.py'],
-    'v': ['~/python/vim.py', '~/python/vim_script.py', '~/python/site/script_paths.py'],
+    'v': ['~/python/vim.py', '~/python/vim_script.py', '~/python/site/script_path.py'],
     'rf': ['~/python/rf.py', '~/.config/rf/config'],
     'jpm': ['~/hub/jpm/jpm/jpm.py', '~/hub/jpm/bin/jpm'],
     'cd':  ['~/hub/cde/cde.sh', '~/hub/cde/cde.py', '~/.config/cd'],
