@@ -1,8 +1,12 @@
 #! /bin/cat
 
 
+key_path () {
+    echo ~/bash/keyboard/$1
+}
+
 echo_key () {
-    local files_=$(ls ~/bash/keyboard/$1 2>/dev/null) || return 1
+    local files_=$(ls $(key_path $1) 2>/dev/null) || return 1
     echo -n  $files_
 }
 
@@ -26,7 +30,7 @@ key_scripts () {
 }
 
 key_init () {
-    echo $(echo_keys __init__.sh)
+    echo $(key_path __init__.sh)
 }
 
 same_path () {
@@ -41,8 +45,8 @@ write_keys () {
     local init_=$(key_init) text_=
     echo "#! /usr/bin/env bat" > $init_
     for script_ in $(key_scripts); do
-        grep -v "^#!" $script_
-    done >> $init_
+        grep -v "^#!" $script_ >> $init_
+    done
 }
 
 read_keys () {
