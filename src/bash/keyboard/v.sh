@@ -151,7 +151,7 @@ ved () {
 }
 
 vfd () {
-    vim -p $(fd "$@")
+    vim -p $(fd --follow "$@")
 }
 
 vin () {

@@ -1,11 +1,11 @@
 #! /usr/bin/env bat
 
 
-# See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
-#   Allows cutting stuff out of stderr
 
 g () {
     local grep_="$(which egrep) --color"
+    # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
+    #   Allows cutting text out of stderr
     ($grep_ "$@" 3>&1 1>&2 2>&3 | sed -e "/Is a directory/d") 3>&1 1>&2 2>&3
 }
 
