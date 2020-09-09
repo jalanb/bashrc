@@ -3,13 +3,13 @@
 # x
 
 l () {
-    $(_ls_command) "$@"
+    $(ls_command) "$@"
 }
 
 # xx
 
 l0 () {
-    ll -htrLo "$@"
+    l -l -htrLo "$@"
 }
 
 la () {
@@ -18,6 +18,11 @@ la () {
 
 lg () {
     l -g "$@"
+}
+
+lf () {
+  l fred* 2>&1 | grep -q "No such" && echo "fredless" >&2 
+  fdf fred
 }
 
 lh () {
@@ -60,7 +65,7 @@ ly () {
 # xxx
 
 lao () {
-    l -1 -a "$@"
+    la -C "$@"
 }
 
 lal () {
@@ -95,7 +100,7 @@ ltr () {
 }
 
 loa () {
-    lo -a
+    lo -a "$@"
 }
 
 # xxxx
@@ -114,40 +119,48 @@ _ls_option () {
     $(_ls_program)  --help 2>/dev/null | grep -q -- $1
 }
 
+
+has_option () {
+    $1 --help 2>/dev/null | grep -q -- $2 && return 0
+    return 8
+}
+
+which_q () {
+    which "$1" 2>/dev/null
+}
+
+ls_program () {
+    local __doc__="""Use ls by default, or gls if available (e.g. macOS)"""
+    local which_ls_=$(which_q ls)
+    [[ -f $which_ls_ ]] || which_ls_=$(which_q gls)
+    [[ -f $which_ls_ ]] || return 1
+    readlink -f $which_ls_
+}
+
+ls_has_option () {
+    local ls_=$(ls_program) || return 1
+    has_option "$ls_" "$1"
+}
+
+ls_options () {
+    local __doc__="""Use available options"""
+    local by_dir_= colour_=-G classify_=-F
+    if ls_has_option $colour_; then
+        colour_=--color
+        by_dir_=--group-directories-first
+        classify_=--classify
+    fi
+    echo "-h -1 $colour_ $by_dir_ $classify_"
+}
+
+
+ls_command () {
+    echo "$(ls_program)" "$(ls_options)"
+}
+
 # _xxxxxxxxxx
 
-_ls_command () {
-    # echo "$(_ls_program)"      "$(_ls_options)"
-      echo "  $LS_PROGRAM "      "  $LS_OPTIONS "
-    # echo "  $LS_PROGRAM " "$@" "  $LS_OPTIONS "
-}
 
-_ls_program () {
-    local __doc__="""Use ls by default, or gls if available (e.g. macOS)"""
-    if [[ -z $LS_PROGRAM ]]; then
-        LS_PROGRAM=$(which ls 2>/dev/null)
-        local _gls=$(which gls 2>/dev/null)
-        [[ -x "$_gls" ]] && LS_PROGRAM="$_gls"
-    fi
-    echo $LS_PROGRAM
-}
 
-_ls_options () {
-    local __doc__="""Use available options"""
-    if [[ -z $LS_OPTIONS ]]; then
-        LS_OPTIONS="-h -1"
-        if _ls_option --color; then
-            LS_OPTIONS="$LS_OPTIONS --color"
-            _ls_option --group-directories-first && LS_OPTIONS="$LS_OPTIONS --group-directories-first"
-            _ls_option --classify && LS_OPTIONS="$LS_OPTIONS --classify"
-        else
-            # BSD / macOS has older names for --color and --classify
-            _ls_option -G && LS_OPTIONS="$LS_OPTIONS -G"
-            _ls_option -F && LS_OPTIONS="$LS_OPTIONS -F"
-        fi
-    fi
-    echo $LS_OPTIONS
-}
-
-export LS_PROGRAM=$(LS_PROGRAM= _ls_program)
-export LS_OPTIONS=$(LS_OPTIONS= _ls_options)
+LS_COMMAND=$(ls_command) LS_OPTIONS=$(ls_options) LS_PROGRAM=$(ls_program)
+export LS_COMMAND LS_OPTIONS LS_PROGRAM
