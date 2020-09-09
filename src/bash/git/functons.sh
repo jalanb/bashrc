@@ -301,7 +301,7 @@ gip () {
 }
 
 gl1 () {
-    gl -n1 "$@"
+    gl_ 1 "$@"
 }
 
 gla () {
@@ -445,7 +445,7 @@ grm () {
         local one_=$1
         local one_branch_=$(git branch | grep "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
         if [[ ! $one_branch_ ]]; then
-            local one_remote_=$(git branch --remotes | sed -e "s:origin/::" | grep $one_ | head -n1)
+            local one_remote_=$(git branch --remotes | sed -e "s:origin/::" | grep $one_ | head -n 1)
             if [[ $one_remote_ ]]; then
                 one_branch_=$one_remote_
                 git co $one_branch_
@@ -615,7 +615,7 @@ gbd_ () {
     local current_branch_=$(get_branch)
     if [[ "$@" =~ $current_branch_ ]]; then
         if [[ "$@" == "master" ]]; then
-            git checkout $(git tag --list  | sort -V | tail -n1)
+            git checkout $(git tag --list  | sort -V | tail -n 1)
             current_branch_=$(get_branch)
             if [[ $current_branch_ == "master" ]]; then
                 show_error Please checkout another branch before deleting master
@@ -796,12 +796,12 @@ glgs () {
 }
 
 glp1 () {
-    glp -n1 "$@"
+    glp -n 1 "$@"
 }
 
 glf1 () {
-    git lg -n1 "$@"
-    git lg -n1 --compact-summary "$@" | kat -f 2 -l -2 | cut -d'|' -f2
+    git lg -n 1 "$@"
+    git lg -n 1 --compact-summary "$@" | kat -f 2 -l -2 | cut -d'|' -f2
 }
 
 gls1 () {
@@ -1157,9 +1157,16 @@ dit () {
 }
 
 gl_ () {
-    local lines_="-n 8"
-    [[ $1 =~ ^[0-9][0-9]*$ ]] && lines_="-n $1" && shift
-    dit "$@" l $lines_
+    local options_="-n 8"
+    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
+        options_="-n $1"
+        shift
+    fi
+    if [[ $1 == "--oneline" ]]; then
+        options_="$options_ $1"
+        shift
+    fi
+    dit "$@" l $options_
 }
 
 untracked () {
