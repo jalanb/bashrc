@@ -32,6 +32,10 @@ py () {
 
 # xxx
 
+pid () {
+    pip_install_develop "$@"
+}
+
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
@@ -40,12 +44,13 @@ pii () {
 
 # xxxx
 
-ppip () {
-    show_run_command python -m pip "$@"
+pidd () {
+    pip_install_develop .
 }
 
-pipd () {
-    _pip_install_develop "$@"
+ppip () {
+    #show_run_command python -m pip "$@"
+    python -m pip "$@"
 }
 
 pipv () {
@@ -144,12 +149,6 @@ pythonv () {
 
 # xxxxxxx
 
-pythonvv () {
-    python -m .venv
-    sed -i -e /activate/d .cd
-    echo "activate_python_here" >> .cd
-}
-
 pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
     [[ $string != "# pylint: disable=No" ]] && echo $string
@@ -157,18 +156,10 @@ pylinum () {
 
 # xxxxxxx*
 
-install_develop () {
-    [[ -f setup.py ]] || echo "setup.py is not a file" >&2
-    [[ -f setup.py ]] || return 1
-    local _pip=ppip
-    [[ -f requirements.txt ]] && $_pip install -r requirements.txt
-    $_pip install -e .
-}
-
-_pip_install_develop () {
+pip_install_develop () {
     local __doc__="""pip install a directory for development"
     piup >/dev/null 2>&1
-    local _install=develop; shift
+    local _install=develop
     local _dir=.
     if [[ -d "$1" ]]; then
         _dir="$1"
