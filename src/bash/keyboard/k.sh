@@ -38,8 +38,20 @@ ky () {
 
 # xxx
 
+kad () {
+    head -n1 | grep -q '#!' || return;
+    kat -f '{$' -l '^}' "$@" | bat -l bash
+}
+
+key () {
+    . ~/bash/keyboard/$1.sh
+}
+
 kkk () {
     :  # Name reserved
 }
 
+kpj () {
+    rsync -a -e "ssh -i $HOME/.ssh/id_jab" "$@"
+}
 

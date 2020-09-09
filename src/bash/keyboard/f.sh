@@ -1,7 +1,29 @@
 #! /bin/cat
 
 # x
+
+f () {
+    local _dir=.
+    [[ -d "$1" ]] && _dir="$1" && shift
+    local _type=f
+    [[ $1 =~ ^[dDfF]$ ]] && _type="$1" && shift
+    _type="-type $_type"
+    local name_='*'
+    [[ -n $1 ]] && name_="$1" && shift
+    name_="-name $name_"
+    find $_dir $_type $name_ "$@"
+}
+
+# _
 # xx
+
+fa () {
+    fv "$@"
+}
+
+ff () {
+    fdf "$@"
+}
 
 fl () {
     freds | tr ' ' '\n'
@@ -10,8 +32,40 @@ fl () {
 # xxx
 
 fd_ () {
-    local __doc__="""Always follow links"""
-    fd --follow "$@"
+    local dir_=. name_=. follow_=--follow options_=
+    while [[ "$@" ]]; do
+        if [[ $1 =~ ^[fd]$ ]]; then
+            options_="$options_ -t $1"
+        elif [[ $1 =~ ^[-]*[e]$ ]]; then
+            shift
+            options_="$options_ -e $1"
+        elif [[ $1 =~ ^[-][f]$ ]]; then
+            follow_=
+        elif [[ -d "$1" ]]; then
+            dir_="$1"
+        else
+            name_="$1"
+        fi
+        shift
+    done
+    options_="$options_ $follow_"
+    fd $options_ "$name_" "$dir_"
+}
+
+fdd () {
+    fd_ d "$@"
+}
+
+fde () {
+    fd_ e "$@"
+}
+
+fdf () {
+    fd_ f "$@"
+}
+
+fdp () {
+    fde py "$@"
 }
 
 fee () {
