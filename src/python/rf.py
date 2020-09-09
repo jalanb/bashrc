@@ -5,7 +5,6 @@ The script contains a known list of globs for temporary files
 """
 
 
-from __future__ import print_function
 import os
 import bdb
 import sys
@@ -22,7 +21,8 @@ def get_module_name():
 
 
 def _get_path_to_config():
-    path_to_config = '~/.config/%s/config' % get_module_name()
+    name = get_module_name()
+    path_to_config = f"~/.config/{name}.ini"
     return os.path.expanduser(path_to_config)
 
 
@@ -219,7 +219,6 @@ def remove_files(files, quiet, trial_run):
 
 def script(paths, args, globs):
     """Run the script"""
-    breakpoint()
     result = os.EX_OK
     for path in paths:
         files = get_files(path, globs, args.recursive)
@@ -234,10 +233,9 @@ def main():
     try:
         paths, args, globs = parse_options()
     except bdb.BdbQuit:
-        breakpoint()
         return 0
     except NotImplementedError as e:
-        breakpont()
+        breakpoint()
         print(e, file=sys.stderr)
         return os.EX_USAGE
     return script(paths, args, globs)
