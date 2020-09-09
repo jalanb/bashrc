@@ -1,0 +1,66 @@
+#
+# ~/.inputrc
+#
+# See also http://cnswww.cns.cwru.edu/php/chet/readline/readline.html#SEC9
+#
+
+# which default set of key bindings is used
+set editing-mode vi
+
+#  filename matching and completion in a case-insensitive fashion
+set completion-ignore-case on
+
+# treat hyphens (`-') and underscores (`_') as equivalent when performing case-insensitive filename matching
+set completion-map-case on
+
+# common prefixes longer than this value are replaced with an ellipsis when displaying possible completions. 
+set completion-prefix-display-length 2
+
+#  words which have more than one possible completion cause the matches to be listed immediately
+set show-all-if-ambiguous on
+
+# words which have more than one possible completion without any possible partial completion
+# cause the matches to be listed immediately instead of ringing the bell
+set show-all-if-unmodified on
+
+# a character denoting a file's type is appended to the filename when listing possible completions
+set visible-stats on
+
+# match files whose names begin with a `.' (hidden files) 
+set match-hidden-files on
+
+# Key bindings
+
+# Up arrow
+"\e[A":history-search-backward
+# Down arrow
+"\e[B":history-search-forward
+# Do not re-assign the left/right arrows, use them for line-editting
+# Right arrow
+# "\e[C":menu-complete
+# Left arrow
+# "\e[D": 
+
+$if Bash
+#
+# Function keys
+#
+# <F12>
+"\e[24~": "!$\r"
+# <Shift-F12>
+"\e[24;2~": "!!\r\e0"
+
+set keymap vi-insert
+# <PageUp>
+"\e[5~": "\ek0"
+# <PageDown>
+"\e[6~": "\ej$"
+
+set keymap vi-command
+# <PageUp>
+"\e[5~": "k0"
+# <PageDown>
+"\e[6~": "j$"
+
+
+$endif

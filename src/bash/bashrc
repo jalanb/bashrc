@@ -37,10 +37,10 @@ vbb () {
     test -f $BASHRC_LOG && _log=$BASHRC_LOG
     (
         cd $home_user
-        local local__=
-        test -f local/__init__.sh && local__=local/__init__.sh
-        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local__ ~/.vimrc $_log "$@"
-        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local__ ~/.vimrc $_log
+        local local_=
+        test -f local/__init__.sh && local_=local/__init__.sh
+        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ ~/.vimrc $_log "$@"
+        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ ~/.vimrc $_log
     )
     [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
 }
