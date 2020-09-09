@@ -304,6 +304,18 @@ gl1 () {
     gl_ 1 "$@"
 }
 
+gl2 () {
+    gl_ 2 "$@"
+}
+
+gl3 () {
+    gl_ 3 "$@"
+}
+
+gl4 () {
+    gl_ 4 "$@"
+}
+
 gla () {
     git_log_to_screen lg "$@" --author=Alan.Brogan
 }
@@ -317,7 +329,7 @@ glg () {
 }
 
 gll () {
-    gl_ 8 "$@" ll 
+    gl_ 8 "$@"
 }
 
 gln () {
@@ -729,7 +741,7 @@ glgo () {
 }
 
 glll () {
-    gl_ 16 "$@" ll 
+    gl_ 16 "$@"
 }
 
 godr () {
@@ -925,7 +937,27 @@ gorll () {
 }
 
 gllll () {
-    gl_ 32 "$@" ll 
+    gl_ 32 "$@"
+}
+
+glllll () {
+    gl_ 32 "$@"
+}
+
+gllllll () {
+    gl_ 32 "$@"
+}
+
+glllllll () {
+    gl_ 32 "$@"
+}
+
+gllllllll () {
+    gl_ 32 "$@"
+}
+
+glllllllll () {
+    gl_ 32 "$@"
 }
 
 glone () {

@@ -134,6 +134,11 @@ llllllllg () {
     gl_ 87 "$@"
 }
 
+lllllllllg () {
+    gl_ 141 "$@"
+}
+
+
 # _xxxxxxxxx
 
 has_option () {
