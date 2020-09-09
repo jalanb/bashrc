@@ -23,3 +23,32 @@ gsj () {
 gv () {
     g -v "$@"
 }
+
+glll () {
+    gl_ 16 "$@"
+}
+
+gllll () {
+    gl_ 32 "$@"
+}
+
+glllll () {
+    gl_ 64 "$@"
+}
+
+gllllll () {
+    gl_ 128 "$@"
+}
+
+glllllll () {
+    gl_ 256 "$@"
+}
+
+gllllllll () {
+    gl_ 512 "$@"
+}
+
+gllllllll () {
+    gl_ 1024 "$@"
+}
+

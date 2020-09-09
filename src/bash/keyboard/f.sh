@@ -22,6 +22,10 @@ fff () {
     freds | tr ' ' '\n'
 }
 
+fdb () {
+    bat $(fdf "$@")
+}
+
 fdd () {
     fd_type d "$@"
 }

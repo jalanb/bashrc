@@ -17,7 +17,7 @@ la () {
 }
 
 lg () {
-    l -g "$@"
+    gl_ 2 "$@"
 }
 
 lf () {
@@ -73,18 +73,7 @@ lal () {
 }
 
 llg () {
-    local _grep=$1; shift
-    if [[ -n "$@" ]]; then
-        if [[ -d "$1" ]]; then
-            local _dir="$1"
-            shift
-            ll "$_dir/" "$@"
-        else
-            ll "$@" 
-        fi
-    else
-        ll ./
-    fi | g $_grep
+    gl_ 3 "$@"
 }
 
 lll () {
@@ -105,6 +94,10 @@ loa () {
 
 # xxxx
 
+lllg () {
+    gl_ 5 "$@"
+}
+
 llll () {
     lll -a "$@"
 }
@@ -113,12 +106,35 @@ lotr () {
     lo -tr "$@"
 }
 
-# _xxxxxxxxx
-
-_ls_option () {
-    $(_ls_program)  --help 2>/dev/null | grep -q -- $1
+llllg () {
+    gl_ 8 "$@"
 }
 
+lllllg () {
+    gl_ 13 "$@"
+}
+
+lllllg () {
+    gl_ 21 "$@"
+}
+
+llllllg () {
+    gl_ 33 "$@"
+}
+
+lllllllg () {
+    gl_ 54 "$@"
+}
+
+llllllllg () {
+    gl_ 87 "$@"
+}
+
+llllllllg () {
+    gl_ 87 "$@"
+}
+
+# _xxxxxxxxx
 
 has_option () {
     $1 --help 2>/dev/null | grep -q -- $2 && return 0
