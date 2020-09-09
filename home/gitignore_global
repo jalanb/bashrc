@@ -24,6 +24,7 @@
 # Developers temporary files
 #
 .cd
+.venv
 *.fail
 *.history
 *.ilk
@@ -293,4 +294,3 @@ Lib
 Scripts
 pyvenv.cfg
 pip-selfcheck.json
-
