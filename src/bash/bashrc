@@ -28,50 +28,11 @@ lred_user () {
     echo "${_colour_username}@$_colour_host"
 }
 
-home_user=$HOME/jab
-pre_bashrc_ () {
-    local homes_=$home_user/bin:$HOME/bin:$HOME/.local local_=/usr/local
-    local locals_="$local_/gnu:$local_/bin:$local_/go/bin"
-    local bins_=/usr/bin:/bin:/usr/sbin:/sbin
-    local mysite_=/Users/jab/jab/src/python/site/
-
-    local all_="$homes_:$locals_:$bins_"
-    PATH=$all_; export PATH
-    PYTHONPATH=$mysite_:$PYTHONPATH;
-
-    if test -d $HOME/lib -a -n "$(find $HOME/lib -maxdepth 1 -name 'libpython*' -print -quit)"; then
-        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
-    fi
-    . ~/.aliases optional
-    . ~/.functions optional
-}
-
-# set -x
-
 export home_user_=~/jab
 
-bashrc_ () {
-#   set -x
-    export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
-    local init_=$home_user_/__init__.sh
-    if [[ -f $init_ ]]; then
-        # echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
-        # echo "PSI is $PS1"
-        # echo "Here is $(readlink -f .)"
-        source $init_
-        sp green
-        echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
-        # echo "PSI is $PS1"
-        echo "Here is $(readlink -f .)"
-    fi
-    # set +x
-    # set -x
-    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
-}
-
 BASHRC_LOG=~/log/bashrc.log
+home_user=$HOME/jab
 vbb () {
-    # set -x
     local _log=
     test -f $BASHRC_LOG && _log=$BASHRC_LOG
     (
@@ -85,34 +46,50 @@ vbb () {
 }
 
 vbl () {
-    # set -x
     [[ -f $BASHRC_LOG ]] || return 1
     vim $BASHRC_LOG
 }
 
-log_main () {
-    set -x
-    [[ $- =~ i ]] && main > $BASHRC_LOG 2>&1
-    set +x
+echo_path () {
+    echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
+    echo "PSI is $PS1"
+    echo "Here is $(readlink -f .)"
+}
+
+pre_bashrc_ () {
+    local homes_=$home_user/bin:$HOME/bin:$HOME/.local local_=/usr/local
+    local locals_="$local_/gnu:$local_/bin:$local_/go/bin"
+    local bins_=/usr/bin:/bin:/usr/sbin:/sbin
+    local mysite_=/Users/jab/jab/src/python/site/
+
+    local all_="$homes_:$locals_:$bins_"
+    PATH=$all_; export PATH
+    PYTHONPATH=$mysite_:$PYTHONPATH;
+
+    if test -d $HOME/lib -a -n "$(find $HOME/lib -maxdepth 1 -name 'libpython*' -print -quit)"; then
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
+    fi
+    . ~/.aliases ~/.functions
+}
+
+bashrc_ () {
+    # echo_path
+    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
+    local init_=$home_user_/__init__.sh
+    [[ -f $init_ ]] && source $init_
+    sp green
 }
 
 post_bashrc_ () {
-    # set +x
     . $home_user/local/__init__.sh optional
-    # set -x
 }
 
-main () {
-    # set -x
-    [[ $- =~ i ]] || return
+__main__ () {
     pre_bashrc_
     bashrc_ $home_user
     post_bashrc_
     set +m
 }
 
-# echo bashrc
-main  "$@"
-# log_main "$@"
-
-set +x
+[[ $- =~ i ]] && __main__  "$@" #  > $BASHRC_LOG 2>&1

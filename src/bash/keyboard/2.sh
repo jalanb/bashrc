@@ -102,7 +102,7 @@ home_fd () {
     (
         home_cd "$@"
         shift $?
-        fd "$@"
+        fd --follow "$@"
     )
 }
 

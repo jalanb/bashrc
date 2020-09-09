@@ -16,6 +16,10 @@ git_status_regexp_="^${git_status_char_regexp_}${git_status_char_regexp_}"
 
 # xx
 
+GI () {
+    GIT_EDITOR=true gi "$@"
+}
+
 ga () {
     [[ -n $GIT_ADDED ]] && GIT_ADDED="$@" || GIT_ADDED="$GIT_ADDED:""$@"
     if [[ -z "$*" ]]; then
@@ -44,65 +48,18 @@ gb () {
 }
 
 gd () {
-    dit "$@" diff
+    dit "$@" d
 }
 
 gf () {
     gfa; gft
 }
 
-gpf () {
-    show_command "git push --force-with-lease $@"
-    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
-        if [[ $MSG =~ set-upstream ]]; then
-            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
-            $command_
-        else
-            show_error "$MSG"
-            return 1
-        fi
-    fi
-}
-
-gdf () {
-    dit "$@" df
-}
-
-grf () {
-    gcu
-    git_root -o
-    gfe | grep -v 'Fetching'
-    gor master 2>/dev/null | grep -v "up to date"
-    gb
-    bump show
-    local lines_=5
-    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
-    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
-}
-
-gof () {
-    gbD fred 2>/dev/null
-    gob fred "$@"
-}
-
-gipf () {
-    gi "$@"
-    gpf
-}
-
-gpff () {
-    gp --force "$@"
-}
-
-GI () {
-    GIT_EDITOR=true gi "$@"
-}
-
 gi () {
     local _doc___="git in"
     if [[ "$@" ]]; then
         local storage_=/tmp/gi.sh
-        show_command "$@"
+        #show_command "$@"
         python -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
@@ -114,7 +71,7 @@ gi () {
 }
 
 gl () {
-    dit "$@" log
+    gl_ 4 "$@"
 }
 
 gm () {
@@ -168,21 +125,42 @@ gt () {
     [[ $tag_ ]] || git tag | sort
 }
 
-tc () {
-    local global_config_=; test -f ~/.gitconfig && global_config_=~/.gitconfig
-    local global_ignore_=; test -f ~/.gitignore_global && global_ignore_=~/.gitignore_global
-    local local_config_=; test -f .git/config && local_config_=.git/config
-    local local_ignore_=; test -f .gitignore && local_ignore_=.gitignore
-    local local_creds_=; test -f ~/.git-credentials && local_creds_=~/.git-credentials
-    test -f ~/.git-credentials.more && local_creds_="$local_creds_ ~/.git-credentials.more"
-    vim -p $global_config_ $global_ignore_ $local_ignore_ $local_config_ $local_creds_
+gpf () {
+    show_command "git push --force-with-lease $@"
+    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
+            $command_
+        else
+            show_error "$MSG"
+            return 1
+        fi
+    fi
 }
 
-ts () {
-    tig status
+gdf () {
+    dit "$@" df
 }
 
-# xx_
+grf () {
+    local branch_=__main__
+    [[ $1 ]] && branch_=$1
+    gru
+    gcu
+    git_root -o
+    gfe | grep -v 'Fetching'
+    gor $branch_ 2>/dev/null | grep -v "up to date"
+    gb
+    bump show
+    local lines_=5
+    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
+    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
+}
+
+gof () {
+    gbD fred 2>/dev/null
+    gob fred "$@"
+}
 
 gs_ () {
     local _doc___="""git status back end"""
@@ -323,12 +301,19 @@ gip () {
 }
 
 gl1 () {
-    gl -n1 "$@"
+    gl_ 1 "$@"
 }
 
-glone () {
-    local _doc___="""pronounced 'g l one'"""
-    gl --oneline "$@"
+gl2 () {
+    gl_ 2 "$@"
+}
+
+gl3 () {
+    gl_ 3 "$@"
+}
+
+gl4 () {
+    gl_ 4 "$@"
 }
 
 gla () {
@@ -344,7 +329,7 @@ glg () {
 }
 
 gll () {
-    dit "$@" ll
+    gl_ 8 "$@"
 }
 
 gln () {
@@ -396,7 +381,7 @@ gog () {
 }
 
 gom () {
-    go master "$@"
+    gba | grep -q __main__ && go __main__ "$@" || go master "$@"
 }
 
 goo () {
@@ -439,12 +424,6 @@ gpt () {
     gpo --tags
 }
 
-show_pre_loop_ () {
-    show_green local
-    show_this_branch
-    show_green status
-}
-
 gra () {
     git rebase --abort
 }
@@ -472,12 +451,13 @@ gri () {
 
 grm () {
     local upstream_=master
+    git branch | grep -q __main__ && upstream_=__main__
     local branch_=$(get_branch)
     if [[ $1 ]]; then
         local one_=$1
         local one_branch_=$(git branch | grep "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
         if [[ ! $one_branch_ ]]; then
-            local one_remote_=$(git branch --remotes | sed -e "s:origin/::" | grep $one_ | head -n1)
+            local one_remote_=$(git branch --remotes | sed -e "s:origin/::" | grep $one_ | head -n 1)
             if [[ $one_remote_ ]]; then
                 one_branch_=$one_remote_
                 git co $one_branch_
@@ -541,11 +521,6 @@ gss () {
     gs --short "$@"
 }
 
-git_stash () {
-    local _doc___="""git stash"""
-    dit "$@" stash
-}
-
 gso () {
     git_stash_and go "$@"
 }
@@ -591,6 +566,10 @@ gvi () {
     gxi gvi_show_diff_ gvi_response_ "$@"
 }
 
+gut ()
+{
+    [[ $1 =~ [-][v] ]] && git --version || dit "$@"
+}
 gxi () {
     local _doc___=""""""
     local show_diff_=$1; shift
@@ -633,13 +612,22 @@ sit () {
 }
 
 
+gipf () {
+    gi "$@"
+    gpf
+}
+
+gpff () {
+    gp --force "$@"
+}
+
 # xxxx
 
 gbd_ () {
     local current_branch_=$(get_branch)
     if [[ "$@" =~ $current_branch_ ]]; then
         if [[ "$@" == "master" ]]; then
-            git checkout $(git tag --list  | sort -V | tail -n1)
+            git checkout $(git tag --list  | sort -V | tail -n 1)
             current_branch_=$(get_branch)
             if [[ $current_branch_ == "master" ]]; then
                 show_error Please checkout another branch before deleting master
@@ -752,6 +740,10 @@ glgo () {
     glg origin/"$@"
 }
 
+glll () {
+    gl_ 16 "$@"
+}
+
 godr () {
     gor development
     bump show
@@ -762,7 +754,8 @@ gomb () {
 }
 
 gomr () {
-    gor master
+    gom
+    gr
     bump show
 }
 
@@ -815,12 +808,12 @@ glgs () {
 }
 
 glp1 () {
-    glp -n1 "$@"
+    glp -n 1 "$@"
 }
 
 glf1 () {
-    git lg -n1 "$@"
-    git lg -n1 --compact-summary "$@" | kat -f 2 -l -2 | cut -d'|' -f2
+    git lg -n 1 "$@"
+    git lg -n 1 --compact-summary "$@" | kat -f 2 -l -2 | cut -d'|' -f2
 }
 
 gls1 () {
@@ -943,6 +936,35 @@ gorll () {
     git lg
 }
 
+gllll () {
+    gl_ 32 "$@"
+}
+
+glllll () {
+    gl_ 32 "$@"
+}
+
+gllllll () {
+    gl_ 32 "$@"
+}
+
+glllllll () {
+    gl_ 32 "$@"
+}
+
+gllllllll () {
+    gl_ 32 "$@"
+}
+
+glllllllll () {
+    gl_ 32 "$@"
+}
+
+glone () {
+    local _doc___="""pronounced 'g l one'"""
+    gl --oneline "$@"
+}
+
 # xxxxxx
 # xxxxxxx
 # xxxxxxxx
@@ -953,6 +975,12 @@ git_kd_ () {
 
 mastered () {
     has_branch master "$1" master || has_branch master origin/$1 
+}
+
+show_pre_loop_ () {
+    show_green local
+    show_this_branch
+    show_green status
 }
 
 get_root () {
@@ -990,6 +1018,11 @@ git_root () {
 }
 
 # xxxxxxxxx
+
+git_stash () {
+    local _doc___="""git stash"""
+    dit "$@" stash
+}
 
 git_dirty () {
     git -C $1 status | grep -v -e 'On branch' -e '^$' -e 'branch is up to date' -e 'working tree clean' | grep -q .
@@ -1153,6 +1186,19 @@ dit () {
     # set -x
     git -C "$dir_" "$@" 
     # set +x
+}
+
+gl_ () {
+    local options_="-n 8"
+    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
+        options_="-n $1"
+        shift
+    fi
+    if [[ $1 == "--oneline" ]]; then
+        options_="$options_ $1"
+        shift
+    fi
+    dit "$@" l $options_
 }
 
 untracked () {

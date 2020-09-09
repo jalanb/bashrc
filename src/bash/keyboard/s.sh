@@ -72,7 +72,7 @@ sgf () {
 }
 
 slf () {
-    s $(functons -l)
+    JAB_LOCAL_FUNCS= s $(functons -l)
 }
 
 swf () {

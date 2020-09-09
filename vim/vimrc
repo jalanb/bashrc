@@ -79,7 +79,13 @@ nnoremap j jzz
 nnoremap k kzz
 "noremap l - go right
 "noremap l :call AfterPressing("l")<CR>
-"noremap m
+nnoremap mb ?<cr>zvzz
+nnoremap mn #
+nnoremap mm *
+nnoremap mk m
+nnoremap ml m
+nnoremap m, /<cr>zvzz
+nnoremap m. `m
 nnoremap n nzvzz
 "noremap o - open new line
 "noremap p - paste
@@ -179,7 +185,7 @@ nnoremap H gT
 nnoremap J <PageDown>zz
 nnoremap K <PageUp>zz
 nnoremap L gt
-"noremap M - To Middle of window
+nnoremap M :cn<cr>zMzvzz
 nnoremap N :cn<cr>zMzvzz
 "noremap O - Open line above
 "noremap P - paste forward

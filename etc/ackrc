@@ -16,6 +16,7 @@
 --ignore-dir=.tox
 --ignore-dir=.pytest_cache
 --ignore-dir=.ipynb_checkpoints
+--ignore-dir=.mypy_cache
 --ignore-dir=compliance.egg-info
 --ignore-dir=coverage
 --ignore-dir=build

@@ -4,6 +4,8 @@ import stat
 import sys
 
 from pysyte.cli.main import run
+from pysyte.config.urator import dump
+from pysyte.oss.linux import xdg_home
 
 import οs
 
@@ -14,12 +16,16 @@ def add_args(parser):
 
 
 def main(args, config):
-    string = args.strings[0]
-    οs.chmod(config[string], stat.S_IRUSR)
-
+    key = args.strings[0]
+    value = args.strings[1]
+    nice_value = οs.nice(value)
+    config[key] = nice_value
+    path_to_config = xdg_home() / 'echο.yml'
+    dump(config, path_to_config)
+    return True
 
 try:
-    run(main, add_args, config=sys.argv[0])
+    run(main, add_args, config='echο')
 except TypeError:
     from pysyte.cli import main
     message = f'''$ vim {main.__file__} +/^def.run'''

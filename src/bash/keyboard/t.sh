@@ -31,3 +31,6 @@ tx () {
     ra
 }
 
+too () {
+    PYTHONPATH= tox "$@"
+}

@@ -69,7 +69,7 @@ set_history_file () {
     # format history times
     export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
     # ignore some simple commands in history
-    export HISTIGNORE="bg:fg:history:gh:hh:th:z:za:zg:zk:zl:zp:zv:zx:zva:zvv:zvvv"
+    export HISTIGNORE="bg:fg:history:gh:hh:th:z:za:zg:zk:zl:zp:zv:zx:zva:zvv:zvvv:upset"
     #  remember multi-line commands
     shopt -s cmdhist
     # edit a failed history substitution (default just ignores them)
