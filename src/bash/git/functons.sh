@@ -40,10 +40,10 @@ gb () {
     fi
     sought_="$@"
     if [[ $sought_ ]]; then
-        show_command "git branch $option_ | grep $sought_"
+        show_cmnd "git branch $option_ | grep $sought_"
         git branch $option_ 2>&1 | grep -v -e warning | grep --color $sought_
     else
-        show_command "git branch $option_"
+        show_cmnd "git branch $option_"
         git branch $option_ 2>&1 | grep -v -e warning
     fi
 }
@@ -60,7 +60,7 @@ gi () {
     local _doc___="git in"
     if [[ "$@" ]]; then
         local storage_=/tmp/gi.sh
-        #show_command "$@"
+        #show_cmnd "$@"
         python -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
@@ -85,7 +85,7 @@ go () {
     local current_branch_=$(get_branch) wanted_branch_="${@//origin\/}"
     [[ "$wanted_branch_" == $current_branch_ ]] && show_error "Already on $current_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && return 0
-    show_command "git checkout $wanted_branch_"
+    show_cmnd "git checkout $wanted_branch_"
     if any_git_changes_ .; then
         show_error "Cannot checkout $wanted_branch_"
         show_error "Please clean the index first:"
@@ -97,7 +97,7 @@ go () {
 }
 
 gp () {
-    show_command "git push $@"
+    show_cmnd "git push $@"
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream)
@@ -127,7 +127,7 @@ gt () {
 }
 
 gpf () {
-    show_command "git push --force-with-lease $@"
+    show_cmnd "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
@@ -234,7 +234,7 @@ gcp () {
 }
 
 gcu () {
-    show_command git config user
+    show_cmnd git config user
     echo "$(git config user.name) "'<'"$(git config user.email)"'>'
 }
 
@@ -288,7 +288,7 @@ ggi () {
 }
 
 gia () {
-    show_command git commit --amend "$@"
+    show_cmnd git commit --amend "$@"
     GIT_EDITOR=true git commit --amend "$@"
 }
 
@@ -430,7 +430,7 @@ gra () {
 }
 
 grc () {
-    show_command git rebase --continue
+    show_cmnd git rebase --continue
     GIT_EDITOR=true git rebase --continue | g "skip this commit" || return
     git rebase --skip
 }
@@ -709,7 +709,7 @@ gdis () {
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_command dit lg "$@" > $stdout_
+    show_cmnd dit lg "$@" > $stdout_
     dit "$@" lg >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
@@ -1034,7 +1034,7 @@ has_branch () {
 git_stash_and () {
     local stashed_=
     if git_changed; then
-        show_command git stash
+        show_cmnd git stash
         git stash -q
         stashed_=1
     fi
@@ -1156,7 +1156,7 @@ git_log_to_screen () {
 dit () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
-    # show_command git -C "$dir_" "$@" 
+    # show_cmnd git -C "$dir_" "$@" 
     # set -x
     git -C "$dir_" "$@" 
     # set +x
