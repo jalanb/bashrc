@@ -40,10 +40,10 @@ gb () {
     fi
     sought_="$@"
     if [[ $sought_ ]]; then
-        show_command "git branch $option_ | grep $sought_"
+        show_cmnd "git branch $option_ | grep $sought_"
         git branch $option_ 2>&1 | grep -v -e warning | grep --color $sought_
     else
-        show_command "git branch $option_"
+        show_cmnd "git branch $option_"
         git branch $option_ 2>&1 | grep -v -e warning
     fi
 }
@@ -60,7 +60,7 @@ gi () {
     local _doc___="git in"
     if [[ "$@" ]]; then
         local storage_=/tmp/gi.sh
-        #show_command "$@"
+        #show_cmnd "$@"
         python -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
@@ -85,7 +85,7 @@ go () {
     local current_branch_=$(get_branch) wanted_branch_="${@//origin\/}"
     [[ "$wanted_branch_" == $current_branch_ ]] && show_error "Already on $current_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && return 0
-    show_command "git checkout $wanted_branch_"
+    show_cmnd "git checkout $wanted_branch_"
     if any_git_changes_ .; then
         show_error "Cannot checkout $wanted_branch_"
         show_error "Please clean the index first:"
@@ -97,7 +97,7 @@ go () {
 }
 
 gp () {
-    show_command "git push $@"
+    show_cmnd "git push $@"
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream)
@@ -127,7 +127,7 @@ gt () {
 }
 
 gpf () {
-    show_command "git push --force-with-lease $@"
+    show_cmnd "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
@@ -141,21 +141,6 @@ gpf () {
 
 gdf () {
     dit "$@" df
-}
-
-grf () {
-    local branch_=__main__
-    [[ $1 ]] && branch_=$1
-    gru
-    gcu
-    git_root -o
-    gfe | grep -v 'Fetching'
-    gor $branch_ 2>/dev/null | grep -v "up to date"
-    gb
-    bump show
-    local lines_=5
-    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
-    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
 }
 
 gof () {
@@ -234,7 +219,7 @@ gcp () {
 }
 
 gcu () {
-    show_command git config user
+    show_cmnd git config user
     echo "$(git config user.name) "'<'"$(git config user.email)"'>'
 }
 
@@ -243,8 +228,7 @@ gdd () {
 }
 
 gdi () {
-    local _doc___="""git di args"""
-    dit "$@" d
+    dit d "$@"
 }
 
 gdh () {
@@ -279,7 +263,7 @@ gfm () {
 }
 
 gft () {
-    git fetch --tags --force
+    git fetch --tags --force --all
 }
 
 ggi () {
@@ -288,7 +272,7 @@ ggi () {
 }
 
 gia () {
-    show_command git commit --amend "$@"
+    show_cmnd git commit --amend "$@"
     GIT_EDITOR=true git commit --amend "$@"
 }
 
@@ -429,10 +413,81 @@ gra () {
     git rebase --abort
 }
 
+dir_has_branch () {
+    is_branch "$@"
+}
+
+is_branch () {
+    local dir_=.
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+    fi
+    local branch_=$1 branches_=$(git -C $dir_ branch 2>/dev/null )
+    [[ $branches_ ]] || return 1
+    local found_=$(git -C $dir_ branch 2>/dev/null | grep $branch_ 2>/dev/null)
+    [[ $found_ ]] || return 2
+    [[ $2 == -v ]] && echo $found_
+    return 0
+}
+
+show_branch () {
+    local show_option_=-v
+    [[ $2 == -q ]] && show_option_=
+    is_branch $show_option_ $1
+}
+
+minus_one () {
+    local int_=$1
+    echo $(( $int_ - 1 ))
+}
+
+branches () {
+    local needed_=$1 branch_=
+    for branch_ in "$*"; do
+        test $needed_ -le 0 && return 0
+        is_branch $branch_ . || continue
+        echo $branch_
+        needed_=$(minus_one $needed_)
+    done
+    return 1
+}
+
+mains () {
+    local dir="$1"
+
+    branches $1 __made__ __main__ master
+}
+
+
+grb () {
+    local branch_= upstream_=$(mains 1 "$@")
+    [[ $upstream_ ]] || upstream_=$2
+    [[ $upstream_ ]] || echo "No masters available, usage: grb branch upstream"
+    [[ $upstream_ ]] || return 1
+
+    git rebase $upstream_ $branch_
+}
+
 grc () {
-    show_command git rebase --continue
+    show_cmnd git rebase --continue
     GIT_EDITOR=true git rebase --continue | g "skip this commit" || return
     git rebase --skip
+}
+
+grf () {
+    local branch_=__main__
+    [[ $1 ]] && branch_=$1
+    gru
+    gcu
+    git_root -o
+    gfe | grep -v 'Fetching'
+    gor $branch_ 2>/dev/null | grep -v "up to date"
+    gb
+    bump show
+    local lines_=5
+    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
+    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
 }
 
 grg () {
@@ -453,7 +508,16 @@ gri () {
 grm () {
     local upstream_=master
     git branch | grep -q __main__ && upstream_=__main__
-    local branch_=$(get_branch)
+    grmu $upstream_
+}
+
+grmm () {
+    grmu __main__ __made__
+}
+
+grmu () {
+    local upstream_=$1 branch_=$(get_branch)
+    shift
     if [[ $1 ]]; then
         local one_=$1
         local one_branch_=$(git branch | grep "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
@@ -549,11 +613,11 @@ gtl () {
 gvd () {
     local _doc___="""vim diff all changed files"""
     shift_dir "$@" && shift
-    for f in $(git_status_line_dir $dir | grep "^ M" | cut -dM -f2)
+    for f in $(git_status_line_dir $dir_ | grep "^ M" | cut -dM -f2)
     do
         git dv $f
     done
-    QUESTIONS=$(untracked $dir)
+    QUESTIONS=$(untracked $dir_)
     [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
@@ -562,7 +626,7 @@ gxi () {
     local show_diff_=$1; shift
     local response_=$1; shift
     local responded_=
-    dir=$(show_arg_dir_or_here "$1") && shift
+    local dir_=$(show_arg_dir_or_here "$1") && shift
     stashed_=
     GXI_QUERY=
     show_green remote
@@ -570,12 +634,12 @@ gxi () {
     glg
     show_this_branch -r
     show_pre_loop_
-    while git status --short "$dir"; do
+    while git status --short "$dir_"; do
         show_green staged
         git di --staged
         show_green files
         responded_=
-        for file_ in $(git_status_line_dir_changes "$dir"); do
+        for file_ in $(git_status_line_dir_changes "$dir_"); do
             [[ -n "$file_" ]] || continue
             gxi_grep_ $file_ $GXI_QUERY || continue
             $show_diff_ "$file_"
@@ -709,7 +773,7 @@ gdis () {
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_command dit lg "$@" > $stdout_
+    show_cmnd dit lg "$@" > $stdout_
     dit "$@" lg >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
@@ -879,7 +943,7 @@ gurl () {
 
 gvsd () {
     shift_dir "$@" && shift
-    for file_ in $(git_status_line_dir $dir); do
+    for file_ in $(git_status_line_dir $dir_); do
         gvi_vim_ "$file_"
     done
 }
@@ -1034,7 +1098,7 @@ has_branch () {
 git_stash_and () {
     local stashed_=
     if git_changed; then
-        show_command git stash
+        show_cmnd git stash
         git stash -q
         stashed_=1
     fi
@@ -1156,7 +1220,7 @@ git_log_to_screen () {
 dit () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
-    # show_command git -C "$dir_" "$@" 
+    # show_cmnd git -C "$dir_" "$@" 
     # set -x
     git -C "$dir_" "$@" 
     # set +x
@@ -1233,7 +1297,7 @@ any_git_changes_ () {
     local _doc___="whether the current dir has modified or untacked files"
     local dir_=$1
     [[ -z $dir_ ]] && dir_=$PWD
-    [[ -d "${dir}/.git" ]] || return 1
+    [[ -d "${dir_}/.git" ]] || return 1
     git -C $dir_ status --porcelain | grep "$git_status_regexp_"
 }
 
@@ -1346,7 +1410,12 @@ status_line_ () {
 }
 
 status_chars_ () {
-    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
+    local dir_=.
+    if [[ -d "$1" ]]; then 
+        dir_="$1"
+        shift
+    fi
+    git -C $dir_ status -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
 gsi_drop_ () {

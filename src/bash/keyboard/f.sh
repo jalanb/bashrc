@@ -120,11 +120,13 @@ vff () {
 # xxxx
 
 fd_type () {
-    local type_=$1 sought_=. dir_=.
+    local type_=$1 sought_=. dir_=. hidden_=--hidden
+    [[ $type_ ]] && type_="-t $type_"
     [[ $2 ]] && sought_=$2
     [[ $3 ]] && dir_=$3
+    [[ $4 =~ [-]H ]] && hidden_=
     [[ -d $sought_ ]] && dir_=$sought_ && sought_=.
-    fd_ -t $type_ $sought_ $dir_
+    fd_ $type_ $hidden_ $sought_ $dir_
 }
 
 # xxxxx

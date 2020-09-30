@@ -16,7 +16,6 @@ __version__=0.8.41
 . ~/bash/pym.sh
 . ~/bash/python.sh
 . ~/bash/rf.sh
-. ~/bash/virtualenvwrapper.sh
 . ~/bash/work.sh
 . ~/bash/keys.sh
 . ~/bash/git/__init__.sh
