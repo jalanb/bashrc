@@ -42,10 +42,7 @@ is_command () {
 }
 
 show_command () {
-    if is_command w
-    then w "$@"
-    else show_blue_line '$ '"$*"
-    fi
+    show_blue_line '$ '"$*"
 }
 
 # xxxxxxxxxxxxx

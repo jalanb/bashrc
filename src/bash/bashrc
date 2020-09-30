@@ -69,7 +69,6 @@ pre_bashrc_ () {
     if test -d $HOME/lib -a -n "$(find $HOME/lib -maxdepth 1 -name 'libpython*' -print -quit)"; then
         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     fi
-    . ~/.aliases ~/.functions
 }
 
 bashrc_ () {

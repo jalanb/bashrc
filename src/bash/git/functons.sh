@@ -40,10 +40,10 @@ gb () {
     fi
     sought_="$@"
     if [[ $sought_ ]]; then
-        show_cmnd "git branch $option_ | grep $sought_"
+        show_command "git branch $option_ | grep $sought_"
         git branch $option_ 2>&1 | grep -v -e warning | grep --color $sought_
     else
-        show_cmnd "git branch $option_"
+        show_command "git branch $option_"
         git branch $option_ 2>&1 | grep -v -e warning
     fi
 }
@@ -60,7 +60,6 @@ gi () {
     local _doc___="git in"
     if [[ "$@" ]]; then
         local storage_=/tmp/gi.sh
-        #show_cmnd "$@"
         python -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
@@ -83,9 +82,9 @@ go () {
     local _doc___="git checkout"
     local stashed_=
     local current_branch_=$(get_branch) wanted_branch_="${@//origin\/}"
+    show_command "git checkout $wanted_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && show_error "Already on $current_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && return 0
-    show_cmnd "git checkout $wanted_branch_"
     if any_git_changes_ .; then
         show_error "Cannot checkout $wanted_branch_"
         show_error "Please clean the index first:"
@@ -97,7 +96,7 @@ go () {
 }
 
 gp () {
-    show_cmnd "git push $@"
+    show_command "git push $@"
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream)
@@ -127,7 +126,7 @@ gt () {
 }
 
 gpf () {
-    show_cmnd "git push --force-with-lease $@"
+    show_command "git push --force-with-lease $@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
@@ -219,7 +218,7 @@ gcp () {
 }
 
 gcu () {
-    show_cmnd git config user
+    show_command git config user
     echo "$(git config user.name) "'<'"$(git config user.email)"'>'
 }
 
@@ -249,6 +248,7 @@ gdv () {
 }
 
 gfa () {
+    show_command git fetch --prune --all
     git fetch --prune --all
 }
 
@@ -272,7 +272,7 @@ ggi () {
 }
 
 gia () {
-    show_cmnd git commit --amend "$@"
+    show_command git commit --amend "$@"
     GIT_EDITOR=true git commit --amend "$@"
 }
 
@@ -470,7 +470,7 @@ grb () {
 }
 
 grc () {
-    show_cmnd git rebase --continue
+    show_command git rebase --continue
     GIT_EDITOR=true git rebase --continue | g "skip this commit" || return
     git rebase --skip
 }
@@ -480,14 +480,13 @@ grf () {
     [[ $1 ]] && branch_=$1
     gru
     gcu
-    git_root -o
+    show_command git_root -o
     gfe | grep -v 'Fetching'
     gor $branch_ 2>/dev/null | grep -v "up to date"
     gb
+    show_command bump show
     bump show
-    local lines_=5
-    [[ $1 =~ [0-9]+ ]] && lines_=$(( $1 + 3 ))
-    glg $lines_ | grep -v -e 'nothing to commit' -e 'On branch'
+    gll
 }
 
 grg () {
@@ -564,6 +563,7 @@ grs () {
 }
 
 gru () {
+    show_command git remote get-url origin
     git remote get-url origin
 }
 
@@ -658,7 +658,6 @@ gxi () {
     git status
 }
 
-
 gipf () {
     gi "$@"
     gpf
@@ -697,9 +696,11 @@ gbd_ () {
             gma
         fi
         gom
+        show_command git branch "$@" $current_branch_
         git branch "$@" $current_branch_
         return 0
     fi
+    show_command git branch "$@"
     git branch "$@"
 }
 
@@ -773,7 +774,7 @@ gdis () {
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_cmnd dit lg "$@" > $stdout_
+    show_command dit lg "$@" > $stdout_
     dit "$@" lg >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
@@ -890,10 +891,14 @@ grmt () {
 }
 
 grup () {
+    show_command git remote update origin --prune
     git remote update origin --prune
     git branch | grep -q fred && gbD fred
+    show_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
+    show_command git gc --prune=now --aggressive
     git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    show_command git repack -a -d
     git repack -a -d 2>&1
 }
 
@@ -988,23 +993,23 @@ gllll () {
 }
 
 glllll () {
-    gl_ 32 "$@"
+    gl_ 64 "$@"
 }
 
 gllllll () {
-    gl_ 32 "$@"
+    gl_ 128 "$@"
 }
 
 glllllll () {
-    gl_ 32 "$@"
+    gl_ 256 "$@"
 }
 
 gllllllll () {
-    gl_ 32 "$@"
+    gl_ 512 "$@"
 }
 
 glllllllll () {
-    gl_ 32 "$@"
+    gl_ 1024 "$@"
 }
 
 glone () {
@@ -1061,7 +1066,8 @@ git_root () {
         cat /tmp/fd2 >&2
         return 1
     fi
-    $show_ git -C "$full_dir_" rev-parse --show-toplevel
+    # show_command git -C "$full_dir_" rev-parse --show-toplevel
+    git -C "$full_dir_" rev-parse --show-toplevel
 }
 
 # xxxxxxxxx
@@ -1098,7 +1104,7 @@ has_branch () {
 git_stash_and () {
     local stashed_=
     if git_changed; then
-        show_cmnd git stash
+        show_command git stash
         git stash -q
         stashed_=1
     fi
@@ -1133,17 +1139,22 @@ gxi_menu_ () {
     echo -n -e "$(status_chars_ $1) $1: $GSI_MENU"
 }
 
+is_branch () {
+    get_branch $1 >/dev/null
+}
+
 get_branch () {
     git_branch -q "$@"
 }
 
 git_branch () {
-    local show_=show_run_command
+    local show_=show_run_command ref_=HEAD
     [[ $1 == -q ]] && show_=
     [[ $1 == -q ]] && shift
     [[ $1 == -v ]] && show_=show_run_command
     [[ $1 == -v ]] && shift
-    $show_ git rev-parse --abbrev-ref $( [[ $@ ]] && echo "$@" || "HEAD") 2> /dev/null || return 1
+    [[ "$@" ]] && ref_=$1
+    $show_ git rev-parse --abbrev-ref $ref_ 2> /dev/null || return 1
 }
 
 sed_origin () {
@@ -1193,10 +1204,8 @@ git_log_lines_to_screen () {
             shift
         fi
     fi
-    # set +x
-    local log_cmd_=lg
     # set -x
-    git_log_to_screen $log_cmd_ "$@" -n $number_of_commits_ | trim_git_lines
+    git_log_to_screen lg "$@" -n $number_of_commits_ | trim_git_lines
     # set +x
 }
 
@@ -1213,14 +1222,14 @@ git_log_to_screen () {
     local vertical_lines_=${LINES:-$(screen_height)}
     local one_third_of_vertical_=$(( $vertical_lines_ / 3 ))
     local lines_=${number_of_lines_:-$one_third_of_vertical_}
-    local options="$log_cmd_ --color"
+    local options_="$log_cmd_ --color"
     dit "$@" $options_ | head -n $lines_
 }
 
 dit () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
-    # show_cmnd git -C "$dir_" "$@" 
+    show_command git -C "$dir_" "$@" 
     # set -x
     git -C "$dir_" "$@" 
     # set +x
