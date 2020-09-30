@@ -964,6 +964,11 @@ clipout () {
     echo "$(pbpaste)"
 }
 
+given () {
+    cat /Users/jab/jab/txt/given.jira.txt | pbcopy
+    echo "copied"
+}
+
 ptags () {
     local _source="$1"
     [[ -n $_source ]] || _source="."
