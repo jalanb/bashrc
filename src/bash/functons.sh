@@ -1065,27 +1065,17 @@ lesen () {
 }
 
 mkvenv () {
-    local _req=
-    [[ -f requirements.txt ]] && _req="-r requirements.txt"
-    local _project_dir=
-    [[ -f setup.py || -f requirements.txt || $(ls */__init__.py) ]] && _project_dir="-a $(readlink -f .)"
-    local _env_name=$(basename $_project_dir 2>/dev/null)
-    [[ $1 ]] && _env_name=$1
-    [[ $1 ]] && shift
-    [[ $_env_name ]] || echo "_env_name is empty" >&2
-    [[ $_env_name ]] || return 1
-        # --verbose  # Increase verbosity. \
-        # --clear # Clear out the non-root install and start from scratch. \
-        # --system-site-packages # Give the virtual environment access to the global site-packages. \
-        # --relocatable # Make an EXISTING virtualenv environment relocatable. \
-        # --python=/usr/local/bin/python3 # The Python interpreter to use \
-        # $_project_dir # Provide a full path to a project directory to associate with the new environment. \
-        # $_req # Provide a pip requirements file to install a base set of packages into the new environment. \
-        # $_env_name
-    local _python=/usr/local/bin/python3
-    [[ $1 == 2 ]] && _python=/usr/local/bin/python2
-    mkvirtualenv --verbose --clear --system-site-packages --relocatable --python=$_python $_project_dir $_req $_env_name
-    virtualenv --python=/usr/local/bin/python3 /Users/jab/.virtualenvs/$_env_name
+    local dir_=. venv_dir_=
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+    fi
+    venv_dir_="$dir_/.venv"
+    deactivate
+    rm -rf $venv_dir_
+    python3 -m venv "$venv_dir_"
+    . "$venv_dir_/bin/activate"
+    piup
 }
 
 tailer () {
