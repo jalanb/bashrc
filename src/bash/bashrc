@@ -28,8 +28,6 @@ lred_user () {
     echo "${_colour_username}@$_colour_host"
 }
 
-export home_user_=~/jab
-
 BASHRC_LOG=~/log/bashrc.log
 home_user=$HOME/jab
 vbb () {
@@ -75,8 +73,9 @@ bashrc_ () {
     # echo_path
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
-    local init_=$home_user_/__init__.sh
-    [[ -f $init_ ]] && source $init_
+    local init_=$home_user/__init__.sh
+    [[ -f $init_ ]] || return 1
+    source $init_
     sp green
 }
 
