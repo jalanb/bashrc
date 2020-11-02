@@ -81,7 +81,7 @@ gm () {
 go () {
     local _doc___="git checkout"
     local stashed_=
-    local current_branch_=$(get_branch) wanted_branch_="${@//origin\/}"
+    local current_branch_=$(get_branch) wanted_branch_="${@##*/}"
     show_command "git checkout $wanted_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && show_error "Already on $current_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && return 0
