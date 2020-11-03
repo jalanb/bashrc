@@ -218,7 +218,7 @@ gcp () {
 }
 
 gcu () {
-    show_command git config user
+    show_command "git config user.name; git config user.email"
     echo "$(git config user.name) "'<'"$(git config user.email)"'>'
 }
 
@@ -508,6 +508,11 @@ grm () {
     local upstream_=master
     git branch | grep -q __main__ && upstream_=__main__
     grmu $upstream_
+}
+
+gbac () {
+    show_command git branch --all --contains "$@"
+    git branch --all --contains "$@"
 }
 
 grmm () {
