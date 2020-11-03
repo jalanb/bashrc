@@ -568,8 +568,10 @@ grs () {
 }
 
 gru () {
-    show_command git remote get-url origin
-    git remote get-url origin
+    local options_=
+    [[ -d $1 ]] && options_="-C $1"
+    show_command git $options_ remote get-url origin
+    git $options_ remote get-url origin
 }
 
 gsa () {
