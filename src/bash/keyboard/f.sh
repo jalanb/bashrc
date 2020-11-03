@@ -52,6 +52,10 @@ fd_ () {
     fd $options_ "$name_" "$dir_"
 }
 
+fdb () {
+    bat $(fdf "$@")
+}
+
 fdd () {
     fd_ d "$@"
 }
@@ -64,7 +68,12 @@ fdf () {
     fd_ f "$@"
 }
 
-fdp () {
+fdg () {
+    local name_="$1"; shift
+    fd_ "$name_" "$@" | g "$name_"
+}
+
+fdy () {
     fde py "$@"
 }
 
@@ -74,27 +83,6 @@ fee () {
 
 fff () {
     freds | tr ' ' '\n'
-}
-
-fdb () {
-    bat $(fdf "$@")
-}
-
-fdd () {
-    fd_type d "$@"
-}
-
-fdf () {
-    fd_type f "$@"
-}
-
-fdg () {
-    local name_="$1"; shift
-    fd_ "$name_" "$@" | g "$name_"
-}
-
-fdy () {
-    fdf -e py "$@"
 }
 
 fll () {
@@ -118,16 +106,6 @@ vff () {
 }
 
 # xxxx
-
-fd_type () {
-    local type_=$1 sought_=. dir_=. hidden_=--hidden
-    [[ $type_ ]] && type_="-t $type_"
-    [[ $2 ]] && sought_=$2
-    [[ $3 ]] && dir_=$3
-    [[ $4 =~ [-]H ]] && hidden_=
-    [[ -d $sought_ ]] && dir_=$sought_ && sought_=.
-    fd_ $type_ $hidden_ $sought_ $dir_
-}
 
 # xxxxx
 
