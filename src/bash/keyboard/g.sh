@@ -20,6 +20,10 @@ gsj () {
     git -C ~/hub/jab status
 }
 
+gt () {
+    git "$@"
+}
+
 gv () {
     g -v "$@"
 }
