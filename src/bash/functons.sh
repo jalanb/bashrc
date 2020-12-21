@@ -967,6 +967,8 @@ clipout () {
 given () {
     cat /Users/jab/jab/txt/given.jira.txt | pbcopy
     echo "copied"
+    cp /Users/jab/jab/txt/given.jira.txt ~/tmp/given.txt
+    vim ~/tmp/given.txt
 }
 
 ptags () {

@@ -6,6 +6,7 @@ type same_dir >/dev/null 2>&1 || . ~/bash/paths.sh
 # xx
 
 pi () {
+    [[ $1 == install ]] && shift
     ppip install "$@"
 }
 
@@ -40,6 +41,10 @@ pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
     pypath $_ipython "$@"
+}
+
+pir () {
+    pi -r "$@"
 }
 
 pvv () {
