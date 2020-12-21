@@ -13,7 +13,7 @@ ag () {
 }
 
 aj () {
-    a "$@" ~/jalanb
+    a "$@" ~/jab/
 }
 
 ak () {
@@ -52,7 +52,7 @@ aaj () {
 }
 
 ajj () {
-    a "$@" ~/jalanb/jab
+    a "$@" ~/jalanb/
 }
 
 avb () {
