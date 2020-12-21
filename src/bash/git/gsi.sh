@@ -47,6 +47,7 @@ gxi () {
 }
 
 gsi_show_diff_ () {
+    set -x
     if stat_untracked "$1"; then
         if [[ -d "$1" ]]; then
             find "$1" -type f -print
@@ -55,6 +56,7 @@ gsi_show_diff_ () {
         else
             echo "Cannot handle $1"
         fi
+        set +x
         return 0
     fi
     if stat_modified "$1"; then
@@ -65,6 +67,7 @@ gsi_show_diff_ () {
             gdi "$1"
         fi
     fi
+    set +x
     git status --short $1
 }
 
