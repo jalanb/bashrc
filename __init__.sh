@@ -22,6 +22,7 @@ show_pythonpath () {
 
 export WHYP=~/hub/whyp/whyp
 . $WHYP.sh
+export WHYP_EDITOR=v
 export ACKVIM=~/hub/ackvim/ackvim
 . $ACKVIM.sh
 export CDE=~/hub/cde/cde
