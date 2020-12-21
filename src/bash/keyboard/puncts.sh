@@ -4,7 +4,7 @@
 # x
 # _
 # x
-# _x
+# ,x
 
 ,. () {
     [[ -f .cd ]] && . .cd
@@ -21,4 +21,8 @@
 ,w () {
     . $WHYP.sh
 }
+# .x
 
+.v () {
+    . .venv/bin/activate
+}
