@@ -1,4 +1,4 @@
-#! /usr/bin/env python3 -W once:
+#! /usr/bin/env python3 -W once
 
 # -W action can be once, ignore, module, ... "man python"
 
@@ -15,6 +15,7 @@ def get(string):
         response = requests.get(url)
     except Exception as e:
         import pudb; pudb.set_trace()  # pylint: disable=multiple-statements
+
 
 def main(args):
     result = 0
