@@ -1,11 +1,38 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
+"""Show the real path of each arg that has one
+
+If no arg has a real path
+    then show all args commented out
+"""
 
 import os
 import sys
+from typing import List
 
-for arg in sys.argv[1:]:
-    try:
-        print(os.path.realpath(arg))
-    except:  # pylint: disable=bare-except
-        print('# ! %s' % arg)
-sys.exit(os.EX_OK)
+from pysyte.cli.main import run
+from pysyte.types.paths import path
+
+
+def add_args(parser):
+    parser.positionals(name="paths", help="files, dirs, ...")
+    return parser
+
+
+def prints(lines: List[str]):
+    """Print strings as lines"""
+    print("\n".join(lines))
+
+
+def main(args: List[str]) -> int:
+    """Show every arg that has a real path"""
+    paths = [path(_) for _ in args]
+    reals = [_.realpath() for _ in paths if _]
+    if reals:
+        prints(reals)
+        return os.EX_OK
+    fakes = [f"# {_}" for _ in args]
+    prints(fakes)
+    return len(fakes)
+
+
+run(main, add_args)
