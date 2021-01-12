@@ -15,7 +15,7 @@
     e = pull --rebase
     h = rev-parse --abbrev-ref HEAD
     i = commit 
-    l = lg
+    l = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
     o = checkout
     r = rebase
     s = status
@@ -42,14 +42,17 @@
     dump = cat-file -p
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
-    ld = log --pretty=format:'%Cgreen%ci %C(auto)%h %C(blue)%an %Creset %s'
-    lf = log --stat --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
-    lp = log -p --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
-    ll = log --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s' --no-color
-    lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
-    li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s %Creset' 
-    lh = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' 
-    lt = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --tags
+    lc = l --color=always --decorate
+    ld = lg -p     
+    le = lg --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s' 
+    lf = lg --stat 
+    lg = lc --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s' 
+    ll = lg -2
+    lll = lg -4
+    llll = lg -8
+    lllll = lg -16
+    llllll = lg -32
+    lt = lg --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s'
     mo = merge origin/__main__
     re = rebase
     st = status
