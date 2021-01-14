@@ -969,6 +969,7 @@ given () {
     echo "copied"
     cp /Users/jab/jab/txt/given.jira.txt ~/tmp/given.txt
     vim ~/tmp/given.txt
+    cat ~/tmp/given.txt | pbcopy
 }
 
 ptags () {

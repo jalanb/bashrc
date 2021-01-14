@@ -92,7 +92,7 @@ go () {
         git status
         return 1
     fi
-    git checkout -q "$wanted_branch_" 
+    git checkout -q "$wanted_branch_"
     return 0
 }
 
@@ -294,9 +294,9 @@ gia () {
 gid () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
-    show_command git -C "$dir_" "$@" 
+    show_command git -C "$dir_" "$@"
     # set -x
-    git -C "$dir_" "$@" 
+    git -C "$dir_" "$@"
 }
 
 gie () {
@@ -340,7 +340,7 @@ gll () {
 }
 
 gln () {
-    git_log_to_screen lg "$@" --name-only 
+    git_log_to_screen lg "$@" --name-only
 }
 
 glp () {
@@ -348,11 +348,11 @@ glp () {
 }
 
 gls () {
-    git_log_to_screen log "$@" --stat 
+    git_log_to_screen log "$@" --stat
 }
 
 glt () {
-    git_log_to_screen lt "$@" 
+    git_log_to_screen lt "$@"
 }
 
 glv () {
@@ -726,7 +726,7 @@ gbac () {
 
 gbdd () {
     local branch_=
-    for branch_ in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+    for branch_ in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do
         if mastered $branch_; then
             gbd $branch_
         fi
@@ -786,13 +786,13 @@ gdil () {
 }
 
 gdis () {
-    gid "$@" d --staged 
+    gid "$@" d --staged
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
     show_command gid lg "$@" > $stdout_
-    gid "$@" lg >> $stdout_ 2> $stderr_ 
+    gid "$@" lg >> $stdout_ 2> $stderr_
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
     if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
@@ -1043,7 +1043,7 @@ git_kd_ () {
 }
 
 mastered () {
-    has_branch master "$1" master || has_branch master origin/$1 
+    has_branch master "$1" master || has_branch master origin/$1
 }
 
 show_pre_loop_ () {
@@ -1256,7 +1256,7 @@ gl_ () {
     is_branch $1 || echo "Not a branch: $1" >&2
     is_branch $1 || return 1
     local branch_=$1 && shift
-    gid "$@" l $options_ $branch_
+    gid "$@" lg $options_ $branch_
 }
 
 untracked () {
@@ -1431,7 +1431,7 @@ status_line_ () {
 
 status_chars_ () {
     local dir_=.
-    if [[ -d "$1" ]]; then 
+    if [[ -d "$1" ]]; then
         dir_="$1"
         shift
     fi
