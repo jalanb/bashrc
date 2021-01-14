@@ -79,14 +79,15 @@ nnoremap j jzz
 nnoremap k kzz
 "noremap l - go right
 "noremap l :call AfterPressing("l")<CR>
-nnoremap mb ?<cr>zvzz
-nnoremap mn #
-nnoremap mm *
+nnoremap mb ?
 nnoremap mk m
-nnoremap ml m
-nnoremap m, /<cr>zvzz
-nnoremap m. `m
-nnoremap n nzvzz
+nnoremap ml `m
+nnoremap mm *
+nnoremap mn #
+nnoremap m, /
+nnoremap nb ?<cr>zvzz
+nnoremap nm /<cr>?zvzz
+nnoremap nn nzvzz
 "noremap o - open new line
 "noremap p - paste
 nnoremap q :q<cr>
@@ -148,6 +149,7 @@ nnoremap " m'
 "noremap \ - leader
 nnoremap , .n
 "noremap . - repeat
+"noremap / - search
 "noremap / - search
 "noremap `
 " Shifted punctuation {{{3
