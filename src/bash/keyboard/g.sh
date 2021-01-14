@@ -20,7 +20,7 @@ gsj () {
     git -C ~/hub/jab status
 }
 
-gt () {
+rt () {
     git "$@"
 }
 
