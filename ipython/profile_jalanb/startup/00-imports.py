@@ -8,6 +8,11 @@ import os
 import re
 import sys
 import inspect
+
+import bots
+import tools
+from tools.issues import issues
+
 pyprint = print
 
 mores = []
@@ -37,6 +42,24 @@ try:
     from pysyte.types import paths
     from pysyte.types.paths import path
     from pysyte import cli
+    # jalanb
+    import ackvim
+    import cde
+    import jpm
+    import pai
+    import parsher
+    import pym
+    import trying
+    import whyp
+    import zatso
+
+    # jalanb/jab/python/site
+    import locate
+    import script_path
+    import see_code
+    import todo
+    import work
+    import οs
 except ImportError as e:
     print(e)
     sys.stderr.write("pip install pysyte # please")
@@ -53,7 +76,7 @@ version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
 stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
-
+stdout(f"import bots, tools, tools.issues.issues")
 stdout("")
 stdout(f"{executable} {version}")
-
+stdout(f"{bots.__file__} {bots.__version__}")
