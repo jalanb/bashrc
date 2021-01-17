@@ -109,10 +109,6 @@ gp () {
     fi
 }
 
-gr () {
-    git pull --rebase "$@"
-}
-
 gs () {
     local _doc___="""git status front end"""
     gs_ "$@"
@@ -569,7 +565,7 @@ grp () {
 }
 
 grr () {
-    git_stash_and gr "$@"
+    git pull --rebase "$@"
 }
 
 grs () {
