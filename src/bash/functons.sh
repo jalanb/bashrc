@@ -258,6 +258,10 @@ hub () {
     cde $_directory
 }
 
+inj () {
+    ind ~/jab/ "$@"
+}
+
 jjb () {
     kk ~/bash "$@"
 }
