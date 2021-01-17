@@ -11,12 +11,6 @@ Host builder
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
 
-Host jenkins
-# 2 cores, 2 Gb
-    Hostname 172.25.32.74 
-    User jenkins
-    IdentityFile ~/.ssh/work/bots/jenkins.key
-
 Host digger
 # 2 cores, 2 Gb
     Hostname 172.25.32.74 
@@ -25,27 +19,15 @@ Host digger
 
 Host git
 # 2 cores, 4 Gb
-    Hostname 172.25.32.115 
+    Hostname 172.25.32.117
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host bolder
+Host bilder
 # 2 cores, 4 Gb
-    Hostname 172.25.32.115 
+    Hostname 172.25.32.117
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
-
-Host thumber
-# 2 cores, 4 Gb
-    Hostname 172.25.32.115 
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
-Host climber
-# 2 cores, 4 Gb
-    Hostname 172.25.32.115 
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
 
 Host twkwbe51 opp
 # 2 cores, 16 Gb
@@ -91,7 +73,7 @@ Host atlwbe43 eopbeta
 
 Host twkwbe43 eop
 # 3 cores, 16 Gb
-    Hostname 172.25.32.103 
+    Hostname 172.25.32.103
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
@@ -115,7 +97,7 @@ Host twkwbe48 corteva
 
 Host twkwbe49 dupont
 # 3 cores, 16 Gb
-    Hostname 172.25.32.104 
+    Hostname 172.25.32.104
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
@@ -124,24 +106,6 @@ Host atlwbe49 dupontbeta
     Hostname 172.25.232.244 
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
-
-Host a_wmpdev
-# 1 cores, 4 Gb
-    Hostname 172.25.32.106 
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
-Host a_wmptest
-# 1 cores, 4 Gb
-    Hostname 172.25.32.107
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
-
-Host a_wmpstage
-# 2 cpu, 8 gb
-    Hostname 172.25.32.105 
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
 
 Host a_wmpbeta
 # 4 cpu, 16 gb
@@ -157,25 +121,25 @@ Host a_wmp
 
 Host twkwbe55 tmpdev
 # 1 cpu, 4 gb
-    Hostname 172.25.32.106 
+    Hostname 172.25.32.106
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe54 wmpstage
 # 2 cpu, 8 gb
-    Hostname 172.25.32.105 
+    Hostname 172.25.32.105
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe56 wmptest
 # 4 cpu, 16 gb
-    Hostname 172.25.32.107 
+    Hostname 172.25.32.107
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe57 wmpdev
 # 4 cpu, 32 gb
-    Hostname 172.25.32.108 
+    Hostname 172.25.32.108
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
@@ -207,17 +171,17 @@ Host twkwbe35 wmp
 #     User builder
 #     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host sosotest
+Host sosotest twkwbe63
 # 1 cores, 4 Gb
     Hostname 172.25.32.133 
     User builder
     IdentityFile ~/.ssh/work/soso/builder.key
 
-Host twkwbe63
+# Host twkwbe63
 # 1 cores, 4 Gb
-    Hostname 172.25.32.133 
-    User ab13173
-    IdentityFile ~/.ssh/work/ab13173.key
+#     Hostname 172.25.32.133 
+#     User ab13173
+#     IdentityFile ~/.ssh/work/ab13173.key
 
 Host sosobeta
 # 3 cores, 16 Gb
@@ -277,7 +241,7 @@ Host vagrant
 #
 Host book
     Hostname book.local
-    User jab
+    User jalanb
     IdentityFile ~/.ssh/id_jab
 
 Host mini
