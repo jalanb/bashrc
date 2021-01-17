@@ -7,7 +7,7 @@ def backup_with_suffix(filename, suffix):
     file('%s%s' % (filename, suffix), 'w').write(text)
 
 
-# pylint: disable-msg=too-many-arguments
+# pylint: disable=too-many-arguments
 def looks_like_this(filename, limits=None, numbers=True, space=' ', tab='\t',
                     sol=None, eol=None, count_from=1):
     lines = file(filename).readlines()

@@ -1,6 +1,6 @@
 """Imports for IPython"""
 
-# pylint: disable-msg=W0611
+# pylint: disable=W0611
 
 # import this
 
