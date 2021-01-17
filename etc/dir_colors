@@ -16,6 +16,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .h            00;31
 .hrl          00;31
 .js           00;31
+.rb           00;31
 .py           00;31
 .sh           00;31
 .sql          00;31

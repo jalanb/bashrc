@@ -6,6 +6,7 @@
 [pager]
     diff =
 [core]
+    editor = vim
     excludesfile = ~/.gitignore_global
     trustctime = false
 [alias]
@@ -13,17 +14,26 @@
     b = branch
     d = difftool -y --extcmd=\"icdiff \"
     e = pull --rebase
+    f = push --force-with-lease
     h = rev-parse --abbrev-ref HEAD
-    i = commit 
-    l = lg
+    i = commit
+    l = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
     o = checkout
+    p = push 
     r = rebase
     s = status
     t = remote get-url origin
-    u = push --force-with-lease
     w = show
-    ba = branch -a
-    br = branch -r
+    ba = branch --all
+    bc = branch --contains
+    bac = branch --all --contains
+    bd = branch -d
+    bD = branch -D
+    bl = branch --list
+    bm = branch -m
+    bM = branch -M
+    br = branch --remotes
+    bp = branch --points-at
     cb = rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
@@ -42,20 +52,43 @@
     dump = cat-file -p
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
-    ld = log --pretty=format:'%Cgreen%ci %C(auto)%h %C(blue)%an %Creset %s'
-    lf = log --stat --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
-    lp = log -p --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset' 
-    ll = log --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s' --no-color
-    lg = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s %Creset' 
-    li = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s %Creset' 
-    lh = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' 
-    lt = log --oneline --graph --decorate --abbrev-commit --date=relative --pretty=format:'%C(auto)%h%Creset %C(auto)%d%Creset %s %Cgreen(%cr) %C(blue)<%an %aE>%Creset' --tags
+    lc = l --color=always --decorate
+    ld = lg -p
+    le = lg --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    lf = lg --stat
+    lg = lc --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s'
+    ll = lg -2
+    lll = lg -4
+    llll = lg -8
+    lllll = lg -16
+    llllll = lg -32
+    lm = log --pretty=format:'%C(auto)%s%Creset'
+    lt = lg --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s'
     mo = merge origin/__main__
-    re = rebase
+    pa =  push --all
+    pf =  push --atomic --force-with-lease
+    pff = push --atomic --force
+    pt =  push --tags
+    pu =  push -u
+    puu =  push --unset-upstream
+    ra = rebase --abort
+    rc = rebase --continue
+    ri = rebase --interactive
+    rs = rebase --skip
+    rq = rebase --quit
     st = status
     standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Mon == $(date +%a) ]] && echo last friday || echo yesterday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
 [push]
     default = simple
+[help]
+    autocorrect = 1
+# See http://git-scm.com/book/en/v2/Git-Tools-Rerere
+[rerere]
+    enabled = true
+[icdiff]
+    options = --highlight --line-numbers
+[advice]
+    detachedHead = False
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
@@ -76,21 +109,12 @@
 [mergetool "meld"]
     path = "/Applications/Meld.app/Contents/MacOS/Meld"
     trustExitCode = false
-[color]
-    ui = auto
-[help]
-    autocorrect = 1
-# See http://git-scm.com/book/en/v2/Git-Tools-Rerere
-[rerere]
-    enabled = true
 [mergetool "diffconflicts"]
     keepBackup = false
-[icdiff]
-    options = --highlight --line-numbers
+[color]
+    ui = auto
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[advice]
-    detachedHead = False

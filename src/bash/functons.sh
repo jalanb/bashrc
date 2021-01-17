@@ -258,6 +258,10 @@ hub () {
     cde $_directory
 }
 
+inj () {
+    ind ~/jab/ "$@"
+}
+
 jjb () {
     kk ~/bash "$@"
 }
@@ -967,6 +971,9 @@ clipout () {
 given () {
     cat /Users/jab/jab/txt/given.jira.txt | pbcopy
     echo "copied"
+    cp /Users/jab/jab/txt/given.jira.txt ~/tmp/given.txt
+    vim ~/tmp/given.txt
+    cat ~/tmp/given.txt | pbcopy
 }
 
 ptags () {
@@ -1095,22 +1102,6 @@ show_line () {
     echo "$_prefix ${_server}$_suffix"
 }
 
-
-online_all () {
-    is_online www.google.com
-    if runnable worker; then
-        is_online $(worker bots)
-        is_online $(worker git)
-        is_online $(worker wmp)
-        is_online $(worker eop)
-        is_online $(worker dupont)
-        is_online $(worker corteva)
-        is_online $(worker eopdev)
-    fi
-    is_online mac.local
-    is_online book.local
-    is_online mini.local
-}
 
 please () {
     local _command=$(history -p !-1)

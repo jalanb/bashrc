@@ -6,6 +6,7 @@ type same_dir >/dev/null 2>&1 || . ~/bash/paths.sh
 # xx
 
 pi () {
+    [[ $1 == install ]] && shift
     ppip install "$@"
 }
 
@@ -40,6 +41,16 @@ pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
     pypath $_ipython "$@"
+}
+
+pir () {
+    pi -r "$@"
+}
+
+pvv () {
+    local virtualenv_=.venv
+    python -m venv $virtualenv_
+    cde_activate_there $virtualenv_
 }
 
 # xxxx
@@ -116,6 +127,17 @@ vipy () {
     pipy -V "$@"
 }
 
+venv () {
+    local activate_="$ACTIVATE"
+    make_venv "$@" 2>/dev/null
+    local venv_=.venv
+    [[ -d "$1" ]] && venv_="$1/.venv"
+    cde_activate_there $venv_ || return 1
+    [[ "$activate_" != "$ACTIVATE" ]] && show_blue_line "cde_activate_there $venv_"
+    pip install --upgrade pip | tail -n1
+    whyp python 2>/dev/null
+}
+
 # _xxxx
 
 _install_requirements_here () {
@@ -152,6 +174,27 @@ pythonv () {
 pylinum () {
     local string=$(pylint --help-msg $1 | hd1 | cut -d\: -f2 | cut -d\  -f1 | sed -e "s/^/# pylint: disable=/")
     [[ $string != "# pylint: disable=No" ]] && echo $string
+}
+
+# xxxxxxxxx
+
+make_venv () {
+    local __doc__="""Make a .venv"""
+    local root_=. venv_=.venv venv_dir_=.venv
+    if [[ -d "$1" ]]; then
+        root_="$1"
+        venv_dir_="$1/$venv_"
+        shift
+    fi
+    local force_=
+    [[ $1 =~ ^-(f|-force)$ ]] && force_=1
+    if [[ -d $venv_dir_ ]]; then
+        [[ $force_ ]] || return 0
+        show_command "rm -rf $venv_dir_"
+        rm -rf $venv_dir_
+    fi
+    show_command "python3 -m venv $venv_"
+    python3 -m venv $venv_
 }
 
 # xxxxxxx*

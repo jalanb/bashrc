@@ -28,24 +28,27 @@ lred_user () {
     echo "${_colour_username}@$_colour_host"
 }
 
-BASHRC_LOG=~/log/bashrc.log
-home_user=$HOME/jab
+bashrc_log=~/log/bashrc.log
+jab_dir=~/jalanb/jab
+local_init=$jab_dir/local/__init__.sh
 vbb () {
-    local _log=
-    test -f $BASHRC_LOG && _log=$BASHRC_LOG
     (
-        cd $home_user
-        local local_=
-        test -f local/__init__.sh && local_=local/__init__.sh
-        vim -p ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ ~/.vimrc $_log "$@"
-        readlink -f ~/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ ~/.vimrc $_log
+        cd $jab_dir
+        local local_= log_=
+        [[ -f $local_init ]] && local_=$local_init
+        [[ -f $bashrc_log ]] && log_=$bashrc_log
+        local files_=" "\
+            "~/.bashrc "\
+            "__init__.sh "\
+            "environ.d/__init__.sh "\
+            "src/bash/__init__.sh "\
+            "$local_ "\
+            "~/.vimrc "\
+            "$log_ "\
+            "$@"
+        vim -p $files_
+        readlink -f $files_
     )
-    [[ -f $_log ]] && mv $_log ~/log 2>/dev/null
-}
-
-vbl () {
-    [[ -f $BASHRC_LOG ]] || return 1
-    vim $BASHRC_LOG
 }
 
 echo_path () {
@@ -55,7 +58,7 @@ echo_path () {
 }
 
 pre_bashrc_ () {
-    local homes_=$home_user/bin:$HOME/bin:$HOME/.local local_=/usr/local
+    local homes_=$jab_dir/bin:$HOME/bin:$HOME/.local local_=/usr/local
     local locals_="$local_/gnu:$local_/bin:$local_/go/bin"
     local bins_=/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
@@ -73,21 +76,17 @@ bashrc_ () {
     # echo_path
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
-    local init_=$home_user/__init__.sh
+    local init_=$jab_dir/__init__.sh 
     [[ -f $init_ ]] || return 1
     source $init_
+    [[ -f $local_init ]] && source $local_init
     sp green
-}
-
-post_bashrc_ () {
-    . $home_user/local/__init__.sh optional
 }
 
 __main__ () {
     pre_bashrc_
-    bashrc_ $home_user
-    post_bashrc_
+    bashrc_ $jab_dir
     set +m
 }
 
-[[ $- =~ i ]] && __main__  "$@" #  > $BASHRC_LOG 2>&1
+[[ $- =~ i ]] && __main__  "$@" #  > $bashrc_log 2>&1

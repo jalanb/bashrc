@@ -75,6 +75,22 @@ is_online () {
 
 # xxxxxxxxxx
 
+online_all () {
+    is_online www.google.com
+    if runnable worker; then
+        is_online $(worker bots)
+        is_online $(worker git)
+        is_online $(worker wmp)
+        is_online $(worker eop)
+        is_online $(worker soso)
+        is_online $(worker corteva)
+        is_online $(worker eopdev)
+    fi
+    is_online mac.local
+    is_online book.local
+    is_online mini.local
+}
+
 pong_local () {
     pong -t1 $1.local
 }

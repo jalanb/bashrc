@@ -28,6 +28,7 @@ ga () {
         show_error 'Did you mean "gaa" (add all) ?'
         return 1
     else
+        show_command git add "$@"
         git add "$@"
     fi
 }
@@ -49,7 +50,7 @@ gb () {
 }
 
 gd () {
-    dit "$@" d
+    gid "$@" d
 }
 
 gf () {
@@ -91,7 +92,7 @@ go () {
         git status
         return 1
     fi
-    git checkout -q "$wanted_branch_" 
+    git checkout -q "$wanted_branch_"
     return 0
 }
 
@@ -106,10 +107,6 @@ gp () {
             return 1
         fi
     fi
-}
-
-gr () {
-    git pull --rebase "$@"
 }
 
 gs () {
@@ -139,7 +136,7 @@ gpf () {
 }
 
 gdf () {
-    dit "$@" df
+    gid "$@" df
 }
 
 gof () {
@@ -149,7 +146,7 @@ gof () {
 
 gs_ () {
     local _doc___="""git status back end"""
-    dit "$@" status
+    gid "$@" status
 }
 
 # xxx
@@ -227,11 +224,11 @@ gdd () {
 }
 
 gdi () {
-    dit d "$@"
+    gid d "$@"
 }
 
 gdh () {
-    dit "$@" dh
+    gid "$@" dh
 }
 
 gdl () {
@@ -244,7 +241,7 @@ gds () {
 }
 
 gdv () {
-    dit "$@" dv
+    gid "$@" dv
 }
 
 gfa () {
@@ -255,6 +252,20 @@ gfa () {
 gfe () {
     gfa
     grup
+}
+
+gff () {
+    local branch_=__main__
+    [[ $1 ]] && branch_=$1
+    gru
+    gcu
+    show_command git_root -o
+    gfe | grep -v 'Fetching'
+    gor $branch_ 2>/dev/null | grep -v "up to date"
+    gb
+    show_command bump show
+    bump show
+    gll
 }
 
 gfm () {
@@ -274,6 +285,14 @@ ggi () {
 gia () {
     show_command git commit --amend "$@"
     GIT_EDITOR=true git commit --amend "$@"
+}
+
+gid () {
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1" && shift
+    show_command git -C "$dir_" "$@"
+    # set -x
+    git -C "$dir_" "$@"
 }
 
 gie () {
@@ -306,8 +325,7 @@ gla () {
 }
 
 glg () {
-    local number_of_commits_=16
-    git_log_lines_to_screen "$@" -n $number_of_commits 2>/dev/null
+    git_log_lines_to_screen "$@" --grep "$1" 2>/dev/null
     local result_=$?
     echo
     return $result_
@@ -318,7 +336,7 @@ gll () {
 }
 
 gln () {
-    git_log_to_screen lg "$@" --name-only 
+    git_log_to_screen lg "$@" --name-only
 }
 
 glp () {
@@ -326,11 +344,11 @@ glp () {
 }
 
 gls () {
-    git_log_to_screen log "$@" --stat 
+    git_log_to_screen log "$@" --stat
 }
 
 glt () {
-    git_log_to_screen lt "$@" 
+    git_log_to_screen lt "$@"
 }
 
 glv () {
@@ -394,6 +412,7 @@ got () {
 }
 
 gpo () {
+    show_command git push origin "$@"
     git push origin "$@"
 }
 
@@ -475,20 +494,6 @@ grc () {
     git rebase --skip
 }
 
-grf () {
-    local branch_=__main__
-    [[ $1 ]] && branch_=$1
-    gru
-    gcu
-    show_command git_root -o
-    gfe | grep -v 'Fetching'
-    gor $branch_ 2>/dev/null | grep -v "up to date"
-    gb
-    show_command bump show
-    bump show
-    gll
-}
-
 grg () {
     gr && glg
 }
@@ -560,7 +565,7 @@ grp () {
 }
 
 grr () {
-    git_stash_and gr "$@"
+    git pull --rebase "$@"
 }
 
 grs () {
@@ -717,7 +722,7 @@ gbac () {
 
 gbdd () {
     local branch_=
-    for branch_ in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do 
+    for branch_ in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do
         if mastered $branch_; then
             gbd $branch_
         fi
@@ -732,7 +737,8 @@ gbdr () {
 gbDD () {
     local current_branch_=$(get_branch)
     [[ "$@" ]] && current_branch_="$@"
-    gbD "$@" && gpod $current_branch_
+    gbD "$@"
+    gpod $current_branch_
 }
 
 gaai () {
@@ -776,18 +782,18 @@ gdil () {
 }
 
 gdis () {
-    dit "$@" d --staged 
+    gid "$@" d --staged
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_command dit lg "$@" > $stdout_
-    dit "$@" lg >> $stdout_ 2> $stderr_ 
+    show_command gid lg "$@" > $stdout_
+    gid "$@" lg >> $stdout_ 2> $stderr_
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
     if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
     elif [[ $count_ < 256 ]]; then less -R $stdout_
-    else tput smcup; dit "$@" lg; tput rmcup
+    else tput smcup; gid "$@" lg; tput rmcup
     fi
 }
 
@@ -1033,7 +1039,7 @@ git_kd_ () {
 }
 
 mastered () {
-    has_branch master "$1" master || has_branch master origin/$1 
+    has_branch master "$1" master || has_branch master origin/$1
 }
 
 show_pre_loop_ () {
@@ -1081,7 +1087,7 @@ git_root () {
 
 git_stash () {
     local _doc___="""git stash"""
-    dit "$@" stash
+    gid "$@" stash
 }
 
 git_dirty () {
@@ -1230,16 +1236,7 @@ git_log_to_screen () {
     local one_third_of_vertical_=$(( $vertical_lines_ / 3 ))
     local lines_=${number_of_lines_:-$one_third_of_vertical_}
     local options_="$log_cmd_ --color"
-    dit "$@" $options_ | head -n $lines_
-}
-
-dit () {
-    local dir_=.
-    [[ -d "$1" ]] && dir_="$1" && shift
-    show_command git -C "$dir_" "$@" 
-    # set -x
-    git -C "$dir_" "$@" 
-    # set +x
+    gid "$@" $options_ | head -n $lines_
 }
 
 gl_ () {
@@ -1252,7 +1249,10 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    dit "$@" l $options_
+    is_branch $1 || echo "Not a branch: $1" >&2
+    is_branch $1 || return 1
+    local branch_=$1 && shift
+    gid "$@" lg $options_ $branch_
 }
 
 untracked () {
@@ -1427,7 +1427,7 @@ status_line_ () {
 
 status_chars_ () {
     local dir_=.
-    if [[ -d "$1" ]]; then 
+    if [[ -d "$1" ]]; then
         dir_="$1"
         shift
     fi

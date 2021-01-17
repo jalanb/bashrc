@@ -172,7 +172,7 @@ export_prompt_colour () {
 _pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
-    (cde_python --add . >/dev/null 2>&1)
+    cde_python --add . >/dev/null 2>&1
     history -a
 }
 

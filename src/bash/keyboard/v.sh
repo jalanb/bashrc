@@ -70,7 +70,7 @@ vv () {
 }
 
 vw () {
-    v $WHYP.sh "$@"
+    v ~/whyp.sh "$@"
 }
 
 # vx

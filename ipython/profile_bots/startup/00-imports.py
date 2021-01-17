@@ -1,6 +1,6 @@
 """Imports for IPython"""
 
-# pylint: disable-msg=W0611
+# pylint: disable=W0611
 
 # import this
 
@@ -8,6 +8,10 @@ import os
 import re
 import sys
 import inspect
+
+import bots
+import tools
+from tools.issues import issues
 
 pyprint = print
 
@@ -37,28 +41,24 @@ try:
     import pysyte
     from pysyte.types import paths
     from pysyte.types.paths import path
+    from pysyte import cli
 except ImportError as e:
     print(e)
     sys.stderr.write("pip install pysyte # please")
 
 try:
     from pathlib import Path
+    mores += ["Path"]
 except ImportError:
-    from pysyte.types.paths import path as Path
+    pass
 
-
-import bots
-import tools
-
-
-
-more = ", ".join([""] + mores) if mores else ""
+more = ", ".join([" "] + mores) if mores else ""
 executable = sys.executable.replace(os.environ['HOME'], '~')
 version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
-stdout(f"import os, re, sys, inspect, pysyte, paths, path{more}")
-stdout(f"import bots, tools")
+stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
+stdout(f"import bots, tools, tools.issues.issues")
 stdout("")
 stdout(f"{executable} {version}")
 stdout(f"{bots.__file__} {bots.__version__}")
