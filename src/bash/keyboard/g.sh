@@ -1,6 +1,9 @@
 #! /usr/bin/env bat
 
 
+g () {
+    git "$@"
+}
 
 gr () {
     local grep_="$(which egrep) --color"

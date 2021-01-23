@@ -58,8 +58,8 @@ read_history () {
     local format_="%Y/%m/%d:%H:%M:%S "
     if [[ $1 == -f ]]; then
         shift
-        [[ $2 ]] && format_="$2" || format_=
-        [[ $2 ]] && shift
+        [[ $1 ]] && format_="$1" || format_=
+        [[ $1 ]] && shift
     fi
     HISTTIMEFORMAT="$format_" history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "$history_log_"
 }
@@ -92,7 +92,7 @@ big_history_grep () {
         number_=$2
         shift 2
     fi
-    grep "$@" ~/.b*history | tail -n $number_ | sed -e "s,[^:]*:,," | g "$@"
+    grep "$@" ~/.b*history | tail -n $number_ | sed -e "s,[^:]*:,," | grep --color "$@"
 }
 
 history_grep () {
