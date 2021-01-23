@@ -21,7 +21,7 @@ basename_ () {
     return $_result
 }
 
-_set_ls_options () {
+ls_options () {
     export LS_PROGRAM=$(readlink -f $(/usr/bin/which ls))
     if $LS_PROGRAM -@ >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='-@'
@@ -37,11 +37,10 @@ _set_ls_options () {
     fi
 }
 
-_main () {
-    if _jab_dir; then
-        _set_ls_options
-    fi
+main () {
+    [[ -d ~/jab ]] || echo ~/jab is not a directory >&2
+    [[ -d ~/jab ]] || return 1
+    ls_options
 }
 
-_main
-
+main
