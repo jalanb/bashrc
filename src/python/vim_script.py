@@ -17,7 +17,7 @@ from pysyte.types import paths
 import script_path
 
 
-def path_to_editor():
+def path_to_editor() -> str:
     """Get the editor from the os, default to vim
 
     The rest of the script is predicated on using vim
@@ -35,7 +35,7 @@ def path_to_editor():
 
 
 class VimBashScript(object):
-    """Write a bash script to run vim"""
+    """A bash script to run vim"""
     def __init__(self):
         self.lines = [
             '#! /bin/bash -x',
