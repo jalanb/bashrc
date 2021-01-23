@@ -42,7 +42,7 @@ gb () {
     sought_="$@"
     if [[ $sought_ ]]; then
         show_command "git branch $option_ | grep $sought_"
-        git branch $option_ 2>&1 | grep -v -e warning | grep --color $sought_
+        grep_branch "$sought_" "$option_" 2>&1 | grep -v -e warning | grep --color $sought_
     else
         show_command "git branch $option_"
         git branch $option_ 2>&1 | grep -v -e warning
@@ -261,8 +261,8 @@ gff () {
     gcu
     show_command git_root -o
     gfe | grep -v 'Fetching'
-    gor $branch_ 2>/dev/null | grep -v "up to date"
-    gb
+    gba
+    gor $branch_ 2>/dev/null | grep -v -e "up to date" -e Already
     show_command bump show
     bump show
     gll
@@ -399,12 +399,12 @@ gor () {
     fi
     for branch in "$@"; do
         go "$branch"
-        gr
+        git e
     done
 }
 
 got () {
-    if git branch -a | grep $1; then
+    if grep_branch "$1" -a -q ; then
         gor "$@"
     else
         git "$@"
@@ -495,7 +495,7 @@ grc () {
 }
 
 grg () {
-    gr && glg
+    git e && glg
 }
 
 grh () {
@@ -511,7 +511,7 @@ gri () {
 
 grm () {
     local upstream_=master
-    git branch | grep -q __main__ && upstream_=__main__
+    grep_branch __main__ -q && upstream_=__main__
     grmu $upstream_
 }
 
@@ -529,9 +529,9 @@ grmu () {
     shift
     if [[ $1 ]]; then
         local one_=$1
-        local one_branch_=$(git branch | grep "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
+        local one_branch_=$(grep_branch "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
         if [[ ! $one_branch_ ]]; then
-            local one_remote_=$(git branch --remotes | sed -e "s:origin/::" | grep $one_ | head -n 1)
+            local one_remote_=$(grep_branch -r $one_ | sed -e "s:origin/::" | grep $one_ | head -n 1)
             if [[ $one_remote_ ]]; then
                 one_branch_=$one_remote_
                 git co $one_branch_
@@ -722,7 +722,7 @@ gbac () {
 
 gbdd () {
     local branch_=
-    for branch_ in $(git branch | grep -v master | sed -e "s:^[* ]*::"); do
+    for branch_ in $(grep_branch -v master); do
         if mastered $branch_; then
             gbd $branch_
         fi
@@ -731,7 +731,7 @@ gbdd () {
 
 gbdr () {
     gbD
-    gr
+    git e
 }
 
 gbDD () {
@@ -816,7 +816,7 @@ gomb () {
 
 gomr () {
     gom
-    gr
+    git e
     bump show
 }
 
@@ -906,7 +906,7 @@ grmt () {
 grup () {
     show_command git remote update origin --prune
     git remote update origin --prune
-    git branch | grep -q fred && gbD fred
+    grep_branch -q '^fred$' && git branch -D fred
     show_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     show_command git gc --prune=now --aggressive
@@ -1182,7 +1182,7 @@ clean_clone() {
     git clean -f -d -f
     git fetch --all
     git checkout master
-    for branch in $(git branch | grep -v -e master -e deployed-to); do
+    for branch in $(git branch sed -e 's,^[ *]*,,'| grep -v -e master -e deployed-to); do
         [[ -f $branch ]] && continue
         git branch -d $branch
     done
@@ -1252,12 +1252,26 @@ gl_ () {
     is_branch $1 || echo "Not a branch: $1" >&2
     is_branch $1 || return 1
     local branch_=$1 && shift
-    gid "$@" lg $options_ $branch_
+    gid "$@" lc $options_ $branch_
 }
 
 untracked () {
     local path_="$1"; shift
     ( test -d "$path_" && git_status_line_dir "$path_" || status_line_ "$path_" ) | grep "??" | cut -d' ' -f2
+}
+
+grep_branch () {
+    local regexp_= git_options_= grep_options_= 
+    while [[ $1 ]]; do
+        if [[ $1 =~ -[aqrv] ]]; then
+            [[ $1 =~ -[ar] ]] && git_options_="$git_options_ $1"
+            [[ $1 == -[qv] ]] && grep_options_="$grep_options_ $1"
+        else
+            regexp_=$1
+        fi
+        shift
+    done
+    git branch $git_options_ | sed -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
 }
 
 do_git_status_ () {
