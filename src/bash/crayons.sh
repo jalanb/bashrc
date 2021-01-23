@@ -28,9 +28,11 @@ show_colour () {
         line_="\n"
         shift
     fi
+    local colour_=$1
+    shift
     if [[ "$@" ]];
-    then printf "$*""${NO_COLOUR}${line_}"
-    else printf "${GREEN}$(cat)${NO_COLOUR}${line_}"
+    then printf "${colour_}$*""${NO_COLOUR}${line_}"
+    else printf "${colour_}$(cat)${NO_COLOUR}${line_}"
     fi
 }
 

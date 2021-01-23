@@ -84,23 +84,23 @@ pipv () {
 }
 
 _pipy_setup () {
-    local _dir="$1" _force="$2"; shift 2
-    local _dev=
-    _install_requirements_there $_dir "$_force"
-    local _script_dir=
-    local _mode=--editable
-    local _which_python=$(which python)
-    if [[ $_which_python =~ ^/usr/local ]]; then
-        _script_dir="--script-dir=/usr/local/bin"
-        _mode=
-    elif [[ ! $_which_python =~ ^$HOME ]]; then
+    local dir_="$1" force_="$2"; shift 2
+    local dev_=
+    _install_requirements_there $dir_ "$force_"
+    local script_dir_=
+    local mode_=--editable
+    local which_python_=$(which python)
+    if [[ $which_python_ =~ ^/usr/local ]]; then
+        script_dir_="--script-dir=/usr/local/bin"
+        mode_=
+    elif [[ ! $which_python_ =~ ^$HOME ]]; then
         show_error Cannot pipy $(which python), which is outside $HOME
         return 1
     fi
-    [[ -f $_dir/setup.py ]] || echo "$_dir/setup.py is not a file" >&2
-    [[ -f $_dir/setup.py ]] || return 1
+    [[ -f $dir_/setup.py ]] || echo "$dir_/setup.py is not a file" >&2
+    [[ -f $dir_/setup.py ]] || return 1
     set -x
-    pip install $_force $_mode $_script_dir $_dir
+    pip install $force_ $mode_ $script_dir_ $dir_
     set +x
 }
 
@@ -129,7 +129,7 @@ pirr () {
 }
 
 piup () {
-    pi --upgrade pip
+    piu pip
 }
 
 vipy () {
@@ -202,7 +202,6 @@ make_venv () {
 pip_install_develop () {
     local __doc__="""pip install a directory for development"
     piup >/dev/null 2>&1
-    local _install=develop
     local _dir=.
     if [[ -d "$1" ]]; then
         _dir="$1"
