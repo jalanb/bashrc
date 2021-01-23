@@ -20,7 +20,7 @@ def fred(items, n, k):
         elif round_total > 0:
             break
         i += 1
-    fred_total = fred(rest, len(rest), k - 1)
+    fred_total = fred(items, len(items), k - 1)
     return round_total + fred_total
 
 fred([1,1, 1,1, 1,1,], 6, 2)

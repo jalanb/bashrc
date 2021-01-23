@@ -53,9 +53,6 @@ except ImportError:
     from pysyte.types.paths import path as Path
 
 
-import bots
-import tools
-from tools.issues import issues
 
 
 
