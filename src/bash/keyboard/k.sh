@@ -44,11 +44,15 @@ kad () {
 }
 
 key () {
-    . ~/bash/keyboard/$1.sh
-}
-
-kkk () {
-    :  # Name reserved
+    local command_=. file_=~/bash/keyboard/$1.sh command_too_=
+    if [[ $1 =~ -[bv.] ]]; then
+        [[ $1 == -b ]] && command_=bat
+        [[ $1 == -v ]] && command_=vim && command_too_="."
+        shift
+        file_=~/bash/keyboard/$1.sh
+    fi
+    $command_ $file_
+    [[ $command_too_ ]] && $command_too_ $file_
 }
 
 kpj () {

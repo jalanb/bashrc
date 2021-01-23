@@ -12,18 +12,24 @@
 [alias]
     a = add
     b = branch
+    c = cherry-pick
     d = difftool -y --extcmd=\"icdiff \"
     e = pull --rebase
-    f = push --force-with-lease
+    f = fetch
     h = rev-parse --abbrev-ref HEAD
     i = commit
-    l = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
+    l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
+    m = merge
     o = checkout
     p = push 
     r = rebase
     s = status
     t = remote get-url origin
     w = show
+    ai = add --interactive
+    aip = add --interactive --patch
+    aa = add .
+    ap = add --patch
     ba = branch --all
     bc = branch --contains
     bac = branch --all --contains
@@ -35,8 +41,11 @@
     br = branch --remotes
     bp = branch --points-at
     cb = rev-parse --abbrev-ref HEAD
-    ci = commit
-    co = checkout
+    ca = cherry-pick --abort
+    ce = cherry-pick --edit
+    cc = cherry-pick --continue
+    cs = cherry-pick --skip
+    cq = cherry-pick --quit
     df = diff --name-only
     dh = difftool -y --extcmd=\"vim -d -o\"
     di = difftool -y --extcmd=\"icdiff --line-numbers\"
@@ -50,22 +59,44 @@
     ds = diff --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     dump = cat-file -p
+    fa = fetch --all 
+    fap = fa --prune
+    ff = fap --tags
+    ft = fetch --tags
+    ia = commit --amend
+    ie = commit --edit
+    ii = commit --interactive
+    iip = commit --interactive --patch
+    ip = commit --patch
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
-    lc = l --color=always --decorate
-    ld = lg -p
-    le = lg --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-    lf = lg --stat
-    lg = lc --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%cd %C(auto)%d%Creset %s'
-    ll = lg -2
-    lll = lg -4
-    llll = lg -8
-    lllll = lg -16
-    llllll = lg -32
-    lm = log --pretty=format:'%C(auto)%s%Creset'
-    lt = lg --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s'
+    lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+    ld = ll -p
+    le = ll --pretty=format:'%Cgreen%cr %Creset %C(blue)<%an %aE>, %C(auto)%h %C(auto)%d%Creset %s'
+    lf = ll --stat
+    lg = l --grep
+    ll = lc -2 
+    lll = ll -4
+    llll = ll -8
+    lllll = ll -16
+    llllll = ll -32
+    lpppppp = lp -32
+    lppppp = lp -16
+    lpppp = lp -8
+    lppp = lp -4
+    lpp = lp -2
+    lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
+    lm = lc __main__..
+    lt = lc --pretty=format:'%Cgreen%ci %C(blue)%an, %C(auto)%h %C(auto)%d%Creset %s'
+    ma = merge --abort
+    mc = merge --continue
     mo = merge origin/__main__
-    pa =  push --all
+    mm = merge --no-ff --no-edit 
+    mmo = mm -X ours
+    mmt = mm -X theirs
+    mm = merge --no-ff --no-edit -X theirs
+    mq = merge --quit
+    pa =  push --atomic --all
     pf =  push --atomic --force-with-lease
     pff = push --atomic --force
     pt =  push --tags
@@ -82,13 +113,13 @@
     default = simple
 [help]
     autocorrect = 1
+[advice]
+    detachedHead = False
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
     enabled = true
 [icdiff]
     options = --highlight --line-numbers
-[advice]
-    detachedHead = False
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]

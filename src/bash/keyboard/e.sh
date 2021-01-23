@@ -28,7 +28,7 @@ et () {
 
 quietly unalias eg
 eg () {
-    env | g "$@"
+    env | gr "$@"
 }
 
 # xxx

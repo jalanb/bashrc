@@ -61,7 +61,7 @@ pidd () {
 
 ppip () {
     #show_run_command python -m pip "$@"
-    python -m pip "$@"
+    python3 -m pip "$@"
 }
 
 pipv () {

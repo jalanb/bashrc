@@ -3,10 +3,10 @@
 
 # _
 # x
-# _x
-# xx
 
 alias m=echo
+# _x
+# xx
 
 mvim () {
     local _mvim=/Applications/MacVim.app/Contents/bin/mvim 

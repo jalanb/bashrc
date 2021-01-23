@@ -35,6 +35,17 @@ vd () {
 # vh
 # vi
 
+vg () {
+    local user_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_=.git/config
+    [[ -f $user_ ]] || user_=
+    [[ -f $clone_ ]] || clone_=
+    if [[ $1 ]]; then
+        vim -p $user_ $clone_ +/"$1"
+    else
+        vim -p $user_ $clone_
+    fi
+}
+
 vj () {
     (cd ~/jab; vm .; gsi)
 }
@@ -291,7 +302,7 @@ vim_diff () {
 
 v_safely () {
     local __doc__="""Use a safe vim function"""
-    v "$@"
+    vv "$@"
 }
 
 
