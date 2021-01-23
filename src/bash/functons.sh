@@ -182,7 +182,7 @@ calf () {
 }
 
 envv () {
-    env | g VIRTUAL_ENV= | g '=.*'
+    env | grep VIRTUAL_ENV= | grep '=.*'
 }
 
 fdv () {
@@ -256,6 +256,10 @@ hub () {
     [[ -d $_directory ]] && cde $_directory
     [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
     cde $_directory
+}
+
+inj () {
+    ind ~/jab "$@"
 }
 
 jjb () {
@@ -453,7 +457,10 @@ raj () {
 }
 
 rlf () {
-    [[ -z $1 ]] && realpath . || realpath "$@"
+    local path_=.
+    [[ $1 ]] && path_="$1"
+    readlink -f "$path_"
+    # realpath $path_
 }
 
 sai () {
@@ -546,7 +553,7 @@ vfr () {
 }
 
 vgf () {
-    _edit_source ~/bash/git/functons.sh "$@"
+    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
 }
 
 vla () {
@@ -638,7 +645,7 @@ bins () {
     while [[ -n $_name ]]; do
         for root in $HOME /bin /usr; do
             find $root -wholename "bin/*$_name*" -print 2>/dev/null
-        done | grep -e $_name | sort | uniq | g $_name 2>/dev/null
+        done | grep -e $_name | sort | uniq | grep $_name 2>/dev/null
         _name="$1"; shift
     done
 }
@@ -766,12 +773,12 @@ mkv3 () {
 }
 
 nose_doctests () {
-    nosetests -h 2>&1 | g -q doctest || return
+    nosetests -h 2>&1 | grep -q doctest || return
     echo "--with-doctest --doctest-tests --doctest-extension=.test --doctest-extension=.tests "
 }
 
 nose_coverage () {
-    nosetests -h 2>&1 | g -q coverage || return
+    nosetests -h 2>&1 | grep -q coverage || return
     echo """ \
         --with-coverage \
         --cover-erase \
@@ -783,12 +790,12 @@ nose_coverage () {
 
 nose_stopwatch () {
     [[ $1 == 1 ]] && return
-    nosetests -h 2>&1 | g -q stopwatch || return
+    nosetests -h 2>&1 | grep -q stopwatch || return
     echo "-A \"speed!='slow'\""
 }
 
 nose_progress () {
-    nosetests -h 2>&1 | g -q progressive || return
+    nosetests -h 2>&1 | grep -q progressive || return
     echo "--with-progressive "
     nose_coverage $_progress "$@"
 }
@@ -853,6 +860,7 @@ Tree () {
     tree "$@" | less -R
 }
 
+venv
 vims () {
     whiches vim
 }
@@ -940,6 +948,10 @@ paste () {
     else
         echo "# $(pbpaste)"
     fi
+}
+
+blacken () {
+    black -l 79 "$@"
 }
 
 clipvim () {
@@ -1089,6 +1101,19 @@ show_line () {
     echo "$_prefix ${_server}$_suffix"
 }
 
+
+online_all () {
+    is_online www.google.com
+    local server_=
+    if runnable worker; then
+        for server_ in bots git wmp eop dupont corteva eopdev; do
+            is_online $(worker $server_)
+        done
+    fi
+    for server_ in mac.local book.local mini.local; do
+        is_online $server_
+    done
+}
 
 please () {
     local _command=$(history -p !-1)
@@ -1457,7 +1482,7 @@ one_two_three () {
     else
         3d 1 --noreport "$@"
     fi
-    l $(ls1 -p | g -v "\(pyc\|/\)$")
+    l $(ls1 -p | grep -v "\(pyc\|/\)$")
 }
 
 insert_commas () {

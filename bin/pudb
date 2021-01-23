@@ -4,16 +4,21 @@
 
 set -e
 
+which_debugger () {
+    local debugger_=pudb3
+    local where_="/usr/local/bin:/usr/bin:/bin"
+    local here_=${VIRTUAL_ENV:-$PWD}
+    [[ $here_ ]] || return 1
+    [[ -d "$here_" ]] || return 2
+    local bin_="$here_/bin"
+    [[ -d "$bin_" ]] && where_="$bin_:$where_"
+    PATH="$where_" which $debugger_ 2>/dev/null
+}
+
 main () {
-    local _pudb=
-    local _ppath="/usr/local/bin:/usr/bin:/bin"
-    [[ -d $VIRTUAL_ENV && -d $VIRTUAL_ENV/bin ]] && _ppath="$VIRTUAL_ENV/bin:$_ppath"
-    _pudb3=$(PATH=$_ppath which pudb3)
-    [[ -x $_pudb3 ]] && _pudb="$_pudb3"
-    [[ -x $_pudb ]] || _pudb=$(PATH=$_ppath which pudb 2>/dev/null)
-    [[ -x $_pudb ]] || PATH=$_ppath which pudb
-    [[ -x $_pudb ]] || return 1
-    TERM=xterm-256color $_pudb "$@"
+    local debugger_=$(which_debugger)
+    [[ -x "$debugger_" ]] || return 1
+    TERM=xterm-256color "$debugger_" "$@"
 }
 
 main "$@"

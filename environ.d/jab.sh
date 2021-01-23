@@ -21,18 +21,7 @@ basename_ () {
     return $_result
 }
 
-_jab_dir () {
-    [[ -d ~/jab ]] || echo ~/jab is not a directory >&2
-    [[ -d ~/jab ]] 
-}
-
-_set_ssh () {
-    local home_id=~/.ssh/id_jab
-    [[ -f "$home_id" ]] && export JAB_ID=$home_id
-    export JAB_SSH=$(dirname_ $home_id)
-}
-
-_set_ls_options () {
+ls_options () {
     export LS_PROGRAM=$(readlink -f $(/usr/bin/which ls))
     if $LS_PROGRAM -@ >/dev/null 2>&1; then
         export LS_COLOUR_OPTION='-@'
@@ -48,12 +37,10 @@ _set_ls_options () {
     fi
 }
 
-_main () {
-    if _jab_dir; then
-        _set_ssh
-        _set_ls_options
-    fi
+main () {
+    [[ -d ~/jab ]] || echo ~/jab is not a directory >&2
+    [[ -d ~/jab ]] || return 1
+    ls_options
 }
 
-_main
-
+main

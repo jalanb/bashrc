@@ -1,3 +1,17 @@
+Host *
+    AddKeysToAgent yes
+    UseKeychain no
+
+Host github
+    Hostname 140.82.121.3
+    User git
+    IdentityFile ~/.ssh/jalanb_github
+
+Host gitlab
+    Hostname gitlab.com
+    User git
+    IdentityFile ~/.ssh/jalanb_github
+
 Host bots
 # 2 cpu, 2 gb
     Hostname 172.25.32.74 
@@ -191,6 +205,7 @@ Host sosobeta
 
 Host soso
 # 3 cores, 16 Gb
+    Hostname orderwwtssoftwaresolutions
     Hostname 172.25.32.135 
     User builder
     IdentityFile ~/.ssh/work/soso/builder.key

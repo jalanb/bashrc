@@ -19,8 +19,17 @@ gv () {
     grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
 }
 
-rt () {
-    git "$@"
+gre () {
+    if [[ "$@" ]]
+    then gr "$@"
+    else 
+        echo "gre what?" >&2
+        return 1
+    fi
+}
+
+gsj () {
+    git -C ~/hub/jab status
 }
 
 grv () {

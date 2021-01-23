@@ -37,6 +37,10 @@ pid () {
     pip_install_develop "$@"
 }
 
+pig () {
+    pi --upgrade "$@"
+}
+
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
@@ -53,6 +57,10 @@ pvv () {
     cde_activate_there $virtualenv_
 }
 
+piu () {
+    pi --upgrade "$@"
+}
+
 # xxxx
 
 pidd () {
@@ -60,8 +68,9 @@ pidd () {
 }
 
 ppip () {
-    #show_run_command python -m pip "$@"
-    python3 -m pip "$@"
+    [[ "$@" ]] || return 1
+    show_run_command python -m pip "$@"
+    python3 -m pip "$@" 2>&1 | grep -q "using pip version"  && piup
 }
 
 pipv () {
@@ -75,23 +84,23 @@ pipv () {
 }
 
 _pipy_setup () {
-    local _dir="$1" _force="$2"; shift 2
-    local _dev=
-    _install_requirements_there $_dir "$_force"
-    local _script_dir=
-    local _mode=--editable
-    local _which_python=$(which python)
-    if [[ $_which_python =~ ^/usr/local ]]; then
-        _script_dir="--script-dir=/usr/local/bin"
-        _mode=
-    elif [[ ! $_which_python =~ ^$HOME ]]; then
+    local dir_="$1" force_="$2"; shift 2
+    local dev_=
+    _install_requirements_there $dir_ "$force_"
+    local script_dir_=
+    local mode_=--editable
+    local which_python_=$(which python)
+    if [[ $which_python_ =~ ^/usr/local ]]; then
+        script_dir_="--script-dir=/usr/local/bin"
+        mode_=
+    elif [[ ! $which_python_ =~ ^$HOME ]]; then
         show_error Cannot pipy $(which python), which is outside $HOME
         return 1
     fi
-    [[ -f $_dir/setup.py ]] || echo "$_dir/setup.py is not a file" >&2
-    [[ -f $_dir/setup.py ]] || return 1
+    [[ -f $dir_/setup.py ]] || echo "$dir_/setup.py is not a file" >&2
+    [[ -f $dir_/setup.py ]] || return 1
     set -x
-    pip install $_force $_mode $_script_dir $_dir
+    pip install $force_ $mode_ $script_dir_ $dir_
     set +x
 }
 
@@ -107,12 +116,12 @@ pipy () {
     piup >/dev/null 2>&1
     local _dir=$PWD
     [[ -d "$1" ]] && _dir="$1" && shift
-    local _force=
-    [[ $1 =~ -u*fu* ]] && _force=--force-reinstall
-    [[ $1 =~ -f*uf* ]] && _force="$_force --upgrade"
-    [[ $_force ]] && shift
+    local force_=
+    [[ $1 =~ -u*fu* ]] && force_=--force-reinstall
+    [[ $1 =~ -f*uf* ]] && force_="$force_ --upgrade"
+    [[ $force_ ]] && shift
     [[ -d "$1" ]] && _dir="$1" && shift
-    _pipy_setup $_dir $_force 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
+    _pipy_setup $_dir $force_ 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
 }
 
 pirr () {
@@ -120,7 +129,7 @@ pirr () {
 }
 
 piup () {
-    pi --upgrade pip
+    piu pip
 }
 
 vipy () {
@@ -141,18 +150,9 @@ venv () {
 # _xxxx
 
 _install_requirements_here () {
-    local _force=$1 _name=
-    if [[ -d requirements ]]; then
-        (cd requirements
-            for _name in development testing requirements; do
-                if [[ -f ${_name}.txt ]]; then
-                    pi $_force -r ${_name}.txt
-                    return
-                fi
-            done
-        )
-    fi
-    [[ -f requirements.txt ]] && pi $_force -r requirements.txt
+    local force_=$1 requirement_=
+    [[ -f requirements.txt ]] && pir -r requirements.txt $force_ && return 0
+    [[ -d requirements ]] && for requirement_ in requirements/*.txt; do pir ${requirement_} $force_ ; done
 }
 
 _install_requirements_there () {
@@ -202,17 +202,16 @@ make_venv () {
 pip_install_develop () {
     local __doc__="""pip install a directory for development"
     piup >/dev/null 2>&1
-    local _install=develop
     local _dir=.
     if [[ -d "$1" ]]; then
         _dir="$1"
         shift
-        local _force=
-        [[ $1 == "-f" ]] && _force=--force-reinstall
-        _install_requirements_there $_dir $_force
+        local force_=
+        [[ $1 == "-f" ]] && force_=--force-reinstall
+        _install_requirements_there $_dir $force_
         if [[ -f setup.py ]]; then
-            [[ $_force ]] && _force=--upgrade
-            ppip install $_force -e .
+            [[ $force_ ]] && force_=--upgrade
+            pi $force_ -e .
         fi
     fi 2>&1 | grep -v already.satisfied
 }

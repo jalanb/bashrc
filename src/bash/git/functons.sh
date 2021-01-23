@@ -54,8 +54,9 @@ gd () {
 }
 
 gf () {
-    gfa; gft
+    gft; gfa
 }
+alias fetch_tags_all=gf
 
 gi () {
     local _doc___="git in"
@@ -64,7 +65,7 @@ gi () {
         python -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
-        rr $storage_
+        rm -f $storage_
     else
         git commit --verbose
     fi
@@ -111,7 +112,7 @@ gp () {
 
 gs () {
     local _doc___="""git status front end"""
-    gs_ "$@"
+    gid "$@" status
 }
 
 gt () {
@@ -122,38 +123,11 @@ gt () {
     [[ $tag_ ]] || git tag | sort
 }
 
-gpf () {
-    show_command "git push --force-with-lease $@"
-    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
-        if [[ $MSG =~ set-upstream ]]; then
-            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
-            $command_
-        else
-            show_error "$MSG"
-            return 1
-        fi
-    fi
-}
-
-gdf () {
-    gid "$@" df
-}
-
-gof () {
-    gbD fred 2>/dev/null
-    gob fred "$@"
-}
-
-gs_ () {
-    local _doc___="""git status back end"""
-    gid "$@" status
-}
-
-# xxx
-
 egi () {
     GIT_EDITOR=true gi "$@"
 }
+
+# xxx
 
 gaa () {
     ga .
@@ -221,6 +195,10 @@ gcu () {
 
 gdd () {
     gdi .
+}
+
+gdf () {
+    gid "$@" df
 }
 
 gdi () {
@@ -304,6 +282,19 @@ gip () {
     gp
 }
 
+gl_ () {
+    local options_="-n 8"
+    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
+        options_="-n $1"
+        shift
+    fi
+    if [[ $1 == "--oneline" ]]; then
+        options_="$options_ $1"
+        shift
+    fi
+    gid "$@" lc $options_
+}
+
 gl1 () {
     gl_ 1 "$@"
 }
@@ -343,10 +334,6 @@ glp () {
     gl -p "$@"
 }
 
-gls () {
-    git_log_to_screen log "$@" --stat
-}
-
 glt () {
     git_log_to_screen lt "$@"
 }
@@ -377,6 +364,11 @@ gob () {
     [[ $new_branch_ ]] || return 1
     [[ $old_commit_ ]] || old_commit_=$(get_branch)
     git checkout -b $new_branch_ $old_commit_
+}
+
+gof () {
+    gbD fred 2>/dev/null
+    gob fred "$@"
 }
 
 gog () {
@@ -411,6 +403,19 @@ got () {
     fi
 }
 
+gpf () {
+    show_command "git push --force-with-lease $@"
+    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
+            $command_
+        else
+            show_error "$MSG"
+            return 1
+        fi
+    fi
+}
+
 gpo () {
     show_command git push origin "$@"
     git push origin "$@"
@@ -430,6 +435,10 @@ gpt () {
 
 gra () {
     git rebase --abort
+}
+
+grr () {
+    git pull --rebase "$@"
 }
 
 dir_has_branch () {
@@ -568,6 +577,10 @@ grr () {
     git pull --rebase "$@"
 }
 
+grrr () {
+    git_stash_and grr "$@"
+}
+
 grs () {
     git rebase --skip
 }
@@ -661,7 +674,7 @@ gxi () {
         [[ $answer =~ [qQ] || -z $responded_ ]] && break
         [[ $answer =~ [sS] ]] && gxi_stash_
         gi
-        git status -v | g -q "working [a-z][a-z]* clean" && break
+        git status -v | grep -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
         show_pre_loop_
     done
@@ -782,13 +795,13 @@ gdil () {
 }
 
 gdis () {
-    gid "$@" d --staged
+    gid "$@" d --staged 
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
     show_command gid lg "$@" > $stdout_
-    gid "$@" lg >> $stdout_ 2> $stderr_
+    gid "$@" lg >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
     if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
@@ -819,6 +832,7 @@ gomr () {
     git e
     bump show
 }
+alias pull_main=gomr
 
 gorl () {
     gor "$@"
@@ -850,7 +864,7 @@ gdsv () {
 }
 
 ggai () {
-    g -q $1 $2 && gai $2 || echo fuck off >&2
+    grep -q $1 $2 && gai $2 || echo fuck off >&2
 }
 
 gl11 () {
@@ -952,11 +966,11 @@ gtdd () {
 }
 
 gtlg () {
-    gtl | g "$@"
+    gtl | grep "$@"
 }
 
 gurl () {
-    grep https .git/config | sed -e "s:url =::" | g git.*
+    grep https .git/config | sed -e "s:url =::" | grep git.*
 }
 
 gvsd () {
@@ -1137,7 +1151,7 @@ gxi_menu_ () {
     red_one a dd
     stat_modified $1 && red_two in t eractive
     red_two a m end
-    red_two am e dit
+    red_two am e gid
     red_two sta g ed
     red_one s tash
     stat_modified $1 && red_one d iff
@@ -1237,22 +1251,6 @@ git_log_to_screen () {
     local lines_=${number_of_lines_:-$one_third_of_vertical_}
     local options_="$log_cmd_ --color"
     gid "$@" $options_ | head -n $lines_
-}
-
-gl_ () {
-    local options_="-n 8"
-    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
-        options_="-n $1"
-        shift
-    fi
-    if [[ $1 == "--oneline" ]]; then
-        options_="$options_ $1"
-        shift
-    fi
-    is_branch $1 || echo "Not a branch: $1" >&2
-    is_branch $1 || return 1
-    local branch_=$1 && shift
-    gid "$@" lc $options_ $branch_
 }
 
 untracked () {

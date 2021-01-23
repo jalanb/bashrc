@@ -14,29 +14,10 @@ __version__ = '0.1.0'
 from vim_script import script
 
 
-class ScriptError(NotImplementedError):
-    pass
-
-
-def run_args(args, methods):
-    """Run any methods eponymous with args"""
-    if not args:
-        return False
-    valuable_args = {k for k, v in args.__dict__.items() if v}
-    arg_methods = {methods[a] for a in valuable_args if a in methods}
-    for method in arg_methods:
-        method(args)
-
-
-def version(args):
-    print('%s %s' % (args, __version__))
-    raise SystemExit
-
-
-def parse_args(methods):
+def parse_args():
     """Parse out command line arguments
 
-    The parsed args are not actually used, except for running -U and -v
+    The parsed args are not actually used, except for running --version
     The main script interprets sys.argv itself
         (Some args for here, some for vim)
     """
@@ -51,14 +32,16 @@ def parse_args(methods):
     parser.add_argument('-o', '--open', action='store_true', help='Open N windows (default: one for each file)')
     parser.add_argument('-O', '--Orienteering', action='store_true', help='Like -o but split vertically')
     args = parser.parse_args()
-    run_args(args, methods)
+    if args.version:
+        print(f"{sys.argv[0]}: {__version__}")
+        sys.exit(os.EX_OK)
     return args
 
 
 def main():
     """Run the program"""
     try:
-        _ = parse_args(globals())
+        _ = parse_args()
         return script()
     except BdbQuit:
         pass

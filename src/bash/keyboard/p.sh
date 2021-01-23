@@ -21,6 +21,12 @@ pd () {
     python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$@"
 }
 
+pv () {
+    python -m venv .venv
+    unhash_python_handlers
+
+}
+
 # xxx
 
 ppp () {

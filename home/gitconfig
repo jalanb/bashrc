@@ -1,6 +1,8 @@
 [user]
     name = J Alan Brogan
     email = github@al-got-rhythm.net
+[mailmap]
+    file = ~/mail.map
 [credential]
     helper = store
 [pager]
@@ -21,7 +23,7 @@
     l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
     m = merge
     o = checkout
-    p = push 
+    p = push
     r = rebase
     s = status
     t = remote get-url origin
@@ -31,6 +33,7 @@
     aa = add .
     ap = add --patch
     ba = branch --all
+    bb = switch
     bc = branch --contains
     bac = branch --all --contains
     bd = branch -d
@@ -72,10 +75,10 @@
     last = log -1 HEAD
     lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
     ld = ll -p
-    le = ll --pretty=format:'%Cgreen%cr %Creset %C(blue)<%an %aE>, %C(auto)%h %C(auto)%d%Creset %s'
+    le = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
     lf = ll --stat
     lg = l --grep
-    ll = lc -2 
+    ll = lc -2
     lll = ll -4
     llll = ll -8
     lllll = ll -16
@@ -86,12 +89,12 @@
     lppp = lp -4
     lpp = lp -2
     lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
-    lm = lc __main__..
-    lt = lc --pretty=format:'%Cgreen%ci %C(blue)%an, %C(auto)%h %C(auto)%d%Creset %s'
+    lm = log --pretty=format:'%C(auto)%s%Creset'
+    lt = lp --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s'
     ma = merge --abort
     mc = merge --continue
     mo = merge origin/__main__
-    mm = merge --no-ff --no-edit 
+    mm = merge --no-ff --no-edit
     mmo = mm -X ours
     mmt = mm -X theirs
     mm = merge --no-ff --no-edit -X theirs
@@ -120,6 +123,8 @@
     enabled = true
 [icdiff]
     options = --highlight --line-numbers
+[mergetool "diffconflicts"]
+    keepBackup = false
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
@@ -140,8 +145,6 @@
 [mergetool "meld"]
     path = "/Applications/Meld.app/Contents/MacOS/Meld"
     trustExitCode = false
-[mergetool "diffconflicts"]
-    keepBackup = false
 [color]
     ui = auto
 [filter "lfs"]

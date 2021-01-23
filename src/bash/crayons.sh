@@ -1,7 +1,5 @@
 #! /bin/cat
 
-
-
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
 # xxxxxxxx
@@ -13,9 +11,10 @@ show_red () {
 # xxxxxxxxxx
 
 show_error () {
-    show_red_line "$@"
+    show_red_line "$@" >&2
     return 1
 }
+alias show_fail=show_error
 
 show_green () {
     show_colour $GREEN "$*"
@@ -29,9 +28,11 @@ show_colour () {
         line_="\n"
         shift
     fi
+    local colour_=$1
+    shift
     if [[ "$@" ]];
-    then printf "$*""${NO_COLOUR}${line_}"
-    else printf "${GREEN}$(cat)${NO_COLOUR}${line_}"
+    then printf "${colour_}$*""${NO_COLOUR}${line_}"
+    else printf "${colour_}$(cat)${NO_COLOUR}${line_}"
     fi
 }
 
@@ -51,7 +52,6 @@ show_red_line () {
     show_colour_line $RED "$*"
 }
 alias red_line=show_red_line
-alias show_fail=show_red_line
 
 # xxxxxxxxxxxxxxx
 

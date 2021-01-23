@@ -1,10 +1,9 @@
 #! /bin/cat
 
+SHELL_SESSION_HISTORY=0
 
 # x
 # xx
-
-
 # xxx
 # xxxx
 # xxxxx
@@ -85,4 +84,3 @@ set_history_file () {
 }
 
 [[ $HISTFILE =~ eternal ]] || set_history_file
-

@@ -9,5 +9,4 @@ LC_ALL='C' /usr/bin/sudo \
     /bin/bash \
         /usr/local/Cellar/findutils/4.4.2/bin/updatedb \
         --prunepaths="$PRUNEPATHS" \
-        2>&1 \
-        >> $LOG
+        >> $LOG 2>&1
