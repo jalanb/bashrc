@@ -50,7 +50,14 @@ try:
     from pathlib import Path
     mores += ["Path"]
 except ImportError:
-    pass
+    from pysyte.types.paths import path as Path
+
+
+import bots
+import tools
+from tools.issues import issues
+
+
 
 more = ", ".join([" "] + mores) if mores else ""
 executable = sys.executable.replace(os.environ['HOME'], '~')

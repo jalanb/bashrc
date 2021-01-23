@@ -11,7 +11,7 @@ which_debugger () {
     [[ $here_ ]] || return 1
     [[ -d "$here_" ]] || return 2
     local bin_="$here_/bin"
-    [[ -d "$here_bin_" ]] && where_="$bin_:$where_"
+    [[ -d "$bin_" ]] && where_="$bin_:$where_"
     PATH="$where_" which $debugger_ 2>/dev/null
 }
 
