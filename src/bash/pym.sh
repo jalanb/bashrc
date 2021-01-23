@@ -24,11 +24,15 @@ workon_pym () {
     hub pym pym "$@"
 }
 
-pyi () {
-    cd ~/hub/pym/pym
-    add_to_a_path PATH ./bin
-    add_to_a_path PYTHONPATH ./pym
-    source ~/.virtualenvs/pym/bin/activate
+pyi () {(
+    local pym_=~/hub/pym pym_bin_=$pym_/bin pym_py_=$pym_/pym 
+    [[ -d $pym_bin_ && -d $pym_py_ ]] || return 1
+    [[ $PATH ]] && PATH="$pym_bin_:$PATH" || PATH=$pym_bin_
+    [[ $PYTHONPATH ]] && PYTHONPATH="$pym_py:$PYTHONPATH" || PYTHONPATH=$pym_py
+    cd $pym_
+    [[ -f .venv/bin/activate ]] || show_fail "-f $pym_/.venv/bin/activate"
+    [[ -f .venv/bin/activate ]] || return 1
+    source .venv/bin/activate
     if [[ -n $* ]]; then
         if shift_dir "$@"; then
             shift
@@ -60,7 +64,7 @@ pyi () {
     fi
     echo
     [[ -n $* ]] && "$@"
-}
+)}
 
 pym () {
     local __doc__="function to run https://github.com/jalanb/pym, if installed"
@@ -85,3 +89,4 @@ pym () {
         -- "$@"
 }
 
+pyi () {}
