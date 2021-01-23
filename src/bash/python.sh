@@ -194,7 +194,7 @@ make_venv () {
         rm -rf $venv_dir_
     fi
     show_command "python3 -m venv $venv_"
-    python3 -m venv $venv_
+    python3 -m venv --copies $venv_
 }
 
 # xxxxxxx*
