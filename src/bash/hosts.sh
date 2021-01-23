@@ -8,14 +8,18 @@
 # xxxxx
 
 hosts () {
-    g -e ^Host -e Host[nN]ame ~/jab/hss/hosts
+    grep --color -e ^Host -e Host[nN]ame ~/jab/hss/hosts
 }
 
 # xxxxxx
 
 vhosts () {
-    v \
+    local servers_=
+    [[ -f servers ]] && servers_=servers
+    [[ -f inventory ]] && servers_=inventory
+    vim -p \
         ~/.ssh/config \
+        $servers_ \
         ~/.git-credentials \
         ~/jab/src/bash/jabnet.sh \
         /etc/hosts \

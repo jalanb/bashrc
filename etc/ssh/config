@@ -119,9 +119,9 @@ Host a_wmp
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host twkwbe55 tmpdev
-# 1 cpu, 4 gb
-    Hostname 172.25.32.106
+Host twkwbe54 wmpstage
+# 2 cpu, 8 gb
+    Hostname 172.25.32.105
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
@@ -131,21 +131,21 @@ Host twkwbe54 wmpstage
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe56 wmptest
+Host twkwbe55 wmptest
+# 1 cpu, 4 gb
+    Hostname 172.25.32.106
+    User builder
+    IdentityFile ~/.ssh/work/wmp/builder.key
+
+Host twkwbe56 wmpdev
 # 4 cpu, 16 gb
     Hostname 172.25.32.107
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe57 wmpdev
+Host twkwbe57 wmpbeta
 # 4 cpu, 32 gb
     Hostname 172.25.32.108
-    User builder
-    IdentityFile ~/.ssh/work/wmp/builder.key
-
-Host atlwbe35 wmpbeta
-# 4 cpu, 16 gb
-    Hostname 172.25.32.202  
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 

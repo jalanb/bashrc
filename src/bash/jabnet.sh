@@ -29,23 +29,3 @@ ssu () {
     ssh -tq $_server "$_sudo" || ssh -t $_server "$_sudo"
 }
 
-ssga () {
-    ssa $(worker twkgit20)
-}
-
-ssgb () {
-    ssh builder
-}
-
-ssx () {
-    local _server=$1; shift
-    ssu ${_server} "$@"
-}
-
-# xxxx
-
-_ssj () {
-    _server=$1
-    [[ $(hostname) == $_server ]] || sst jab $_server -q "$@"
-}
-
