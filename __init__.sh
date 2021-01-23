@@ -25,14 +25,13 @@ export WHYP=~/hub/whyp/whyp
 export WHYP_EDITOR=v
 export ACKVIM=~/hub/ackvim/ackvim
 . $ACKVIM.sh
-export CDE=~/hub/cde/cde
-. $CDE.sh
 # . $WHYP.sh
 export PYTH=~/hub/pyth/pyth
 . $PYTH.sh
 
 . ~/jab/environ.d/__init__.sh
 . ~/jab/src/bash/__init__.sh
+. ~/jab/src/bash/__cd__.sh
 . ~/jab/local/__init__.sh optional
 . ~/jab/work/__init__.sh optional
 
