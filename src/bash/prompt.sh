@@ -72,7 +72,7 @@ _colour_prompt () {
 }
 
 path_to_venv () {
-    env | g VIRTUAL_ENV= | cut -d= -f2
+    env | grep VIRTUAL_ENV= | cut -d= -f2
 }
 
 venv_name () {
@@ -121,7 +121,7 @@ blue_user () {
 red_python () {
 
     local _virtual_env_name=
-    local _virtual_env_root=$(env | g VIRTUAL_ENV | cut -d= -f2)
+    local _virtual_env_root=$(env | grep VIRTUAL_ENV | cut -d= -f2)
     [[ $_virtual_env_root ]] && _virtual_env_name=$(basename "$_virtual_env_root")
     if [[ $_virtual_env_name == ".venv" ]]; then
         local _virtual_env_directory=$(dirname $_virtual_env_root)
