@@ -1,7 +1,5 @@
 #! /bin/cat
 
-
-
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
 # xxxxxxxx
@@ -51,7 +49,6 @@ show_red_line () {
     show_colour_line $RED "$*"
 }
 alias red_line=show_red_line
-alias show_fail=show_red_line
 
 # xxxxxxxxxxxxxxx
 
