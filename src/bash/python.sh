@@ -37,6 +37,10 @@ pid () {
     pip_install_develop "$@"
 }
 
+pig () {
+    pi --upgrade "$@"
+}
+
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
@@ -53,6 +57,10 @@ pvv () {
     cde_activate_there $virtualenv_
 }
 
+piu () {
+    pi --upgrade "$@"
+}
+
 # xxxx
 
 pidd () {
@@ -60,8 +68,9 @@ pidd () {
 }
 
 ppip () {
-    #show_run_command python -m pip "$@"
-    python3 -m pip "$@"
+    [[ "$@" ]] || return 1
+    show_run_command python -m pip "$@"
+    python3 -m pip "$@" 2>&1 | grep -q "using pip version"  && piup
 }
 
 pipv () {
@@ -107,12 +116,12 @@ pipy () {
     piup >/dev/null 2>&1
     local _dir=$PWD
     [[ -d "$1" ]] && _dir="$1" && shift
-    local _force=
-    [[ $1 =~ -u*fu* ]] && _force=--force-reinstall
-    [[ $1 =~ -f*uf* ]] && _force="$_force --upgrade"
-    [[ $_force ]] && shift
+    local force_=
+    [[ $1 =~ -u*fu* ]] && force_=--force-reinstall
+    [[ $1 =~ -f*uf* ]] && force_="$force_ --upgrade"
+    [[ $force_ ]] && shift
     [[ -d "$1" ]] && _dir="$1" && shift
-    _pipy_setup $_dir $_force 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
+    _pipy_setup $_dir $force_ 2>&1 | grep -v already.satisfied  | grep -e ^Installed -e '^Installing .* script' -e pip.install | grep -e 'g [a-z_]+\>' -e '/\<[a-z0-9.-]*[^/]+$'
 }
 
 pirr () {
@@ -141,18 +150,9 @@ venv () {
 # _xxxx
 
 _install_requirements_here () {
-    local _force=$1 _name=
-    if [[ -d requirements ]]; then
-        (cd requirements
-            for _name in development testing requirements; do
-                if [[ -f ${_name}.txt ]]; then
-                    pi $_force -r ${_name}.txt
-                    return
-                fi
-            done
-        )
-    fi
-    [[ -f requirements.txt ]] && pi $_force -r requirements.txt
+    local force_=$1 requirement_=
+    [[ -f requirements.txt ]] && pir -r requirements.txt $force_ && return 0
+    [[ -d requirements ]] && for requirement_ in requirements/*.txt; do pir ${requirement_} $force_ ; done
 }
 
 _install_requirements_there () {
@@ -207,12 +207,12 @@ pip_install_develop () {
     if [[ -d "$1" ]]; then
         _dir="$1"
         shift
-        local _force=
-        [[ $1 == "-f" ]] && _force=--force-reinstall
-        _install_requirements_there $_dir $_force
+        local force_=
+        [[ $1 == "-f" ]] && force_=--force-reinstall
+        _install_requirements_there $_dir $force_
         if [[ -f setup.py ]]; then
-            [[ $_force ]] && _force=--upgrade
-            ppip install $_force -e .
+            [[ $force_ ]] && force_=--upgrade
+            pi $force_ -e .
         fi
     fi 2>&1 | grep -v already.satisfied
 }

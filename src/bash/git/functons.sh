@@ -54,8 +54,9 @@ gd () {
 }
 
 gf () {
-    gfa; gft
+    gft; gfa
 }
+alias fetch_tags_all=gf
 
 gi () {
     local _doc___="git in"
@@ -196,6 +197,10 @@ gdd () {
     gdi .
 }
 
+gdf () {
+    gid "$@" df
+}
+
 gdi () {
     gid d "$@"
 }
@@ -263,16 +268,9 @@ gia () {
 gid () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
-<<<<<<< HEAD
     show_command git -C "$dir_" "$@"
     # set -x
     git -C "$dir_" "$@"
-=======
-    show_command git -C "$dir_" "$@" 
-    # set -x
-    git -C "$dir_" "$@" 
-    # set +x
->>>>>>> 23197096... RRR
 }
 
 gie () {
@@ -282,6 +280,19 @@ gie () {
 gip () {
     gi "$@"
     gp
+}
+
+gl_ () {
+    local options_="-n 8"
+    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
+        options_="-n $1"
+        shift
+    fi
+    if [[ $1 == "--oneline" ]]; then
+        options_="$options_ $1"
+        shift
+    fi
+    gid "$@" lc $options_
 }
 
 gl1 () {
@@ -323,13 +334,6 @@ glp () {
     gl -p "$@"
 }
 
-<<<<<<< HEAD
-gls () {
-    git_log_to_screen log "$@" --stat
-}
-
-=======
->>>>>>> 23197096... RRR
 glt () {
     git_log_to_screen lt "$@"
 }
@@ -360,6 +364,11 @@ gob () {
     [[ $new_branch_ ]] || return 1
     [[ $old_commit_ ]] || old_commit_=$(get_branch)
     git checkout -b $new_branch_ $old_commit_
+}
+
+gof () {
+    gbD fred 2>/dev/null
+    gob fred "$@"
 }
 
 gog () {
@@ -394,6 +403,19 @@ got () {
     fi
 }
 
+gpf () {
+    show_command "git push --force-with-lease $@"
+    if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
+        if [[ $MSG =~ set-upstream ]]; then
+            local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
+            $command_
+        else
+            show_error "$MSG"
+            return 1
+        fi
+    fi
+}
+
 gpo () {
     show_command git push origin "$@"
     git push origin "$@"
@@ -413,6 +435,10 @@ gpt () {
 
 gra () {
     git rebase --abort
+}
+
+grr () {
+    git pull --rebase "$@"
 }
 
 dir_has_branch () {
@@ -547,13 +573,12 @@ grp () {
     fi
 }
 
-<<<<<<< HEAD
 grr () {
     git pull --rebase "$@"
-=======
+}
+
 grrr () {
-    git_stash_and gr "$@"
->>>>>>> 23197096... RRR
+    git_stash_and grr "$@"
 }
 
 grs () {
@@ -770,21 +795,13 @@ gdil () {
 }
 
 gdis () {
-<<<<<<< HEAD
-    gid "$@" d --staged
-=======
     gid "$@" d --staged 
->>>>>>> 23197096... RRR
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
     show_command gid lg "$@" > $stdout_
-<<<<<<< HEAD
-    gid "$@" lg >> $stdout_ 2> $stderr_
-=======
     gid "$@" lg >> $stdout_ 2> $stderr_ 
->>>>>>> 23197096... RRR
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
     if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
@@ -815,6 +832,7 @@ gomr () {
     git e
     bump show
 }
+alias pull_main=gomr
 
 gorl () {
     gor "$@"
@@ -1233,25 +1251,6 @@ git_log_to_screen () {
     local lines_=${number_of_lines_:-$one_third_of_vertical_}
     local options_="$log_cmd_ --color"
     gid "$@" $options_ | head -n $lines_
-<<<<<<< HEAD
-}
-
-gl_ () {
-    local options_="-n 8"
-    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
-        options_="-n $1"
-        shift
-    fi
-    if [[ $1 == "--oneline" ]]; then
-        options_="$options_ $1"
-        shift
-    fi
-    is_branch $1 || echo "Not a branch: $1" >&2
-    is_branch $1 || return 1
-    local branch_=$1 && shift
-    gid "$@" lc $options_ $branch_
-=======
->>>>>>> 23197096... RRR
 }
 
 untracked () {

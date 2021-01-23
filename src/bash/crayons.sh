@@ -11,9 +11,10 @@ show_red () {
 # xxxxxxxxxx
 
 show_error () {
-    show_red_line "$@"
+    show_red_line "$@" >&2
     return 1
 }
+alias show_fail=show_error
 
 show_green () {
     show_colour $GREEN "$*"
