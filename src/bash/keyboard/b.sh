@@ -13,6 +13,8 @@ bu () {
     brew upgrade "$@"
 }
 
+alias bfd=fdb
+
 bub () {
     brew update
 }
