@@ -258,6 +258,10 @@ hub () {
     cde $_directory
 }
 
+inj () {
+    ind ~/jab "$@"
+}
+
 jjb () {
     kk ~/bash "$@"
 }
@@ -453,7 +457,10 @@ raj () {
 }
 
 rlf () {
-    [[ -z $1 ]] && realpath . || realpath "$@"
+    local path_=.
+    [[ $1 ]] && path_="$1"
+    readlink -f "$path_"
+    # realpath $path_
 }
 
 sai () {
@@ -546,7 +553,7 @@ vfr () {
 }
 
 vgf () {
-    _edit_source ~/bash/git/functons.sh "$@"
+    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
 }
 
 vla () {
@@ -853,6 +860,7 @@ Tree () {
     tree "$@" | less -R
 }
 
+venv
 vims () {
     whiches vim
 }
@@ -940,6 +948,10 @@ paste () {
     else
         echo "# $(pbpaste)"
     fi
+}
+
+blacken () {
+    black -l 79 "$@"
 }
 
 clipvim () {
