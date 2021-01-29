@@ -2,7 +2,7 @@
 
 . ~/hub/whyp/whyp.sh
 . ~/jab/src/bash/functons.sh
-. ~/jalanb/local/functons.sh optional
+whyp_source ~/jalanb/local/functons.sh optional
 
 _find_copier () {
     CLIP_BOARD_COPIER=
