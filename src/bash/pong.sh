@@ -20,7 +20,7 @@ pong () {
     fi
     local _pinged=$(ping -c1 $_options "$_remote")
     [[ $_pinged ]] || return 1
-    echo $_pinged | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | g ' [0-9.]*'
+    echo $_pinged | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep ' [0-9.]*'
     return 0
 }
 
