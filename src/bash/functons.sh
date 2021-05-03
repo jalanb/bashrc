@@ -12,7 +12,6 @@ typed pii || . ~/bash/python.sh
 
 # sorted by strcmp of function name, punctuation before letters
 
-
 # _x
 
 ,. () {
@@ -167,18 +166,10 @@ ask () {
     echo $_answer
 }
 
-clf () {
-    cat ~/jalanb/local/functons.sh
-}
-
 dir () {
     local _where=.
     [[ -n "$@" ]] && _where="$@"
     say $(short_dir $_where)
-}
-
-calf () {
-    cat ~/jalanb/local/functons.sh
 }
 
 envv () {
@@ -418,17 +409,6 @@ num () {
     vim ~/jalanb/local/numbers.txt
 }
 
-pi2 () {
-    IPYTHON="/usr/local/bin/ipython2" pii "$@"
-    IPYTHON=
-}
-alias pi1=pi2 # I keept typo-ing on that
-
-pi3 () {
-    IPYTHON=ipython3; pii "$@"
-    IPYTHON=
-}
-
 ps3 () {
     if [[ -z "$@" ]]; then
         ps axf | vim - +
@@ -557,19 +537,19 @@ vgf () {
 }
 
 vla () {
-    _edit_locals aliases.sh
+    _edit_locals aliases.sh "$@"
 }
 
 vle () {
-    _edit_locals environ.sh
+    _edit_locals environ.sh "$@"
 }
 
 vlf () {
-    _edit_locals functons.sh
+    _edit_locals functons.sh "$@"
 }
 
 vla () {
-    _edit_locals aliases.sh
+    _edit_locals aliases.sh "$@"
 }
 
 vwa () {
@@ -768,8 +748,8 @@ mkpy () {
 }
 
 mkv3 () {
-    mkvirtualenv -v --clear --system-site-packages --relocatable --python=/usr/local/bin/python3 $1
-    virtualenv --python=/usr/local/bin/python3 /Users/jab/.virtualenvs/$1
+    mkvirtualenv -v --clear --system-site-packages --relocatable --python=$(which python3) $1
+    virtualenv --python=$(which python3) /Users/jab/.virtualenvs/$1
 }
 
 nose_doctests () {
@@ -1616,7 +1596,11 @@ _edit_source () {
 _edit_locals () {
     local local_dir=~/jalanb/local
     [[ -d "$local_dir" ]] || mkdir -p $local_dir
-    _edit_source $local_dir/$1
+    local name_="$1" force_=
+    shift
+    [[ $1 =~ -f ]] && force_=--force
+    [[ $force_ ]] || return 0
+    _edit_source "$local_dir/$name_"
 }
 
 _edit_work () {
