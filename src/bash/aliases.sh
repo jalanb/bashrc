@@ -86,8 +86,8 @@ alias jlf="sst jlfieblu jlf.ie"
 
 alias out="to_release"
 
-alias sle=". ~/jab/local/environ.sh optional"
-alias slp=". ~/jab/local/prompt optional"
+alias sle=". ~/jalanb/local/environ.sh optional"
+alias slp=". ~/jalanb/local/prompt optional"
 alias spe=". ~/jab/environ.d/python.sh"
 
 alias tra="try ~/alans_tests"
