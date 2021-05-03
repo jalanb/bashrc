@@ -19,7 +19,7 @@ h () {
 alias HG=$(which hg 2>/dev/null) # With apologies, but don't really use it
 
 h1 () {
-    history_tail 2 | head -n 1
+    head -n 1 "$@"
 }
 
 hd () {
@@ -49,7 +49,21 @@ hgt () {
     hg "$@" | tail
 }
 
+ht1 () {
+    history_tail 2 | head -n 1
+}
 
+
+# xxxxxxxxx
+
+hash_bang () {
+    local head_=$(h1 "$1")
+    echo "$head_" | grep -q "^#!" || return 1
+    echo "$head_" | grep --color -e python -e bash && return 0
+    echo "$head_" | grep --color 'env [^ ]*' && return 0
+    echo "$head_" | grep --color '[!] [^ ]*' && return 0
+    return 1
+}
 
 # history_xxxx+
 

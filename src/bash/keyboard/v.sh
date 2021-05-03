@@ -220,6 +220,12 @@ vd13 () {
     vd ~/two ~/three
 }
 
+venv () {
+    local virtualenv_=.venv
+    [[ -d $virtualenv_ ]] || python3 -m venv $virtualenv_
+    cde_activate_there $virtualenv_/bin/activate
+}
+
 vims () {
     whiches vim
 }

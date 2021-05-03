@@ -44,10 +44,10 @@ kad () {
 }
 
 key () {
-    local command_=. file_=~/bash/keyboard/$1.sh command_too_=
+    local command_=. command_too_= file_=~/bash/keyboard/$1.sh
     if [[ $1 =~ -[bv.] ]]; then
         [[ $1 == -b ]] && command_=bat
-        [[ $1 == -v ]] && command_=vim && command_too_="."
+        [[ $1 == -v ]] && command_=vim && command_too_="whyp_source"
         shift
         file_=~/bash/keyboard/$1.sh
     fi

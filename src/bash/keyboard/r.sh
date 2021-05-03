@@ -42,6 +42,19 @@ scalp_hermann () {
 }
 
 rr () {
+    if [[ "$1" =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
+        echo "Will not remove $1" >&2
+        return 1
+    fi
+    local _real_home=$(realpath $HOME)
+    if [[ $(realpath "$1") == "$_real_home" ]]; then
+        echo "Will not remove $1" >&2
+        return 1
+    fi
+    r "$@" >/dev/null 2>&1
+}
+
+old_rr () {
     local _interactive= _path= _options=
     if [[ "$1" == '-i' ]]; then
         _interactive=1
