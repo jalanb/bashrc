@@ -2,6 +2,7 @@
 
 lcolour () {
     local colour_="[1;${1}m" no_colour_="[0m"
+    shift
     local text_="$@"
     printf "$colour_$text_$no_colour_"
 }
@@ -30,23 +31,17 @@ lred_user () {
 
 bashrc_log=~/log/bashrc.log
 jab_dir=~/jalanb/jab
-local_init=$jab_dir/local/__init__.sh
+local_dir=~/jalanb/local
+local_init=$local_dir/__init__.sh
+
 vbb () {
     (
         cd $jab_dir
         local local_= log_=
         [[ -f $local_init ]] && local_=$local_init
         [[ -f $bashrc_log ]] && log_=$bashrc_log
-        local files_=" "\
-            "~/.bashrc "\
-            "__init__.sh "\
-            "environ.d/__init__.sh "\
-            "src/bash/__init__.sh "\
-            "$local_ "\
-            "~/.vimrc "\
-            "$log_ "\
-            "$@"
-        vim -p $files_
+        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $log_ "
+        vim -p "$@" $files_
         readlink -f $files_
     )
 }
@@ -57,9 +52,13 @@ echo_path () {
     echo "Here is $(readlink -f .)"
 }
 
+usr_local () {
+    echo "/usr/local/$1"
+}
+
 pre_bashrc_ () {
-    local homes_=$jab_dir/bin:$HOME/bin:$HOME/.local local_=/usr/local
-    local locals_="$local_/gnu:$local_/bin:$local_/go/bin"
+    local homes_=$jab_dir/bin:$HOME/bin:$HOME/.local
+    local locals_="$(usr_local gnu):$(usr_local bin):$(usr_local go/bin)"
     local bins_=/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
 

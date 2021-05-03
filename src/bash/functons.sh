@@ -105,7 +105,7 @@ rg () {
 }
 
 ru () {
-    # do da root root route, do da ru !
+    local __doc__="""do da root root route, do da ru !"""
     if [[ -z "$@" ]]; then
         SUDO
     else
@@ -168,7 +168,7 @@ ask () {
 }
 
 clf () {
-    cat ~/jab/local/functons.sh
+    cat ~/jalanb/local/functons.sh
 }
 
 dir () {
@@ -178,7 +178,7 @@ dir () {
 }
 
 calf () {
-    cat ~/jab/local/functons.sh
+    cat ~/jalanb/local/functons.sh
 }
 
 envv () {
@@ -415,7 +415,7 @@ nat () {
 }
 
 num () {
-    vim ~/jab/local/numbers.txt
+    vim ~/jalanb/local/numbers.txt
 }
 
 pi2 () {
@@ -1614,7 +1614,7 @@ _edit_source () {
 }
 
 _edit_locals () {
-    local local_dir=~/jab/local
+    local local_dir=~/jalanb/local
     [[ -d "$local_dir" ]] || mkdir -p $local_dir
     _edit_source $local_dir/$1
 }

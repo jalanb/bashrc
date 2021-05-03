@@ -5,14 +5,6 @@ type same_dir >/dev/null 2>&1 || . ~/bash/paths.sh
 # x
 # xx
 
-pi () {
-    [[ $1 == install ]] && shift
-    ppip install "$@"
-}
-
-pu () {
-    ppip uninstall "$@"
-}
 
 py () {
     local __doc__="""Run python, or a python script or directory"""
@@ -33,32 +25,23 @@ py () {
 
 # xxx
 
-pid () {
-    pip_install_develop "$@"
-}
-
-pig () {
-    pi --upgrade "$@"
-}
-
 pii () {
     local _ipython=$(which ipython)
     [[ -n $IPYTHON ]] && _ipython=$IPYTHON
     pypath $_ipython "$@"
 }
 
-pir () {
-    pi -r "$@"
+ppi () {
+    [[ $1 == install ]] && shift
+    ppip install "$@"
 }
 
-pvv () {
-    local virtualenv_=.venv
-    python -m venv $virtualenv_
-    cde_activate_there $virtualenv_
+ppu () {
+    ppip uninstall "$@"
 }
 
 piu () {
-    pi --upgrade "$@"
+    ppi --upgrade "$@"
 }
 
 # xxxx
@@ -67,10 +50,22 @@ pidd () {
     pip_install_develop .
 }
 
+ppid () {
+    pip_install_develop "$@"
+}
+
+ppig () {
+    ppi --upgrade "$@"
+}
+
+ppir () {
+    ppi -r "$@"
+}
+
 ppip () {
     [[ "$@" ]] || return 1
-    show_run_command python -m pip "$@"
-    python3 -m pip "$@" 2>&1 | grep -q "using pip version"  && piup
+    show_command python -m pip "$@"
+    python3 -m pip "$@" 2>&1 | grep -q "using pip version"  && python3 -m pip install --upgrade pip
 }
 
 pipv () {
@@ -211,7 +206,7 @@ pip_install_develop () {
         _install_requirements_there $_dir $force_
         if [[ -f setup.py ]]; then
             [[ $force_ ]] && force_=--upgrade
-            pi $force_ -e .
+            ppi $force_ -e .
         fi
     fi 2>&1 | grep -v already.satisfied
 }

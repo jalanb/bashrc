@@ -2,7 +2,20 @@
 
 
 # _
+
+. ~/hub/ackvim/ackvim.sh
+
 # x
+
+# a was in ackvim.sh
+
+a () {
+    ack_find "$@"
+}
+
+# xx
+
+# aa is in ackvim.sh
 
 ab () {
     ash "$@" ~/bash
@@ -20,19 +33,6 @@ ak () {
     ash "$@" ~/keys
 }
 
-# _x
-# xx
-
-
-. ~/hub/ackvim/ackvim.sh
-
-# a is defined in ackvim.sh
-
-# _x
-# xx
-
-# aa is in ackvim.sh
-
 # _xx
 
 _av () {
@@ -41,7 +41,7 @@ _av () {
 
 # xxx
 
-# aaa also ackvim.sh
+# aaa is in ackvim.sh
 
 aab () {
     aash "$@" ~/bash
@@ -96,8 +96,10 @@ avv () {
 }
 
 
+# xxxx
+
+# aaaa is in ackvim.sh
+
 aajj () {
     aa "$@" ~/jalanb/jab
 }
-
-

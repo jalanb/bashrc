@@ -6,8 +6,9 @@ set -e
 
 main () {
     local _pudb3=
-    local ppath="/usr/local/bin:/usr/bin:/bin"
-    _pudb3=$(PATH=$ppath which pudb3)
+    local path_="/usr/local/bin:/usr/bin:/bin"
+    [[ $VIRTUAL_ENV ]] && path_="$VIRTUAL_ENV:$path_"
+    _pudb3=$(PATH=$path_ which pudb3)
     [[ -x $_pudb3 ]] || return 1
     # set -x
     TERM=xterm-256color $_pudb3 "$@"

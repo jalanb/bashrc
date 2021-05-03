@@ -15,12 +15,13 @@
     a = add
     b = branch
     c = cherry-pick
+    cl = clean -d -f -f -x
     d = difftool -y --extcmd=\"icdiff \"
     e = pull --rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
     i = commit
-    l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
+    l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
     m = merge
     o = checkout
     p = push
@@ -73,23 +74,23 @@
     ip = commit --patch
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     last = log -1 HEAD
-    lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+    lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
     ld = ll -p
     le = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
     lf = ll --stat
     lg = l --grep
-    ll = lc -2
-    lll = ll -4
-    llll = ll -8
-    lllll = ll -16
-    llllll = ll -32
+    ll = l -2
+    lll = l -4
+    llll = l -8
+    lllll = l -16
+    llllll = l -32
     lpppppp = lp -32
     lppppp = lp -16
     lpppp = lp -8
     lppp = lp -4
     lpp = lp -2
     lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
-    lm = log --pretty=format:'%C(auto)%s%Creset'
+    lm = l __main__^..
     lt = lp --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s'
     ma = merge --abort
     mc = merge --continue

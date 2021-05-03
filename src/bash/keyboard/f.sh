@@ -32,19 +32,26 @@ fl () {
 # xxx
 
 fd_ () {
-    local dir_=. names_=. follow_=--follow options_=
+    local dir_= names_= follow_=--follow options_=
     while [[ "$@" ]]; do
         if [[ $1 =~ ^-(e|-expression)$ ]]; then
             shift
             options_="$options_ --expression $1"
-        elif [[ $1 =~ ^(f|-no-follow)$ ]]; then follow_=
+        elif [[ $1 =~ ^-(f|-no-follow)$ ]]; then follow_=
+        elif [[ $1 =~ ^-(t|-type) ]]; then 
+            options_="$options_ $1 $2"
+            shift
+        elif [[ $1 =~ ^- ]]; then options_="$options_ $1"
         elif [[ -d "$1" ]]; then dir_="$1"
         elif [[ -f "$1" ]]; then dir_=$(dirname "$1")
-        else names_="$names_ $1"
+        elif [[ $names_ ]]; then names_="${names_}.${1}"
+        else names_="$1"
         fi
         shift
     done
     options_="$options_ $follow_"
+    [[ $names_ ]] || names_=.
+    [[ $dir_ ]] || dir_=.
     fd $options_ "$names_" "$dir_"
 }
 

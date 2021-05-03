@@ -78,11 +78,15 @@ show_run_command () {
     show_command "$@"
     echo
     "$@" > ~/fd1 2> ~/fd2
-    if grep -q '0m' ~/fd1
-    then cat ~/fd1
-    else show_colour $LIGHT_GREEN $(cat ~/fd1)
+    if test -s ~/fd1; then
+        if grep -q '0m' ~/fd1
+        then cat ~/fd1
+        else show_colour $LIGHT_GREEN $(cat ~/fd1)
+        fi
     fi
-    show_colour $RED $(cat ~/fd2)
+    if test -s ~/fd2; then
+        show_colour $RED $(cat ~/fd2)
+    fi
 }
 
 show_run_command_old () {

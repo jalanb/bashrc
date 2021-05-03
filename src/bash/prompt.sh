@@ -108,7 +108,7 @@ blue_pwd_git () {
         _branch_version=", $_text_branch $_project_version"
     fi
     local _text_dir="$(_short_dir "$PWD")"
-    [[ $_text_dir ]] || _text_dir=../$(basename "$(readlink -f .)")
+    [[ $_text_dir ]] || _text_dir=$(basename "$(readlink -f .)")
     echo $(_colour l_blue "${_text_dir}${_branch_version}")
 }
 
