@@ -88,6 +88,8 @@ nnoremap m, /
 nnoremap nb ?<cr>zvzz
 nnoremap nm /<cr>?zvzz
 nnoremap nn nzvzz
+nnoremap n<down> /<cr>
+nnoremap n<up> ?<cr>
 "noremap o - open new line
 "noremap p - paste
 nnoremap q :q<cr>
@@ -198,7 +200,7 @@ nnoremap T :!tags
 nnoremap U :redo<cr>
 "noremap V - linewise visual
 nnoremap W :w!<cr>
-nnoremap X :wa!<cr>:qa<cr>
+nnoremap X :wa!<cr>:qa!<cr>
 "noremap Y - aka yy
 nnoremap Z XC
 " ordinary keys for movement {{{2
@@ -308,6 +310,7 @@ nnoremap <leader>l :call AfterPressing("l")<CR>
 nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
+nnoremap <leader>M gg/^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>n :call ToggleNumber()<cr>
 nnoremap <leader>o :w! ~/one<cr>
