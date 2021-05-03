@@ -50,7 +50,11 @@ gb () {
 }
 
 gd () {
-    gid "$@" d
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1" && shift
+    show_command git -C "$dir_" "$@"
+    # set -x
+    git -C "$dir_" "$@"
 }
 
 gf () {
@@ -112,7 +116,7 @@ gp () {
 
 gs () {
     local _doc___="""git status front end"""
-    gid "$@" status
+    gd "$@" status
 }
 
 gt () {
@@ -198,15 +202,11 @@ gdd () {
 }
 
 gdf () {
-    gid "$@" df
-}
-
-gdi () {
-    gid d "$@"
+    gd "$@" df
 }
 
 gdh () {
-    gid "$@" dh
+    gd "$@" dh
 }
 
 gdl () {
@@ -219,7 +219,7 @@ gds () {
 }
 
 gdv () {
-    gid "$@" dv
+    gd "$@" dv
 }
 
 gfa () {
@@ -255,22 +255,9 @@ gft () {
     git fetch --tags --force --all
 }
 
-ggi () {
-    local _doc___="""Me neither"""
-    gxi gdis_ ggi_response_ "$@"
-}
-
 gia () {
     show_command git commit --amend "$@"
     GIT_EDITOR=true git commit --amend "$@"
-}
-
-gid () {
-    local dir_=.
-    [[ -d "$1" ]] && dir_="$1" && shift
-    show_command git -C "$dir_" "$@"
-    # set -x
-    git -C "$dir_" "$@"
 }
 
 gie () {
@@ -292,7 +279,7 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gid "$@" lc $options_
+    gd "$@" l $options_
 }
 
 gl1 () {
@@ -380,11 +367,11 @@ gom () {
 }
 
 goo () {
-    go .
+    g restore .
 }
 
 gor () {
-    if git_changed; then
+    if git_changes_here; then
         show_red_line "Please handle changes first" >&2
         git status --short
         return 1
@@ -481,6 +468,12 @@ branches () {
     return 1
 }
 
+giddy () {
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1" && shift
+    git -C "$dir_" "$@"
+}
+
 mains () {
     local dir="$1"
 
@@ -499,7 +492,7 @@ grb () {
 
 grc () {
     show_command git rebase --continue
-    GIT_EDITOR=true git rebase --continue | g "skip this commit" || return
+    GIT_EDITOR=true git rebase --continue | grep "skip this commit" || return
     git rebase --skip
 }
 
@@ -646,43 +639,6 @@ gvd () {
     [[ -n $QUESTIONS ]] && v $QUESTIONS
 }
 
-gxi () {
-    local _doc___=""""""
-    local show_diff_=$1; shift
-    local response_=$1; shift
-    local responded_=
-    local dir_=$(show_arg_dir_or_here "$1") && shift
-    stashed_=
-    GXI_QUERY=
-    show_green remote
-    glf 1
-    glg
-    show_this_branch -r
-    show_pre_loop_
-    while git status --short "$dir_"; do
-        show_green staged
-        git di --staged
-        show_green files
-        responded_=
-        for file_ in $(git_status_line_dir_changes "$dir_"); do
-            [[ -n "$file_" ]] || continue
-            gxi_grep_ $file_ $GXI_QUERY || continue
-            $show_diff_ "$file_"
-            gxi_request_ "$file_" || break
-            $response_ "$file_" && responded_=1
-        done
-        [[ $answer =~ [qQ] || -z $responded_ ]] && break
-        [[ $answer =~ [sS] ]] && gxi_stash_
-        gi
-        git status -v | grep -q "working [a-z][a-z]* clean" && break
-        [[ -n $QUESTIONS ]] && v $QUESTIONS
-        show_pre_loop_
-    done
-    [[ -n $stashed_ ]] && git_stash_pop
-    git dn --staged
-    git status
-}
-
 gipf () {
     gi "$@"
     gpf
@@ -695,7 +651,7 @@ gpff () {
 # xxxx
 
 gbd_ () {
-    local current_branch_=$(get_branch)
+    local current_branch_=$(get_branch) options_=
     if [[ "$@" =~ $current_branch_ ]]; then
         if [[ "$@" == "master" ]]; then
             git checkout $(git tag --list  | sort -V | tail -n 1)
@@ -707,22 +663,29 @@ gbd_ () {
         else
             gom
         fi
-    elif [[ "$@" =~ ^-[dD]$ ]]; then
+    elif [[ "$1" =~ ^-[dD]$ ]]; then
+        options_="$1"
+        shift
         if [[ $current_branch_ == "master" ]]; then
             show_error Please checkout another branch before deleting master
             return 1
         elif [[ $current_branch_ == "fred" ]]; then
             answer=Y
         else
-            read -p "OK to remove $current_branch_ [y]? " -n1 answer
+            if [[ "$1" =~ ^-[yY]$ ]]; then
+                answer=Y
+                shift
+            else
+                read -p "OK to remove $current_branch_ [y]? " -n1 answer
+            fi
         fi
         [[ -n $answer && ! $answer =~ [yY] ]] && return 1
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
         fi
         gom
-        show_command git branch "$@" $current_branch_
-        git branch "$@" $current_branch_
+        show_command git branch "$options_" $current_branch_
+        git branch "$options_" $current_branch_
         return 0
     fi
     show_command git branch "$@"
@@ -795,18 +758,18 @@ gdil () {
 }
 
 gdis () {
-    gid "$@" d --staged 
+    gd "$@" d --staged 
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_command gid lg "$@" > $stdout_
-    gid "$@" lg >> $stdout_ 2> $stderr_ 
+    show_command gd lg "$@" > $stdout_
+    gd "$@" lg >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
     if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
     elif [[ $count_ < 256 ]]; then less -R $stdout_
-    else tput smcup; gid "$@" lg; tput rmcup
+    else tput smcup; gd "$@" lg; tput rmcup
     fi
 }
 
@@ -924,9 +887,9 @@ grup () {
     show_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     show_command git gc --prune=now --aggressive
-    git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    # git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
     show_command git repack -a -d
-    git repack -a -d 2>&1
+    # git repack -a -d 2>&1
 }
 
 gsri () {
@@ -971,13 +934,6 @@ gtlg () {
 
 gurl () {
     grep https .git/config | sed -e "s:url =::" | grep git.*
-}
-
-gvsd () {
-    shift_dir "$@" && shift
-    for file_ in $(git_status_line_dir $dir_); do
-        gvi_vim_ "$file_"
-    done
 }
 
 # xxxxx
@@ -1093,7 +1049,6 @@ git_root () {
         cat /tmp/fd2 >&2
         return 1
     fi
-    # show_command git -C "$full_dir_" rev-parse --show-toplevel
     git -C "$full_dir_" rev-parse --show-toplevel
 }
 
@@ -1101,7 +1056,7 @@ git_root () {
 
 git_stash () {
     local _doc___="""git stash"""
-    gid "$@" stash
+    gd "$@" stash
 }
 
 git_dirty () {
@@ -1130,7 +1085,7 @@ has_branch () {
 
 git_stash_and () {
     local stashed_=
-    if git_changed; then
+    if git_changes_here; then
         show_command git stash
         git stash -q
         stashed_=1
@@ -1141,29 +1096,6 @@ git_stash_and () {
         git_stash_pop -q
     fi
     return $result_
-}
-
-gxi_menu_ () {
-    GSI_MENU=
-    suffix=", "
-    red_one "/"
-    red_one q uit
-    red_one a dd
-    stat_modified $1 && red_two in t eractive
-    red_two a m end
-    red_two am e gid
-    red_two sta g ed
-    red_one s tash
-    stat_modified $1 && red_one d iff
-    red_two d r op
-    red_two de l ete
-    [[ -n $GIT_ADDED ]] && red_one f asten
-    red_two comm i t
-    red_one v im
-    stat_modified $1 && red_one p atch
-    suffix=";"
-    red_one space " next"
-    echo -n -e "$(status_chars_ $1) $1: $GSI_MENU"
 }
 
 is_branch () {
@@ -1202,64 +1134,18 @@ clean_clone() {
     done
 }
 
-git_changed () {
-    local git_dir=$(git_root "$1")
-    [[ -n $git_dir ]] || return 1
-    git -C $git_dir status --porcelain | grep -q "$git_status_regexp_"
+git_changes_here () {
+    has_git_changes_ .
 }
 
-# xxxxxxxxxxxx
+# xxxxxxxxxxxxxx
 
-https_origin () {
-    sed_origin -e s,http:,https:,
-}
-
-# xxxxxxxxxxxxx
-
-trim_git_lines () {
-    call_me_alan_ -e "s/ ago//"
-}
-
-git_log_lines_to_screen () {
-    local number_of_commits_=7
-    local number_of_commits_=15
-    if [[ $1 =~ ^-?[0-9]+$ ]]; then
-        number_of_commits_=$1
-        shift
-        if [[ $1 =~ ^-?[0-9]+$ ]]; then
-            number_of_commits_=$1
-            shift
-        fi
-    fi
-    # set -x
-    git_log_to_screen lg "$@" -n $number_of_commits_ | trim_git_lines
-    # set +x
-}
-
-git_log_to_screen () {
-    local log_cmd_=$1; shift
-    local number_of_lines_=
-    if [[ $1 =~ ^-[ln] ]]; then
-        shift
-        if [[ $1 =~ ^-?[0-9]+$ ]]; then
-            number_of_lines_=$1
-            shift
-        fi
-    fi
-    local vertical_lines_=${LINES:-$(screen_height)}
-    local one_third_of_vertical_=$(( $vertical_lines_ / 3 ))
-    local lines_=${number_of_lines_:-$one_third_of_vertical_}
-    local options_="$log_cmd_ --color"
-    gid "$@" $options_ | head -n $lines_
-}
-
-untracked () {
-    local path_="$1"; shift
-    ( test -d "$path_" && git_status_line_dir "$path_" || status_line_ "$path_" ) | grep "??" | cut -d' ' -f2
+in_repo () {
+    git rev-parse --is-inside-work-tree
 }
 
 grep_branch () {
-    local regexp_= git_options_= grep_options_= 
+    local regexp_= git_options_= grep_options_=
     while [[ $1 ]]; do
         if [[ $1 =~ -[aqrv] ]]; then
             [[ $1 =~ -[ar] ]] && git_options_="$git_options_ $1"
@@ -1270,24 +1156,6 @@ grep_branch () {
         shift
     done
     git branch $git_options_ | sed -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
-}
-
-do_git_status_ () {
-    local _doc___="get the status from git"
-    local root_=$(git_root "$1")
-    if [[ $root_ ]]; then
-        shift
-        git -C $root_ status "$@"
-    else
-        show_error "Fail: git_root $@"
-        return 1
-    fi
-}
-
-# xxxxxxxxxxxxxx
-
-in_repo () {
-    git rev-parse --is-inside-work-tree
 }
 
 show_branch () {
@@ -1375,52 +1243,6 @@ log_test_file ()
     grep_git_log_for_python_test_file 3
 }
 
-gdis_ () {
-    local _doc___="""git di args; git short status"""
-    if stat_untracked "$1"; then
-        kat -n "$1"
-        return 0
-    fi
-    if stat_modified "$1"; then
-        local lines_=$(wc -l "$1" | cut -d ' ' -f1)
-        if [[ $lines_ < $LINES ]]; then
-            git d "$1"
-        else
-            gdi "$1"
-        fi
-    fi
-    git status --short $1
-}
-
-ggi_response_ () {
-    [[ $answer =~ [rR] ]] && gsi_drop_ "$1" && return 0
-    [[ $answer =~ [lL] && -f $1 ]] && rm -f "$1" && return 0
-    [[ $answer =~ [vV] ]] && gsi_vim_ "$1" && return 0
-    gxi_response_ "$@"
-}
-
-gxi_response_ () {
-    if [[ $answer =~ [iIgGdDpPtT] ]]; then
-        [[ $answer =~ [iI] ]] && gi
-        [[ $answer =~ [gG] ]] && git diff --staged
-        if stat_modified "$1" ; then
-            [[ $answer =~ [dD] ]] && git di "$1"
-            [[ $answer =~ [pP] ]] && git diff --patch "$1"
-            [[ $answer =~ [tT] ]] && gai "$1"
-        fi
-        gxi_request_ "$1"
-        return 0
-    fi
-    [[ $answer =~ [aA] ]] && ga "$1" && return 0
-    [[ $answer =~ [mM] ]] && gcm "$1" && return 0
-    [[ $answer =~ [eE] ]] && gcme "$1" && return 0
-    if [[ $answer == "/" ]]; then
-        read -p "/ " GXI_QUERY
-        return 0
-    fi
-    return 1
-}
-
 red_one () {
     local red="\033[0;31m"
     local no_colour="\033[0m"
@@ -1434,56 +1256,5 @@ red_two () {
 }
 
 status_line_ () {
-    [[ -n "$*" ]] && git status --short . || git status --short "$@"
+    giddy "$@" status --short
 }
-
-status_chars_ () {
-    local dir_=.
-    if [[ -d "$1" ]]; then
-        dir_="$1"
-        shift
-    fi
-    git -C $dir_ status -s -- $1 | sed -e "s/\(..\).*/\1/"
-}
-
-gsi_drop_ () {
-    if [[ $answer =~ [rR] ]]; then
-        stat_modified "$1" && go "$1"
-        stat_untracked "$1" && rm -i "$1"
-    fi
-}
-
-gvi_drop_ () {
-    if [[ $answer =~ [rR] ]]; then
-        stat_modified "$1" && go "$1"
-        stat_untracked "$1" && rm -f "$1"
-    fi
-}
-
-gvi_git_dv_ () {
-    local one_="$1"
-    shift
-    gvi_other_vim_
-    if stat_modified "$1"; then
-        git dv $(echo "$1" | cut -dM -f2)
-    else
-        gvi_vim_ "$1"
-    fi
-}
-
-gvi_vim_ () {
-    if stat_untracked "$1"; then
-        v $(status_line_ "$1" | grep "??" | cut -d' ' -f2)
-    elif stat_modified "$1"; then
-        v $(echo "$1" | cut -dM -f2)
-    elif stat_added "$1"; then
-        v  $(echo "$1" | cut -dA -f2)
-    fi
-    status_line_ "$1"
-}
-
-gsi_vim_ () {
-    stat_modified "$1" && git dv "$1" || git diff "$1" | vin
-}
-
-
