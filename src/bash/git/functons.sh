@@ -116,7 +116,7 @@ gp () {
 
 gs () {
     local _doc___="""git status front end"""
-    gd "$@" status
+    gd "$@" status 2>/dev/null 
 }
 
 gt () {
@@ -127,8 +127,8 @@ gt () {
     [[ $tag_ ]] || git tag | sort
 }
 
-egi () {
-    GIT_EDITOR=true gi "$@"
+gw () {
+    git config alias.$1
 }
 
 # xxx
@@ -205,6 +205,10 @@ gdf () {
     gd "$@" df
 }
 
+gdi () {
+    gd "$@" d
+}
+
 gdh () {
     gd "$@" dh
 }
@@ -229,7 +233,7 @@ gfa () {
 
 gfe () {
     gfa
-    grup
+    [[ $1 == -f ]] && grupp || grup
 }
 
 gff () {
@@ -238,12 +242,16 @@ gff () {
     gru
     gcu
     show_command git_root -o
-    gfe | grep -v 'Fetching'
+    gfe "$@" | grep -v 'Fetching'
     gba
     gor $branch_ 2>/dev/null | grep -v -e "up to date" -e Already
     show_command bump show
     bump show
     gll
+}
+
+gfff () {
+    gff -f
 }
 
 gfm () {
@@ -367,7 +375,10 @@ gom () {
 }
 
 goo () {
-    g restore .
+    local path_="."
+    [[ "$@" ]] && path_="$@"
+    git restore "$path_"
+    git status --porcelain "$path_"
 }
 
 gor () {
@@ -512,9 +523,10 @@ gri () {
 }
 
 grm () {
+    local __doc__="""git rebase main branch onto $1, or checked out branch"""
     local upstream_=master
     grep_branch __main__ -q && upstream_=__main__
-    grmu $upstream_
+    grbb $upstream_ "$@"
 }
 
 gbac () {
@@ -522,21 +534,18 @@ gbac () {
     git branch --all --contains "$@"
 }
 
-grmm () {
-    grmu __main__ __made__
-}
-
-grmu () {
+grbb () {
+    local __doc__="""git rebase $1 onto $2, or checked out branch"""
     local upstream_=$1 branch_=$(get_branch)
     shift
     if [[ $1 ]]; then
         local one_=$1
-        local one_branch_=$(grep_branch "^[ ]*[^ ]*$one_[^ ]*$" | head -n 1)
+        local one_branch_=$(list_branches $one_ | head -n 1)
         if [[ ! $one_branch_ ]]; then
-            local one_remote_=$(grep_branch -r $one_ | sed -e "s:origin/::" | grep $one_ | head -n 1)
+            local one_remote_=$(list_branches $one_ | head -n 1)
             if [[ $one_remote_ ]]; then
                 one_branch_=$one_remote_
-                git co $one_branch_
+                git checkout $one_branch_
             fi
         fi
         if [[ $one_branch_ ]]; then
@@ -546,6 +555,7 @@ grmu () {
     fi
     [[ $branch_ == $upstream_ ]] && echo "Already on $upstream_" >&2
     [[ $branch_ == $upstream_ ]] && return 1
+    show_command git rebase $upstream_ $branch_
     git rebase $upstream_ $branch_
 }
 
@@ -596,7 +606,7 @@ gsg () {
 
 gss () {
     local _doc___="""git short status"""
-    gs --short "$@"
+    gd "$@" status --short 2>/dev/null 
 }
 
 gso () {
@@ -605,7 +615,7 @@ gso () {
 
 gsp () {
     local _doc___="""Porcelain status"""
-    gs --porcelain
+    gd "$@" status --porcelain 2>/dev/null 
 }
 
 gta () {
@@ -886,6 +896,10 @@ grup () {
     grep_branch -q '^fred$' && git branch -D fred
     show_command git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
     git fetch --tags --force --prune-tags --prune origin "refs/tags/*:refs/tags/*"
+}
+
+grupp () {
+    grup
     show_command git gc --prune=now --aggressive
     # git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
     show_command git repack -a -d
@@ -898,7 +912,7 @@ gsri () {
 
 git_status_line_dir () {
     local dir_="$1"; shift
-    status_line_ -C $dir_ "$@"
+    git -C $dir_ "$@" status --short
 }
 alias gssd=git_status_line_dir
 
@@ -1122,15 +1136,15 @@ sed_origin () {
 
 # xxxxxxxxxxx
 
-clean_clone() {
+clean_clone () {
     git reset head .
     git checkout .
     git clean -f -d -f
     git fetch --all
-    git checkout master
-    for branch in $(git branch sed -e 's,^[ *]*,,'| grep -v -e master -e deployed-to); do
+    git checkout __main__
+    for branch in $(git branch --format="%(refname:short)" | grep -v -e __main__ -e master -e deployed-to); do
         [[ -f $branch ]] && continue
-        git branch -d $branch
+        git branch -d $branch 2>/dev/null
     done
 }
 
@@ -1144,12 +1158,22 @@ in_repo () {
     git rev-parse --is-inside-work-tree
 }
 
+list_branches () {
+    local __doc__="""glob the last arg as a branch name, avoiding prefixes: just the name"""
+    local option_=
+    if [[ $1 =~ ^[-][ar] ]]; then
+        option_=$1
+        shift
+    fi
+    git branch $option_ --list '*'"${1}"'*' --format='%(refname:short)'
+}
+
 grep_branch () {
     local regexp_= git_options_= grep_options_=
     while [[ $1 ]]; do
-        if [[ $1 =~ -[aqrv] ]]; then
-            [[ $1 =~ -[ar] ]] && git_options_="$git_options_ $1"
-            [[ $1 == -[qv] ]] && grep_options_="$grep_options_ $1"
+        if [[ $1 =~ ^-[aqrv] ]]; then
+            [[ $1 =~ ^-[ar] ]] && git_options_="$git_options_ $1"
+            [[ $1 == ^-[qv] ]] && grep_options_="$grep_options_ $1"
         else
             regexp_=$1
         fi
@@ -1253,8 +1277,4 @@ red_two () {
     local red="\033[0;31m"
     local no_colour="\033[0m"
     GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
-}
-
-status_line_ () {
-    giddy "$@" status --short
 }
