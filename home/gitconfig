@@ -16,7 +16,7 @@
     b = branch
     c = cherry-pick
     cl = clean -d -f -f -x
-    d = difftool -y --extcmd=\"icdiff \"
+    d = difftool -y --extcmd=\"icdiff -N\"
     e = pull --rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
@@ -27,16 +27,18 @@
     p = push
     r = rebase
     s = status
-    t = remote get-url origin
+    t = tag
     w = show
+
+    aa = add .
     ai = add --interactive
     aip = add --interactive --patch
-    aa = add .
     ap = add --patch
+
     ba = branch --all
+    bac = branch --all --contains
     bb = switch
     bc = branch --contains
-    bac = branch --all --contains
     bd = branch -d
     bD = branch -D
     bl = branch --list
@@ -44,12 +46,15 @@
     bM = branch -M
     br = branch --remotes
     bp = branch --points-at
+
     cb = rev-parse --abbrev-ref HEAD
     ca = cherry-pick --abort
     ce = cherry-pick --edit
     cc = cherry-pick --continue
     cs = cherry-pick --skip
+    cp = cherry-pick -x --allow-empty
     cq = cherry-pick --quit
+
     df = diff --name-only
     dh = difftool -y --extcmd=\"vim -d -o\"
     di = difftool -y --extcmd=\"icdiff --line-numbers\"
@@ -63,21 +68,25 @@
     ds = diff --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     dump = cat-file -p
-    fa = fetch --all 
-    fap = fa --prune
-    ff = fap --tags
-    ft = fetch --tags
+
+    fa = fetch --all
+    fap = fetch --all --prune
+    fg = fetch --tags
+    ff = fetch -all --prune --tags
+
     ia = commit --amend
     ie = commit --edit
     ii = commit --interactive
     iip = commit --interactive --patch
     ip = commit --patch
+
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
     last = log -1 HEAD
     lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
     ld = ll -p
     le = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-    lf = ll --stat
+    lf = lc --stat
     lg = l --grep
     ll = l -2
     lll = l -4
@@ -91,7 +100,10 @@
     lpp = lp -2
     lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
     lm = l __main__^..
-    lt = lp --pretty=format:'%C(auto)%h %C(blue)%an, %Cgreen%ci %C(auto)%d%Creset %s'
+    lom = l origin/__main__^..
+    lt = l --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+    ltt = l --pretty=format:'%Cgreen%ci %C(blue)%an, %C(auto)%d%Creset %C(auto)%h \"%s\"'
+
     ma = merge --abort
     mc = merge --continue
     mo = merge origin/__main__
@@ -100,19 +112,33 @@
     mmt = mm -X theirs
     mm = merge --no-ff --no-edit -X theirs
     mq = merge --quit
+
+    ob = checkout -b
+
     pa =  push --atomic --all
     pf =  push --atomic --force-with-lease
     pff = push --atomic --force
     pt =  push --tags
-    pu =  push -u
+    pu =  push --set-upstream
     puu =  push --unset-upstream
+
     ra = rebase --abort
     rc = rebase --continue
     ri = rebase --interactive
     rs = rebase --skip
     rq = rebase --quit
-    st = status
+    ru = remote get-url origin
+
+    st = stash
+    stp = stash pop
+    stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
     standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Mon == $(date +%a) ]] && echo last friday || echo yesterday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
+
+    td = tag -d
+    tf = fetch --tags
+    tl = tag --list
+    tp = push --tags
+
 [push]
     default = simple
 [help]
@@ -149,7 +175,7 @@
 [color]
     ui = auto
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
