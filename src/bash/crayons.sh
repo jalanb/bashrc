@@ -5,7 +5,13 @@
 # xxxxxxxx
 
 show_red () {
-    show_colour $RED "$*"
+    show_colour $RED "$@"
+}
+
+# xxxxxxxx
+
+show_blue () {
+    show_colour $BLUE "$@"
 }
 
 # xxxxxxxxxx
@@ -16,23 +22,28 @@ show_error () {
 }
 alias show_fail=show_error
 
+show_lblue () {
+    show_colour $LIGHT_BLUE "$@"
+}
+
 show_green () {
-    show_colour $GREEN "$*"
+    show_colour $GREEN "$@"
 }
 
 # xxxxxxxxxxx
 
 show_colour () {
-    local line_=
-    if [[ $1 =~ -n ]]; then
-        line_="\n"
-        shift
-    fi
     local colour_=$1
     shift
-    if [[ "$@" ]];
-    then printf "${colour_}$*""${NO_COLOUR}${line_}"
-    else printf "${colour_}$(cat)${NO_COLOUR}${line_}"
+    local eol_= text_="$@"
+    if [[ $* =~ (^|[\ ])-l ]]; then
+        eol_="\n"
+        text_=$(echo $text_ | sed -e 's,\(^\|[ ]\)-l,,g')
+        shift
+    fi
+    if [[ "$text_" ]];
+    then printf "${colour_}$text_""${NO_COLOUR}${eol_}"
+    else printf "${colour_}$(cat)${NO_COLOUR}${eol_}"
     fi
 }
 
@@ -43,35 +54,38 @@ is_command () {
 }
 
 show_command () {
-    show_blue_line '$ '"$*"
+    show_lblue_line '$' "$@"
 }
 
 # xxxxxxxxxxxxx
 
 show_red_line () {
-    show_colour_line $RED "$*"
+    show_red "$@" -l
 }
 alias red_line=show_red_line
 
 # xxxxxxxxxxxxxxx
 
 show_blue_line () {
-    show_colour_line $LIGHT_BLUE "$*"
+    show_blue "$@" -l
 }
 alias blue_line=show_blue_line
 alias show_cmnd=show_blue_line
 # xxxxxxxxxxxxxxx
 
 show_green_line () {
-    show_colour_line $GREEN "$*"
+    show_green "$@" -l
 }
 alias green_line=show_green_line
 alias show_pass=show_green_line
 
+show_lblue_line () {
+    show_lblue "$@" -l
+}
 # xxxxxxxxxxxxxxxx
 
 show_colour_line () {
-    show_colour -n "$@"
+    show_colour "$@" -l
 }
 
 show_run_command () {
