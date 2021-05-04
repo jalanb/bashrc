@@ -60,7 +60,7 @@ alias Z='set +x'
 # xx
 
 alias ..='cdup'
-alias .c='. $CDE.sh'
+alias .c='. ~/cde.sh'
 alias .w='. $WHYP.sh'
 
 alias p-="echo $OLDPWD"

@@ -840,7 +840,6 @@ Tree () {
     tree "$@" | less -R
 }
 
-venv
 vims () {
     whiches vim
 }
@@ -1012,6 +1011,7 @@ ylint () {
 
 # xxxxxx
 
+
 bumper () {
     if [[ -z $1 ]]; then
         echo Please specify branch to bump >&2
@@ -1052,7 +1052,7 @@ _lesser () {
 }
 
 lesen () {
-    less -NR "$@"
+    less -SNR "$@"
 }
 
 mkvenv () {
@@ -1079,20 +1079,6 @@ show_line () {
     [[ $1 ]] && _server=$1
     [[ $2 ]] && _suffix=", $2"
     echo "$_prefix ${_server}$_suffix"
-}
-
-
-online_all () {
-    is_online www.google.com
-    local server_=
-    if runnable worker; then
-        for server_ in bots git wmp eop dupont corteva eopdev; do
-            is_online $(worker $server_)
-        done
-    fi
-    for server_ in mac.local book.local mini.local; do
-        is_online $server_
-    done
 }
 
 please () {
@@ -1233,6 +1219,7 @@ thirteen () {
     cd_one
     3d "$@"
 }
+
 
 todo_edit () {
     local todo_txt="~/jab/todo.txt"

@@ -1,3 +1,8 @@
+ggi () {
+    local _doc___="""Me neither"""
+    gxi ggi_show_diff_ ggi_response_ "$@"
+}
+
 gsi () {
     local __doc__="""Menu to help clearing git status"""
     gxi gsi_show_diff_ gsi_response_ "$1"
@@ -162,9 +167,9 @@ gxi_response_ () {
         gxi_request_ "$path_"
         return 0
     fi
-    [[ $answer =~ [aA] ]] && ga "$path_" && return 0
-    [[ $answer =~ [mM] ]] && gcm "$path_" && return 0
-    [[ $answer =~ [eE] ]] && gcme "$path_" && return 0
+    [[ $answer =~ [aA] ]] && ga "$1" && return 0
+    [[ $answer =~ [mM] ]] && git commit --amend "$1" && return 0
+    [[ $answer =~ [eE] ]] && git commit --amend --edit "$1" && return 0
     if [[ $answer == "/" ]]; then
         read -p "/ " GXI_QUERY
         return 0
@@ -186,9 +191,9 @@ gxi_grep_ () {
     grep -q "$@" $file_
 }
 
-gsi_drop_ () {
+gxi_drop_ () {
     if [[ $answer =~ [rR] ]]; then
-        stat_modified "$1" && go "$1"
+        stat_modified "$1" && git restore "$1"
         stat_untracked "$1" && rm -i "$1"
     fi
 }
@@ -198,6 +203,10 @@ gvi_drop_ () {
         stat_modified "$1" && go "$1"
         stat_untracked "$1" && rm -f "$1"
     fi
+}
+
+status_chars_ () {
+    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
 gvi_git_dv_ () {
@@ -215,6 +224,28 @@ gsi_vim_ () {
     stat_modified "$1" && gxit dv "$1" || gxit diff "$1" | vin
 }
 
+gxi_menu_ () {
+    GSI_MENU=
+    suffix=", "
+    red_one "/"
+    red_one q uit
+    red_one a dd
+    stat_modified $1 && red_two in t eractive
+    red_two a m end
+    red_two am e dit
+    red_two sta g ed
+    red_one s tash
+    stat_modified $1 && red_one d iff
+    red_two d r op
+    red_two de l ete
+    [[ -n $GIT_ADDED ]] && red_one f asten
+    red_two comm i t
+    red_one v im
+    stat_modified $1 && red_one p atch
+    suffix=";"
+    red_one space " next"
+    echo -n -e "$(status_chars_ $1) $1: $GSI_MENU"
+}
 
 gxi_request_ () {
     local path_="$1"; shift

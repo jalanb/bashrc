@@ -47,8 +47,8 @@ eft () {
 }
 
 etf () {
-    local __doc__="""Errors from a status"""
     wtf $?
+    local __doc__="""Errors from a status"""
 }
 
 ett () {
@@ -59,19 +59,23 @@ ett () {
 }
 
 wtf () {
-    local _status=$?
+    local _status=$? 
     local __doc__="""Errors from a status"""
+    local name_=Pass out_=1 err_=1
     [[ $1 ]] && _status=$1 && shift
-    local _name=True
-    local _streams=
-    [[ $1 =~ -[qQ] ]] || _streams='>&1'
-    [[ $_status == 0 ]] ||_name=False
-    [[ $_name == True ]] || _streams="$_streams >&2"
-    [[ $1 =~ -[Q] ]] && _streams=
-    _message="$_name $_status $(face $_status)" 
-    echo $_message $_streams
-    [[ $_name == False ]] && return $_status
-    true
+    [[ $_status == 0 ]] || name_=Fail
+    [[ $name_ == Fail ]] && out_=
+    [[ $name_ == Pass ]] && err_=
+    [[ $1 =~ -[qQ] ]] && out_=
+    [[ $1 =~ -[Q] ]] && err_=
+    _message="$name_ $_status $(face $_status)" 
+    if [[ $name_ == Pass ]]; then
+        [[ $out_ ]] && echo $_message
+    elif [[ $name_ == Fail ]]; then
+        [[ $err_ ]] && echo $_message >&2
+    fi
+    [[ $name_ == Fail ]] && return $_status
+    return 0
 }
 
 # _xx
