@@ -29,23 +29,6 @@ lred_user () {
     echo "${_colour_username}@$_colour_host"
 }
 
-bashrc_log=~/log/bashrc.log
-jab_dir=~/jalanb/jab
-local_dir=~/jalanb/local
-local_init=$local_dir/__init__.sh
-
-vbb () {
-    (
-        cd $jab_dir
-        local local_= log_=
-        [[ -f $local_init ]] && local_=$local_init
-        [[ -f $bashrc_log ]] && log_=$bashrc_log
-        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $log_ "
-        vim -p "$@" $files_
-        readlink -f $files_
-    )
-}
-
 echo_path () {
     echo "PATH is $(echo $PATH | sed -e "s,:,:    ,g" | tr ':' '\n')"
     echo "PSI is $PS1"
@@ -55,6 +38,11 @@ echo_path () {
 usr_local () {
     echo "/usr/local/$1"
 }
+
+bashrc_log=~/log/bashrc.log
+jab_dir=~/jalanb/jab
+jab_init=$jab_dir/__init__.sh
+local_init=$jab_dir/local/__init__.sh
 
 pre_bashrc_ () {
     local homes_=$jab_dir/bin:$HOME/bin:$HOME/.local
@@ -75,11 +63,22 @@ bashrc_ () {
     # echo_path
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
-    local init_=$jab_dir/__init__.sh 
-    [[ -f $init_ ]] || return 1
-    source $init_
+    [[ -f $jab_init ]] || return 1
+    source $jab_init
     [[ -f $local_init ]] && source $local_init
     sp green
+}
+
+vbb () {
+    (
+        cd $jab_dir
+        local local_= log_=
+        [[ -f $local_init ]] && local_=$local_init
+        [[ -f $bashrc_log ]] && log_=$bashrc_log
+        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $log_ "
+        vim -p "$@" $files_
+        readlink -f $files_
+    )
 }
 
 __main__ () {
