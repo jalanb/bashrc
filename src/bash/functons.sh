@@ -840,7 +840,6 @@ Tree () {
     tree "$@" | less -R
 }
 
-venv
 vims () {
     whiches vim
 }
@@ -1012,6 +1011,7 @@ ylint () {
 
 # xxxxxx
 
+
 bumper () {
     if [[ -z $1 ]]; then
         echo Please specify branch to bump >&2
@@ -1052,7 +1052,7 @@ _lesser () {
 }
 
 lesen () {
-    less -NR "$@"
+    less -SNR "$@"
 }
 
 mkvenv () {
@@ -1219,6 +1219,7 @@ thirteen () {
     cd_one
     3d "$@"
 }
+
 
 todo_edit () {
     local todo_txt="~/jab/todo.txt"
