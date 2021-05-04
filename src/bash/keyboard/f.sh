@@ -37,11 +37,11 @@ fd_ () {
         if [[ $1 =~ ^-(e|-expression)$ ]]; then
             shift
             options_="$options_ --expression $1"
-        elif [[ $1 =~ ^-(f|-no-follow)$ ]]; then follow_=
+        elif [[ $1 =~ ^[-](f|-no-follow)$ ]]; then follow_=
         elif [[ $1 =~ ^-(t|-type) ]]; then 
             options_="$options_ $1 $2"
             shift
-        elif [[ $1 =~ ^- ]]; then options_="$options_ $1"
+        elif [[ $1 =~ ^[-] ]]; then options_="$options_ $1"
         elif [[ -d "$1" ]]; then dir_="$1"
         elif [[ -f "$1" ]]; then dir_=$(dirname "$1")
         elif [[ $names_ ]]; then names_="${names_}.${1}"

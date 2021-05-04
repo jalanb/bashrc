@@ -31,7 +31,7 @@ nnoremap <S-F5>     <C-W>=
 "noremap <bs>
 "noremap =
 "noremap -
-"noremap 
+"noremap
 "noremap 9
 "noremap 8
 "noremap 7
@@ -180,8 +180,8 @@ nnoremap @ :w !sudo tee % >/dev/null<cr>
 " LETTERS {{{3
 "noremap A - Append to line
 nnoremap B :vsplit
-"noremap C 
-nnoremap E :wa!<cr>
+"noremap C
+nnoremap E :wa!<cr>:qa!<cr>
 "noremap F f backwards
 "noremap G goto line (default last)
 nnoremap H gT
@@ -199,7 +199,7 @@ nnoremap S :%s,,,<Left><Left>
 nnoremap T :!tags
 nnoremap U :redo<cr>
 "noremap V - linewise visual
-nnoremap W :w!<cr>
+nnoremap W :wa!<cr>
 nnoremap X :wa!<cr>:qa!<cr>
 "noremap Y - aka yy
 nnoremap Z XC
@@ -261,6 +261,7 @@ nnoremap    <C-h> <c-w><c-h>
 nnoremap    <C-j> <c-w><c-j>
 nnoremap    <C-k> <c-w><c-k>
 nnoremap    <C-l> <c-w><c-l>
+nnoremap    <C-w> :wq<cr>
      map    <C-b> dndndndd/<cr>
      map    <C-m> dd/<cr>dndd/<cr>
      map    <C-n> dndd/<cr>dd/<cr>
@@ -289,6 +290,8 @@ nnoremap <leader>' :call Unsearch()<cr><c-l>
 nnoremap <leader>: :wa<cr>
 nnoremap <leader>; :w<cr>
 nnoremap <leader>P :wa<cr>qa<cr>
+" Next one is from http://vi.stackexchange.com/a/479/182
+nnoremap <leader>W :w !sudo tee % >/dev/null<cr>L<cr>
 nnoremap <leader>[ :cn<cr>zMzvzz
 nnoremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
 nnoremap <leader>] :cp<cr>zMzvzz
@@ -304,7 +307,7 @@ nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>d used by ftplugin/python/jab
 "noremap <leader>e used by plugin/EasyMotion.vim
 "noremap <leader>f used by plugin/EasyMotion.vim
-"noremap <leader>g
+nnoremap <leader>g :GitGutterToggle<cr>
 nnoremap <leader>h :call AfterPressing("h")<CR>
 nnoremap <leader>l :call AfterPressing("l")<CR>
 nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
@@ -313,16 +316,15 @@ nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 nnoremap <leader>M gg/^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>n :call ToggleNumber()<cr>
-nnoremap <leader>o :w! ~/one<cr>
+"noremap <leader>o
 nnoremap <leader>p :set paste<cr>
-nnoremap <leader>q :qa!<cr>
+"noremap <leader>q
 nnoremap <leader>r :set wrap!<cr>
-nnoremap <leader>s :w<cr>
+"noremap <leader>s
 nnoremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
 nnoremap <leader>u :GundoToggle<CR>
 nnoremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
-" Next one is from http://vi.stackexchange.com/a/479/182
-nnoremap <leader>w :w !sudo tee % >/dev/null<cr>L<cr>
+nnoremap <leader>w :wq<cr>
 nnoremap <leader>x :call RangerExplorer()<cr>
 "noremap <leader>y
 "noremap <leader>z

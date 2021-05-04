@@ -1,13 +1,13 @@
 #! /bin/cat
 
 
-source ~/hub/whyp/whyp.sh
+type whyp_source >/dev/null 2>&1 || source ~/hub/whyp/whyp.sh
 
 # _
 # x
 s () {
     local __doc__="""s is for sourcing"""
-    . "$@"
+    whyp_source "$@"
 }
 
 # _x
@@ -25,11 +25,7 @@ sf () {
 }
 
 sp () {
-    source ~/bash/prompt.sh
-}
-
-sq () {
-    . $GIT_BUCKET/qaz/src/bash/qazrc
+    s ~/bash/prompt.sh "$@"
 }
 
 sx () {

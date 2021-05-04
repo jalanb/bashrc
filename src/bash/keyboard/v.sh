@@ -59,6 +59,11 @@ vj () {
 # vr
 # vs
 
+vl () {
+    local stdout_=$(history -p !-1)
+    vim -p $($stdout_)
+}
+
 vt () {
     python ~/jab/src/python/vim_traceback.py "$@"
 }
@@ -71,7 +76,7 @@ vu () {
 }
 
 vv () {
-    vim -p "$@"
+    [[ $1 ]] && vim -p "$@" || vim ~/.vimrc
 }
 
 vw () {
