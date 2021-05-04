@@ -37,29 +37,11 @@ Host git
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host bilder
+Host bolder
 # 2 cores, 4 Gb
     Hostname 172.25.32.117
     User builder
     IdentityFile ~/.ssh/work/bots/builder.key
-
-Host twkwbe51 opp
-# 2 cores, 16 Gb
-    Hostname 172.25.32.141 
-    User builder
-    IdentityFile ~/.ssh/work/opp/builder.key
-
-Host twkwbe52 oppdev
-# 3 cores, 16 Gb
-    Hostname 172.25.32.113 
-    User builder
-    IdentityFile ~/.ssh/work/opp/builder.key
-
-Host twkwbe53 opptest
-# 3 cores, 16 Gb
-    Hostname 172.25.32.121 
-    User builder
-    IdentityFile ~/.ssh/work/opp/builder.key
 
 Host twkwbe40 eopdev
 # 1 cores, 4 Gb
@@ -97,30 +79,6 @@ Host twkwbe47 order
     User builder
     IdentityFile ~/.ssh/work/eop/builder.key
 
-Host twkwbe50 cortevatest
-# 3 cores, 16 Gb
-    Hostname 172.25.1.216 
-    User builder
-    IdentityFile ~/.ssh/work/eop/builder.key
-
-Host twkwbe48 corteva
-# 3 cores, 16 Gb
-    Hostname 172.25.32.123 
-    User builder
-    IdentityFile ~/.ssh/work/eop/builder.key
-
-Host twkwbe49 dupont
-# 3 cores, 16 Gb
-    Hostname 172.25.32.104
-    User builder
-    IdentityFile ~/.ssh/work/eop/builder.key
-
-Host atlwbe49 dupontbeta
-# ? cores, ? Gb
-    Hostname 172.25.232.244 
-    User builder
-    IdentityFile ~/.ssh/work/eop/builder.key
-
 Host a_wmpbeta
 # 4 cpu, 16 gb
     Hostname 172.25.32.202  
@@ -133,37 +91,31 @@ Host a_wmp
     User ab13173
     IdentityFile ~/.ssh/work/ab13173.key
 
-Host twkwbe54 wmpstage
-# 2 cpu, 8 gb
-    Hostname 172.25.32.105
-    User builder
-    IdentityFile ~/.ssh/work/wmp/builder.key
-
-Host twkwbe54 wmpstage
-# 2 cpu, 8 gb
+Host twkwbe54 wmpdev
+# 1 cpu, 4 gb
     Hostname 172.25.32.105
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
 Host twkwbe55 wmptest
-# 1 cpu, 4 gb
+# 4 cpu, 16 gb
     Hostname 172.25.32.106
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe56 wmpdev
-# 4 cpu, 16 gb
+Host twkwbe56 wmpbeta
+# 4 cpu, 32 gb
     Hostname 172.25.32.107
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe57 wmpbeta
+Host twkwbe57 wmp
 # 4 cpu, 32 gb
     Hostname 172.25.32.108
     User builder
     IdentityFile ~/.ssh/work/wmp/builder.key
 
-Host twkwbe35 wmp
+Host twkwbe35 wmpold
 # 4 cpu, 32 gb
     Hostname 172.25.32.149 
     User builder
@@ -256,7 +208,7 @@ Host vagrant
 #
 Host book
     Hostname book.local
-    User jalanb
+    User jab
     IdentityFile ~/.ssh/id_jab
 
 Host mini
