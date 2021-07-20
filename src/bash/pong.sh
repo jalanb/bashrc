@@ -118,7 +118,13 @@ show_online () {
     [[ $1 == --no-line ]] && line_end_=
     [[ $line_end_ ]] || shift
     if pingable "$@"; then
-        show_green $line_end_ $(pong -q "$@")
+        local pong_out_=$(pong "$@")
+        [[ $pong_out_ ]] || pong_out_="pingable $@"
+        if [[ $line_end_ == -l ]]; then
+            show_green_line $pong_out_
+        else
+            show_green $pong_out_
+        fi
         return 0
     fi
     show_red $line_end_ "$@" offline
