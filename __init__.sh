@@ -34,6 +34,8 @@ export PYTH=~/hub/pyth/pyth
 . ~/jalanb/local/__init__.sh optional
 . ~/jab/work/__init__.sh optional
 
+[[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
+
 cde_activate_venv ~/jab/.venv
 ACTIVE_PYTHON=$(which python)
 

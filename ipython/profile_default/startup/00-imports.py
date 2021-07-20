@@ -17,6 +17,8 @@ try:
     console = Console(color_system="standard")
     print = console.print
     mores += ["rich"]
+    from rich import pretty
+    pretty.install()
 except ImportError:
     pass
 
