@@ -6,22 +6,27 @@ import sys
 from collections import defaultdict
 from pysyte import imports
 from pysyte.cli.main import run
+from pysyte.types import paths
 
-__version__ = '0.2.0'
+__version__ = "0.2.0"
 
 
 def add_args(parser):
     """Parse out command line arguments"""
-    parser.positional('source', help='path to source(s) to be checked')
+    parser.positional("source", help="path to source(s) to be checked")
     parser.add_option(
-        '-e', '--edit', action='store_true', help='Show a command for editing')
+        "-e", "--edit", action="store_true", help="Show a command for editing"
+    )
     parser.add_option(
-        '-m', '--multiple', action='store_true', help='Show multiple imports')
+        "-m", "--multiple", action="store_true", help="Show multiple imports"
+    )
+    parser.add_option("-u", "--unused", action="store_true", help="Show unused imports")
     parser.add_option(
-        '-u', '--unused', action='store_true', help='Show unused imports')
-    parser.add_option(
-        '-t', '--tmp', action='store_true',
-        help='Write to /tmp/imports.txt (not stdout)')
+        "-t",
+        "--tmp",
+        action="store_true",
+        help="Write to /tmp/imports.txt (not stdout)",
+    )
     return parser
 
 
@@ -34,12 +39,8 @@ def gather_lines(method):
 
 
 def texter(visitor):
-
     def text(line):
-        string = '% 4d: %s' % (
-            line, 
-            linecache.getline(visitor.path, line)
-        )
+        string = "% 4d: %s" % (line, linecache.getline(visitor.path, line))
         return string.rstrip()
 
     return text
@@ -49,40 +50,62 @@ def show_unused(visitor, stream):
     lines = gather_lines(visitor.unused)
     if not lines:
         return []
-    print('Unused:', file=stream)
+    print("Unused:", file=stream)
     text = texter(visitor)
     for line in sorted(lines):
         names = lines[line]
-        print(
-            '%s\n%s' % (','.join(names), text(line)),
-            file=stream)
+        print("%s\n%s" % (",".join(names), text(line)), file=stream)
     return visitor.unused().keys()
 
 
 def show_multiples(visitor, stream):
     multiples = visitor.multiples()
     if multiples:
-        print('Duplicates:', file=stream)
+        print("Duplicates:", file=stream)
     for name, lines in multiples.items():
         instances = [visitor.line(_, True) for _ in lines]
         lines = [name] + instances
-        print('\n'.join(lines), file=stream)
+        print("\n".join(lines), file=stream)
     return multiples.keys()
 
 
-def script(args):
-    visitor = imports.extract_imports(args.source[0])
-    stream = open('/tmp/imports.txt', 'w') if args.tmp else sys.stdout
+def find_sources(args):
+    ignores = ["__pycache__", ".tox", ".git", ".venv"]
+    result = []
+    for arg in args:
+        path_to_arg = paths.path(arg)
+        if path_to_arg.isfile():
+            result.append(path_to_arg)
+        elif path_to_arg.isdir():
+            for path_to_file in path_to_arg.walkfiles(pattern="*.py", ignores=ignores):
+                result.append(path_to_file)
+        else:
+            raise TypeError(f"Unknown path type {path_to_arg}")
+    return result
+
+
+def show_imports(args, source):
+    visitor = imports.extract_imports(source)
+    stream = open("/tmp/imports.txt", "w") if args.tmp else sys.stdout
     modules = []
     if args.multiple:
         modules.extend(show_multiples(visitor, stream))
     if args.unused:
         modules.extend(show_unused(visitor, stream))
     if args.edit and modules:
-        vim = 'vim -p /tmp/imports.txt' if args.tmp else 'vim'
-        search = r'\|'.join((rf'\<{_}\>' for _ in modules))
+        vim = "vim -p /tmp/imports.txt" if args.tmp else "vim"
+        search = r"\|".join((rf"\<{_}\>" for _ in modules))
         print(f'\n{vim} {visitor.path} +/"{search}"')
     return bool(modules)
+
+
+def script(args):
+    result = False
+    sources = find_sources(args.source)
+    for source in sources:
+        if show_imports(args, source):
+            result = True
+    return result
 
 
 run(script, add_args)
