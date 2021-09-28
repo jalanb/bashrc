@@ -16,6 +16,7 @@ def add_args(parser):
 def main(args, config):
     string = args.strings[0]
     οs.chmod(config[string], stat.S_IRUSR)
+    print(string)
 
 
 try:
