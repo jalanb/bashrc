@@ -26,9 +26,9 @@ def recursively_list(args):
     here = path('.')
     for f in here.walkfiles(pattern=args.glob[0], ignores=args.ignores):
         if args.relative:
-            print f.short_relative_path_from_here()
+            print(f.short_relative_path_from_here())
         else:
-            print f
+            print(f)
 
 
 def main():

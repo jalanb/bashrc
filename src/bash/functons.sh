@@ -707,7 +707,7 @@ bump () {
 
 
 down () {
-    cd ~/Downloads "$@"
+    cde ~/Downloads "$@"
     l -tr . | tail
 }
 
