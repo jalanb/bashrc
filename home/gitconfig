@@ -72,7 +72,7 @@
     fa = fetch --all
     fap = fetch --all --prune
     fg = fetch --tags
-    ff = fetch -all --prune --tags
+    ff = fetch --all --prune --tags
 
     ia = commit --amend
     ie = commit --edit

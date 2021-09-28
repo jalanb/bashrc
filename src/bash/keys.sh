@@ -79,4 +79,4 @@ alias rk=read_keys
 alias wk=write_keys
 alias vk=vim_keyboard
 
-keys
+read_keys
