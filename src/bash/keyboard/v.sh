@@ -172,6 +172,10 @@ vtr () {
     python ~/jab/src/python/tracebacks.py -e "$@"
 }
 
+vss () {
+    vim -p ~/.ssh/config ~/.ssh/keys/config ~/.ssh
+}
+
 vtt () {
     local _crappy_program_py=$1
     python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
@@ -226,8 +230,18 @@ vd13 () {
 }
 
 venv () {
-    local virtualenv_=.venv
-    [[ -d $virtualenv_ ]] || python3 -m venv $virtualenv_
+    local virtualenv_=.venv requirement_=
+    [[ $1 == "-r" ]] && rm -rf $virtualenv_
+    if [[ ! -d $virtualenv_ ]]; then
+        deactivate
+        python3 -m venv $virtualenv_
+        $virtualenv_/bin/python -m pip install --upgrade pip wheel | grep installed
+        for requirement_ in requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
+            [[ -f $requirement_ ]] || continue
+            $virtualenv_/bin/python -m pip install -r $requirement_ | grep installed
+            break
+        done
+    fi
     cde_activate_there $virtualenv_/bin/activate
 }
 

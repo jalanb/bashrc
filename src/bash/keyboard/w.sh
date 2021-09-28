@@ -1,6 +1,6 @@
 #! /bin/cat
 
-[[ -f ~/whyp.sh ]] && . ~/whyp.sh
+! type ww >/dev/null 2>&1 && test  -f ~/whyp.sh && . ~/whyp.sh
 
 # # x
 # 
