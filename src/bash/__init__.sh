@@ -21,4 +21,3 @@ __version__=0.8.53
 . ~/bash/git/__init__.sh
 
 export _BASH_DIR=~/bash
-

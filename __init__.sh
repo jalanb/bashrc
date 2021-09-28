@@ -24,7 +24,6 @@ export WHYP=~/hub/whyp/whyp
 export WHYP_EDITOR=vv
 export ACKVIM=~/hub/ackvim/ackvim
 . $ACKVIM.sh
-# . $WHYP.sh
 export PYTH=~/hub/pyth/pyth
 . $PYTH.sh
 
