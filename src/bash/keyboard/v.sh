@@ -17,7 +17,10 @@ hd () {
     vim_diff -o "$@"
 }
 
-# va
+
+va () {
+    _edit_source $(aliases) "$@"
+}
 
 vc () {
     local _dot_cd
@@ -29,11 +32,13 @@ vd () {
     vim_diff -O "$@"
 }
 
-# ve
-# vf
-# vg
+ve () {
+    _edit_source ~/jab/environ.d/jab.sh "$@"
+}
 
-# vi
+vf () {
+    _edit_source $(functons) "$@"
+}
 
 vg () {
     local user_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_=.git/config
@@ -54,7 +59,10 @@ vj () {
 # vm
 # vn
 # vo
-# vp
+vp () {
+    _edit_source ~/bash/prompt.sh +/^_colour_prompt
+}
+
 # vq
 # vr
 # vs

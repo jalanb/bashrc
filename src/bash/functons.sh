@@ -138,22 +138,6 @@ tt () {
     ranger
 }
 
-va () {
-    _edit_source $(aliases) "$@"
-}
-
-ve () {
-    _edit_source ~/jab/environ.d/jab.sh "$@"
-}
-
-vf () {
-    _edit_source $(functons) "$@"
-}
-
-vp () {
-    _edit_source ~/bash/prompt.sh +/^_colour_prompt
-}
-
 # xxx
 
 add () {
