@@ -114,6 +114,7 @@
     mq = merge --quit
 
     ob = checkout -b
+    oo = restore
 
     pa =  push --atomic --all
     pf =  push --atomic --force-with-lease

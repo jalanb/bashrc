@@ -22,6 +22,10 @@ ijg () {
     inj git "$@"
 }
 
+inj () {
+    ind ~/jalanb "$@"
+}
+
 init () {
     local __doc__="""LOok for __init__.sh here, there, or below and source it if found"""
     local _init=./__init__.sh

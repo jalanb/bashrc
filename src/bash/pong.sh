@@ -33,6 +33,10 @@ pong () {
     return 0
 }
 
+poss ()
+{
+    ssh $1 "hostname"
+}
 # xxxxx
 # xxxxxx
 

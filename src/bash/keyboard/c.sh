@@ -67,6 +67,14 @@ can () {
     cat -n "$@"
 }
 
+cdj () {
+    cde ~/jab
+}
+
+cdn () {
+    cde ~/jalanb
+}
+
 cjy () {
     cd ~/jab/src/python "$@"
 }

@@ -9,14 +9,15 @@ v () {
     mvim "$@"
 }
 
-v. () {
-    v .
-}
+# xx
 
 hd () {
     vim_diff -o "$@"
 }
 
+v. () {
+    vv .
+}
 
 va () {
     _edit_source $(aliases) "$@"
@@ -51,11 +52,19 @@ vg () {
     fi
 }
 
+# vi
+
 vj () {
     (cd ~/jab; mvim .; gsi)
 }
 
-# vl
+# vk
+
+vl () {
+    local stdout_=$(history -p !-1)
+    vim -p $($stdout_)
+}
+
 # vm
 # vn
 # vo
@@ -66,11 +75,6 @@ vp () {
 # vq
 # vr
 # vs
-
-vl () {
-    local stdout_=$(history -p !-1)
-    vim -p $($stdout_)
-}
 
 vt () {
     python ~/jab/src/python/vim_traceback.py "$@"
@@ -235,22 +239,6 @@ vd12 () {
 
 vd13 () {
     vd ~/two ~/three
-}
-
-venv () {
-    local virtualenv_=.venv requirement_=
-    [[ $1 == "-r" ]] && rm -rf $virtualenv_
-    if [[ ! -d $virtualenv_ ]]; then
-        deactivate
-        python3 -m venv $virtualenv_
-        $virtualenv_/bin/python -m pip install --upgrade pip wheel | grep installed
-        for requirement_ in requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
-            [[ -f $requirement_ ]] || continue
-            $virtualenv_/bin/python -m pip install -r $requirement_ | grep installed
-            break
-        done
-    fi
-    cde_activate_there $virtualenv_/bin/activate
 }
 
 vims () {
