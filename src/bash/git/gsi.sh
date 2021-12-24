@@ -47,7 +47,7 @@ gxi () {
         [[ $answer =~ [qQ] || -z $responded_ ]] && break
         [[ $answer =~ [sS] ]] && gxi_stash_
         gi
-        gxit status -v | g -q "working [a-z][a-z]* clean" && break
+        gxit status -v | grep -q "working [a-z][a-z]* clean" && break
         [[ -n $QUESTIONS ]] && v $QUESTIONS
         show_pre_loop_
     done
@@ -101,24 +101,47 @@ gvi_show_diff_ () {
     gxit status --short $1
 }
 
+ggi_response_ () {
+    local path_="$1"; shift
+    [[ $answer =~ [rR] ]] && gsi_restore_ "$path_" && return 0
+    [[ $answer =~ [lL] ]] && rm -f "$path_" 2>/dev/null && return 0
+    [[ $answer =~ [vV] ]] && gsi_vim_ "$path_" && return 0
+    gxi_response_ "$path_"
+}
+
 gsi_response_ () {
     local path_="$1"; shift
     [[ $answer =~ [yY] ]] && ga "$path_" && return 0
     ggi_response_ "$path_"
 }
 
+gxi_response_ () {
+    local path_="$1"; shift
+    if [[ $answer =~ [iIgGdDpPtT] ]]; then
+        [[ $answer =~ [iI] ]] && gi
+        [[ $answer =~ [gG] ]] && gxit diff --staged
+        if stat_modified "$path_" ; then
+            [[ $answer =~ [dD] ]] && gxit di "$path_"
+            [[ $answer =~ [pP] ]] && gxit diff --patch "$path_"
+            [[ $answer =~ [tT] ]] && gai "$path_"
+        fi
+        gxi_request_ "$path_"
+        return 0
+    fi
+    [[ $answer =~ [aA] ]] && ga "$path_" && return 0
+    [[ $answer =~ [mM] ]] && git commit --amend "$path_" && return 0
+    [[ $answer =~ [eE] ]] && git commit --amend --edit "$path_" && return 0
+    if [[ $answer == "/" ]]; then
+        read -p "/ " GXI_QUERY
+        return 0
+    fi
+    return 1
+}
+
 gvi_response_ () {
     local path_="$1"; shift
     [[ $answer =~ [yY] ]] && ga "$path_" && return 0
     ggi_response_ "$path_"
-}
-
-ggi_response_ () {
-    local path_="$1"; shift
-    [[ $answer =~ [rR] ]] && gsi_drop_ "$path_" && return 0
-    [[ $answer =~ [lL] ]] && rm -f "$path_" 2>/dev/null && return 0
-    [[ $answer =~ [vV] ]] && gsi_vim_ "$path_" && return 0
-    gxi_response_ "$path_"
 }
 
 gxi_menu_ () {
@@ -154,29 +177,6 @@ gxitss () {
     gxit status --short "$@"
 }
 
-gxi_response_ () {
-    local path_="$1"; shift
-    if [[ $answer =~ [iIgGdDpPtT] ]]; then
-        [[ $answer =~ [iI] ]] && gi
-        [[ $answer =~ [gG] ]] && gxit diff --staged
-        if stat_modified "$path_" ; then
-            [[ $answer =~ [dD] ]] && gxit di "$path_"
-            [[ $answer =~ [pP] ]] && gxit diff --patch "$path_"
-            [[ $answer =~ [tT] ]] && gai "$path_"
-        fi
-        gxi_request_ "$path_"
-        return 0
-    fi
-    [[ $answer =~ [aA] ]] && ga "$1" && return 0
-    [[ $answer =~ [mM] ]] && git commit --amend "$1" && return 0
-    [[ $answer =~ [eE] ]] && git commit --amend --edit "$1" && return 0
-    if [[ $answer == "/" ]]; then
-        read -p "/ " GXI_QUERY
-        return 0
-    fi
-    return 1
-}
-
 show_pre_loop_ () {
     show_green_line status
 }
@@ -191,7 +191,7 @@ gxi_grep_ () {
     grep -q "$@" $file_
 }
 
-gxi_drop_ () {
+gsi_restore_ () {
     if [[ $answer =~ [rR] ]]; then
         stat_modified "$1" && git restore "$1"
         stat_untracked "$1" && rm -i "$1"
@@ -205,7 +205,7 @@ gvi_drop_ () {
     fi
 }
 
-status_chars_ () {
+dstatus_chars_ () {
     git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
 }
 
