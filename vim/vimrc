@@ -79,14 +79,9 @@ nnoremap j jzz
 nnoremap k kzz
 "noremap l - go right
 "noremap l :call AfterPressing("l")<CR>
-nnoremap mb ?
-nnoremap mk m
-nnoremap ml `m
-nnoremap mm *
-nnoremap mn #
-nnoremap m, /
+"noremap m - set mark
 nnoremap nb ?<cr>zvzz
-nnoremap nm /<cr>?zvzz
+nnoremap nm /<cr>zvzz
 nnoremap nn nzvzz
 nnoremap n<down> /<cr>
 nnoremap n<up> ?<cr>
@@ -168,6 +163,7 @@ nnoremap " bn
 "noremap !
 nnoremap @ :w !sudo tee % >/dev/null<cr>
 "noremap L
+nnoremap M `m
 "noremap $ -
 "noremap %
 "noremap ^
@@ -195,7 +191,7 @@ nnoremap N :cn<cr>zMzvzz
 "noremap P - paste forward
 nnoremap Q :qa!<CR>
 "noremap R - Replace
-nnoremap S :%s,,,<Left><Left>
+nnoremap S G:%s,,,<Left><Left>
 nnoremap T :!tags
 nnoremap U :redo<cr>
 "noremap V - linewise visual
@@ -214,32 +210,20 @@ nnoremap tl       gt
 "
 nnoremap <up>               ?<cr>zv
 nnoremap <down>             /<cr>zv
+nnoremap <left>             #zv
 nnoremap <right>            *zv
+nnoremap <S-up>             ?
+nnoremap <S-down>           /
+nnoremap <S-left>           :tabprev<cr>
+nnoremap <S-right>          :tabnext<cr>
 nnoremap <PageUp>           <C-B>
 nnoremap <PageDown>         <C-F>
 "
-" More Arrows
-"
-" nnoremap <up><up>           ?<cr>
-" nnoremap <down><down>       /<cr>
-" nnoremap <left><left>         #zv
-" nnoremap <right><right>       *zv
-"
 " Shift Arrows
 "
-nnoremap <s-up>             <C-B>
-nnoremap <s-down>           <C-F>
-nnoremap <s-left>           gT
-nnoremap <s-right>          gt
-"noremap <s-left>           gT
-"noremap <s-right>          gt
 "
 " Normal Control Arrows
 "
-"noremap <c-up>             window up
-"noremap <c-down>           does nothing ?
-"noremap <c-left>           prev desktop
-"noremap <c-right>          next desktop
 nnoremap <c-k>              window up
 nnoremap <c-j>              does nothing ?
 nnoremap <c-h>              prev desktop
@@ -269,8 +253,6 @@ inoremap    <C-d> <esc>:qa<CR>
 inoremap    <C-q> <Esc>:qa!<CR>
 " Alt keys {{{2
 nnoremap    <A-q>      :qa!<CR>
-nnoremap <A-Right>      :tabnext<Cr>
-nnoremap <A-Left>      :tabprev<Cr>
 inoremap    <A-q> <Esc>:qa!<CR>
 inoremap <A-Right> <Esc>:tabnext<CR>
 inoremap <A-Left> <Esc>:tabprev<CR>
