@@ -2,8 +2,7 @@
 """Find imports in python files"""
 
 import linecache
-import sys
-from collections import defaultdict
+
 from pysyte import imports
 from pysyte.cli.main import run
 from pysyte.types import paths
@@ -14,28 +13,10 @@ __version__ = "0.2.0"
 def add_args(parser):
     """Parse out command line arguments"""
     parser.positional("source", help="path to source(s) to be checked")
-    parser.add_option(
-        "-e", "--edit", action="store_true", help="Show a command for editing"
-    )
-    parser.add_option(
-        "-m", "--multiple", action="store_true", help="Show multiple imports"
-    )
-    parser.add_option("-u", "--unused", action="store_true", help="Show unused imports")
-    parser.add_option(
-        "-t",
-        "--tmp",
-        action="store_true",
-        help="Write to /tmp/imports.txt (not stdout)",
-    )
+    parser.boolean("", "edit", help="Show a command for editing")
+    parser.boolean("", "multiple", help="Show multiple imports")
+    parser.boolean("", "unused", help="Show unused imports")
     return parser
-
-
-def gather_lines(method):
-    result = defaultdict(set)
-    for name, lines in method().items():
-        for line in lines:
-            result[line].add(name)
-    return result
 
 
 def texter(visitor):
@@ -46,26 +27,27 @@ def texter(visitor):
     return text
 
 
-def show_unused(visitor, stream):
-    lines = gather_lines(visitor.unused)
-    if not lines:
+def show_unused(visitor):
+    unused_lines = visitor.unused_lines()
+    if not unused_lines:
         return []
-    print("Unused:", file=stream)
     text = texter(visitor)
-    for line in sorted(lines):
-        names = lines[line]
-        print("%s\n%s" % (",".join(names), text(line)), file=stream)
+    print("Unused:")
+    for line in sorted(unused_lines):
+        names = unused_lines[line]
+        print(",".join(names))
+        print(text(line))
     return visitor.unused().keys()
 
 
-def show_multiples(visitor, stream):
+def show_multiples(visitor):
     multiples = visitor.multiples()
     if multiples:
-        print("Duplicates:", file=stream)
+        print("Multiples:")
     for name, lines in multiples.items():
         instances = [visitor.line(_, True) for _ in lines]
         lines = [name] + instances
-        print("\n".join(lines), file=stream)
+        print("\n".join(lines))
     return multiples.keys()
 
 
@@ -84,22 +66,20 @@ def find_sources(args):
     return result
 
 
-def show_imports(args, source):
-    visitor = imports.extract_imports(source)
-    stream = open("/tmp/imports.txt", "w") if args.tmp else sys.stdout
+def show_imports(args, source) -> bool:
+    visitor = imports.parse(source)
     modules = []
     if args.multiple:
-        modules.extend(show_multiples(visitor, stream))
+        modules.extend(show_multiples(visitor))
     if args.unused:
-        modules.extend(show_unused(visitor, stream))
+        modules.extend(show_unused(visitor))
     if args.edit and modules:
-        vim = "vim -p /tmp/imports.txt" if args.tmp else "vim"
-        search = r"\|".join((rf"\<{_}\>" for _ in modules))
-        print(f'\n{vim} {visitor.path} +/"{search}"')
+        sought = r"\|".join((rf"\<{_}\>" for _ in modules))
+        print(f'\n{vim} {visitor.path} +/"{sought}"')
     return bool(modules)
 
 
-def script(args):
+def main(args) -> bool:
     result = False
     sources = find_sources(args.source)
     for source in sources:
@@ -108,4 +88,4 @@ def script(args):
     return result
 
 
-run(script, add_args)
+run(main, add_args)
