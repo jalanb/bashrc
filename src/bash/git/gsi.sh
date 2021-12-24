@@ -27,8 +27,8 @@ gxi () {
     [[ $GXI_DIR ]] || GXI_DIR=$(python_realpath .)
     stashed_=
     GXI_QUERY=
-    g lll
-    g lf -n1
+    LESS=MRFX g lll
+    LESS=MRFX g lf -n1
     show_pre_loop_
     while gxitss; do
         show_green staged
@@ -134,7 +134,7 @@ gxi_menu_ () {
     red_two sta g ed
     red_one s tash
     stat_modified "$path_" && red_one d iff
-    red_two d r op
+    red_one r estore
     red_two de l ete
     [[ -n $GIT_ADDED ]] && red_one f asten
     red_two comm i t

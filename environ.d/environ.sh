@@ -51,6 +51,7 @@ export_symbols () {
     export RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
     export LOG_LINES_ON_CD_GIT_DIR=7
     export EDITOR=vim
+    export LESS=MRSFX
 }
 
 _set_option () {

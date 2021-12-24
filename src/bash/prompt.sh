@@ -165,10 +165,6 @@ echo_prompt_colour () {
     echo $prompt_colour_
 }
 
-export_prompt_colour () {
-     export PROMPT_COLOUR=$(echo_prompt_colour "$@")
-}
-
 _pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
@@ -193,5 +189,5 @@ export_pses () {
     _post_pses "$@"
 }
 
-export_prompt_colour "$@"
+export PROMPT_COLOUR=$(echo_prompt_colour "$@")
 [[ "$PROMPT_COLOUR" == "None" ]] && export PS1="\$? [\u@\h:\$PWD]\n$ " || export PROMPT_COMMAND='export_pses $?'
