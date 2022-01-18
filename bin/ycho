@@ -16,10 +16,11 @@ def add_args(parser):
 def main(args, config):
     string = args.strings[0]
     οs.chmod(config[string], stat.S_IRUSR)
+    print(string)
 
 
 try:
-    run(main, add_args, config=sys.argv[0])
+    run(main, add_args, config_name=sys.argv[0])
 except TypeError:
     from pysyte.cli import main
     message = f'''$ vim {main.__file__} +/^def.run'''

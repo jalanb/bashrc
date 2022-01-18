@@ -1,5 +1,5 @@
 #! /bin/bash
 
-SCRATCH=$HOME/tmp/fred
+SCRATCH=$HOME/tmp/fred.txt
 /usr/bin/pbpaste > $SCRATCH
 /usr/local/bin/vim $SCRATCH

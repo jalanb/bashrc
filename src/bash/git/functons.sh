@@ -54,7 +54,7 @@ gd () {
     [[ -d "$1" ]] && dir_="$1" && shift
     show_command git -C "$dir_" "$@"
     # set -x
-    git -C "$dir_" "$@"
+    git --no-pager -C "$dir_" "$@"
 }
 
 gf () {
@@ -128,7 +128,11 @@ gt () {
 }
 
 gw () {
-    git config alias.$1
+    if [[ $1 ]]; then
+        git config alias.$1
+    else
+        vv ~/.gitconfig +/alias
+    fi
 }
 
 # xxx
@@ -148,7 +152,12 @@ gai () {
 }
 
 gba () {
-    gb -a "$@"
+    gbr "$@"
+    gb "$@"
+}
+
+gbaa () {
+    git branch -a "$@"
 }
 
 gbb () {
@@ -161,6 +170,11 @@ gbc () {
 
 gbr () {
     gb -r "$@"
+}
+
+gbs () {
+    gb "$@"
+    gs
 }
 
 gbt () {
@@ -307,11 +321,12 @@ gl4 () {
 }
 
 gla () {
-    git_log_to_screen lg "$@" --author=Alan.Brogan
+    gd "$@" l --author=Alan.Brogan
 }
 
 glg () {
-    git_log_lines_to_screen "$@" --grep "$1" 2>/dev/null
+    local sought_=$1; shift
+    gd "$@" l --grep "$sought_" 2>/dev/null
     local result_=$?
     echo
     return $result_
@@ -322,7 +337,7 @@ gll () {
 }
 
 gln () {
-    git_log_to_screen lg "$@" --name-only
+    gd "$@" l --name-only
 }
 
 glp () {
@@ -330,7 +345,7 @@ glp () {
 }
 
 glt () {
-    git_log_to_screen lt "$@"
+    gd "$@" lt
 }
 
 glv () {
@@ -371,7 +386,10 @@ gog () {
 }
 
 gom () {
-    gba | grep -q __main__ && go __main__ "$@" || go master "$@"
+    local _target_=master source_=$(get_branch)
+    gba | grep -q __main__ && target_=__main__
+    [[ $source_ == $target_ ]] && return
+    go $target_ "$@"
 }
 
 goo () {
@@ -389,7 +407,8 @@ gor () {
     fi
     for branch in "$@"; do
         go "$branch"
-        git e
+        show_command git pull --rebase
+        git pull --rebase
     done
 }
 
@@ -450,6 +469,7 @@ is_branch () {
         shift
     fi
     local branch_=$1 branches_=$(git -C $dir_ branch 2>/dev/null )
+    [[ $branch_ ]] || return 1
     [[ $branches_ ]] || return 1
     local found_=$(git -C $dir_ branch 2>/dev/null | grep $branch_ 2>/dev/null)
     [[ $found_ ]] || return 2
@@ -524,8 +544,8 @@ gri () {
 
 grm () {
     local __doc__="""git rebase main branch onto $1, or checked out branch"""
-    local upstream_=master
-    grep_branch __main__ -q && upstream_=__main__
+    local upstream_=__main__
+    grep_branch master -q && upstream_=master
     grbb $upstream_ "$@"
 }
 
@@ -662,12 +682,13 @@ gpff () {
 
 gbd_ () {
     local current_branch_=$(get_branch) options_=
+    local delete_branch_=$current_branch_
     if [[ "$@" =~ $current_branch_ ]]; then
-        if [[ "$@" == "master" ]]; then
+        if [[ "$@" == "__main__" ]]; then
             git checkout $(git tag --list  | sort -V | tail -n 1)
             current_branch_=$(get_branch)
-            if [[ $current_branch_ == "master" ]]; then
-                show_error Please checkout another branch before deleting master
+            if [[ $current_branch_ == "__main__" ]]; then
+                show_error Please checkout another branch before deleting __main__
                 return 1
             fi
         else
@@ -676,17 +697,24 @@ gbd_ () {
     elif [[ "$1" =~ ^-[dD]$ ]]; then
         options_="$1"
         shift
-        if [[ $current_branch_ == "master" ]]; then
-            show_error Please checkout another branch before deleting master
+        local arg_= branches_=
+        for arg_ in "$@"; do
+            is_branch $arg_ || continue
+            branches_="$branches_ $arg_"
+        done
+        [[ "$branches_" ]] && delete_branch_="$branches_"
+        if [[ $delete_branch_ == "__main__" ]]; then
+            show_error Please checkout another branch before deleting __main__
             return 1
-        elif [[ $current_branch_ == "fred" ]]; then
+        elif [[ $delete_branch_ == "fred" ]]; then
             answer=Y
         else
             if [[ "$1" =~ ^-[yY]$ ]]; then
                 answer=Y
                 shift
             else
-                read -p "OK to remove $current_branch_ [y]? " -n1 answer
+                read -p "OK to remove $delete_branch_ [y]? " -n1 answer
+                echo
             fi
         fi
         [[ -n $answer && ! $answer =~ [yY] ]] && return 1
@@ -694,8 +722,8 @@ gbd_ () {
             gma
         fi
         gom
-        show_command git branch "$options_" $current_branch_
-        git branch "$options_" $current_branch_
+        show_command git branch "$options_" $delete_branch_
+        git branch "$options_" $delete_branch_
         return 0
     fi
     show_command git branch "$@"
@@ -708,7 +736,7 @@ gbac () {
 
 gbdd () {
     local branch_=
-    for branch_ in $(grep_branch -v master); do
+    for branch_ in $(grep_branch -v -e __main__ -e master); do
         if mastered $branch_; then
             gbd $branch_
         fi
@@ -721,10 +749,10 @@ gbdr () {
 }
 
 gbDD () {
-    local current_branch_=$(get_branch)
-    [[ "$@" ]] && current_branch_="$@"
+    local delete_branch_=$(get_branch)
+    [[ "$@" ]] && delete_branch_="$@"
     gbD "$@"
-    gpod $current_branch_
+    gpod $delete_branch_
 }
 
 gaai () {
@@ -1112,7 +1140,9 @@ git_stash_and () {
     return $result_
 }
 
+
 is_branch () {
+    [[ $1 ]] || return 1
     get_branch $1 >/dev/null
 }
 
@@ -1127,6 +1157,7 @@ git_branch () {
     [[ $1 == -v ]] && show_=show_run_command
     [[ $1 == -v ]] && shift
     [[ "$@" ]] && ref_=$1
+    [[ $ref_ ]] || return 1
     $show_ git rev-parse --abbrev-ref $ref_ 2> /dev/null || return 1
 }
 
@@ -1146,6 +1177,10 @@ clean_clone () {
         [[ -f $branch ]] && continue
         git branch -d $branch 2>/dev/null
     done
+    echo; echo
+    pwd
+    g b
+    g s
 }
 
 git_changes_here () {

@@ -25,7 +25,7 @@ def main(args, config):
     return True
 
 try:
-    run(main, add_args, config='echο')
+    run(main, add_args, config_name='echο')
 except TypeError:
     from pysyte.cli import main
     message = f'''$ vim {main.__file__} +/^def.run'''

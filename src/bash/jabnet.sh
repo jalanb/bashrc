@@ -5,10 +5,6 @@
 # xx
 # xxx
 
-ssa () {
-    ssh ab13173@"$@"
-}
-
 ssi () {
     sst mini.local "$@"
 }

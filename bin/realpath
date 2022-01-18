@@ -9,13 +9,13 @@ import os
 import sys
 from typing import List
 
-from pysyte.cli.arguments import ArgumentsParser
+from pysyte.cli import arguments
 from pysyte.cli.main import run
 from pysyte.types.paths import path
 
 
-def add_args(parser: ArgumentsParser) -> ArgumentsParser:
-    parser.positionals(name="paths", dest="paths", help="files, dirs, ...")
+def add_args(parser: arguments.ArgumentsParser) -> arguments.ArgumentsParser:
+    parser.positionals("paths", help="files, dirs, ...")
     return parser
 
 
@@ -24,9 +24,9 @@ def prints(lines: List[str]):
     print("\n".join(lines))
 
 
-def main(args: List[str]) -> int:
+def main(args: arguments.ArgumentsNamespace) -> int:
     """Show every arg that has a real path"""
-    paths = [path(_) for _ in args]
+    paths = [path(_) for _ in args.paths]
     reals = [_.realpath() for _ in paths if _]
     if reals:
         prints(reals)

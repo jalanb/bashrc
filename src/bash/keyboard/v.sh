@@ -9,15 +9,19 @@ v () {
     mvim "$@"
 }
 
-v. () {
-    v .
-}
+# xx
 
 hd () {
     vim_diff -o "$@"
 }
 
-# va
+v. () {
+    vv .
+}
+
+va () {
+    _edit_source $(aliases) "$@"
+}
 
 vc () {
     local _dot_cd
@@ -29,11 +33,13 @@ vd () {
     vim_diff -O "$@"
 }
 
-# ve
-# vf
-# vg
+ve () {
+    _edit_source ~/jab/environ.d/jab.sh "$@"
+}
 
-# vi
+vf () {
+    _edit_source $(functons) "$@"
+}
 
 vg () {
     local user_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_=.git/config
@@ -46,23 +52,29 @@ vg () {
     fi
 }
 
+# vi
+
 vj () {
     (cd ~/jab; mvim .; gsi)
 }
 
-# vl
-# vm
-# vn
-# vo
-# vp
-# vq
-# vr
-# vs
+# vk
 
 vl () {
     local stdout_=$(history -p !-1)
     vim -p $($stdout_)
 }
+
+# vm
+# vn
+# vo
+vp () {
+    _edit_source ~/bash/prompt.sh +/^_colour_prompt
+}
+
+# vq
+# vr
+# vs
 
 vt () {
     python ~/jab/src/python/vim_traceback.py "$@"
@@ -172,6 +184,10 @@ vtr () {
     python ~/jab/src/python/tracebacks.py -e "$@"
 }
 
+vss () {
+    vim -p ~/.ssh/config ~/.ssh/keys/config ~/.ssh
+}
+
 vtt () {
     local _crappy_program_py=$1
     python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
@@ -223,12 +239,6 @@ vd12 () {
 
 vd13 () {
     vd ~/two ~/three
-}
-
-venv () {
-    local virtualenv_=.venv
-    [[ -d $virtualenv_ ]] || python3 -m venv $virtualenv_
-    cde_activate_there $virtualenv_/bin/activate
 }
 
 vims () {

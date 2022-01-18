@@ -41,13 +41,17 @@ scalp_hermann () {
     ) 
 }
 
+rr_path () {
+    test -e "$1" && readlink -f "$1" || realpath "$1"
+}
+
 rr () {
     if [[ "$1" =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
         echo "Will not remove $1" >&2
         return 1
     fi
-    local _real_home=$(realpath $HOME)
-    if [[ $(realpath "$1") == "$_real_home" ]]; then
+    local rr_home_=$(rr_path $HOME) rr_one_=$(rr_path "$1")
+    if [[ $(rr_path "$1") == "$rr_home_" ]]; then
         echo "Will not remove $1" >&2
         return 1
     fi
@@ -64,8 +68,8 @@ old_rr () {
         echo "Will not remove $1" >&2
         return 1
     fi
-    local _real_home=$(realpath $HOME)
-    if [[ $(realpath "$@") == "$_real_home" ]]; then
+    local rr_home_=$(rr_path $HOME) rr_all_=$(rr_path "$@")
+    if [[ $rr_all_ == "$rr_home_" ]]; then
         scalp_hermann 
         return 1
     fi
@@ -76,9 +80,9 @@ old_rr () {
         fi
         if [[ -e "$p" ]]; then
             _paths="${_paths}${_sep}${p}"
-            _path=$(realpath "$p")
+            _path=$(rr_path "$p")
             [[ -e "$_path" ]] || continue
-            if [[ "$_path" == "$_real_home" ]]; then
+            if [[ "$_path" == "$rr_home_" ]]; then
                 scalp_hermann
             fi
             [[ -d "$_path" ]] && _options='-r'

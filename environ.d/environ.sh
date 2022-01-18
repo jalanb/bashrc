@@ -33,11 +33,8 @@ set_bucket () {
     GIT_BUCKET=no_bucket; [[ -d $_src/git/bucket ]] && GIT_BUCKET=$( readlink -f $_src/git/bucket); export GIT_BUCKET
     HG_BUCKET=no_bucket; [[ -d $_src/hg/bucket ]] && HG_BUCKET=$( readlink -f $_src/hg/bucket); export HG_BUCKET
     BUCKET=no_bucket
-    if [[ -d $HG_BUCKET ]]; then
-        BUCKET=$HG_BUCKET
-    elif [[ -d $GIT_BUCKET ]]; then
-        BUCKET=$GIT_BUCKET
-    fi
+    [[ -d $HG_BUCKET ]] && BUCKET=$HG_BUCKET
+    [[ -d $GIT_BUCKET ]] && BUCKET=$GIT_BUCKET
     export BUCKET
 }
 
@@ -54,6 +51,7 @@ export_symbols () {
     export RE_IP="\<\([0-9]\{1,3\}\.\)\{3\}[0-9]\{1,3\}\>"
     export LOG_LINES_ON_CD_GIT_DIR=7
     export EDITOR=vim
+    export LESS=MRSFX
 }
 
 _set_option () {

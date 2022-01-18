@@ -3,21 +3,20 @@
 
 THIS=$BASH_SOURCE
 
-. ~/jalanb/local/functons.sh optional
+[[ -f ~/jalanb/local/functons.sh ]] && . ~/jalanb/local/functons.sh
 
 # _
 # x
 
 alias 0="home_cde hub"
 alias 1="home_cde jab"
-alias 2="home_cde bots"
-alias 3="echo '#' | pbcopy"
-alias 4="home_cde wmp"
-alias 5="home_cde tippy"
+alias 2="home_cde bots/bots"
+alias 3="home_cde portals"
+alias 4="home_cde /opt/clones/gitlab/bots/deploys"
+alias 5="home_cde saas/dashboard"
 alias 6="home_cde txt"
 alias 7="c ~/hub/zatso"
 alias 8="home_range hub"
-alias 9="in_home -e tmp"
 
 # _x
 # xx
@@ -95,7 +94,6 @@ alias 99="cde /"
 alias 92="cde /etc"
 alias 97="cde /usr"
 alias 98="cde /usr/local"
-alias 99="in_home tmp"
 
 # _x
 # _xx

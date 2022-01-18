@@ -23,6 +23,7 @@
 #
 # Developers temporary files
 #
+fred.[a-z]*
 .cd
 .venv
 *.fail
@@ -96,6 +97,7 @@ hs_err_pid*
 *.iml
 
 ## Directory-based project format:
+.vscode/
 .idea/
 # if you remove the above rule, at least ignore the following:
 

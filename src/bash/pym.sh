@@ -17,15 +17,11 @@
 # Other environment variables:
 # PYTHONSTARTUP: file executed on interactive startup (no default)
 
-. ~/jalanb/local/environ.sh optional
-
-workon_pym () {
-    [[ $VIRTUAL_ENV =~ /pym$ ]] || workon pym
-    hub pym pym "$@"
-}
+[[ -f ~/jalanb/local/environ.sh ]] && . ~/jalanb/local/environ.sh
 
 pyi () {(
-    local pym_=~/hub/pym pym_bin_=$pym_/bin pym_py_=$pym_/pym 
+    local pym_=~/hub/pym
+    local pym_bin_=$pym_/bin pym_py_=$pym_/pym 
     [[ -d $pym_bin_ && -d $pym_py_ ]] || return 1
     [[ $PATH ]] && PATH="$pym_bin_:$PATH" || PATH=$pym_bin_
     [[ $PYTHONPATH ]] && PYTHONPATH="$pym_py:$PYTHONPATH" || PYTHONPATH=$pym_py
@@ -39,7 +35,6 @@ pyi () {(
             cd $dir
         fi
     fi
-    2
     pwd
     local _status=$(git status -s)
     if [[ -n $_status ]]; then

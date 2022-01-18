@@ -4,6 +4,10 @@ SOURCE_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
 WORK=wwts
 WORK_COM=${WORK}.com
 
+ssa () {
+    ssh -i ~/.ssh/work/ab13173.key ab13173@$1.wwts.com
+}
+
 ssw () {
     local _command=$(python $SOURCE_DIR/ssw_command.py "$@")
     echo $_command
