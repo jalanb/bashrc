@@ -2,7 +2,7 @@ cd $HOME
 
 rm -rf lab; ln -s /opt/clones/gitlab lab
 rm -f saas; ln -s ~/lab/saas .
-rm -f soso; ln -s ~/lab/soso .
+rm -f soso; ln -s ~/lab/waas/soso .
 rm -f portals; ln -s ~/lab/bots/portals .
 
 rm -rf hub; ln -s /opt/clones/github hub
@@ -21,7 +21,6 @@ rm -f keys; ln -s ~/bash/keyboard keys
 rm -f prompt.sh ; ln -s ~/bash/prompt.sh .
 rm -f fd ; ln -s ~/bash/fd fd
 rm -f fd1 ; ln -s ~/fd/1 fd1
-rm -f fd3 ; ln -s ~/fd/3 fd3
 rm -f fd2 ; ln -s ~/fd/2 fd2
 
 rm -f one; ln -s ~/tmp/one .

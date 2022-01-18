@@ -42,10 +42,10 @@ is_init () {
 }
 
 write_keys () {
-    local init_=$(key_init) text_=
+    local init_=$(key_init)
     echo "#! /usr/bin/env bat" > $init_
     for script_ in $(key_scripts); do
-        grep -v "^#!" $script_ >> $init_
+        grep -v "^#! " $script_ >> $init_
     done
 }
 
@@ -58,11 +58,11 @@ vim_keyboard () {
     local init_=$(key_init) files_=
     if [[ ! "$@" ]]; then
         files_="$(echo_keys '[a-z12].sh')"
-        v $files_
+        vv $files_
         return
     fi
     local option_= path_= file_=
-    dir_=$(echo_keys)
+    dir_=$(key_path)
     for option_ in "$@"; do
         path_=$dir_/$option_
         [[ -f ${path_} ]] && file_=${path_}
