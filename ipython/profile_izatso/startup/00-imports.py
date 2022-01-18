@@ -1,4 +1,4 @@
-"""Imports for IPython"""
+"""Imports for ibots"""
 
 # pylint: disable=W0611
 
@@ -10,7 +10,8 @@ import sys
 import inspect
 
 import bots
-from bots.issues import issues
+import tools
+from tools.issues import issues
 
 pyprint = print
 
@@ -52,6 +53,10 @@ except ImportError:
     from pysyte.types.paths import path as Path
 
 
+import zatso
+import pym
+import copycat
+
 
 
 
@@ -61,7 +66,7 @@ version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
 stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
-stdout(f"import bots, bots.issues.issues")
+stdout(f"import zatso, pym, copycat")
 stdout("")
 stdout(f"{executable} {version}")
 stdout(f"{bots.__file__} {bots.__version__}")
