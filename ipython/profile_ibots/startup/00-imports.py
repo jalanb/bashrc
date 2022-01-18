@@ -10,7 +10,12 @@ import sys
 import inspect
 
 import bots
+<<<<<<< HEAD
 from bots.issues import issues
+=======
+import tools
+from tools.issues import issues
+>>>>>>> 78e3db04 (Add new IPython profiles)
 
 pyprint = print
 
@@ -52,6 +57,13 @@ except ImportError:
     from pysyte.types.paths import path as Path
 
 
+<<<<<<< HEAD
+=======
+import zatso
+import pym
+import copycat
+
+>>>>>>> 78e3db04 (Add new IPython profiles)
 
 
 
@@ -61,7 +73,11 @@ version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
 stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
+<<<<<<< HEAD
 stdout(f"import bots, bots.issues.issues")
+=======
+stdout(f"import zatso, pym, copycat")
+>>>>>>> 78e3db04 (Add new IPython profiles)
 stdout("")
 stdout(f"{executable} {version}")
 stdout(f"{bots.__file__} {bots.__version__}")
