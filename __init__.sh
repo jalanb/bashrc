@@ -19,8 +19,7 @@ show_pythonpath () {
     show_green_line PYTHONPATH==$PYTHONPATH after "$1"
 }
 
-export WHYP=~/hub/whyp/whyp
-. $WHYP.sh
+. ~/whyp.sh
 export WHYP_EDITOR=vv
 export ACKVIM=~/hub/ackvim/ackvim
 . $ACKVIM.sh

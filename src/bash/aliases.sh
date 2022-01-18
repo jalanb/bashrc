@@ -49,7 +49,7 @@ unalias -a
 # t()
 # u
 # v()
-# w()
+alias w=whyp
 # x()
 # y()
 # z()
