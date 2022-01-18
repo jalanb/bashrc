@@ -39,7 +39,7 @@ alias hv=history_vim
 alias vh="history_vim -[ 1"
 alias vhh="history_vim -[ 2"
 alias hhv="history_vim -h"
-alias hvv="vim ~/.bash_eternal_history -p ~/.bash_history"
+alias hvv="vim -p ~/.bash_eternal_history ~/.big_eternal_history"
 
 
 # xxx
