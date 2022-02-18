@@ -14,6 +14,10 @@ I () {
 
 # xx
 
+ib () {
+    ind ~/bash/ "$@"
+}
+
 ij () {
     ind ~/jab/ "$@"
 }

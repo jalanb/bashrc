@@ -8,24 +8,25 @@ More modules for testing
 ------------------------
 
     >>> import os
+    >>> from dataclasses import dataclass
 
 Mock options
 ------------
 
 Some methods need options which look like they came from an OptionParser
-    >>> class Values:
-    ...     pass
-    >>> options = Values()
-    >>> options.directories = False
-    >>> options.files = True
-    >>> options.ignore_case = False
-    >>> options.basename = True
-    >>> options.globs = False
-    >>> options.sought = 'locate'
-    >>> options.executables = []
-    >>> options.verbose = False
-    >>> options.exclude = []
-    >>> options.real = False
+    >>> @dataclass
+    ... class Options:
+    ...     directories = False
+    ...     files = True
+    ...     ignore_case = False
+    ...     basename = True
+    ...     globs = False
+    ...     sought = 'locate'
+    ...     executables = []
+    ...     verbose = False
+    ...     exclude = []
+    ...     real = False
+    >>> options = Options()
 
 locate
 ------

@@ -1035,6 +1035,10 @@ _lesser () {
     less -R "$@"
 }
 
+lese () {
+    less -SR "$@"
+}
+
 lesen () {
     less -SNR "$@"
 }

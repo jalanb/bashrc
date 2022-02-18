@@ -386,7 +386,7 @@ gog () {
 }
 
 gom () {
-    local _target_=master source_=$(get_branch)
+    local target_=master source_=$(get_branch)
     gba | grep -q __main__ && target_=__main__
     [[ $source_ == $target_ ]] && return
     go $target_ "$@"
@@ -454,7 +454,15 @@ gra () {
     git rebase --abort
 }
 
+grl () {
+    show_command git pull --rebase
+    git pull --rebase "$@"
+    show_command git log -n $(( $LINES / 2 ))
+    git l -n $(( $LINES / 2 ))
+}
+
 grr () {
+    show_command git pull --rebase
     git pull --rebase "$@"
 }
 
@@ -830,6 +838,7 @@ gomb () {
 
 gomr () {
     gom
+    show_command git pull --rebase
     git e
     bump show
 }

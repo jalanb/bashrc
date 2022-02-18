@@ -10,7 +10,7 @@
 # This list is quite long enough, we accept no other aliases
 #   Thanks anyway
 #
-# (Except we will hang on to '.' (which is set by whype.sh))
+# (Except we will hang on to '.' (which is set by whyp.sh))
 
 _keep_dot=$(alias . 2>/dev/null | sed -e "s/.*=//" -e "s/'//g")  # parses out any alias of '.'
 unalias -a
@@ -60,8 +60,8 @@ alias Z='set +x'
 # xx
 
 alias ..='cdup'
-alias .c='. ~/cde.sh'
-alias .w='. $WHYP.sh'
+alias .c='whyp_source ~/cde.sh'
+alias .w="whyp_source $WHYP_SOURCE"
 
 alias p-="echo $OLDPWD"
 
@@ -86,9 +86,9 @@ alias jlf="sst jlfieblu jlf.ie"
 
 alias out="to_release"
 
-alias sle=". ~/jalanb/local/environ.sh optional"
-alias slp=". ~/jalanb/local/prompt optional"
-alias spe=". ~/jab/environ.d/python.sh"
+alias sle="whyp_source ~/jalanb/local/environ.sh optional"
+alias slp="whyp_source ~/jalanb/local/prompt optional"
+alias spe="whyp_source ~/jab/environ.d/python.sh"
 
 alias tra="try ~/alans_tests"
 
@@ -96,7 +96,7 @@ alias tra="try ~/alans_tests"
 
 alias ....='cduppp'
 
-alias comp=". ~/jab/environ.d/company.sh"
+alias comp="whyp_source ~/jab/environ.d/company.sh"
 
 alias popp=pisd
 

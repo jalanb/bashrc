@@ -2,10 +2,9 @@
 """Methods to run the locate script more exactly"""
 
 
-from __future__ import print_function
-
 import re
 import os
+import sys
 import argparse
 try:
     from commands import getoutput, getstatusoutput
@@ -179,3 +178,7 @@ def main():
     else:
         print('\n'.join(located_arg))
     return os.EX_OK
+
+
+if __name__ == "__main__":
+    sys.exit(main())

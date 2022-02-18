@@ -36,4 +36,3 @@ export PYTH=~/hub/pyth/pyth
 
 cde_activate_venv ~/jab/.venv
 ACTIVE_PYTHON=$(which python)
-
