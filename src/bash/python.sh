@@ -58,7 +58,7 @@ ppii () {
 
 ppip () {
     [[ "$@" ]] || return 1
-    show_command python -m pip "$@"
+    show_command python3 -m pip "$@"
     python3 -m pip "$@" > ~/fd1
     grep -v -e already.satisfied -e upgrade.pip ~/fd1
     if grep -q "pip install --upgrade pip" ~/fd1; then
