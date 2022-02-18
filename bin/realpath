@@ -31,7 +31,7 @@ def main(args: arguments.ArgumentsNamespace) -> int:
     if reals:
         prints(reals)
         return os.EX_OK
-    fakes = [f"# {_}" for _ in args]
+    fakes = [f"# {_}" for _ in paths]
     prints(fakes)
     return len(fakes)
 

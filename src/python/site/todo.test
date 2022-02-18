@@ -24,6 +24,6 @@ Items have text and priority
 
 Priorities have names and colours
     >>> priorities = todo.priorities()
-    >>> urgent = priorities[0]
-    >>> assert urgent.name == 'bug'
-    >>> assert urgent.colour == 'red'
+    >>> priority = priorities[0]
+    >>> assert priority.name == 'bug'
+    >>> assert priority.colour == 'red'
