@@ -134,21 +134,12 @@ llllllllg () {
     gl_ 87 "$@"
 }
 
-llllllllg () {
-    gl_ 87 "$@"
-}
-
 lllllllllg () {
     gl_ 141 "$@"
 }
 
 
 # _xxxxxxxxx
-
-has_option () {
-    $1 --help 2>/dev/null | grep -q -- $2 && return 0
-    return 8
-}
 
 which_q () {
     which "$1" 2>/dev/null
@@ -164,7 +155,8 @@ ls_program () {
 
 ls_has_option () {
     local ls_=$(ls_program) || return 1
-    has_option "$ls_" "$1"
+    $ls_ --help 2>/dev/null | grep -q -- $1 && return 0
+    return 2
 }
 
 ls_options () {
