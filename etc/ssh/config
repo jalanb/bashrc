@@ -1,6 +1,6 @@
 Include macs
-Include ab13173
 Include keys/config
+Include ab13173
 
 Host *
     AddKeysToAgent yes
