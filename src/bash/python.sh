@@ -93,3 +93,22 @@ unhash_deactivate () {
     [[ $VIRTUAL_ENV ]] && deactivate
     [[ $1 == -q ]] || show_blue_line "python3 is $(which python3)"
 }
+
+# xxxxxxx*
+
+pip_install_develop () {
+    local __doc__="""pip install a directory for development"
+    piup >/dev/null 2>&1
+    local _dir=.
+    if [[ -d "$1" ]]; then
+        _dir="$1"
+        shift
+        local force_=
+        [[ $1 == "-f" ]] && force_=--force-reinstall
+        _install_requirements_there $_dir $force_
+        if [[ -f setup.py ]]; then
+            [[ $force_ ]] && force_=--upgrade
+            ppi $force_ -e .
+        fi
+    fi 2>&1 | grep -v already.satisfied
+}
