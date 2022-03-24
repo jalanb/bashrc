@@ -24,9 +24,7 @@ va () {
 }
 
 vc () {
-    local _dot_cd
-    [[ -f .cd ]] && _dot_cd=.cd
-    v ~/cde.sh ~/cde/ ~/keys/c.sh $_dot_cd
+    vim_cde ~/keys/c.sh
 }
 
 vd () {

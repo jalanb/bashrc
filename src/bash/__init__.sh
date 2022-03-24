@@ -19,4 +19,6 @@ __version__=0.8.60
 . ~/bash/keys.sh
 . ~/bash/git/__init__.sh
 
+read_keys
+
 export _BASH_DIR=~/bash
