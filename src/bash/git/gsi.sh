@@ -131,6 +131,8 @@ gxi_response_ () {
             [[ $answer =~ [dD] ]] && gxit di "$path_"
             [[ $answer =~ [pP] ]] && gxit diff --patch "$path_"
             [[ $answer =~ [tT] ]] && gai "$path_"
+            [[ $answer =~ [xX] ]] && set -x
+            [[ $answer =~ [zZ] ]] && set +x
         fi
         gxi_request_ "$path_"
         return 0
