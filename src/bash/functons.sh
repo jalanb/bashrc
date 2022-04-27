@@ -436,10 +436,6 @@ wvj () {
     vim -p ~/jab/__init__.sh "$@"
 }
 
-wvp () {
-    vim -p ~/hub/pym/pym/edit/ "$@"
-}
-
 wvw () {
     vim -p ~/hub/whyp/whyp.sh "$@"
 }

@@ -208,13 +208,19 @@ ltr () {
 }
 
 lyi () {(
-    local pym_=~/hub/pym
-    local pym_bin_=$pym_/bin pym_py_=$pym_/pym 
-    [[ -d $pym_bin_ && -d $pym_py_ ]] || return 1
-    [[ $PATH ]] && PATH="$pym_bin_:$PATH" || PATH=$pym_bin_
-    [[ $PYTHONPATH ]] && PYTHONPATH="$pym_py:$PYTHONPATH" || PYTHONPATH=$pym_py
-    cd $pym_
-    [[ -f .venv/bin/activate ]] || show_fail "-f $pym_/.venv/bin/activate"
+    local package_=pym
+    local package_dir_=~/hub/jalanb/$package_
+    [[ -d ~/$package_ ]] && package_dir_=~/$package_
+    local package_bin_=$package_dir_/bin
+    if [[ -d $package_bin_ ]]; then
+        [[ $PATH ]] && PATH="$package_bin_:$PATH" || PATH=$package_bin_
+    fi
+    local package_python_=$package_dir_/$package_
+    if [[ -d $package_python_ ]]; then
+        [[ $PYTHONPATH ]] && PYTHONPATH="$package_python_:$PYTHONPATH" || PYTHONPATH=$package_python_
+    fi
+    cd $package_dir_
+    [[ -f .venv/bin/activate ]] || show_fail "-f $package_dir_/.venv/bin/activate"
     [[ -f .venv/bin/activate ]] || return 1
     source .venv/bin/activate
     if [[ -n $* ]]; then

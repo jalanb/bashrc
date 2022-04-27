@@ -13,7 +13,6 @@ __version__=0.8.55
 . ~/bash/history.sh
 . ~/bash/jabnet.sh
 . ~/bash/prompt.sh
-. ~/bash/pym.sh
 . ~/bash/python.sh
 . ~/bash/rf.sh
 . ~/bash/work.sh
