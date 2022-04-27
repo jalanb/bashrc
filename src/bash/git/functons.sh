@@ -77,7 +77,7 @@ gi () {
 }
 
 gl () {
-    gl_ 4 "$@"
+    gl_ "$@"
 }
 
 gm () {
@@ -251,14 +251,14 @@ gfe () {
 }
 
 gff () {
-    local branch_=__main__
-    [[ $1 ]] && branch_=$1
+    local upstream_=$(main_branch)
+    [[ $1 ]] && upstream_=$1
     gru
     gcu
     show_command git_root -o
     gfe "$@" | grep -v 'Fetching'
     gba
-    gor $branch_ 2>/dev/null | grep -v -e "up to date" -e Already
+    gor $upstream_ 2>/dev/null | grep -v -e "up to date" -e Already
     show_command bump show
     bump show
     gll
@@ -292,8 +292,8 @@ gip () {
 }
 
 gl_ () {
-    local options_="-n 8"
-    if [[ $1 =~ ^[0-9][0-9]*$ ]]; then
+    rlocal options_="-n 8"
+    if [[ $1 =~ ^[1-9][0-9]*$ ]]; then
         options_="-n $1"
         shift
     fi
@@ -301,7 +301,7 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gd "$@" l $options_
+    gd "$@" $options_l
 }
 
 gl1 () {
@@ -357,11 +357,11 @@ gma () {
 }
 
 gmm () {
-    local branch_=$(get_branch)
-    go master
+    local branch_=$(get_branch) upstream_=$(main_branch)
+    go $upstream_
     grr
     go $branch_
-    gm master
+    gm $upstream_
 }
 
 gmt () {
@@ -385,11 +385,15 @@ gog () {
     go "$@"; glg; bump show
 }
 
+gol () {
+    go "$@"
+    gl
+}
+
 gom () {
-    local target_=master source_=$(get_branch)
-    gba | grep -q __main__ && target_=__main__
-    [[ $source_ == $target_ ]] && return
-    go $target_ "$@"
+    local upstream_=$(main_branch) source_=$(get_branch)
+    [[ $source_ == $upstream_ ]] && return
+    go $upstream_ "$@"
 }
 
 goo () {
@@ -485,6 +489,12 @@ is_branch () {
     return 0
 }
 
+main_branch () {
+    local upstream_=__main__
+    grep_branch master -q && upstream_=master
+    echo $upstream_
+}
+
 show_branch () {
     local show_option_=-v
     [[ $2 == -q ]] && show_option_=
@@ -512,13 +522,6 @@ giddy () {
     [[ -d "$1" ]] && dir_="$1" && shift
     git -C "$dir_" "$@"
 }
-
-mains () {
-    local dir="$1"
-
-    branches $1 __made__ __main__ master
-}
-
 
 grb () {
     local branch_= upstream_=$(mains 1 "$@")
@@ -552,8 +555,7 @@ gri () {
 
 grm () {
     local __doc__="""git rebase main branch onto $1, or checked out branch"""
-    local upstream_=__main__
-    grep_branch master -q && upstream_=master
+    local upstream_=$(main_branch)
     grbb $upstream_ "$@"
 }
 
@@ -690,13 +692,14 @@ gpff () {
 
 gbd_ () {
     local current_branch_=$(get_branch) options_=
+    local upstream_=$(main_branch)
     local delete_branch_=$current_branch_
     if [[ "$@" =~ $current_branch_ ]]; then
-        if [[ "$@" == "__main__" ]]; then
+        if [[ "$@" == "$upstream_" ]]; then
             git checkout $(git tag --list  | sort -V | tail -n 1)
             current_branch_=$(get_branch)
-            if [[ $current_branch_ == "__main__" ]]; then
-                show_error Please checkout another branch before deleting __main__
+            if [[ $current_branch_ == "$upstream_" ]]; then
+                show_error Please checkout another branch before deleting $upstream_
                 return 1
             fi
         else
@@ -711,8 +714,8 @@ gbd_ () {
             branches_="$branches_ $arg_"
         done
         [[ "$branches_" ]] && delete_branch_="$branches_"
-        if [[ $delete_branch_ == "__main__" ]]; then
-            show_error Please checkout another branch before deleting __main__
+        if [[ $delete_branch_ == "$upstream_" ]]; then
+            show_error Please checkout another branch before deleting $upstream_
             return 1
         elif [[ $delete_branch_ == "fred" ]]; then
             answer=Y
@@ -810,12 +813,12 @@ gdis () {
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
     show_command gd lg "$@" > $stdout_
-    gd "$@" lg >> $stdout_ 2> $stderr_ 
+    gd lg "$@" >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
-    if [[ $count_ < $(( $LINES - 2 )) ]]; then cat $stdout_
+    if [[ $count_ < $(( $LINES - 2 )) ]]; then gd lg "$@"
     elif [[ $count_ < 256 ]]; then less -R $stdout_
-    else tput smcup; gd "$@" lg; tput rmcup
+    else tput smcup; gd lg "$@"; tput rmcup
     fi
 }
 
@@ -987,6 +990,10 @@ gurl () {
     grep https .git/config | sed -e "s:url =::" | grep git.*
 }
 
+rgl_ () {
+    gl_ "$@"
+}
+
 # xxxxx
 
 clone () {
@@ -1060,7 +1067,8 @@ git_kd_ () {
 }
 
 mastered () {
-    has_branch master "$1" master || has_branch master origin/$1
+    local upstream_=$(main_branch)
+    has_branch $upstream_ "$1" || has_branch $upstream_ origin/$1
 }
 
 show_pre_loop_ () {
@@ -1177,11 +1185,12 @@ sed_origin () {
 # xxxxxxxxxxx
 
 clean_clone () {
+    local upstream_=$(main_branch)
     git reset head .
     git checkout .
     git clean -f -d -f
     git fetch --all
-    git checkout __main__
+    git checkout $upstream_
     for branch in $(git branch --format="%(refname:short)" | grep -v -e __main__ -e master -e deployed-to); do
         [[ -f $branch ]] && continue
         git branch -d $branch 2>/dev/null
