@@ -97,6 +97,33 @@ old_rr () {
 
 # xxx
 
+raj () {
+    pushq ~/jab
+    range "$@"
+    popq
+}
+
+rlf () {
+    local path_=.
+    [[ $1 ]] && path_="$1"
+    readlink -f "$path_"
+    # realpath $path_
+}
+
+rlg () {
+    green_line $(rlf "$@")
+}
+
+rll () {
+    rlg "$@"
+    ll -tr "$@"
+}
+
+rlo () {
+    rlg "$@"
+    lo -tr "$@"
+}
+
 rri () {
     read -n1 -p "rm $@ [Y]" reply
     [[ $reply =~ [qQ] ]] && return 1

@@ -64,6 +64,10 @@ ly () {
 
 # xxx
 
+l1d () {
+    ld -1 "$@"
+}
+
 lao () {
     la -C "$@"
 }
@@ -72,24 +76,190 @@ lal () {
     l -a -l "$@"
 }
 
+lda () {
+    ls -1da "$@"
+}
+
+lff () {
+    ls fred*
+}
+
+lka () {
+    l -a "$@"
+}
+
+lkk () {
+    l -a "$@"
+}
+
+lkl () {
+    lkra "$@"
+}
+
+lkq () {
+    local _sought=$1
+    if [[ -f $_sought ]]; then
+        l $_sought
+        return 0
+    fi
+    while [[ -n $_sought ]]; do
+        if l -d $_sought 2>/dev/null; then
+            break
+        fi
+        _sought=$(dirnames $_sought)
+        if [[ $_sought == / ]]; then
+            break
+        fi
+    done
+}
+
+lkr () {
+    l -lhtr "$@"
+}
+
+lib () {
+    lr ~/.bashrc
+}
+
+lla () {
+    ll -a "$@"
+}
+
 llg () {
     gl_ 3 "$@"
 }
 
+llk () {
+    rlg "$@"
+    llr "$@"
+    rlg "$@"
+}
+
 lll () {
-    ll -tr "$@"
+    rll -tr "$@"
+}
+
+llo () {
+    rlg "$@"
+    lo -tr "$@"
 }
 
 llr () {
-    lr -l "$@"
+    rlg "$@"
+    ll -tr "$@"
+    rlg "$@"
+}
+
+lly () {
+    shift_dir "$@" && shift
+    reset=$(shopt -p dotglob)
+    shopt -s dotglob
+    lr "$dir"/*.tests
+    echo
+    lr "$dir"/*.test
+    echo
+    lr "$dir"/*.py
+    $reset
+}
+
+lns () {
+    ln -s "$@"
+}
+
+loa () {
+    lo -a "$@"
+}
+
+loc () {
+    locate "$@"
+}
+
+lof () {
+    locate -f "$@"
+}
+
+lr1 () {
+    shift_dir "$@" && shift
+    l -1tr --color=always "$dir" | tel
+}
+
+lra () {
+    lr -a "$@"
+}
+
+lrd () {
+    lr -d "$@"
+}
+
+lrt () {
+    l --color=always -lrth "$@" | tel
+}
+
+ls1 () {
+    l1 "$@" | sort
+}
+
+lsh () {
+    l *.sh
 }
 
 ltr () {
     lt -r "$@"
 }
 
-loa () {
-    lo -a "$@"
+lyi () {(
+    local pym_=~/hub/pym
+    local pym_bin_=$pym_/bin pym_py_=$pym_/pym 
+    [[ -d $pym_bin_ && -d $pym_py_ ]] || return 1
+    [[ $PATH ]] && PATH="$pym_bin_:$PATH" || PATH=$pym_bin_
+    [[ $PYTHONPATH ]] && PYTHONPATH="$pym_py:$PYTHONPATH" || PYTHONPATH=$pym_py
+    cd $pym_
+    [[ -f .venv/bin/activate ]] || show_fail "-f $pym_/.venv/bin/activate"
+    [[ -f .venv/bin/activate ]] || return 1
+    source .venv/bin/activate
+    if [[ -n $* ]]; then
+        if shift_dir "$@"; then
+            shift
+            cd $dir
+        fi
+    fi
+    pwd
+    local _status=$(git status -s)
+    if [[ -n $_status ]]; then
+        echo -n "\$ git status -s: "
+        git status -s
+    else
+        local has_dirs=
+        for item in $(ls); do
+            if [[ -d "$item" ]]; then
+                has_dirs=1
+                break
+            fi
+        done
+        if [[ $has_dirs == 1 ]]; then
+            3y -L 2 --noreport . | grep -v -e bdist -e " _build$" -e __init__.py -e .egg-info
+        fi
+        echo
+    fi
+    if [[ -n $(ls *.py | grep -v __init__.py > /dev/null) ]]; then ly -q
+    elif [[ -n $(ls * | grep -v __init__.py) ]]; then lo
+    fi
+    echo
+    [[ -n $* ]] && "$@"
+)}
+
+
+lyy () {
+    reset=$(shopt -p dotglob)
+    shopt -s dotglob
+    l -xd $(ls -F |grep \/$)
+    echo
+    lx *.tests 2>/dev/null
+    echo
+    lx *.test 2>/dev/null
+    echo
+    lx *.py 2>/dev/null
+    $reset
 }
 
 # xxxx

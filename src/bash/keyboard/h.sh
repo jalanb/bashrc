@@ -28,7 +28,8 @@ hd () {
 
 alias hb=big_history_grep
 alias hg=history_grep
-alias hh=history_head
+alias hh="read_history | less -SNR"
+alias hs=history_start
 
 hl () {
     h "$@" | less
@@ -70,23 +71,22 @@ hash_bang () {
 read_history () {
     local history_command_="^history\(_[a-z-]*\)*" history_search_="^[Hh][Gghnt]" h_command="^h [0-9][0-9]*$"
     local history_log_="-e $history_command_ -e $history_search_ -e $h_command"
-    local format_="%Y/%m/%d:%H:%M:%S "
-    if [[ $1 == -f ]]; then
+    local format_=
+    if [[ $1 == -d ]]; then
         shift
-        [[ $1 ]] && format_="$1" || format_=
-        [[ $1 ]] && shift
+        format_="%Y/%m/%d:%H:%M:%S "
     fi
     HISTTIMEFORMAT="$format_" history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "$history_log_"
 }
 
-hyp_executable  () {
+type_executable  () {
     type "$@" > /dev/null 2>&1
 }
 
 history_view () {
     local __doc__="view history"
     local _viewer=
-    hyp_executable "$1" && _viewer="$1"
+    type_executable "$1" && _viewer="$1"
     [[ $_viewer ]] && shift || _viewer=tail
     local _options="-n $(( $LINES - 8 ))"
     [[ $1 == -n ]] && shift
@@ -97,7 +97,7 @@ history_view () {
     read_history "$@" | $_viewer $_options
 }
 
-history_head () {
+history_start () {
     history_view head "$@"
 }
 
@@ -116,11 +116,11 @@ history_grep () {
     local _back=
     [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
     local _sought="$@"
-    read_history | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
+    read_history -d | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
 }
 
 history_tail_dateless () {
-    history_tail -f "$@"
+    history_tail "$@"
 }
 
 history_tail () {
