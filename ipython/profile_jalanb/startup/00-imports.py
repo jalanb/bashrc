@@ -48,7 +48,6 @@ try:
     import jpm
     import pai
     import parsher
-    import pym
     import trying
     import whyp
     import zatso
