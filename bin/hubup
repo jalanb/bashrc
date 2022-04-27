@@ -22,7 +22,7 @@ update_dir () {
     grp
 }
 
-up_dir () {
+update_dir () {
     printf "$LIGHT_GREEN================================================\n"
     printf "      $GREEN                  $1\n"
     printf "$LIGHT_GREEN================================================\n"
@@ -32,21 +32,19 @@ up_dir () {
 }
 
 main () {
-    up_dir ~/hub/ackvim
-    up_dir ~/hub/al_got_rhythm.net
-    up_dir ~/hub/autopep8
-    up_dir ~/hub/ciss
-    up_dir ~/hub/co.py.cat
-    up_dir ~/hub/craas
-    up_dir ~/hub/dotsite
-    up_dir ~/hub/jail
-    up_dir ~/hub/jalanb.github.io
-    up_dir ~/hub/cde
-    up_dir ~/hub/pss
-    up_dir ~/hub/pym
-    up_dir ~/hub/vimcat
-    up_dir ~/hub/what
-    up_dir ~/jab
+    up_dir ~/hub/jalanb/ackvim
+    up_dir ~/hub/jalanb/al_got_rhythm.net
+    up_dir ~/hub/jalanb/autopep8
+    up_dir ~/hub/jalanb/cde
+    up_dir ~/hub/jalanb/co.py.cat
+    up_dir ~/hub/jalanb/pysyte
+    up_dir ~/hub/jalanb/jab
+    up_dir ~/hub/jalanb/jail
+    up_dir ~/hub/jalanb/jalanb.github.io
+    up_dir ~/hub/jalanb/pss
+    up_dir ~/hub/jalanb/pym
+    up_dir ~/hub/jalanb/vimcat
+    up_dir ~/hub/jalanb/whyp
 }
 
 main
