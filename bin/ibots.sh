@@ -9,8 +9,8 @@ pip_upgrade () {
 main () {
     local clone_=~/bots/bots/iterm
     cd $clone_
-    git checkout -q __main__
-    git pull -q --rebase
+    git checkout -q __main__ 
+    git pull -q --rebase | grep -v Already
     source .venv/bin/activate
     pip_upgrade pip
     pip_upgrade pysyte
