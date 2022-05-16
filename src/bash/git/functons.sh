@@ -292,7 +292,7 @@ gip () {
 }
 
 gl_ () {
-    rlocal options_="-n 8"
+    local options_="-n 8"
     if [[ $1 =~ ^[1-9][0-9]*$ ]]; then
         options_="-n $1"
         shift
@@ -301,7 +301,7 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gd "$@" $options_l
+    gd "$@" l $options_
 }
 
 gl1 () {
