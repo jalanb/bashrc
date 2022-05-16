@@ -12,12 +12,11 @@ from bdb import BdbQuit
 from rich import print
 from pysyte.freds.freds import Freds
 from pysyte.types.paths import path
-from pysyte.types.sources import SourceError
 
 __version__ = '0.1.0'
 
 
-class TypedError(SourceError):
+class TypedError(FileNotFoundError):
     def __init__(self, type_, name):
         super().__init__(f'{type_} {name} not found')
 
@@ -105,6 +104,6 @@ def script(args):
         print(' '.join(fred_files))
         return True
     if not fred_files:
-        raise SourceError('No freds found')
+        raise FileNotFoundError('No freds found')
     print('%s %s' % (command, ' '.join(as_paths(fred_files))))
     return True
