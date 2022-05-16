@@ -112,7 +112,7 @@ fss () {
     $(freds --shell "$@")
 }
 
-vff () {
+fvv () {
     $(freds --edit "$@")
 }
 
