@@ -9,11 +9,12 @@ pip_upgrade () {
 main () {
     local clone_=~/bots/bots/iterm
     cd $clone_
+    echo Updating git
     git checkout -q __main__ 
     git pull -q --rebase | grep -v Already
     source .venv/bin/activate
-    pip_upgrade pip
-    pip_upgrade pysyte
+    echo Upgrading pip packages
+    pip_upgrade pip pysyte
     pip_upgrade -r requirements/development.txt
     export PYTHONHTTPSVERIFY=0
     export TERM=xterm-256color
