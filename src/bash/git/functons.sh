@@ -336,6 +336,10 @@ gll () {
     gl_ 8 "$@"
 }
 
+glm () {
+    g l __main__..
+}
+
 gln () {
     gd "$@" l --name-only
 }
