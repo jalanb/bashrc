@@ -88,12 +88,12 @@ def script(args):
         command = '; '.join(
             f"""python -c "
             try:
-                import {fred}
                 breakpoint()
+                import {_}
             except ImportError:
                 pass
             "
-            """ for fred in freds
+            """ for _ in freds
         )
     elif args.shell:
         freds = [_ for _ in fred_files if _ and _.ext == '.sh'][:1]
