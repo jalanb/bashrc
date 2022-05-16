@@ -5,6 +5,7 @@ Include ab13173
 Host *
     AddKeysToAgent yes
     UseKeychain no
+    IdentitiesOnly=yes
 
 Host github
     Hostname 140.82.121.3

@@ -1,7 +1,5 @@
 
 pprintpp
-pym
 pysyte
+rich-cli
 tldr
-# vidb
-# zatso

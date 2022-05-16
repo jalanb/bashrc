@@ -34,7 +34,8 @@ count_dirs () {
     )
 }
 
-cd_home_dirs () {
+
+home_cd_dir () {
     local cde_=
     local echo_=
     local arg_=
@@ -61,14 +62,14 @@ cd_home_dirs () {
 
 home_ls () {
     local _doc="""Try $1, and $1/$2 as a directory under $HOME"""
-    local $_dir=$(cd_home_dirs "$@" && pwd)
+    local $_dir=$(home_cd_dir "$@" && pwd)
     CDE_header=$( ls -1 -d $ $_dir * 2>/dev/null )
     # set +x
 }
 
 home_cd () {
     local _return=$(count_dirs "$@")
-    cd_home_dirs "$@"
+    home_cd_dir "$@"
 }
 
 home_cde () {
@@ -76,7 +77,7 @@ home_cde () {
 }
 
 home_range () {
-    cd_home_dirs "$@"
+    home_cd_dir "$@"
     ranger
 }
 

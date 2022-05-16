@@ -70,7 +70,7 @@ vim_keyboard () {
         [[ -f $file_ ]] && files_="$files_ $file_"
         file_=
     done
-    v $files_
+    vim -p $files_
     read_keys
 }
 

@@ -29,7 +29,7 @@ pong () {
         pinged_=$(ping -c1 $options_ "$remote_")
     fi
     [[ $pinged_ ]] || return 1
-    echo $_pinged | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep ' [0-9.]*'
+    echo $pinged_ | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep --color ' [0-9.]*'
     return 0
 }
 

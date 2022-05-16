@@ -49,35 +49,11 @@ eft () {
     local __doc__="""Errors from a command, or the one before"""
 }
 
-etf () {
-    wtf $?
-    local __doc__="""Errors from a status"""
-}
-
 ett () {
     local _status=$1
     echo "True $_status $(face $_status)" >&1
     true
     local __doc__="""Errors from a successful command"""
-}
-
-wtf () {
-    local _status=$1 name_=Pass out_=1 err_=1
-    [[ $1 ]] && _status=$1 && shift
-    [[ $_status == 0 ]] || name_=Fail
-    [[ $name_ == Fail ]] && out_=
-    [[ $name_ == Pass ]] && err_=
-    [[ $1 =~ -[qQ] ]] && out_=
-    [[ $1 =~ -[Q] ]] && err_=
-    _message="$name_ $_status $(face $_status)" 
-    if [[ $name_ == Pass ]]; then
-        [[ $out_ ]] && echo $_message
-    elif [[ $name_ == Fail ]]; then
-        [[ $err_ ]] && echo $_message >&2
-    fi
-    [[ $name_ == Fail ]] && return $_status
-    return 0
-    local __doc__="""Errors from a status"""
 }
 
 # _xx

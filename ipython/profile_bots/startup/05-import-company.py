@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 
-from tools.issues import issues
+from bots.issues import issues
 
 @dataclass
 class EmployerData:

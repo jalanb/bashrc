@@ -67,7 +67,7 @@ def find_sources(args):
 
 
 def show_imports(args, source) -> bool:
-    visitor = imports.parse(source)
+    visitor = imports.extract_imports(source)
     modules = []
     if args.multiple:
         modules.extend(show_multiples(visitor))
@@ -75,7 +75,7 @@ def show_imports(args, source) -> bool:
         modules.extend(show_unused(visitor))
     if args.edit and modules:
         sought = r"\|".join((rf"\<{_}\>" for _ in modules))
-        print(f'\n{vim} {visitor.path} +/"{sought}"')
+        print(f'\nvim {visitor.path} +/"{sought}"')
     return bool(modules)
 
 

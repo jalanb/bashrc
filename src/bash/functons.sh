@@ -12,6 +12,12 @@ typed pii || . ~/bash/python.sh
 
 # sorted by strcmp of function name, punctuation before letters
 
+# x
+
+3 () {
+    tree "$@" | less -R
+}
+
 # _x
 
 ,. () {
@@ -29,10 +35,33 @@ typed pii || . ~/bash/python.sh
 }
 
 3l () {
-    local _num=
-    [[ $1 =~ ^[0-9]+$ ]] && _num=$1
-    [[ $_num ]] && shift || _num=3
-    Tree -L $_num  "$@"
+    local options_= shifts_=
+    [[ $1 =~ ^[0-9]+$ ]] && options_="-L $1" && shifts_=1
+    [[ $1 =~ ^[-]L$ ]] && options_="$1 $2" && shifts_=2
+    [[ $options_ ]] || options_="-L 3"
+    [[ $1 =~ ^[-]P$ ]] && options_="$options_ $1 $2" && shifts_=2
+    [[ $shifts_ ]] && shift $shifts_
+    3 $options_ "$@"
+}
+
+arg_dirs () {
+    local dir_=. arg_= path_= result_=1
+    for arg_ in "$@"; do
+        [[ -e "$arg_" ]] || continue
+        path_=$( readlink -f "$arg_")
+        [[ -d "$path_" ]] && dir_="$path_"
+        [[ -f "$path_" ]] && dir_=$(dirname "$path_")
+        [[ -d "$dir_" ]] && result_=0
+        [[ -d "$dir_" ]] && echo $dir_
+    done
+    return $result_
+}
+
+arg_dir () {
+    [[ -e "$1" ]] || return 1
+    local path_=$( readlink -f "$1") dir_=
+    [[ -d "$path_" ]] && echo "$path_" || dirname "$path_"
+    return 0
 }
 
 3y () {
@@ -249,184 +278,6 @@ gsij () {
     gsi ~/jab
 }
 
-l1d () {
-    ld -1 "$@"
-}
-
-lda () {
-    ls -1da "$@"
-}
-
-lff () {
-    ls fred*
-}
-
-lka () {
-    l -a "$@"
-}
-
-lkk () {
-    l -a "$@"
-}
-
-lkl () {
-    lkra "$@"
-}
-
-lkq () {
-    local _sought=$1
-    if [[ -f $_sought ]]; then
-        l $_sought
-        return 0
-    fi
-    while [[ -n $_sought ]]; do
-        if l -d $_sought 2>/dev/null; then
-            break
-        fi
-        _sought=$(dirnames $_sought)
-        if [[ $_sought == / ]]; then
-            break
-        fi
-    done
-}
-
-lkr () {
-    l -lhtr "$@"
-}
-
-lib () {
-    lr ~/.bashrc
-}
-
-lla () {
-    ll -a "$@"
-}
-
-lly () {
-    shift_dir "$@" && shift
-    reset=$(shopt -p dotglob)
-    shopt -s dotglob
-    lr "$dir"/*.tests
-    echo
-    lr "$dir"/*.test
-    echo
-    lr "$dir"/*.py
-    $reset
-}
-
-lns () {
-    ln -s "$@"
-}
-
-loc () {
-    locate "$@"
-}
-
-lof () {
-    locate -f "$@"
-}
-
-lr1 () {
-    shift_dir "$@" && shift
-    l -1tr --color=always "$dir" | tel
-}
-
-lra () {
-    lr -a "$@"
-}
-
-lrd () {
-    lr -d "$@"
-}
-
-lrt () {
-    l --color=always -lrth "$@" | tel
-}
-
-ls1 () {
-    l1 "$@" | sort
-}
-
-lsh () {
-    l *.sh
-}
-
-
-lyy () {
-    reset=$(shopt -p dotglob)
-    shopt -s dotglob
-    l -xd $(ls -F |grep \/$)
-    echo
-    lx *.tests 2>/dev/null
-    echo
-    lx *.test 2>/dev/null
-    echo
-    lx *.py 2>/dev/null
-    $reset
-}
-
-mkd () {
-    local __doc__='make a directory' _error=0
-    if [[ -d "$1" ]]; then
-        [[ $# > 1 ]] || echo Directory existed "$@" >&2
-        _error=1
-    else
-        mkdir -p "$1"
-    fi
-    [[ $# > 1 ]] || return $_error
-    (cd "$1"
-        shift
-        for x in "$@"; do [[ -e "$x" ]] || touch "$x"; done
-        _error=$?
-    )
-    return $_error
-}
-
-nat () {
-    local _cmd=cat
-    is-file bat && _cmd=bat
-    is-file kat && $(kat "$@" >~/fd1 2>~/fd2) && _cmd=kat
-    $_cmd "$@"
-}
-
-num () {
-    vim ~/jalanb/local/numbers.txt
-}
-
-ps3 () {
-    if [[ -z "$@" ]]; then
-        ps axf | vim - +
-    else ps axf | vim - +/"$*"
-    fi
-}
-
-pyt () {
-    local __doc__="""Run py.test with args, or default to doctests"""
-    local _pythonpath=$(readlink -f .) _options="--doctest-modules --doctest-glob=*.test --doctest-glob=*.tests"
-    if [[ $@ ]]; then
-        if [[ $1 =~ -[d] ]]; then
-            shift
-        else
-            _options=
-        fi
-    fi
-    [[ $PYTHONPATH ]] && _pythonpath="$_pythonpath:$PYTHONPATH"
-    PYTHONPATH="$_pythonpath" py.test $_options "$@"
-}
-
-raj () {
-    pushq ~/jab
-    range "$@"
-    popq
-}
-
-rlf () {
-    local path_=.
-    [[ $1 ]] && path_="$1"
-    readlink -f "$path_"
-    # realpath $path_
-}
-
 sai () {
     [[ -f /usr/bin/say ]] || return
     local _one=$1
@@ -583,10 +434,6 @@ wvb () {
 
 wvj () {
     vim -p ~/jab/__init__.sh "$@"
-}
-
-wvp () {
-    vim -p ~/hub/pym/pym/edit/ "$@"
 }
 
 wvw () {
@@ -1604,7 +1451,6 @@ _divv_get_difference () {
         --exclude="*.beam" \
         --exclude="*.a" \
         --exclude="*.o" \
-        --exclude=.gitignore \
         $_source_gitignore \
         $destination_gitignore \
     "$_source_dir" "$_destination_dir" 2> ~/fd2

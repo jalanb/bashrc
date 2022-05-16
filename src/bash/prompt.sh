@@ -180,6 +180,8 @@ _post_pses () {
 export_pses () {
     local __doc__="""Set all PS* symbols (which control prompts"""
     local _status=$1
+    PROMPT_STATUS=$_status
+    export PROMPT_STATUS
     _pre_pses
     export PS1=$(_colour_prompt $_status)
     export PS2="... "  # Continuation line

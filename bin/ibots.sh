@@ -3,17 +3,18 @@
 hash -d python3 ipython3
 
 pip_upgrade () {
-    python3 -m pip install --index-url=https://twkgit31.wwts.com --upgrade "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting
+    python3 -m pip install --index-url=https://pypi.wwts.com --upgrade --no-deps "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting
 }
 
 main () {
     local clone_=~/bots/bots/iterm
     cd $clone_
-    git checkout -q __main__
-    git pull -q --rebase
+    echo Updating git
+    git checkout -q __main__ 
+    git pull -q --rebase | grep -v Already
     source .venv/bin/activate
-    pip_upgrade pip
-    pip_upgrade pysyte
+    echo Upgrading pip packages
+    pip_upgrade pip pysyte
     pip_upgrade -r requirements/development.txt
     export PYTHONHTTPSVERIFY=0
     export TERM=xterm-256color
