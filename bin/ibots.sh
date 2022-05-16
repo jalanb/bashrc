@@ -3,7 +3,7 @@
 hash -d python3 ipython3
 
 pip_upgrade () {
-    python3 -m pip install --index-url=https://twkgit31.wwts.com --upgrade "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting
+    python3 -m pip install --index-url=https://pypi.wwts.com --upgrade --no-deps "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting
 }
 
 main () {
