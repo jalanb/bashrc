@@ -185,7 +185,7 @@ vtr () {
 }
 
 vss () {
-    vim -p ~/.ssh/config ~/.ssh/keys/config ~/.ssh
+    vim -p ~/.ssh/config ~/.ssh/keys/config ~/.ssh/macs ~/.ssh/ab13173
 }
 
 vtt () {
