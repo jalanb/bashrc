@@ -41,7 +41,7 @@ typed pii || . ~/bash/python.sh
     [[ $options_ ]] || options_="-L 3"
     [[ $1 =~ ^[-]P$ ]] && options_="$options_ $1 $2" && shifts_=2
     [[ $shifts_ ]] && shift $shifts_
-    3 $options_ "$@"
+    Tree $options_ "$@"
 }
 
 arg_dirs () {
