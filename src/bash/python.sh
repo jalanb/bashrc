@@ -30,7 +30,7 @@ ppi () {
 }
 
 ppu () {
-    ppip uninstall "$@"
+    ppip uninstall -y "$@"
 }
 
 # xxxx
@@ -42,6 +42,7 @@ ppid () {
 ppie () {
     if [[ -d "$1" ]]; then
         (
+            show_command cd "$1"
             cd "$1"
             ppi -e .
         )
