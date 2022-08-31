@@ -104,9 +104,15 @@ raj () {
 }
 
 rlf () {
-    local path_=.
+    local path_=. rlf_path_= suffix_=
     [[ $1 ]] && path_="$1"
-    readlink -f "$path_"
+    rlf_path_=$(readlink -f "$path_")
+    if [[ -e $rlf_path_ ]]; then
+        echo $rlf_path_
+        return 0
+    fi
+    echo "$rlf_path_  # does not exist"
+    return 1
     # realpath $path_
 }
 
