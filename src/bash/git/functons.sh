@@ -49,12 +49,19 @@ gb () {
     fi
 }
 
-gd () {
+
+gc () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
     show_command git -C "$dir_" "$@"
     # set -x
     git --no-pager -C "$dir_" "$@"
+}
+
+gd () {
+    red_line gc "$@"
+    gc "$@"
+    return 4
 }
 
 gf () {
@@ -116,7 +123,7 @@ gp () {
 
 gs () {
     local _doc___="""git status front end"""
-    gd "$@" status 2>/dev/null 
+    gc "$@" status 2>/dev/null 
 }
 
 gt () {
@@ -216,15 +223,15 @@ gdd () {
 }
 
 gdf () {
-    gd "$@" df
+    gc "$@" df
 }
 
 gdi () {
-    gd "$@" d
+    gc "$@" d
 }
 
 gdh () {
-    gd "$@" dh
+    gc "$@" dh
 }
 
 gdl () {
@@ -237,7 +244,7 @@ gds () {
 }
 
 gdv () {
-    gd "$@" dv
+    gc "$@" dv
 }
 
 gfa () {
@@ -301,7 +308,7 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gd "$@" l $options_
+    gc "$@" l $options_
 }
 
 gl1 () {
@@ -321,12 +328,12 @@ gl4 () {
 }
 
 gla () {
-    gd "$@" l --author=Alan.Brogan
+    gc "$@" l --author=Alan.Brogan
 }
 
 glg () {
     local sought_=$1; shift
-    gd "$@" l --grep "$sought_" 2>/dev/null
+    gc "$@" l --grep "$sought_" 2>/dev/null
     local result_=$?
     echo
     return $result_
@@ -341,7 +348,7 @@ glm () {
 }
 
 gln () {
-    gd "$@" l --name-only
+    gc "$@" l --name-only
 }
 
 glp () {
@@ -349,7 +356,7 @@ glp () {
 }
 
 glt () {
-    gd "$@" lt
+    gc "$@" lt
 }
 
 glv () {
@@ -640,7 +647,7 @@ gsg () {
 
 gss () {
     local _doc___="""git short status"""
-    gd "$@" status --short 2>/dev/null 
+    gc "$@" status --short 2>/dev/null 
 }
 
 gso () {
@@ -649,7 +656,7 @@ gso () {
 
 gsp () {
     local _doc___="""Porcelain status"""
-    gd "$@" status --porcelain 2>/dev/null 
+    gc "$@" status --porcelain 2>/dev/null 
 }
 
 gta () {
@@ -811,18 +818,18 @@ gdil () {
 }
 
 gdis () {
-    gd "$@" d --staged 
+    gc "$@" d --staged 
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_command gd lg "$@" > $stdout_
-    gd lg "$@" >> $stdout_ 2> $stderr_ 
+    show_command gc lg "$@" > $stdout_
+    gc lg "$@" >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
-    if [[ $count_ < $(( $LINES - 2 )) ]]; then gd lg "$@"
+    if [[ $count_ < $(( $LINES - 2 )) ]]; then gc lg "$@"
     elif [[ $count_ < 256 ]]; then less -R $stdout_
-    else tput smcup; gd lg "$@"; tput rmcup
+    else tput smcup; gc lg "$@"; tput rmcup
     fi
 }
 
@@ -1119,7 +1126,7 @@ git_root () {
 
 git_stash () {
     local _doc___="""git stash"""
-    gd "$@" stash
+    gc "$@" stash
 }
 
 git_dirty () {
