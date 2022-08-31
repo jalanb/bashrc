@@ -77,6 +77,7 @@
     ia = commit --amend
     ie = commit --edit
     ii = commit --interactive
+    im = commit --message
     iip = commit --interactive --patch
     ip = commit --patch
 
@@ -119,6 +120,7 @@
     pa =  push --atomic --all
     pf =  push --atomic --force-with-lease
     pff = push --atomic --force
+    pod = push origin --delete
     pt =  push --tags
     pu =  push --set-upstream
     puu =  push --unset-upstream
