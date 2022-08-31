@@ -485,31 +485,20 @@ dir_has_branch () {
     is_branch "$@"
 }
 
-is_branch () {
-    local dir_=.
-    if [[ -d "$1" ]]; then
-        dir_="$1"
-        shift
-    fi
-    local branch_=$1 branches_=$(git -C $dir_ branch 2>/dev/null )
-    [[ $branch_ ]] || return 1
-    [[ $branches_ ]] || return 1
-    local found_=$(git -C $dir_ branch 2>/dev/null | grep $branch_ 2>/dev/null)
-    [[ $found_ ]] || return 2
-    [[ $2 == -v ]] && echo $found_
-    return 0
-}
-
 main_branch () {
-    local upstream_=__main__
-    grep_branch master -q && upstream_=master
-    echo $upstream_
+    if grep_branch -q __main__; then
+        echo __main__
+        return 0
+    fi
+    if grep_branch -q master; then
+        grep_branch master
+        return 0
+    fi
+    return 1
 }
 
 show_branch () {
-    local show_option_=-v
-    [[ $2 == -q ]] && show_option_=
-    is_branch $show_option_ $1
+    git_branch -v "$@"
 }
 
 minus_one () {
@@ -1237,17 +1226,13 @@ grep_branch () {
     while [[ $1 ]]; do
         if [[ $1 =~ ^-[aqrv] ]]; then
             [[ $1 =~ ^-[ar] ]] && git_options_="$git_options_ $1"
-            [[ $1 == ^-[qv] ]] && grep_options_="$grep_options_ $1"
+            [[ $1 =~ ^-[qv] ]] && grep_options_="$grep_options_ $1"
         else
             regexp_=$1
         fi
         shift
     done
     git branch $git_options_ | sed -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
-}
-
-show_branch () {
-    git_branch -v "$@"
 }
 
 show_git_time () {
