@@ -21,10 +21,8 @@ show_pythonpath () {
 
 . ~/whyp.sh
 export WHYP_EDITOR=vv
-export ACKVIM=~/hub/ackvim/ackvim
-. $ACKVIM.sh
-export PYTH=~/hub/pyth/pyth
-. $PYTH.sh
+. ~/hub/jalanb/ackvim/ackvim.sh
+. ~/hub/jalanb/pyth/pyth.sh
 
 . ~/jab/src/bash/__cd__.sh
 . ~/jab/environ.d/__init__.sh
