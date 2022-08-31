@@ -32,6 +32,7 @@ typed pii || . ~/bash/python.sh
 
 3l () {
     local options_= shifts_=
+    [[ $1 =~ ^[-]d$ ]] && options_="-d" && shift
     [[ $1 =~ ^[0-9]+$ ]] && options_="-L $1" && shifts_=1
     [[ $1 =~ ^[-]L$ ]] && options_="$1 $2" && shifts_=2
     [[ $options_ ]] || options_="-L 3"
@@ -61,19 +62,13 @@ arg_dir () {
 }
 
 3y () {
-    local _dir=
-    [[ -f "$1" ]] && _dir=$(dirname "$1")
-    [[ -d "$1" ]] && _dir="$1"
-    if [[ -f "$1" ]]; then
-        dir=$(dirnames "$1")
+    local dir_=.
+    if [[ -e "$1" ]]; then
+        [[ -d "$1" ]] && dir_="$1"
+        [[ -f "$1" ]] && dir_=$(dirname "$1")
         shift
-    elif [[ -d "$1" ]]; then
-        dir=$1
-        shift
-    else
-        dir=
     fi
-    3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
+    3l -P "*.py" $dir_ "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
 }
 
 IP () {
@@ -479,7 +474,6 @@ brew () {
 }
 
 bump () {
-    local _bump_dir=.
     local _show=
     local _get=
     if [[ $1 == show ]]; then
@@ -503,7 +497,7 @@ bump () {
     local _config=
     [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
     [[ -n $_config ]] && shift
-    local _bump_root=$(git_root $_bump_dir)
+    local _bump_root=$(git_root .)
     local _part=${1:-patch}; shift
     if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
@@ -564,9 +558,9 @@ mine () {
 
 mkcd () {
     local __doc__='make a directory and start using it';
-    mkd "$1"
-    [[ -d "$@" ]] || return 1
-    cd "$@"
+    mkdir -p "$1"
+    [[ -d "$1" ]] || return 1
+    cd "$1"
 }
 
 mkpy () {
