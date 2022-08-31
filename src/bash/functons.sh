@@ -14,10 +14,6 @@ typed pii || . ~/bash/python.sh
 
 # x
 
-3 () {
-    tree "$@" | less -R
-}
-
 # _x
 
 ,. () {
@@ -272,10 +268,6 @@ jjb () {
 
 jjy () {
     kk ~/jab/src/python "$@"
-}
-
-gsij () {
-    gsi ~/jab
 }
 
 sai () {
@@ -540,6 +532,10 @@ bump () {
 down () {
     cde ~/Downloads "$@"
     l -tr . | tail
+}
+
+fred () {
+    lo
 }
 
 hhhh () {
@@ -904,10 +900,6 @@ mkvenv () {
     piup
 }
 
-tailer () {
-    tail -n 1 "$@"
-}
-
 show_line () {
     local _prefix=$1; shift
     local _server= _suffix=
@@ -938,6 +930,10 @@ run_as () {
     else
         SUDO $username
     fi
+}
+
+tailer () {
+    tail -n 1 "$@"
 }
 
 # xxxxxxx
