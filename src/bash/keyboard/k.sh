@@ -44,18 +44,18 @@ kad () {
 }
 
 key () {
-    local command_=. command_too_= file_=~/bash/keyboard/$1.sh
-    if [[ $1 =~ -[bv.] ]]; then
-        [[ $1 == -b ]] && command_=bat
-        [[ $1 == -v ]] && command_=vim && command_too_="whyp_source"
+    local command_=whyp_source file_=~/bash/keyboard/$1.sh
+    [[ -f "$file_" ]] || return 1
+    shift
+    if [[ $1 =~ -[blsv] ]]; then
+        if [[ $1 == -b ]]; then command_=bat
+        elif [[ $1 == -l ]]; then command_="ls -l"
+        elif [[ $1 == -s ]]; then command_=whyp_source
+        elif [[ $1 == -v ]]; then command_="vim -p"
+        fi
         shift
-        file_=~/bash/keyboard/$1.sh
     fi
+    [[ "$command_" ]] || return 2
     $command_ $file_
-    [[ $command_too_ ]] && $command_too_ $file_
+    [[ $command_ == "vim -p" ]] && whyp_source $file_
 }
-
-kpj () {
-    rsync -a -e "ssh -i $HOME/.ssh/id_jab" "$@"
-}
-
