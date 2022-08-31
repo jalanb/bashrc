@@ -22,13 +22,6 @@ kl () {
     l
 }
 
-kv () {
-    (k $1 || return 1
-    shift
-    vim -p "$@" && gsi)
-    return 0
-}
-
 ky () {
     shift_dir "$@" && shift
     dir=${dir:-~/jab/src/python}
@@ -44,18 +37,28 @@ kad () {
 }
 
 key () {
-    local command_=whyp_source file_=~/bash/keyboard/$1.sh
-    [[ -f "$file_" ]] || return 1
+    local command_=whyp_source file_= path_= option_=
+    if [[ $1 =~ [-] ]]; then
+        option_=$1
+        path_="$HOME/bash/keyboard/$2.sh"
+    else
+        path_="$HOME/bash/keyboard/$1.sh"
+        option_=$2
+    fi
+    shift 2
+    [[ $option_ ]] || $option_="-s"
+    [[ -f "$path_" ]] || return 1
     shift
-    if [[ $1 =~ -[blsv] ]]; then
-        if [[ $1 == -b ]]; then command_=bat
-        elif [[ $1 == -l ]]; then command_="ls -l"
-        elif [[ $1 == -s ]]; then command_=whyp_source
-        elif [[ $1 == -v ]]; then command_="vim -p"
+    local vim_command_="vim +1 "
+    if [[ $option_ =~ -[blsv] ]]; then
+        if [[ $option_ == -b ]]; then command_=bat
+        elif [[ $option_ == -l ]]; then command_="ls -l"
+        elif [[ $option_ == -s ]]; then command_=whyp_source
+        elif [[ $option_ == -v ]]; then command_="$vim_command_"
         fi
         shift
     fi
     [[ "$command_" ]] || return 2
-    $command_ $file_
-    [[ $command_ == "vim -p" ]] && whyp_source $file_
+    $command_ $path_
+    [[ $command_ == "$vim_command_" ]] && whyp_source $path_
 }
