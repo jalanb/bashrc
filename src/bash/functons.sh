@@ -908,6 +908,12 @@ show_line () {
     echo "$_prefix ${_server}$_suffix"
 }
 
+pysyon () {
+    local python_path_=/users/jab/pysyte
+    [[ $PYTHONPATH ]] && python_path_="$python_path_:$PYTHONPATH"
+    PYTHONPATH="$python_path_" python "$@"
+}
+
 please () {
     local _command=$(history -p !-1)
     [[ "$@" ]] && _command="$@"
@@ -1110,6 +1116,13 @@ twkgit30 () {
     sed -i -e s/$(work tools)/${_twkgit30}/ .git/config
     sed -i -e s/$(work tooltest)/${_twkgit30}/ .git/config
     sed -i -e 's!http://${_twkgit30}!https://${_twkgit30}!' .git/config
+}
+
+unittest () {
+    local __doc__="""unittest args"""
+    local _pythonpath=$(readlink -f .)
+    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    (PYTHONPATH="$_pythonpath" python -m unittest "$@")
 }
 
 # xxxxxxxxx

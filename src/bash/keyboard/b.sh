@@ -30,3 +30,8 @@ bup () {
 but () {
     bu tig
 }
+
+balck () {
+    local __doc__="""Common typo"""
+    black "$@"
+}
