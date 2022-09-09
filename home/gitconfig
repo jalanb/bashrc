@@ -67,6 +67,7 @@
     dr = rerere diff
     ds = d --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
+    dis = di --staged
     dump = cat-file -p
 
     ea = rebase --abort

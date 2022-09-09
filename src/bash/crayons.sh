@@ -3,20 +3,50 @@
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
 # show_colours
-
 # xxxxxxxx
 
+off () {
+    echo $NO_COLOUR
+}
+
+ansi_red () {
+    echo $RED
+}
+
+ansi_green () {
+    echo $GREEN
+}
+
+ansi_blue () {
+    echo $LIGHT_BLUE
+}
+
+red () {
+    coloured $(ansi_red) "$@"
+}
+
+blue () {
+    coloured $(ansi_blue) "$@"
+}
 
 
 show_error () {
-    show_red_line "$@" >&2
+    red_line "$@" >&2
     return 1
 }
 alias show_fail=show_error
 
+lblue () {
+    coloured $(ansi_blue) "$@"
+}
+
+green () {
+    coloured $(ansi_green) "$@"
+}
+
 # xxxxxxxxxxx
 
-show_colour () {
+coloured () {
     [[ $1 ]] || return 7
     [[ $1 =~ ^l?(red|green|blue|cyan|magenta|black|white)$ ]] || return 8
     local upper_=$(echo $1 | tr [:lower:] [:upper:])
@@ -49,6 +79,10 @@ is_command () {
     type $1 >/dev/null 2>&1
 }
 
+show_data () {
+    lblue_line "$@"
+}
+
 show_command () {
     lgreen_line '$' "$@"
 }
@@ -56,20 +90,38 @@ show_command () {
 # xxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxx
+red_line () {
+    red -l "$@"
+}
+alias show_red_line=red_line
 
 # xxxxxxxxxxxxxxx
 
 alias show_pass=green_line
+blue_line () {
+    blue -l "$@"
+}
+alias show_blue_line=blue_line
+alias show_cmnd=show_blue_line
+# xxxxxxxxxxxxxxx
+green_line () {
+    green -l "$@"
+}
+alias show_green_line=green_line
+alias show_pass=show_green_line
 
+lblue_line () {
+    lblue -l "$@"
+}
 # xxxxxxxxxxxxxxxx
 
-show_colour_line () {
-    show_colour "$@" -l
+coloured_line () {
+    coloured -l "$@"
 }
 
 show_run_command () {
     show_command "$@"
-    echo
+    printf
     "$@" > ~/fd1 2> ~/fd2
     if test -s ~/fd1; then
         if grep -q '0m' ~/fd1

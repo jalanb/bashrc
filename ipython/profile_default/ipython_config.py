@@ -46,7 +46,7 @@ c = get_config()
 # c.InteractiveShellApp.pylab_import_all = True
 
 # A list of dotted module names of IPython extensions to load.
-# c.InteractiveShellApp.extensions = []
+c.InteractiveShellApp.extensions = ["rich",]
 
 # Run the module as a script.
 # c.InteractiveShellApp.module_to_run = None

@@ -52,6 +52,12 @@ gb () {
 
 gc () {
     local dir_=.
+    if [[ ! $1 ]]; then 
+        clear
+        red_line "$ g d"
+        g d >&2
+        return 3
+    fi
     [[ -d "$1" ]] && dir_="$1" && shift
     show_command git -C "$dir_" "$@"
     # set -x
@@ -639,10 +645,12 @@ grs () {
 }
 
 gru () {
-    local options_=
-    [[ -d $1 ]] && options_="-C $1"
-    show_command git $options_ remote get-url origin
-    git $options_ remote get-url origin
+    local options_= quiet_=
+    [[ -d $1 ]] && options_="-C $1" && shift
+    [[ $1 =~ [-]q ]] && quiet_=1
+    local git_command_="git $options_ remote get-url origin"
+    [[ $quiet_ ]] || show_command $git_command_
+    $git_command_
 }
 
 gsa () {
@@ -1396,14 +1404,74 @@ log_test_file ()
     grep_git_log_for_python_test_file 3
 }
 
+off () {
+    # Turns colours off
+    echo "\033[0m"
+}
+
+render () {
+    local colour_=$1 end_=
+    [[ $colour_ ]] || return 3
+    shift
+    if [[ $1 == -l ]]; then
+        end_="\n"
+        shift
+    fi
+    printf "$colour_""$*""$(off)$end_"
+}
+
+red () {
+    echo "\033[0;31m"
+}
+
+green () {
+    echo "\033[0;32m"
+}
+
+blue () {
+    echo "\033[0;34m"
+}
+
+red_text () {
+    render $(red) "$@"
+}
+
+green_text () {
+    render $(green) "$@"
+}
+
+blue_text () {
+    render $(blue) "$@"
+}
+
+red_line () {
+    red_text -l "$@"
+}
+
+green_line () {
+    green_text -l "$@"
+}
+
+blue_line () {
+    blue_text -l "$@"
+}
+
+fail_line () {
+    red_line "$@"
+}
+
+pass_line () {
+    green_line "$@"
+}
+
+command_line () {
+    blue_line "$@"
+}
+
 red_one () {
-    local red="\033[0;31m"
-    local no_colour="\033[0m"
-    GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
+    GSI_MENU="$GSI_MENU$(red_text $1)$2"
 }
 
 red_two () {
-    local red="\033[0;31m"
-    local no_colour="\033[0m"
-    GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
+    GSI_MENU="${GSI_MENU}$(off)$1$(red_text $2)$3"
 }

@@ -25,6 +25,7 @@
 #
 fred.[a-z]*
 .cd
+.cd.sh
 .venv
 *.fail
 *.history
