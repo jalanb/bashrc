@@ -111,6 +111,7 @@ blue_line () {
 alias show_blue_line=blue_line
 alias show_cmnd=show_blue_line
 # xxxxxxxxxxxxxxx
+
 green_line () {
     green -l "$@"
 }

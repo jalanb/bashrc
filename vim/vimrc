@@ -160,8 +160,6 @@ nnoremap " bn
 "noremap ~ -
 "noremap !
 nnoremap @ :w !sudo tee % >/dev/null<cr>
-"noremap L
-nnoremap M `m
 "noremap $ -
 "noremap %
 "noremap ^
