@@ -1344,7 +1344,6 @@ untracked () {
 
 # xxxxxxxxxxxxxx
 
-
 quietly () {
     "$@" 2>/dev/null
 }
