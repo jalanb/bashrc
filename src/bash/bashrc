@@ -40,12 +40,19 @@ usr_local () {
 }
 
 bashrc_log=~/log/bashrc.log
-jab_dir=~/jalanb/jab
-jab_init=$jab_dir/__init__.sh
-local_init=$jab_dir/local/__init__.sh
+
+jalanblink () {
+    readlink -f ~/jalanb/$1
+}
+
+jablink () {
+    jalanblink jab/$1
+}
+
+jab_init=$(jablink __init__.sh)
 
 pre_bashrc_ () {
-    local homes_=$jab_dir/bin:$HOME/bin:$HOME/.local
+    local homes_=$(jablink bin):$HOME/bin:$HOME/.local
     local locals_="$(usr_local gnu):$(usr_local bin):$(usr_local go/bin)"
     local bins_=/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
@@ -59,31 +66,35 @@ pre_bashrc_ () {
     fi
 }
 
+local_init  () {
+    jablink local/__init__.sh
+}
+
 bashrc_ () {
     # echo_path
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     export PS1="\$? [$(lred_user)@\h:\$PWD]\n$ "
     [[ -f $jab_init ]] || return 1
     source $jab_init
-    [[ -f $local_init ]] && source $local_init
+    [[ -f $(local_init) ]] && source $(local_init)
     sp green
 }
 
 vbb () {
     (
-        cd $jab_dir
+        cd $(jablink)
         local local_= log_=
-        [[ -f $local_init ]] && local_=$local_init
+        [[ -f $(local_init) ]] && local_=$(local_init)
         [[ -f $bashrc_log ]] && log_=$bashrc_log
-        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $log_ "
-        vim -p "$@" $files_
-        readlink -f $files_
+        local bbs_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $log_ "
+        vim -p "$@" $bbs_
+        readlink -f $bbs_
     )
 }
 
 __main__ () {
     pre_bashrc_
-    bashrc_ $jab_dir
+    bashrc_ 
     set +m
 }
 

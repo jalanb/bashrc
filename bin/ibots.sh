@@ -3,12 +3,13 @@
 hash -d python3 ipython3
 
 pip_upgrade () {
-    python3 -m pip install --index-url=https://pypi.wwts.com --upgrade --no-deps "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting
+    python3 -m pip install --index-url=https://pypi.wwts.com --upgrade --no-deps "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting -e build
 }
 
 main () {
-    local clone_=~/bots/bots/iterm
+    local clone_=~/bots/iterm
     cd $clone_
+    echo "cd $clone_"
     echo Updating git
     git checkout -q __main__ 
     git pull -q --rebase | grep -v Already

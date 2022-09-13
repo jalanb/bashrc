@@ -49,12 +49,19 @@ gb () {
     fi
 }
 
-gd () {
+
+gc () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1" && shift
     show_command git -C "$dir_" "$@"
     # set -x
     git --no-pager -C "$dir_" "$@"
+}
+
+gd () {
+    red_line gc "$@"
+    gc "$@"
+    return 4
 }
 
 gf () {
@@ -116,7 +123,7 @@ gp () {
 
 gs () {
     local _doc___="""git status front end"""
-    gd "$@" status 2>/dev/null 
+    gc "$@" status 2>/dev/null 
 }
 
 gt () {
@@ -202,8 +209,28 @@ gbv () {
     git blame "$1" | vin
 }
 
+gcc () {
+    local c_="." d_=
+    [[ -d $1 ]] && c_=$1 && d_=d
+    [[ $d_ == d ]] && shift
+    echo $c_ 
+    [[ $d_ == d ]] && return 0
+    return 1
+}
+
+
+gcl () {
+    local c_=$(gcc "$@") && shift
+    gc $c_ l "$@"
+}
+
 gcp () {
     git cherry-pick -x --allow-empty "$@"
+}
+
+gcs () {
+    local c_=$(gcc "$@") && shift
+    gc "$c_" s
 }
 
 gcu () {
@@ -216,15 +243,15 @@ gdd () {
 }
 
 gdf () {
-    gd "$@" df
+    gc "$@" df
 }
 
 gdi () {
-    gd "$@" d
+    gc "$@" d
 }
 
 gdh () {
-    gd "$@" dh
+    gc "$@" dh
 }
 
 gdl () {
@@ -237,7 +264,7 @@ gds () {
 }
 
 gdv () {
-    gd "$@" dv
+    gc "$@" dv
 }
 
 gfa () {
@@ -301,7 +328,7 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gd "$@" l $options_
+    gc "$@" l $options_
 }
 
 gl1 () {
@@ -321,12 +348,12 @@ gl4 () {
 }
 
 gla () {
-    gd "$@" l --author=Alan.Brogan
+    gc "$@" l --author=Alan.Brogan
 }
 
 glg () {
     local sought_=$1; shift
-    gd "$@" l --grep "$sought_" 2>/dev/null
+    gc "$@" l --grep "$sought_" 2>/dev/null
     local result_=$?
     echo
     return $result_
@@ -341,7 +368,7 @@ glm () {
 }
 
 gln () {
-    gd "$@" l --name-only
+    gc "$@" l --name-only
 }
 
 glp () {
@@ -349,7 +376,7 @@ glp () {
 }
 
 glt () {
-    gd "$@" lt
+    gc "$@" lt
 }
 
 glv () {
@@ -409,7 +436,7 @@ goo () {
 
 gor () {
     if git_changes_here; then
-        show_red_line "Please handle changes first" >&2
+        red_line "Please handle changes first" >&2
         git status --short
         return 1
     fi
@@ -478,31 +505,20 @@ dir_has_branch () {
     is_branch "$@"
 }
 
-is_branch () {
-    local dir_=.
-    if [[ -d "$1" ]]; then
-        dir_="$1"
-        shift
-    fi
-    local branch_=$1 branches_=$(git -C $dir_ branch 2>/dev/null )
-    [[ $branch_ ]] || return 1
-    [[ $branches_ ]] || return 1
-    local found_=$(git -C $dir_ branch 2>/dev/null | grep $branch_ 2>/dev/null)
-    [[ $found_ ]] || return 2
-    [[ $2 == -v ]] && echo $found_
-    return 0
-}
-
 main_branch () {
-    local upstream_=__main__
-    grep_branch master -q && upstream_=master
-    echo $upstream_
+    if grep_branch -q __main__; then
+        echo __main__
+        return 0
+    fi
+    if grep_branch -q master; then
+        grep_branch master
+        return 0
+    fi
+    return 1
 }
 
 show_branch () {
-    local show_option_=-v
-    [[ $2 == -q ]] && show_option_=
-    is_branch $show_option_ $1
+    git_branch -v "$@"
 }
 
 minus_one () {
@@ -633,6 +649,11 @@ gsa () {
     git_stash_and "$@"
 }
 
+gsb () {
+    gs
+    gb
+}
+
 gsg () {
     gs
     glg
@@ -640,7 +661,7 @@ gsg () {
 
 gss () {
     local _doc___="""git short status"""
-    gd "$@" status --short 2>/dev/null 
+    gc "$@" status --short 2>/dev/null 
 }
 
 gso () {
@@ -649,7 +670,7 @@ gso () {
 
 gsp () {
     local _doc___="""Porcelain status"""
-    gd "$@" status --porcelain 2>/dev/null 
+    gc "$@" status --porcelain 2>/dev/null 
 }
 
 gta () {
@@ -802,6 +823,10 @@ gcug () {
 
 alias gcuj=gcuh
 
+gcus () {
+    local_gcu 'Sparky' $(work_email alan.brogan)
+}
+
 gcuw () {
     local_gcu 'Alan Brogan' $(work_email ab13173)
 }
@@ -811,18 +836,18 @@ gdil () {
 }
 
 gdis () {
-    gd "$@" d --staged 
+    gc "$@" d --staged 
 }
 
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
-    show_command gd lg "$@" > $stdout_
-    gd lg "$@" >> $stdout_ 2> $stderr_ 
+    show_command gc lg "$@" > $stdout_
+    gc lg "$@" >> $stdout_ 2> $stderr_ 
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
-    if [[ $count_ < $(( $LINES - 2 )) ]]; then gd lg "$@"
+    if [[ $count_ < $(( $LINES - 2 )) ]]; then gc lg "$@"
     elif [[ $count_ < 256 ]]; then less -R $stdout_
-    else tput smcup; gd lg "$@"; tput rmcup
+    else tput smcup; gc lg "$@"; tput rmcup
     fi
 }
 
@@ -1000,6 +1025,34 @@ rgl_ () {
 
 # xxxxx
 
+clonn () {
+    local name_=${1:-pysyte}
+    [[ $name_ ]] || return 12
+    local here_=`readlink -f .`
+    local dir_=`dirname $here_`
+    local url_="https://github.com/jalanb/${name_}.git"
+    local pwd_=`pwd`
+    if [[ -d $name_ ]]; then
+        cd $name_
+        local gurl_=`git remote get-url origin`
+        [[ $url_ == $gurl_ ]] || return 15
+        pwd
+        return 0
+    elif [[  $name_ =~ pysy.e ]]; then
+        [[ $dir_ == pysyse ]] || return 13
+        clone $url_
+        return 0
+    elif [[ $dir_ == jalanb ]]; then
+        clone $url_
+        return 0
+    else
+        local dest_="$HOME/jalanb"
+        [[ $name_ =~ pysy.e ]] && dest_="$dest_/pysyse"
+        cd $dest_
+        clonn $name_
+    fi
+}
+
 clone () {
     local range_=
     [[ "$1" == "-r" ]] && range_=ranger
@@ -1076,9 +1129,9 @@ mastered () {
 }
 
 show_pre_loop_ () {
-    show_green local
+    green_line local
     show_this_branch
-    show_green status
+    green_line status
 }
 
 get_root () {
@@ -1106,20 +1159,20 @@ git_root () {
     [[ -f "$git_dir_" ]] && git_dir_=$(dirname_ $git_dir_)
     [[ -d "$git_dir_" ]] || echo "Not a dir '$git_dir_'"
     [[ -d "$git_dir_" ]] || return 1
-    local full_dir_=$(readlink -f $git_dir_)
-    if ! git -C "$full_dir_" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
+    local dir_=$(readlink -f $git_dir_)
+    if ! git -C "$dir_" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
         cat /tmp/fd1
         cat /tmp/fd2 >&2
         return 1
     fi
-    git -C "$full_dir_" rev-parse --show-toplevel
+    git -C "$dir_" rev-parse --show-toplevel
 }
 
 # xxxxxxxxx
 
 git_stash () {
     local _doc___="""git stash"""
-    gd "$@" stash
+    gc "$@" stash
 }
 
 git_dirty () {
@@ -1186,6 +1239,29 @@ sed_origin () {
     git remote set-url origin $(git remote get-url origin | sed "$@")
 }
 
+show_clone () {
+    local head_='===-===-==='
+    local dir_="$1"
+    [[ $dir_ ]] || dir_=.
+    [[ -d "$dir_/.git" ]] || return 1
+    local git_="git -C $dir_"
+    echo
+    blue_line $head_
+    green_line $head_
+    green_line "$($git_ remote get-url origin) -> " $(rlf "$dir_")
+    green_line $head_
+    local status_=$($git_ status --porcelain)
+    if [[ $status_ ]]; then
+        red_line $head_
+        red_line $status_
+        red_line $head_
+    fi
+    green_line $head_
+    $git_ ll
+    green_line $head_
+    blue_line $head_
+}
+
 # xxxxxxxxxxx
 
 clean_clone () {
@@ -1230,17 +1306,13 @@ grep_branch () {
     while [[ $1 ]]; do
         if [[ $1 =~ ^-[aqrv] ]]; then
             [[ $1 =~ ^-[ar] ]] && git_options_="$git_options_ $1"
-            [[ $1 == ^-[qv] ]] && grep_options_="$grep_options_ $1"
+            [[ $1 =~ ^-[qv] ]] && grep_options_="$grep_options_ $1"
         else
             regexp_=$1
         fi
         shift
     done
     git branch $git_options_ | sed -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
-}
-
-show_branch () {
-    git_branch -v "$@"
 }
 
 show_git_time () {

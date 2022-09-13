@@ -3,7 +3,7 @@
 
 # _
 
-. ~/hub/ackvim/ackvim.sh
+. ~/hub/jalanb/ackvim/ackvim.sh
 
 # x
 

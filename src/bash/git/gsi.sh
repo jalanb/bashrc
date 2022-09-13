@@ -23,24 +23,31 @@ gxi () {
     local show_diff_=$1; shift
     local response_=$1; shift
     local responded_=
-    GXI_DIR=$(python_realpath "$1") && shift
-    [[ $GXI_DIR ]] || GXI_DIR=$(python_realpath .)
-    stashed_=
+    local dir_=$(python_realpath "$1") && shift
+    [[ $dir_ ]] || dir_=$(python_realpath .)
+    [[ -d "$dir_/.git" ]] || dir_=$(git -C "$dir_" rev-parse --show-toplevel)
+    [[ -d "$dir_/.git" ]] || return 1
+    GXI_DIR=$dir_
+    export GXI_DIR
+
+    STASHED_=
     GXI_QUERY=
     LESS=MRFX g lll
     LESS=MRFX g lf -n1
     show_pre_loop_
     while gxitss; do
-        show_green staged
+        green staged
         gxit di --staged
         echo
         responded_=
         for file_ in $(git_status_line_dir_changes); do
             [[ -n "$file_" ]] || continue
             echo "$file_"
-            echo gxi_grep_ $file_ $GXI_QUERY
-            gxi_grep_ $file_ $GXI_QUERY || continue
-            $show_diff_ "$file_"
+            if [[ $GXI_QUERY ]]; then
+                blue_line gxi_grep_ $file_ $GXI_QUERY
+                gxi_grep_ $file_ $GXI_QUERY || continue
+            fi
+            $diff_ "$file_"
             gxi_request_ "$file_" || break
             $response_ "$file_" && responded_=1
         done
@@ -51,7 +58,7 @@ gxi () {
         [[ -n $QUESTIONS ]] && v $QUESTIONS
         show_pre_loop_
     done
-    [[ -n $stashed_ ]] && gxit stash pop
+    [[ -n $STASHED_ ]] && gxit stash pop
     gxit dn --staged
     gxit status
 }
@@ -67,7 +74,7 @@ gsi_show_diff_ () {
         if [[ -d "$1" ]]; then
             find "$1" -type f -print
         elif [[ -f "$1" ]]; then
-            kat -n "$1"
+            bat -n "$1"
         else
             echo "Cannot handle $1"
         fi
@@ -82,7 +89,7 @@ gsi_show_diff_ () {
 ggi_show_diff_ () {
     local __doc__="""git di args; git short status"""
     if stat_untracked "$1"; then
-        kat -n "$1"
+        bat -n "$1"
         return 0
     fi
     if stat_modified "$1"; then
@@ -178,7 +185,7 @@ gxitss () {
 }
 
 show_pre_loop_ () {
-    show_green_line status
+    green_line status
 }
 
 git_status_line_dir_changes () {
@@ -256,8 +263,8 @@ gxi_request_ () {
 }
 
 gxi_stash_ () {
-    if [[ -z $stashed_ ]]; then
-        stashed_=gxi
+    if [[ -z $STASHED_ ]]; then
+        STASHED_=gxi
         gxit stash
     fi
 }
@@ -287,6 +294,8 @@ red_two () {
 
 python_realpath () {
     [[ $1 ]] || return 1
-    python -c"import os; print(os.path.realpath('""$1""'))"
+    local result_=$(python -c"import os; print(os.path.realpath('""$1""'))")
+    test -d $result_ || return 2
+    echo $result_
 }
 

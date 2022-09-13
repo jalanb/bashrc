@@ -4,7 +4,7 @@
 # set -e
 . ~/bash/types.sh
 
-typed show_green || . ~/bash/crayons.sh
+typed green || . ~/bash/crayons.sh
 typed pong || . ~/bash/pong.sh
 typed pii || . ~/bash/python.sh
 
@@ -13,10 +13,6 @@ typed pii || . ~/bash/python.sh
 # sorted by strcmp of function name, punctuation before letters
 
 # x
-
-3 () {
-    tree "$@" | less -R
-}
 
 # _x
 
@@ -36,12 +32,13 @@ typed pii || . ~/bash/python.sh
 
 3l () {
     local options_= shifts_=
+    [[ $1 =~ ^[-]d$ ]] && options_="-d" && shift
     [[ $1 =~ ^[0-9]+$ ]] && options_="-L $1" && shifts_=1
     [[ $1 =~ ^[-]L$ ]] && options_="$1 $2" && shifts_=2
     [[ $options_ ]] || options_="-L 3"
     [[ $1 =~ ^[-]P$ ]] && options_="$options_ $1 $2" && shifts_=2
     [[ $shifts_ ]] && shift $shifts_
-    3 $options_ "$@"
+    Tree $options_ "$@"
 }
 
 arg_dirs () {
@@ -65,19 +62,13 @@ arg_dir () {
 }
 
 3y () {
-    local _dir=
-    [[ -f "$1" ]] && _dir=$(dirname "$1")
-    [[ -d "$1" ]] && _dir="$1"
-    if [[ -f "$1" ]]; then
-        dir=$(dirnames "$1")
+    local dir_=.
+    if [[ -e "$1" ]]; then
+        [[ -d "$1" ]] && dir_="$1"
+        [[ -f "$1" ]] && dir_=$(dirname "$1")
         shift
-    elif [[ -d "$1" ]]; then
-        dir=$1
-        shift
-    else
-        dir=
     fi
-    3l -P "*.py" $dir "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
+    3l -P "*.py" $dir_ "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
 }
 
 IP () {
@@ -274,8 +265,9 @@ jjy () {
     kk ~/jab/src/python "$@"
 }
 
-gsij () {
-    gsi ~/jab
+mkd () {
+    show_command mkdir -p "$@"
+    mkdir -p "$@"
 }
 
 sai () {
@@ -487,7 +479,6 @@ brew () {
 }
 
 bump () {
-    local _bump_dir=.
     local _show=
     local _get=
     if [[ $1 == show ]]; then
@@ -511,7 +502,7 @@ bump () {
     local _config=
     [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
     [[ -n $_config ]] && shift
-    local _bump_root=$(git_root $_bump_dir)
+    local _bump_root=$(git_root .)
     local _part=${1:-patch}; shift
     if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
@@ -562,15 +553,21 @@ main () {
     [[ -n $* ]] && cp ~/jab/src/python/main.py $1 || cp ~/jab/src/python/main.py $dir
 }
 
+mann () {
+    man -P /usr/local/gnu/cat $1 | col -b
+}
+
 mine () {
     sudo chown -R $(id -un):$(id -gn) "$@"
 }
 
 mkcd () {
     local __doc__='make a directory and start using it';
-    mkd "$1"
-    [[ -d "$@" ]] || return 1
-    cd "$@"
+    show_command mkdir -p "$1"
+    mkdir -p "$1"
+    [[ -d "$1" ]] || return 1
+    show_command cd "$1"
+    cd "$1"
 }
 
 mkpy () {
@@ -735,7 +732,7 @@ jalanb () {
         [[ -d $repo ]] || continue
         git_dirty $repo || continue
         echo
-        show_green_line $repo
+        show_command $repo
         git -C $repo branch
         git -C $repo lg -n 3
         git -C $repo status | grep 'Your branch'
@@ -904,10 +901,6 @@ mkvenv () {
     piup
 }
 
-tailer () {
-    tail -n 1 "$@"
-}
-
 show_line () {
     local _prefix=$1; shift
     local _server= _suffix=
@@ -916,10 +909,16 @@ show_line () {
     echo "$_prefix ${_server}$_suffix"
 }
 
+pysyon () {
+    local python_path_=/users/jab/pysyte
+    [[ $PYTHONPATH ]] && python_path_="$python_path_:$PYTHONPATH"
+    PYTHONPATH="$python_path_" python "$@"
+}
+
 please () {
     local _command=$(history -p !-1)
     [[ "$@" ]] && _command="$@"
-    green_line "$ sudo $_command"
+    show_command "$ sudo $_command"
     sudo $_command
 }
 
@@ -938,6 +937,10 @@ run_as () {
     else
         SUDO $username
     fi
+}
+
+tailer () {
+    tail -n 1 "$@"
 }
 
 # xxxxxxx
@@ -1114,6 +1117,13 @@ twkgit30 () {
     sed -i -e s/$(work tools)/${_twkgit30}/ .git/config
     sed -i -e s/$(work tooltest)/${_twkgit30}/ .git/config
     sed -i -e 's!http://${_twkgit30}!https://${_twkgit30}!' .git/config
+}
+
+unittest () {
+    local __doc__="""unittest args"""
+    local _pythonpath=$(readlink -f .)
+    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    (PYTHONPATH="$_pythonpath" python -m unittest "$@")
 }
 
 # xxxxxxxxx

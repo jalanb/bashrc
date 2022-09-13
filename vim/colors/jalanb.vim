@@ -17,6 +17,7 @@ highlight Error                              ctermbg=Red                        
 highlight Todo              ctermfg=Black    ctermbg=Green                 guifg=#000080  guibg=#c0c000
 highlight Search            ctermfg=196      ctermbg=52                    guifg=#ff0000  guibg=#402020
 highlight Comment           ctermfg=241      ctermbg=232                   guifg=#626262
+" text
 highlight pythonBoolean     ctermfg=33                                     guifg=#0087ff
 highlight Number            ctermfg=39
 highlight String            ctermfg=159                                    guifg=#afffff
@@ -31,11 +32,14 @@ highlight Exception         ctermfg=160                                    guifg
 highlight Structure         ctermfg=196                                    guifg=#ff0000                  gui=bold
 highlight PreProc           ctermfg=130                                    guifg=#af5f00                  gui=bold
 highlight Type              ctermfg=52                                     guifg=#5f0000                  gui=bold
-highlight pythonClassname   ctermfg=56                                     guifg=#5f00d7
+highlight pythonClassStatement    	ctermfg=021                            guifg=#00005f
+highlight pythonClassStatement    	ctermfg=021                            guifg=#00005f
+highlight pythonInclude     ctermfg=022                                    guifg=#5f00d7
 highlight pythonFunction    ctermfg=68                                     guifg=#5f87d7
+highlight pythonFuncStatement      	ctermfg=022                            guifg=#5f0000
 highlight pythonBuiltinFunc ctermfg=58                                     guifg=#5f5f00
-highlight pythonSelf        ctermfg=97                                     guifg=#875FAF
-highlight pythonCall        ctermfg=46                                     guifg=#00FF00
+highlight pythonSelf        ctermfg=099                                    guifg=#875FAF
+highlight pythonCall        ctermfg=046                                    guifg=#00FF00
 highlight pythonInstance    ctermfg=48                                     guifg=#00FF87
 highlight pythonMemberCall  ctermfg=28                                     guifg=#008700
 highlight pythonMember      ctermfg=171                                    guifg=#D75FFF

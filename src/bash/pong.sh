@@ -28,7 +28,10 @@ pong () {
     else
         pinged_=$(ping -c1 $options_ "$remote_")
     fi
-    [[ $pinged_ ]] || return 1
+    local ping_result_=$?
+    [[ $ping_result_ == 0 ]] || return $ping_result_
+    [[ $pinged_ ]] || return 10
+    echo $pinged_ | grep -q "Unreachable" && return 11
     echo $pinged_ | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep --color ' [0-9.]*'
     return 0
 }

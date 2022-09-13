@@ -128,7 +128,14 @@ def script(args):
         print(' '.join(fred_files))
         return True
     if not fred_files:
-        raise FileNotFoundError('No freds found')
+        if args.edit:
+            fred_files = ["fred",]
+        elif args.list:
+            fred_files = ["fred*",]
+        elif args.remove:
+            return True
+        else:
+            raise FileNotFoundError('No freds found')
     print('%s %s' % (command, ' '.join(as_paths(fred_files))))
     return True
 
