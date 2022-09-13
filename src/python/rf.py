@@ -13,6 +13,8 @@ import fnmatch
 
 
 from six.moves import configparser
+import pysyte.shell.args
+import pysyte.shell.main
 
 
 def get_module_name():
@@ -117,23 +119,6 @@ def wanted_globs(options, configured_globs):
             for glob in value.split()]
 
 
-def parse_options():
-    """Find out what user wants at command line"""
-    configured_options, configured_globs = read_configuration()
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    add_arguments(parser, configured_options, configured_globs)
-    parser.add_argument('paths', default=['.'], nargs='*',
-                        help='paths to clean (default .)')
-    args = parser.parse_args(None)
-    paths = args.paths
-    delattr(args, 'paths')
-    if args.all:
-        _ = [setattr(args, name, True) for name in configured_globs.keys()]
-    if args.quiet and args.Trial_Run:
-        raise NotImplementedError('Using --quiet and --Trial-Run: Do nothing')
-    return paths, args, wanted_globs(args, configured_globs)
-
-
 def get_names_in(directory):
     """A list of names for all items in that directory"""
     try:
@@ -226,6 +211,23 @@ def script(paths, args, globs):
         if file_result != os.EX_OK:
             result = file_result
     return result
+
+
+def parse_options():
+    """Find out what user wants at command line"""
+    configured_options, configured_globs = read_configuration()
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    add_arguments(parser, configured_options, configured_globs)
+    parser.add_argument('paths', default=['.'], nargs='*',
+                        help='paths to clean (default .)')
+    args = parser.parse_args(None)
+    paths = args.paths
+    delattr(args, 'paths')
+    if args.all:
+        _ = [setattr(args, name, True) for name in configured_globs.keys()]
+    if args.quiet and args.Trial_Run:
+        raise NotImplementedError('Using --quiet and --Trial-Run: Do nothing')
+    return paths, args, wanted_globs(args, configured_globs)
 
 
 def main():
