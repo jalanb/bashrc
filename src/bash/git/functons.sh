@@ -416,7 +416,7 @@ goo () {
 
 gor () {
     if git_changes_here; then
-        show_red_line "Please handle changes first" >&2
+        red_line "Please handle changes first" >&2
         git status --short
         return 1
     fi
@@ -1072,9 +1072,9 @@ mastered () {
 }
 
 show_pre_loop_ () {
-    show_green local
+    green_line local
     show_this_branch
-    show_green status
+    green_line status
 }
 
 get_root () {

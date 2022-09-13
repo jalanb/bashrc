@@ -2,19 +2,11 @@
 
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
-# xxxxxxxx
-
-show_red () {
-    show_colour $RED "$@"
-}
+# show_colours
 
 # xxxxxxxx
 
-show_blue () {
-    show_colour $BLUE "$@"
-}
 
-# xxxxxxxxxx
 
 show_error () {
     show_red_line "$@" >&2
@@ -22,28 +14,32 @@ show_error () {
 }
 alias show_fail=show_error
 
-show_lblue () {
-    show_colour $LIGHT_BLUE "$@"
-}
-
-show_green () {
-    show_colour $GREEN "$@"
-}
-
 # xxxxxxxxxxx
 
 show_colour () {
-    local colour_=$1
+    [[ $1 ]] || return 7
+    [[ $1 =~ ^l?(red|green|blue|cyan|magenta|black|white)$ ]] || return 8
+    local upper_=${1^^}
+    [[ $1 =~ ^l ]] && upper_=${upper_:1}
+    local fore_="NIGHT_$upper_"  back_= none_=
+    [[ $1 =~ ^l ]] && fore_=${fore_/N/L}
     shift
+    [[ $1 ]] || return 9
+    if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
+        back_="BACK_${1^^}"
+        shift
+    fi
+    local colour_="${fore_}${back_}"
     local eol_= text_="$@"
     if [[ $* =~ (^|[\ ])-l ]]; then
         eol_="\n"
-        text_=$(echo $text_ | sed -e 's,\(^\|[ ]\)-l,,g')
+        text_=$(echo $text_ | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
         shift
     fi
+    [[ $back_ ]] || back_=none_
     if [[ "$text_" ]];
-    then printf "${colour_}$text_""${NO_COLOUR}${eol_}"
-    else printf "${colour_}$(cat)${NO_COLOUR}${eol_}"
+    then printf "${!fore_}${!back_}$text_""${NO_COLOUR}${eol_}"
+    else printf "${!fore_}${!back_}$(cat)${NO_COLOUR}${eol_}"
     fi
 }
 
@@ -54,34 +50,17 @@ is_command () {
 }
 
 show_command () {
-    show_lblue_line '$' "$@"
+    lgreen_line '$' "$@"
 }
 
 # xxxxxxxxxxxxx
 
-show_red_line () {
-    show_red "$@" -l
-}
-alias red_line=show_red_line
+# xxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxx
 
-show_blue_line () {
-    show_blue "$@" -l
-}
-alias blue_line=show_blue_line
-alias show_cmnd=show_blue_line
-# xxxxxxxxxxxxxxx
+alias show_pass=green_line
 
-show_green_line () {
-    show_green "$@" -l
-}
-alias green_line=show_green_line
-alias show_pass=show_green_line
-
-show_lblue_line () {
-    show_lblue "$@" -l
-}
 # xxxxxxxxxxxxxxxx
 
 show_colour_line () {
@@ -95,20 +74,31 @@ show_run_command () {
     if test -s ~/fd1; then
         if grep -q '0m' ~/fd1
         then cat ~/fd1
-        else show_colour $LIGHT_GREEN $(cat ~/fd1)
+        else light_blue_line $(cat ~/fd1)
         fi
     fi
     if test -s ~/fd2; then
-        show_colour $RED $(cat ~/fd2)
+        red_line $(cat ~/fd2)
     fi
-}
-
-show_run_command_old () {
-    show_command "$@"
-    "$@"
 }
 
 show_this_branch () {
     git branch $1 | grep --colour -B3 -A 3 $(get_branch)
 }
 
+source_colour_functions () {
+    local function_script_=${BASH_SOURCE}.sh
+    echo > $function_script_
+    printf "no_colour () {\n show_colour "'$NO_COLOR'" \n}\n\n" >> $function_script_
+    for colour in red green blue cyan magenta yellow black white; do
+        printf "$colour () {\n show_colour $colour "'"$@"'"\n}\n\n" >> $function_script_
+        printf "l$colour () {\n show_colour l$colour "'"$@"'"\n}\n\n" >> $function_script_
+        printf "${colour}_line () {\n show_colour $colour -l "'"$@"'"\n}\n\n" >> $function_script_
+        printf "l${colour}_line () {\n show_colour l$colour -l "'"$@"'"\n}\n\n" >> $function_script_
+    done
+    . $function_script_
+    # rm -f $function_script_
+    SOURCED_COLOUR_FUNCTIONS=1
+}
+
+[[ $SOURCED_COLOUR_FUNCTIONS ]] || source_colour_functions
