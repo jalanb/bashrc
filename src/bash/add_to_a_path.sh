@@ -65,16 +65,16 @@ show_value () {
 show_a_path () {
     local _quiet=
     [[ -z $1 ]] && return 1
-    if [[ $1 == "-q" ]]; then _quiet=1; shift; fi
+    [[ $1 == "-q" ]] && _quiet=1 && shift
     local name=$1 && shift
-    if [[ $1 == "-q" ]]; then _quiet=1; shift; fi
+    [[ $1 == "-q" ]] && _quiet=1 && shift
     local setter=bash
     if [[ -n $1 ]]; then
         setter=$1
         shift
     fi
-    [[ $1 == "-q" ]] && _quiet=1
-    [[ -n $_quiet ]] || echo "$setter has set \$$name to:"
+    [[ $1 == "-q" ]] && _quiet=1 && shift
+    [[ $_quiet ]] || echo "$setter has set \$$name to:"
     local old_ifs=$IFS
     IFS=":"
     local path=
