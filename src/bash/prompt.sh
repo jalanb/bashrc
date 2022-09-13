@@ -1,7 +1,5 @@
 #! /bin/cat -n
 
-
-
 export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
@@ -90,8 +88,8 @@ emoji_error () {
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
     echo
-    printf "$(emoji_error $1) $(green_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
-    #printf "$(emoji_error $1) $(green_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
+    printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
+    #printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
 }
 
 path_to_venv () {
@@ -110,9 +108,9 @@ venv_name () {
     echo $(l_red_ "${_venv_name/./}")
 }
 
-green_date () {
-    local _colour_day=$(green_ $(date +'%A'))
-    local _colour_date=$(l_green_ $(date +' %F %H:%M'))
+blue_date () {
+    local _colour_day=$(_colour blue $(date +'%A'))
+    local _colour_date=$(_colour l_blue $(date +' %F %H:%M'))
     echo $_colour_day $_colour_date
 }
 
@@ -136,9 +134,11 @@ blue_pwd_git () {
 }
 
 blue_user () {
-    local _colour_username=$(blue_ ${USER:-$(whoami)})
-    local _colour_host=$(blue_ ${HOSTNAME:-$(hostname -s)})
-    echo "${_colour_username}@$_colour_host"
+    local user_=$(whoami)
+    local hostname_=$(hostname -s)
+    local _hue_user=$(_colour blue ${user_:$USER})
+    local _hue_host=$(_colour blue ${hostname_:-$HOSTNAME})
+    echo "${_hue_user}@$_hue_host"
 }
 
 red_python () {
