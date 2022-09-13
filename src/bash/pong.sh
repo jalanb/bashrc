@@ -21,30 +21,6 @@ pong () {
     else
         remote_="$@"
     fi
-<<<<<<< HEAD
-    local pinged_=
-    if [[ $options_ =~ -q ]]; then
-        options_=$(echo "$@" | sed -e "s/$host_//" -e "s/-q//")
-        pinged_=$(ping -c1 $options_ "$remote_" 2>/dev/null)
-    else
-        pinged_=$(ping -c1 $options_ "$remote_")
-    fi
-    local ping_result_=$?
-    [[ $ping_result_ == 0 ]] || return $ping_result_
-    [[ $pinged_ ]] || return 10
-    echo $pinged_ | grep -q "Unreachable" && return 11
-    echo $pinged_ | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep --color ' [0-9.]*'
-||||||| parent of e302d433 (Explicit is better than implicit.)
-    local pinged_=
-    if [[ $options_ =~ -q ]]; then
-        options_=$(echo "$@" | sed -e "s/$host_//" -e "s/-q//")
-        pinged_=$(ping -c1 $options_ "$remote_" 2>/dev/null)
-    else
-        pinged_=$(ping -c1 $options_ "$remote_")
-    fi
-    [[ $pinged_ ]] || return 1
-    echo $_pinged | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep ' [0-9.]*'
-=======
     [[ $options_ =~ -t ]] || options_="-t1 $options_" 
     [[ $options_ =~ -c ]] || options_="-c1 $options_" 
     local quiet_=
@@ -54,17 +30,9 @@ pong () {
     local pinged_=$([[ $quiet_ ]] && $ping_ 2>/dev/null || $ping_)
     [[ $? == 0 ]] || return 1
     [[ $quiet_ == 1 ]] || echo $_pinged | grep "([0-9]*[.][0-9.]*)" | sed -e "s/PING //" -e "s/ (/ -> /" -e "s/).*//" | grep ' [0-9.]*'
->>>>>>> e302d433 (Explicit is better than implicit.)
     return 0
 }
 
-<<<<<<< HEAD
-poss ()
-{
-    ssh $1 "hostname"
-}
-||||||| parent of e302d433 (Explicit is better than implicit.)
-=======
 pongable () {
     local remote_=$1
     pong -q -c1 -t1 $remote_
@@ -74,7 +42,6 @@ poss () {
     ssh $1 "hostname"
 }
 
->>>>>>> e302d433 (Explicit is better than implicit.)
 # xxxxx
 # xxxxxx
 
