@@ -207,6 +207,8 @@ nnoremap <down>             /<cr>zv
 nnoremap <left>             #zv
 nnoremap <right>            *zv
 "
+" Shift Arrows
+"
 nnoremap <s-left>           gT
 nnoremap <s-right>          gt
 
