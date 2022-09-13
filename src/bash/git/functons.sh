@@ -150,6 +150,15 @@ gw () {
     fi
 }
 
+gdf () {
+    git "$@" df
+}
+
+gof () {
+    gbD fred 2>/dev/null
+    gob fred "$@"
+}
+
 # xxx
 
 gaa () {
@@ -565,6 +574,21 @@ grc () {
     show_command git rebase --continue
     GIT_EDITOR=true git rebase --continue | grep "skip this commit" || return
     git rebase --skip
+}
+
+grf () {
+    local branch_=__main__
+    [[ $1 ]] && branch_=$1
+    gru
+    gcu
+    show_command git_root -o
+    git_root -o
+    gfe | grep -v 'Fetching'
+    gor $branch_ 2>/dev/null | grep -v "up to date"
+    gb
+    show_command bump show
+    bump show
+    gll
 }
 
 grg () {
