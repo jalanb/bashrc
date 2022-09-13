@@ -9,6 +9,10 @@ r () {
 
 # xx
 
+ra () {
+    ranger "$@"
+}
+
 ri () {
     local _argc=${#*}
     if [[ $_argc == 1 ]]; then
