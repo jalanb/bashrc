@@ -25,7 +25,7 @@ gxi () {
     local responded_=
     GXI_DIR=$(python_realpath "$1") && shift
     [[ $GXI_DIR ]] || GXI_DIR=$(python_realpath .)
-    stashed_=
+    STASHED_=
     GXI_QUERY=
     LESS=MRFX g lll
     LESS=MRFX g lf -n1
@@ -51,7 +51,7 @@ gxi () {
         [[ -n $QUESTIONS ]] && v $QUESTIONS
         show_pre_loop_
     done
-    [[ -n $stashed_ ]] && gxit stash pop
+    [[ -n $STASHED_ ]] && gxit stash pop
     gxit dn --staged
     gxit status
 }
@@ -256,8 +256,8 @@ gxi_request_ () {
 }
 
 gxi_stash_ () {
-    if [[ -z $stashed_ ]]; then
-        stashed_=gxi
+    if [[ -z $STASHED_ ]]; then
+        STASHED_=gxi
         gxit stash
     fi
 }

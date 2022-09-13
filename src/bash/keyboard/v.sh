@@ -115,8 +115,28 @@ vat () {
     vimcat "$@"
 }
 
+
+vbb () {
+    (
+        cd ~/jalanb/jab
+        local local_=local/__init__.sh
+        [[ -f $local_ ]] || local_=
+        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc "
+        vim -p $files_ "$@"
+        readlink -f $files_
+    )
+}
+
 vd1 () {
     vd ~/one "$@"
+}
+
+vd2 () {
+    vd ~/two "$@"
+}
+
+vd3 () {
+    vd ~/three "$@"
 }
 
 vdd () {
@@ -230,15 +250,31 @@ vvv () {
 # xxxx
 
 hd12 () {
-    hd ~/one ~/two
+    hd ~/one ~/two "$@"
 }
 
 vd12 () {
-    vd ~/one ~/two
+    vd ~/one ~/two "$@"
 }
 
 vd13 () {
-    vd ~/two ~/three
+    vd ~/two ~/three "$@"
+}
+
+vd21 () {
+    vd ~/one ~/two "$@"
+}
+
+vd23 () {
+    vd ~/two ~/three "$@"
+}
+
+vd32 () {
+    vd ~/one ~/two "$@"
+}
+
+vd31 () {
+    vd ~/two ~/three "$@"
 }
 
 vims () {
@@ -276,7 +312,7 @@ vimpy () {
 }
 
 vd123 () {
-    vd ~/one ~/two ~/three
+    vd ~/one ~/two ~/three "$@"
 }
 
 # xxxxxx

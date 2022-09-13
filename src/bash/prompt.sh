@@ -39,13 +39,14 @@ get_git_status() {
 _colour () {
     local one_="$1"; shift
     local light_= no_colour_="\033[0m"
+    local regexp_="red|green|blue|cyan|magenta|yellow"
     local hue_=$one_
     if [[ "$one_" =~ ^l_ ]]; then
         light_="LIGHT_"
-        [[ $one_ =~ l_red|green|blue ]] && hue_=${one_/l_/}
+        [[ $one_ =~ l_$regexp_ ]] && hue_=${one_/l_/}
     fi
     local var_=
-    if [[ $hue_ =~ red|green|blue|cyan|magenta|yellow ]]; then
+    if [[ $hue_ =~ $regexp_ ]]; then
         [[ $hue_ == red ]] && var_="${light_}RED"
         [[ $hue_ == green ]] && var_="${light_}GREEN"
         [[ $hue_ == blue ]] && var_="${light_}BLUE"
@@ -57,17 +58,38 @@ _colour () {
     echo -n "$hues_""$@""$no_colour_"
 }
 
+blue_ () {
+    _colour blue "$@"
+}
+
+green_ () {
+    _colour green "$@"
+}
+
+l_blue_ () {
+    _colour l_blue "$@"
+}
+
+l_green_ () {
+    _colour l_green "$@"
+}
+
+l_red_ () {
+    _colour l_red "$@"
+}
+
 emoji_error () {
     if [[ $1 == 0 ]]; then 
         echo "😎 "
     else
-        local _faces=(👿 👎 💀 👻 💩 🤨  😐 😑 😥 😮 😫 😲 ☹️  😤 😢 😭 😦 😧 😨 😩 🤯  😬 😰 😱 🥵  🥶  😳 🤢 🤮 )
+        local _faces=(👿 👎 💀 👻 💩 😢 😥 😰 😮 😫 😲 ☹️  😤 😭 😦 😧 😨 😩 🤯 😬 😱 🥵 🥶 😳 🤢 🤮 🤨 😐 😑 )
         echo "${_faces[$1]} "
     fi
 }
 
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
+    echo
     printf "$(emoji_error $1) $(green_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
 }
 
@@ -84,37 +106,35 @@ venv_name () {
         local _parent_name=$(basename $_parent)
         _venv_name=$_parent_name
     fi
-    echo $(_colour l_red "${_venv_name/./}")
+    echo $(l_red_ "${_venv_name/./}")
 }
 
 green_date () {
-    local _colour_day=$(_colour green $(date +'%A'))
-    local _colour_date=$(_colour l_green $(date +' %F %H:%M'))
+    local _colour_day=$(green_ $(date +'%A'))
+    local _colour_date=$(l_green_ $(date +' %F %H:%M'))
     echo $_colour_day $_colour_date
 }
 
-_short_dir () {
-    local _short=$(which short_dir 2> /dev/null)
-    [[ $_short ]] || return 1
-    $_short "$1"
+short_pwd () {
+    echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
 }
 
 blue_pwd_git () {
-    local _text_branch="$(get_branch)"
-    local _branch_version=
-    if [[ $_text_branch ]]; then
-        local _project_version="v$(bump get 2>/dev/null)"
-        [[ $_project_version == v ]] && _project_version=
-        _branch_version=", $_text_branch $_project_version"
+    local _branch_name="$(get_branch)"
+    local _version=
+    if [[ $_branch_name ]]; then
+        local _bump_version="v$(bump get 2>/dev/null)"
+        [[ $_bump_version == v ]] && _bump_version=
+        _version=", $_branch_name $_bump_version"
     fi
-    local _text_dir="$(_short_dir "$PWD")"
-    [[ $_text_dir ]] || _text_dir=$(basename "$(readlink -f .)")
-    echo $(_colour l_blue "${_text_dir}${_branch_version}")
+    local _pwd="$(short_pwd)"
+    [[ $_pwd ]] || _pwd=$(basename "$(readlink -f .)")
+    echo $(l_blue_ "${_pwd}${_version}")
 }
 
 blue_user () {
-    local _colour_username=$(_colour blue ${USER:-$(whoami)})
-    local _colour_host=$(_colour blue ${HOSTNAME:-$(hostname -s)})
+    local _colour_username=$(blue_ ${USER:-$(whoami)})
+    local _colour_host=$(blue_ ${HOSTNAME:-$(hostname -s)})
     echo "${_colour_username}@$_colour_host"
 }
 
@@ -129,7 +149,7 @@ red_python () {
     fi
 
     local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
-    local _colour_python=$(_colour l_red "${_python_version}")
+    local _colour_python=$(l_red_ "${_python_version}")
     local _colour_venv=$(venv_name)
     if [[ ! $_colour_venv ]]; then
         echo $_colour_python

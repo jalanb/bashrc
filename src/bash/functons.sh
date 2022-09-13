@@ -4,7 +4,7 @@
 # set -e
 . ~/bash/types.sh
 
-typed show_green || . ~/bash/crayons.sh
+typed green || . ~/bash/crayons.sh
 typed pong || . ~/bash/pong.sh
 typed pii || . ~/bash/python.sh
 
@@ -263,6 +263,11 @@ jjb () {
 
 jjy () {
     kk ~/jab/src/python "$@"
+}
+
+mkd () {
+    show_command mkdir -p "$@"
+    mkdir -p "$@"
 }
 
 sai () {
@@ -528,10 +533,6 @@ down () {
     l -tr . | tail
 }
 
-fred () {
-    lo
-}
-
 hhhh () {
     echo '#' | clip_in
 }
@@ -552,14 +553,20 @@ main () {
     [[ -n $* ]] && cp ~/jab/src/python/main.py $1 || cp ~/jab/src/python/main.py $dir
 }
 
+mann () {
+    man -P /usr/local/gnu/cat $1 | col -b
+}
+
 mine () {
     sudo chown -R $(id -un):$(id -gn) "$@"
 }
 
 mkcd () {
     local __doc__='make a directory and start using it';
+    show_command mkdir -p "$1"
     mkdir -p "$1"
     [[ -d "$1" ]] || return 1
+    show_command cd "$1"
     cd "$1"
 }
 
@@ -725,7 +732,7 @@ jalanb () {
         [[ -d $repo ]] || continue
         git_dirty $repo || continue
         echo
-        show_green_line $repo
+        show_command $repo
         git -C $repo branch
         git -C $repo lg -n 3
         git -C $repo status | grep 'Your branch'
@@ -911,7 +918,7 @@ pysyon () {
 please () {
     local _command=$(history -p !-1)
     [[ "$@" ]] && _command="$@"
-    green_line "$ sudo $_command"
+    show_command "$ sudo $_command"
     sudo $_command
 }
 
