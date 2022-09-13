@@ -1004,9 +1004,9 @@ grup () {
 grupp () {
     grup
     show_command git gc --prune=now --aggressive
-    # git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
     show_command git repack -a -d
-    # git repack -a -d 2>&1
+    git repack -a -d 2>&1
 }
 
 gsri () {
@@ -1199,6 +1199,7 @@ git_root () {
         cat /tmp/fd2 >&2
         return 1
     fi
+    [[ $quiet_ ]] || show_command git -C "$dir_" rev-parse --show-toplevel
     git -C "$dir_" rev-parse --show-toplevel
 }
 
@@ -1251,6 +1252,10 @@ git_stash_and () {
 
 is_branch () {
     [[ $1 ]] || return 1
+    get_branch $1 >/dev/null
+}
+
+is_branch () {
     get_branch $1 >/dev/null
 }
 
@@ -1317,6 +1322,15 @@ clean_clone () {
 
 git_changes_here () {
     has_git_changes_ .
+}
+
+# xxxxxxxxxxxx
+
+# xxxxxxxxxxxxx
+
+untracked () {
+    local path_="$1"; shift
+    ( test -d "$path_" && git_status_line_dir "$path_" || status_line_ "$path_" ) | grep "??" | cut -d' ' -f2
 }
 
 # xxxxxxxxxxxxxx
