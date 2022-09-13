@@ -9,11 +9,6 @@ if [[  -f ~/whyp.sh ]]; then
     typed w || missing_w=w 
     typed ww || missing_w=ww
     [[ $missing_w ]] && . ~/whyp.sh
-else
-    alias .=whyp_source
-    alias w=whyp
-    alias .w="whyp_source $WHYP_SOURCE"
-    alias wq="quietly whyp "
 fi
 
 wtf () {

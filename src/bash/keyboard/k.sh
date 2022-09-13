@@ -3,30 +3,17 @@
 # x
 
 k () {
-    local _dir="$1"; shift
-    [[ -z "$_dir" ]] && _dir=.
-    [[ -d "$_dir" ]] || return 1
-    cd $_dir; 
+    local dir_="$1"; shift
+    [[ "$dir_" ]] || dir_=.
+    [[ -d "$dir_" ]] || return 1
+    cd $dir_; 
     "$@"
 }
 
 # xx
 
-kk () {
-    clear
-    k "$@" && ranger
-}
-
 kl () {
-    kk "$@"
-    l
-}
-
-ky () {
-    shift_dir "$@" && shift
-    dir=${dir:-~/jab/src/python}
-    cde $dir "$@"
-    y .
+    k "$1" l
 }
 
 # xxx
