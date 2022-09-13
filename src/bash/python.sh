@@ -8,55 +8,53 @@ pym () {
     python3 -m "$@"
 }
 
-pmp () {
-    pym pip "$@" 
-}
-
-ppd () {
-    pip_install_develop "$@"
+pyp () {
+    pym pip "$@"
 }
 
 ppi () {
-    [[ $1 == install ]] && shift
-    pmp install "$@" | grep --color installed
+    pyp install "$@"
 }
 
 ppu () {
-    ppi --upgrade "$@"
+    pyp uninstall -y "$@"
 }
 
-ppp () {
-    ppu setuptools wheel pip
-}
-
-ppy () {
-    pmp uninstall -y "$@"
-}
 
 # xxx
 
 # xxxx
 
 ppie () {
-    if [[ -d "$1" ]]; then
+    local dir_=$1
+    [[ -d $dir_ ]] || dir_=.
+    ppi $1/setup.py && upgrade_=
+    [[ -f $setup_ ]] && upgrade="--upgrade"
+    if [[ -d "$dir" ]]; then
         (
             show_command cd "$1"
             cd "$1"
-            ppi -e .
+            ppi $upgrade_ -e .
         )
     else
-        ppi -e . 
+        ppi $upgrade_ -e . 
     fi
+}
+
+ppii () {
+    local _ipython=$(which ipython)
+    [[ -n $IPYTHON ]] && _ipython=$IPYTHON
+    pypath $_ipython "$@"
 }
 
 ppip () {
     [[ "$@" ]] || return 1
-    show_command python -m pip "$@"
-    python3 -m pip "$@" > ~/fd1
-    grep -v -e already.satisfied -e upgrade.pip ~/fd1
-    if grep -q "pip install --upgrade pip" ~/fd1; then
-        python3 -m pip install --upgrade pip &
+    if ppi "$@" | grep -q "pip install --upgrade pip"; then 
+        quietly ppiu pip
     fi
+}
+
+ppiq () {
 }
 
 ppir () {
@@ -81,11 +79,12 @@ unhash_activate () {
     show_data "python3 is $(which python3)"
 }
 
-unhash_deactivate () {
-    local arg_=
-    for arg_ in python python2 python3 ipython ipython2 ipython3 pudb pudb3 pdb ipdb pip pip2 pip3; do
-        hash -d $arg_ 2>/dev/null
-    done
+pirr () {
+    _install_requirements_from "$@"
+}
+
+piup () {
+    [[ $1 == [-]v ]] && ppiu pip || quietly ppiu pip
 }
 
 venv () {
@@ -117,17 +116,15 @@ make_venv () {
             show_command "rm -rf $venv_dir_"
             rm -rf $venv_dir_
         else
-            $venv_dir_/bin/python3 -m pip install --upgrade pip
+            piup
             return 0
         fi
     fi
     [[ $VIRTUAL_ENV ]] && deactivate
     show_command "python3 -m venv $venv_"
     python3 -m venv --copies $venv_
-    [[ $1 == -q ]] || show_data "python3 is $(which python3)"
-    local venv_python_=$venv_dir_/bin/python3
-    $venv_python_ -m ensurepip
-    $venv_python_ -m pip install --upgrade pip setuptools wheel
+    $python_ -m ensurepip
+    ppiu pip setuptools wheel
     local requirements_=$(requirements_file $root_)
     [[ $requirements_ ]] || return 0
     $venv_python_ -m pip install -r $requirements_
