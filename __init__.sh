@@ -1,4 +1,6 @@
-#! /bin/cat
+#! /usr/bin/env head -n 3
+
+# This script is intended to be sourced, not run
 
 realdir () {
     local _p=
