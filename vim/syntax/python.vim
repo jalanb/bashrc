@@ -115,37 +115,31 @@ if exists("python_highlight_all") && python_highlight_all != 0
 endif
 
 " Keywords
-syn keyword pythonNone	    None
 syn keyword pythonBoolean	False True
-syn keyword pythonKeyword	as assert del exec global
 syn keyword pythonBranch	break continue
-syn keyword pythonKeyword	lambda nonlocal pass print return with yield
-syn keyword pythonClassStatement	class nextgroup=pythonClassname skipwhite
-syn keyword pythonFuncStatement	def cdef nextgroup=pythonFunction skipwhite
+" syn keyword pythonClassStatement	class nextgroup=pythonClassname skipwhite
 syn keyword pythonConditional	elif else if
-syn keyword pythonRepeat	for while
-syn keyword pythonOperator	and in is not or
 syn keyword pythonException	except finally raise try
+" syn keyword pythonFuncStatement	def cdef nextgroup=pythonFunction skipwhite
 syn keyword pythonInclude	from import
-syn match   pythonFunction	"\h\w*" display contained
-syn match   pythonClassname	"\h\w*\((\h\w*)\)\?" display contained
-
-" Decorators (new in Python 2.4)
-syn match   pythonDecorator	"@" display nextgroup=pythonDottedName skipwhite
-syn match   pythonDottedName "[a-zA-Z_][a-zA-Z0-9_]*\(\.[a-zA-Z_][a-zA-Z0-9_]*\)*" display contained
-syn match   pythonDot        "\." display containedin=pythonDottedName
-
-" Comments
-syn match   pythonComment	"#.*$" display contains=pythonTodo,@Spell
-syn match   pythonRun		"\%^#!.*$"
-syn match   pythonCoding	"\%^.*\%(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$"
+syn keyword pythonKeyword	as assert del exec global
+syn keyword pythonKeyword	lambda nonlocal pass print return with yield
+syn keyword pythonNone	    None
+syn keyword pythonOperator	and in is not or
+syn keyword pythonRepeat	for while
 syn keyword pythonTodo		TODO FIXME XXX contained
-
-" Errors
-syn match pythonError		"\<\d\+\D\+\>" display
-syn match pythonError		"[$?]" display
-syn match pythonError		"[&|]\{2,}" display
-syn match pythonError		"[=]\{3,}" display
+syn match   pythonClassname	"\h\w*\((\h\w*)\)\?" display contained
+syn match   pythonCoding	"\%^.*\%(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$"
+syn match   pythonComment	"#.*$" display contains=pythonTodo,@Spell
+syn match   pythonDecorator	"@" display nextgroup=pythonDottedName skipwhite
+syn match   pythonDot        "\." display containedin=pythonDottedName
+syn match   pythonDottedName "[a-zA-Z_][a-zA-Z0-9_]*\(\.[a-zA-Z_][a-zA-Z0-9_]*\)*" display contained
+syn match   pythonFunction	"\h\w*" display contained
+syn match   pythonRun		"\%^#!.*$"
+syn match   pythonError		"[$?]" display
+syn match   pythonError		"[&|]\{2,}" display
+syn match   pythonError		"[=]\{3,}" display
+syn match   pythonError		"\<\d\+\D\+\>" display
 
 " TODO: Mixing spaces and tabs also may be used for pretty formatting multiline
 " statements. For now I don't know how to work around this.
