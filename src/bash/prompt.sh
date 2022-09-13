@@ -87,7 +87,6 @@ emoji_error () {
 
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    echo
     printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
     #printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
 }
