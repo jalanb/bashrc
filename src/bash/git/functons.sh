@@ -209,8 +209,28 @@ gbv () {
     git blame "$1" | vin
 }
 
+gcc () {
+    local c_="." d_=
+    [[ -d $1 ]] && c_=$1 && d_=d
+    [[ $d_ == d ]] && shift
+    echo $c_ 
+    [[ $d_ == d ]] && return 0
+    return 1
+}
+
+
+gcl () {
+    local c_=$(gcc "$@") && shift
+    gc $c_ l "$@"
+}
+
 gcp () {
     git cherry-pick -x --allow-empty "$@"
+}
+
+gcs () {
+    local c_=$(gcc "$@") && shift
+    gc "$c_" s
 }
 
 gcu () {
@@ -629,6 +649,11 @@ gsa () {
     git_stash_and "$@"
 }
 
+gsb () {
+    gs
+    gb
+}
+
 gsg () {
     gs
     glg
@@ -797,6 +822,10 @@ gcug () {
 }
 
 alias gcuj=gcuh
+
+gcus () {
+    local_gcu 'Sparky' $(work_email alan.brogan)
+}
 
 gcuw () {
     local_gcu 'Alan Brogan' $(work_email ab13173)
@@ -996,6 +1025,34 @@ rgl_ () {
 
 # xxxxx
 
+clonn () {
+    local name_=${1:-pysyte}
+    [[ $name_ ]] || return 12
+    local here_=`readlink -f .`
+    local dir_=`dirname $here_`
+    local url_="https://github.com/jalanb/${name_}.git"
+    local pwd_=`pwd`
+    if [[ -d $name_ ]]; then
+        cd $name_
+        local gurl_=`git remote get-url origin`
+        [[ $url_ == $gurl_ ]] || return 15
+        pwd
+        return 0
+    elif [[  $name_ =~ pysy.e ]]; then
+        [[ $dir_ == pysyse ]] || return 13
+        clone $url_
+        return 0
+    elif [[ $dir_ == jalanb ]]; then
+        clone $url_
+        return 0
+    else
+        local dest_="$HOME/jalanb"
+        [[ $name_ =~ pysy.e ]] && dest_="$dest_/pysyse"
+        cd $dest_
+        clonn $name_
+    fi
+}
+
 clone () {
     local range_=
     [[ "$1" == "-r" ]] && range_=ranger
@@ -1102,13 +1159,13 @@ git_root () {
     [[ -f "$git_dir_" ]] && git_dir_=$(dirname_ $git_dir_)
     [[ -d "$git_dir_" ]] || echo "Not a dir '$git_dir_'"
     [[ -d "$git_dir_" ]] || return 1
-    local full_dir_=$(readlink -f $git_dir_)
-    if ! git -C "$full_dir_" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
+    local dir_=$(readlink -f $git_dir_)
+    if ! git -C "$dir_" rev-parse --git-dir > /tmp/fd1 2>/tmp/fd2; then
         cat /tmp/fd1
         cat /tmp/fd2 >&2
         return 1
     fi
-    git -C "$full_dir_" rev-parse --show-toplevel
+    git -C "$dir_" rev-parse --show-toplevel
 }
 
 # xxxxxxxxx
@@ -1180,6 +1237,29 @@ git_branch () {
 
 sed_origin () {
     git remote set-url origin $(git remote get-url origin | sed "$@")
+}
+
+show_clone () {
+    local head_='===-===-==='
+    local dir_="$1"
+    [[ $dir_ ]] || dir_=.
+    [[ -d "$dir_/.git" ]] || return 1
+    local git_="git -C $dir_"
+    echo
+    blue_line $head_
+    green_line $head_
+    green_line "$($git_ remote get-url origin) -> " $(rlf "$dir_")
+    green_line $head_
+    local status_=$($git_ status --porcelain)
+    if [[ $status_ ]]; then
+        red_line $head_
+        red_line $status_
+        red_line $head_
+    fi
+    green_line $head_
+    $git_ ll
+    green_line $head_
+    blue_line $head_
 }
 
 # xxxxxxxxxxx
