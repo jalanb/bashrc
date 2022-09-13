@@ -278,14 +278,6 @@ llll () {
     lll -a "$@"
 }
 
-lotr () {
-    lo -tr "$@"
-}
-
-llss () {
-    llr ~/.ssh/
-}
-
 llllg () {
     gl_ 8 "$@"
 }

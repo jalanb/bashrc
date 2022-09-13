@@ -94,16 +94,6 @@ _free_line_here () {
 }
 
 
-ma () {
-    local _storage=/tmp/fred.sh;
-    if [[ -z "$@" ]]; then
-        python -c "print 'memo -a\"$*\"'" > $_storage;
-        bash $_storage;
-        cat $_storage;
-        rr $_storage;
-    fi
-}
-
 ml () {
     memo -l 9
 }
@@ -114,10 +104,6 @@ pg () {
 
 pt () {
     ptpython "$@"
-}
-
-ra () {
-    ranger "$@"
 }
 
 rg () {
