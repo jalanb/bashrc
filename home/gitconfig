@@ -17,7 +17,7 @@
     c = cherry-pick
     cl = clean -d -f -f -x
     d = difftool -y --extcmd=\"icdiff -N\"
-    e = pull --rebase
+    e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
     i = commit
@@ -25,7 +25,7 @@
     m = merge
     o = checkout
     p = push
-    r = rebase
+    r = pull --rebase
     s = status
     t = tag
     w = show
@@ -60,14 +60,21 @@
     di = difftool -y --extcmd=\"icdiff --line-numbers\"
     dk = difftool -y -t Kaleidoscope
     dm = difftool -y --extcmd=\"~/bin/meld  \"
-    dn = diff --name-only
+    dn = d --name-only
     dv = difftool -y --extcmd=\"vim -d -O\"
     dy = difftool -y --extcmd=\"pydiff\"
     dw = diff --word-diff
     dr = rerere diff
-    ds = diff --staged
+    ds = d --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     dump = cat-file -p
+
+    ea = rebase --abort
+    ec = rebase --continue
+    ei = rebase --interactive
+    es = rebase --skip
+    eq = rebase --quit
+    eu = remote get-url origin
 
     fa = fetch --all
     fap = fetch --all --prune
@@ -115,6 +122,7 @@
     mq = merge --quit
 
     ob = checkout -b
+    om = checkout __main__
     oo = restore
 
     pa =  push --atomic --all
@@ -125,11 +133,6 @@
     pu =  push --set-upstream
     puu =  push --unset-upstream
 
-    ra = rebase --abort
-    rc = rebase --continue
-    ri = rebase --interactive
-    rs = rebase --skip
-    rq = rebase --quit
     ru = remote get-url origin
 
     st = stash
