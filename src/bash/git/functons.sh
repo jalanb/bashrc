@@ -346,7 +346,13 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gc "$@" l $options_
+    if [[ $1 ]]; then
+        if git branch | grep -q $1; then
+            shift
+            options_="$options_ $1"
+        fi
+    fi
+    gd "$@" l $options_
 }
 
 gl1 () {
