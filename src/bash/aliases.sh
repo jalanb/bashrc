@@ -117,6 +117,7 @@ alias ......='cduppppp'
 # xxxxxxx
 
 alias .......='cdupppppp'
+alias quitely=quietly
 alias service="sudo /sbin/service "
 
 # xxxxxxxx
