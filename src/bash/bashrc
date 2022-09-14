@@ -53,7 +53,7 @@ jab_init=$(jablink __init__.sh)
 
 pre_bashrc_ () {
     local homes_=$(jablink bin):$HOME/bin:$HOME/.local
-    local locals_="$(usr_local gnu):$(usr_local bin):$(usr_local go/bin)"
+    local locals_="$(usr_local gnu):/opt/homebrew/bin:$(usr_local bin):$(usr_local opt):$(usr_local go/bin)"
     local bins_=/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
 

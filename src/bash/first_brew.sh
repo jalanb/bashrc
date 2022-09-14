@@ -2,7 +2,20 @@
 
 # jab.mini
 
-brew install htop
-brew install ping
-brew install fd
-brew install bat
+. ~/bash/functons.sh
+
+brew_install_all \
+    ack \
+    bat \
+    fd \
+    git \
+    htop \
+    meld \
+    mysql \
+    ncdu \
+    ranger \
+    tig \
+    tree \
+    vim \
+    wget \
+    youtube-dl \
