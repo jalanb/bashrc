@@ -59,8 +59,8 @@ gc () {
 }
 
 gd () {
-    red_line gc "$@"
-    gc "$@"
+    green_line g d "$@"
+    g d "$@"
     return 4
 }
 
