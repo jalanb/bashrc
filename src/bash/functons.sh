@@ -475,7 +475,9 @@ bool () {
 }
 
 brew () {
-    GIT= /usr/local/bin/brew "$@"
+    brew_=/usr/local/bin/brew
+    [[ -f /opt/homebrew/bin/brew ]] && brew_=/opt/homebrew/bin/brew
+    GIT= $brew_ "$@"
 }
 
 bump () {
@@ -1326,6 +1328,13 @@ source_aliases () {
 }
 
 # xxxxxxxxxxxxxxx
+
+brew_install_all () {
+    for brew_ in "$@";
+    do 
+        GIT= brew install $brew_ 3>&1 1>&2 2>&3 | grep -v -e "already installed" -e re[-]*install
+    done
+}
 
 # xxxxxxxxxxxxxxxx
 

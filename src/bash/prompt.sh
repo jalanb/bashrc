@@ -211,5 +211,11 @@ export_pses () {
     _post_pses "$@"
 }
 
+
 export PROMPT_COLOUR=$(echo_prompt_colour "$@")
-[[ "$PROMPT_COLOUR" == "None" ]] && export PS1="\$? [\u@\h:\$PWD]\n$ " || export PROMPT_COMMAND='export_pses $?'
+if [[ "$PROMPT_COLOUR" == "None" ]]; then
+    export PS1="\$? [\u@\h:\$PWD]\n$ "
+else
+    export_pses
+    export PROMPT_COMMAND='export_pses $?'
+fi

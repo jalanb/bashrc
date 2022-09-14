@@ -19,14 +19,14 @@ alias show_fail=show_error
 show_colour () {
     [[ $1 ]] || return 7
     [[ $1 =~ ^l?(red|green|blue|cyan|magenta|black|white)$ ]] || return 8
-    local upper_=${1^^}
+    local upper_=$(echo $1 | tr [:lower:] [:upper:])
     [[ $1 =~ ^l ]] && upper_=${upper_:1}
     local fore_="NIGHT_$upper_"  back_= none_=
     [[ $1 =~ ^l ]] && fore_=${fore_/N/L}
     shift
     [[ $1 ]] || return 9
     if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
-        back_="BACK_${1^^}"
+        back_="BACK_$(echo $1 | tr [:lower:] [:upper:])"
         shift
     fi
     local colour_="${fore_}${back_}"
