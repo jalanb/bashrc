@@ -233,6 +233,7 @@ gcl () {
 }
 
 gcp () {
+    show_command git cherry-pick -x --allow-empty "$@"
     git cherry-pick -x --allow-empty "$@"
 }
 
@@ -892,18 +893,17 @@ gorl () {
 }
 
 gcpa () {
+    show_command git cherry-pick --abort
     git cherry-pick --abort
 }
 
-gcpe () {
-    git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
-}
-
 gcpc () {
+    show_command git cherry-pick --continue
     GIT_EDITOR=true git cherry-pick --continue
 }
 
 gcpe () {
+    show_command git cherry-pick --edit "$@"
     git cherry-pick --edit "$@"
 }
 
