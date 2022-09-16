@@ -3,11 +3,15 @@
 # x
 
 r () {
-    [[ -z "$@" ]] && ra . || rm -rf "$@"
+    [[ "$@" ]] && rm -vrf "$@" || ra . 
 }
 
 
 # xx
+
+ra () {
+    ranger "$@"
+}
 
 ri () {
     local _argc=${#*}

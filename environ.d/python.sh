@@ -20,9 +20,8 @@ add_to_a_path PYTHON_SOURCE_PATH ~/jab/src/python
 
 
 export PYTHONBREAKPOINT="pudb.set_trace"
-
-if [[ -d ~/.pyenv ]]; then
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv virtualenv-init -)"
+if [[ -d "$HOME/.pyenv" ]]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
 fi

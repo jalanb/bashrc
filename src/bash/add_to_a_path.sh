@@ -11,7 +11,7 @@
 # Once sourced there is one major command:
 #
 add_to_a_path_py () {
-    python ~/jab/src/python/add_to_a_path.py "$@"
+    python3 ~/jab/src/python/add_to_a_path.py "$@"
 }
 
 add_to_a_path () {

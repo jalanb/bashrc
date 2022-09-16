@@ -1,4 +1,6 @@
-#! /bin/cat
+#! /usr/bin/env head -n 3
+
+# This script is intended to be sourced, not run
 
 
 # set -e
@@ -92,16 +94,6 @@ _free_line_here () {
 }
 
 
-ma () {
-    local _storage=/tmp/fred.sh;
-    if [[ -z "$@" ]]; then
-        python -c "print 'memo -a\"$*\"'" > $_storage;
-        bash $_storage;
-        cat $_storage;
-        rr $_storage;
-    fi
-}
-
 ml () {
     memo -l 9
 }
@@ -112,10 +104,6 @@ pg () {
 
 pt () {
     ptpython "$@"
-}
-
-ra () {
-    ranger "$@"
 }
 
 rg () {
@@ -582,6 +570,10 @@ mkv3 () {
     virtualenv --python=$(which python3) /Users/jab/.virtualenvs/$1
 }
 
+show_bashh () {
+    show_bash "$@" && et || ef
+}
+
 nose_doctests () {
     nosetests -h 2>&1 | grep -q doctest || return
     echo "--with-doctest --doctest-tests --doctest-extension=.test --doctest-extension=.tests "
@@ -970,6 +962,14 @@ has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
 }
 
+headline () {
+    [[ $1 ]] && head -n 1 "$1" || cat | head -n 1
+}
+
+tailline () {
+    [[ $1 ]] && tail -n 1 "$1" || cat | tail -n 1
+}
+
 is_a_dir () {
     [[ -d "$1" ]] || echo "\"$1\" is not a directory" >&2
     [[ -d "$1" ]]
@@ -981,6 +981,14 @@ playbook () {
 
 relpath () {
     python ~/jab/src/python/relpath.py "$@"
+}
+
+quitely () {
+    "$@" > /dev/null
+}
+
+quietly () {
+    "$@" > /dev/null 2>&1
 }
 
 whiches () {
@@ -1100,6 +1108,10 @@ dirnames () {
         _result=0
     done
     return $_result
+}
+
+quietless () {
+    "$@" 2> /dev/null
 }
 
 twkgit00 () {

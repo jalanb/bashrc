@@ -1,7 +1,5 @@
 #! /bin/cat -n
 
-
-
 export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
@@ -79,7 +77,7 @@ l_red_ () {
 }
 
 emoji_error () {
-    if [[ $1 == 0 ]]; then 
+    if [[ $1 == 0 ]]; then
         echo "😎 "
     else
         local _faces=(👿 👎 💀 👻 💩 😢 😥 😰 😮 😫 😲 ☹️  😤 😭 😦 😧 😨 😩 🤯 😬 😱 🥵 🥶 😳 🤢 🤮 🤨 😐 😑 )
@@ -90,7 +88,8 @@ emoji_error () {
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
     echo
-    printf "$(emoji_error $1) $(green_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
+    printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
+    #printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
 }
 
 path_to_venv () {
@@ -109,9 +108,9 @@ venv_name () {
     echo $(l_red_ "${_venv_name/./}")
 }
 
-green_date () {
-    local _colour_day=$(green_ $(date +'%A'))
-    local _colour_date=$(l_green_ $(date +' %F %H:%M'))
+blue_date () {
+    local _colour_day=$(_colour blue $(date +'%A'))
+    local _colour_date=$(_colour l_blue $(date +' %F %H:%M'))
     echo $_colour_day $_colour_date
 }
 
@@ -127,15 +126,19 @@ blue_pwd_git () {
         [[ $_bump_version == v ]] && _bump_version=
         _version=", $_branch_name $_bump_version"
     fi
-    local _pwd="$(short_pwd)"
-    [[ $_pwd ]] || _pwd=$(basename "$(readlink -f .)")
-    echo $(l_blue_ "${_pwd}${_version}")
+    local pwd_="$(short_pwd)"
+    [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
+    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2,")
+    [[ $project_ ]] && pwd_="${project_}:${pwd_}"
+    echo $(l_blue_ "${pwd_}${_version}")
 }
 
 blue_user () {
-    local _colour_username=$(blue_ ${USER:-$(whoami)})
-    local _colour_host=$(blue_ ${HOSTNAME:-$(hostname -s)})
-    echo "${_colour_username}@$_colour_host"
+    local user_=$(whoami)
+    local hostname_=$(hostname -s)
+    local _hue_user=$(_colour blue ${user_:$USER})
+    local _hue_host=$(_colour blue ${hostname_:-$HOSTNAME})
+    echo "${_hue_user}@$_hue_host"
 }
 
 red_python () {
@@ -202,6 +205,7 @@ export_pses () {
     local _status=$1
     PROMPT_STATUS=$_status
     export PROMPT_STATUS
+    # export ITERM2_SQUELCH_MARK=1
     _pre_pses
     export PS1=$(_colour_prompt $_status)
     export PS2="... "  # Continuation line

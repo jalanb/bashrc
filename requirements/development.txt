@@ -3,4 +3,5 @@
 
 ipython
 pudb
-rich
+rich-cli
+httpie

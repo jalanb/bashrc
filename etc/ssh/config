@@ -1,6 +1,6 @@
 Include macs
-Include keys/config
 Include ab13173
+Include keys/config
 
 Host *
     AddKeysToAgent yes
@@ -15,4 +15,4 @@ Host github
 Host gitlab
     Hostname gitlab.com
     User git
-    IdentityFile ~/.ssh/id_gitlab
+    IdentityFile ~/.ssh/jalanb_github

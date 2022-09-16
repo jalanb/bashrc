@@ -212,10 +212,6 @@ gvi_drop_ () {
     fi
 }
 
-dstatus_chars_ () {
-    git -C $dir status -s -- $1 | sed -e "s/\(..\).*/\1/"
-}
-
 gvi_git_dv_ () {
     local one_="$1"
     shift

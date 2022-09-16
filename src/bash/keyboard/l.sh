@@ -268,6 +268,15 @@ lyy () {
     $reset
 }
 
+loo () {
+    local dir_=.
+    [[ -f $1 ]] && dir_=$(dirname $1)
+    [[ -d $1 ]] && dir_=$1
+    [[ -d $dir_ ]] || return 1
+    shift
+    loa $dir_ "$@"
+}
+
 # xxxx
 
 lllg () {
@@ -276,14 +285,6 @@ lllg () {
 
 llll () {
     lll -a "$@"
-}
-
-lotr () {
-    lo -tr "$@"
-}
-
-llss () {
-    llr ~/.ssh/
 }
 
 llllg () {

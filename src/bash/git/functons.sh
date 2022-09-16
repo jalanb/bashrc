@@ -1,4 +1,6 @@
-#! /bin/cat
+#! /usr/bin/env head -n 3
+
+# This script is intended to be sourced, not run
 
 
 . ~/bash/arg_dirs.sh
@@ -52,6 +54,12 @@ gb () {
 
 gc () {
     local dir_=.
+    if [[ ! $1 ]]; then 
+        clear
+        red_line "$ g d"
+        g d >&2
+        return 3
+    fi
     [[ -d "$1" ]] && dir_="$1" && shift
     show_command git -C "$dir_" "$@"
     # set -x
@@ -142,6 +150,15 @@ gw () {
     fi
 }
 
+gdf () {
+    git "$@" df
+}
+
+gof () {
+    gbD fred 2>/dev/null
+    gob fred "$@"
+}
+
 # xxx
 
 gaa () {
@@ -225,6 +242,7 @@ gcl () {
 }
 
 gcp () {
+    show_command git cherry-pick -x --allow-empty "$@"
     git cherry-pick -x --allow-empty "$@"
 }
 
@@ -328,7 +346,13 @@ gl_ () {
         options_="$options_ $1"
         shift
     fi
-    gc "$@" l $options_
+    if [[ $1 ]]; then
+        if git branch | grep -q $1; then
+            shift
+            options_="$options_ $1"
+        fi
+    fi
+    gd "$@" l $options_
 }
 
 gl1 () {
@@ -558,6 +582,21 @@ grc () {
     git rebase --skip
 }
 
+grf () {
+    local branch_=__main__
+    [[ $1 ]] && branch_=$1
+    gru
+    gcu
+    show_command git_root -o
+    git_root -o
+    gfe | grep -v 'Fetching'
+    gor $branch_ 2>/dev/null | grep -v "up to date"
+    gb
+    show_command bump show
+    bump show
+    gll
+}
+
 grg () {
     git e && glg
 }
@@ -639,10 +678,12 @@ grs () {
 }
 
 gru () {
-    local options_=
-    [[ -d $1 ]] && options_="-C $1"
-    show_command git $options_ remote get-url origin
-    git $options_ remote get-url origin
+    local options_= quiet_=
+    [[ -d $1 ]] && options_="-C $1" && shift
+    [[ $1 =~ [-]q ]] && quiet_=1
+    local git_command_="git $options_ remote get-url origin"
+    [[ $quiet_ ]] || show_command $git_command_
+    $git_command_
 }
 
 gsa () {
@@ -882,18 +923,17 @@ gorl () {
 }
 
 gcpa () {
+    show_command git cherry-pick --abort
     git cherry-pick --abort
 }
 
-gcpe () {
-    git commit --allow-empty  -F .git/CHERRY_PICK_HEAD
-}
-
 gcpc () {
+    show_command git cherry-pick --continue
     GIT_EDITOR=true git cherry-pick --continue
 }
 
 gcpe () {
+    show_command git cherry-pick --edit "$@"
     git cherry-pick --edit "$@"
 }
 
@@ -970,9 +1010,9 @@ grup () {
 grupp () {
     grup
     show_command git gc --prune=now --aggressive
-    # git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
+    git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
     show_command git repack -a -d
-    # git repack -a -d 2>&1
+    git repack -a -d 2>&1
 }
 
 gsri () {
@@ -1165,6 +1205,7 @@ git_root () {
         cat /tmp/fd2 >&2
         return 1
     fi
+    [[ $quiet_ ]] || show_command git -C "$dir_" rev-parse --show-toplevel
     git -C "$dir_" rev-parse --show-toplevel
 }
 
@@ -1217,6 +1258,10 @@ git_stash_and () {
 
 is_branch () {
     [[ $1 ]] || return 1
+    get_branch $1 >/dev/null
+}
+
+is_branch () {
     get_branch $1 >/dev/null
 }
 
@@ -1283,6 +1328,15 @@ clean_clone () {
 
 git_changes_here () {
     has_git_changes_ .
+}
+
+# xxxxxxxxxxxx
+
+# xxxxxxxxxxxxx
+
+untracked () {
+    local path_="$1"; shift
+    ( test -d "$path_" && git_status_line_dir "$path_" || status_line_ "$path_" ) | grep "??" | cut -d' ' -f2
 }
 
 # xxxxxxxxxxxxxx
@@ -1396,14 +1450,74 @@ log_test_file ()
     grep_git_log_for_python_test_file 3
 }
 
+off () {
+    # Turns colours off
+    echo "\033[0m"
+}
+
+render () {
+    local colour_=$1 end_=
+    [[ $colour_ ]] || return 3
+    shift
+    if [[ $1 == -l ]]; then
+        end_="\n"
+        shift
+    fi
+    printf "$colour_""$*""$(off)$end_"
+}
+
+red () {
+    echo "\033[0;31m"
+}
+
+green () {
+    echo "\033[0;32m"
+}
+
+blue () {
+    echo "\033[0;34m"
+}
+
+red_text () {
+    render $(red) "$@"
+}
+
+green_text () {
+    render $(green) "$@"
+}
+
+blue_text () {
+    render $(blue) "$@"
+}
+
+red_line () {
+    red_text -l "$@"
+}
+
+green_line () {
+    green_text -l "$@"
+}
+
+blue_line () {
+    blue_text -l "$@"
+}
+
+fail_line () {
+    red_line "$@"
+}
+
+pass_line () {
+    green_line "$@"
+}
+
+command_line () {
+    blue_line "$@"
+}
+
 red_one () {
-    local red="\033[0;31m"
-    local no_colour="\033[0m"
-    GSI_MENU="${GSI_MENU}${red}${1}${no_colour}${2}${suffix}"
+    GSI_MENU="$GSI_MENU$(red_text $1)$2"
 }
 
 red_two () {
-    local red="\033[0;31m"
-    local no_colour="\033[0m"
-    GSI_MENU="${GSI_MENU}${no_colour}${1}${red}${2}${no_colour}${3}${suffix}"
+    GSI_MENU="${GSI_MENU}$(off)$1$(red_text $2)$3"
 }

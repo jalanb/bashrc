@@ -67,6 +67,7 @@
     dr = rerere diff
     ds = d --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
+    dis = di --staged
     dump = cat-file -p
 
     ea = rebase --abort
@@ -96,11 +97,14 @@
     le = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
     lf = lc --stat
     lg = l --grep
-    ll = l -2
-    lll = l -4
+    ll = "!git l -n `$LINES / 2`"
+    lll = l -16
     llll = l -8
-    lllll = l -16
-    llllll = l -32
+    lllll = l -4
+    llllll = l -2
+    lllllll = l -1
+    llllllll = log -n 1
+    lllllllll = log -n 0
     lpppppp = lp -32
     lppppp = lp -16
     lpppp = lp -8

@@ -22,7 +22,7 @@ etc/history
 bin/venv_bin
 vim/bundle.remote
 src/bash/keyboard/__init__.sh
-src/bash/keys__init__.sh
+local
 
 # Derived development files
 tags

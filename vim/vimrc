@@ -83,8 +83,6 @@ nnoremap k kzz
 nnoremap nb ?<cr>zvzz
 nnoremap nm /<cr>zvzz
 nnoremap nn nzvzz
-nnoremap n<down> /<cr>
-nnoremap n<up> ?<cr>
 "noremap o - open new line
 "noremap p - paste
 nnoremap q :q<cr>
@@ -178,7 +176,7 @@ nnoremap M `m
 nnoremap B :vsplit
 "noremap C
 nnoremap E :wa!<cr>:qa!<cr>
-"noremap F f backwards
+nnoremap F :w! ~/fred
 "noremap G goto line (default last)
 nnoremap H gT
 "noremap I insert at start of line
@@ -201,8 +199,6 @@ nnoremap X :wa!<cr>:qa!<cr>
 nnoremap Z XC
 " ordinary keys for movement {{{2
 nnoremap <Space><Space>  <PageDown>zz
-nnoremap t<left>  gT
-nnoremap t<right> gt
 nnoremap th       gT
 nnoremap tl       gt
 "
@@ -213,24 +209,8 @@ nnoremap <down>             /<cr>zv
 nnoremap <left>             #zv
 nnoremap <right>            *zv
 "
-" Shift Normal Arrows
-"
-nnoremap <S-up>             ?
-nnoremap <S-down>           /
-nnoremap <S-left>           :tabprev<cr>
-nnoremap <S-right>          :tabnext<cr>
-"
-" Control Normal Arrows
-"
-nnoremap <c-k>              window up
-nnoremap <c-j>              does nothing ?
-nnoremap <c-h>              prev desktop
-nnoremap <c-l>              next desktop
-"
-" Not Arrows
-"
-nnoremap <PageUp>           <C-B>
-nnoremap <PageDown>         <C-F>
+nnoremap <s-left>           gT
+nnoremap <s-right>          gt
 
 " Other Control Keys {{{2
 nnoremap    <C-d> :qa<CR>
@@ -241,7 +221,6 @@ nnoremap    <C-h> <c-w><c-h>
 nnoremap    <C-j> <c-w><c-j>
 nnoremap    <C-k> <c-w><c-k>
 nnoremap    <C-l> <c-w><c-l>
-nnoremap    <C-w> :wq<cr>
      map    <C-b> dndndndd/<cr>
      map    <C-m> dd/<cr>dndd/<cr>
      map    <C-n> dndd/<cr>dd/<cr>
@@ -271,7 +250,6 @@ nnoremap <leader>P :wa<cr>qa<cr>
 " Next one is from http://vi.stackexchange.com/a/479/182
 nnoremap <leader>W :w !sudo tee % >/dev/null<cr>L<cr>
 nnoremap <leader>[ :cn<cr>zMzvzz
-nnoremap <leader>\ :call ToggleHighlightSearch()<cr><c-l>
 nnoremap <leader>] :cp<cr>zMzvzz
 
 nnoremap <leader>1 :w! ~/one<cr>
@@ -609,8 +587,6 @@ set number    " Start with line numbers
 " Search {{{2
 " Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci
 :set grepprg=grep\ -nH
-" <leader>\ is bound to calling ToggleHighlightSearch
-"   The leader key is also \, so really \\ calls this
 function Unsearch()
     set nohlsearch
     normal /,,,<cr>
@@ -619,13 +595,6 @@ function Unsearch()
     endif
 endfunction
 
-function ToggleHighlightSearch()
-    if &hlsearch
-        set nohlsearch
-    else
-        set hlsearch
-    endif
-endfunction
 " set some tings {{{3
 set noignorecase      " Ignore Case while searching (\C in the regexp to search casefully)
 set nosmartcase       " Do not ignorecase if the regexp includes capitals

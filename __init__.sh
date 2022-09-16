@@ -1,4 +1,6 @@
-#! /bin/cat
+#! /usr/bin/env head -n 3
+
+# This script is intended to be sourced, not run
 
 realdir () {
     local _p=
@@ -25,9 +27,9 @@ export WHYP_EDITOR=vv
 . ~/hub/jalanb/pyth/pyth.sh
 
 . ~/jab/src/bash/__cd__.sh
-. ~/jab/environ.d/__init__.sh
+. ~/jab/environ.d/__init__.sh optional
 . ~/jab/src/bash/__init__.sh
-. ~/jalanb/local/__init__.sh optional
+. ~/jab/local/__init__.sh optional
 . ~/jab/work/__init__.sh optional
 
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
