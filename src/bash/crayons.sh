@@ -21,12 +21,45 @@ ansi_blue () {
     echo $LIGHT_BLUE
 }
 
+rgb () {
+    [[ $1 ]] || return 7
+    [[ $1 =~ ^l?(off|red|green|blue|cyan|magenta|black|white)$ ]] || return 8
+    local colour_=$1
+    [[ $colour_ ]] || return 9
+    shift
+    local light_=
+    [[ $colour_ =~ ^l ]] && light_=1
+    [[ $light_ ]] && colour_=${colour:1}
+    colour_=$(echo $colour_ | tr [:lower:] [:upper:])
+    local ight_=NIGHT 
+    [[ $light_ ]] && ight_=LIGHT
+    local foreground_="$ight_$colour_" background_=
+    if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
+        background_="BACK_$(echo $1 | tr [:lower:] [:upper:])"
+        shift
+    fi
+    local eol_= text_="$@"
+    if [[ $* =~ (^|[\ ])-l ]]; then
+        eol_="\n"
+        text_=$(echo $text_ | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
+        shift
+    fi
+    if [[ "$text_" ]];
+    then printf "${!foreground_}${!background_}$text_""${NO_COLOUR}${eol_}"
+    else printf "${!foreground_}${!background_}$(cat)${NO_COLOUR}${eol_}"
+    fi
+}
+
 red () {
-    coloured $(ansi_red) "$@"
+    rgb red "$@"
+}
+
+green () {
+    rgb green "$@"
 }
 
 blue () {
-    coloured $(ansi_blue) "$@"
+    rgb blue "$@"
 }
 
 
@@ -37,41 +70,10 @@ show_error () {
 alias show_fail=show_error
 
 lblue () {
-    coloured $(ansi_blue) "$@"
-}
-
-green () {
-    coloured $(ansi_green) "$@"
+    rgb lblue "$@"
 }
 
 # xxxxxxxxxxx
-
-coloured () {
-    [[ $1 ]] || return 7
-    [[ $1 =~ ^l?(red|green|blue|cyan|magenta|black|white)$ ]] || return 8
-    local upper_=$(echo $1 | tr [:lower:] [:upper:])
-    [[ $1 =~ ^l ]] && upper_=${upper_:1}
-    local fore_="NIGHT_$upper_"  back_= none_=
-    [[ $1 =~ ^l ]] && fore_=${fore_/N/L}
-    shift
-    [[ $1 ]] || return 9
-    if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
-        back_="BACK_$(echo $1 | tr [:lower:] [:upper:])"
-        shift
-    fi
-    local colour_="${fore_}${back_}"
-    local eol_= text_="$@"
-    if [[ $* =~ (^|[\ ])-l ]]; then
-        eol_="\n"
-        text_=$(echo $text_ | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
-        shift
-    fi
-    [[ $back_ ]] || back_=none_
-    if [[ "$text_" ]];
-    then printf "${!fore_}${!back_}$text_""${NO_COLOUR}${eol_}"
-    else printf "${!fore_}${!back_}$(cat)${NO_COLOUR}${eol_}"
-    fi
-}
 
 # xxxxxxxxxxxx
 
@@ -123,8 +125,8 @@ lblue_line () {
 }
 # xxxxxxxxxxxxxxxx
 
-coloured_line () {
-    coloured -l "$@"
+rgbl () {
+    rgb -l "$@"
 }
 
 show_run_command () {
@@ -161,4 +163,30 @@ source_colour_functions () {
     SOURCED_COLOUR_FUNCTIONS=1
 }
 
-[[ $SOURCED_COLOUR_FUNCTIONS ]] || source_colour_functions
+crayons () {
+    echo "${BASH_SOURCE/.sh/}-crayons.sh"
+}
+
+crayon () {
+    local name_=$1 body_=$2
+    [[ $body_ ]] || body_=$name_
+    printf "$name_ () {\n rgb $body_ "'"$@"'" \n}\n\n" >> $(crayons)
+}
+
+source_crayon_functions () {
+    local crayons_=$(crayons) name=$1 body_=$2
+    echo > $crayons_
+    crayon no_colour off
+    for colour in red green blue cyan magenta yellow black white; do
+        crayon $colour
+        crayon l$colour
+        crayon ${colour}_line "$colour -l"
+        crayon l${colour}_line "$colour -l"
+    done
+    . $crayons_
+}
+
+if [[ ! $SOURCED_CRAYON_FUNCTIONS ]]; then
+    source_crayon_functions
+    SOURCED_CRAYON_FUNCTIONS=1
+fi
