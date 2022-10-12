@@ -7,6 +7,8 @@
 #
 
 export           NO_COLOUR="\033[0m"
+export           NIGHT_OFF=$NO_COLOUR
+export           LIGHT_OFF=$NO_COLOUR
 
 export         NIGHT_BLACK="\033[0;30m"
 export         LIGHT_BLACK="\033[1;30m"

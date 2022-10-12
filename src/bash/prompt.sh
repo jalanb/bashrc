@@ -34,7 +34,7 @@ get_git_status() {
     return 0
 }
 
-_colour () {
+_rgb () {
     local one_="$1"; shift
     local light_= no_colour_="\033[0m"
     local regexp_="red|green|blue|cyan|magenta|yellow"
@@ -56,24 +56,24 @@ _colour () {
     echo -n "$hues_""$@""$no_colour_"
 }
 
-blue_ () {
-    _colour blue "$@"
+_blue () {
+    _rgb blue "$@"
 }
 
-green_ () {
-    _colour green "$@"
+_green () {
+    _rgb green "$@"
 }
 
-l_blue_ () {
-    _colour l_blue "$@"
+_l_blue () {
+    _rgb l_blue "$@"
 }
 
-l_green_ () {
-    _colour l_green "$@"
+_l_green () {
+    _rgb l_green "$@"
 }
 
-l_red_ () {
-    _colour l_red "$@"
+_l_red () {
+    _rgb l_red "$@"
 }
 
 emoji_error () {
@@ -104,12 +104,12 @@ venv_name () {
         local _parent_name=$(basename $_parent)
         _venv_name=$_parent_name
     fi
-    echo $(l_red_ "${_venv_name/./}")
+    echo $(_l_red "${_venv_name/./}")
 }
 
 blue_date () {
-    local _colour_day=$(_colour blue $(date +'%A'))
-    local _colour_date=$(_colour l_blue $(date +' %F %H:%M'))
+    local _colour_day=$(_rgb blue $(date +'%A'))
+    local _colour_date=$(_rgb l_blue $(date +' %F %H:%M'))
     echo $_colour_day $_colour_date
 }
 
@@ -121,7 +121,7 @@ blue_pwd_git () {
     local _branch_name="$(get_branch)"
     local _version=
     if [[ $_branch_name ]]; then
-        local _bump_version="v$(bump get 2>/dev/null)"
+        local _bump_version="v$(bump get)"
         [[ $_bump_version == v ]] && _bump_version=
         _version=", $_branch_name $_bump_version"
     fi
@@ -129,14 +129,14 @@ blue_pwd_git () {
     [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
     local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2,")
     [[ $project_ ]] && pwd_="${project_}:${pwd_}"
-    echo $(l_blue_ "${pwd_}${_version}")
+    echo $(_l_blue "${pwd_}${_version}")
 }
 
 blue_user () {
     local user_=$(whoami)
     local hostname_=$(hostname -s)
-    local _hue_user=$(_colour blue ${user_:$USER})
-    local _hue_host=$(_colour blue ${hostname_:-$HOSTNAME})
+    local _hue_user=$(_rgb blue ${user_:$USER})
+    local _hue_host=$(_rgb blue ${hostname_:-$HOSTNAME})
     echo "${_hue_user}@$_hue_host"
 }
 
@@ -151,7 +151,7 @@ red_python () {
     fi
 
     local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
-    local _colour_python=$(l_red_ "${_python_version}")
+    local _colour_python=$(_l_red "${_python_version}")
     local _colour_venv=$(venv_name)
     if [[ ! $_colour_venv ]]; then
         echo $_colour_python
@@ -171,7 +171,7 @@ set_status_bit () {
     [[ -z "$_one" ]] && _one="-z \$?"
     local _status_color=red
     [[ $_one == 0 ]] && _status_color=green
-    _status=$(_colour $_status_color $_one)
+    _status=$(_rgb $_status_color $_one)
     export STATUS=$_status
 }
 
@@ -197,6 +197,12 @@ _pre_pses () {
 _post_pses () {
     local __doc__="""Stuff to do after setting the prompt"""
     set_status_bit "$@"
+    # echo "which -a:"
+    # which -a python3
+    # echo; echo "type -a: "
+    # type -a python3;
+    # echo; echo "command -v: "
+    # command -v python3
 }
 
 export_pses () {
