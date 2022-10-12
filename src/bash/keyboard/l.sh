@@ -1,5 +1,7 @@
 #! /bin/cat
 
+source ~/keys/q.sh
+
 # x
 
 l () {
@@ -8,8 +10,12 @@ l () {
 
 # xx
 
+l1 () {
+    l -1 "$@"
+}
+
 l0 () {
-    l -l -htrLo "$@"
+    l -1 "$@"
 }
 
 la () {
@@ -318,16 +324,14 @@ lllllllllg () {
 
 # _xxxxxxxxx
 
-which_q () {
-    which "$1" 2>/dev/null
-}
-
 ls_program () {
-    local __doc__="""Use ls by default, or gls if available (e.g. macOS)"""
-    local which_ls_=$(which_q ls)
-    [[ -f $which_ls_ ]] || which_ls_=$(which_q gls)
-    [[ -f $which_ls_ ]] || return 1
-    readlink -f $which_ls_
+    local __doc__="""Use gls if available, or ls if not"""
+    local gls_=$(quietly which gls)
+    local ls_=$(quietly which ls)
+    local which_=${gls:-$ls_}
+    local link_=$(readlink -f $which_)
+    [[ -x $link_ ]] || return 1
+    echo $link_
 }
 
 ls_has_option () {
@@ -339,17 +343,20 @@ ls_has_option () {
 ls_options () {
     local __doc__="""Use available options"""
     local by_dir_= colour_=-G classify_=-F
+    local dimension_=-C
+    [[ $1 =~ -[v1] ]] && dimension_=-1
     if ls_has_option $colour_; then
         colour_=--color
         by_dir_=--group-directories-first
         classify_=--classify
     fi
-    echo "-h -1 $colour_ $by_dir_ $classify_"
+    echo "-h $dimension_ $colour_ $by_dir_ $classify_"
+
 }
 
 
 ls_command () {
-    echo "$(ls_program)" "$(ls_options)"
+    echo "$(ls_program)" "$(ls_options "$@")"
 }
 
 # _xxxxxxxxxx

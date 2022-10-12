@@ -6,14 +6,31 @@
 # _x
 # xx
 
-alias b=echo
+b () {
+    bd ~
+}
+
 alias bt="set -eu; source ~/bash/bashtrace.sh"
+
+bb () {
+    l bbb
+}
+
+bd () {
+    cd $1
+    clear
+    l
+}
 
 bu () {
     brew upgrade "$@"
 }
 
 alias bfd=fdb
+
+bbb () {
+    . ~/.bashrc
+}
 
 bub () {
     brew update
@@ -29,6 +46,11 @@ bup () {
 
 but () {
     bu tig
+}
+
+bbbb () {
+    deactivate
+    hash -d python python3 2>/dev/null
 }
 
 balck () {

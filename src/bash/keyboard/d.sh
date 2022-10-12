@@ -13,6 +13,15 @@ dn () {
 }
 
 
+ddg () {
+    ddgr --ducky "$@"
+}
+
+ddu () {
+    local query_=""
+    open -n "https://duckduckgo.com/?q=$@"
+}
+
 dn1 () {
     "$@" > /dev/null
 }

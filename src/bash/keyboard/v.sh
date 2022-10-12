@@ -191,7 +191,7 @@ vin () {
 }
 
 vlo () {
-    v_safely $(locate "$@")
+    vv $(locate "$@")
 }
 
 vtc () {
@@ -339,11 +339,6 @@ vim_diff () {
         return 1
     fi
     vim $diff_opts_ $one_  $two_ $three_"$@"
-}
-
-v_safely () {
-    local __doc__="""Use a safe vim function"""
-    vv "$@"
 }
 
 

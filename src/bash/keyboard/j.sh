@@ -6,19 +6,27 @@
 # x
 
 j () {
-    cde ~/jab
-    clear
-    lo
+    jd ~/jab
 }
 
 # xx
 
+jd () {
+    cd $1
+    clear
+    l
+}
+
 jj () {
-    cde_activate_venv ~/jab/.venv
+    jd ~/jalanb
 }
 
 jjj () {
     . ~/jab/__init__.sh
+}
+
+jjjj () {
+    cde_activate_venv ~/jab/.venv
 }
 
 # xxx

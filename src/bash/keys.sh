@@ -43,7 +43,7 @@ is_init () {
 
 write_keys () {
     local init_=$(key_init)
-    echo "#! /usr/bin/env bat" > $init_
+    echo "#! /usr/bin/env bat -l bash" > $init_
     for script_ in $(key_scripts); do
         grep -v "^#! " $script_ >> $init_
     done

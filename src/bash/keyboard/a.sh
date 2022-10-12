@@ -55,6 +55,10 @@ ajj () {
     a "$@" ~/jalanb/
 }
 
+asb () {
+    red ab "$@" ~/bash
+}
+
 avb () {
     __doc__="vack all args in ~/jab/src/bash";
     _av ~/jab/src/bash "$@"
