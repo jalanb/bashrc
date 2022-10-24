@@ -16,8 +16,16 @@ ppi () {
     pyp install "$@"
 }
 
+ppp () {
+    ppu pip
+}
+
+ppr () {
+    ppu -r "$@"
+}
+
 ppu () {
-    pyp uninstall -y "$@"
+    ppi --upgrade "$@" | grep -v already.satisfied
 }
 
 
@@ -68,6 +76,55 @@ pipv () {
 }
 
 pirr () {
+    ppie "$dir_"
+}
+
+venv () {
+    local __doc__="""Activate a .venv (make it if needed)"""
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1"
+    local dir_venv_="$dir_/.venv"
+    if [[ -d "$dir_venv_" ]]; then
+        if [[ $1 =~ ^-(f|-force)$ ]]; then
+            show_command "rm -rf \"$dir_venv_\""
+            rm -rf "$dir_venv_" >/dev/null
+        else
+            unhash_activate "$dir_venv_"
+            ppp
+            return 0
+        fi
+    fi
+    [[ $VIRTUAL_ENV ]] && deactivate
+    hash -d python3 2>/dev/null
+    show_command "python3 -m venv \"$dir_venv_\""
+    pym venv --copies "$dir_venv_"
+    unhash_activate "$dir_venv_"
+    python3 -m ensurepip
+    ppu setuptools wheel pip
+    install_requirements_at "$dir_" -p
+}
+
+install_requirements_at () {
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1"
+    [[ $2 == -p ]] || ppp
+    local requirement_file_= requirements_=
+    for requirement_file_ in requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
+        requirements_="$dir_/$requirement_file_"
+        [[ -f "$requirements_" ]] || continue
+        ppr "$requirements_"
+        break
+    done
+}
+
+pip_install_develop () {
+    local __doc__="""pip install a directory for development"
+    local dir_=.
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+    fi
+    install_requirements_at "$dir_"
     ppie "$dir_"
 }
 
