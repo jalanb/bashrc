@@ -143,7 +143,7 @@ source_colour_functions () {
     echo > $function_script_
     printf "no_colour () {\n show_colour "'$NO_COLOR'" \n}\n\n" >> $function_script_
     for colour in red green blue cyan magenta yellow black white; do
-        printf "$colour () {\n show_colour $colour "'"$@"'"\n}\n\n" >> $function_script_
+        [[ $colour == "black" ]] || printf "$colour () {\n show_colour $colour "'"$@"'"\n}\n\n" >> $function_script_
         printf "l$colour () {\n show_colour l$colour "'"$@"'"\n}\n\n" >> $function_script_
         printf "${colour}_line () {\n show_colour $colour -l "'"$@"'"\n}\n\n" >> $function_script_
         printf "l${colour}_line () {\n show_colour l$colour -l "'"$@"'"\n}\n\n" >> $function_script_
