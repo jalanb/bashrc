@@ -126,7 +126,7 @@ show_run_command () {
     if test -s ~/fd1; then
         if grep -q '0m' ~/fd1
         then cat ~/fd1
-        else light_blue_line $(cat ~/fd1)
+        else lblue_line $(cat ~/fd1)
         fi
     fi
     if test -s ~/fd2; then
