@@ -38,17 +38,9 @@ pm () {
 pv () {
     python -m venv .venv
     unhash_python_handlers
-
 }
 
 # xxx
 
-ppp () {
-    pyth pai "$@"
-}
-
 # xxxx
 
-pypu () {
-    pyth pudb "$@"
-}

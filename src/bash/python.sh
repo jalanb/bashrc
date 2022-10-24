@@ -54,19 +54,21 @@ ppip () {
     fi
 }
 
-ppiq () {
+pipv () {
+    local dir_=$PWD setup_py_= setup_cfg= requires_=
+    [[ -d "$1" ]] && dir_="$1" && shift
+    [[ -f "$dir_/setup.py" ]] && setup_py_="$dir_/setup.py"
+    [[ -f "$dir_/setup.cfg" ]] && setup_cfg_="$dir_/setup.cfg"
+    if [[ -d "$dir_/requirements" ]]; then
+        requires_="$dir_"'/requirements/*'
+    elif [[ -f "$dir_/requirements.txt" ]]; then
+        requires_="$dir_/requirements.txt"
+    fi
+    vim -p "$setup_py_" "$setup_cfg_" "$requires_"
 }
 
-ppir () {
-    ppi -r "$@"
-}
-
-ppiu () {
-    ppi --upgrade "$@" | grep -v already.satisfied
-}
-
-ppup () {
-    ppiu pip
+pirr () {
+    ppie "$dir_"
 }
 
 unhash_activate () {

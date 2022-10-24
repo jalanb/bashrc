@@ -117,10 +117,10 @@ endif
 " Keywords
 syn keyword pythonBoolean	False True
 syn keyword pythonBranch	break continue
-" syn keyword pythonClassStatement	class nextgroup=pythonClassname skipwhite
+syn keyword pythonClassStatement	class nextgroup=pythonClassname skipwhite
 syn keyword pythonConditional	elif else if
 syn keyword pythonException	except finally raise try
-" syn keyword pythonFuncStatement	def cdef nextgroup=pythonFunction skipwhite
+syn keyword pythonFuncStatement	def cdef nextgroup=pythonFunction skipwhite
 syn keyword pythonInclude	from import
 syn keyword pythonKeyword	as assert del exec global
 syn keyword pythonKeyword	lambda nonlocal pass print return with yield
