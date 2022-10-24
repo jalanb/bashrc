@@ -1091,8 +1091,13 @@ twkgit30 () {
 unittest () {
     local __doc__="""unittest args"""
     local _pythonpath=$(readlink -f .)
+    local option_=--failfast
+    if [[ $1 =~ [-][vf] ]]; then
+        option_=
+        shift
+    fi
     [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
-    (PYTHONPATH="$_pythonpath" python -m unittest "$@")
+    (PYTHONPATH="$_pythonpath" python -m unittest $option_ "$@")
 }
 
 # xxxxxxxxx
