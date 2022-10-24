@@ -912,7 +912,7 @@ gomb () {
 gomr () {
     gom
     show_command git pull --rebase
-    git e
+    git pull --rebase
     bump show
 }
 alias pull_main=gomr
