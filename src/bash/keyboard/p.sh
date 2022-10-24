@@ -12,13 +12,23 @@
 # x
 
 p () {
-    py "$@"
+    if [[ $1 == "-q" ]]; then
+        shift
+    else
+        show_command python "$@"
+    fi
+    python "$@"
 }
 
 # xx
 
-pd () {
-    python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$@"
+pm () {
+    local option_=
+    if [[ $1 == "-q" ]]; then
+        shift
+        option_=-q
+    fi
+    p $option_ -m "$@"
 }
 
 pm () {
