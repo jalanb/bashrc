@@ -52,9 +52,6 @@ except ImportError:
     from pysyte.types.paths import path as Path
 
 
-
-
-
 more = ", ".join([" "] + mores) if mores else ""
 executable = sys.executable.replace(os.environ['HOME'], '~')
 version = sys.version.split()[0]

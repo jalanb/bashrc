@@ -160,8 +160,6 @@ nnoremap " bn
 "noremap ~ -
 "noremap !
 nnoremap @ :w !sudo tee % >/dev/null<cr>
-"noremap L
-nnoremap M `m
 "noremap $ -
 "noremap %
 "noremap ^
@@ -208,6 +206,8 @@ nnoremap <up>               ?<cr>zv
 nnoremap <down>             /<cr>zv
 nnoremap <left>             #zv
 nnoremap <right>            *zv
+"
+" Shift Arrows
 "
 nnoremap <s-left>           gT
 nnoremap <s-right>          gt

@@ -1261,10 +1261,6 @@ is_branch () {
     get_branch $1 >/dev/null
 }
 
-is_branch () {
-    get_branch $1 >/dev/null
-}
-
 get_branch () {
     git_branch -q "$@"
 }
@@ -1276,7 +1272,6 @@ git_branch () {
     [[ $1 == -v ]] && show_=show_run_command
     [[ $1 == -v ]] && shift
     [[ "$@" ]] && ref_=$1
-    [[ $ref_ ]] || return 1
     $show_ git rev-parse --abbrev-ref $ref_ 2> /dev/null || return 1
 }
 
@@ -1340,7 +1335,6 @@ untracked () {
 }
 
 # xxxxxxxxxxxxxx
-
 
 quietly () {
     "$@" 2>/dev/null
