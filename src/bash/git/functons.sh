@@ -51,6 +51,15 @@ gb () {
     fi
 }
 
+gbg () {
+    local option_=
+    [[ $1 =~ ^- ]] && option_=$1
+    [[ $option_ ]] && shift
+    [[ "$@" ]] || return
+    show_command git branch $option_ '|' grep $@
+    grep_branch "$@" $option_ 2>&1 | grep -v -e warning | grep --color "$@"
+}
+
 
 gc () {
     local quiet_= quietly_=
