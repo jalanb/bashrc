@@ -910,7 +910,9 @@ doctest () {
     local __doc__="""doctest args"""
     local _pythonpath=$(readlink -f .)
     [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
-    (PYTHONPATH="$_pythonpath" python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$@")
+    local target_="$@"
+    [[ $target_ ]] || target_=.
+    (PYTHONPATH="$_pythonpath" python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
 }
 
 has_ext () {
