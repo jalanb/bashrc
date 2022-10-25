@@ -84,7 +84,14 @@ show_data () {
 }
 
 show_command () {
-    lgreen_line '$' "$@"
+    local arg_= args_=("$@")
+    lgreen "$ ${args_[0]} "
+    unset args_[0]
+    for arg_ in "${args_[@]}"; do
+        [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
+        lgreen "$arg_ "
+    done
+    echo ""
 }
 
 # xxxxxxxxxxxxx
@@ -126,7 +133,7 @@ show_run_command () {
     if test -s ~/fd1; then
         if grep -q '0m' ~/fd1
         then cat ~/fd1
-        else light_blue_line $(cat ~/fd1)
+        else lblue_line $(cat ~/fd1)
         fi
     fi
     if test -s ~/fd2; then
@@ -143,7 +150,7 @@ source_colour_functions () {
     echo > $function_script_
     printf "no_colour () {\n show_colour "'$NO_COLOR'" \n}\n\n" >> $function_script_
     for colour in red green blue cyan magenta yellow black white; do
-        printf "$colour () {\n show_colour $colour "'"$@"'"\n}\n\n" >> $function_script_
+        [[ $colour == "black" ]] || printf "$colour () {\n show_colour $colour "'"$@"'"\n}\n\n" >> $function_script_
         printf "l$colour () {\n show_colour l$colour "'"$@"'"\n}\n\n" >> $function_script_
         printf "${colour}_line () {\n show_colour $colour -l "'"$@"'"\n}\n\n" >> $function_script_
         printf "l${colour}_line () {\n show_colour l$colour -l "'"$@"'"\n}\n\n" >> $function_script_

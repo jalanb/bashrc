@@ -53,17 +53,17 @@ gb () {
 
 
 gc () {
-    local dir_=.
-    if [[ ! $1 ]]; then 
-        clear
-        red_line "$ g d"
-        g d >&2
-        return 3
+    local quiet_= quietly_=
+    [[ $1 =~ [-][qQ] ]] && quiet_=$1 && shift
+    [[ $quiet_ =~ [-][Q] ]] && quietly_=Quietly
+    if [[ -d "$1" ]]; then
+        local dir_="$1" && shift
+        [[ $quiet_ ]] || show_command git -C "$dir_" "$@"
+        $quietly_ git --no-pager -C "$dir_" "$@"
+    else
+        [[ $quiet_ ]] || show_command git "$@"
+        $quietly_ git --no-pager "$@"
     fi
-    [[ -d "$1" ]] && dir_="$1" && shift
-    show_command git -C "$dir_" "$@"
-    # set -x
-    git --no-pager -C "$dir_" "$@"
 }
 
 gd () {
@@ -912,7 +912,7 @@ gomb () {
 gomr () {
     gom
     show_command git pull --rebase
-    git e
+    git pull --rebase
     bump show
 }
 alias pull_main=gomr
@@ -1028,7 +1028,7 @@ alias gssd=git_status_line_dir
 git_stash_branch () {
     local branch_=$1
     [[ $branch_ ]] || branch_=fred && shift
-    [[ $branch_ == 'fred' ]] && QUietly git branch -D fred
+    [[ $branch_ == 'fred' ]] && Quietly git branch -D fred
     git stash branch $branch_ "$@"
 }
 alias gstb=git_stash_branch
@@ -1340,6 +1340,19 @@ untracked () {
 }
 
 # xxxxxxxxxxxxxx
+
+
+quietly () {
+    "$@" 2>/dev/null
+}
+
+Quietly () {
+    "$@" >/dev/null
+}
+
+QUIETLY () {
+    quietly "$@" >/dev/null
+}
 
 in_repo () {
     git rev-parse --is-inside-work-tree

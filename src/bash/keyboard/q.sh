@@ -13,6 +13,26 @@ q () {
 alias Q="exit 0"
 
 # xx
-# _x
-# _xx
+
+qq () {
+    "$@" 2>&1
+}
+
+#
 # xxx
+# xxxx
+# xxxxx
+# xxxxxx
+# xxxxxxx
+
+quietly () {
+    "$@" 2>/dev/null
+}
+
+Quietly () {
+    "$@" >/dev/null
+}
+
+QUIETLY () {
+    quietly "$@" >/dev/null
+}

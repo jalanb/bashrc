@@ -33,10 +33,9 @@ highlight Structure         ctermfg=196                                    guifg
 highlight PreProc           ctermfg=130                                    guifg=#af5f00                  gui=bold
 highlight Type              ctermfg=52                                     guifg=#5f0000                  gui=bold
 highlight pythonClassStatement    	ctermfg=021                            guifg=#00005f
-highlight pythonClassStatement    	ctermfg=021                            guifg=#00005f
 highlight pythonInclude     ctermfg=022                                    guifg=#5f00d7
 highlight pythonFunction    ctermfg=68                                     guifg=#5f87d7
-highlight pythonFuncStatement      	ctermfg=022                            guifg=#5f0000
+highlight pythonFuncStatement      	ctermfg=018                            guifg=#5f0000
 highlight pythonBuiltinFunc ctermfg=58                                     guifg=#5f5f00
 highlight pythonSelf        ctermfg=099                                    guifg=#875FAF
 highlight pythonCall        ctermfg=046                                    guifg=#00FF00

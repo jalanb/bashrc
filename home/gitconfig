@@ -46,6 +46,7 @@
     bM = branch -M
     br = branch --remotes
     bp = branch --points-at
+    bu = branch --unset-upstream
 
     cb = rev-parse --abbrev-ref HEAD
     ca = cherry-pick --abort

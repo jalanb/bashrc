@@ -570,51 +570,6 @@ mkv3 () {
     virtualenv --python=$(which python3) /Users/jab/.virtualenvs/$1
 }
 
-show_bashh () {
-    show_bash "$@" && et || ef
-}
-
-nose_doctests () {
-    nosetests -h 2>&1 | grep -q doctest || return
-    echo "--with-doctest --doctest-tests --doctest-extension=.test --doctest-extension=.tests "
-}
-
-nose_coverage () {
-    nosetests -h 2>&1 | grep -q coverage || return
-    echo """ \
-        --with-coverage \
-        --cover-erase \
-        --cover-package=. \
-        --cover-tests \
-        --cover-html --cover-html-dir=coverage \
-        """
-}
-
-nose_stopwatch () {
-    [[ $1 == 1 ]] && return
-    nosetests -h 2>&1 | grep -q stopwatch || return
-    echo "-A \"speed!='slow'\""
-}
-
-nose_progress () {
-    nosetests -h 2>&1 | grep -q progressive || return
-    echo "--with-progressive "
-    nose_coverage $_progress "$@"
-}
-
-nose () {
-    local _there=
-    [[ -d $1 ]] && _there=$1
-    [[ $_there ]] && shift
-    [[ $_there ]] || _there=.
-    local _all=
-    [[ $1 == -a ]] && _all=1
-    [[ $_all ]] && shift
-    (cd $_there
-    NOSE_COVER_TESTS= nosetests $(nose_doctests) $(nose_coverage) $(nose_stopwatch $_all) $(nose_progress) "$@"
-    )
-}
-
 SUDO () {
     if [[ -n $1 ]]; then
         user="-u $1"
@@ -955,7 +910,9 @@ doctest () {
     local __doc__="""doctest args"""
     local _pythonpath=$(readlink -f .)
     [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
-    (PYTHONPATH="$_pythonpath" python -m doctest "$@")
+    local target_="$@"
+    [[ $target_ ]] || target_=.
+    (PYTHONPATH="$_pythonpath" python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
 }
 
 has_ext () {
@@ -1136,8 +1093,15 @@ twkgit30 () {
 unittest () {
     local __doc__="""unittest args"""
     local _pythonpath=$(readlink -f .)
+    local option_=--failfast
+    if [[ $1 =~ [-][vf] ]]; then
+        option_=
+        shift
+    fi
     [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
-    (PYTHONPATH="$_pythonpath" python -m unittest "$@")
+    local target_="$@"
+    [[ $target_ ]] || target_=.
+    (PYTHONPATH="$_pythonpath" python -m unittest $option_ "$target_")
 }
 
 # xxxxxxxxx

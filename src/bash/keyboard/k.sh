@@ -30,7 +30,7 @@ key () {
         path_="$HOME/bash/keyboard/$2.sh"
     else
         path_="$HOME/bash/keyboard/$1.sh"
-        option_=$2
+        [[ $2 =~ [-] ]] && option_=$2
     fi
     shift 2
     [[ $option_ ]] || $option_="-s"

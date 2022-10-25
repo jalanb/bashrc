@@ -29,7 +29,6 @@ et () {
     local __doc__="""show a happy face :-) Or let the other ones out"""
 }
 
-quietly unalias eg
 eg () {
     env | gr "$@"
 }

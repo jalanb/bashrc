@@ -47,7 +47,7 @@ gxi () {
                 blue_line gxi_grep_ $file_ $GXI_QUERY
                 gxi_grep_ $file_ $GXI_QUERY || continue
             fi
-            $diff_ "$file_"
+            $show_diff_ "$file_"
             gxi_request_ "$file_" || break
             $response_ "$file_" && responded_=1
         done
@@ -149,30 +149,6 @@ gvi_response_ () {
     local path_="$1"; shift
     [[ $answer =~ [yY] ]] && ga "$path_" && return 0
     ggi_response_ "$path_"
-}
-
-gxi_menu_ () {
-    local path_="$1"; shift
-    GSI_MENU=
-    suffix=", "
-    red_one "/"
-    red_one q uit
-    red_one a dd
-    stat_modified "$path_" && red_two in t eractive
-    red_two a m end
-    red_two am e gid
-    red_two sta g ed
-    red_one s tash
-    stat_modified "$path_" && red_one d iff
-    red_one r estore
-    red_two de l ete
-    [[ -n $GIT_ADDED ]] && red_one f asten
-    red_two comm i t
-    red_one v im
-    stat_modified "$path_" && red_one p atch
-    suffix=";"
-    red_one space " next"
-    echo -n -e "$(status_chars_ "$path_") $path_: $GSI_MENU"
 }
 
 status_chars_ () {

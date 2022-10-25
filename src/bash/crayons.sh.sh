@@ -99,10 +99,6 @@ lyellow_line () {
  show_colour lyellow -l "$@"
 }
 
-black () {
- show_colour black "$@"
-}
-
 lblack () {
  show_colour lblack "$@"
 }
