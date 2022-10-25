@@ -84,7 +84,14 @@ show_data () {
 }
 
 show_command () {
-    lgreen_line '$' "$@"
+    local arg_= args_=("$@")
+    lgreen "$ ${args_[0]} "
+    unset args_[0]
+    for arg_ in "${args_[@]}"; do
+        [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
+        lgreen "$arg_ "
+    done
+    echo ""
 }
 
 # xxxxxxxxxxxxx
