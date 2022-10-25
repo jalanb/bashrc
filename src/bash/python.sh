@@ -4,8 +4,12 @@
 # xx
 
 pym () {
-    [[ $1 == -q ]] && shift || show_command python3 -m "$@"
-    python3 -m "$@"
+    local args=("$@") quiet_=
+    for i in "${!args[@]}"; do
+        [[ ${args[$i]} == -q ]] && unset args[$i] && quiet_=1
+    done
+    [[ $quiet_ ]] || show_command "python -m" "${args[@]}"
+    python -m "${args[@]}"
 }
 
 pyp () {
@@ -13,7 +17,9 @@ pyp () {
 }
 
 ppi () {
-    pyp install "$@"
+    [[ $1 == install ]] && shift
+    show_command python3 -m pip install "$@"
+    pmp install "$@" 2>&1 | grep -v -e already | grep --color [un]*installed
 }
 
 ppp () {
@@ -25,7 +31,7 @@ ppr () {
 }
 
 ppu () {
-    ppi --upgrade "$@" | grep -v already.satisfied
+    ppi --upgrade "$@"
 }
 
 
@@ -96,10 +102,10 @@ venv () {
     fi
     [[ $VIRTUAL_ENV ]] && deactivate
     hash -d python3 2>/dev/null
-    show_command "python3 -m venv \"$dir_venv_\""
     pym venv --copies "$dir_venv_"
     unhash_activate "$dir_venv_"
-    python3 -m ensurepip
+    show_command python3 -m ensurepip
+    pym ensurepip | grep -v -e Looking -e already | grep [un]*installed
     ppu setuptools wheel pip
     install_requirements_at "$dir_" -p
 }
@@ -112,6 +118,7 @@ install_requirements_at () {
     for requirement_file_ in requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
         requirements_="$dir_/$requirement_file_"
         [[ -f "$requirements_" ]] || continue
+        lblue_line Found requirements $requirements_
         ppr "$requirements_"
         break
     done
