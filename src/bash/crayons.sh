@@ -31,8 +31,8 @@ rgb () {
     [[ $colour_ =~ ^l ]] && light_=1
     [[ $light_ ]] && colour_=${colour:1}
     colour_=$(echo $colour_ | tr [:lower:] [:upper:])
-    local ight_=NIGHT 
-    [[ $light_ ]] && ight_=LIGHT
+    local ight_=NIGHT_
+    [[ $light_ ]] && ight_=LIGHT_
     local foreground_="$ight_$colour_" background_=
     if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
         background_="BACK_$(echo $1 | tr [:lower:] [:upper:])"
@@ -164,7 +164,7 @@ source_colour_functions () {
 }
 
 crayons () {
-    echo "${BASH_SOURCE/.sh/}-crayons.sh"
+    echo "${BASH_SOURCE}.sh"
 }
 
 crayon () {
