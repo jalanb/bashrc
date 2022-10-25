@@ -940,14 +940,6 @@ relpath () {
     python ~/jab/src/python/relpath.py "$@"
 }
 
-quitely () {
-    "$@" > /dev/null
-}
-
-quietly () {
-    "$@" > /dev/null 2>&1
-}
-
 whiches () {
     local _which=$(which $1)
     local _located=
@@ -970,7 +962,7 @@ umports () {
 # xxxxxxxx
 
 doctests () {
-    py.test --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests
+    py.test --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests --doctest-glob=*.md
 }
 
 functons () {
