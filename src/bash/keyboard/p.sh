@@ -31,14 +31,6 @@ pm () {
     p $option_ -m "$@"
 }
 
-pm () {
-    python3 -m "$@"
-}
-
-pm () {
-    python3 -m "$@"
-}
-
 pv () {
     python -m venv .venv
     unhash_python_handlers

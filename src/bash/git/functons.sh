@@ -1261,14 +1261,6 @@ is_branch () {
     get_branch $1 >/dev/null
 }
 
-is_branch () {
-    get_branch $1 >/dev/null
-}
-
-is_branch () {
-    get_branch $1 >/dev/null
-}
-
 get_branch () {
     git_branch -q "$@"
 }
