@@ -1099,7 +1099,9 @@ unittest () {
         shift
     fi
     [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
-    (PYTHONPATH="$_pythonpath" python -m unittest $option_ "$@")
+    local target_="$@"
+    [[ $target_ ]] || target_=.
+    (PYTHONPATH="$_pythonpath" python -m unittest $option_ "$target_")
 }
 
 # xxxxxxxxx
