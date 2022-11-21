@@ -16,7 +16,7 @@
     b = branch
     c = cherry-pick
     cl = clean -d -f -f -x
-    d = difftool -y --extcmd=\"icdiff -N\"
+    d = difftool -y --extcmd=\"icdiff --line-numbers\"
     e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
