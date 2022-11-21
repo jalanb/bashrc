@@ -8,6 +8,10 @@
 
 alias d=echo
 
+di () {
+    icdiff "$@"
+}
+
 dn () {
     "$@" >/dev/null 2>/dev/null
 }

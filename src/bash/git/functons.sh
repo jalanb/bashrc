@@ -216,11 +216,21 @@ gbt () {
 }
 
 gbd () {
-    gbd_ -d "$@"
+    if [[ $1 =~ [-][yY] ]]; then
+        shift
+        echo y | gbd_ -d "$@"
+    else
+        gbd_ -d "$@"
+    fi
 }
 
 gbD () {
-    gbd_ -D "$@"
+    if [[ $1 =~ [-][yY] ]]; then
+        shift
+        echo y | gbd_ -D "$@"
+    else
+        gbd_ -D "$@"
+    fi
 }
 
 gbo () {
@@ -463,7 +473,9 @@ gom () {
 goo () {
     local path_="."
     [[ "$@" ]] && path_="$@"
+    show_command git restore "$path_"
     git restore "$path_"
+    show_command git status --porcelain "$path_"
     git status --porcelain "$path_"
 }
 
@@ -476,7 +488,7 @@ gor () {
     for branch in "$@"; do
         go "$branch"
         show_command git pull --rebase
-        git pull --rebase
+        git pull --rebase -q
     done
 }
 
@@ -676,6 +688,10 @@ grp () {
 
 grr () {
     git pull --rebase "$@"
+}
+
+grim () {
+    gri $(main_branch)
 }
 
 grrr () {
@@ -925,6 +941,10 @@ gomr () {
     bump show
 }
 alias pull_main=gomr
+
+gooo () {
+    goo .
+}
 
 gorl () {
     gor "$@"

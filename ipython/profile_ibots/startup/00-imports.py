@@ -42,7 +42,7 @@ try:
     from pysyte.types.paths import path
     from pysyte import cli
 except ImportError as e:
-    print(e)
+    sys.stderr.write(str(e))
     sys.stderr.write("pip install pysyte # please")
 
 try:

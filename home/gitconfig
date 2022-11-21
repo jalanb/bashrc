@@ -16,7 +16,7 @@
     b = branch
     c = cherry-pick
     cl = clean -d -f -f -x
-    d = difftool -y --extcmd=\"icdiff -N\"
+    d = difftool -y --extcmd=\"icdiff --line-numbers\"
     e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
@@ -98,7 +98,7 @@
     le = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
     lf = lc --stat
     lg = l --grep
-    ll = "!git l -n `$LINES / 2`"
+    ll = l -32
     lll = l -16
     llll = l -8
     lllll = l -4
