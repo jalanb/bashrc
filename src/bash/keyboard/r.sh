@@ -3,9 +3,11 @@
 # x
 
 r () {
-    [[ "$@" ]] && rm -vrf "$@" || ra . 
+    local command_="ranger ."
+    [[ "$@" ]] && command_="rm -vrf ""$@"
+    show_command $command_
+    $command_
 }
-
 
 # xx
 
@@ -35,7 +37,6 @@ chewed_rri () {
     )
     rri "$@"
 }
-
 
 scalp_hermann () {
     (
@@ -110,14 +111,15 @@ raj () {
 rlf () {
     local path_=. rlf_path_= suffix_=
     [[ $1 ]] && path_="$1"
+    [[ $path_ ]] || return 1
     rlf_path_=$(readlink -f "$path_")
     if [[ -e $rlf_path_ ]]; then
         echo $rlf_path_
         return 0
     fi
-    echo "$rlf_path_  # does not exist"
+    [[ $rlf_path_ ]] && path_=$rlf_path_
+    echo "$path_  # does not exist"
     return 1
-    # realpath $path_
 }
 
 rlg () {
@@ -152,5 +154,5 @@ rri () {
 
 rrr () {
     # Scalp Hans too
-    sudo rm -rf "$@" 2> ~/fd2
+    sudo rm -rf --preserve-root "$@" 2> ~/fd2
 }

@@ -338,7 +338,11 @@ vim_diff () {
         echo same 
         return 1
     fi
-    vim $diff_opts_ $one_  $two_ $three_"$@"
+    if [[ $three_ ]]; then
+        vim $diff_opts_ "$one_"  "$two_" "$three_"
+    else
+        vim $diff_opts_ "$one_"  "$two_"
+    fi
 }
 
 
