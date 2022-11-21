@@ -329,6 +329,8 @@ ls_program () {
     local gls_=$(quietly which gls)
     local ls_=$(quietly which ls)
     local which_=${gls:-$ls_}
+    [[ $which_ ]] || show_fail "No ls available"
+    [[ $which_ ]] || return 1
     local link_=$(readlink -f $which_)
     [[ -x $link_ ]] || return 1
     echo $link_
