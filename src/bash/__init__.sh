@@ -1,7 +1,7 @@
 #! /bin/cat
 
 
-__version__=0.8.63
+__version__=0.8.64
 
 . ~/bash/tput.sh
 . ~/bash/aliases.sh
