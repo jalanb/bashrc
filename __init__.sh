@@ -29,7 +29,7 @@ export WHYP_EDITOR=vv
 . ~/jab/src/bash/__cd__.sh
 . ~/jab/environ.d/__init__.sh optional
 . ~/jab/src/bash/__init__.sh
-. ~/jab/local/__init__.sh optional
+. ~/jalanb/local/__init__.sh optional
 . ~/jab/work/__init__.sh optional
 
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
