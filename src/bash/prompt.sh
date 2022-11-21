@@ -36,7 +36,7 @@ get_git_status() {
 
 _rgb () {
     local one_="$1"; shift
-    local light_= no_colour_="\033[0m"
+    local light_=NIGHT_ no_colour_="\033[0m"
     local regexp_="red|green|blue|cyan|magenta|yellow"
     local hue_=$one_
     if [[ "$one_" =~ ^l_ ]]; then
@@ -56,26 +56,6 @@ _rgb () {
     echo -n "$hues_""$@""$no_colour_"
 }
 
-_blue () {
-    _rgb blue "$@"
-}
-
-_green () {
-    _rgb green "$@"
-}
-
-_l_blue () {
-    _rgb l_blue "$@"
-}
-
-_l_green () {
-    _rgb l_green "$@"
-}
-
-_l_red () {
-    _rgb l_red "$@"
-}
-
 emoji_error () {
     if [[ $1 == 0 ]]; then
         echo "😎 "
@@ -87,7 +67,7 @@ emoji_error () {
 
 _colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
+    printf "\n$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
     #printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
 }
 
@@ -104,7 +84,7 @@ venv_name () {
         local _parent_name=$(basename $_parent)
         _venv_name=$_parent_name
     fi
-    echo $(_l_red "${_venv_name/./}")
+    echo $(_rgb l_red "${_venv_name/./}")
 }
 
 blue_date () {
@@ -118,7 +98,7 @@ short_pwd () {
 }
 
 blue_pwd_git () {
-    local _branch_name="$(get_branch)"
+    local _branch_name="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
     local _version=
     if [[ $_branch_name ]]; then
         local _bump_version="v$(bump get)"
@@ -129,7 +109,7 @@ blue_pwd_git () {
     [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
     local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2,")
     [[ $project_ ]] && pwd_="${project_}:${pwd_}"
-    echo $(_l_blue "${pwd_}${_version}")
+    echo $(_rgb l_blue "${pwd_}${_version}")
 }
 
 blue_user () {
@@ -141,7 +121,6 @@ blue_user () {
 }
 
 red_python () {
-
     local _virtual_env_name=
     local _virtual_env_root=$(env | grep VIRTUAL_ENV | cut -d= -f2)
     [[ $_virtual_env_root ]] && _virtual_env_name=$(basename "$_virtual_env_root")
@@ -151,7 +130,7 @@ red_python () {
     fi
 
     local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
-    local _colour_python=$(_l_red "${_python_version}")
+    local _colour_python=$(_rgb l_red "${_python_version}")
     local _colour_venv=$(venv_name)
     if [[ ! $_colour_venv ]]; then
         echo $_colour_python
