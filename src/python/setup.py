@@ -10,7 +10,7 @@ import jab as src_python
 setup(
     name="jab",
     packages=["jab"],
-    version='0.8.64',
+    version='0.8.65',
     url='https://github.com/jalanb/jab/',
     license='MIT License',
     author='J Alan Brogan',
