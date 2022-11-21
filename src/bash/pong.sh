@@ -123,9 +123,9 @@ show_online () {
         local pong_out_=$(pong "$@")
         [[ $pong_out_ ]] || pong_out_="pingable $@"
         if [[ $line_end_ == -l ]]; then
-            show_green_line $pong_out_
+            green_line $pong_out_
         else
-            show_green $pong_out_
+            green $pong_out_
         fi
         return 0
     fi

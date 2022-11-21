@@ -90,7 +90,8 @@ nnoremap q :q<cr>
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 noremap tf :tabnew ~/tmp/fred.txt
-noremap tn :tabnew<Space>
+noremap tn :tabprev<cr>:tabnew<Space>
+noremap tv :tabprev<cr>:tabnew ~/.vimrc<cr>
 nnoremap tq <esc>;iq<CR>
 nnoremap ttq <esc>;iqa!<CR>
 nnoremap tw <esc>;iwa!<CR>qa!<CR>
@@ -142,7 +143,9 @@ nnoremap ; q:
 nnoremap ' bp
 nnoremap " m'
 "noremap \ - leader
-nnoremap , .n
+nnoremap < .?<cr>
+nnoremap , n.
+nnoremap > j.
 "noremap . - repeat
 "noremap / - search
 "noremap / - search

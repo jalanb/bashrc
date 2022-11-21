@@ -13,8 +13,6 @@ import fnmatch
 
 
 from six.moves import configparser
-import pysyte.shell.args
-import pysyte.shell.main
 
 
 def get_module_name():

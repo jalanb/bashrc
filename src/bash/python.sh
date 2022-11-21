@@ -47,10 +47,9 @@ ppy () {
 # xxxx
 
 ppie () {
-    local dir_=$1
+    local dir_=$1 upgrade_=
     [[ -d $dir_ ]] || dir_=.
-    ppi $1/setup.py && upgrade_=
-    [[ -f $setup_ ]] && upgrade="--upgrade"
+    Quietly pyp freeze $(basename $(readlink -f $dir_)) && upgrade_=--upgrade
     if [[ -d "$dir" ]]; then
         (
             show_command cd "$1"
@@ -58,7 +57,7 @@ ppie () {
             ppi $upgrade_ -e .
         )
     else
-        ppi $upgrade_ -e . 
+        ppi $upgrade_ -e .
     fi
 }
 

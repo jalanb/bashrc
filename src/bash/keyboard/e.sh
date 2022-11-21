@@ -48,6 +48,10 @@ eft () {
     local __doc__="""Errors from a command, or the one before"""
 }
 
+etf () {
+    et || ef
+}
+
 ett () {
     local _status=$1
     echo "True $_status $(face $_status)" >&1

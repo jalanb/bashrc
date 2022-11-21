@@ -51,6 +51,15 @@ gb () {
     fi
 }
 
+gbg () {
+    local option_=
+    [[ $1 =~ ^- ]] && option_=$1
+    [[ $option_ ]] && shift
+    [[ "$@" ]] || return
+    show_command git branch $option_ '|' grep $@
+    grep_branch "$@" $option_ 2>&1 | grep -v -e warning | grep --color "$@"
+}
+
 
 gc () {
     local quiet_= quietly_=
@@ -352,7 +361,7 @@ gl_ () {
             options_="$options_ $1"
         fi
     fi
-    gd "$@" l $options_
+    gc "$@" l $options_
 }
 
 gl1 () {
@@ -945,10 +954,6 @@ gdsv () {
     gds dv "$@"
 }
 
-ggai () {
-    grep -q $1 $2 && gai $2 || echo fuck off >&2
-}
-
 gl11 () {
     if [[ -n $1 ]]; then
         for sha1 in "$@"; do
@@ -1457,74 +1462,3 @@ log_test_file ()
     grep_git_log_for_python_test_file 3
 }
 
-off () {
-    # Turns colours off
-    echo "\033[0m"
-}
-
-render () {
-    local colour_=$1 end_=
-    [[ $colour_ ]] || return 3
-    shift
-    if [[ $1 == -l ]]; then
-        end_="\n"
-        shift
-    fi
-    printf "$colour_""$*""$(off)$end_"
-}
-
-red () {
-    echo "\033[0;31m"
-}
-
-green () {
-    echo "\033[0;32m"
-}
-
-blue () {
-    echo "\033[0;34m"
-}
-
-red_text () {
-    render $(red) "$@"
-}
-
-green_text () {
-    render $(green) "$@"
-}
-
-blue_text () {
-    render $(blue) "$@"
-}
-
-red_line () {
-    red_text -l "$@"
-}
-
-green_line () {
-    green_text -l "$@"
-}
-
-blue_line () {
-    blue_text -l "$@"
-}
-
-fail_line () {
-    red_line "$@"
-}
-
-pass_line () {
-    green_line "$@"
-}
-
-command_line () {
-    blue_line "$@"
-}
-
-red_one () {
-    GSI_MENU="$GSI_MENU$(red_text $1)$2"
-}
-
-red_two () {
-    GSI_MENU="${GSI_MENU}$(off)$1$(red_text $2)$3"
-}

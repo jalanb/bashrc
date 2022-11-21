@@ -492,7 +492,7 @@ bump () {
     local _config=
     [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
     [[ -n $_config ]] && shift
-    local _bump_root=$(git_root .)
+    local _bump_root=$(git_root -q .)
     local _part=${1:-patch}; shift
     if [[ -z $_show && -z $_get ]]; then
         if [[ -n $_part ]]; then
@@ -908,11 +908,11 @@ clearly () {
 
 doctest () {
     local __doc__="""doctest args"""
-    local _pythonpath=$(readlink -f .)
-    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    local pythonpath_=$(readlink -f .)
+    [[ $PYTHONPATH ]] && pythonpath_="$PYTHONPATH:$pythonpath_"
     local target_="$@"
     [[ $target_ ]] || target_=.
-    (PYTHONPATH="$_pythonpath" python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
+    (PYTHONPATH="$pythonpath_" python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
 }
 
 has_ext () {
@@ -940,14 +940,6 @@ relpath () {
     python ~/jab/src/python/relpath.py "$@"
 }
 
-quitely () {
-    "$@" > /dev/null
-}
-
-quietly () {
-    "$@" > /dev/null 2>&1
-}
-
 whiches () {
     local _which=$(which $1)
     local _located=
@@ -970,7 +962,7 @@ umports () {
 # xxxxxxxx
 
 doctests () {
-    py.test --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests
+    py.test --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests --doctest-glob=*.md
 }
 
 functons () {
@@ -1227,7 +1219,7 @@ blank_script () {
 }
 
 project_root () {
-    git_root "$@" 2>/dev/null && return 0
+    git_root -q "$@" 2>/dev/null && return 0
     local _arg= _file= _path=
     for _arg in "$@"; do
         for _path in $(~/jab/bin/parents $_arg); do

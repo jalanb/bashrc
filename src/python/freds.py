@@ -56,14 +56,16 @@ def parse_args(methods):
     return args
 
 def add_args(parser: ArgumentsParser) -> ArgumentsParser:
-    parser.positional('directories', metavar='items', type=str, 
-                        help='Only look for fred files in these directories')
+    parser.positional('directories', metavar='dirs', type=str, 
+                        help='Only look for freds in these directories',
+                      default=['.'],
+                     )
     parser.add_option('-d', '--debug', action='store_true',
-                        help='Debug the first fred.py with pudb')
+                        help='Debug the first fred.py or fred.sh')
     parser.add_option('-e', '--edit', action='store_true',
                         help='Edit the freds with vim')
     parser.add_option('-l', '--list', action='store_true',
-                        help='Use long listing')
+                        help='Long list the freds')
     parser.add_option('-r', '--remove', action='store_true',
                         help='Remove the freds')
     parser.add_option('-p', '--python', action='store_true',
