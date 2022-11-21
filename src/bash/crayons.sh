@@ -2,9 +2,6 @@
 
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
-# show_colours
-# xxxxxxxx
-
 rgb () {
     [[ $1 ]] || return 7
     [[ $1 =~ ^l?(off|red|green|blue|cyan|magenta|black|white)$ ]] || return 8
@@ -40,7 +37,6 @@ show_error () {
     red_line "$@" >&2
     return 1
 }
-alias show_fail=show_error
 
 # xxxxxxxxxxx
 
@@ -61,16 +57,9 @@ show_command () {
     echo ""
 }
 
-# xxxxxxxxxxxxx
-
-# xxxxxxxxxxxxxxx
-
-# xxxxxxxxxxxxxxx
-
+alias show_fail=show_error
 alias show_pass=green_line
-# xxxxxxxxxxxxxxx
-
-# xxxxxxxxxxxxxxxx
+alias show_cmnd=blue_line
 
 rgbl () {
     rgb -l "$@"
