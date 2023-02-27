@@ -3,14 +3,22 @@
 # x
 
 k () {
-    local dir_="$1"; shift
-    [[ "$dir_" ]] || dir_=.
-    [[ -d "$dir_" ]] || return 1
-    cd $dir_; 
+    local dir_="$1"; 
+    [[ "$dir_" ]] || return 1
+    [[ -d "$dir_" ]] || return 2
+    cd $dir_
+    shift
+    [[ "$@" ]] || return 3
     "$@"
 }
 
 # xx
+
+kk () {
+    (
+        k "$@"
+    )
+}
 
 kl () {
     k "$1" l
