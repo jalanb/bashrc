@@ -652,7 +652,7 @@ grbb () {
         local one_=$1
         local one_branch_=$(list_branches $one_ | head -n 1)
         if [[ ! $one_branch_ ]]; then
-            local one_remote_=$(list_branches $one_ | head -n 1)
+            local one_remote_=$(list_branches -r $one_ | head -n 1)
             if [[ $one_remote_ ]]; then
                 one_branch_=$one_remote_
                 git checkout $one_branch_
