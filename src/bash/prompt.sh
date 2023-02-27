@@ -94,7 +94,8 @@ blue_date () {
 }
 
 short_pwd () {
-    echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
+    local main_dir_="$HOME/pysyse/__main__"
+    PYTHONPATH="$main_dir_" "$main_dir_/bin/short_dir" "$PWD" 2> /dev/null
 }
 
 blue_pwd_git () {
