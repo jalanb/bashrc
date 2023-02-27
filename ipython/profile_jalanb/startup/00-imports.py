@@ -10,8 +10,8 @@ import sys
 import inspect
 
 import bots
-import tools
-from tools.issues import issues
+import bots
+from bots.issues import issues
 
 pyprint = print
 
@@ -75,7 +75,7 @@ version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
 stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
-stdout(f"import bots, tools, tools.issues.issues")
+stdout(f"import bots, bots, bots.issues.issues")
 stdout("")
 stdout(f"{executable} {version}")
 stdout(f"{bots.__file__} {bots.__version__}")

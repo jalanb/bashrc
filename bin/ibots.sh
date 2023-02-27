@@ -22,7 +22,7 @@ main () {
     source .venv/bin/activate
     echo Upgrading pip packages
     pip_upgrade pip pysyte
-    [[ $(extra) ]] || /usr/local/bin/sed --in-place --expression="/wwts.com/d" requirements/requirements.txt
+    [[ $(extra) ]] || /usr/bin/sed --in-place --expression="/wwts.com/d" requirements/requirements.txt
     pip_upgrade -r requirements/development.txt
     [[ $(extra) ]] || git restore requirements/
 

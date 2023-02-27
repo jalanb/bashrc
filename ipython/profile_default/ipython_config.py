@@ -181,6 +181,8 @@ c.TerminalIPythonApp.display_banner = False
 
 # Set the color scheme (NoColor, Linux, or LightBG).
 c.TerminalInteractiveShell.colors = 'Linux'
+from IPython.core import ultratb
+ultratb.VerboseTB._tb_highlight = "bg:#400000"
 
 # Autoindent IPython code entered interactively.
 # c.TerminalInteractiveShell.autoindent = True
