@@ -808,18 +808,20 @@ gbd_ () {
         if [[ $delete_branch_ == "$main_branch_" ]]; then
             show_error Please checkout another branch before deleting $main_branch_
             return 1
-        elif [[ $delete_branch_ == "fred" ]]; then
-            answer=Y
+        fi
+        local answer_=N
+        if [[ $delete_branch_ == "fred" ]]; then
+            answer_=Y
         else
             if [[ "$1" =~ ^-[yY]$ ]]; then
-                answer=Y
+                answer_=Y
                 shift
             else
-                read -p "OK to remove $delete_branch_ [y]? " -n1 answer
+                read -p "OK to remove $delete_branch_ [y]? " -n1 answer_
                 echo
             fi
         fi
-        [[ -n $answer && ! $answer =~ [yY] ]] && return 1
+        [[ -n $answer_ && ! $answer_ =~ [yY] ]] && return 1
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
         fi
