@@ -10,7 +10,7 @@ rgb () {
     shift
     local light_=
     [[ $colour_ =~ ^l ]] && light_=1
-    [[ $light_ ]] && colour_=${colour:1}
+    [[ $light_ ]] && colour_=${colour_:1}
     colour_=$(echo $colour_ | tr [:lower:] [:upper:])
     local ight_=NIGHT_
     [[ $light_ ]] && ight_=LIGHT_
@@ -26,7 +26,7 @@ rgb () {
         shift
     fi
     colour_="${!foreground_}"
-    [[ $background_ ]] && colour="${colour}${!background_}"
+    [[ $background_ ]] && colour_="${colour_}${!background_}"
     if [[ "$text_" ]];
     then printf -- "${colour_}$text_""${NO_COLOUR}${eol_}"
     else printf -- "${colour_}$(cat)${NO_COLOUR}${eol_}"

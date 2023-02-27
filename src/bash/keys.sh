@@ -54,7 +54,7 @@ read_keys () {
     . $(key_init)
 }
 
-vim_keyboard () {
+vim_keys () {
     local init_=$(key_init) files_=
     if [[ ! "$@" ]]; then
         files_="$(echo_keys '[a-z12].sh')"
@@ -77,6 +77,6 @@ vim_keyboard () {
 alias keys=read_keys
 alias rk=read_keys
 alias wk=write_keys
-alias vk=vim_keyboard
+alias vk=vim_keys
 
 read_keys
