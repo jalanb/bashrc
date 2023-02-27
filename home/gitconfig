@@ -69,11 +69,13 @@
     ds = d --staged
     dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
     dis = di --staged
+    dry = "!f() { git merge-tree `git merge-base $2 $1` $2 $1; }; f"
     dump = cat-file -p
 
     ea = rebase --abort
     ec = rebase --continue
     ei = rebase --interactive
+    em = rebase __main__
     es = rebase --skip
     eq = rebase --quit
     eu = remote get-url origin
