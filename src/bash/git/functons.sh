@@ -407,7 +407,7 @@ gll () {
 }
 
 glm () {
-    g l __main__..
+    g l __main__^..
 }
 
 gln () {
