@@ -507,6 +507,7 @@ bump () {
         fi
     fi
     [[ -z $_config ]] && _config="$_bump_root/.bumpversion.cfg"
+    [[ -f $_config ]] || return 2
     local _sought=^current_version
     if [[ -n $_show ]]; then
         grep $_sought $_config | grep --colour '\d[0-9a-z.]\+$'
