@@ -904,7 +904,7 @@ gdil () {
 }
 
 gdis () {
-    gc "$@" d --staged 
+    gc d --staged  "$@"
 }
 
 glgg () {
