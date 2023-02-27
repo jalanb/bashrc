@@ -20,10 +20,18 @@ ppd () {
     pip_install_develop "$@"
 }
 
+ppf () {
+    if [[ -n "$@" ]]; then
+        pmp freeze | grep "$@"
+    else
+        pmp freeze
+    fi
+}
+
 ppi () {
     [[ $1 == install ]] && shift
     show_command python3 -m pip install "$@"
-    pmp install "$@" 2>&1 | grep -v -e already | grep --color [un]*installed
+    pmp install "$@" | grep -v -e already | grep --color [un]*installed
 }
 
 ppp () {
@@ -49,16 +57,12 @@ ppy () {
 ppie () {
     local dir_=$1 upgrade_=
     [[ -d $dir_ ]] || dir_=.
-    Quietly pyp freeze $(basename $(readlink -f $dir_)) && upgrade_=--upgrade
-    if [[ -d "$dir" ]]; then
-        (
-            show_command cd "$1"
-            cd "$1"
-            ppi $upgrade_ -e .
-        )
-    else
+    (
+        [[ $dir_ == "." ]] || show_command cd "$dir_"
+        cd "$dir_"
+        Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
         ppi $upgrade_ -e .
-    fi
+    )
 }
 
 pipv () {

@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /usr/local/bin/bash -x
 
 lcolour () {
     local colour_="[1;${1}m" no_colour_="[0m"

@@ -94,7 +94,8 @@ blue_date () {
 }
 
 short_pwd () {
-    echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
+    local main_dir_="$HOME/pysyse/__main__"
+    PYTHONPATH="$main_dir_" "$main_dir_/bin/short_dir" "$PWD" 2> /dev/null
 }
 
 blue_pwd_git () {
@@ -107,7 +108,7 @@ blue_pwd_git () {
     fi
     local pwd_="$(short_pwd)"
     [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
-    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2,")
+    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2," -e "s,[.]git$,,")
     [[ $project_ ]] && pwd_="${project_}:${pwd_}"
     echo $(_rgb l_blue "${pwd_}${_version}")
 }

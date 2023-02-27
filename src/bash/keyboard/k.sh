@@ -3,23 +3,49 @@
 # x
 
 k () {
-    local dir_="$1"; shift
-    [[ "$dir_" ]] || dir_=.
-    [[ -d "$dir_" ]] || return 1
-    cd $dir_; 
+    local dir_="$1"; 
+    [[ "$dir_" ]] || return 1
+    [[ -d "$dir_" ]] || return 2
+    cd $dir_
+    shift
+    [[ "$@" ]] || return 3
     "$@"
 }
 
 # xx
 
+kk () {
+    (
+        k "$@"
+    )
+}
+
 kl () {
     k "$1" l
 }
 
+kr () {
+    read_keys "$@"
+}
+
+kw () {
+    write_keys "$@"
+}
+
+kv () {
+    vim_keys "$@"
+}
+
 # xxx
 
+has_bash () {
+    [[ $1 =~ [.]sh$ ]] && return 0
+    head -n1 "$1" | grep -q '#!.*bash' && return 0
+    return 1
+}
+
 kad () {
-    head -n1 | grep -q '#!' || return;
+    has_bash "$1" || return 1
     kat -f '{$' -l '^}' "$@" | bat -l bash
 }
 

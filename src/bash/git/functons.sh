@@ -315,14 +315,14 @@ gfe () {
 }
 
 gff () {
-    local upstream_=$(main_branch)
-    [[ $1 ]] && upstream_=$1
+    local main_branch_=$(main_branch)
+    [[ $1 ]] && main_branch_=$1
     gru
     gcu
     show_command git_root -o
     gfe "$@" | grep -v 'Fetching'
     gba
-    gor $upstream_ 2>/dev/null | grep -v -e "up to date" -e Already
+    gor $main_branch_ 2>/dev/null | grep -v -e "up to date" -e Already
     show_command bump show
     bump show
     gll
@@ -407,7 +407,7 @@ gll () {
 }
 
 glm () {
-    g l __main__..
+    g l __main__^..
 }
 
 gln () {
@@ -431,11 +431,11 @@ gma () {
 }
 
 gmm () {
-    local branch_=$(get_branch) upstream_=$(main_branch)
-    go $upstream_
+    local branch_=$(get_branch) main_branch_=$(main_branch)
+    go $main_branch_
     grr
     go $branch_
-    gm $upstream_
+    gm $main_branch_
 }
 
 gmt () {
@@ -465,9 +465,9 @@ gol () {
 }
 
 gom () {
-    local upstream_=$(main_branch) source_=$(get_branch)
-    [[ $source_ == $upstream_ ]] && return
-    go $upstream_ "$@"
+    local main_branch_=$(main_branch) source_=$(get_branch)
+    [[ $source_ == $main_branch_ ]] && return
+    go $main_branch_ "$@"
 }
 
 goo () {
@@ -589,12 +589,12 @@ giddy () {
 }
 
 grb () {
-    local branch_= upstream_=$(mains 1 "$@")
-    [[ $upstream_ ]] || upstream_=$2
-    [[ $upstream_ ]] || echo "No masters available, usage: grb branch upstream"
-    [[ $upstream_ ]] || return 1
+    local branch_= main_branch=$(mains 1 "$@")
+    [[ $main_branch ]] || main_branch=$2
+    [[ $main_branch ]] || echo "No masters available, usage: grb branch upstream"
+    [[ $main_branch ]] || return 1
 
-    git rebase $upstream_ $branch_
+    git rebase $main_branch $branch_
 }
 
 grc () {
@@ -635,8 +635,8 @@ gri () {
 
 grm () {
     local __doc__="""git rebase main branch onto $1, or checked out branch"""
-    local upstream_=$(main_branch)
-    grbb $upstream_ "$@"
+    local main_branch=$(main_branch)
+    grbb $main_branch "$@"
 }
 
 gbac () {
@@ -652,7 +652,7 @@ grbb () {
         local one_=$1
         local one_branch_=$(list_branches $one_ | head -n 1)
         if [[ ! $one_branch_ ]]; then
-            local one_remote_=$(list_branches $one_ | head -n 1)
+            local one_remote_=$(list_branches -r $one_ | head -n 1)
             if [[ $one_remote_ ]]; then
                 one_branch_=$one_remote_
                 git checkout $one_branch_
@@ -783,14 +783,14 @@ gpff () {
 
 gbd_ () {
     local current_branch_=$(get_branch) options_=
-    local upstream_=$(main_branch)
+    local main_branch_=$(main_branch)
     local delete_branch_=$current_branch_
     if [[ "$@" =~ $current_branch_ ]]; then
-        if [[ "$@" == "$upstream_" ]]; then
+        if [[ "$@" == "$main_branch_" ]]; then
             git checkout $(git tag --list  | sort -V | tail -n 1)
             current_branch_=$(get_branch)
-            if [[ $current_branch_ == "$upstream_" ]]; then
-                show_error Please checkout another branch before deleting $upstream_
+            if [[ $current_branch_ == "$main_branch_" ]]; then
+                show_error Please checkout another branch before deleting $main_branch_
                 return 1
             fi
         else
@@ -805,21 +805,23 @@ gbd_ () {
             branches_="$branches_ $arg_"
         done
         [[ "$branches_" ]] && delete_branch_="$branches_"
-        if [[ $delete_branch_ == "$upstream_" ]]; then
-            show_error Please checkout another branch before deleting $upstream_
+        if [[ $delete_branch_ == "$main_branch_" ]]; then
+            show_error Please checkout another branch before deleting $main_branch_
             return 1
-        elif [[ $delete_branch_ == "fred" ]]; then
-            answer=Y
+        fi
+        local answer_=N
+        if [[ $delete_branch_ == "fred" ]]; then
+            answer_=Y
         else
             if [[ "$1" =~ ^-[yY]$ ]]; then
-                answer=Y
+                answer_=Y
                 shift
             else
-                read -p "OK to remove $delete_branch_ [y]? " -n1 answer
+                read -p "OK to remove $delete_branch_ [y]? " -n1 answer_
                 echo
             fi
         fi
-        [[ -n $answer && ! $answer =~ [yY] ]] && return 1
+        [[ -n $answer_ && ! $answer_ =~ [yY] ]] && return 1
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
         fi
@@ -902,7 +904,7 @@ gdil () {
 }
 
 gdis () {
-    gc "$@" d --staged 
+    gc d --staged  "$@"
 }
 
 glgg () {
@@ -1189,8 +1191,8 @@ git_kd_ () {
 }
 
 mastered () {
-    local upstream_=$(main_branch)
-    has_branch $upstream_ "$1" || has_branch $upstream_ origin/$1
+    local main_branch_=$(main_branch)
+    has_branch $main_branch_ "$1" || has_branch $main_branch_ origin/$1
 }
 
 show_pre_loop_ () {
@@ -1330,12 +1332,12 @@ show_clone () {
 # xxxxxxxxxxx
 
 clean_clone () {
-    local upstream_=$(main_branch)
+    local main_branch_=$(main_branch)
     git reset head .
     git checkout .
     git clean -f -d -f
     git fetch --all
-    git checkout $upstream_
+    git checkout $main_branch_
     for branch in $(git branch --format="%(refname:short)" | grep -v -e __main__ -e master -e deployed-to); do
         [[ -f $branch ]] && continue
         git branch -d $branch 2>/dev/null

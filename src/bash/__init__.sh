@@ -12,7 +12,6 @@ __version__=0.8.65
 . ~/bash/hosts.sh
 . ~/bash/history.sh
 . ~/bash/jabnet.sh
-. ~/bash/prompt.sh green
 . ~/bash/python.sh
 . ~/bash/rf.sh
 . ~/bash/work.sh

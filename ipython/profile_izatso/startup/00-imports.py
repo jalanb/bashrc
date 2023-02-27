@@ -10,8 +10,8 @@ import sys
 import inspect
 
 import bots
-import tools
-from tools.issues import issues
+import bots
+from bots.issues import issues
 
 pyprint = print
 
