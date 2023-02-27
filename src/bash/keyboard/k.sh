@@ -24,10 +24,28 @@ kl () {
     k "$1" l
 }
 
+kr () {
+    read_keys "$@"
+}
+
+kw () {
+    write_keys "$@"
+}
+
+kv () {
+    vim_keys "$@"
+}
+
 # xxx
 
+has_bash () {
+    [[ $1 =~ [.]sh$ ]] && return 0
+    head -n1 "$1" | grep -q '#!.*bash' && return 0
+    return 1
+}
+
 kad () {
-    head -n1 | grep -q '#!' || return;
+    has_bash "$1" || return 1
     kat -f '{$' -l '^}' "$@" | bat -l bash
 }
 
