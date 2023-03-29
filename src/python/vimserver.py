@@ -23,12 +23,7 @@ import socket
 import sys
 import threading
 
-try:
-    # Python 3
-    import socketserver
-except ImportError:
-    # Python 2
-    import SocketServer as socketserver
+import socketserver
 
 
 class NameSpace(object):

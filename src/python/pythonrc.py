@@ -1,9 +1,7 @@
 """Dirty up the main namespace with some extra imports"""
 
-from __future__ import print_function
-
 try:
-    see
+    see  # type: ignore
 except NameError:
 
     def see(thing, regexp=None):
@@ -77,5 +75,11 @@ def set_prompt():
 complete()
 set_prompt()
 
+
 # https://www.reddit.com/r/Python/comments/4ivd2k/what_is_your_favorite_python_error_message/d329j8l
-q = type("", (), {"__repr__": lambda _: exit()})()
+class Quit(object):
+    def __repr__(self):
+        exit()
+
+
+quit = Quit()

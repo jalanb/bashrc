@@ -169,7 +169,7 @@ def get_files_in(directory, globs):
 
 def get_files(directory, globs, recursive):
     """Get a list of files under that directory, matching those globs"""
-    get_paths = recursive and get_files_under or get_files_in
+    get_paths = get_files_under if recursive else get_files_in
     result = []
     for glob in globs:
         result.extend(get_paths(directory, glob))
@@ -209,8 +209,8 @@ def remove_files(files, quiet, trial_run):
 def script(paths, args, globs):
     """Run the script"""
     result = os.EX_OK
-    for path in paths:
-        files = get_files(path, globs, args.recursive)
+    for path_ in paths:
+        files = get_files(path_, globs, args.recursive)
         file_result = remove_files(files, args.quiet, args.Trial_Run)
         if file_result != os.EX_OK:
             result = file_result

@@ -6,6 +6,8 @@ import sys
 import shutil
 from contextlib import contextmanager
 from functools import partial
+from typing import Any
+from typing import List
 
 from subprocess import getstatusoutput
 
@@ -29,7 +31,7 @@ class GitException(RuntimeError):
         that any further-derived classes provide some handlers
     """
 
-    required_handlers = []
+    required_handlers: List[Any] = []
 
     def __new__(cls, name, bases, body):
         """Derived classes must have all required_handlers"""
