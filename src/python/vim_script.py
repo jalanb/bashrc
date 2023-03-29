@@ -24,8 +24,7 @@ def path_to_editor() -> str:
         We are not expecting any other filename
         but will respect and directory which has been set
 
-    >>> path_to_editor().endswith('vim')
-    True
+    >>> assert path_to_editor().endswith('vim')
     """
     editor = os.environ.get("EDITOR", "vim")
     if os.path.basename(editor) not in ["vim", "gvim"]:
@@ -72,12 +71,10 @@ def quote(string):
         escape any doubles in the string
         double-quote the entire string
 
-    >>> quote('string') == '"string"'
-    True
+    >>> assert quote('string') == '"string"'
 
     Leave any matched quotes at start and end
-    >>> quote('"string"') == '"string"'
-    True
+    >>> assert quote('"string"') == '"string"'
     """
     double = '"'
     single = "'"
@@ -96,8 +93,7 @@ def quote(string):
 def quotes(strings):
     """Add quotation marks around each string
 
-    >>> quotes(['a', "'b'"]) == ['"a"', '"b"']
-    True
+    >>> assert quotes(['a', "'b'"]) == ['"a"', '"b"']
     """
     return [quote(string) for string in strings]
 
@@ -105,8 +101,7 @@ def quotes(strings):
 def escape_quotes(string):
     """Make the string accepatble to command line by esacping any quotes
 
-    >>> escape_quotes('word"here') == r'word\\"here'
-    True
+    >>> assert escape_quotes('word"here') == r'word\\"here'
     """
     return string.replace('"', r"\"").replace("'", r"\'")
 
@@ -114,8 +109,7 @@ def escape_quotes(string):
 def quote_finds(strings):
     """Add quotation marks around any sought items
 
-    >>> quote_finds(['+1', '+/1']) == ['+1', '+/"1"']
-    True
+    >>> assert quote_finds(['+1', '+/1']) == ['+1', '+/"1"']
     """
     result = []
     for string in strings:
@@ -128,8 +122,7 @@ def quote_finds(strings):
 def is_final_option(string):
     """Whether that string means there will be no further options
 
-    >>> is_final_option('--')
-    True
+    >>> assert is_final_option('--')
     """
     return string == "--"
 
@@ -137,8 +130,7 @@ def is_final_option(string):
 def is_dash_option(string):
     """Whether that string looks like an option
 
-    >>> is_dash_option('-p')
-    True
+    >>> assert is_dash_option('-p')
     """
     return string[0] == "-"
 
@@ -146,8 +138,7 @@ def is_dash_option(string):
 def is_plus_option(string):
     """Whether that string looks like an option
 
-    >>> is_plus_option('+/sought')
-    True
+    >>> assert is_plus_option('+/sought')
     """
     return string[0] == "+"
 
@@ -155,8 +146,7 @@ def is_plus_option(string):
 def is_option(string):
     """Whether that string looks like an option to vim
 
-    >>> is_option('-p') and is_option('+/sought')
-    True
+    >>> assert is_option('-p') and is_option('+/sought')
     """
     end = "finished"
     if is_final_option(string):
@@ -169,8 +159,7 @@ def is_option(string):
 def divide(items, divider):
     """Divide a list in two depending on the divider method
 
-    >>> divide([0, 1, 2, 3], lambda x: x < 1) == ([0], [1, 2, 3])
-    True
+    >>> assert divide([0, 1, 2, 3], lambda x: x < 1) == ([0], [1, 2, 3])
     """
     trues = []
     falses = []
@@ -185,8 +174,7 @@ def divide(items, divider):
 def missing_extension(string):
     """Whether that string looks like it's missing an extension
 
-    >>> missing_extension('string.')
-    True
+    >>> assert missing_extension('string.')
     """
     return string[-1] == "."
 
@@ -207,8 +195,7 @@ def get_globs(directory, glob):
 def process_cwd(pid):
     """The current working directory for that process id
 
-    >>> process_cwd(os.getpid()) == os.getcwd()
-    True
+    >>> assert process_cwd(os.getpid()) == os.getcwd()
     """
     command = '/usr/sbin/lsof -a -p %s -d cwd -Fn | grep "^n"' % pid
     output = getoutput(command)
@@ -219,8 +206,7 @@ def process_cwd(pid):
 def real_path(path_to_directory, path_to_file):
     """The real path of that file relative to that directory
 
-    >>> real_path('~/tmp', '../../../file') == '/file'
-    True
+    >>> assert real_path('~/tmp', '../../../file') == '/file'
     """
     full_path = os.path.join(path_to_directory, path_to_file)
     full_path = os.path.expanduser(full_path)

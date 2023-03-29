@@ -20,9 +20,8 @@ from __future__ import print_function
 import re
 import sys
 
-from dotsite import scripts
-from dotsite import paths
-from repositories import repository
+from pysyte.cli.main import run
+from pysyte.types import paths
 
 
 def add_args(parser):
@@ -184,7 +183,7 @@ def read_dirs_tags(path_to_directory=None):
         path_to_directory = paths.pwd()
     tags = read_dir_tags(path_to_directory)
     for path_to_sub_directory in path_to_directory.walkdirs():
-        if repository.is_repository_path(path_to_sub_directory):
+        if path_to_sub_directory.name in (".git", ".svn", ".venv", ".tox"):
             continue
         tags.append(read_dir_tags(path_to_sub_directory))
     return tags
@@ -222,7 +221,7 @@ def tag_directory_recursively(source):
     tags = read_dirs_tags(path_to_directory)
     write_tags(path_to_directory, tags)
     for path_to_sub_directory in path_to_directory.walkdirs():
-        if repository.is_repository_path(path_to_sub_directory):
+        if path_to_sub_directory.name in (".git", ".svn", ".venv", ".tox"):
             continue
         tag_directory(path_to_directory)
 

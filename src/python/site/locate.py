@@ -7,14 +7,10 @@ import os
 import sys
 import argparse
 
-try:
-    from commands import getoutput, getstatusoutput
-except ImportError:
-    from subprocess import getoutput, getstatusoutput
+from subprocess import getoutput, getstatusoutput
 from fnmatch import fnmatch
 
 
-from repositories import repository
 from pysyte.types.paths import path as makepath
 from pysyte import splits
 
@@ -69,7 +65,7 @@ def _make_locate_command(args):
 
 def _locatable(path):
     """Whether that path is wanted in location results"""
-    return not repository.is_repository_path(path)
+    return path.name not in (".git", ".tox", ".venv")
 
 
 def _run_locate(args):

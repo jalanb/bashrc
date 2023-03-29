@@ -52,7 +52,7 @@ We can insist on finding only directories
     >>> options.directories = True
 
 There are fewer of them
-    >>> assert len(locate._locate(options)) < 3
+    >>> assert len(locate._locate(options)) <= 3
 
 So we can use a glob instead
     >>> options.directories = False

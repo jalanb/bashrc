@@ -7,7 +7,7 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-from pysyte.bash import cmnds
+from pysyte.bash import shell
 
 import script_path
 
@@ -79,11 +79,12 @@ def script(args):
         if args.list or args.shortlist:
             list_command = "PATH=/bin:/usr/bin ls" + " -l" if args.list else ""
             command = "%s %s" % (list_command, path_to_item)
-            status, output = cmnds.getstatusoutput(command)
-            if status == os.EX_OK:
-                print(output)
+            try:
+                print(shell.run(command))
                 result = True
                 continue
+            except shell.BashError:
+                pass
         print(path_to_item)
         result = True
     return result

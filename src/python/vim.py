@@ -11,7 +11,7 @@ from bdb import BdbQuit
 __version__ = "0.1.0"
 
 
-from vim_script import script
+from .vim_script import script
 
 
 def parse_args():

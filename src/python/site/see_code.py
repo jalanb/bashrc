@@ -37,7 +37,7 @@ def code_of_method(method):
     def code_of_method(method):
     ...
         if not callable(method):
-            raise NoCode('Not callable: %r' % method)
+            raise NoCode("Not callable: %r" % method)
     ...
     """
 
