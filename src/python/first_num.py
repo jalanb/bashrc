@@ -62,7 +62,6 @@ def _globalize(items, _predicate, _name):
 
 def _extract_first(predicate, items):
     result = items[:]
-    _first = None
     for item in items:
         if predicate(item):
             result.remove(item)
@@ -71,8 +70,7 @@ def _extract_first(predicate, items):
 
 
 def _extract_all(predicate, items):
-    _found = bool([_ for _ in items if predicate(_)])
-    return
+    return bool([_ for _ in items if predicate(_)])
 
 
 def _extract_first_digit(items):

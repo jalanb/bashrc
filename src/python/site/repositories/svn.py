@@ -30,7 +30,7 @@ def _get_some_subversion_config_lines(path_to_config, match):
     except ValueError:
         return []
     lines = path_to_file.lines()
-    return [l for l in lines if match(l)]
+    return [_ for _ in lines if match(_)]
 
 
 def _get_svn_global_ignores():

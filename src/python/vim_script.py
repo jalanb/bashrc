@@ -232,7 +232,7 @@ def vimming_files(processes):
     result = []
     for pid, arg_string in processes:
         args = arg_string.split()
-        _vim_command, vim_args = args[0], args[1:]
+        _, *vim_args = args
         working_dir = process_cwd(pid)
         for vim_arg in vim_args:
             if not is_option(vim_arg):

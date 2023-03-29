@@ -20,7 +20,7 @@ def format_line(ip, names):
 
 def read_host_lines(path_to_hosts):
     lines = []
-    for line in file(path_to_hosts, "r"):
+    for line in open(path_to_hosts, "r"):
         line = line.rstrip()
         if not line or line[0] == "#":
             parsed = (line, None)
@@ -54,7 +54,7 @@ def _has_names(line):
 
 
 def ip_dict(lines):
-    return dict([l for l in lines if _has_names(l)])
+    return dict([_ for _ in lines if _has_names(_)])
 
 
 def merge_hosts(etc_hosts, my_hosts):
@@ -93,7 +93,7 @@ def write_hosts(lines, path_to_hosts):
         then just write to stdout
     """
     try:
-        output = file(path_to_hosts, "w")
+        output = open(path_to_hosts, "w")
         for line in lines:
             print(line, file=output)
         output.close()

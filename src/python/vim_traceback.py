@@ -21,7 +21,6 @@ If you prefer to use splits instead of tabs, add the option "-s", e.g
 
 
 from __future__ import print_function
-import re
 import os
 import sys
 

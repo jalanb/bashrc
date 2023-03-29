@@ -3,8 +3,8 @@ from __future__ import print_function
 
 
 def backup_with_suffix(filename, suffix):
-    text = file(filename).read()
-    file("%s%s" % (filename, suffix), "w").write(text)
+    text = open(filename).read()
+    open("%s%s" % (filename, suffix), "w").write(text)
 
 
 # pylint: disable=too-many-arguments
@@ -18,7 +18,8 @@ def looks_like_this(
     eol=None,
     count_from=1,
 ):
-    lines = file(filename).readlines()
+    with open(filename) as stream:
+        lines = stream.readlines()
     lines = _look_like_that(lines, limits, count_from, numbers, space, tab, sol)
     for line in lines:
         if eol:

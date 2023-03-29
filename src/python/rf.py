@@ -68,7 +68,11 @@ def compare_options(a, b):
         return +1
     if a[0][0].islower() and b[0][0].isupper():
         return -1
-    return cmp(a[0], b[0])  # pylint: disable=undefined-variable
+    if a[0] > b[0]:
+        return +1
+    if a[0] < b[0]:
+        return -1
+    return 0
 
 
 def get_help_text(configured_globs):
@@ -87,7 +91,7 @@ def get_help_text(configured_globs):
     ]
     try:
         return sorted(explanations + glob_explations, cmp=compare_options)
-    except TypeError as e:
+    except TypeError:
         return sorted(explanations + glob_explations, key=lambda x: x[0])
 
 

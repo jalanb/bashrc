@@ -4,16 +4,15 @@
 import os
 import sys
 
-
 from sh import pylint  # pylint: disable=no-name-in-module
 
 
 def name(number):
     """Convert a pylint nuber to a name
 
-    >>> assert name('E0611') == no-name-in-module
+    >>> assert name('E0611') == "no-name-in-module"
     """
-    number_line = [l for l in pylint("--help-msg", number) if number in l][0]
+    number_line = [_ for _ in pylint("--help-msg", number) if number in _][0]
     return number_line.split(":")[1].split()[0]
 
 

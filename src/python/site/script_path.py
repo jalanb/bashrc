@@ -25,7 +25,6 @@ def sift(sys_args):
 
 def arg_paths(sys_args):
     sifted = sift(sys_args)
-    values = sifted.values()
     arg_paths = [paths.path(p) for v in sifted.values() for p in v]
     if arg_paths:
         return arg_paths

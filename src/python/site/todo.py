@@ -3,7 +3,6 @@
 
 from __future__ import print_function
 import re
-import os
 import sys
 
 try:
@@ -33,6 +32,32 @@ def todo_file():
 
 
 def read_todo(todo):
+    lines = [_.rstrip() for _ in open(todo)]
+    return [_ for _ in lines if _ and _[0] != "#"]
+
+
+def as_todo_item(line):
+    """Initialise a TodoItem from the line"""
+    item_regexp = re.compile(
+        "^(?P<text>.*), (?P<priority>[%s])$" % priority_keys_string()
+    )
+    match = item_regexp.match(line)
+    TodoItem = namedtuple("TodoItem", "text, priority")
+    if not match:
+        return TodoItem(line, -1)
+    text = match.groupdict()["text"]
+    priority = match.groupdict()["priority"]
+    return TodoItem(text, int(priority))
+
+
+def read_items():
+    """Extract a list of todo items from a list of lines
+
+    Each item is a tuple of (text, priority)
+    """
+    todo = todo_file()
+    lines = read_todo(todo) if todo else []
+    return [as_todo_item(_) for _ in lines]
 
 
 def priorities():

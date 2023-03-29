@@ -37,7 +37,7 @@ class ScriptError(NotImplementedError):
 
 
 def version():
-    print("%s %s" % (args, __version__))
+    print(__version__)
     raise SystemExit
 
 

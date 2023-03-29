@@ -5,6 +5,7 @@ from __future__ import print_function
 import os
 import sys
 
+from pysyte.cli import arguments
 from pysyte.cli import streams
 
 
@@ -56,12 +57,12 @@ def as_words(string):
 def lines_of_words(lines):
     """Read the file, spilt text into lines of words
 
-    >>> lines = lines_of_words(file(__file__).readlines())
-    >>> this_line = [l for l in lines if 'this_line' in l][0]
+    >>> lines = lines_of_words(open(__file__).readlines())
+    >>> this_line = [_ for _ in lines if 'this_line' in _][0]
     >>> this_line[:3] == ['>>>', 'this_line', '=']
     True
     """
-    return [as_words(l) for l in lines]
+    return [as_words(_) for _ in lines]
 
 
 def filter_by_word(lines, word_index, expected_word):
@@ -71,7 +72,7 @@ def filter_by_word(lines, word_index, expected_word):
     >>> filter_by_word(lines, 1, 'five') == [['four', 'five']]
     True
     """
-    return [l for l in lines if l and l[word_index] == expected_word]
+    return [_ for _ in lines if _ and _[word_index] == expected_word]
 
 
 def parse_traceback_lines(lines):
@@ -87,7 +88,7 @@ def parse_traceback_lines(lines):
     """
     lines = lines_of_words(lines)
     file_lines = filter_by_word(lines, 0, "File")
-    return [(de_punctuate_word(l, 1), de_punctuate_word(l, 3)) for l in file_lines]
+    return [(de_punctuate_word(_, 1), de_punctuate_word(_, 3)) for _ in file_lines]
 
 
 def parse_args():
@@ -102,12 +103,12 @@ def parse_args():
 def main(_args):
     """Use command line args as files containing tracebacks"""
     args = parse_args()
-    streams = streams.args(args, "file")
-    if not streams:
+    streams_ = streams.args(args, "file")
+    if not streams_:
         print("No traceback file specified", file=sys.stderr)
         return not os.EX_OK
-    for stream in streams:
-        for line in parse_traceback_lines(streams.full_lines(stream)):
+    for stream in streams_:
+        for line in parse_traceback_lines(streams_.full_lines(stream)):
             print("b", ":".join(line))
     return os.EX_OK
 

@@ -84,7 +84,7 @@ def _run_locate(args):
             raise ValueError("command: %s\n output: %s" % (command, output))
     elif not output:
         return []
-    locatable = [l for l in output.split("\n") if _locatable(l)]
+    locatable = [_ for _ in output.split("\n") if _locatable(_)]
     for exclude in args.exclude or []:
         locatable = [_ for _ in locatable if not re.search(exclude, _)]
     return locatable
@@ -141,7 +141,7 @@ def _locate(args):
 
     lines = _run_locate(args)
     check = _make_check_method(_directory_in_path, args)
-    result = [l for l in lines if check(l)]
+    result = [_ for _ in lines if check(_)]
     if result:
         return result
     if args.directories or args.files:
@@ -182,7 +182,8 @@ def main():
         return not os.EX_OK
     if args.lsld:
         ls_commands = [str("ls -ld %r" % str(_)) for _ in located_arg]
-        __ = [print(getoutput(_)) for _ in ls_commands]
+        for command in ls_commands:
+            print(getoutput(command))
     else:
         print("\n".join(located_arg))
     return os.EX_OK

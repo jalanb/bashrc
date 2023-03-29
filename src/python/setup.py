@@ -4,9 +4,6 @@
 from setuptools import setup
 
 
-import jab as src_python
-
-
 setup(
     name="jab",
     packages=["jab"],

@@ -81,7 +81,8 @@ class Tag(object):
         return '<Tag "%s">' % self.name
 
     def __cmp__(self, other):
-        return cmp(str(self), str(other))
+        a, b = str(self), str(other)
+        return 1 if a > b else -1 if a < b else 0
 
     def address_pattern(self):
         """The pattern in the address"""

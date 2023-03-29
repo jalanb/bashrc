@@ -4,6 +4,8 @@
 import os
 import argv
 
+from ls import ly
+from repositories import svn
 
 argv.add_options(
     [
@@ -14,10 +16,6 @@ argv.add_options(
         ("verbose", "run ptags verbosely", False),
     ]
 )
-
-
-from ls import ly
-from repositories import svn
 
 
 def remove_globs(globs):

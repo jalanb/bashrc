@@ -6,14 +6,11 @@
 
 import os
 import sys
-import argparse
-from bdb import BdbQuit
 
 from rich import print
 from pysyte.cli.arguments import ArgumentsParser
 from pysyte.cli.main import run
 from pysyte.freds.freds import Freds
-from pysyte.types.paths import path
 
 __version__ = "0.1.0"
 
@@ -48,7 +45,7 @@ def version(_):
     raise SystemExit
 
 
-def parse_args(methods):
+def parse_args(parser, methods):
     """Parse out command line arguments"""
     args = parser.parse_args()
     run_args(args, methods)

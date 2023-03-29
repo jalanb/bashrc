@@ -267,7 +267,7 @@ def branches(remotes=False):
 def branches_containing(commit):
     """Return a list of branches conatining that commit"""
     lines = run(f"branch --contains {commit}").splitlines()
-    return [l.lstrip("* ") for l in lines]
+    return [_.lstrip("* ") for _ in lines]
 
 
 def hide(item):
@@ -424,7 +424,7 @@ def abandon_operation():
     return run(command.replace("git", "", 1))
 
 
-def show_branches(branch1, branch2):
+def show_branches(branch_1, branch_2):
     """Runs git show-branch between the 2 branches, parse result"""
 
     def parse_show_line(string):
@@ -483,7 +483,7 @@ def commits_with_message(message):
     """All commits with that message (in current branch)"""
     output = log(f"--grep '{message}'", oneline=True, quiet=True)
     lines = output.splitlines()
-    return [l.split(" ", 1)[0] for l in lines]
+    return [_.split(" ", 1)[0] for _ in lines]
 
 
 def sha1(branch=None, path=None):
@@ -627,7 +627,7 @@ def delete(branch, force=False, remote=False):
             raise
         checkout("master")
         result = run(f"branch {option} {branch}")
-    except Exception as e:
+    except Exception:
         pass
     if remote:
         return hide(branch)
@@ -733,7 +733,7 @@ def git_continuer(method, *args, **kwargs):
                 raise
             try:
                 method(*args, **kwargs)
-            except Resolver as resolved:
+            except Resolver as resolved:  # noqa
                 pass
             else:
                 return

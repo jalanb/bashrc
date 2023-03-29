@@ -7,7 +7,7 @@ def dump_args(func):
     fname = func.func_name
 
     def echo_func(*a, **kw):
-        print(fname, ": ")
+        print(f"{fname}({argnames}):")
         return func(*a, **kw)
 
     return echo_func
