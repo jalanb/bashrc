@@ -1,7 +1,7 @@
 -r testing.txt
 
 
-ipython
+ipython>=8.10
 pudb
 rich-cli
 httpie
