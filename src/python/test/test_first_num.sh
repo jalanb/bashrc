@@ -3,8 +3,8 @@
 set -e
 
 test_expected () {
-    BASH_DIR=$(dirname_ $BASH_SOURCE)
-    PARENT=$(dirname_ $BASH_DIR)
+    BASH_DIR=$(dirname $BASH_SOURCE)
+    PARENT=$(dirname $BASH_DIR)
     if [[ $(python $PARENT/first_num.py "$@") == $EXPECTED ]]; then
         echo pass
         return 0
