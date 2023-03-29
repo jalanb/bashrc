@@ -27,24 +27,23 @@ def _get_path_to_config():
 
 
 def has_true(value):
-    return value.lower() in ['true', 't', 'yes', 'y', '1']
+    return value.lower() in ["true", "t", "yes", "y", "1"]
 
 
 def default_options():
     options = {
-        'all': False,
-        'recursive': False,
-        'quiet': False,
-        'temporary': True,
-        'Trial-Run': False,
+        "all": False,
+        "recursive": False,
+        "quiet": False,
+        "temporary": True,
+        "Trial-Run": False,
     }
     globs = {
-        'development': 'tags a.out *.log',
-        'old': '*.old',
-        'python': '*.pyc *.pyo *.fail *$py.class *.profile',
-        'temporary':
-        '*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two',
-        'vim': '*.sw[opqrs]',
+        "development": "tags a.out *.log",
+        "old": "*.old",
+        "python": "*.pyc *.pyo *.fail *$py.class *.profile",
+        "temporary": "*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two",
+        "vim": "*.sw[opqrs]",
     }
     return options, globs
 
@@ -55,13 +54,13 @@ def read_configuration():
     if not os.path.isfile(path):
         return default_options()
     parser.read(path)
-    options = {k: has_true(v) for k, v in parser.items('options')}
-    globs = dict(parser.items('globs'))
+    options = {k: has_true(v) for k, v in parser.items("options")}
+    globs = dict(parser.items("globs"))
     return options, globs
 
 
 def as_configuration_name(name):
-    return '-'.join([s.lower() for s in name.split('-')])
+    return "-".join([s.lower() for s in name.split("-")])
 
 
 def compare_options(a, b):
@@ -73,17 +72,19 @@ def compare_options(a, b):
 
 
 def get_help_text(configured_globs):
-    all_glob_names = ', '.join([k for k in configured_globs.keys()])
+    all_glob_names = ", ".join([k for k in configured_globs.keys()])
     explanations = [
-        ('all', 'remove all (%s)' % all_glob_names),
-        ('recursive', 'remove from subdirectories too'),
-        ('quiet', 'do not show files being removed'),
-        ('Trial-Run', 'show which files would be removed, but do nothing'),
+        ("all", "remove all (%s)" % all_glob_names),
+        ("recursive", "remove from subdirectories too"),
+        ("quiet", "do not show files being removed"),
+        ("Trial-Run", "show which files would be removed, but do nothing"),
     ]
     explanation_names = [a for a, _ in explanations]
-    glob_explations = [(name, 'remove "%s"' % value)
-                       for name, value in configured_globs.items()
-                       if name not in explanation_names]
+    glob_explations = [
+        (name, 'remove "%s"' % value)
+        for name, value in configured_globs.items()
+        if name not in explanation_names
+    ]
     try:
         return sorted(explanations + glob_explations, cmp=compare_options)
     except TypeError as e:
@@ -91,14 +92,13 @@ def get_help_text(configured_globs):
 
 
 def add_argument(parser, name, default, explanation):
-    letter = '-%s' % name[0]
-    word = '--%s' % name
-    action = 'store_true'
+    letter = "-%s" % name[0]
+    word = "--%s" % name
+    action = "store_true"
     if default:
-        explanation = 'do not %s' % explanation
-        action = 'store_false'
-    parser.add_argument(
-        letter, word, action=action, default=default, help=explanation)
+        explanation = "do not %s" % explanation
+        action = "store_false"
+    parser.add_argument(letter, word, action=action, default=default, help=explanation)
 
 
 def add_arguments(parser, configured_options, configured_globs):
@@ -111,10 +111,12 @@ def add_arguments(parser, configured_options, configured_globs):
 
 def wanted_globs(options, configured_globs):
     """A list of globs for all files to be deleted"""
-    return [glob
-            for key, value in configured_globs.items()
-            if getattr(options, key)
-            for glob in value.split()]
+    return [
+        glob
+        for key, value in configured_globs.items()
+        if getattr(options, key)
+        for glob in value.split()
+    ]
 
 
 def get_names_in(directory):
@@ -136,7 +138,7 @@ def get_paths_under(directory, glob):
     """Get a list of directories under that directory, matching those globs"""
     result = []
     for name in get_names_in(directory):
-        if name in ('.git', '.idea', '.venv', '.tox', '.pytest_cache'):
+        if name in (".git", ".idea", ".venv", ".tox", ".pytest_cache"):
             continue
         path = os.path.join(directory, name)
         if fnmatch.fnmatch(name, glob):
@@ -216,15 +218,16 @@ def parse_options():
     configured_options, configured_globs = read_configuration()
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     add_arguments(parser, configured_options, configured_globs)
-    parser.add_argument('paths', default=['.'], nargs='*',
-                        help='paths to clean (default .)')
+    parser.add_argument(
+        "paths", default=["."], nargs="*", help="paths to clean (default .)"
+    )
     args = parser.parse_args(None)
     paths = args.paths
-    delattr(args, 'paths')
+    delattr(args, "paths")
     if args.all:
         _ = [setattr(args, name, True) for name in configured_globs.keys()]
     if args.quiet and args.Trial_Run:
-        raise NotImplementedError('Using --quiet and --Trial-Run: Do nothing')
+        raise NotImplementedError("Using --quiet and --Trial-Run: Do nothing")
     return paths, args, wanted_globs(args, configured_globs)
 
 
@@ -240,5 +243,6 @@ def main():
         return os.EX_USAGE
     return script(paths, args, globs)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     sys.exit(main())

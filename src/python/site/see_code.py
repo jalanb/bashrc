@@ -14,7 +14,7 @@ class NoCode(ValueError):
 
 def indent_line(filename, line_number):
     line = linecache.getline(filename, line_number)
-    match = re.match(r'(\s*)', line)
+    match = re.match(r"(\s*)", line)
     return line.rstrip(), match.groups()[0]
 
 
@@ -27,7 +27,7 @@ def subsequent_lines_with_more_indentation(filename, first_line_number):
         result.append(line)
         line_number += 1
         line, indentation = indent_line(filename, line_number)
-    return '\n'.join(result)
+    return "\n".join(result)
 
 
 def code_of_method(method):
@@ -42,18 +42,20 @@ def code_of_method(method):
     """
 
     if not callable(method):
-        raise NoCode('Not callable: %r' % method)
+        raise NoCode("Not callable: %r" % method)
     try:
         function_code = method.__code__
     except AttributeError:
         try:
             function_code = method.func_code
         except AttributeError:
-            raise NoCode('No code available for %s' % method)
-    filename = re.sub('.py[co]$', '.py', function_code.co_filename)
+            raise NoCode("No code available for %s" % method)
+    filename = re.sub(".py[co]$", ".py", function_code.co_filename)
     if not os.path.isfile(filename):
-        raise NoCode('Source is not a file: %r' % filename)
-    return subsequent_lines_with_more_indentation(filename, function_code.co_firstlineno)
+        raise NoCode("Source is not a file: %r" % filename)
+    return subsequent_lines_with_more_indentation(
+        filename, function_code.co_firstlineno
+    )
 
 
 def higlight_code(text):
@@ -63,17 +65,18 @@ def higlight_code(text):
         from pygments.styles import ClassNotFound
     except ImportError:
         return text
-    language = 'python'
+    language = "python"
     lexer = get_lexer_by_name(language)
     if not lexer:
         return text
     try:
-        formatter = get_formatter_by_name('terminal256', style='alan')
+        formatter = get_formatter_by_name("terminal256", style="alan")
     except ClassNotFound:
-        formatter = get_formatter_by_name('terminal256', style='monokai')
+        formatter = get_formatter_by_name("terminal256", style="monokai")
     if not formatter:
         return text
     import pygments
+
     return pygments.highlight(text, lexer, formatter)
 
 
@@ -83,7 +86,7 @@ def highlight_method(method):
 
 
 def code_of_module(module):
-    filename = re.sub('.py[co]$', '.py', module.__file__)
+    filename = re.sub(".py[co]$", ".py", module.__file__)
     return open(filename).read()
 
 
@@ -93,13 +96,13 @@ def highlight_module(module):
 
 
 def highlight(instance):
-    if hasattr(instance, '__file__'):
+    if hasattr(instance, "__file__"):
         return highlight_module(instance)
     return highlight_method(instance)
 
 
 def code(instance):
-    if hasattr(instance, '__file__'):
+    if hasattr(instance, "__file__"):
         return code_of_module(instance)
     return code_of_method(instance)
 

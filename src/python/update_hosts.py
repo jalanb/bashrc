@@ -4,6 +4,7 @@ from __future__ import print_function
 import os
 import sys
 
+
 def parse_line(line):
     parts = line.split()
     ip, names = parts[0], parts[1:]
@@ -14,13 +15,14 @@ def format_line(ip, names):
     if names is None:
         return str(ip)
     names = sorted(list(names))
-    return '%-16s\t%s' % (ip, ' '.join(names))
+    return "%-16s\t%s" % (ip, " ".join(names))
+
 
 def read_host_lines(path_to_hosts):
     lines = []
-    for line in file(path_to_hosts, 'r'):
+    for line in file(path_to_hosts, "r"):
         line = line.rstrip()
-        if not line or line[0] == '#':
+        if not line or line[0] == "#":
             parsed = (line, None)
         else:
             parts = line.split()
@@ -30,12 +32,12 @@ def read_host_lines(path_to_hosts):
 
 
 def path_to_etc_hosts():
-    return '/etc/hosts'
+    return "/etc/hosts"
 
 
 def path_to_jab_hosts():
-    jab = '~/jab'
-    return os.path.join(jab, 'etc/hosts')
+    jab = "~/jab"
+    return os.path.join(jab, "etc/hosts")
 
 
 def read_etc_hosts():
@@ -58,7 +60,7 @@ def ip_dict(lines):
 def merge_hosts(etc_hosts, my_hosts):
     extras = ip_dict(my_hosts)
     result = []
-    added_line = '# Added by %s' % os.path.basename(sys.argv[0])
+    added_line = "# Added by %s" % os.path.basename(sys.argv[0])
     has_added_line = False
     for line in etc_hosts:
         ip, names = line
@@ -78,8 +80,8 @@ def merge_hosts(etc_hosts, my_hosts):
     for ip, names in extras.items():
         extra_lines.append(format_line(ip, names))
     if extra_lines and not has_added_line:
-        extra_lines.insert(0, '#')
-        extra_lines.insert(1, '# Added by %s' % sys.argv[0])
+        extra_lines.insert(0, "#")
+        extra_lines.insert(1, "# Added by %s" % sys.argv[0])
     result.extend(extra_lines)
     return result
 
@@ -91,13 +93,13 @@ def write_hosts(lines, path_to_hosts):
         then just write to stdout
     """
     try:
-        output = file(path_to_hosts, 'w')
+        output = file(path_to_hosts, "w")
         for line in lines:
             print(line, file=output)
         output.close()
         return os.EX_OK
     except IOError:
-        print('\n'.join(lines))
+        print("\n".join(lines))
         return os.EX_NOPERM
 
 
@@ -108,5 +110,5 @@ def main():
     return write_hosts(lines, path_to_etc_hosts())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

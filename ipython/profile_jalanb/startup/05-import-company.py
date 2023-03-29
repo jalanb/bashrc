@@ -2,8 +2,10 @@
 
 from dataclasses import dataclass
 
+
 @dataclass
 class EmployerData:
     name: str
 
-wwts = EmployerData('wwts')
+
+wwts = EmployerData("wwts")

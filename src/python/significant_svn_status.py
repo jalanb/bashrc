@@ -11,6 +11,7 @@ import sys
 try:
     from repositories.svn import get_significant_status
 except ImportError:
+
     def get_significant_status(_):
         return False
 
@@ -22,5 +23,5 @@ def main(args):
     return not os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

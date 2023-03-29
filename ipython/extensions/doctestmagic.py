@@ -41,8 +41,7 @@ import doctest
 from contextlib import contextmanager
 
 from IPython.core.magic import Magics, magics_class, line_magic, cell_magic
-from IPython.core.magic_arguments import (argument, magic_arguments,
-                                          parse_argstring)
+from IPython.core.magic_arguments import argument, magic_arguments, parse_argstring
 
 
 class DummyForDoctest(object):
@@ -52,7 +51,10 @@ class DummyForDoctest(object):
 def common_doctest_arguments(func):
     commons = [
         argument(
-            '-x', '--stop', default=False, action='store_true',
+            "-x",
+            "--stop",
+            default=False,
+            action="store_true",
             help="""
             Stop running tests after the first error or failure.
             When this option is specified, the error is recorded
@@ -62,23 +64,33 @@ def common_doctest_arguments(func):
             """,
         ),
         argument(
-            '-v', '--verbose', default=False, action='store_true',
-            help='See :func:`doctest.run_docstring_examples`.',
+            "-v",
+            "--verbose",
+            default=False,
+            action="store_true",
+            help="See :func:`doctest.run_docstring_examples`.",
         ),
         argument(
-            '-n', '--name', default='NoName',
-            help='See :func:`doctest.run_docstring_examples`.',
+            "-n",
+            "--name",
+            default="NoName",
+            help="See :func:`doctest.run_docstring_examples`.",
         ),
         argument(
-            '-f', '--file', default='', action='store_true',
-            help='The object to be tested is a file'
+            "-f",
+            "--file",
+            default="",
+            action="store_true",
+            help="The object to be tested is a file",
         ),
         argument(
-            '-o', '--options', default=0,
+            "-o",
+            "--options",
+            default=0,
             help="""
             Use these doctest options, e.g.
                 %%doctest --options=doctest.ELLIPSIS object
-            """
+            """,
         ),
     ]
     for c in commons:
@@ -93,19 +105,18 @@ def _load_testfile(filename):
 
 @magics_class
 class DoctestMagic(Magics):
-
     def _run_docstring_examples(self, obj, args):
         verbose = args.verbose
         name = args.name
         try:
             optionflags = eval(args.options)  # pylint: disable=eval-used
         except AttributeError as e:
-            if args.options.startswith('doctest.'):
-                raise AttributeError(str(e).replace(
-                    "'module' object", "doctest module"))
+            if args.options.startswith("doctest."):
+                raise AttributeError(
+                    str(e).replace("'module' object", "doctest module")
+                )
         globs = self.shell.user_ns
-        runner_class = doctest.DebugRunner if args.stop else \
-                      doctest.DocTestRunner
+        runner_class = doctest.DebugRunner if args.stop else doctest.DocTestRunner
         runner = runner_class(verbose=verbose, optionflags=optionflags)
         if args.file:
             text, filename = _load_testfile(obj)
@@ -137,19 +148,23 @@ class DoctestMagic(Magics):
 
     def _print_report(self, num_objects=None):
         if num_objects is None:
-            in_objects_message = ''
+            in_objects_message = ""
         else:
-            in_objects_message = ' in {0} objects'.format(num_objects)
-        print("Ran {0} tests{1}, {2} tests failed.".format(
-            self._test_tries, in_objects_message, self._test_failures))
+            in_objects_message = " in {0} objects".format(num_objects)
+        print(
+            "Ran {0} tests{1}, {2} tests failed.".format(
+                self._test_tries, in_objects_message, self._test_failures
+            )
+        )
 
     @magic_arguments()
     @argument(
-        'object', nargs='+',
-        help='Doctest is run against docstrings of this object.',
+        "object",
+        nargs="+",
+        help="Doctest is run against docstrings of this object.",
     )
     @common_doctest_arguments
-    @line_magic('doctest')
+    @line_magic("doctest")
     def doctest_object(self, line):
         """
         Run doctest of given objects.
@@ -174,7 +189,7 @@ class DoctestMagic(Magics):
 
     @magic_arguments()
     @common_doctest_arguments
-    @cell_magic('doctest')
+    @cell_magic("doctest")
     def doctest_cell(self, line, cell):
         """
         Run doctest written in a cell.
@@ -191,5 +206,6 @@ def load_ipython_extension(ip):
     if not _loaded[0]:
         ip.register_magics(DoctestMagic)
         _loaded[0] = True
+
 
 _loaded = [False]

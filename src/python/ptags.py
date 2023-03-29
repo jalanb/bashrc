@@ -27,17 +27,19 @@ from repositories import repository
 
 def add_args(parser):
     """Parse out command line arguments"""
-    parser.add_argument('source',
-                        help='path to source(s) to be checked')
-    parser.add_argument('-r', '--recursive', action='store_true',
-                        help='Recurse into sub-directories')
-    parser.add_argument('-V', '--Verbose', action='store_true',
-                        help='Report disk changes')
+    parser.add_argument("source", help="path to source(s) to be checked")
+    parser.add_argument(
+        "-r", "--recursive", action="store_true", help="Recurse into sub-directories"
+    )
+    parser.add_argument(
+        "-V", "--Verbose", action="store_true", help="Report disk changes"
+    )
 
 
 def def_or_class_regexp():
     """A regular expression to match a def/class statement in a Python line"""
-    return re.compile(r'''
+    return re.compile(
+        r"""
         (?P<address>
             ^[ \t]*
             (?P<type>def|class)
@@ -46,7 +48,9 @@ def def_or_class_regexp():
             [ \t]*
             [:\(]
         )
-    ''', re.VERBOSE)
+    """,
+        re.VERBOSE,
+    )
 
 
 def find_tag_in_line(path_to_tag, string):
@@ -59,18 +63,19 @@ def find_tag_in_line(path_to_tag, string):
 
 class Tag(object):
     """A tag recognised by ctags"""
+
     # pylint: disable-msg=R0903
 
     def __init__(self, path, matches):
-        self.name = ''
+        self.name = ""
         self.__dict__.update(matches)
         self.path = path
-        self.address = re.sub('[ \t]+', ' +', '/^%s/' % self.address)
+        self.address = re.sub("[ \t]+", " +", "/^%s/" % self.address)
         if not self.name:
-            self.name = ''
+            self.name = ""
 
     def __str__(self):
-        return '\t'.join([self.name, self.path, self.address])
+        return "\t".join([self.name, self.path, self.address])
 
     def __repr__(self):
         return '<Tag "%s">' % self.name
@@ -90,6 +95,7 @@ class Tag(object):
 
 class FileTag(Tag):
     """A tag which include a file path"""
+
     # pylint: disable-msg=R0903
 
     def __init__(self, path):
@@ -97,9 +103,9 @@ class FileTag(Tag):
             self.name = path.namebase
         except AttributeError:
             path = paths.path(path)
-        Tag.__init__(self, path, {'address': '1'})
+        Tag.__init__(self, path, {"address": "1"})
         self.name = path.namebase
-        self.address = '1'
+        self.address = "1"
 
     def __repr__(self):
         return '<FileTag "%s">' % self.name
@@ -112,17 +118,18 @@ def more_likely_of(old, new):
             return None, new
         if old.address == new.address:
             return None, new
-        if new.split_address_pattern() == (' +', old.address_pattern()):
-            new.name = '.%s' % new.name
+        if new.split_address_pattern() == (" +", old.address_pattern()):
+            new.name = ".%s" % new.name
             return old, new
-        if old.split_address_pattern() == (' +', new.address_pattern()):
-            old.name = '.%s' % old.name
+        if old.split_address_pattern() == (" +", new.address_pattern()):
+            old.name = ".%s" % old.name
             return old, new
-        if ('+class' in new.address and '+def' in old.address) or \
-           ('+class' in old.address and '+def' in new.address):
+        if ("+class" in new.address and "+def" in old.address) or (
+            "+class" in old.address and "+def" in new.address
+        ):
             return old, new
         return old, new
-    raise NotImplementedError('\n\t%r\n\t%r' % (old.path, new.path))
+    raise NotImplementedError("\n\t%r\n\t%r" % (old.path, new.path))
 
 
 def read_file(path_to_python):
@@ -155,7 +162,7 @@ def read_file(path_to_python):
             tags.remove(previous_tag)
         tags.append(tag)
     if problems:
-        raise ValueError('\n'.join(problems))
+        raise ValueError("\n".join(problems))
     return tags
 
 
@@ -164,7 +171,7 @@ def read_dir_tags(path_to_directory):
     if not path_to_directory.isdir():
         return []
     tags = []
-    for path_to_python in path_to_directory.files('*.py'):
+    for path_to_python in path_to_directory.files("*.py"):
         for tag in read_file(path_to_python):
             tags.append(tag)
     return tags
@@ -186,18 +193,18 @@ def tags_to_text(tags):
     """Return a text of sorted tags"""
     str_tags = [str(t) for t in tags]
     sorted_tags = sorted(str_tags)
-    return '\n'.join(sorted_tags)
+    return "\n".join(sorted_tags)
 
 
 def write_tags(path_to_directory, tags):
     """Write the given tags to a tags file in the given directory"""
-    out = paths.path('%s/tags' % path_to_directory)
+    out = paths.path("%s/tags" % path_to_directory)
     if out.isdir():
-        message = 'Wrote no tags to %s' % out
+        message = "Wrote no tags to %s" % out
     else:
         text = tags_to_text(tags)
         out.write_text(text)
-        message = 'Wrote tags to %s' % out
+        message = "Wrote tags to %s" % out
     if scripts.args.Verbose:
         print(message)
 
@@ -241,5 +248,5 @@ def script(args):
         tag_directory(directory)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     scripts.main(script, add_args, docstring=__doc__)

@@ -19,6 +19,7 @@ mores = []
 
 try:
     from rich.console import Console
+
     console = Console(color_system="standard")
     print = console.print
     mores += ["rich"]
@@ -28,11 +29,14 @@ except ImportError:
 try:
     from importlib import reload
 except ImportError:
+
     def reload(x):
         raise NotImplementedError("importlib.reload is not available")
 
+
 try:
     import requests
+
     mores += ["requests"]
 except ModuleNotFoundError:
     pass
@@ -42,6 +46,7 @@ try:
     from pysyte.types import paths
     from pysyte.types.paths import path
     from pysyte import cli
+
     # jalanb
     import ackvim
     import cde
@@ -65,12 +70,13 @@ except ImportError as e:
 
 try:
     from pathlib import Path
+
     mores += ["Path"]
 except ImportError:
     pass
 
 more = ", ".join([" "] + mores) if mores else ""
-executable = sys.executable.replace(os.environ['HOME'], '~')
+executable = sys.executable.replace(os.environ["HOME"], "~")
 version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 

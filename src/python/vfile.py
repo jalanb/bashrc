@@ -12,7 +12,7 @@ from bdb import BdbQuit
 import vim_traceback
 
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 
 def run_args(args, methods):
@@ -26,29 +26,29 @@ def run_args(args, methods):
 
 
 def version(args):
-    print('%s %s' % (args, __version__))
+    print("%s %s" % (args, __version__))
     raise SystemExit
 
 
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('items', metavar='items', type=str, nargs='+',
-                        help='some items')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
+    parser.add_argument(
+        "items", metavar="items", type=str, nargs="+", help="some items"
+    )
+    parser.add_argument("-v", "--version", action="store_true", help="Show version")
     args = parser.parse_args()
     run_args(args, methods)
     return args
 
 
 def script(args):
-    line = ' '.join(args.items)
+    line = " ".join(args.items)
     parsed = vim_traceback.parse_line(line)
     if not parsed:
         return False
     path, line_number = parsed
-    print('vim %s +%s' % (path, line_number))
+    print("vim %s +%s" % (path, line_number))
     return True
 
 
@@ -64,5 +64,5 @@ def main():
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

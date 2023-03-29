@@ -14,7 +14,9 @@ def get(string):
     try:
         response = requests.get(url)
     except Exception as e:
-        import pudb; pudb.set_trace()  # pylint: disable=multiple-statements
+        import pudb
+
+        pudb.set_trace()  # pylint: disable=multiple-statements
 
 
 def main(args):
@@ -29,6 +31,5 @@ def main(args):
     return result
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))
-

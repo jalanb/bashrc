@@ -13,7 +13,7 @@ from pysyte.types.paths import path as makepath
 import freds
 
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 
 class ScriptError(NotImplementedError):
@@ -31,17 +31,17 @@ def run_args(args, methods):
 
 
 def version(args):
-    print('%s %s' % (args, __version__))
+    print("%s %s" % (args, __version__))
     raise SystemExit
 
 
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('items', metavar='items', type=str, nargs='*',
-                        help='some items')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
+    parser.add_argument(
+        "items", metavar="items", type=str, nargs="*", help="some items"
+    )
+    parser.add_argument("-v", "--version", action="store_true", help="Show version")
     args = parser.parse_args()
     run_args(args, methods)
     return args
@@ -56,8 +56,8 @@ def get_freds(paths):
         for path in paths:
             path = makepath(path)
             if path.isdir():
-                result |= {p for p in path.files('fred*') if p[-1] != '~'}
-            elif path.isfile() and path.name.startswith('fred'):
+                result |= {p for p in path.files("fred*") if p[-1] != "~"}
+            elif path.isfile() and path.name.startswith("fred"):
                 result.add(path)
     return [pwd().relpathto(p) for p in result]
 
@@ -66,7 +66,7 @@ def script(args):
     freds_ = get_freds(args.items)
     if not freds_:
         return False
-    print('v %s' % ' '.join(freds_))
+    print("v %s" % " ".join(freds_))
     return True
 
 
@@ -82,5 +82,5 @@ def main():
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

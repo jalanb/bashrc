@@ -23,7 +23,7 @@ def de_comma(string):
     >>> de_comma(',fred,,')  == ',fred'
     True
     """
-    return string.rstrip(',')
+    return string.rstrip(",")
 
 
 def de_punctuate(string):
@@ -86,32 +86,31 @@ def parse_traceback_lines(lines):
     [('build.py', '86'), ('build.py', '52')]
     """
     lines = lines_of_words(lines)
-    file_lines = filter_by_word(lines, 0, 'File')
-    return [(de_punctuate_word(l, 1), de_punctuate_word(l, 3))
-            for l in file_lines]
+    file_lines = filter_by_word(lines, 0, "File")
+    return [(de_punctuate_word(l, 1), de_punctuate_word(l, 3)) for l in file_lines]
 
 
 def parse_args():
     """Parse out command line arguments"""
     parser = arguments.parser(__doc__)
-    parser.positional('file', help='File with traceback data')
-    parser.boolean('-p', '--paste', help='Paste text from clipboard')
-    parser.boolean('-i', '--stdin', help='Wait for text from stdin')
+    parser.positional("file", help="File with traceback data")
+    parser.boolean("-p", "--paste", help="Paste text from clipboard")
+    parser.boolean("-i", "--stdin", help="Wait for text from stdin")
     return parser.parse_args()
 
 
 def main(_args):
     """Use command line args as files containing tracebacks"""
     args = parse_args()
-    streams = streams.args(args, 'file')
+    streams = streams.args(args, "file")
     if not streams:
-        print('No traceback file specified', file=sys.stderr)
+        print("No traceback file specified", file=sys.stderr)
         return not os.EX_OK
     for stream in streams:
         for line in parse_traceback_lines(streams.full_lines(stream)):
-            print('b', ':'.join(line))
+            print("b", ":".join(line))
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

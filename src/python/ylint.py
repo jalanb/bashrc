@@ -13,8 +13,8 @@ def name(number):
 
     >>> assert name('E0611') == no-name-in-module
     """
-    number_line = [l for l in pylint('--help-msg', number) if number in l][0]
-    return number_line.split(':')[1].split()[0]
+    number_line = [l for l in pylint("--help-msg", number) if number in l][0]
+    return number_line.split(":")[1].split()[0]
 
 
 def disable(number):
@@ -23,7 +23,7 @@ def disable(number):
     >>> assert not disable('E0611')
     # pylint: disable=no-name-in-module
     """
-    return '  # pylint: disable=%s' % name(number)
+    return "  # pylint: disable=%s" % name(number)
 
 
 def main(args):
@@ -36,5 +36,5 @@ def main(args):
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

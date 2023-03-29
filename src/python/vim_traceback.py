@@ -31,25 +31,24 @@ from pysyte import tracebacks
 
 def as_vim_command(lines, use_splits):
     first, rest = lines[0], lines[1:]
-    command = 'vim %s +%s' % first
-    window = 'sp' if use_splits else 'tabnew'
-    args = [str('+"%s +%s %s"' % (window, line, file_))
-            for file_, line in rest]
+    command = "vim %s +%s" % first
+    window = "sp" if use_splits else "tabnew"
+    args = [str('+"%s +%s %s"' % (window, line, file_)) for file_, line in rest]
     args.insert(0, command)
-    return ' '.join(args)
+    return " ".join(args)
 
 
 def main(args):
     """Run the script"""
-    args = [_ for _ in args if _[:2] != '--']
-    stream = streams.first_argv('-c')
+    args = [_ for _ in args if _[:2] != "--"]
+    stream = streams.first_argv("-c")
     if not stream:
-        print('No file specified', file=sys.stderr)
+        print("No file specified", file=sys.stderr)
         return not os.EX_OK
     lines = map(tracebacks.parse_line, streams.full_lines(stream))
-    print(as_vim_command(lines, '-s' in args))
+    print(as_vim_command(lines, "-s" in args))
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

@@ -11,11 +11,11 @@ from pysyte.types.paths import path as makepath
 
 def has_tarball_extension(path):
     ext = path.ext
-    if ext == '.tar':
+    if ext == ".tar":
         return True
-    if ext in ['.gz', '.bz2']:
+    if ext in [".gz", ".bz2"]:
         stem, _ = path.splitext()
-        if stem.ext == '.tar':
+        if stem.ext == ".tar":
             return True
     return False
 
@@ -28,9 +28,13 @@ def directory_tarballs(arg_paths):
     directories = [p for p in arg_paths if p.isdir()]
     result = []
     for directory in directories:
-        result.extend([
-            path for path in directory.parent.glob(directory.name + '.tar*')
-            if is_tarball(path)])
+        result.extend(
+            [
+                path
+                for path in directory.parent.glob(directory.name + ".tar*")
+                if is_tarball(path)
+            ]
+        )
     return result
 
 
@@ -42,7 +46,7 @@ def find_tarballs(args):
 
 
 def removable_contents(tarball):
-    names = {n.split('/', 1)[0] for n in tarfile.open(tarball).getnames()}
+    names = {n.split("/", 1)[0] for n in tarfile.open(tarball).getnames()}
     name_paths = [makepath(n) for n in names]
     return [p for p in name_paths if p.isfile() or p.isdir()]
 
@@ -51,10 +55,10 @@ def remove(tarballs):
     for tarball in tarballs:
         for path in removable_contents(tarball):
             if path.isdir():
-                print('rm -rf', path)
+                print("rm -rf", path)
             else:
-                print('rm -f', path)
-        print('rm -vf', tarball)
+                print("rm -f", path)
+        print("rm -vf", tarball)
 
 
 def main(args):
@@ -63,5 +67,5 @@ def main(args):
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

@@ -13,15 +13,15 @@ def _get_existing_file(path_to_file):
     result = path(path_to_file)
     if result.isfile():
         return result
-    raise ValueError('%s is not a file' % result)
+    raise ValueError("%s is not a file" % result)
 
 
 def _home_subversion_config():
-    return '~/.subversion/config'
+    return "~/.subversion/config"
 
 
 def _jab_subversion_config():
-    return '~/jab/etc/subversion/config'
+    return "~/jab/etc/subversion/config"
 
 
 def _get_some_subversion_config_lines(path_to_config, match):
@@ -35,7 +35,8 @@ def _get_some_subversion_config_lines(path_to_config, match):
 
 def _get_svn_global_ignores():
     def _match(line):
-        return line.startswith('global-ignores')
+        return line.startswith("global-ignores")
+
     path_to_home_config = _home_subversion_config()
     lines = []
     if path_to_home_config:
@@ -56,7 +57,7 @@ def global_ignores():
     if not ignores_lines:
         return set()
     ignores_line = ignores_lines[0]
-    _key, value = ignores_line.split('=')
+    _key, value = ignores_line.split("=")
     return set(value.split())
 
 
@@ -66,7 +67,7 @@ def is_svn_path(path_):
     >>> is_svn_path('/path/to/.svn/file')
     True
     """
-    return '/.svn' in path_
+    return "/.svn" in path_
 
 
 def has_svn_path(paths):
@@ -75,7 +76,7 @@ def has_svn_path(paths):
 
 
 def _get_immediately_significant_status(path_to_dir):
-    command = 'svn stat --depth=immediates %s' % path_to_dir
+    command = "svn stat --depth=immediates %s" % path_to_dir
     status, output = commands.getstatusoutput(command)
     if status:
         raise ValueError(output)
@@ -84,13 +85,13 @@ def _get_immediately_significant_status(path_to_dir):
         if not line:
             continue
         char = line[0]
-        if char not in 'I?':
+        if char not in "I?":
             return True
     return False
 
 
 def _subversion_sub_directory(path_to_directory):
-    return path_to_directory / '.svn'
+    return path_to_directory / ".svn"
 
 
 def _existing_subversion_sub_directory(path_to_directory):
@@ -122,7 +123,7 @@ def get_significant_status(path_to_directory):
     if status:
         return status
     for path_to_dir in path_to_directory.dirs():
-        if path_to_dir[0] == '.' or path_to_dir == path_to_directory:
+        if path_to_dir[0] == "." or path_to_dir == path_to_directory:
             continue
         status = get_significant_status(path_to_dir)
         if status:
@@ -133,6 +134,6 @@ def get_significant_status(path_to_directory):
 def show_stat(path_):
     if not _is_working_directory(path_):
         return
-    command = 'svn stat %r' % path_
+    command = "svn stat %r" % path_
     _, output = commands.getstatusoutput(command)
     print(output)

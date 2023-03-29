@@ -8,16 +8,19 @@ import os
 import re
 import sys
 import inspect
+
 pyprint = print
 
 mores = []
 
 try:
     from rich.console import Console
+
     console = Console(color_system="standard")
     print = console.print
     mores += ["rich"]
     from rich import pretty
+
     pretty.install()
 except ImportError:
     pass
@@ -25,11 +28,14 @@ except ImportError:
 try:
     from importlib import reload
 except ImportError:
+
     def reload(x):
         raise NotImplementedError("importlib.reload is not available")
 
+
 try:
     import requests
+
     mores += ["requests"]
 except ModuleNotFoundError:
     pass
@@ -45,12 +51,13 @@ except ImportError as e:
 
 try:
     from pathlib import Path
+
     mores += ["Path"]
 except ImportError:
     pass
 
 more = ", ".join([" "] + mores) if mores else ""
-executable = sys.executable.replace(os.environ['HOME'], '~')
+executable = sys.executable.replace(os.environ["HOME"], "~")
 version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
@@ -58,4 +65,3 @@ stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
 
 stdout("")
 stdout(f"{executable} {version}")
-

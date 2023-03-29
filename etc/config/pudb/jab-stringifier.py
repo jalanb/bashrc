@@ -54,11 +54,10 @@ def timeout(_signum, _frame, a_time):
 
 def run_with_timeout(code, a_time, symbols=None):
     """
-Evaluate ``code``, timing out after ``a_time`` seconds.
+    Evaluate ``code``, timing out after ``a_time`` seconds.
 
-In Python 2.5 and lower, ``a_time`` is rounded up to the nearest integer.
-The return value is whatever ``code`` returns.
-"""
+    In Python 2.5 and lower, ``a_time`` is rounded up to the nearest integer.
+    The return value is whatever ``code`` returns."""
     # Set the signal handler and a ``a_time``-second alarm
     signal.signal(signal.SIGALRM, lambda s, f: timeout(s, f, a_time))
     if sys.version_info > (2, 5):
@@ -76,22 +75,25 @@ The return value is whatever ``code`` returns.
 
 def pudb_stringifier(obj):
     """
-This is the custom stringifier.
+    This is the custom stringifier.
 
-It returns str(obj), unless it take more than a second to compute,
-in which case it falls back to type(obj).
-"""
+    It returns str(obj), unless it take more than a second to compute,
+    in which case it falls back to type(obj)."""
     if type(obj) == type(pudb_stringifier):
-        return 'def %s%s' % (obj.func_name, '(%s): ...' % ', '.join(
-            obj.func_code.co_varnames[:obj.func_code.co_argcount]))
+        return "def %s%s" % (
+            obj.func_name,
+            "(%s): ..."
+            % ", ".join(obj.func_code.co_varnames[: obj.func_code.co_argcount]),
+        )
     elif type(obj) == type(sys):
-        return 'imported'
+        return "imported"
     elif callable(obj):
-        return 'XXX'  # pylint: disable=fixme
+        return "XXX"  # pylint: disable=fixme
     try:
-        return run_with_timeout("str(obj)", 30, {'obj': obj})
+        return run_with_timeout("str(obj)", 30, {"obj": obj})
     except TimeOutError:
         return (type(obj), "(str too slow to compute)")
+
 
 # Example usage
 
@@ -105,6 +107,7 @@ class SlowString(object):
     def __str__(self):
         time.sleep(10)  # Return the string value after ten seconds
         return "This was slow to compute."
+
 
 fast = FastString()
 slow = SlowString()

@@ -9,7 +9,7 @@ from functools import partial
 
 from subprocess import getstatusoutput
 
-_working_dirs = ['.']
+_working_dirs = ["."]
 
 
 class GitException(RuntimeError):
@@ -33,21 +33,20 @@ class GitException(RuntimeError):
 
     def __new__(cls, name, bases, body):
         """Derived classes must have all required_handlers"""
-        if 'required_handlers' in body:
+        if "required_handlers" in body:
             missing = set(cls.required_handlers) - set(body.keys())
             if missing:
-                plural = len(missing) == 1 and '' or 's',
-                missings = '\n'.join(
-                    f'{cls.__class__.__name__}.{m}()' for m in missing)
-                raise TypeError(f'Missing handler{plural}: {missings}')
+                plural = (len(missing) == 1 and "" or "s",)
+                missings = "\n".join(f"{cls.__class__.__name__}.{m}()" for m in missing)
+                raise TypeError(f"Missing handler{plural}: {missings}")
         return super(GitException, cls).__new__(cls, name, bases, body)
 
 
 class GitError(GitException):
     def __init__(self, command, status_, output):
         super(GitError, self).__init__(
-            '\nPWD: %r\nCommand: %r\nstderr:\n%r' % (
-                os.getcwd(), command, output))
+            "\nPWD: %r\nCommand: %r\nstderr:\n%r" % (os.getcwd(), command, output)
+        )
         self.command = command
         self.status = status_
         self.output = output
@@ -86,7 +85,7 @@ def resolve_conflicts(in_lines):
     resolved = set()
     conflicts = set()
     for line in in_lines:
-        if line.startswith('Resolved'):
+        if line.startswith("Resolved"):
             name = line.split("'")[1]
             resolved.add(name)
             add(name)
@@ -94,8 +93,8 @@ def resolve_conflicts(in_lines):
                 conflicts.remove(name)
             continue
         lsw = line.startswith
-        if lsw('CONFLICT') or lsw('Recorded preimage'):
-            if lsw('CONFLICT'):
+        if lsw("CONFLICT") or lsw("Recorded preimage"):
+            if lsw("CONFLICT"):
                 name = line.split()[-1]
             else:
                 name = line.split()[-1].strip("'")
@@ -103,11 +102,11 @@ def resolve_conflicts(in_lines):
                 continue
             conflicts.add(name)
         lines.append(line)
-    return '\n'.join(lines), resolved, conflicts
+    return "\n".join(lines), resolved, conflicts
 
 
 class Resolver(GitError):
-    required_handlers = ['resolve_conflicts']
+    required_handlers = ["resolve_conflicts"]
 
     def __init__(self, command, status_, output):
         super(Resolver, self).__init__(command, status_, output)
@@ -140,12 +139,12 @@ def use_resolver(resolver):
 def root_from(path):
     p = path if os.path.isdir(path) else os.path.dirname(path)
     p = os.path.realpath(p)
-    while p[:2] >= '/A':
-        p_git = os.path.join(p, '.git')
+    while p[:2] >= "/A":
+        p_git = os.path.join(p, ".git")
         if os.path.isdir(p_git):
             return p
         p = os.path.dirname(p)
-    raise ValueError(f'No .git above {path}')
+    raise ValueError(f"No .git above {path}")
 
 
 @contextmanager
@@ -179,35 +178,35 @@ def run(sub_command, quiet=True, no_edit=False, no_verify=False):
 
     If the command gives a non-zero status, raise a GitError exception
     """
-    if _working_dirs[0] != '.':
+    if _working_dirs[0] != ".":
         git_command = f'git -C "{_working_dirs[0]}"'
     else:
-        git_command = 'git'
-    edit = 'GIT_EDITOR=true' if no_edit else ''
-    verify = 'GIT_SSL_NO_VERIFY=true' if no_verify else ''
-    command = f'{verify} {edit} {git_command} {sub_command}'
+        git_command = "git"
+    edit = "GIT_EDITOR=true" if no_edit else ""
+    verify = "GIT_SSL_NO_VERIFY=true" if no_verify else ""
+    command = f"{verify} {edit} {git_command} {sub_command}"
     if not quiet:
-        print(f'$ {command}')
+        print(f"$ {command}")
     status_, output = getstatusoutput(command)
     if status_:
         if quiet:
-            print(f'$ {command}', file=sys.stderr)
-        print(f'\n{output}', file=sys.stderr)
-        if 'unknown revision' in output:
+            print(f"$ {command}", file=sys.stderr)
+        print(f"\n{output}", file=sys.stderr)
+        if "unknown revision" in output:
             raise UnknownRevision(command, status_, output)
-        elif 'remote ref does not exist' in output:
+        elif "remote ref does not exist" in output:
             raise NoRemoteRef(command, status_, output)
-        elif 'no such commit' in output:
+        elif "no such commit" in output:
             raise NoSuchCommit(command, status_, output)
-        elif 'reference already exists' in output:
+        elif "reference already exists" in output:
             raise ExistingReference(command, status_, output)
-        elif re.search('Resolved|CONFLICT|Recorded preimage', output):
+        elif re.search("Resolved|CONFLICT|Recorded preimage", output):
             raise ResolveError(command, status_, output)
-        elif re.search('branch named.*already exists', output):
+        elif re.search("branch named.*already exists", output):
             raise ExistingBranch(command, status, output)
         raise GitError(command, status_, output)
     elif output and not quiet:
-        print(f'\n{output}')
+        print(f"\n{output}")
     return output
 
 
@@ -219,19 +218,16 @@ def log(args, number=None, oneline=False, quiet=True):
     number, if true-ish, will be added as a "-n" option
     oneline, if true-ish, will add the "--oneline" option
     """
-    options = ' '.join([
-        number and f'-n {number}' or '',
-        oneline and '--oneline' or ''
-    ])
+    options = " ".join([number and f"-n {number}" or "", oneline and "--oneline" or ""])
     try:
-        return run(f'log {options} {args}', quiet=quiet)
+        return run(f"log {options} {args}", quiet=quiet)
     except UnknownRevision:
-        return ''
+        return ""
 
 
 def rev_parse(options, *args, **kwargs):
     """Run 'git rev-parse' with those options"""
-    return run(f'rev-parse {options}', *args, **kwargs)
+    return run(f"rev-parse {options}", *args, **kwargs)
 
 
 def root():
@@ -239,7 +235,7 @@ def root():
 
     i.e. this directory (or one above) which contains the ".git" directory
     """
-    return os.path.dirname(rev_parse('--absolute-git-dir', quiet=True))
+    return os.path.dirname(rev_parse("--absolute-git-dir", quiet=True))
 
 
 def branch(options=False, *args, **kwargs):
@@ -247,9 +243,11 @@ def branch(options=False, *args, **kwargs):
 
     If not options then return name of the branch currently checked out
     """
-    return (options
-            and run(f'branch {options}', *args, **kwargs)
-            or rev_parse('--abbrev-ref HEAD', *args, **kwargs))
+    return (
+        options
+        and run(f"branch {options}", *args, **kwargs)
+        or rev_parse("--abbrev-ref HEAD", *args, **kwargs)
+    )
 
 
 def branches(remotes=False):
@@ -261,33 +259,33 @@ def branches(remotes=False):
         this method just gives a list of branch names
     Use branch() method to determine the current branch
     """
-    options = remotes and '-a' or ''
-    stdout = branch(f'--list {options}', quiet=True)
-    return [_.lstrip('*').strip() for _ in stdout.splitlines()]
+    options = remotes and "-a" or ""
+    stdout = branch(f"--list {options}", quiet=True)
+    return [_.lstrip("*").strip() for _ in stdout.splitlines()]
 
 
 def branches_containing(commit):
     """Return a list of branches conatining that commit"""
-    lines = run(f'branch --contains {commit}').splitlines()
-    return [l.lstrip('* ') for l in lines]
+    lines = run(f"branch --contains {commit}").splitlines()
+    return [l.lstrip("* ") for l in lines]
 
 
 def hide(item):
     """Hide that item (branch or tag), i.e. remove it from origin"""
     try:
-        return push('origin --delete', item)
+        return push("origin --delete", item)
     except NoRemoteRef:
         pass
 
 
 def unstaged_files():
     """A list of all filenames which have changes, but not staged for commit"""
-    return diff_files('', '')
+    return diff_files("", "")
 
 
 def conflicted(path_to_file):
     """Whether there are any conflict markers in that file"""
-    for line in open(path_to_file, 'r'):
+    for line in open(path_to_file, "r"):
         for marker in '>="<':
             if line.startswith(marker * 8):
                 return True
@@ -299,11 +297,11 @@ def add(path=None, force=False, quiet=True):
 
     so that it will be included in next commit
     """
-    option = '-f' if force else ''
+    option = "-f" if force else ""
     return run(f'add {option} {path or "."}', quiet=quiet)
 
 
-def push(qualifiers='', refspec=None):
+def push(qualifiers="", refspec=None):
     """Push the local refspec to remote repository
 
     If refspec is left as None, then push current branch
@@ -314,7 +312,7 @@ def push(qualifiers='', refspec=None):
 
 def fetch_all():
     """Fetch all (new) branches and tags from remote"""
-    run('fetch --all')
+    run("fetch --all")
 
 
 def grup():
@@ -322,7 +320,7 @@ def grup():
 
     method name is an acronym of the command
     """
-    run('remote update origin --prune')
+    run("remote update origin --prune")
 
 
 def config(key, value, local=True):
@@ -330,17 +328,18 @@ def config(key, value, local=True):
 
     Unless local is set to False: only change local config
     """
-    option = local and '--local' or ''
+    option = local and "--local" or ""
     run(f'config {option} "{key}" "{value}"')
 
 
 def clean(full=False):
-    options = '-d -f -f -x' if full else ''
-    run(f'clean {options}')
-    run('gc --quiet')
+    options = "-d -f -f -x" if full else ""
+    run(f"clean {options}")
+    run("gc --quiet")
     if full:
-        run('reset HEAD .')
-        checkout('.')
+        run("reset HEAD .")
+        checkout(".")
+
 
 def clone(url, path=None, remove=True):
     """Clone a local repo from that URL to that path
@@ -366,19 +365,19 @@ def clone(url, path=None, remove=True):
         path_to_clone = path
     old_dir = _working_dirs[0]
     _working_dirs[0] = path_to_clone
-    config('user.name', 'Release Script')
-    config('user.email', 'gitlab@wwts.com')
+    config("user.name", "Release Script")
+    config("user.email", "gitlab@wwts.com")
     _working_dirs[0] = old_dir
     return path_to_clone
 
 
 def diff_files(branch_1, branch_2):
-    return run(f'diff --name-only {branch_1} {branch_2}').splitlines()
+    return run(f"diff --name-only {branch_1} {branch_2}").splitlines()
 
 
 def status(short=False):
-    option = '--short' if short else '--long'
-    return run(f'status {option}')
+    option = "--short" if short else "--long"
+    return run(f"status {option}")
 
 
 def needs_abort():
@@ -389,16 +388,16 @@ def needs_abort():
         then give a command to abandon the operation
     """
     for line in status().splitlines():
-        if '--abort' in line:
+        if "--abort" in line:
             for part in line.split('"'):
-                if '--abort' in part:
+                if "--abort" in part:
                     return part
-        elif 'All conflicts fixed but you are still merging' in line:
-            return 'git merge --abort'
-        elif 'You have unmerged paths.' in line:
-            return 'git merge --abort'
+        elif "All conflicts fixed but you are still merging" in line:
+            return "git merge --abort"
+        elif "You have unmerged paths." in line:
+            return "git merge --abort"
         elif 'all conflicts fixed: run "git rebase --continue"' in line:
-            return 'git rebase --abort'
+            return "git rebase --abort"
     return None
 
 
@@ -416,12 +415,13 @@ def abandon_fully():
     abandon_operation()
     clean(full=True)
 
+
 def abandon_operation():
     """Abandon any current operaton which needs it"""
     command = needs_abort()
     if not command:
         return False
-    return run(command.replace('git', '', 1))
+    return run(command.replace("git", "", 1))
 
 
 def show_branches(branch1, branch2):
@@ -433,18 +433,18 @@ def show_branches(branch1, branch2):
         >>> parse_show_line('+ [master^2] TOOLS-122 Add bashrc')
         '+ ', 'master^2', 'TOOLS-122 Add bashrc'
         """
-        regexp = re.compile(r'(.*)\[(.*)] (.*)')
+        regexp = re.compile(r"(.*)\[(.*)] (.*)")
         match = regexp.match(string)
         if not match:
             return None
         prefix, commit, comment = match.groups()
-        return prefix[0] == ' ' and 1 or 0, commit, comment
+        return prefix[0] == " " and 1 or 0, commit, comment
 
     log = run(f'show-branch --sha1-name "{branch_1}" "{branch_2}"')
     lines = iter(log.splitlines())
     line = lines.next()
     branches = {}
-    while line != '--':
+    while line != "--":
         column, branch, comment = parse_show_line(line)
         branches[column] = [branch]
         line = lines.next()
@@ -474,18 +474,16 @@ def latest_commit(branch=None, path=None):
 
     If a path is given, then get latest for that path only
     """
-    options = '--no-abbrev-commit %s %s' % (
-        branch or '',
-        path and f'-- {path}' or '')
+    options = "--no-abbrev-commit %s %s" % (branch or "", path and f"-- {path}" or "")
     result = log(options, 1, True, True)
-    return result and result.split(' ', 1) or ('', '')
+    return result and result.split(" ", 1) or ("", "")
 
 
 def commits_with_message(message):
     """All commits with that message (in current branch)"""
     output = log(f"--grep '{message}'", oneline=True, quiet=True)
     lines = output.splitlines()
-    return [l.split(' ', 1)[0] for l in lines]
+    return [l.split(" ", 1)[0] for l in lines]
 
 
 def sha1(branch=None, path=None):
@@ -515,12 +513,12 @@ def checkout(branch, quiet=True, as_path=False):
     """
     try:
         if as_path:
-            branch = '-- {branch}'
-            option = quiet and '-q' or ''
-        run(f'checkout {option} {branch}')
+            branch = "-- {branch}"
+            option = quiet and "-q" or ""
+        run(f"checkout {option} {branch}")
         return True
     except GitError as e:
-        if 'need to resolve your current index' in e.output:
+        if "need to resolve your current index" in e.output:
             raise
         return False
 
@@ -528,9 +526,9 @@ def checkout(branch, quiet=True, as_path=False):
 checkout_path = partial(checkout, as_path=True)
 
 
-def diff(options=None, branch='master', path=None):
-    suffix = path and f'-- {path}' or ''
-    return run(f'diff {options} {branch} {suffix}')
+def diff(options=None, branch="master", path=None):
+    suffix = path and f"-- {path}" or ""
+    return run(f"diff {options} {branch} {suffix}")
 
 
 def same_diffs(commit1, commit2):
@@ -545,21 +543,22 @@ def same_diffs(commit1, commit2):
     Otherwise there will be lines after the header lines
         (and those lines will show the difference)
     """
+
     def range_one(commit):
         """A git commit "range" to include only one commit"""
-        return f'{commit}^..{commit}'
+        return f"{commit}^..{commit}"
 
-    output = run(f'range-diff {range_one(commit1)} {range_one(commit2)}')
+    output = run(f"range-diff {range_one(commit1)} {range_one(commit2)}")
     lines = output.splitlines()
     for i, line in enumerate(lines, 1):
-        if not line.startswith(f'{i}'):
+        if not line.startswith(f"{i}"):
             break
     return not lines[i:]
 
 
 def checkout_log(branch, number=15, quiet=True, as_path=False):
     if checkout(branch, quiet, as_path):
-        return log('', number=number, oneline=True, quiet=quiet).splitlines()
+        return log("", number=number, oneline=True, quiet=quiet).splitlines()
     return []
 
 
@@ -592,41 +591,42 @@ def pull_branch(branch):
     pull()
     return up_to_date()
 
+
 def up_to_date():
-    return bool(re.search('up.to.date', status()))
+    return bool(re.search("up.to.date", status()))
+
 
 def new_local_branch(branch, start_point):
     """Make a new local branch from that start_point
 
     start_point is a git "commit-ish", e.g branch, tag, commit
     """
-    return run(f'checkout -b {branch} {start_point}')
+    return run(f"checkout -b {branch} {start_point}")
 
 
 def publish(branch, full_force=False):
     """Publish that branch, i.e. push it to origin"""
     checkout(branch)
     try:
-        push('--force --set-upstream origin', branch)
+        push("--force --set-upstream origin", branch)
     except ExistingReference:
         if full_force:
-            push('origin --delete', branch)
-            push('--force --set-upstream origin', branch)
-
+            push("origin --delete", branch)
+            push("--force --set-upstream origin", branch)
 
 
 def delete(branch, force=False, remote=False):
-    option = '-D' if force else '-d'
+    option = "-D" if force else "-d"
     try:
-        result = run(f'branch {option} {branch}')
+        result = run(f"branch {option} {branch}")
         pass
     except GitError as e:
-        if 'checked out at' not in e.output:
+        if "checked out at" not in e.output:
             raise
-        if branch == 'master':
+        if branch == "master":
             raise
-        checkout('master')
-        result = run(f'branch {option} {branch}')
+        checkout("master")
+        result = run(f"branch {option} {branch}")
     except Exception as e:
         pass
     if remote:
@@ -640,15 +640,15 @@ def commit(message, add=False, quiet=True):
     If add is truish then "$ git add ." first
     """
     if add:
-        run('add .')
+        run("add .")
     try:
-        stdout = run('commit -m %r' % str(message), quiet=quiet)
+        stdout = run("commit -m %r" % str(message), quiet=quiet)
     except GitError as e:
         s = str(e)
-        if 'nothing to commit' in s or 'no changes added to commit' in s:
+        if "nothing to commit" in s or "no changes added to commit" in s:
             raise EmptyCommit(*e.inits())
         raise
-    return re.split(r'[ \]]', stdout.splitlines()[0])[1]
+    return re.split(r"[ \]]", stdout.splitlines()[0])[1]
 
 
 def pull(rebase=True, refspec=None):
@@ -657,9 +657,9 @@ def pull(rebase=True, refspec=None):
     If refspec is left as None, then pull current branch
     The '--rebase' option is used unless rebase is set to false
     """
-    options = rebase and '--rebase' or ''
+    options = rebase and "--rebase" or ""
     output = run(f'pull {options} {refspec or ""}')
-    return not re.search('up.to.date', output)
+    return not re.search("up.to.date", output)
 
 
 def tag(name, remote=False, commit=None):
@@ -671,12 +671,12 @@ def tag(name, remote=False, commit=None):
     command = f'tag {name} {commit or ""}'
     result = run(command)
     if remote:
-        push(f'origin {name}')
+        push(f"origin {name}")
     return result
 
 
 def tags():
-    return run('tag', quiet=True).splitlines()
+    return run("tag", quiet=True).splitlines()
 
 
 def in_tag(name):
@@ -699,11 +699,11 @@ def re_tag(name, remote=False, commit=None):
     If tag already exists, delete it, then re-make it
     """
     if remote:
-        tags = run('ls-remote --tags', quiet=True).splitlines()
+        tags = run("ls-remote --tags", quiet=True).splitlines()
         if name in tags:
             hide(name)
     if is_tag(name):
-        run(f'tag --delete {name}')
+        run(f"tag --delete {name}")
     return tag(name, remote, commit)
 
 
@@ -713,13 +713,13 @@ def merge(branch, fast_forward=False, commit=True, options=None):
     fast_forward and commit add the eponymous options to the command
     """
     more_options = [
-        fast_forward and '--ff' or '--no-ff',
-        commit and '--commit' or '--no-commit',
+        fast_forward and "--ff" or "--no-ff",
+        commit and "--commit" or "--no-commit",
     ] + (options and options or [])
-    option_string = ' '.join(more_options)
+    option_string = " ".join(more_options)
     all_branches = branches()
-    assert branch in all_branches, f'Missing branch: {branch}'
-    command = f'merge {option_string} {branch}'
+    assert branch in all_branches, f"Missing branch: {branch}"
+    command = f"merge {option_string} {branch}"
     return run(command)
 
 
@@ -746,8 +746,8 @@ def cherry_pick(pick):
         but can include command options, e.g.:
             cherry_pick('ab12cd34 -X theirs')
     """
-    with git_continuer(run, 'cherry-pick --continue', no_edit=True):
-        return run(f'cherry-pick -x --allow-empty {pick}')
+    with git_continuer(run, "cherry-pick --continue", no_edit=True):
+        return run(f"cherry-pick -x --allow-empty {pick}")
 
 
 def rebase(upstream, branch=None):
@@ -757,9 +757,9 @@ def rebase(upstream, branch=None):
 
     """
     rebase_branch = branch and branch or current_branch()
-    with git_continuer(run, 'rebase --continue', no_edit=True):
-        stdout = run(f'rebase {upstream} {rebase_branch}')
-        return 'Applying' in stdout
+    with git_continuer(run, "rebase --continue", no_edit=True):
+        stdout = run(f"rebase {upstream} {rebase_branch}")
+        return "Applying" in stdout
 
 
 def merge_resolve(branch, fast_forward=False, commit=True, options=None):
@@ -771,6 +771,7 @@ def merge_resolve(branch, fast_forward=False, commit=True, options=None):
     If all conflicts were resolved
         then remove the error
     """
+
     def get_resolution(resolved=None):
         return resolved
 
@@ -789,19 +790,19 @@ def split_conflict(conflict):
     with open(conflict) as stream:
         for line in stream:
             markers = [
-                '<<<<<<<',
-                '|||||||',
-                '=======',
-                '>>>>>>>',
+                "<<<<<<<",
+                "|||||||",
+                "=======",
+                ">>>>>>>",
             ]
             for marker in markers:
                 if line.startswith(marker):
-                    if marker == '<<<<<<<':
+                    if marker == "<<<<<<<":
                         position = during
                         # Assuming only one conflict in a version file
                         assert previous_conflict is False
                         previous_conflict = True
-                    elif marker == '>>>>>>>':
+                    elif marker == ">>>>>>>":
                         position = after
                     break
             else:

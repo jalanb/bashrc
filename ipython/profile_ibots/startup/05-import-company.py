@@ -4,11 +4,13 @@ from dataclasses import dataclass
 
 from bots.issues import issues
 
+
 @dataclass
 class EmployerData:
     name: str
 
-wwts = EmployerData('wwts')
+
+wwts = EmployerData("wwts")
 
 
 def issue_branch(issue):

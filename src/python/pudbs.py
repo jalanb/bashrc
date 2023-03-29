@@ -9,6 +9,7 @@ from pudb import remote
 
 remote.PUDB_RDB_PORT = 53337
 
+
 def frame_above():
     return inspect.currentframe().f_back.f_back
 

@@ -7,4 +7,4 @@ def is_git_path(path):
     >>> is_git_path('/path/to/.git/file')
     True
     """
-    return '/.git' in path
+    return "/.git" in path
