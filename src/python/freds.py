@@ -10,9 +10,34 @@ import sys
 from rich import print
 from pysyte.cli.arguments import ArgumentsParser
 from pysyte.cli.main import run
-from pysyte.freds.freds import Freds
 
 __version__ = "0.1.0"
+
+
+
+class Freds(object):
+    """Handle fred.* as strings, paths, files, ..."""
+    def __init__(self, dirs):
+        self._dirs = dirs
+
+    def extended(self):
+        exts = ('', '.py', '.sh', '.txt', '.now', '.html')
+        return [str('%s/fred%s' % (d, e)) for d in self._dirs for e in exts]
+
+    def _paths(self):
+        return [path(_) for _ in self.extended()]
+
+    def _files(self):
+        return [_ for _ in self._paths() if _.isfile()]
+
+    def sized(self):
+        return set(_ for _ in self._files() if _.size)
+
+    def zero_sized(self):
+        return [_ for _ in self._files() if not _.size]
+
+    def remove_empties(self):
+        [_.remove() for _ in self.zero_sized()]
 
 
 class TypedError(FileNotFoundError):
