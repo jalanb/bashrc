@@ -16,7 +16,7 @@ def get(string):
     except Exception as e:
         import pudb
 
-        pudb.set_trace()  # pylint: disable=multiple-statements
+        pudb.set_trace()
 
 
 def main(args):

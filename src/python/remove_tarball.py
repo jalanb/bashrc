@@ -1,6 +1,5 @@
 """Script to act as a template"""
 
-from __future__ import print_function
 import os
 import sys
 import tarfile

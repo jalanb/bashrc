@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 """Script to show the first number in its arguments"""
 
-from __future__ import print_function
 import os
 import sys
 import argparse

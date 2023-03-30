@@ -1,7 +1,5 @@
 """Script to set up a call to vim"""
 
-
-from __future__ import print_function
 import os
 import re
 import sys
@@ -48,7 +46,6 @@ class VimBashScript(object):
 
     @staticmethod
     def _script_stream():
-        #  pylint: disable=no-self-use
         return tempfile.NamedTemporaryFile(
             mode="w",
             suffix="-vim.sh",

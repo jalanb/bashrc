@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 """Script to merge two branches at a path"""
 
-from __future__ import print_function
 import os
 import re
 import sys
@@ -65,13 +64,9 @@ def extract_commit(log_line):
     return match.group(0)
 
 
-# pylint: disable=too-many-locals
 def script(args):
     branch_one = args.first
     branch_two = args.second
-    # base = git('merge-base %s %s' % (branch_one, branch_two))[0]
-    # log_branch_one = log_from_base(base, branch_one)
-    # log_branch_two = log_from_base(base, branch_two)
     log_path_one = git_log('%s -- %s' % (branch_one, args.path))
     log_path_two = git_log('%s -- %s' % (branch_two, args.path))
     commits_path_one = [extract_commit(l) for l in log_path_one]

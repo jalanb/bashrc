@@ -1,7 +1,6 @@
 """Convert a traceback to breakpoint lines for use with pudb"""
 
 
-from __future__ import print_function
 import os
 import sys
 

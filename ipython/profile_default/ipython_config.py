@@ -1,7 +1,5 @@
 # Configuration file for ipython.
 
-# pylint: disable=E0602
-
 c = get_config()
 
 # -----------------------------------------------------------------------------
