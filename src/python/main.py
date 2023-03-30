@@ -8,7 +8,7 @@ import argparse
 from bdb import BdbQuit
 
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 
 class ScriptError(NotImplementedError):
@@ -26,7 +26,7 @@ def run_args(args, methods):
 
 
 def version(args):
-    print('%s %s' % (args, __version__))
+    print("%s %s" % (args, __version__))
     raise SystemExit
 
 
@@ -34,8 +34,8 @@ def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     pa = parser.add_argument
-    pa('items', metavar='items', type=str, nargs='+', help='some items')
-    pa('-v', '--version', action='store_true', help='Show version')
+    pa("items", metavar="items", type=str, nargs="+", help="some items")
+    pa("-v", "--version", action="store_true", help="Show version")
     args = parser.parse_args()
     run_args(args, methods)
     return args
@@ -57,5 +57,5 @@ def main():
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

@@ -1,14 +1,9 @@
-    >>> import environ
+    >>> from os import environ
+    >>> from pysyte.types import paths
 
 A method to read the keys set in ~/jab/environ
-    >>> keys = environ.read_environ_keys()
-    >>> assert 'EDITOR' in keys
+    >>> assert 'EDITOR' in environ
+    >>> assert environ['EDITOR'].endswith('vim')
 
-Turn those keys into a dictionary with values from bash's environment
-    >>> assert environ.jab['HISTFILE']
-    >>> assert environ.jab['EDITOR'].endswith('vim')
-
-Bash's environment variables are attributes of the module
-    >>> assert environ.EDITOR == environ.jab['EDITOR']
-
-    >>> paths = environ.environ_paths()
+    >>> histfile = paths.path(environ['HISTFILE'])
+    >>> assert histfile.parent == paths.home()

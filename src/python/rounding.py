@@ -1,5 +1,6 @@
 shop_rounding = lambda x: 2 - ((x + 2) % 5)
 
+
 def fred(items, n, k):
     if not k:
         return sum(items)
@@ -23,4 +24,16 @@ def fred(items, n, k):
     fred_total = fred(items, len(items), k - 1)
     return round_total + fred_total
 
-fred([1,1, 1,1, 1,1,], 6, 2)
+
+fred(
+    [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+    ],
+    6,
+    2,
+)

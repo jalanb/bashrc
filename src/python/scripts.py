@@ -7,11 +7,11 @@ import sys
 import argparse
 from bdb import BdbQuit
 
-from pysyte.bash import cmnds
+from pysyte.bash import shell
 
 import script_path
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 
 class ScriptError(NotImplementedError):
@@ -29,25 +29,28 @@ def run_args(args, methods):
 
 
 def version(args):
-    print('%s %s' % (args, __version__))
+    print("%s %s" % (args, __version__))
     raise SystemExit
 
 
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('keys', metavar='keys', type=str, nargs='*',
-                        help='keys to find')
-    parser.add_argument('-l', '--list', action='store_true',
-                        help='$ ls -l scripts')
-    parser.add_argument('-m', '--mains', action='store_true',
-                        help='show python scripts with main methods')
-    parser.add_argument('-p', '--python', action='store_true',
-                        help='show python scripts only')
-    parser.add_argument('-s', '--shortlist', action='store_true',
-                        help='$ ls scripts')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
+    parser.add_argument(
+        "keys", metavar="keys", type=str, nargs="*", help="keys to find"
+    )
+    parser.add_argument("-l", "--list", action="store_true", help="$ ls -l scripts")
+    parser.add_argument(
+        "-m",
+        "--mains",
+        action="store_true",
+        help="show python scripts with main methods",
+    )
+    parser.add_argument(
+        "-p", "--python", action="store_true", help="show python scripts only"
+    )
+    parser.add_argument("-s", "--shortlist", action="store_true", help="$ ls scripts")
+    parser.add_argument("-v", "--version", action="store_true", help="Show version")
     args = parser.parse_args()
     run_args(args, methods)
     return args
@@ -56,7 +59,7 @@ def parse_args(methods):
 def lines(path_to_item):
     if path_to_item.isfile():
         return path_to_item.lines()
-    return ['']
+    return [""]
 
 
 def script(args):
@@ -64,23 +67,24 @@ def script(args):
     result = False
     for path_to_item in paths_to_items:
         if args.python:
-            if path_to_item.ext != '.py':
-                if 'python' not in lines(path_to_item)[0]:
+            if path_to_item.ext != ".py":
+                if "python" not in lines(path_to_item)[0]:
                     continue
         elif args.mains:
             for line in lines(path_to_item):
-                if line.startswith('def main('):
+                if line.startswith("def main("):
                     break
             else:
                 continue
         if args.list or args.shortlist:
-            list_command = 'PATH=/bin:/usr/bin ls' + ' -l' if args.list else ''
-            command = '%s %s' % (list_command, path_to_item)
-            status, output = cmnds.getstatusoutput(command)
-            if status == os.EX_OK:
-                print(output)
+            list_command = "PATH=/bin:/usr/bin ls" + " -l" if args.list else ""
+            command = "%s %s" % (list_command, path_to_item)
+            try:
+                print(shell.run(command))
                 result = True
                 continue
+            except shell.BashError:
+                pass
         print(path_to_item)
         result = True
     return result
@@ -98,5 +102,5 @@ def main():
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

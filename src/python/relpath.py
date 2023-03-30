@@ -10,7 +10,7 @@ from bdb import BdbQuit
 from pysyte.types.paths import pwd
 
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 
 class ScriptError(NotImplementedError):
@@ -28,19 +28,23 @@ def run_args(args, methods):
 
 
 def version(args):
-    print('%s %s' % (args, __version__))
+    print("%s %s" % (args, __version__))
     raise SystemExit
 
 
 def parse_args(methods):
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('items', metavar='items', type=str, nargs='+',
-                        help='some items')
-    parser.add_argument('-s', '--short', action='store_true',
-                        help='The shorter of absolute or relative path')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
+    parser.add_argument(
+        "items", metavar="items", type=str, nargs="+", help="some items"
+    )
+    parser.add_argument(
+        "-s",
+        "--short",
+        action="store_true",
+        help="The shorter of absolute or relative path",
+    )
+    parser.add_argument("-v", "--version", action="store_true", help="Show version")
     args = parser.parse_args()
     run_args(args, methods)
     return args
@@ -49,7 +53,7 @@ def parse_args(methods):
 def script(args):
     p = pwd()
     method = p.short_relative_path_to if args.short else p.relpathto
-    print(method(' '.join(args.items)))
+    print(method(" ".join(args.items)))
     return True
 
 
@@ -65,5 +69,5 @@ def main():
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

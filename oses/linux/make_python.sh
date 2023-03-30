@@ -36,7 +36,7 @@ pip_install_modules () {
         echo >&2 Cannot find pip
         return 1
     fi
-    $PIP install setuptools
+    $PIP install setuptools>=65.5.1
     [[ -f $BASH_DIR/requirements.txt ]] && $PIP install -r $BASH_DIR/requirements.txt
 }
 

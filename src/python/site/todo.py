@@ -3,8 +3,8 @@
 
 from __future__ import print_function
 import re
-import os
 import sys
+
 try:
     from namedtuple import namedtuple  # pylint: disable=import-error
 except ImportError:
@@ -23,30 +23,30 @@ def todo_file():
         todo = path(sys.argv[1])
         if todo.isfile():
             return todo
-    todo = path('~/jab') / 'todo.txt'
-    if todo.isfile():
-        return todo
-    todo = jab / 'todo.md'
-    if todo.isfile():
-        return todo
-    return None
+    jab = path("~/jab")
+    for ext in ("md", "txt"):
+        todo = jab / f"todo.{ext}"
+        if todo.isfile():
+            return todo
+    return path(None)
 
 
 def read_todo(todo):
-    lines = [l.rstrip() for l in open(todo)]
-    return [l for l in lines if l and l[0] != '#']
+    lines = [_.rstrip() for _ in open(todo)]
+    return [_ for _ in lines if _ and _[0] != "#"]
 
 
 def as_todo_item(line):
     """Initialise a TodoItem from the line"""
-    item_regexp = re.compile('^(?P<text>.*), (?P<priority>[%s])$' %
-                             priority_keys_string())
+    item_regexp = re.compile(
+        "^(?P<text>.*), (?P<priority>[%s])$" % priority_keys_string()
+    )
     match = item_regexp.match(line)
-    TodoItem = namedtuple('TodoItem', 'text, priority')
+    TodoItem = namedtuple("TodoItem", "text, priority")
     if not match:
         return TodoItem(line, -1)
-    text = match.groupdict()['text']
-    priority = match.groupdict()['priority']
+    text = match.groupdict()["text"]
+    priority = match.groupdict()["priority"]
     return TodoItem(text, int(priority))
 
 
@@ -57,35 +57,35 @@ def read_items():
     """
     todo = todo_file()
     lines = read_todo(todo) if todo else []
-    return [as_todo_item(l) for l in lines]
+    return [as_todo_item(_) for _ in lines]
 
 
 def priorities():
     """The recognised priorities in this system"""
-    Priority = namedtuple('Priority', 'number, name, colour')
+    Priority = namedtuple("Priority", "number, name, colour")
     # pylint: disable=bad-whitespace
     # Yeah, fuck off!
     return [
-        Priority(0, 'bug',       'red'),
-        Priority(1, 'yesterday', 'magenta'),
-        Priority(2, 'today',     'blue'),
-        Priority(3, 'tomorrow',  'cyan'),
-        Priority(4, 'feature',   'green'),
-        Priority(5, 'wish',      'yellow'),
-        Priority(6, 'text',      'gray'),
+        Priority(0, "bug", "red"),
+        Priority(1, "yesterday", "magenta"),
+        Priority(2, "today", "blue"),
+        Priority(3, "tomorrow", "cyan"),
+        Priority(4, "feature", "green"),
+        Priority(5, "wish", "yellow"),
+        Priority(6, "text", "gray"),
     ]
 
 
 def priority_keys_string():
     """A string with the priority numbers in this system"""
-    return ''.join([str(priority.number) for priority in priorities()])
+    return "".join([str(priority.number) for priority in priorities()])
 
 
 def priority_colour(priority_number):
     for priority in priorities():
         if priority_number == priority.number:
             return priority.colour
-    return 'white'
+    return "white"
 
 
 def show_item(item):

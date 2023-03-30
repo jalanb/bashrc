@@ -23,33 +23,30 @@ import socket
 import sys
 import threading
 
-try:
-    # Python 3
-    import socketserver
-except ImportError:
-    # Python 2
-    import SocketServer as socketserver
+import socketserver
+
 
 class NameSpace(object):
     thesocket = None
 
+
 name_space = NameSpace()
 
-class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
+class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         print("=== socket opened ===")
         name_space.thesocket = self.request
         while True:
             try:
-                data = self.request.recv(4096).decode('utf-8')
+                data = self.request.recv(4096).decode("utf-8")
             except socket.error:
                 print("=== socket error ===")
                 break
             except IOError:  # pylint: disable=duplicate-except
                 print("=== socket closed ===")
                 break
-            if data == '':
+            if data == "":
                 print("=== socket closed ===")
                 break
             print("received: {0}".format(data))
@@ -57,22 +54,24 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                 decoded = json.loads(data)
             except ValueError:
                 print("json decoding failed")
-                decoded = [-1, '']
+                decoded = [-1, ""]
 
             # Send a response if the sequence number is positive.
             # Negative numbers are used for "eval" responses.
             if decoded[0] >= 0:
-                if decoded[1] == 'hello!':
+                if decoded[1] == "hello!":
                     response = "got it"
                 else:
                     response = "what?"
                 encoded = json.dumps([decoded[0], response])
                 print("sending {0}".format(encoded))
-                self.request.sendall(encoded.encode('utf-8'))
+                self.request.sendall(encoded.encode("utf-8"))
         name_space.thesocket = None
+
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
+
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 8765
@@ -99,7 +98,7 @@ if __name__ == "__main__":
             print("No socket yet")
         else:
             print("sending {0}".format(typed))
-            name_space.thesocket.sendall(typed.encode('utf-8'))
+            name_space.thesocket.sendall(typed.encode("utf-8"))
 
     server.shutdown()
     server.server_close()

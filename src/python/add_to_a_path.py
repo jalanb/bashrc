@@ -29,7 +29,7 @@ import argparse
 from bdb import BdbQuit
 
 
-__version__ = '0.1.0'
+__version__ = "0.1.0"
 
 
 class ScriptError(NotImplementedError):
@@ -37,21 +37,25 @@ class ScriptError(NotImplementedError):
 
 
 def version():
-    print('%s %s' % (args, __version__))
+    print(__version__)
     raise SystemExit
 
 
 def parse_args():
     """Parse out command line arguments"""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('symbol', help='The bash symbol to be changed')
-    parser.add_argument('path', help='The path to be added')
-    parser.add_argument('-s', '--start', action='store_true',
-                        help='Add the path at start of list of paths')
-    parser.add_argument('-i', '--index', type=int,
-                        help='The index at which the path will be inserted')
-    parser.add_argument('-v', '--version', action='store_true',
-                        help='Show version')
+    parser.add_argument("symbol", help="The bash symbol to be changed")
+    parser.add_argument("path", help="The path to be added")
+    parser.add_argument(
+        "-s",
+        "--start",
+        action="store_true",
+        help="Add the path at start of list of paths",
+    )
+    parser.add_argument(
+        "-i", "--index", type=int, help="The index at which the path will be inserted"
+    )
+    parser.add_argument("-v", "--version", action="store_true", help="Show version")
     args = parser.parse_args()
     if args.version:
         version()
@@ -82,11 +86,11 @@ def _add_symbol_to_paths(paths, symbol, i):
 def get_arg_path(args):
     path = args.path
     if not path:
-        return ''
+        return ""
     user_path = os.path.expanduser(path)
     real_path = os.path.realpath(user_path)
     if not os.path.isdir(real_path):
-        return ''
+        return ""
     return real_path
 
 
@@ -98,7 +102,7 @@ def split_paths(string):
 
 def get_paths(args):
     symbol = args.symbol
-    paths_string = ''
+    paths_string = ""
     if symbol in os.environ:
         paths_string = os.environ[symbol]
     elif os.path.pathsep in symbol:
@@ -118,7 +122,7 @@ def script(args):
         paths = _add_symbol_to_paths(paths, arg_path, args.index)
     else:
         return False
-    print('='.join((args.symbol, os.path.pathsep.join(paths))))
+    print("=".join((args.symbol, os.path.pathsep.join(paths))))
     return True
 
 
@@ -132,5 +136,5 @@ def main():
     return os.EX_OK
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

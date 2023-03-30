@@ -1,6 +1,0 @@
-The repository module
-=====================
-
-    >>> import repository
-    >>> print repository.__doc__
-    This module handles repositories generically

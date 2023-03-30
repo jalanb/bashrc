@@ -99,7 +99,7 @@ venv () {
     unhash_activate "$dir_venv_"
     show_command python3 -m ensurepip
     pym ensurepip | grep -v -e Looking -e already | grep [un]*installed
-    ppu setuptools wheel pip
+    ppu setuptools>=65.5.1 wheel pip
     install_requirements_at "$dir_" -p
 }
 

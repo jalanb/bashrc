@@ -3,20 +3,31 @@ from __future__ import print_function
 
 
 def backup_with_suffix(filename, suffix):
-    text = file(filename).read()
-    file('%s%s' % (filename, suffix), 'w').write(text)
+    text = open(filename).read()
+    open("%s%s" % (filename, suffix), "w").write(text)
 
 
 # pylint: disable=too-many-arguments
-def looks_like_this(filename, limits=None, numbers=True, space=' ', tab='\t',
-                    sol=None, eol=None, count_from=1):
-    lines = file(filename).readlines()
+def looks_like_this(
+    filename,
+    limits=None,
+    numbers=True,
+    space=" ",
+    tab="\t",
+    sol=None,
+    eol=None,
+    count_from=1,
+):
+    with open(filename) as stream:
+        lines = stream.readlines()
     lines = _look_like_that(lines, limits, count_from, numbers, space, tab, sol)
     for line in lines:
         if eol:
-            print(line.replace('\n', eol))
+            print(line.replace("\n", eol))
         else:
-            print(line,)
+            print(
+                line,
+            )
 
 
 def _limits_to_lines(limits, max_end):
@@ -32,13 +43,13 @@ def _look_like_that(lines, limits, count_from, numbers, space, tab, sol):
     for i, line in enumerate(lines[start:], start=start):
         line_number = i + count_from
         if space:
-            line = line.replace(' ', space)
+            line = line.replace(" ", space)
         if tab:
-            line = line.replace('\t', tab)
+            line = line.replace("\t", tab)
         if sol:
-            line = '%s%s' % (sol, line)
+            line = "%s%s" % (sol, line)
         if numbers:
-            line = '%2d: %s' % (line_number, line)
+            line = "%2d: %s" % (line_number, line)
         result.append(line)
         if line_number > end:
             break
