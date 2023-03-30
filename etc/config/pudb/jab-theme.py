@@ -17,11 +17,6 @@
 # See this URL to see what keys there are:
 # https://github.com/inducer/pudb/blob/master/pudb/theme.py
 
-# This file is exec'd by pudb, so does not play nice with pylint
-# Specifically - some globals are supplied, with look undefined to pylint
-#
-# pylint: disable=E0602,E126
-
 # Initially set a palette to dark vim
 palette.update(
     {

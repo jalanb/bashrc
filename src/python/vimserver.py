@@ -42,7 +42,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             except socket.error:
                 print("=== socket error ===")
                 break
-            except IOError:  # pylint: disable=duplicate-except
+            except IOError:
                 print("=== socket closed ===")
                 break
             if data == "":

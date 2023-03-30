@@ -109,7 +109,7 @@ class DoctestMagic(Magics):
         verbose = args.verbose
         name = args.name
         try:
-            optionflags = eval(args.options)  # pylint: disable=eval-used
+            optionflags = eval(args.options)
         except AttributeError as e:
             if args.options.startswith("doctest."):
                 raise AttributeError(

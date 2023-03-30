@@ -5,7 +5,7 @@ import re
 import sys
 
 try:
-    from namedtuple import namedtuple  # pylint: disable=import-error
+    from namedtuple import namedtuple
 except ImportError:
     from collections import namedtuple
 
@@ -16,8 +16,6 @@ from pysyte.colours import texts
 
 def todo_file():
     """Get the filename from the environment"""
-    # Tell pylint not to warn that this is a todo
-    # pylint: disable=W0511
     if sys.argv[1:]:
         todo = path(sys.argv[1])
         if todo.isfile():
@@ -62,8 +60,6 @@ def read_items():
 def priorities():
     """The recognised priorities in this system"""
     Priority = namedtuple("Priority", "number, name, colour")
-    # pylint: disable=bad-whitespace
-    # Yeah, fuck off!
     return [
         Priority(0, "bug", "red"),
         Priority(1, "yesterday", "magenta"),

@@ -1,9 +1,5 @@
 """Imports for IPython"""
 
-# pylint: disable=W0611
-
-# import this
-
 import os
 import re
 import sys

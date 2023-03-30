@@ -6,7 +6,6 @@ def backup_with_suffix(filename, suffix):
     open("%s%s" % (filename, suffix), "w").write(text)
 
 
-# pylint: disable=too-many-arguments
 def looks_like_this(
     filename,
     limits=None,

@@ -46,7 +46,6 @@ class VimBashScript(object):
 
     @staticmethod
     def _script_stream():
-        #  pylint: disable=no-self-use
         return tempfile.NamedTemporaryFile(
             mode="w",
             suffix="-vim.sh",

@@ -68,7 +68,7 @@ def run_with_timeout(code, a_time, symbols=None):
         # Use math.ceil to round a float up.
         a_time = int(math.ceil(a_time))
         signal.alarm(a_time)
-    r = eval(code, symbols)  # pylint: disable=eval-used
+    r = eval(code, symbols)
     signal.alarm(0)  # Disable the alarm
     return r
 
@@ -88,7 +88,7 @@ def pudb_stringifier(obj):
     elif type(obj) == type(sys):
         return "imported"
     elif callable(obj):
-        return "XXX"  # pylint: disable=fixme
+        return "XXX"
     try:
         return run_with_timeout("str(obj)", 30, {"obj": obj})
     except TimeOutError:

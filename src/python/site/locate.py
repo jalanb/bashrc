@@ -117,7 +117,6 @@ def _locate(args):
             if "*" not in two:
                 two = f"*{two}*"
             return fnmatch(one, two)
-        # cmp? pylint: disable=undefined-variable
         try:
             return cmp(one, two) == 0
         except NameError:
