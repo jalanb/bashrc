@@ -1,5 +1,4 @@
 """Methods to handle text files"""
-from __future__ import print_function
 
 
 def backup_with_suffix(filename, suffix):

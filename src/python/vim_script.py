@@ -1,7 +1,5 @@
 """Script to set up a call to vim"""
 
-
-from __future__ import print_function
 import os
 import re
 import sys

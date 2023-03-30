@@ -17,7 +17,6 @@
 #
 # This requires Python 2.6 or later.
 
-from __future__ import print_function
 import json
 import socket
 import sys

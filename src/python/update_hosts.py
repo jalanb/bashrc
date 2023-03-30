@@ -1,6 +1,5 @@
 """A program to update /etc/hosts from our defintions"""
 
-from __future__ import print_function
 import os
 import sys
 
