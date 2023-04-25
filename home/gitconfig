@@ -16,7 +16,7 @@
     b = branch
     c = cherry-pick
     cl = clean -d -f -f -x
-    d = difftool -y --extcmd=\"icdiff --line-numbers\"
+    d = difftool -y --extcmd=\"icdiff --line-numbers -t \"
     e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
@@ -58,7 +58,7 @@
 
     df = diff --name-only
     dh = difftool -y --extcmd=\"vim -d -o\"
-    di = difftool -y --extcmd=\"icdiff --line-numbers\"
+    di = difftool -y --extcmd=\"icdiff --line-numbers \"
     dk = difftool -y -t Kaleidoscope
     dm = difftool -y --extcmd=\"~/bin/meld  \"
     dn = d --name-only
