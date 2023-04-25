@@ -15,10 +15,17 @@ alias Q="exit 0"
 # xx
 
 qg () {
+    qq g "$@"
+}
+
+qr () {
     qq gr "$@"
 }
 
 qx () {
+    local doc_="""Catch an edge case in terminal"""
+
+    local doc__="""set -x writes to stderr, even after a subshell"""
     (set +x; "$@") 2>/dev/null
 }
 
@@ -46,9 +53,9 @@ quietly () {
 }
 
 Quietly () {
-    "$@" >/dev/null
+    "$@" 1>/dev/null
 }
 
 QUIETLY () {
-    quietly "$@" >/dev/null
+    Quietly $(quietly "$@")
 }

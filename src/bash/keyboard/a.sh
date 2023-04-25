@@ -1,5 +1,13 @@
 #! /bin/cat
 
+args_array() {
+    local args=()
+    args=("$@")
+    echo -n "${args[0]} ("
+    unset args[0]
+    echo -n ${args[@]}
+    echo ")"
+}
 
 # _
 

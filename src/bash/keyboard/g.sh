@@ -6,10 +6,12 @@ g () {
 }
 
 gr () {
+    local grep_="$(which egrep) --color"
     if [[ "$@" ]]; then
-        stderr_strip "Is a directory" "$@"
+        cut_err "Is a directory" "$@"
     else
-        grr
+        show_command git pull -- rebase
+        git pull -- rebase
     fi
 }
 
@@ -45,7 +47,7 @@ gree () {
     set +x
 }
 
-stderr_strip () {
+cut_err () {
     # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
     #   Allows cutting text out of stderr
     local text_="$1"; shift
