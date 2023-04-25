@@ -144,6 +144,8 @@
 
     sp = status --porcelain
     st = stash
+    ss = status --short
+    sp = status --porcelain
     stp = stash pop
     stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
     standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Thu == $(date +%a) ]] && echo last.tuesday || echo last.thursday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
