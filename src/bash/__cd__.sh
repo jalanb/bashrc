@@ -1,3 +1,2 @@
 #! /bin/cat
 
-. ~/cde.sh

@@ -25,8 +25,8 @@ show_pythonpath () {
 export WHYP_EDITOR=vv
 . ~/hub/jalanb/ackvim/ackvim.sh
 . ~/hub/jalanb/pyth/pyth.sh
+. ~/hub/jalanb/cde/cde.sh
 
-. ~/jab/src/bash/__cd__.sh
 . ~/jab/environ.d/__init__.sh optional
 . ~/jab/src/bash/__init__.sh
 . ~/jalanb/local/__init__.sh optional

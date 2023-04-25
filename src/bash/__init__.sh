@@ -1,4 +1,3 @@
-#! /bin/cat
 
 
 __version__=0.8.69
