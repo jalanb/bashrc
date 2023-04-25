@@ -14,8 +14,24 @@ alias Q="exit 0"
 
 # xx
 
+qg () {
+    qq gr "$@"
+}
+
+qx () {
+    (set +x; "$@") 2>/dev/null
+}
+
 qq () {
-    "$@" 2>&1
+    qx quietly "$@"
+}
+
+Qq () {
+    qx Quietly "$@"
+}
+
+QQ () {
+    qx QUIETLY "$@"
 }
 
 #

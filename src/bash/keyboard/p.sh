@@ -1,14 +1,5 @@
 #! /bin/cat
 
-# _x
-# _xx
-# _xxx
-# _xxxx
-# _xxxxx
-# _xxxxxx
-
-. ~/bash/python.sh
-
 # x
 
 p () {
@@ -31,7 +22,17 @@ pm () {
     p $option_ -m "$@"
 }
 
+pv () {
+    unhash_python_handlers
+    [[ $1 =~ -f ]] && rm -rf .venv
+    [[ -d .venv ]] || python -m venv .venv
+    . .venv/bin/activate
+}
+
+pvf () {
+    pv -f 
+}
+
 # xxx
 
-# xxxx
-
+. ~/bash/python.sh

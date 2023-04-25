@@ -8,3 +8,7 @@
 
 alias n=echo
 
+nv () {
+    nvim "$@"
+}
+

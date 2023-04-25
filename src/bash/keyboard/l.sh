@@ -35,6 +35,10 @@ lh () {
     l -lh  "$@"
 }
 
+lk () {
+    l0 "$@"
+}
+
 ll () {
     local _long_option=-l
     local _dir_option=
@@ -50,12 +54,16 @@ lo () {
     l -C "$@"
 }
 
+lO () {
+    l -C "$@"
+}
+
 lr () {
     l -tr "$@"
 }
 
 lt () {
-    l -t "$@"
+    l -t 4 "$@"
 }
 
 lx () {
@@ -135,14 +143,9 @@ llg () {
     gl_ 3 "$@"
 }
 
-llk () {
-    rlg "$@"
-    llr "$@"
-    rlg "$@"
-}
-
 lll () {
-    rll -tr "$@"
+    rlg "$@"
+    ll -tr "$@"
 }
 
 llo () {
@@ -152,8 +155,7 @@ llo () {
 
 llr () {
     rlg "$@"
-    ll -tr "$@"
-    rlg "$@"
+    ll -htr "$@"
 }
 
 lly () {
@@ -202,7 +204,7 @@ lrt () {
 }
 
 ls1 () {
-    l1 "$@" | sort
+    l0 "$@" | sort
 }
 
 lsh () {

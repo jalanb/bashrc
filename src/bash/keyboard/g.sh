@@ -6,11 +6,8 @@ g () {
 }
 
 gr () {
-    local grep_="$(which egrep) --color"
-    # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
-    #   Allows cutting text out of stderr
     if [[ "$@" ]]; then
-        ($grep_ "$@" 3>&1 1>&2 2>&3 | sed -e "/Is a directory/d") 3>&1 1>&2 2>&3
+        stderr_strip "Is a directory" "$@"
     else
         grr
     fi
@@ -46,4 +43,14 @@ gree () {
     done
     gr $options_ $paths_
     set +x
+}
+
+stderr_strip () {
+    # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
+    #   Allows cutting text out of stderr
+    local text_="$1"; shift
+    local grep_="$(which egrep) --color"
+    if [[ "$@" ]]; then
+        ($grep_ "$@" 3>&1 1>&2 2>&3 | sed -e "/${text_}/d") 3>&1 1>&2 2>&3
+    fi
 }

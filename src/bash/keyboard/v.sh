@@ -5,6 +5,7 @@
 # x
 
 unalias v >/dev/null 2>&1
+unalias vv >/dev/null 2>&1
 v () {
     mvim "$@"
 }
@@ -40,17 +41,16 @@ vf () {
 }
 
 vg () {
-    local user_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_=.git/config
-    [[ -f $user_ ]] || user_=
-    [[ -f $clone_ ]] || clone_=
+    local user_config_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_config_=.git/config
     local user_ignore_=$(readlink -f ~/.gitignore_global 2>/dev/null) clone_ignore_=.gitignore
+    [[ -f $user_config_ ]] || user_config_=
+    [[ -f $clone_config_ ]] || clone_config_=
     [[ -f $user_ignore_ ]] || user_ignore_=
     [[ -f $clone_ignore_ ]] || clone_ignore_=
-    local command_="vim -p $user_ $clone_ $user_ignore_ $clone_ignore_"
     if [[ $1 ]]; then
-        $command_ +/"$1"
+        vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_ +/"$1"
     else
-        $command_
+        vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_
     fi
 }
 
@@ -120,10 +120,13 @@ vat () {
 
 vbb () {
     (
+    set -x
         cd ~/jalanb/jab
         local local_=local/__init__.sh
         [[ -f $local_ ]] || local_=
-        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc "
+        local bashrc_log=$HOME/log/bashrc.log
+        test -f bashrc_log || bashrc_log=
+        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $bashrc_log"
         vim -p $files_ "$@"
         readlink -f $files_
     )

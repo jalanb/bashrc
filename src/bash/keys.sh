@@ -74,9 +74,4 @@ vim_keys () {
     read_keys
 }
 
-alias keys=read_keys
-alias rk=read_keys
-alias wk=write_keys
-alias vk=vim_keys
-
 read_keys
