@@ -2,13 +2,11 @@
 paths:
 
 users:
-  ssh: ~/.ssh/work
+  wwts: ~/.ssh/work
   - builder:
-      IdentityFile: ssh/bots/builder.key
-  - jenkins:
-      IdentityFile: ssh/bots/jenkins.key
+      IdentityFile: ~/.ssh/keys/devops.key
   - ab13173:
-      IdentityFile: ssh/ab13173.key
+      IdentityFile: ~/.ssh/ab13173.key
 
 hosts:
   address: 172.25.32.74
