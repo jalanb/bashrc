@@ -1,6 +1,13 @@
--r testing.txt
+-r devops.txt
 
-
-ipython>=8.10
+ipython
+isort
 pudb
+pytest-icdiff
+pytest-instafail
+pytest-random-order
+pytest-pudb
+pytest-sugar
+pytest-pudb
+pytest-sugar
 httpie
