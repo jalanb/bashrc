@@ -84,13 +84,13 @@ venv_name () {
         local _parent_name=$(basename $_parent)
         _venv_name=$_parent_name
     fi
-    echo $(_rgb l_red "${_venv_name/./}")
+    echo $(lred "${venv_name_/./}")
 }
 
 blue_date () {
-    local _colour_day=$(_rgb blue $(date +'%A'))
-    local _colour_date=$(_rgb l_blue $(date +' %F %H:%M'))
-    echo $_colour_day $_colour_date
+    local colour_day_=$(blue $(date +'%A'))
+    local colour_date_=$(lblue $(date +' %F %H:%M'))
+    echo $colour_day_ $colour_date_
 }
 
 short_pwd () {
@@ -110,15 +110,15 @@ blue_pwd_git () {
     [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
     local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2," -e "s,[.]git$,,")
     [[ $project_ ]] && pwd_="${project_}:${pwd_}"
-    echo $(_rgb l_blue "${pwd_}${_version}")
+    echo $(lblue "${pwd_}${version_}")
 }
 
 blue_user () {
     local user_=$(whoami)
     local hostname_=$(hostname -s)
-    local _hue_user=$(_rgb blue ${user_:$USER})
-    local _hue_host=$(_rgb blue ${hostname_:-$HOSTNAME})
-    echo "${_hue_user}@$_hue_host"
+    local hue_user_=$(blue ${user_:$USER})
+    local hue_host_=$(blue ${hostname_:-$HOSTNAME})
+    echo "${hue_user_}@$hue_host_"
 }
 
 red_python () {
@@ -130,9 +130,6 @@ red_python () {
         _virtual_env_name=$(basename "$_virtual_env_directory")
     fi
 
-    local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
-    local _colour_python=$(_rgb l_red "${_python_version}")
-    local _colour_venv=$(venv_name)
     if [[ ! $_colour_venv ]]; then
         echo $_colour_python
         return 0
@@ -146,13 +143,13 @@ red_python () {
 
 set_status_bit () {
     local __doc__="""Set the status bit from $?"""
-    local _one=$1; shift
-    local _status=
-    [[ -z "$_one" ]] && _one="-z \$?"
-    local _status_color=red
-    [[ $_one == 0 ]] && _status_color=green
-    _status=$(_rgb $_status_color $_one)
-    export STATUS=$_status
+    local one_=$1; shift
+    local status_=
+    [[ -z "$one_" ]] && one_="-z \$?"
+    local status_color_=red
+    [[ $one_ == 0 ]] && status_color_=green
+    status_=$(rgb $status_color_ $one_)
+    export STATUS=$status_
 }
 
 echo_prompt_colour () {
@@ -167,40 +164,31 @@ echo_prompt_colour () {
     echo $prompt_colour_
 }
 
-_pre_pses () {
+pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
     cde_python --add . >/dev/null 2>&1
     history -a
 }
 
-_post_pses () {
+post_pses () {
     local __doc__="""Stuff to do after setting the prompt"""
     set_status_bit "$@"
-    # echo "which -a:"
-    # which -a python3
-    # echo; echo "type -a: "
-    # type -a python3;
-    # echo; echo "command -v: "
-    # command -v python3
 }
 
 export_pses () {
     local __doc__="""Set all PS* symbols (which control prompts"""
-    local _status=$1
-    PROMPT_STATUS=$_status
+    local status_=$1
+    PROMPT_STATUS=$status_
     export PROMPT_STATUS
     # export ITERM2_SQUELCH_MARK=1
-    _pre_pses
-    export PS1=$(_colour_prompt $_status)
+    pre_pses
+    export PS1=$(colour_prompt $status_)
     export PS2="... "  # Continuation line
     export PS3="#?"    # Prompt for select command
     export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
                                                     # Thanks to pyenv for the (ahem) prompt
-    # export PS4='\nDEBUG level:$SHLVL subshell-level: $BASH_SUBSHELL \nsource-file:${BASH_SOURCE} line#:${LINENO} function:${FUNCNAME[0]:+${FUNCNAME[0]}(): }\nstatement: '
-    #export PS4='+ [${BASH_SOURCE##*/}:${FUNCNAME[0]:+${FUNCNAME[0]}()}:${LINENO}:${BASH_LINENO[*]}] '  
-    export PS4='+ [${BASH_SOURCE:-$0} in ${FUNCNAME[0]}() at ${LINENO}]  '
-    _post_pses "$@"
+    post_pses "$@"
 }
 
 

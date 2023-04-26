@@ -2,7 +2,6 @@
 
 
 
-set -x
 
 OPT_ROOT=/opt/jabs
 
