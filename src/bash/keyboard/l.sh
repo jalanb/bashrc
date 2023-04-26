@@ -44,14 +44,17 @@ lk () {
 }
 
 ll () {
-    local _long_option=-l
-    local _dir_option=
+    local path_="$1"
+    local _dir_option=-a
     if [[ -d "$1" ]]; then
-        _dir_option=-d
-        [[ "$1" =~ /$ ]] && _dir_option=-a
-        [[ "$1" =~ ^[.]*$ ]] && _dir_option=-a
+        [[ "$1" =~ /$ ]] && _dir_option=-d
+        path_="$1/"
     fi
-    l $_long_option $_dir_option "$@"
+    for path_ in "$@"; do
+        test -e $path_ || continue
+        [[ -d "$1" ]] ||
+        l -l $_dir_option "$path_"
+    done
 }
 
 lo () {

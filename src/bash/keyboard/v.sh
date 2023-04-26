@@ -118,7 +118,7 @@ vat () {
 
 vbb () {
     (
-    set -x
+        set -x
         cd ~/jalanb/jab
         local local_=local/__init__.sh
         [[ -f $local_ ]] || local_=
