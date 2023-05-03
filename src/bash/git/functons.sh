@@ -484,6 +484,8 @@ gom () {
 goo () {
     local path_="."
     [[ "$@" ]] && path_="$@"
+    show_command git restore --staged "$path_"
+    git restore --staged "$path_"
     show_command git restore "$path_"
     git restore "$path_"
     show_command git status --porcelain "$path_"
