@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument(
         "files", metavar="files", type=str, nargs="+", help="files to edit"
     )
-    parser.add_argument("-p", "--tabs", action="store_true", help="put files in tabs")
+    parser.add_argument("-t", "--tabs", action="store_true", help="put files in tabs")
     parser.add_argument("-v", "--version", action="store_true", help="Show version")
     parser.add_argument("-d", "--diff_mode", action="store_true", help="use vimdiff")
     parser.add_argument(
