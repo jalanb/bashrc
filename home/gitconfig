@@ -142,6 +142,7 @@
 
     ru = remote get-url origin
 
+    sp = status --porcelain
     st = stash
     stp = stash pop
     stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
