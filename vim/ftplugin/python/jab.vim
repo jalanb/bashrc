@@ -21,7 +21,10 @@ nnoremap <leader>e   ?^\s*def \zs\i<cr>*#zv
 nnoremap <leader>k   $%a<cr><esc
 "noremap <leader>o   O<esc>
 
-call matchadd('ColorColumn', '\(\%80v\|\%100v\)', 100)
+call matchadd('PythonColumn', '\%79v', 90)
+call matchadd('BlackColumn', '\%88v', 80)
+call matchadd('ColorColumn', '\(\%100v\)', 100)
+call matchadd('ColorColumn', '\(\%120v\)', 100)
 
 function! FoldCommentsAndIndentation(lnum)
     let l:line = getline(a:lnum)

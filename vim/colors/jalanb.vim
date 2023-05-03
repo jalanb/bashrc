@@ -62,3 +62,11 @@ highlight MatchParen gui=bold guibg=NONE                                  guifg=
 "
 highlight EasyMotionTarget  ctermfg=DarkRed  ctermbg=none
 highlight EasyMotionShade   ctermfg=Gray     ctermbg=none
+"
+" let s:darkRed=        { "gui": "#63001C", "cterm": "88"  }
+" let s:middleDarkRed=  { "gui": "#FF0055", "cterm": "197" }
+" let s:middleLightRed= { "gui": "#D65E76", "cterm": "167" }
+" let s:lightRed=       { "gui": "#FFAFAF", "cterm": "217" }
+
+highlight PythonColumn      ctermbg=217                                   guibg=#FFAFAF
+highlight BlackColumn       ctermbg=167                                   guibg=#FF0055
