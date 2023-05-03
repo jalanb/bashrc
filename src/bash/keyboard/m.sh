@@ -12,6 +12,10 @@ md () {
     mkdir -p "$@" 2>/dev/null
 }
 
+man () {
+    batman "$@"
+}
+
 mkd () {
     local __doc__='make a directory'
     local verbose_=1
