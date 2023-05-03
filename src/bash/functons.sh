@@ -102,10 +102,6 @@ pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
-pt () {
-    ptpython "$@"
-}
-
 rg () {
     [[ "$@" ]] && c "$@"
     ranger
@@ -1245,15 +1241,6 @@ show_functions () {
     local __doc__="""You're mad!!"""
     echo all functions? here ye go
     declare -f | grep "^[^ ]* ()"
-}
-
-console_hello () {
-    local me=$USER
-    local here=$(jostname)
-    export PYTHON=${PYTHON:-python}
-    console_title_on "python@${here}" && \
-        $PYTHON "$@" && \
-        console_title_off "${me}@${here}"
 }
 
 one_two_three () {

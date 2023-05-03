@@ -21,8 +21,3 @@
 ,w () {
     . $WHYP.sh
 }
-# .x
-
-.v () {
-    . .venv/bin/activate
-}

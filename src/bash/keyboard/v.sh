@@ -198,10 +198,6 @@ vtc () {
     vtr -c
 }
 
-vtr () {
-    python ~/jab/src/python/tracebacks.py -e "$@"
-}
-
 vss () {
     vim -p ~/.ssh/config ~/.ssh/keys/config ~/.ssh/macs ~/.ssh/ab13173
 }
@@ -217,10 +213,6 @@ vvb () {
 
 vvf () {
     vvv ftplugin/$1
-}
-
-vvg () {
-    gv ~/jab/vim/gvimrc
 }
 
 vvp () {
