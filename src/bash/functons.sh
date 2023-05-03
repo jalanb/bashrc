@@ -978,7 +978,9 @@ functons () {
 }
 
 jostname () {
-    echo ${HOSTNAME:-$(hostname -s)}
+    local short_name_=$(hostname -s)
+    local caps_name_=${HOSTNAME:-hostless}
+    echo ${short_name_:-$caps_name_}
 }
 
 maketest () {
