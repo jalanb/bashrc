@@ -1200,11 +1200,32 @@ glone () {
 
 # xxxxxx
 # xxxxxxx
-# xxxxxxxx
+
+standup () {
+    for dir in $(fd -H -td .git ~/lab/sparky/ -X dirname)
+    do
+        if git -C $dir standup | grep -q nothing; then
+            if [[ $(git -C $dir status --porcelain) ]]; then
+                ( 
+                    show_command cd $dir
+                    cd $dir
+                    ls -ltc --time-style=+"xxx%a %b %d%Y" $(git status --porcelain | sed -e "s,...,," -e "s,.*-> ,,") | sed -e "s/.*xxx/ /g" -e "/^total/d"
+                )
+                echo; echo
+            fi
+            continue
+        fi
+        gc $dir standup;
+        gc $dir status --short
+        echo; echo
+    done
+}
 
 git_kd_ () {
     cde "$@" > ~/fd1 2> ~/fd2
 }
+
+# xxxxxxxx
 
 mastered () {
     local main_branch_=$(main_branch)
