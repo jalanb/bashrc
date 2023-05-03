@@ -3,13 +3,67 @@
 # x
 # xx
 
+_python_command () {
+    local __doc__="""Cpommand to be used in this script is python3, or can be over-written with $PYTHON"""
+    local python_=${PYTHON:-python3}
+    $python_  -c"import sys; print(sys.executable)"
+}
+
+i () {
+    local here_=$(jostname)
+    console_title_on "ipython@$here_" && \
+        ${IPYTHON:-ipython} "$@" && \
+        console_title_off "${USER}@${here_}"
+}
+
+ip () {
+    local __doc__="Run ipython with tab title"
+    local me=$USER 
+    local here_=$(jostname)
+    local options_=-noconfirm_exit
+    local _ipython=${IPYTHON:-ipython}
+    if [[ $($_ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
+        options_=--no-confirm-exit
+    fi
+    local profile_=$(ipython_profile $1)
+    [[ $profile_ ]] && shift
+    [[ $profile_ ]] || profile_=ipysyte
+    options_="--profile=$profile_ $options_"
+    console_title_on "${profile_}@${here_}" && \
+        $_ipython $options_ "$@" && \
+        console_title_off "${me}@${here_}"
+}
+
+ib () {
+    ip ibots
+}
+
+ic () {
+    ip company
+}
+
+ij () {
+    ip jalanb
+}
+
+iz () {
+    ip izatso
+}
+
+act () {
+    unhash_activate "$1" && return 0
+    local file_=$(venv_activator "$@")
+    [[ -f "$file_" ]] || ls $(readlink -f "$file_")
+    return 1
+}
+
 pym () {
     local args=("$@") quiet_=
     for i in "${!args[@]}"; do
         [[ ${args[$i]} == -q ]] && unset args[$i] && quiet_=1
     done
-    [[ $quiet_ ]] || show_command "python -m" "${args[@]}"
-    python -m "${args[@]}"
+    [[ $quiet_ ]] || show_command "$(_python_command) -m" "${args[@]}"
+    $(_python_command) -m "${args[@]}"
 }
 
 pmp () {
@@ -18,6 +72,17 @@ pmp () {
 
 ppd () {
     pip_install_develop "$@"
+}
+
+ppe () {
+    local dir_=$1 upgrade_=
+    [[ -d $dir_ ]] || dir_=.
+    (
+        [[ $dir_ == "." ]] || show_command cd "$dir_"
+        cd "$dir_"
+        Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
+        ppi $upgrade_ -e .
+    )
 }
 
 ppf () {
@@ -30,8 +95,8 @@ ppf () {
 
 ppi () {
     [[ $1 == install ]] && shift
-    show_command python3 -m pip install "$@"
-    pmp install "$@" | grep -v -e already | grep --color [un]*installed
+    show_command $(_python_command) -m pip install "$@"
+    pmp install "$@" 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
 }
 
 ppp () {
@@ -54,17 +119,6 @@ ppy () {
 
 # xxxx
 
-ppie () {
-    local dir_=$1 upgrade_=
-    [[ -d $dir_ ]] || dir_=.
-    (
-        [[ $dir_ == "." ]] || show_command cd "$dir_"
-        cd "$dir_"
-        Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
-        ppi $upgrade_ -e .
-    )
-}
-
 pipv () {
     local dir_=$PWD setup_py_= setup_cfg= requires_=
     [[ -d "$1" ]] && dir_="$1" && shift
@@ -82,23 +136,23 @@ venv () {
     local __doc__="""Activate a .venv (make it if needed)"""
     local dir_=.
     [[ -d "$1" ]] && dir_="$1"
-    local dir_venv_="$dir_/.venv"
-    if [[ -d "$dir_venv_" ]]; then
+    local venv_dir_="$dir_/.venv"
+    if [[ -d "$venv_dir_" ]]; then
         if [[ $1 =~ ^-(f|-force)$ ]]; then
-            show_command "rm -rf \"$dir_venv_\""
-            rm -rf "$dir_venv_" >/dev/null
+            show_command "rm -rf \"$venv_dir_\""
+            rm -rf "$venv_dir_" >/dev/null
         else
-            unhash_activate "$dir_venv_"
+            unhash_activate "$venv_dir_"
             ppp
             return 0
         fi
     fi
     [[ $VIRTUAL_ENV ]] && deactivate
-    hash -d python3 2>/dev/null
-    pym venv --copies "$dir_venv_"
-    unhash_activate "$dir_venv_"
-    show_command python3 -m ensurepip
-    pym ensurepip | grep -v -e Looking -e already | grep [un]*installed
+    hash -d python3 python 2>/dev/null
+    pym venv --copies "$venv_dir_"
+    unhash_activate "$venv_dir_"
+    show_command $(_python_command) -m ensurepip
+    pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
     ppu setuptools>=65.5.1 wheel pip
     install_requirements_at "$dir_" -p
 }
@@ -128,21 +182,74 @@ pip_install_develop () {
     ppie "$dir_"
 }
 
-unhash_activate () {
-    local dir_=.
-    [[ -d "$1" ]] && dir_="$1"
-    [[ -d "$dir_" ]] || return 1
-    unhash_deactivate
-    show_command "source \"$dir_/bin/activate\""
-    source "$dir_/bin/activate"
+show_python () {
+    show_data "python  is $(which python)"
     show_data "python3 is $(which python3)"
+}
+
+
+venv_activator () {
+    local venv_dir_=.
+    [[ -d "$1" ]] && venv_dir_="$1"
+    [[ -d "$1/.venv" ]] && venv_dir_="$1/.venv"
+    local file_="${venv_dir_}/bin/activate"
+    echo $file_
+    test -f $file_
+}
+
+unhash_activate () {
+    local file_=$(venv_activator "$@")
+    [[ -f "$file_" ]] || return 1
+    unhash_deactivate -q
+    show_command "source \"$file_\""
+    source "$file_"
+    which_python
 }
 
 unhash_deactivate () {
     local arg_=
+    QUIETLY type deactivate && deactivate
     for arg_ in python python2 python3 ipython ipython2 ipython3 pudb pudb3 pdb ipdb pip pip2 pip3; do
-        hash -d $arg_ 2>/dev/null
+        QUIETLY hash -d $arg_
     done
-    [[ $VIRTUAL_ENV ]] && deactivate
-    [[ $1 == -q ]] || show_data "python3 is $(which python3)"
+    [[ $1 == -q ]] || show_python
+}
+
+which_python () {
+    local __doc__="""Show the real paths to python, from which, python and readlink"""
+    local python_=${PYTHON:-python}
+    local exec_=$($python_ -c"import sys; print(sys.executable)")
+    local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
+    local rlf_=$(readlink -f $exec_)
+    local shown_=
+    if [[ $python_ =~ ^python3? ]]; then
+        local which_=$(which $python_)
+        if [[ $exec_ != $which_ ]]; then
+            show_data "   bash: $which_"
+            show_data " python: $exec_"
+            [[ $rlf_ == $exec_ ]] || show_data "   real: $rlf_"
+            shown_=1
+        fi
+    fi
+    if [[ ! $shown_ ]]; then
+        if [[ $rlf_ == $exec_ ]]; then
+            show_data " python: $exec_"
+        else
+            show_data " python: $exec_"
+            show_data "   real: $rlf_"
+        fi
+    fi
+    show_data "version: $version_"
+}
+
+ipython_profile () {
+    [[ $1 ]] || return 1
+    local profile_=
+    for profile_ in $(ipython profile list | grep '^    ' | grep -v = | sed -e "s,^ *,,") ; do
+        if [[ $profile_ =~ $1 ]]; then
+            echo $profile_
+            return 0
+        fi
+    done
+    return 2
 }
