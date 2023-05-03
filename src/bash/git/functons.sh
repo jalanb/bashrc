@@ -514,7 +514,7 @@ got () {
 }
 
 gpf () {
-    show_command "git push --force-with-lease $@"
+    show_command git push --force-with-lease "$@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
@@ -765,11 +765,11 @@ gtD () {
 }
 
 gtl () {
-    gt "$@"
-}
-
-gtl () {
-    gt --list "$@"
+    if [[ "$@" ]]; then 
+        gt --list | grep "$@"
+    else
+        gt --list
+    fi
 }
 
 gvd () {
@@ -1413,7 +1413,7 @@ grep_branch () {
         fi
         shift
     done
-    git branch $git_options_ | sed -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
+    git branch $git_options_ | sed -e "/HEAD/d" -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
 }
 
 show_git_time () {
@@ -1496,3 +1496,4 @@ log_test_file ()
 {
     grep_git_log_for_python_test_file 3
 }
+
