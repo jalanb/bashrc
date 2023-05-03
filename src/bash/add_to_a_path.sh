@@ -36,8 +36,6 @@ add_to_a_path () {
     fi
 }
 
-PYTHON=$(which python)
-
 add_to_PATH () {
     add_to_a_path PATH "$@"
 }
