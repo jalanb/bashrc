@@ -80,8 +80,8 @@ vt () {
 
 vu () {
     __doc__="Edit vim files in ~/jab. Add home vim files if different"
-    local _vimrc="~/jab/vim/vimrc"; diff -q ~/.vimrc $_vimrc || _vimrc="~/.vimrc $_vimrc"
-    local _vim="~/jab/vim/vimrc"; diff -qr ~/.vim $_vim >/dev/null || _vim="~/.vim $_vim"
+    local _vimrc="$HOME/jab/vim/vimrc"; diff -q $HOME/.vimrc $_vimrc || _vimrc="$HOME/.vimrc $_vimrc"
+    local _vim="$HOME/jab/vim/vimrc"; diff -qr $HOME/.vim $_vim >/dev/null || _vim="$HOME/.vim $_vim"
     v $_vimrc $_vim
 }
 
@@ -166,7 +166,7 @@ vdd () {
 #     "Maybe credit /r/vim collectively. That seems reasonably safe"
 
 ved () {
-    local """Use vim ex commands in a pipe editor"""
+    local __doc__="""Use vim ex commands in a pipe editor"""
     # echo "foo" | ved '%s,o,x,g' -> "fxx"
     [[ $* ]] || show_fail "Usage: ved <commands>" 
     [[ $* ]] || return 1
@@ -203,8 +203,7 @@ vss () {
 }
 
 vtt () {
-    local _crappy_program_py=$1
-    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
+    python "$1" | python ~/jab/src/python/vim_traceback.py -i
 }
 
 vvb () {
@@ -226,8 +225,10 @@ vvy () {
 
 vvu () {
     __doc__="Edit ~/jab/vim files and ~/vim files if different"
-    local _vimrc="$HOME/jab/vim/vimrc"; diff -q $HOME/.vimrc $_vimrc || _vimrc="$HOME/.vimrc $_vimrc"
-    local _vim="$HOME/jab/vim"; diff -qr $HOME/.vim $_vim >/dev/null || _vim="$HOME/.vim $_vim"
+    local _vimrc="$HOME/jab/vim/vimrc"
+    local _vim="$HOME/jab/vim"
+    diff -q $HOME/.vimrc $_vimrc || _vimrc="$HOME/.vimrc $_vimrc"
+    diff -qr $HOME/.vim $_vim >/dev/null || _vim="$HOME/.vim $_vim"
     vvv $_vimrc $_vim "$@"
 }
 
