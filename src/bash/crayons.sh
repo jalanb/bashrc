@@ -52,7 +52,7 @@ show_command () {
     unset args_[0]
     for arg_ in "${args_[@]}"; do
         [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
-        lgreen "$arg_ "
+        lblue "$arg_ "
     done
     echo ""
 }
