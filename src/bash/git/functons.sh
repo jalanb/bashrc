@@ -301,7 +301,14 @@ gds () {
 }
 
 gdv () {
-    gc "$@" dv
+    local dir_=.
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+    fi
+    [[ $1 ]] || return 1
+    (cd $dir_; [[ -f "$1" ]] || return 2)
+    gc "$dir_" dv "$1"
 }
 
 gfa () {
@@ -361,14 +368,18 @@ gl_ () {
         options_="-n $1"
         shift
     fi
-    if [[ $1 == "--oneline" ]]; then
-        options_="$options_ $1"
+    if [[ $1 =~ ^--* ]]; then
+        if [[ $1 =~ ^--since ]]; then
+            options_="$1"
+        else
+            options_="$options_ $1"
+        fi
         shift
     fi
     if [[ $1 ]]; then
-        if git branch | grep -q $1; then
-            shift
+        if git branch --all | grep -q $1; then
             options_="$options_ $1"
+            shift
         fi
     fi
     gc "$@" l $options_
@@ -1483,4 +1494,3 @@ log_test_file ()
 {
     grep_git_log_for_python_test_file 3
 }
-
