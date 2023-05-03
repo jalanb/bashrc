@@ -43,10 +43,14 @@ vg () {
     local user_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_=.git/config
     [[ -f $user_ ]] || user_=
     [[ -f $clone_ ]] || clone_=
+    local user_ignore_=$(readlink -f ~/.gitignore_global 2>/dev/null) clone_ignore_=.gitignore
+    [[ -f $user_ignore_ ]] || user_ignore_=
+    [[ -f $clone_ignore_ ]] || clone_ignore_=
+    local command_="vim -p $user_ $clone_ $user_ignore_ $clone_ignore_"
     if [[ $1 ]]; then
-        vim -p $user_ $clone_ +/"$1"
+        $command_ +/"$1"
     else
-        vim -p $user_ $clone_
+        $command_
     fi
 }
 
