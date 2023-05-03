@@ -950,10 +950,17 @@ whiches () {
 }
 
 umports () {
+    local old_venv_=$VIRTUAL_ENV
+    local pysyte_=$HOME/jalanb/pysyse/__main__
+    QUIETLY deactivate 
+    source $pysyte_/.venv/bin/activate
     for file in "$@"; do
         reorder-python-imports "$file"
-        python3 ~/jab/bin/imports -ume "$file"
+        python -m pysyte.imports -ume "$file"
     done
+    QUIETLY deactivate 
+    [[ $old_venv_ ]] || return 0
+    source $old_venv_/bin/activate
 }
 
 # xxxxxxxx
