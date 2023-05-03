@@ -564,12 +564,15 @@ dir_has_branch () {
 }
 
 main_branch () {
-    if grep_branch -q __main__; then
+    if grep_branch -r -q __main__; then
         echo __main__
         return 0
     fi
     if grep_branch -q master; then
         grep_branch master
+        return 0
+    elif grep_branch -r -q master; then
+        grep_branch -r master
         return 0
     fi
     return 1
