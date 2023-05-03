@@ -102,7 +102,7 @@ source_crayons () {
         [[ $colour == "black" ]] || crayon $colour
         crayon l$colour
         crayon ${colour}_line "$colour -l"
-        crayon l${colour}_line "$colour -l"
+        crayon l${colour}_line "l$colour -l"
     done
     . $crayons_
 }
