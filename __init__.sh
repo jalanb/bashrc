@@ -34,5 +34,7 @@ export WHYP_EDITOR=vv
 
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
 
-cde_activate_venv ~/jab/.venv
+activate_dir="$HOME/jab/.venv"
+[[ -d ".venv" ]] && activate_dir=".venv"
+cde_activate_venv $activate_dir
 ACTIVE_PYTHON=$(which python)
