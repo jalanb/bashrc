@@ -633,14 +633,31 @@ function! ReadTraceback(filename)
 endfunction
 " History {{{2
 set history=1000
-set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
 " Make Vim jump to the last position when reopening a file
     if has('autocmd')
       au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
 
 " for filename completion (with Tab) {{{2
-let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
+""""""""""""""""""""""""""""""
+" File explorer
+""""""""""""""""""""""""""""""
+"Split vertically
+let g:explVertical=1
+
+"Window size
+let g:explWinSize=35
+
+let g:explSplitLeft=1
+let g:explSplitBelow=1
+
+"Hide some files
+let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py[ceo]$,\~$,\.sw[p-z],\.DS_Store'
+
+"Hide the help thing..
+let g:explDetailedHelp=0
+
+
 let g:explVertical=1
 let g:explWinSize=1
 let g:explSplitRight=1
@@ -649,11 +666,11 @@ let g:explSortBy='date'
 
 let g:netrw_altv = 1
 let g:netrw_browse_split = 2
-let g:netrw_list_hide='^\.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[oce],\~\([^\i]\|$\)'
+let g:netrw_list_hide= '^ \.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[ceo],\.sw[p-z],\.DS_Store,\~\([^\i]\|$\)'
 let g:netrw_keepdir=0
 let g:netrw_banner = 0
 
-let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
+let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py[ceo]$,\.sw[p-z],\.DS_Store,\~$'
 let g:jabVertical=1
 let g:jabWinSize=1
 let g:jabSplitRight=1
