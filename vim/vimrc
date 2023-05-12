@@ -521,10 +521,10 @@ endif
 " Miscellaneous {{{1
 " Abbreviations {{{3
 " Ok, ok, so I have some spelling blind-spots {{{3
-abbreviate becuase because
-abbreviate lamda lambda
-abbreviate seperate separate
-cnoreabbrev H vert bo help
+ab becuase because
+ab lamda lambda
+ab seperate separate
+ca Help vert bo help
 " Some miscellaneous stuff from around the interwebs
 " Filetype {{{2
 autocmd FileType c,cpp,h,java set cindent
