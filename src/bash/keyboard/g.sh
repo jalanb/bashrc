@@ -6,9 +6,8 @@ g () {
 }
 
 gr () {
-    local grep_="$(which egrep) --color"
     if [[ "$@" ]]; then
-        $grep "$@" | cut_err  "Is a directory"
+        egrep --color "$@" | cut_err  "Is a directory"
     else
         show_command git pull -- rebase
         git pull -- rebase

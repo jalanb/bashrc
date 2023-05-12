@@ -57,5 +57,5 @@ Quietly () {
 }
 
 QUIETLY () {
-    Quietly $(quietly "$@")
+    Quietly quietly "$@"
 }
