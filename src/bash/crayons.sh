@@ -110,16 +110,8 @@ source_crayons () {
     for colour in red green blue cyan magenta yellow black white; do
         [[ $colour == "black" ]] || crayon $colour
         crayon l$colour
-<<<<<<< HEAD
-        crayon ${colour}_line "$colour -l"
-        crayon l${colour}_line "l$colour -l"
-||||||| parent of a64920a2 (Add function to draw coloured line)
-        crayon ${colour}_line "$colour -l"
-        crayon l${colour}_line "$colour -l"
-=======
         crayon_line ${colour}_line "$colour"
         crayon_line l${colour}_line "l$colour"
->>>>>>> a64920a2 (Add function to draw coloured line)
     done
     . $crayons_
 }

@@ -2,6 +2,7 @@
 
 # x
 # xx
+# xxx
 
 _python_command () {
     local __doc__="""Cpommand to be used in this script is python3, or can be over-written with $PYTHON"""
@@ -60,7 +61,7 @@ act () {
 pym () {
     local args=("$@") quiet_=
     for i in "${!args[@]}"; do
-        [[ ${args[$i]} == -q ]] && unset args[$i] && quiet_=1
+        [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
     done
     [[ $quiet_ ]] || show_command "$(_python_command) -m" "${args[@]}"
     $(_python_command) -m "${args[@]}"
@@ -86,7 +87,7 @@ ppe () {
 }
 
 ppf () {
-    if [[ -n "$@" ]]; then
+    if [[ "$@" ]]; then
         pmp freeze | grep "$@"
     else
         pmp freeze
@@ -114,8 +115,6 @@ ppu () {
 ppy () {
     pmp uninstall -y "$@"
 }
-
-# xxx
 
 # xxxx
 
@@ -160,9 +159,9 @@ venv () {
 install_requirements_at () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1"
-    [[ $2 == -p ]] || ppp
+    [[ $2 =~ -p ]] || ppp
     local requirement_file_= requirements_=
-    for requirement_file_ in requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
+    for requirement_file_ in requirements/devops.txt requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
         requirements_="$dir_/$requirement_file_"
         [[ -f "$requirements_" ]] || continue
         lblue_line Found requirements $requirements_
