@@ -1,28 +1,35 @@
 #! /bin/cat
 
-
-key_path () {
+keyboard_path () {
     echo ~/bash/keyboard/$1
 }
 
+key_exists () {
+    local script_=
+    for script_ in $(keyboard_path $1); do
+        quietly test -f "$script_" && return 0
+    done
+    return 5
+}
+
+path_to_key () {
+    local script_="${1%.sh}.sh"
+    echo $(keyboard_path $script_)
+}
+
+ls_path_to_key () {
+    quietly ls $(path_to_key $1)
+}
+
 echo_key () {
-    local files_=$(ls $(key_path $1) 2>/dev/null) || return 1
-    echo -n  $files_
+    [[ $1 ]] || return 4
+    local script_=$(path_to_key $1)
+    echo -n $script_
 }
 
 echo_keys () {
-    local arg_= args_="$@"
-    [[ ! "$@" ]] && echo_key || for arg_ in "$args_"; do echo_key $arg_; done
-    echo
-}
-
-is_key_script () {
-    [[ -f $(echo_keys $1) ]]
-}
-
-key_script () {
-    is_key_script $1 || return 1
-    echo_keys $1
+    [[ $@ ]] || return 0
+    for arg_ in "$@"; do echo_key $arg_; done
 }
 
 key_scripts () {
@@ -30,18 +37,16 @@ key_scripts () {
 }
 
 key_init () {
-    echo $(key_path __init__.sh)
+    path_to_key __init__
 }
 
 same_path () {
+    [[ $2 ]] || return 4
+    [[ $1 ]] || return 8
     [[ $(readlink -f "$1") == $(readlink -f "$2") ]]
 }
 
-is_init () {
-    same_path "$1" $(key_init)
-}
-
-write_keys () {
+keys_write () {
     local init_=$(key_init)
     echo "#! /usr/bin/env bat -l bash" > $init_
     for script_ in $(key_scripts); do
@@ -49,20 +54,20 @@ write_keys () {
     done
 }
 
-read_keys () {
-    write_keys
+keys_read () {
+    keys_write
     . $(key_init)
 }
 
 vim_keys () {
     local init_=$(key_init) files_=
     if [[ ! "$@" ]]; then
-        files_="$(echo_keys '[a-z12].sh')"
+        files_="$(key_scripts)"
         vv $files_
         return
     fi
     local option_= path_= file_=
-    dir_=$(key_path)
+    dir_=$(keyboard_path)
     for option_ in "$@"; do
         path_=$dir_/$option_
         [[ -f ${path_} ]] && file_=${path_}
@@ -70,8 +75,9 @@ vim_keys () {
         [[ -f $file_ ]] && files_="$files_ $file_"
         file_=
     done
+    [[ $files_ ]] || return 6
     vim -p $files_
-    read_keys
+    keys_read
 }
 
 read_keys
