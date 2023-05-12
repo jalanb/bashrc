@@ -28,10 +28,10 @@ __version__=0.8.69
 . ~/bash/rf.sh
 # echo $HOME/bash/work
 . ~/bash/work.sh
-# echo $HOME/bash/keys
-. ~/bash/keys.sh
 # echo $HOME/bash/git
 . ~/bash/git/__init__.sh
+# echo $HOME/bash/keys
+. ~/bash/keys.sh
 
 # echo $HOME/bash/keys_read
 keys_read
