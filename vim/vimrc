@@ -28,9 +28,12 @@ nnoremap <S-F5>     <C-W>=
 
 " ordinary keys {{{2
 " number row {{{3
-"noremap <bs>
+"noremap <bs> BackSpace
+nnoremap <bs>= I    <esc>j
+nnoremap <bs>- 04xk
 "noremap =
 "noremap -
+"noremap ;
 "noremap
 "noremap 9
 "noremap 8
@@ -86,11 +89,18 @@ nnoremap nn nzvzz
 "noremap o - open new line
 "noremap p - paste
 nnoremap q :q<cr>
+nnoremap qa :qa<cr>
+nnoremap qe :w!<cr>:q!<cr>
+nnoremap qs :q
+nnoremap qq :q<cr>
+nnoremap qw :w<cr>:q<cr>
+nnoremap qz :qa!<cr>
 "noremap r - change one char
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 noremap tf :tabnew ~/tmp/fred.txt
-noremap tn :tabprev<cr>:tabnew<Space>
+noremap tn :tabnew<Space>
+noremap tp :tabprev<cr>:tabnew<Space>
 noremap tv :tabprev<cr>:tabnew ~/.vimrc<cr>
 nnoremap tq <esc>;iq<CR>
 nnoremap ttq <esc>;iqa!<CR>
@@ -214,6 +224,8 @@ nnoremap <right>            *zv
 "
 nnoremap <s-left>           gT
 nnoremap <s-right>          gt
+inoremap <s-left>           <esc>gT
+inoremap <s-right>          <esc>gt
 
 " Other Control Keys {{{2
 nnoremap    <C-d> :qa<CR>
