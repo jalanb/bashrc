@@ -1,9 +1,23 @@
 #!/usr/bin/env python3
+import sys
 
 import json
 import sys
 import yaml
 
-print('---')
-print()
-print(yaml.dump(json.loads(str(sys.stdin.read())), default_flow_style=False))
+def main():
+    print('---')
+    print()
+    print(
+        yaml.dump(
+            json.loads(
+                str(
+                    sys.stdin.read()
+                )
+            ),
+            default_flow_style=False
+        )
+    )
+
+if __name__ == "__main__":
+    sys.exit(main() and 0 or 1)
