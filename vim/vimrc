@@ -352,10 +352,6 @@ endif
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Plugins {{{1
-" Vim-plug {{{2
-call plug#begin()
-Plug '/opt/homebrew/opt/fzf'
-call plug#end()
 " Pathogen {{{2
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)

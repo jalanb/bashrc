@@ -69,12 +69,19 @@ vl () {
 # vn
 # vo
 vp () {
-    _edit_source ~/bash/prompt.sh +/^_colour_prompt
+    _edit_source ~/bash/prompt.sh +/^colour_prompt "$@"
 }
 
 # vq
 # vr
-# vs
+vs () {
+    vv "$@"
+    local arg_=
+    for arg_ in "$@"; do
+        [[ -f "$arg_" ]] || continue
+        . "$arg_"
+    done
+}
 
 vt () {
     python ~/jab/src/python/vim_traceback.py "$@"

@@ -3,10 +3,7 @@
 # x
 
 r () {
-    local command_="ranger ."
-    [[ "$@" ]] && command_="rr -vrf ""$@"
-    show_command $command_
-    $command_
+    [[ "$@" ]] && show_run_command rm -vrf "$@" || ranger .
 }
 
 # xx

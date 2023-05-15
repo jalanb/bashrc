@@ -1,5 +1,8 @@
 #! /bin/cat -n
 
+[[ $SOURCED_CRAYONS ]] || source  ~/bash/crayons.sh.sh
+declare | grep -q "^git_root" || source ~/bash/git/functons.sh
+
 export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
@@ -34,63 +37,66 @@ get_git_status() {
     return 0
 }
 
-_rgb () {
-    local one_="$1"; shift
-    local light_=NIGHT_ no_colour_="\033[0m"
+upper () {
+    echo "$@" | tr '[:lower:]' '[:upper:]'
+}
+
+pro_rgb () {
+    local no_colour_="\033[0m"
     local regexp_="red|green|blue|cyan|magenta|yellow"
-    local hue_=$one_
-    if [[ "$one_" =~ ^l_ ]]; then
+    local hue_="$1"; shift
+    local light_=NIGHT_ 
+    if [[ "$hue_" =~ ^l_ ]]; then
         light_="LIGHT_"
         [[ $one_ =~ l_$regexp_ ]] && hue_=${one_/l_/}
     fi
     local var_=
     if [[ $hue_ =~ $regexp_ ]]; then
-        [[ $hue_ == red ]] && var_="${light_}RED"
-        [[ $hue_ == green ]] && var_="${light_}GREEN"
-        [[ $hue_ == blue ]] && var_="${light_}BLUE"
-        [[ $hue_ == cyan ]] && var_="${light_}CYAN"
-        [[ $hue_ == magenta ]] && var_="${light_}MAGENTA"
-        [[ $hue_ == yellow ]] && var_="${light_}YELLOW"
+        for rgb_ in red green blue cyan magenta yellow; do
+            RGB_=$(upper $rgb_)
+            [[ $hue_ == $rgb_ ]] && HUE_="${light_}${RGB_}"
+        done
     fi
-    local hues_=${!var_}
-    echo -n "$hues_""$@""$no_colour_"
+    local hue_=${!HUE_}
+    echo -n "$hue_""$@""$no_colour_"
 }
 
 emoji_error () {
     if [[ $1 == 0 ]]; then
         echo "😎 "
     else
-        local _faces=(👿 👎 💀 👻 💩 😢 😥 😰 😮 😫 😲 ☹️  😤 😭 😦 😧 😨 😩 🤯 😬 😱 🥵 🥶 😳 🤢 🤮 🤨 😐 😑 )
-        echo "${_faces[$1]} "
+        local faces_=(👿 👎 💀 👻 💩 😢 😥 😰 😮 😫 😲 ☹️  😤 😭 😦 😧 😨 😩 🤯 😬 😱 🥵 🥶 😳 🤢 🤮 🤨 😐 😑 )
+        echo "${faces_[$1]} "
     fi
 }
 
-_colour_prompt () {
+colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    printf "\n$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
-    #printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
+    printf "\n$(emoji_error $1) $(red_date) $(green_python) $(lblue_pwd_git)\n$ "
+    #printf "$(emoji_error $1) $(lblue_date) $(blue_user):$(lblue_pwd_git) $(green_python)\n\[$(iterm2_prompt_mark)\]$ "
 }
 
 path_to_venv () {
     env | grep VIRTUAL_ENV= | cut -d= -f2
 }
 
-venv_name () {
-    local _path_to_venv=$(path_to_venv)
-    [[ -e $_path_to_venv ]] || return 1
-    local _venv_name=$(basename "$_path_to_venv")
-    if [[ $_venv_name == ".venv" ]]; then
-        local _parent=$(dirname $_path_to_venv)
-        local _parent_name=$(basename $_parent)
-        _venv_name=$_parent_name
+lgreen_venv_name () {
+    local path_to_venv_=$(path_to_venv)
+    [[ -e $path_to_venv_ ]] || return 1
+    local venv_name_=$(basename "$path_to_venv_")
+    if [[ $venv_name_ == ".venv" ]]; then
+        local parent_=$(dirname $path_to_venv_)
+        local parent_name_=$(basename $parent_)
+        venv_name_=$parent_name_
     fi
-    echo $(lred "${venv_name_/./}")
+    local lgreen_python_=$(lgreen "${venv_name_/./}")
+    echo $lgreen_python_
 }
 
-blue_date () {
-    local colour_day_=$(blue $(date +'%A'))
-    local colour_date_=$(lblue $(date +' %F %H:%M'))
-    echo $colour_day_ $colour_date_
+red_date () {
+    local red_day_=$(red $(date +'%A'))
+    local red_date_=$(lred $(date +' %F %H:%M'))
+    echo $red_day_ $red_date_
 }
 
 short_pwd () {
@@ -98,15 +104,25 @@ short_pwd () {
     PYTHONPATH="$main_dir_" "$main_dir_/bin/short_dir" "$PWD" 2> /dev/null
 }
 
-blue_pwd_git () {
-    local _branch_name="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local _version=
-    if [[ $_branch_name ]]; then
-        local _bump_version="v$(bump get)"
-        [[ $_bump_version == v ]] && _bump_version=
-        _version=", $_branch_name $_bump_version"
+LBLUE_RLF=$(readlink -f .)
+
+lblue_pwd_git () {
+    local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    local version_=
+    if [[ $branch_name_ ]]; then
+        local bump_version_="v$(bump get)"
+        [[ $bump_version_ == v ]] && bump_version_=
+        version_=", $branch_name_ $bump_version_"
     fi
+    # echo "LBLUE_RLF == '$LBLUE_RLF'"
     local pwd_="$(short_pwd)"
+    # echo "pwd_ == '$pwd_'"
+    local lblue_rlf_="$(readlink -f .)"
+    [[ $lblue_rlf_ == $LBLUE_RLF ]] && || pwd_="$lblue_rlf_"
+    # echo "pwd_ == '$pwd_'"
+    [[ $LBLUE_RLF == "$pwd_" ]] || LBLUE_RLF="$pwd_"
+    # echo "LBLUE_RLF == '$LBLUE_RLF'"
+    export LBLUE_RLF
     [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
     local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2," -e "s,[.]git$,,")
     [[ $project_ ]] && pwd_="${project_}:${pwd_}"
@@ -115,30 +131,37 @@ blue_pwd_git () {
 
 blue_user () {
     local user_=$(whoami)
-    local hostname_=$(hostname -s)
-    local hue_user_=$(blue ${user_:$USER})
-    local hue_host_=$(blue ${hostname_:-$HOSTNAME})
-    echo "${hue_user_}@$hue_host_"
+    local blue_user_=$(blue ${user_:$USER})
+    # echo "${lblue_user_}@$(lblue_host)"
+    echo "${blue_user_}"
 }
 
-red_python () {
-    local _virtual_env_name=
-    local _virtual_env_root=$(env | grep VIRTUAL_ENV | cut -d= -f2)
-    [[ $_virtual_env_root ]] && _virtual_env_name=$(basename "$_virtual_env_root")
-    if [[ $_virtual_env_name == ".venv" ]]; then
-        local _virtual_env_directory=$(dirname $_virtual_env_root)
-        _virtual_env_name=$(basename "$_virtual_env_directory")
+lblue_host () {
+    local hostname_=$(hostname -s)
+    local lblue_host_=$(lblue ${hostname_:-$HOSTNAME})
+    echo "$lblue_host_"
+}
+
+green_python () {
+    local virtual_env_name_=
+    [[ $VIRTUAL_ENV ]] && virtual_env_name_=$(basename "$VIRTUAL_ENV")
+    if [[ $virtual_env_name_ == ".venv" ]]; then
+        local virtual_env_directory_=$(dirname $VIRTUAL_ENV)
+        virtual_env_name_=$(basename "$virtual_env_directory_")
     fi
 
-    if [[ ! $_colour_venv ]]; then
-        echo $_colour_python
+    local python_version_=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
+    local green_python_=$(green "${python_version_}")
+    local green_venv_=$(lgreen_venv_name)
+    if [[ ! $green_venv_ ]]; then
+        echo $green_python_
         return 0
     fi
-    local _path_to_venv=$(path_to_venv)
-    local _join='/'
-    [[ $_path_to_venv =~ ~ ]] && _join='~'
-    [[ $_path_to_venv =~ ^[.] ]] && _join='.'
-    echo "${_colour_python}${_join}${_colour_venv}"
+    local path_to_venv_=$(path_to_venv)
+    local join_='/'
+    [[ $path_to_venv_ =~ ~ ]] && join_='~'
+    [[ $path_to_venv_ =~ ^[.] ]] && join_='.'
+    echo "${green_python_}${join_}${green_venv_}"
 }
 
 set_status_bit () {
