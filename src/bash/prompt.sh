@@ -61,7 +61,7 @@ pro_rgb () {
     echo -n "$hue_""$@""$no_colour_"
 }
 
-emoji_error () {
+emoji_errors () {
     if [[ $1 == 0 ]]; then
         echo "😎 "
     else
@@ -70,10 +70,10 @@ emoji_error () {
     fi
 }
 
-colour_prompt () {
-    local __doc__="""Use a coloured prompt with helpful info"""
-    printf "\n$(emoji_error $1) $(red_date) $(green_python) $(lblue_pwd_git)\n$ "
-    #printf "$(emoji_error $1) $(lblue_date) $(blue_user):$(lblue_pwd_git) $(green_python)\n\[$(iterm2_prompt_mark)\]$ "
+red_date () {
+    local red_day_=$(red $(date +'%A'))
+    local red_date_=$(lred $(date +' %F %H:%M'))
+    echo $red_day_ $red_date_
 }
 
 path_to_venv () {
@@ -91,55 +91,6 @@ lgreen_venv_name () {
     fi
     local lgreen_python_=$(lgreen "${venv_name_/./}")
     echo $lgreen_python_
-}
-
-red_date () {
-    local red_day_=$(red $(date +'%A'))
-    local red_date_=$(lred $(date +' %F %H:%M'))
-    echo $red_day_ $red_date_
-}
-
-short_pwd () {
-    local main_dir_="$HOME/pysyse/__main__"
-    PYTHONPATH="$main_dir_" "$main_dir_/bin/short_dir" "$PWD" 2> /dev/null
-}
-
-LBLUE_RLF=$(readlink -f .)
-
-lblue_pwd_git () {
-    local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local version_=
-    if [[ $branch_name_ ]]; then
-        local bump_version_="v$(bump get)"
-        [[ $bump_version_ == v ]] && bump_version_=
-        version_=", $branch_name_ $bump_version_"
-    fi
-    # echo "LBLUE_RLF == '$LBLUE_RLF'"
-    local pwd_="$(short_pwd)"
-    # echo "pwd_ == '$pwd_'"
-    local lblue_rlf_="$(readlink -f .)"
-    [[ $lblue_rlf_ == $LBLUE_RLF ]] && || pwd_="$lblue_rlf_"
-    # echo "pwd_ == '$pwd_'"
-    [[ $LBLUE_RLF == "$pwd_" ]] || LBLUE_RLF="$pwd_"
-    # echo "LBLUE_RLF == '$LBLUE_RLF'"
-    export LBLUE_RLF
-    [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
-    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2," -e "s,[.]git$,,")
-    [[ $project_ ]] && pwd_="${project_}:${pwd_}"
-    echo $(lblue "${pwd_}${version_}")
-}
-
-blue_user () {
-    local user_=$(whoami)
-    local blue_user_=$(blue ${user_:$USER})
-    # echo "${lblue_user_}@$(lblue_host)"
-    echo "${blue_user_}"
-}
-
-lblue_host () {
-    local hostname_=$(hostname -s)
-    local lblue_host_=$(lblue ${hostname_:-$HOSTNAME})
-    echo "$lblue_host_"
 }
 
 green_python () {
@@ -162,6 +113,55 @@ green_python () {
     [[ $path_to_venv_ =~ ~ ]] && join_='~'
     [[ $path_to_venv_ =~ ^[.] ]] && join_='.'
     echo "${green_python_}${join_}${green_venv_}"
+}
+
+short_pwd () {
+    echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
+}
+
+LBLUE_RLF=$(readlink -f .)
+
+lblue_dir () {
+    local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    local version_=
+    if [[ $branch_name_ ]]; then
+        local bump_version_="v$(bump get)"
+        [[ $bump_version_ == v ]] && bump_version_=
+        version_=", $branch_name_ $bump_version_"
+    fi
+    # echo "LBLUE_RLF == '$LBLUE_RLF'"
+    local pwd_="$(short_pwd)"
+    # echo "pwd_ == '$pwd_'"
+    local lblue_rlf_="$(readlink -f .)"
+    [[ $lblue_rlf_ == $LBLUE_RLF ]] || pwd_="$lblue_rlf_"
+    # echo "pwd_ == '$pwd_'"
+    [[ $LBLUE_RLF == "$pwd_" ]] || LBLUE_RLF="$pwd_"
+    # echo "LBLUE_RLF == '$LBLUE_RLF'"
+    export LBLUE_RLF
+    [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
+    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z.-]*\)[/]\([A-Za-z.-]*\).git,\1/\2.git,")
+    [[ $project_ ]] && pwd_="${project_}:${pwd_}"
+    lblue "${pwd_}${version_}"
+}
+
+colour_prompt () {
+    local __doc__="""Use a coloured prompt with helpful info"""
+    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(lblue_dir)\n $ "
+}
+
+LBLUE_RLF=$(readlink -f .)
+
+blue_user () {
+    local user_=$(whoami)
+    local blue_user_=$(blue ${user_:$USER})
+    # echo "${lblue_user_}@$(lblue_host)"
+    echo "${blue_user_}"
+}
+
+lblue_host () {
+    local hostname_=$(hostname -s)
+    local lblue_host_=$(lblue ${hostname_:-$HOSTNAME})
+    echo "$lblue_host_"
 }
 
 set_status_bit () {
