@@ -34,6 +34,10 @@ grv () {
     gr -v "$@"
 }
 
+grbp () {
+    local __doc__"""coulded grep"""
+}
+
 gree () {
     local options_= arg_= list_=
     local paths_=

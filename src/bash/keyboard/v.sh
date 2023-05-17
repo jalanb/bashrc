@@ -41,8 +41,8 @@ vf () {
 }
 
 vg () {
-    local user_config_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_config_=.git/config
-    local user_ignore_=$(readlink -f ~/.gitignore_global 2>/dev/null) clone_ignore_=.gitignore
+    local user_config_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_config_="$(get_root)/.git/config"
+    local user_ignore_=$(readlink -f ~/.gitignore_global 2>/dev/null) clone_ignore_="$(get_root)/.gitignore"
     [[ -f $user_config_ ]] || user_config_=
     [[ -f $clone_config_ ]] || clone_config_=
     [[ -f $user_ignore_ ]] || user_ignore_=
