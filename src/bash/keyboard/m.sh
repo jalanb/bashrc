@@ -8,6 +8,10 @@ alias m=echo
 # _x
 # xx
 
+man () {
+    batman "$@"
+}
+
 md () {
     mkdir -p "$@" 2>/dev/null
 }
