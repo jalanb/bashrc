@@ -9,8 +9,8 @@ gr () {
     if [[ "$@" ]]; then
         egrep --color "$@" | cut_err  "Is a directory"
     else
-        show_command git pull -- rebase
-        git pull -- rebase
+        show_command git pull --rebase
+        git pull --rebase
     fi
 }
 

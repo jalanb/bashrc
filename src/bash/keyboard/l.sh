@@ -31,8 +31,15 @@ lg () {
 }
 
 lf () {
-  l fred* 2>&1 | grep -q "No such" && echo "fredless" >&2 
-  fdf fred
+    local one_= file_=
+    for one_ in "$@"; do
+        test -f $one_ || continue
+        $file_ ="$one_"
+        rlf "$file_"
+    done
+    [[ $file_ ]] && return 0
+    rlf fred* 2>&1 | grep -q "No such" && echo "fredless" >&2 
+    return 1
 }
 
 lh () {
@@ -44,8 +51,7 @@ lk () {
 }
 
 ll () {
-    local dir_option_=-a path_="$1"
-    shift
+    local dir_option_=-a path_=
     for path_ in "$@"; do
         dir_option_=-a
         test -e $path_ || continue

@@ -8,16 +8,18 @@ alias m=echo
 # _x
 # xx
 
-man () {
-    batman "$@"
-}
-
 md () {
     mkdir -p "$@" 2>/dev/null
 }
 
 man () {
     batman "$@"
+}
+
+min () {
+    local min_=~/jab/bash/bashrc_minimal
+    vim $min_
+    . $min_
 }
 
 mkd () {

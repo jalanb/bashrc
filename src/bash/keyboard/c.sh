@@ -19,6 +19,13 @@ cc () {
     cde $CDE.sh
 }
 
+cd () {
+       command cd "$@"
+    (set -x
+       cde --add .
+    )
+}
+
 cg () {
     local _where=.
     [[ "$*" ]] && _where="$@"
