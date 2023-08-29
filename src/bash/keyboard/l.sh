@@ -61,6 +61,9 @@ ll () {
         l -l $dir_option_ "$path_"
         [[ "$dir_option_" =~ [-]d ]] && dir_option_=-a
     done
+    [[ $path_ ]] && return 0
+    l -l ./
+
 }
 
 lo () {
