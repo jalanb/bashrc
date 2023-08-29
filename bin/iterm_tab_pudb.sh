@@ -1,8 +1,17 @@
 #! /bin/bash
  
-freds=$(fd -e py fred .)
-$freds="$freds $(fd -e py fred ~/tmp)"
-[[ $freds ]] || freds=$(fd -e py fred /tmp)
+quietly () {
+    "$@" 2>/dev/null
+}
+
+find_freds () {
+    quietly fd -e py fred "$1"
+}
+
+for dir in "." "~/tmp" "/tmp"; do
+    freds=$(find_freds $dir )
+    [[ $freds ]] && break
+done
 
 for fred in $freds; do
     pudb $fred
