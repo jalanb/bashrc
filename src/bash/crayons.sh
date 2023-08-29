@@ -37,18 +37,27 @@ rgb () {
     fi
 }
 
-show_error () {
+show_data () {
+    lblue_line "$@"
+}
+
+show_fail () {
     red_line "$@" >&2
     return 1
+}
+
+show_pass () {
+    lgreen_line "$@"
+    return 0
+}
+
+show_error () {
+    show_fail "$@"
 }
 
 # xxxxxxxxxxx
 
 # xxxxxxxxxxxx
-
-show_data () {
-    lblue_line "$@"
-}
 
 show_command () {
     local arg_= args_=("$@")
@@ -61,9 +70,6 @@ show_command () {
     echo ""
 }
 
-alias show_fail=show_error
-alias show_pass=green_line
-alias show_cmnd=blue_line
 
 rgb_line () {
     rgb "$@" "\n"
@@ -71,7 +77,7 @@ rgb_line () {
 
 show_run_command () {
     show_command "$@"
-    printf
+    echo
     "$@" > ~/fd1 2> ~/fd2
     if test -s ~/fd1; then
         local text_=
@@ -79,7 +85,7 @@ show_run_command () {
         else lblue_line $(cat ~/fd1)
     fi
     if test -s ~/fd2; then
-        red_line $(cat ~/fd2)
+        show_fail $(cat ~/fd2)
     fi
 }
 
