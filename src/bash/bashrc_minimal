@@ -1,0 +1,56 @@
+# This file is sourced early from ~/.bashrc
+
+# It contains simplified version of my essential commands
+#     so that I can work easier even if ~/.bashrc failed
+
+SOURCE_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
+source "${SOURCE_DIR}/quietly.sh"
+
+from () {
+    local source_="$1"
+    local import_=$2
+    local type_=$3
+    qt "$type_" && return 0
+    test -f "$source_" || return 2
+    source "$source_"
+}
+
+import_essentials () {
+    from ~/cde.sh import cde
+    from ~/whyp.sh import whyp
+    from ~/bash/keys import read_keys
+    read_keys
+}
+
+quietly import_essentials
+
+g () {
+    git "$@"
+    echo "# MINIMAL $ git ""$@" >&2
+}
+
+gr () {
+    grep --color "$@"
+    echo "# MINIMAL $ grep --color ""$@" >&2
+}
+
+ht () {
+    history | tail -n 30
+    echo "# MINIMAL $ history | tail -n 30" >&2
+}
+
+ll () {
+    ls -l "$@"
+    echo "# MINIMAL $ ls -l""$@" >&2
+}
+
+vd () {
+    vim -dO "$@"
+    echo "# MINIMAL $ vim - dO ""$@" >&2
+}
+
+
+vv () {
+    vim -p "$@"
+    echo "# MINIMAL $ vim -p " "$@">&2
+}

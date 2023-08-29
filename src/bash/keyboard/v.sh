@@ -122,21 +122,6 @@ vat () {
     vimcat "$@"
 }
 
-
-vbb () {
-    (
-        set -x
-        cd ~/jalanb/jab
-        local local_=local/__init__.sh
-        [[ -f $local_ ]] || local_=
-        local bashrc_log=$HOME/log/bashrc.log
-        test -f bashrc_log || bashrc_log=
-        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc $bashrc_log"
-        vim -p $files_ "$@"
-        readlink -f $files_
-    )
-}
-
 vd1 () {
     vd ~/one "$@"
 }
