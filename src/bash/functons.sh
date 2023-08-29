@@ -862,10 +862,9 @@ pysyon () {
 }
 
 please () {
-    local _command=$(history -p !-1)
-    [[ "$@" ]] && _command="$@"
-    show_command "$ sudo $_command"
-    sudo $_command
+    local command_=$(history -p !-1)
+    [[ "$@" ]] && command_="$@"
+    show_run_command sudo $command_
 }
 
 qwerty  () {
