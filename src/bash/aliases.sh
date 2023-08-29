@@ -79,7 +79,8 @@ alias gti=git
 alias jab=j
 alias jlf="sst jlfieblu jlf.ie"
 
-alias out="to_release"
+alias man=batman
+alias out=to_release
 
 alias sle="whyp_source ~/jalanb/local/environ.sh optional"
 alias slp="whyp_source ~/jalanb/local/prompt optional"
