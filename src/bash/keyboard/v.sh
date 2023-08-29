@@ -211,7 +211,13 @@ vtc () {
 }
 
 vss () {
-    vim -p ~/.ssh/config ~/.ssh/keys/config ~/.ssh/macs ~/.ssh/ab13173
+    local files_= file_=
+    for file_ in ~/.ssh/config ~/.ssh/keys/config ~/.ssh/macs ~/.ssh/ab13173 ~/.ssh/jab; do
+        [[ -f $file_ ]] || continue
+        files_="$files_ $file_"
+    done
+    show_command vim -p $files_
+    vim -p $files_
 }
 
 vtt () {
