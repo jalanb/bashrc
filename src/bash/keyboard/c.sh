@@ -20,10 +20,8 @@ cc () {
 }
 
 cd () {
-       command cd "$@"
-    (set -x
-       cde --add .
-    )
+    QUIETLY command cd "$@"
+    cde --QUIETLY --add .
 }
 
 cg () {
@@ -121,10 +119,10 @@ clean () {
 cclot () {
     local lots_=$1
     local arg_=$2
-    local i_=$3 name_=$4 arg_=$5 
+    local i_=$3 name_=$4 arg_=$5
     local i_=$2 name_=$3
     [[ $lot_ =~ (-$i_|--$name_) ]]
-    [[ $arg_ ]] && echo "lots=${lots}$arg_" 
+    [[ $arg_ ]] && echo "lots=${lots}$arg_"
 }
 
 clean_clear_ls () {
