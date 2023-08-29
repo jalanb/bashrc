@@ -63,6 +63,13 @@ rfq () {
 }
 
 rlf () {
+    local one_=
+    for one_ in "$@"; do
+        rlf_ "$one_"
+    done
+}
+
+rlf_ () {
     local path_=. rlf_path_= suffix_=
     [[ $1 ]] && path_="$1"
     [[ $path_ ]] || return 1
@@ -72,7 +79,7 @@ rlf () {
         return 0
     fi
     [[ $rlf_path_ ]] && path_=$rlf_path_
-    echo "$path_  # does not exist"
+    show_fail "# '$path_' does not exist" >&2
     return 1
 }
 
@@ -83,6 +90,10 @@ rlg () {
 rlo () {
     rlg "$@"
     lo -tr "$@"
+}
+
+rlq () {
+    quietly rlf "$@"
 }
 
 rr. () {
