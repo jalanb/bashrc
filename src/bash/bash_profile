@@ -1,12 +1,10 @@
-# .bash_profile
+#! /usr/bin/env bat
 
-# echo "Welcome to ~/.bash_profile"
 
-echo BASH PROFILE
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 [[ -e ~/.bashrc ]] && source ~/.bashrc
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-echo BASH PROFILE
-TWILIO_AC_BASH_SETUP_PATH=/Users/jab/.twilio-cli/autocomplete/bash_setup && test -f $TWILIO_AC_BASH_SETUP_PATH && source $TWILIO_AC_BASH_SETUP_PATH; # twilio autocomplete setup
+# test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+green_line 
