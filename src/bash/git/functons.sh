@@ -144,11 +144,14 @@ gs () {
 }
 
 gt () {
-    local tag_=
-    for tag_ in "$@"; do
-        git tag $tag_
-    done
-    [[ $tag_ ]] || git tag | sort
+    if [[ $* ]]; then
+        local tag_=
+        for tag_ in "$@"; do
+            git tag $tag_
+        done
+    else
+        git tag | sort
+    fi
 }
 
 gw () {
