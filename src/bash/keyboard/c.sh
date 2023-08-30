@@ -20,8 +20,9 @@ cc () {
 }
 
 cd () {
-    QUIETLY command cd "$@"
-    cde --QUIETLY --add .
+    command cd "$@" || return 1
+    local cde_=/opt/clones/github/jalanb/cde
+    PYTHONPATH=$cde_ $cde_/.venv/bin/python3 -m cde --QUIETLY --add .
 }
 
 cg () {
