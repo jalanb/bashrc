@@ -722,12 +722,14 @@ grs () {
 }
 
 gru () {
-    local options_= quiet_=
-    [[ -d $1 ]] && options_="-C $1" && shift
-    [[ $1 =~ [-]q ]] && quiet_=1
-    local git_command_="git $options_ remote get-url origin"
-    [[ $quiet_ ]] || show_command $git_command_
-    $git_command_
+    local c_= quiet_= arg_=
+    for arg_ in "$@"; do
+        [[ -d "$arg_" ]] && c_="-C ""$arg_"
+        [[ $arg_ =~ [-]q ]] && quiet_=1
+    done
+    local args_="$c_ remote get-url origin"
+    [[ $quiet_ ]] || show_command git $args_
+    git $args_
 }
 
 gsa () {
