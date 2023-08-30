@@ -14,7 +14,7 @@ nnoremap tt :Try<cr>
 nnoremap tm :MashTry<cr>
 nnoremap <S-F9> :call WritePEP()<cr>
 nnoremap <leader><space> :%s/\s\+$//<cr>
-nnoremap <leader>8   call matchadd('ColorColumn', '\(\%80v\|88v\|\%100v\)', 100)
+nnoremap <leader>8   call matchadd('ColorColumn', '\(\%80v\|%88v\|\%100v\)', 100)
 nnoremap <leader>c   ?^\s*class \zs\i<cr>*
 nnoremap <leader>d   ?^\s*def \i\+\zs.*<cr>*zv
 nnoremap <leader>e   ?^\s*def \zs\i<cr>*#zv

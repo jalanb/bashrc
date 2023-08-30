@@ -1,6 +1,7 @@
-#! /bin/cat
+#! /usr/bin/env bat -l bash
 
 . ~/jab/src/bash/queue.sh
+. ~/jab/src/bash/quietly.sh
 
 # quit may be defined in queue.sh
 # x
@@ -14,25 +15,11 @@ alias Q="exit 0"
 
 # xx
 
-qq () {
-    "$@" 2>&1
+qg () {
+    qq g "$@"
 }
 
-#
-# xxx
-# xxxx
-# xxxxx
-# xxxxxx
-# xxxxxxx
-
-quietly () {
-    "$@" 2>/dev/null
+qr () {
+    qq gr "$@"
 }
 
-Quietly () {
-    "$@" >/dev/null
-}
-
-QUIETLY () {
-    quietly "$@" >/dev/null
-}

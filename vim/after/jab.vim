@@ -54,6 +54,32 @@ function AtEnd()
     return 0
 endfunction
 
+" function TabNew(c1) abort
+"   echo ':tabnew '
+"   let now = reltime()
+"   while reltimefloat(reltime(now)) < &timeoutlen / 1000.0
+"     " See if the user has typed another character
+"     let c2 = getchar(0)
+" 
+"     if c2 != 0
+"       echo " The user typed something. Is it a path, yet?"
+"       if c2 == char2nr(a:c1)
+"         echo " path matches an open tab, switch to that"
+"         " call feedkeys(a:c1 == 'h' ? ":bp\<CR>" : ":bn\<CR>", 't')
+"       elif c2 == char2nr(a:c1)
+"         echo " path matches a known file, open that in new tab"
+"         " call feedkeys(a:c1 == 'h' ? ":bp\<CR>" : ":bn\<CR>", 't')
+"       else
+"         echo " The user typed something else. Switch tabs and replay what they typed"
+"         " call feedkeys((a:c1 == 'h' ? 'gT' : 'gt') . nr2char(c2), 't')
+"       endif
+"       return
+"     endif
+"   endwhile
+"     :tabprev
+"     :tabnew $1
+" endfunction
+
 " nnoremap <expr> h (AtStart() == 1) ? ':call FirstPress("h")<CR>' : 'h'
 " nnoremap <expr> l (AtEnd() == 1) ? ':call FirstPress("l")<CR>' : 'l'
 " noremap H (getpos('.')[1] == 1 && getpos('.')[2] == 1) ? ':call FirstPress("H")<CR>' : 'H'

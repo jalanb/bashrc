@@ -22,31 +22,55 @@ la () {
     l -a "$@"
 }
 
+ld () {
+    l -d "$@"
+}
+
 lg () {
     gl_ 2 "$@"
 }
 
 lf () {
-  l fred* 2>&1 | grep -q "No such" && echo "fredless" >&2 
-  fdf fred
+    local one_= file_=
+    for one_ in "$@"; do
+        test -f $one_ || continue
+        $file_ ="$one_"
+        rlf "$file_"
+    done
+    [[ $file_ ]] && return 0
+    rlf fred* 2>&1 | grep -q "No such" && echo "fredless" >&2 
+    return 1
 }
 
 lh () {
     l -lh  "$@"
 }
 
+lk () {
+    l0 "$@"
+}
+
 ll () {
-    local _long_option=-l
-    local _dir_option=
-    if [[ -d "$1" ]]; then
-        _dir_option=-d
-        [[ "$1" =~ /$ ]] && _dir_option=-a
-        [[ "$1" =~ ^[.]*$ ]] && _dir_option=-a
-    fi
-    l $_long_option $_dir_option "$@"
+    local dir_option_=-a path_=
+    for path_ in "$@"; do
+        dir_option_=-a
+        test -e $path_ || continue
+        [[ -d "$path_" ]] && dir_option_=-d
+        [[ "$path_" =~ /$ ]] && dir_option_=-a
+        [[ -d "$path_" ]] && path_="$path_/"
+        l -l $dir_option_ "$path_"
+        [[ "$dir_option_" =~ [-]d ]] && dir_option_=-a
+    done
+    [[ $path_ ]] && return 0
+    l -l ./
+
 }
 
 lo () {
+    l -C "$@"
+}
+
+lO () {
     l -C "$@"
 }
 
@@ -55,7 +79,7 @@ lr () {
 }
 
 lt () {
-    l -t "$@"
+    l -t 4 "$@"
 }
 
 lx () {
@@ -63,9 +87,9 @@ lx () {
 }
 
 ly () {
-    local _dir=.
-    [[ -d "$1" ]] && _dir="$1" 
-    l ${_dir}/*.py
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1" 
+    l ${dir_}/*.py
 }
 
 # xxx
@@ -103,17 +127,17 @@ lkl () {
 }
 
 lkq () {
-    local _sought=$1
-    if [[ -f $_sought ]]; then
-        l $_sought
+    local sought_=$1
+    if [[ -f $sought_ ]]; then
+        l $sought_
         return 0
     fi
-    while [[ -n $_sought ]]; do
-        if l -d $_sought 2>/dev/null; then
+    while [[ -n $sought_ ]]; do
+        if l -d $sought_ 2>/dev/null; then
             break
         fi
-        _sought=$(dirnames $_sought)
-        if [[ $_sought == / ]]; then
+        sought_=$(dirnames $sought_)
+        if [[ $sought_ == / ]]; then
             break
         fi
     done
@@ -135,14 +159,9 @@ llg () {
     gl_ 3 "$@"
 }
 
-llk () {
-    rlg "$@"
-    llr "$@"
-    rlg "$@"
-}
-
 lll () {
-    rll -tr "$@"
+    rlg "$@"
+    ll -tr "$@"
 }
 
 llo () {
@@ -152,8 +171,7 @@ llo () {
 
 llr () {
     rlg "$@"
-    ll -tr "$@"
-    rlg "$@"
+    ll -htr "$@"
 }
 
 lly () {
@@ -202,7 +220,7 @@ lrt () {
 }
 
 ls1 () {
-    l1 "$@" | sort
+    l0 "$@" | sort
 }
 
 lsh () {
@@ -236,8 +254,8 @@ lyi () {(
         fi
     fi
     pwd
-    local _status=$(git status -s)
-    if [[ -n $_status ]]; then
+    local status_=$(git status -s)
+    if [[ -n $status_ ]]; then
         echo -n "\$ git status -s: "
         git status -s
     else
@@ -249,7 +267,7 @@ lyi () {(
             fi
         done
         if [[ $has_dirs == 1 ]]; then
-            3y -L 2 --noreport . | grep -v -e bdist -e " _build$" -e __init__.py -e .egg-info
+            3y -L 2 --noreport . | grep -v -e bdist -e " build_$" -e __init__.py -e .egg-info
         fi
         echo
     fi

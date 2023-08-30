@@ -58,6 +58,7 @@ fred.[a-z]*
 .svn
 .settings
 .eggs
+.ackrc
 #
 # Names
 #

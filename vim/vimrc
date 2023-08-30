@@ -28,9 +28,12 @@ nnoremap <S-F5>     <C-W>=
 
 " ordinary keys {{{2
 " number row {{{3
-"noremap <bs>
+"noremap <bs> BackSpace
+nnoremap <bs>= I    <esc>j
+nnoremap <bs>- 04xk
 "noremap =
 "noremap -
+"noremap ;
 "noremap
 "noremap 9
 "noremap 8
@@ -86,11 +89,18 @@ nnoremap nn nzvzz
 "noremap o - open new line
 "noremap p - paste
 nnoremap q :q<cr>
+nnoremap qa :qa<cr>
+nnoremap qe :w!<cr>:q!<cr>
+nnoremap qs :q
+nnoremap qq :q<cr>
+nnoremap qw :w<cr>:q<cr>
+nnoremap qz :qa!<cr>
 "noremap r - change one char
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 noremap tf :tabnew ~/tmp/fred.txt
-noremap tn :tabprev<cr>:tabnew<Space>
+noremap tn :tabnew<Space>
+noremap tp :tabprev<cr>:tabnew<Space>
 noremap tv :tabprev<cr>:tabnew ~/.vimrc<cr>
 nnoremap tq <esc>;iq<CR>
 nnoremap ttq <esc>;iqa!<CR>
@@ -214,6 +224,8 @@ nnoremap <right>            *zv
 "
 nnoremap <s-left>           gT
 nnoremap <s-right>          gt
+inoremap <s-left>           <esc>gT
+inoremap <s-right>          <esc>gt
 
 " Other Control Keys {{{2
 nnoremap    <C-d> :qa<CR>
@@ -505,10 +517,10 @@ endif
 " Miscellaneous {{{1
 " Abbreviations {{{3
 " Ok, ok, so I have some spelling blind-spots {{{3
-abbreviate becuase because
-abbreviate lamda lambda
-abbreviate seperate separate
-cnoreabbrev H vert bo help
+ab becuase because
+ab lamda lambda
+ab seperate separate
+ca Help vert bo help
 " Some miscellaneous stuff from around the interwebs
 " Filetype {{{2
 autocmd FileType c,cpp,h,java set cindent
@@ -575,17 +587,29 @@ endfunction
 " <leader>n is bound (above) to ToggleNumber()
 "
 function! ToggleNumber() " {{{3
-    if &number == 1
-        set nonumber
+    "	From vimhelp
+"	The 'relativenumber' option changes the displayed number to be
+"	relative to the cursor.  Together with 'number' there are these
+"	four combinations (cursor in line 3):
+"
+"		'nonu'          'nu'            'nonu'          'nu'
+"		'nornu'         'nornu'         'rnu'           'rnu'
+"
+"	    |apple          |  1 apple      |  2 apple      |  2 apple
+"	    |pear           |  2 pear       |  1 pear       |  1 pear
+"	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
+"
+" I want the first and last of these
+"
+    if &number == 0 || &relativenumber == 0
+        set nonu
+        set nornu
     else
-        set nonumber
-        if &relativenumber == 1
-            set norelativenumber
-        else
-            set relativenumber
-        endif
+        set nu
+        set rnu
     endif
 endfunction
+
 set number    " Start with line numbers
 " Search {{{2
 " Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci
@@ -617,14 +641,31 @@ function! ReadTraceback(filename)
 endfunction
 " History {{{2
 set history=1000
-set viminfo=/100,'10,r/mnt/zip,r/mnt/floppy,f0,h,\"100,n~/.viminfo
 " Make Vim jump to the last position when reopening a file
     if has('autocmd')
       au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
 
 " for filename completion (with Tab) {{{2
-let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
+""""""""""""""""""""""""""""""
+" File explorer
+""""""""""""""""""""""""""""""
+"Split vertically
+let g:explVertical=1
+
+"Window size
+let g:explWinSize=35
+
+let g:explSplitLeft=1
+let g:explSplitBelow=1
+
+"Hide some files
+let g:explHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py[ceo]$,\~$,\.sw[p-z],\.DS_Store'
+
+"Hide the help thing..
+let g:explDetailedHelp=0
+
+
 let g:explVertical=1
 let g:explWinSize=1
 let g:explSplitRight=1
@@ -633,11 +674,11 @@ let g:explSortBy='date'
 
 let g:netrw_altv = 1
 let g:netrw_browse_split = 2
-let g:netrw_list_hide='^\.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[oce],\~\([^\i]\|$\)'
+let g:netrw_list_hide= '^ \.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[ceo],\.sw[p-z],\.DS_Store,\~\([^\i]\|$\)'
 let g:netrw_keepdir=0
 let g:netrw_banner = 0
 
-let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py.$,\~$'
+let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py[ceo]$,\.sw[p-z],\.DS_Store,\~$'
 let g:jabVertical=1
 let g:jabWinSize=1
 let g:jabSplitRight=1

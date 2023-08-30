@@ -1,0 +1,10 @@
+
+Host github
+    Hostname github.com
+    User git
+    IdentityFile ~/.ssh/jalanb/github
+
+Host gitlab
+    Hostname gitlab.com
+    User git
+    IdentityFile ~/.ssh/jalanb/gitlab

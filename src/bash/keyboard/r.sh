@@ -3,10 +3,7 @@
 # x
 
 r () {
-    local command_="ranger ."
-    [[ "$@" ]] && command_="rm -vrf ""$@"
-    show_command $command_
-    $command_
+    [[ "$@" ]] && show_run_command rm -vrf "$@" || ranger .
 }
 
 # xx
@@ -15,100 +12,64 @@ ra () {
     ranger "$@"
 }
 
+rd () {
+    rf -d "$@"
+}
+
+rf () {
+    python ~/jab/src/python/rf.py "$@"
+}
+
 ri () {
-    local _argc=${#*}
-    if [[ $_argc == 1 ]]; then
-        [[ -d "$1" ]] && chewed_rri "$1"
-    else
-        rri "$@"
-    fi
-}
-
-_chewed="I been chewed out before"
-
-chew () {
-    echo "Landa: You'll be shot for this"
-    echo "Aldo: Nah, I don't think so, more like chewed out. $_chewed"
-}
-
-chewed_rri () {
-    [[ -d "$2" || -d "$1" ]] && (
-        chew
-    )
+    local arg_=
+    for arg_ in "$@"; do
+        [[ -d "$arg_" ]] || continue
+        echo "Landa: You'll be shot for $arg_"
+        echo "Aldo: Nah, I don't think so, more like chewed out."
+        echo "      I been chewed out before"
+        echo
+        break
+    done
     rri "$@"
 }
 
-scalp_hermann () {
-    (
-    echo "Landa: Are you mad? What have you done? I made a deal with your general for that man's life!"
-    echo ""
-    echo "Aldo: Yeah, they made that deal, but they don't give a fuck about him. They need you"
-    ) 
-}
-
-rr_path () {
-    test -e "$1" && readlink -f "$1" || realpath "$1"
-}
 
 rr () {
-    if [[ "$1" =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
-        echo "Will not remove $1" >&2
-        return 1
-    fi
-    local rr_home_=$(rr_path $HOME) rr_one_=$(rr_path "$1")
-    if [[ $(rr_path "$1") == "$rr_home_" ]]; then
-        echo "Will not remove $1" >&2
-        return 1
-    fi
-    r "$@" >/dev/null 2>&1
-}
-
-old_rr () {
-    local _interactive= _path= _options=
-    if [[ "$1" == '-i' ]]; then
-        _interactive=1
+    local options_="-rf"
+    if [[ $1 =~ ^[-][rfv]+$ ]]; then
+        options_=$1
         shift
     fi
     if [[ "$1" =~ ^/[^/]*$|^[./]*$|^$HOME[/]*$ ]]; then
         echo "Will not remove $1" >&2
         return 1
     fi
-    local rr_home_=$(rr_path $HOME) rr_all_=$(rr_path "$@")
-    if [[ $rr_all_ == "$rr_home_" ]]; then
-        scalp_hermann 
+    local rr_home_=$(rr_path $HOME) rr_one_=$(rr_path "$1")
+    if [[ "$rr_one_" == "$rr_home_" ]]; then
+        echo "Will not remove $1" >&2
         return 1
     fi
-    for p in "$@"; do
-        if [[ "$p" == "/" ]];  then
-            echo $_chewed
-            return
-        fi
-        if [[ -e "$p" ]]; then
-            _paths="${_paths}${_sep}${p}"
-            _path=$(rr_path "$p")
-            [[ -e "$_path" ]] || continue
-            if [[ "$_path" == "$rr_home_" ]]; then
-                scalp_hermann
-            fi
-            [[ -d "$_path" ]] && _options='-r'
-            if [[ -n $_interactive ]]; then
-                chewed_rri $_options "$_path"
-            else
-                rm -f $_options "$p"
-            fi
-        fi
-    done
+    rm $options_ "$@" >/dev/null 2>&1
+}
+
+ry () {
+    rf -qpr
 }
 
 # xxx
 
-raj () {
-    pushq ~/jab
-    range "$@"
-    popq
+rfq () {
+    rf -q "$@"
 }
 
 rlf () {
+    local one_=
+    for one_ in "$@"; do
+        rlf_ "$one_"
+    done
+}
+
+rlf_ () {
     local path_=. rlf_path_= suffix_=
     [[ $1 ]] && path_="$1"
     [[ $path_ ]] || return 1
@@ -118,7 +79,7 @@ rlf () {
         return 0
     fi
     [[ $rlf_path_ ]] && path_=$rlf_path_
-    echo "$path_  # does not exist"
+    show_fail "# '$path_' does not exist" >&2
     return 1
 }
 
@@ -126,14 +87,21 @@ rlg () {
     green_line $(rlf "$@")
 }
 
-rll () {
-    rlg "$@"
-    ll -tr "$@"
-}
-
 rlo () {
     rlg "$@"
     lo -tr "$@"
+}
+
+rlq () {
+    quietly rlf "$@"
+}
+
+rr. () {
+    rr ./*
+}
+
+rra () {
+    rr ./* ./.* 2>&1 | grep -v 'cannot remove directory'
 }
 
 rri () {
@@ -147,12 +115,25 @@ rri () {
         _result=0
         _opts='-f'
         [[ -d "$path" ]] && _opts='-rf'
-        rm $_opts "$path"
+        rr $_opts "$path"
     done
     return $_result
 }
 
 rrr () {
-    # Scalp Hans too
     sudo rm -rf --preserve-root "$@" 2> ~/fd2
+}
+
+# xxxx
+
+rr.. () {
+    local here_=$(readlink -f .)
+    cd ..
+    rr "$here_"
+}
+
+# xxxxxxx
+
+rr_path () {
+    readlink -f "$1"
 }

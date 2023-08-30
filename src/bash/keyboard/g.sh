@@ -6,13 +6,11 @@ g () {
 }
 
 gr () {
-    local grep_="$(which egrep) --color"
-    # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
-    #   Allows cutting text out of stderr
     if [[ "$@" ]]; then
-        ($grep_ "$@" 3>&1 1>&2 2>&3 | sed -e "/Is a directory/d") 3>&1 1>&2 2>&3
+        egrep --color "$@" | cut_err  "Is a directory"
     else
-        grr
+        show_command git pull --rebase
+        git pull --rebase
     fi
 }
 
@@ -36,14 +34,26 @@ grv () {
     gr -v "$@"
 }
 
+grbp () {
+    local __doc__"""coulded grep"""
+}
+
 gree () {
     local options_= arg_= list_=
     local paths_=
-    set -x
-    for arg_ in "$@"; do
-        [[ -e $arg_ ]] && list_=paths_ || list_=options_
-        $$list_="$$list_ $arg_"
-    done
-    gr $options_ $paths_
-    set +x
+    (
+        set -x
+        for arg_ in "$@"; do
+            [[ -e $arg_ ]] && list_=paths_ || list_=options_
+            $$list_="$$list_ $arg_"
+        done
+        gr $options_ $paths_
+    )
+}
+
+cut_err () {
+    # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
+    #   Allows cutting text out of stderr
+    local text_="$1"; shift
+    (cat "$@" 3>&1 1>&2 2>&3 | sed -e "/${text_}/d") 3>&1 1>&2 2>&3
 }

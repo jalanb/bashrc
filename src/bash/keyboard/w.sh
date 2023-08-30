@@ -10,6 +10,7 @@ typed red ~/bash/crayons.sh
 
 # Show last status
 wtf () {
+    [[ "$@" ]] && "$@"
     status_=$?
     local name_=Fail colour_=red
     [[ $1 ]] && status_=$1 && shift
@@ -20,3 +21,4 @@ wtf () {
     $colour_ $message_
     return $status_
 }
+

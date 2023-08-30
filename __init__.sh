@@ -21,17 +21,26 @@ show_pythonpath () {
     show_green_line PYTHONPATH==$PYTHONPATH after "$1"
 }
 
+# echo $HOME/jab/whyp
 . ~/whyp.sh
 export WHYP_EDITOR=vv
+# echo $HOME/jab/ackvim
 . ~/hub/jalanb/ackvim/ackvim.sh
+# echo $HOME/jab/pyth
 . ~/hub/jalanb/pyth/pyth.sh
+# echo $HOME/jab/cde
+. ~/hub/jalanb/cde/cde.sh
+# echo $HOME/jab/environ.d
 
-. ~/jab/src/bash/__cd__.sh
 . ~/jab/environ.d/__init__.sh optional
+# echo $HOME/jab/bash
 . ~/jab/src/bash/__init__.sh
+# echo $HOME/jab/local
 . ~/jalanb/local/__init__.sh optional
+# echo $HOME/jab/work
 . ~/jab/work/__init__.sh optional
 
+# echo $HOME/jab/uname
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
 
 activate_dir="$HOME/jab/.venv"

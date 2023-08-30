@@ -3,12 +3,13 @@
 # x
 
 k () {
-    local dir_="$1"; 
-    [[ "$dir_" ]] || return 1
-    [[ -d "$dir_" ]] || return 2
-    cd $dir_
+    # cd to the directory $1 and run args
+    [[ $2 ]] || return 2
+    local dir_="$1"
     shift
-    [[ "$@" ]] || return 3
+    [[ "$dir_" ]] || return 3
+    [[ -d "$dir_" ]] || return 5
+    cd $dir_
     "$@"
 }
 
@@ -21,19 +22,13 @@ kk () {
 }
 
 kl () {
-    k "$1" l
+    # cd to the directory $1 and run ls
+    k "$1" ls
 }
 
-kr () {
-    read_keys "$@"
-}
-
-kw () {
-    write_keys "$@"
-}
-
-kv () {
-    vim_keys "$@"
+kkl () {
+    # run ll in the directory $1 
+    kk $1 ll "$@"
 }
 
 # xxx

@@ -1,5 +1,8 @@
 #! /bin/cat -n
 
+[[ $SOURCED_CRAYONS ]] || source  ~/bash/crayons.sh.sh
+declare | grep -q "^git_root" || source ~/bash/git/functons.sh
+
 export FAIL_COLOUR=red
 export PASS_COLOUR=green
 
@@ -34,125 +37,146 @@ get_git_status() {
     return 0
 }
 
-_rgb () {
-    local one_="$1"; shift
-    local light_=NIGHT_ no_colour_="\033[0m"
+upper () {
+    echo "$@" | tr '[:lower:]' '[:upper:]'
+}
+
+pro_rgb () {
+    local no_colour_="\033[0m"
     local regexp_="red|green|blue|cyan|magenta|yellow"
-    local hue_=$one_
-    if [[ "$one_" =~ ^l_ ]]; then
+    local hue_="$1"; shift
+    local light_=NIGHT_
+    if [[ "$hue_" =~ ^l_ ]]; then
         light_="LIGHT_"
         [[ $one_ =~ l_$regexp_ ]] && hue_=${one_/l_/}
     fi
     local var_=
     if [[ $hue_ =~ $regexp_ ]]; then
-        [[ $hue_ == red ]] && var_="${light_}RED"
-        [[ $hue_ == green ]] && var_="${light_}GREEN"
-        [[ $hue_ == blue ]] && var_="${light_}BLUE"
-        [[ $hue_ == cyan ]] && var_="${light_}CYAN"
-        [[ $hue_ == magenta ]] && var_="${light_}MAGENTA"
-        [[ $hue_ == yellow ]] && var_="${light_}YELLOW"
+        for rgb_ in red green blue cyan magenta yellow; do
+            RGB_=$(upper $rgb_)
+            [[ $hue_ == $rgb_ ]] && HUE_="${light_}${RGB_}"
+        done
     fi
-    local hues_=${!var_}
-    echo -n "$hues_""$@""$no_colour_"
+    local hue_=${!HUE_}
+    echo -n "$hue_""$@""$no_colour_"
 }
 
-emoji_error () {
+emoji_errors () {
     if [[ $1 == 0 ]]; then
         echo "😎 "
     else
-        local _faces=(👿 👎 💀 👻 💩 😢 😥 😰 😮 😫 😲 ☹️  😤 😭 😦 😧 😨 😩 🤯 😬 😱 🥵 🥶 😳 🤢 🤮 🤨 😐 😑 )
-        echo "${_faces[$1]} "
+        local faces_=(👿 👎 💀 👻 💩 😢 😥 😰 😮 😫 😲 ☹️  😤 😭 😦 😧 😨 😩 🤯 😬 😱 🥵 🥶 😳 🤢 🤮 🤨 😐 😑 )
+        echo "${faces_[$1]} "
     fi
 }
 
-_colour_prompt () {
-    local __doc__="""Use a coloured prompt with helpful info"""
-    printf "\n$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n$ "
-    #printf "$(emoji_error $1) $(blue_date) $(blue_user):$(blue_pwd_git) $(red_python)\n\[$(iterm2_prompt_mark)\]$ "
+red_date () {
+    local red_day_=$(red $(date +'%A'))
+    local red_date_=$(lred $(date +' %F %H:%M'))
+    echo $red_day_ $red_date_
 }
 
 path_to_venv () {
     env | grep VIRTUAL_ENV= | cut -d= -f2
 }
 
-venv_name () {
-    local _path_to_venv=$(path_to_venv)
-    [[ -e $_path_to_venv ]] || return 1
-    local _venv_name=$(basename "$_path_to_venv")
-    if [[ $_venv_name == ".venv" ]]; then
-        local _parent=$(dirname $_path_to_venv)
-        local _parent_name=$(basename $_parent)
-        _venv_name=$_parent_name
+lgreen_venv_name () {
+    local path_to_venv_=$(path_to_venv)
+    [[ -e $path_to_venv_ ]] || return 1
+    local venv_name_=$(basename "$path_to_venv_")
+    if [[ $venv_name_ == ".venv" ]]; then
+        local parent_=$(dirname $path_to_venv_)
+        local parent_name_=$(basename $parent_)
+        venv_name_=$parent_name_
     fi
-    echo $(_rgb l_red "${_venv_name/./}")
+    local lgreen_python_=$(lgreen "${venv_name_/./}")
+    echo $lgreen_python_
 }
 
-blue_date () {
-    local _colour_day=$(_rgb blue $(date +'%A'))
-    local _colour_date=$(_rgb l_blue $(date +' %F %H:%M'))
-    echo $_colour_day $_colour_date
-}
-
-short_pwd () {
-    local main_dir_="$HOME/pysyse/__main__"
-    PYTHONPATH="$main_dir_" "$main_dir_/bin/short_dir" "$PWD" 2> /dev/null
-}
-
-blue_pwd_git () {
-    local _branch_name="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local _version=
-    if [[ $_branch_name ]]; then
-        local _bump_version="v$(bump get)"
-        [[ $_bump_version == v ]] && _bump_version=
-        _version=", $_branch_name $_bump_version"
+green_python () {
+    local virtual_env_name_=
+    [[ $VIRTUAL_ENV ]] && virtual_env_name_=$(basename "$VIRTUAL_ENV")
+    if [[ $virtual_env_name_ == ".venv" ]]; then
+        local virtual_env_directory_=$(dirname $VIRTUAL_ENV)
+        virtual_env_name_=$(basename "$virtual_env_directory_")
     fi
-    local pwd_="$(short_pwd)"
-    [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
-    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*/\([a-z.]*\)/\([a-z.]*\)[.git]*,\1/\2," -e "s,[.]git$,,")
-    [[ $project_ ]] && pwd_="${project_}:${pwd_}"
-    echo $(_rgb l_blue "${pwd_}${_version}")
+
+    local python_version_=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
+    local green_python_=$(green "${python_version_}")
+    local green_venv_=$(lgreen_venv_name)
+    if [[ ! $green_venv_ ]]; then
+        echo $green_python_
+        return 0
+    fi
+    local path_to_venv_=$(path_to_venv)
+    local join_='/'
+    [[ $path_to_venv_ =~ ~ ]] && join_='~'
+    [[ $path_to_venv_ =~ ^[.] ]] && join_='.'
+    echo "${green_python_}${join_}${green_venv_}"
+}
+
+short_path () {
+    echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
+}
+
+git_data () {
+    local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    local git_data_=
+    if [[ $branch_name_ ]]; then
+        local bump_version_="v$(bump get)"
+        [[ $bump_version_ == v ]] && bump_version_=
+        git_data_=":$branch_name_ $bump_version_"
+    fi
+    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z.-]*\)[/]\([A-Za-z.-]*\).git,\1/\2.git,")
+    [[ $project_ ]] && git_data_="${project_}${git_data_}"
+    echo $git_data_
+}
+
+dir_data () {
+    local rlf_="$(readlink -f .)"
+    if [[ "$rlf_" != "$PROMPT_RLF" ]]; then
+        readlink -f .
+        return 0
+    fi
+    local path_="$(short_path)"
+    if [[ $path_ ]]; then
+        echo $path_
+        return 0
+    fi
+    readlink -f .
+}
+
+lblue_dir () {
+    lblue "$(dir_data) $(git_data)"
+}
+
+colour_prompt () {
+    local __doc__="""Use a coloured prompt with helpful info"""
+    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(lblue_dir)\n $ "
 }
 
 blue_user () {
     local user_=$(whoami)
-    local hostname_=$(hostname -s)
-    local _hue_user=$(_rgb blue ${user_:$USER})
-    local _hue_host=$(_rgb blue ${hostname_:-$HOSTNAME})
-    echo "${_hue_user}@$_hue_host"
+    local blue_user_=$(blue ${user_:$USER})
+    echo "${blue_user_}"
+  # echo "${lblue_user_}@$(lblue_host)"
 }
 
-red_python () {
-    local _virtual_env_name=
-    local _virtual_env_root=$(env | grep VIRTUAL_ENV | cut -d= -f2)
-    [[ $_virtual_env_root ]] && _virtual_env_name=$(basename "$_virtual_env_root")
-    if [[ $_virtual_env_name == ".venv" ]]; then
-        local _virtual_env_directory=$(dirname $_virtual_env_root)
-        _virtual_env_name=$(basename "$_virtual_env_directory")
-    fi
-
-    local _python_version=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
-    local _colour_python=$(_rgb l_red "${_python_version}")
-    local _colour_venv=$(venv_name)
-    if [[ ! $_colour_venv ]]; then
-        echo $_colour_python
-        return 0
-    fi
-    local _path_to_venv=$(path_to_venv)
-    local _join='/'
-    [[ $_path_to_venv =~ ~ ]] && _join='~'
-    [[ $_path_to_venv =~ ^[.] ]] && _join='.'
-    echo "${_colour_python}${_join}${_colour_venv}"
+lblue_host () {
+    local hostname_=$(hostname -s)
+    local lblue_host_=$(lblue ${hostname_:-$HOSTNAME})
+    echo "$lblue_host_"
 }
 
 set_status_bit () {
     local __doc__="""Set the status bit from $?"""
-    local _one=$1; shift
-    local _status=
-    [[ -z "$_one" ]] && _one="-z \$?"
-    local _status_color=red
-    [[ $_one == 0 ]] && _status_color=green
-    _status=$(_rgb $_status_color $_one)
-    export STATUS=$_status
+    local one_=$1; shift
+    local status_=
+    [[ -z "$one_" ]] && one_="-z \$?"
+    local status_color_=red
+    [[ $one_ == 0 ]] && status_color_=green
+    status_=$(rgb $status_color_ $one_)
+    export STATUS=$status_
 }
 
 echo_prompt_colour () {
@@ -167,40 +191,32 @@ echo_prompt_colour () {
     echo $prompt_colour_
 }
 
-_pre_pses () {
+pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
     console_whoami
     cde_python --add . >/dev/null 2>&1
     history -a
 }
 
-_post_pses () {
+post_pses () {
     local __doc__="""Stuff to do after setting the prompt"""
     set_status_bit "$@"
-    # echo "which -a:"
-    # which -a python3
-    # echo; echo "type -a: "
-    # type -a python3;
-    # echo; echo "command -v: "
-    # command -v python3
+    export PROMPT_RLF=$(readlink -f .)
 }
 
 export_pses () {
     local __doc__="""Set all PS* symbols (which control prompts"""
-    local _status=$1
-    PROMPT_STATUS=$_status
+    local status_=$1
+    PROMPT_STATUS=$status_
     export PROMPT_STATUS
     # export ITERM2_SQUELCH_MARK=1
-    _pre_pses
-    export PS1=$(_colour_prompt $_status)
+    pre_pses
+    export PS1=$(colour_prompt $status_)
     export PS2="... "  # Continuation line
     export PS3="#?"    # Prompt for select command
     export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
                                                     # Thanks to pyenv for the (ahem) prompt
-    # export PS4='\nDEBUG level:$SHLVL subshell-level: $BASH_SUBSHELL \nsource-file:${BASH_SOURCE} line#:${LINENO} function:${FUNCNAME[0]:+${FUNCNAME[0]}(): }\nstatement: '
-    #export PS4='+ [${BASH_SOURCE##*/}:${FUNCNAME[0]:+${FUNCNAME[0]}()}:${LINENO}:${BASH_LINENO[*]}] '  
-    export PS4='+ [${BASH_SOURCE:-$0} in ${FUNCNAME[0]}() at ${LINENO}]  '
-    _post_pses "$@"
+    post_pses "$@"
 }
 
 

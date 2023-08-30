@@ -16,7 +16,7 @@
     b = branch
     c = cherry-pick
     cl = clean -d -f -f -x
-    d = difftool -y --extcmd=\"icdiff --line-numbers\"
+    d = difftool -y --extcmd=\"icdiff --line-numbers -t \"
     e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
@@ -58,7 +58,7 @@
 
     df = diff --name-only
     dh = difftool -y --extcmd=\"vim -d -o\"
-    di = difftool -y --extcmd=\"icdiff --line-numbers\"
+    di = difftool -y --extcmd=\"icdiff --line-numbers \"
     dk = difftool -y -t Kaleidoscope
     dm = difftool -y --extcmd=\"~/bin/meld  \"
     dn = d --name-only
@@ -97,7 +97,11 @@
     last = log -1 HEAD
     lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
     ld = ll -p
-    le = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    le = lllll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    lee = llll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    leee = lll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    leeee = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    leeeee = l --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
     lf = lc --stat
     lg = l --grep
     ll = l -32
@@ -144,6 +148,8 @@
 
     sp = status --porcelain
     st = stash
+    ss = status --short
+    sp = status --porcelain
     stp = stash pop
     stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
     standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Thu == $(date +%a) ]] && echo last.tuesday || echo last.thursday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
@@ -193,3 +199,5 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[init]
+	defaultBranch = __main__

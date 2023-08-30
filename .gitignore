@@ -16,6 +16,7 @@ history.*
 fred
 fred.*
 *.tmp
+*.new
 src/python/tmp*-vim.sh
 src/bash/fd
 etc/history

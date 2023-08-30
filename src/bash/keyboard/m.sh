@@ -16,6 +16,12 @@ man () {
     batman "$@"
 }
 
+min () {
+    local min_=~/jab/bash/bashrc_minimal
+    vim $min_
+    . $min_
+}
+
 mkd () {
     local __doc__='make a directory'
     local verbose_=1

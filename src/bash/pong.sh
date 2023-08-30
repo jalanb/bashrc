@@ -184,7 +184,7 @@ show_portals () {
 
 # xxxxxxxxxxxx
 
-DNS_resfresh () {
+dns_refresh () {
     sudo dscacheutil -flushcache
     sudo killall -HUP mDNSResponder
 }

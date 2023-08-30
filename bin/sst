@@ -43,9 +43,9 @@ main () {
     [[ -n $_local_user ]] || return 1
     local _known_user=
     if [[ -n $_remote_user ]]; then
-        _known_user=$(ssh -G ${_remote_user}@${_remote_server} | g -w user | sed -e "s:user ::")
+        _known_user=$(ssh -G ${_remote_user}@${_remote_server} | grep -w user | sed -e "s:user ::")
     else
-        _known_user=$(ssh -G ${_local_user}@${_remote_server} | g -w user | sed -e "s:user ::")
+        _known_user=$(ssh -G ${_local_user}@${_remote_server} | grep -w user | sed -e "s:user ::")
         [[ -n $_known_user ]] && _remote_user=$_known_user 
     fi
     local _local_server=`hostname -s`
@@ -54,7 +54,7 @@ main () {
     [[ -n $_local_ip ]] || return 1
     local _remote_ip=
     [[ -n $_remote_server ]] || return 1
-    _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')" 2> ~/bash/fd/2; true)
+    _remote_ip=$(python -c "import socket; print socket.gethostbyname('$_remote_server')" 2> ~/fd2; true)
     if [[ $_local_ip == $_remote_ip ]]; then
         if [[ $_remote_user == $(whoami) ]]; then
             echo "Here I am: $_remote_user@$_remote_server ($_remote_ip)" 2>&1
@@ -64,7 +64,11 @@ main () {
         fi
         return
     fi
-    local _identity_file=$(ssh -G ${_remote_user}@${_remote_server} | g identityfile | sed -e "s:identityfile ::")
+    if [[ $(ssh -G ${_remote_user}@${_remote_server} | grep identityfile) != 1 ]]; then
+        echo "Unknown user: ${_remote_user}@${_remote_server}" >&2
+        return 5
+    fi
+    local _identity_file=$(ssh -G ${_remote_user}@${_remote_server} | grep identityfile | sed -e "s:identityfile ::")
     if [[ -n $_identity_file ]]; then
         [[ $_args =~ -i ]] || _args="$_args -i $_identity_file"
     fi

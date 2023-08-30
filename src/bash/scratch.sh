@@ -2,7 +2,7 @@
 
 set -e
 
-SCRATCH=/tmp/Downloads
+SCRATCH=/tmp/scratch
 [[ -d $SCRATCH_DIR ]] && SCRATCH=$SCRATCH_DIR
 
 scratch_up () {

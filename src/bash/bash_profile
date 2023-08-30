@@ -1,9 +1,10 @@
-# .bash_profile
+#! /usr/bin/env bat
 
-# echo "Welcome to ~/.bash_profile"
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 [[ -e ~/.bashrc ]] && source ~/.bashrc
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+# test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+green_line 

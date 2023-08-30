@@ -2,6 +2,10 @@
 
 [[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
 
+upper () {
+    echo "$@" | tr '[:lower:]' '[:upper:]'
+}
+
 rgb () {
     [[ $1 ]] || return 7
     [[ $1 =~ ^l?(off|red|green|blue|cyan|magenta|black|white)$ ]] || return 8
@@ -33,18 +37,27 @@ rgb () {
     fi
 }
 
-show_error () {
+show_data () {
+    lblue_line "$@"
+}
+
+show_fail () {
     red_line "$@" >&2
     return 1
+}
+
+show_pass () {
+    lgreen_line "$@"
+    return 0
+}
+
+show_error () {
+    show_fail "$@"
 }
 
 # xxxxxxxxxxx
 
 # xxxxxxxxxxxx
-
-show_data () {
-    lblue_line "$@"
-}
 
 show_command () {
     local arg_= args_=("$@")
@@ -57,26 +70,22 @@ show_command () {
     echo ""
 }
 
-alias show_fail=show_error
-alias show_pass=green_line
-alias show_cmnd=blue_line
 
-rgbl () {
-    rgb -l "$@"
+rgb_line () {
+    rgb "$@" "\n"
 }
 
 show_run_command () {
     show_command "$@"
-    printf
+    echo
     "$@" > ~/fd1 2> ~/fd2
     if test -s ~/fd1; then
-        if grep -q '0m' ~/fd1
-        then cat ~/fd1
+        local text_=
+        grep -q '0m' ~/fd1 && cat ~/fd1 || lblue_line $(cat ~/fd1)
         else lblue_line $(cat ~/fd1)
-        fi
     fi
     if test -s ~/fd2; then
-        red_line $(cat ~/fd2)
+        show_fail $(cat ~/fd2)
     fi
 }
 
@@ -91,7 +100,13 @@ crayons () {
 crayon () {
     local name_=$1 body_=$2
     [[ $body_ ]] || body_=$name_
-    printf "$name_ () {\n rgb $body_ "'"$@"'" \n}\n\n" >> $(crayons)
+    printf "$name_ () {\n    rgb $body_ "'"$@"'" \n}\n\n" >> $(crayons)
+}
+
+crayon_line () {
+    local name_=$1 body_=$2
+    [[ $body_ ]] || body_=$name_
+    printf "$name_ () {\n    rgb_line $body_ "'"$@"'" \n}\n\n" >> $(crayons)
 }
 
 source_crayons () {
@@ -101,8 +116,8 @@ source_crayons () {
     for colour in red green blue cyan magenta yellow black white; do
         [[ $colour == "black" ]] || crayon $colour
         crayon l$colour
-        crayon ${colour}_line "$colour -l"
-        crayon l${colour}_line "l$colour -l"
+        crayon_line ${colour}_line "$colour"
+        crayon_line l${colour}_line "l$colour"
     done
     . $crayons_
 }

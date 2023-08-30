@@ -19,11 +19,15 @@ lblue () {
     lcolour 34 "$@"
 }
 
+quietly () {
+    "$@" 2>/dev/null
+}
+
 usr_local () {
     echo "/usr/local/$1"
 }
 
-pre_bashrc_ () {
+pre_bashrc () {
     local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local
     local locals_="$(usr_local gnu):/opt/homebrew/bin:$(usr_local bin):$(usr_local opt):$(usr_local go/bin)"
     local bins_=/usr/bin:/bin:/usr/sbin:/sbin
@@ -53,18 +57,6 @@ bashrc_source () {
     source "$@"
 }
 
-bashrc_essential_aliases () {
-    if ! type vv >/dev/null 2>&1 ; then
-        if test -f $HOME/.aliases; then
-            . $HOME/.aliases || source $HOME/.aliases
-        else
-            alias g="git"
-            alias gr="grep --colour"
-            alias vv="vim -p"
-        fi 2>/dev/null
-    fi
-}
-
 bashrc_log=$HOME/log/bashrc.log
 
 echo_if_file () {
@@ -82,26 +74,39 @@ bbb () {
     echo_if_file $HOME/jalanb/local/__init__.sh
     echo_if_file $HOME/.vimrc
     echo_if_file $bashrc_log 
+    echo_if_file $HOME/jab/bash/bashrc_minimal 
 }
     
-bashrc_ () {
+bashrc () {
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
     export PS1="\$? [$(colour_user):$(colour_here)]\n$ "
+    bashrc_source ~/jab/bash/bashrc_minimal
     bashrc_source $HOME/jab/__init__.sh || return 1
     bashrc_source $HOME/bash/prompt.sh green
-    bashrc_essential_aliases
 }
 
 vbb () {
     vim -p $(bbb)
-    . $(bbb)
     readlink -f $(bbb) 2>/dev/null
 }
 
+min () {
+    local min_=~/jab/bash/bashrc_minimal
+    vim $min_
+    . $min_
+}
+
 __main__ () {
-    pre_bashrc_
-    bashrc_
+    pre_bashrc
+    bashrc
     set +m
+    post_bashrc
+}
+
+post_bashrc () {
+    cde .
+    pwd
+    l
 }
 
 [[ $- =~ i ]] && __main__  "$@" # > $bashrc_log 2>&1

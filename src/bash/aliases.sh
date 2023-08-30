@@ -7,10 +7,9 @@
 # One quote might help in reading these files:
 #   "If in doubt, call it Fred", Dr. Mike Scott, Dublin City University, late 80s
 
-# This list is quite long enough, we accept no other aliases
+# This list is quite long enough, we accept no other aliases, except '.'
 #   Thanks anyway
-#
-# (Except we will hang on to '.' (which is set by whyp.sh))
+#   `whyp.sh` sets `.`
 
 _keep_dot=$(alias . 2>/dev/null | sed -e "s/.*=//" -e "s/'//g")  # parses out any alias of '.'
 unalias -a
@@ -21,33 +20,33 @@ unalias -a
 #       Awwww.
 #   There is an alias for every letter
 #       albeit most are unused
-# Search for .= from here
 
 # x
+# Search for ' [a-z.-]*=' from here
 
 # [0-9]* are in keys/1_0.sh
 # a()
 # b()
 # c()
-# d
+# alias d=
 # e()
 # f()
 # g()
 # h()
-# i
+# alias i=
 # j()
 # k()
 # l()
-# m
-# n
-# o
+# alias m=
+# alias n=
+# alias o=
 # p()
 # q()
 # Q()
 # r= script
-# s
+# alias s=
 # t()
-# u
+# alias u=
 # v()
 alias w=whyp
 # x()
@@ -57,9 +56,8 @@ alias w=whyp
 alias X='set -x'
 alias Z='set +x'
 
-# xx
-
 alias ..='cdup'
+
 alias .c='whyp_source ~/cde.sh'
 alias .w="whyp_source $WHYP_SOURCE"
 
@@ -67,11 +65,9 @@ alias p-="echo $OLDPWD"
 
 alias r.="rm -rvf *"
 
-alias sr="sudo rm -vrf "
-
 alias z.="zm \*"
 
-# xxx
+alias ...='cdupp'
 
 alias bim=vim
 alias cim=vim
@@ -83,48 +79,40 @@ alias gti=git
 alias jab=j
 alias jlf="sst jlfieblu jlf.ie"
 
-
-alias out="to_release"
+alias man=batman
+alias out=to_release
 
 alias sle="whyp_source ~/jalanb/local/environ.sh optional"
 alias slp="whyp_source ~/jalanb/local/prompt optional"
 alias spe="whyp_source ~/jab/environ.d/python.sh"
-
-alias tra="try ~/alans_tests"
-
-# xxxx
+alias srr="sudo rm -vrf "
 
 alias ....='cduppp'
 
 alias comp="whyp_source ~/jab/environ.d/company.sh"
-
 alias popp=pisd
-
-# xxxxx
 
 alias .....='cdupppp'
 
 alias mkenv=mkvirtualenv
-
 alias print=printf
-
 alias whihc=which
 
-# xxxxxx
-
 alias ......='cduppppp'
-
-# xxxxxxx
 
 alias .......='cdupppppp'
 alias quitely=quietly
 alias service="sudo /sbin/service "
 
-# xxxxxxxx
+alias .........='cduppppppp'
 
-# xxxxxxxx
-
+alias .........='cdupppppppp'
 alias stopwatch="killall -9 watch"
 
+alias .........='cduppppppppp'
+
+alias .........='cdupppppppppp'
+
+alias ............='cduppppppppppp'
 alias update_hosts="sudo python ~/jab/src/python/update_hosts.py"
 

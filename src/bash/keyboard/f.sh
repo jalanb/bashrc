@@ -29,7 +29,34 @@ fl () {
     freds | tr ' ' '\n'
 }
 
+fd_option () {
+    local arg_=$1; shift
+    local option_="--$1"; shift
+    [[ $arg_ == "${option_:1:2}" ]] && arg_=$option_
+    [[ $arg_ == "${option_}" ]] && arg_=$option_
+    [[ ${arg_:0:5}_ == "--no-" ]] && arg_=$option_
+    [[ $arg_ == "$option_" ]] || return 1
+    echo "$option_"
+}
+
 # xxx
+
+fd_ () {
+    local dir_=. glob_=. options_==--follow
+    for arg_ in "$@"; do
+        [[ -f "$arg_" ]] && dir_=$(dirname "$arg_")
+        [[ -d "$arg_" ]] && dir_="$arg_"
+    done
+    local option_= 
+    for arg_ in "$@"; do
+        for option_ in expression type follow; do
+            options_="$options_ $(fd_option $arg_ $option_)"
+        done
+    done
+    [[ $1 =~ ^[-] ]] && options_="$options_ $1" 
+    show_command fd $options_ "$glob_" "$dir_"
+    fd $options_ "$glob_" "$dir_"
+}
 
 fd_ () {
     local dir_= names_= follow_=--follow options_=
@@ -52,6 +79,7 @@ fd_ () {
     options_="$options_ $follow_"
     [[ $names_ ]] || names_=.
     [[ $dir_ ]] || dir_=.
+    show_command fd $options_ "$names_" "$dir_"
     fd $options_ "$names_" "$dir_"
 }
 
@@ -60,7 +88,7 @@ fdb () {
 }
 
 fdd () {
-    fdt d "$@"
+    _fdt d "$@"
 }
 
 fde () {
@@ -68,7 +96,7 @@ fde () {
 }
 
 fdf () {
-    fdt f "$@"
+    _fdt f "$@"
 }
 
 fdg () {
@@ -76,12 +104,12 @@ fdg () {
     fd_ "$name_" "$@" | g "$name_"
 }
 
-fdt () {
+_fdt () {
     fd_ --type "$@"
 }
 
 fdx () {
-    fdt x "$@"
+    _fdt x "$@"
 }
 
 fdy () {

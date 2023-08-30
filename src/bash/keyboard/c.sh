@@ -19,6 +19,12 @@ cc () {
     cde $CDE.sh
 }
 
+cd () {
+    command cd "$@" || return 1
+    local cde_=/opt/clones/github/jalanb/cde
+    PYTHONPATH=$cde_ $cde_/.venv/bin/python3 -m cde --QUIETLY --add .
+}
+
 cg () {
     local _where=.
     [[ "$*" ]] && _where="$@"
@@ -111,19 +117,31 @@ clean () {
 # xxxxxx
 # _xxxxx
 
+cclot () {
+    local lots_=$1
+    local arg_=$2
+    local i_=$3 name_=$4 arg_=$5
+    local i_=$2 name_=$3
+    [[ $lot_ =~ (-$i_|--$name_) ]]
+    [[ $arg_ ]] && echo "lots=${lots}$arg_"
+}
+
 clean_clear_ls () {
     local __doc__="clean, clear, ls"
-    local dir_=. clear_=clear clean_= ls_options_=C
-    if [[ $1 =~ --clean ]]; then clean_=clean; shift; fi
-    if [[ $1 =~ --clear ]]; then clear_=; shift; fi
-    if [[ $1 =~ --all ]]; then ls_options_=${ls_options_}a; shift; fi
-    if [[ $1 =~ --long ]]; then ls_options_=${ls_options_}lhtr; shift; fi
-    if [[ $1 =~ --wide ]]; then ls_options_=${ls_options_}C; shift; fi
-    [[ $ls_options_ ]] || ls_options_=C
+    local dir_=. lots_=- ls_=ls
+    [[ $1 ]] && lot_=$1
+    cclot "$lots_" n clean && clean
+    cclot "$lots_" r clear && clear
+    cclot "$lots_" l ls && ls_=
+    cclot "$lots_" a all && lots_="${lots_}a"
+    cclot "$lots_" 1 one ]] && lots_="${lots_}1tr"
+    cclot "$lots_" o long ]] && lots_="${lots_}lhtr"
+    cclot "$lots_" w wide ]] && lots_="${lots_}C"
+    [[ $lots_ ]] || lots_="${lots_}C"
     [[ -d "$1" ]] && dir_="$1"
     [[ -d "$dir_" ]] || return 1
-    $clear_
-    $clean_
-    echo l -$ls_options_ "$dir_"
+    [[ $ls_ ]] || return 0
+    [[ $lots_ ]] && lots_=-$lots_
+    $ls_ $lots_ "$dir_"
 }
 

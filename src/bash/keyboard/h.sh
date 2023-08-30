@@ -16,7 +16,10 @@ h () {
 # _x
 # xx
 
-alias HG=$(which hg 2>/dev/null) # With apologies, but don't really use it
+HG () {
+    $(which hg 2>/dev/null)
+}
+ # With apologies, but don't really use it
 
 h1 () {
     head -n 1 "$@"
@@ -26,21 +29,51 @@ hd () {
     vim_diff -o "$@"
 }
 
-alias hb=big_history_grep
-alias hg=history_grep
-alias hh="read_history | less -SNR"
-alias hs=history_start
+hb () {
+    big_history_grep
+}
+
+hg () {
+    history_grep
+}
+
+hh () {
+    read_history | less -SNR
+}
+
+hs () {
+    history_start
+}
+
 
 hl () {
     h "$@" | less
 }
 
-alias ht=history_tail_dateless
-alias hv=history_vim
-alias vh="history_vim -[ 1"
-alias vhh="history_vim -[ 2"
-alias hhv="history_vim -h"
-alias hvv="vim -p ~/.bash_eternal_history ~/.big_eternal_history"
+ht () {
+    history_tail_dateless
+}
+
+hv () {
+    history_vim
+}
+
+vh () {
+    history_vim '-[' 1
+}
+
+vhh () {
+    history_vim '-[' 2
+}
+
+hhv () {
+    history_vim -h
+}
+
+hvv () {
+    vim -p ~/.bash_eternal_history ~/.big_eternal_history
+}
+
 
 
 # xxx
@@ -130,7 +163,7 @@ history_tail () {
 history_vim () {
     local __doc__="edit history"
     local tmp_=~/tmp/history.tmp historian_= 
-    [[ $1 == -[ ]] && shift && historian_=$(history -p !-$1) && shift
+    [[ $1 == -[ ]] && shift && historian_="history -p !-$1" && shift
     [[ $1 == -h ]] && shift && historian_=h
     [[ $historian_ ]] || historian_=read_history
     $historian_ "$@" > $tmp_

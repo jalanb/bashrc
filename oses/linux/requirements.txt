@@ -1,11 +1,6 @@
-nose==1.3.7
-nose-progressive
-nose-pudb
-ipython>=8.10
+ipython
 pudb
 pprintpp
-pysyte
-virtualenv
-virtualenvwrapper
-ansible~=7.0
+pysyte>=0.7.40
+ansible
 sh
