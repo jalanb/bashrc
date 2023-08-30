@@ -9,7 +9,16 @@ extra () {
 }
 
 pip_upgrade () {
-    python3 -m pip install -v $(extra) --upgrade "$@" | grep -v -e already -e Looking -e [uU]ninstall -e [cC]ached -e [cC]ollecting -e build
+    python3 -m pip install -v $(extra) --upgrade "$@" | grep -v \
+        -e already \
+        -e Looking \
+        -e [uU]ninstall \
+        -e [cC]ached \
+        -e [cC]ollecting \
+        -e build \
+        -e Removing.file \
+        -e changing.mode \
+        -e Found.existing 
 }
 
 main () {
@@ -17,12 +26,13 @@ main () {
     cd $clone_
     echo "cd $clone_"
     echo Updating git
-    git checkout -q __main__ 
+    git checkout -q __main__
     git pull -q --rebase | grep -v Already
     source .venv/bin/activate
     echo Upgrading pip packages
     pip_upgrade pip pysyte
     [[ $(extra) ]] || /usr/bin/sed --in-place --expression="/wwts.com/d" requirements/requirements.txt
+    echo Upgrading developer requirements
     pip_upgrade -r requirements/development.txt
     [[ $(extra) ]] || git restore requirements/
 

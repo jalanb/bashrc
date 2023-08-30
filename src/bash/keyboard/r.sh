@@ -3,7 +3,7 @@
 # x
 
 r () {
-    [[ "$@" ]] && show_run_command rm -vrf "$@" || ranger .
+    [[ "$@" ]] && show_run_command rm -vrf "$@" || show_run_command ranger .
 }
 
 # xx
@@ -63,24 +63,23 @@ rfq () {
 }
 
 rlf () {
-    local one_=
-    for one_ in "$@"; do
-        rlf_ "$one_"
-    done
-}
-
-rlf_ () {
-    local path_=. rlf_path_= suffix_=
-    [[ $1 ]] && path_="$1"
-    [[ $path_ ]] || return 1
-    rlf_path_=$(readlink -f "$path_")
-    if [[ -e $rlf_path_ ]]; then
-        echo $rlf_path_
+    if [[ ! "$@" ]]; then
+        readlink -f .
         return 0
     fi
-    [[ $rlf_path_ ]] && path_=$rlf_path_
-    show_fail "# '$path_' does not exist" >&2
-    return 1
+    local path_= rlf_path_= result_=1
+    for path_ in "$@"; do
+        rlf_path_=$(readlink -f "$path_")
+        if [[ -e $rlf_path_ ]]; then
+            echo $rlf_path_
+            result_=0
+        elif [[ $rlf_path_ ]]; then
+            show_fail "$path_ (-> $rlf_path_) does not exist"
+        else
+            show_fail "$path_ (-> $(readlink $path_)) does not exist"
+        fi
+    done
+    return $result_
 }
 
 rlg () {

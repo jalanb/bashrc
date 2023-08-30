@@ -21,7 +21,7 @@ cc () {
 
 cd () {
     command cd "$@" || return 1
-    local cde_=/opt/clones/github/jalanb/cde
+    local cde_=$HOME/cde
     PYTHONPATH=$cde_ $cde_/.venv/bin/python3 -m cde --QUIETLY --add .
 }
 

@@ -23,12 +23,19 @@ kk () {
 
 kl () {
     # cd to the directory $1 and run ls
-    k "$1" ls
+    k "$1" l
 }
 
-kkl () {
-    # run ll in the directory $1 
-    kk $1 ll "$@"
+kr () {
+    read_keys
+}
+
+kv () {
+    vim_keys "$@"
+}
+
+kw () {
+    write_keys
 }
 
 # xxx

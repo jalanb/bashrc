@@ -68,7 +68,7 @@ pym () {
 }
 
 pmp () {
-    pym pip "$@" 
+    pym pip --require-virtualenv "$@" 
 }
 
 ppd () {
