@@ -45,7 +45,7 @@ pro_rgb () {
     local no_colour_="\033[0m"
     local regexp_="red|green|blue|cyan|magenta|yellow"
     local hue_="$1"; shift
-    local light_=NIGHT_ 
+    local light_=NIGHT_
     if [[ "$hue_" =~ ^l_ ]]; then
         light_="LIGHT_"
         [[ $one_ =~ l_$regexp_ ]] && hue_=${one_/l_/}
@@ -115,33 +115,39 @@ green_python () {
     echo "${green_python_}${join_}${green_venv_}"
 }
 
-short_pwd () {
+short_path () {
     echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
 }
 
-LBLUE_RLF=$(readlink -f .)
-
-lblue_dir () {
+git_data () {
     local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local version_=
+    local git_data_=
     if [[ $branch_name_ ]]; then
         local bump_version_="v$(bump get)"
         [[ $bump_version_ == v ]] && bump_version_=
-        version_=", $branch_name_ $bump_version_"
+        git_data_=":$branch_name_ $bump_version_"
     fi
-    # echo "LBLUE_RLF == '$LBLUE_RLF'"
-    local pwd_="$(short_pwd)"
-    # echo "pwd_ == '$pwd_'"
-    local lblue_rlf_="$(readlink -f .)"
-    [[ $lblue_rlf_ == $LBLUE_RLF ]] || pwd_="$lblue_rlf_"
-    # echo "pwd_ == '$pwd_'"
-    [[ $LBLUE_RLF == "$pwd_" ]] || LBLUE_RLF="$pwd_"
-    # echo "LBLUE_RLF == '$LBLUE_RLF'"
-    export LBLUE_RLF
-    [[ $pwd_ ]] || pwd_=$(basename "$(readlink -f .)")
     local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z.-]*\)[/]\([A-Za-z.-]*\).git,\1/\2.git,")
-    [[ $project_ ]] && pwd_="${project_}:${pwd_}"
-    lblue "${pwd_}${version_}"
+    [[ $project_ ]] && git_data_="${project_}${git_data_}"
+    echo $git_data_
+}
+
+dir_data () {
+    local rlf_="$(readlink -f .)"
+    if [[ "$rlf_" != "$PROMPT_RLF" ]]; then
+        readlink -f .
+        return 0
+    fi
+    local path_="$(short_path)"
+    if [[ $path_ ]]; then
+        echo $path_
+        return 0
+    fi
+    readlink -f .
+}
+
+lblue_dir () {
+    lblue "$(dir_data) $(git_data)"
 }
 
 colour_prompt () {
@@ -149,13 +155,11 @@ colour_prompt () {
     printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(lblue_dir)\n $ "
 }
 
-LBLUE_RLF=$(readlink -f .)
-
 blue_user () {
     local user_=$(whoami)
     local blue_user_=$(blue ${user_:$USER})
-    # echo "${lblue_user_}@$(lblue_host)"
     echo "${blue_user_}"
+  # echo "${lblue_user_}@$(lblue_host)"
 }
 
 lblue_host () {
@@ -197,6 +201,7 @@ pre_pses () {
 post_pses () {
     local __doc__="""Stuff to do after setting the prompt"""
     set_status_bit "$@"
+    export PROMPT_RLF=$(readlink -f .)
 }
 
 export_pses () {
