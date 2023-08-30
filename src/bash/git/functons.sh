@@ -131,6 +131,9 @@ gp () {
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream)
             $command_
+        elif [[ $MSG =~ current.branch.does.not.match ]]; then
+            show_command git push origin HEAD
+            git push origin HEAD
         else
             show_error "$MSG"
             return 1
