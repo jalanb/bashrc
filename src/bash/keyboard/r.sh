@@ -3,7 +3,7 @@
 # x
 
 r () {
-    [[ "$@" ]] && show_run_command rm -vrf "$@" || ranger .
+    [[ "$@" ]] && show_run_command rm -vrf "$@" || show_run_command ranger .
 }
 
 # xx
