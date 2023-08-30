@@ -104,8 +104,6 @@ alias popp=pisd
 
 alias .....='cdupppp'
 
-alias balck=black
-
 alias mkenv=mkvirtualenv
 
 alias print=printf

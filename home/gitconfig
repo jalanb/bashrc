@@ -142,10 +142,11 @@
 
     ru = remote get-url origin
 
+    sp = status --porcelain
     st = stash
     stp = stash pop
     stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
-    standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Mon == $(date +%a) ]] && echo last friday || echo yesterday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
+    standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Thu == $(date +%a) ]] && echo last.tuesday || echo last.thursday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
 
     td = tag -d
     tf = fetch --tags

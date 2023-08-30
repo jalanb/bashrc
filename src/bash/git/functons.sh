@@ -301,7 +301,14 @@ gds () {
 }
 
 gdv () {
-    gc "$@" dv
+    local dir_=.
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+    fi
+    [[ $1 ]] || return 1
+    (cd $dir_; [[ -f "$1" ]] || return 2)
+    gc "$dir_" dv "$1"
 }
 
 gfa () {
@@ -361,14 +368,18 @@ gl_ () {
         options_="-n $1"
         shift
     fi
-    if [[ $1 == "--oneline" ]]; then
-        options_="$options_ $1"
+    if [[ $1 =~ ^--* ]]; then
+        if [[ $1 =~ ^--since ]]; then
+            options_="$1"
+        else
+            options_="$options_ $1"
+        fi
         shift
     fi
     if [[ $1 ]]; then
-        if git branch | grep -q $1; then
-            shift
+        if git branch --all | grep -q $1; then
             options_="$options_ $1"
+            shift
         fi
     fi
     gc "$@" l $options_
@@ -473,6 +484,8 @@ gom () {
 goo () {
     local path_="."
     [[ "$@" ]] && path_="$@"
+    show_command git restore --staged "$path_"
+    git restore --staged "$path_"
     show_command git restore "$path_"
     git restore "$path_"
     show_command git status --porcelain "$path_"
@@ -501,7 +514,7 @@ got () {
 }
 
 gpf () {
-    show_command "git push --force-with-lease $@"
+    show_command git push --force-with-lease "$@"
     if ! MSG=$(git push --force-with-lease "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream | sed -e "s:push :push --force :")
@@ -551,12 +564,15 @@ dir_has_branch () {
 }
 
 main_branch () {
-    if grep_branch -q __main__; then
+    if grep_branch -r -q __main__; then
         echo __main__
         return 0
     fi
     if grep_branch -q master; then
         grep_branch master
+        return 0
+    elif grep_branch -r -q master; then
+        grep_branch -r master
         return 0
     fi
     return 1
@@ -752,11 +768,11 @@ gtD () {
 }
 
 gtl () {
-    gt "$@"
-}
-
-gtl () {
-    gt --list "$@"
+    if [[ "$@" ]]; then 
+        gt --list | grep "$@"
+    else
+        gt --list
+    fi
 }
 
 gvd () {
@@ -1184,11 +1200,32 @@ glone () {
 
 # xxxxxx
 # xxxxxxx
-# xxxxxxxx
+
+standup () {
+    for dir in $(fd -H -td .git ~/lab/sparky/ -X dirname)
+    do
+        if git -C $dir standup | grep -q nothing; then
+            if [[ $(git -C $dir status --porcelain) ]]; then
+                ( 
+                    show_command cd $dir
+                    cd $dir
+                    ls -ltc --time-style=+"xxx%a %b %d%Y" $(git status --porcelain | sed -e "s,...,," -e "s,.*-> ,,") | sed -e "s/.*xxx/ /g" -e "/^total/d"
+                )
+                echo; echo
+            fi
+            continue
+        fi
+        gc $dir standup;
+        gc $dir status --short
+        echo; echo
+    done
+}
 
 git_kd_ () {
     cde "$@" > ~/fd1 2> ~/fd2
 }
+
+# xxxxxxxx
 
 mastered () {
     local main_branch_=$(main_branch)
@@ -1400,7 +1437,7 @@ grep_branch () {
         fi
         shift
     done
-    git branch $git_options_ | sed -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
+    git branch $git_options_ | sed -e "/HEAD/d" -e "s,^[ *]*,," | grep $grep_options_ "$regexp_"
 }
 
 show_git_time () {

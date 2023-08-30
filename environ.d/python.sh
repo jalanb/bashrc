@@ -2,8 +2,6 @@
 
 
 
-PYTHON=${PYTHON:-$(pypath which python 2>/dev/null)}
-    
 export PIP_REQUIRE_VIRTUALENV=false
 export PIP_RESPECT_VIRTUALENV=true
 

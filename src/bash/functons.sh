@@ -102,10 +102,6 @@ pg () {
     ps -ef | grep -v grep | grep "$@"
 }
 
-pt () {
-    ptpython "$@"
-}
-
 rg () {
     [[ "$@" ]] && c "$@"
     ranger
@@ -954,10 +950,17 @@ whiches () {
 }
 
 umports () {
+    local old_venv_=$VIRTUAL_ENV
+    local pysyte_=$HOME/jalanb/pysyse/__main__
+    QUIETLY deactivate 
+    source $pysyte_/.venv/bin/activate
     for file in "$@"; do
         reorder-python-imports "$file"
-        python3 ~/jab/bin/imports -ume "$file"
+        python -m pysyte.imports -ume "$file"
     done
+    QUIETLY deactivate 
+    [[ $old_venv_ ]] || return 0
+    source $old_venv_/bin/activate
 }
 
 # xxxxxxxx
@@ -975,7 +978,9 @@ functons () {
 }
 
 jostname () {
-    echo ${HOSTNAME:-$(hostname -s)}
+    local short_name_=$(hostname -s)
+    local caps_name_=${HOSTNAME:-hostless}
+    echo ${short_name_:-$caps_name_}
 }
 
 maketest () {
@@ -1245,15 +1250,6 @@ show_functions () {
     local __doc__="""You're mad!!"""
     echo all functions? here ye go
     declare -f | grep "^[^ ]* ()"
-}
-
-console_hello () {
-    local me=$USER
-    local here=$(jostname)
-    export PYTHON=${PYTHON:-python}
-    console_title_on "python@${here}" && \
-        $PYTHON "$@" && \
-        console_title_off "${me}@${here}"
 }
 
 one_two_three () {

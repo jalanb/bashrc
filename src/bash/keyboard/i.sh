@@ -6,25 +6,11 @@
 # _
 # x
 
-alias i=ind
-
 I () {
     printf "%s" "$*"
 }
 
 # xx
-
-ib () {
-    ind ~/bash/ "$@"
-}
-
-ij () {
-    ind ~/jab/ "$@"
-}
-
-ijg () {
-    inj git "$@"
-}
 
 inj () {
     ind ~/jalanb "$@"

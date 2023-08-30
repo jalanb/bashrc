@@ -31,11 +31,6 @@ pm () {
     p $option_ -m "$@"
 }
 
-pv () {
-    python -m venv .venv
-    unhash_python_handlers
-}
-
 # xxx
 
 # xxxx

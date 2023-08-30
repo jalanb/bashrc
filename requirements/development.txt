@@ -3,5 +3,4 @@
 
 ipython>=8.10
 pudb
-rich-cli
 httpie

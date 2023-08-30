@@ -197,6 +197,9 @@ export_pses () {
     export PS3="#?"    # Prompt for select command
     export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
                                                     # Thanks to pyenv for the (ahem) prompt
+    # export PS4='\nDEBUG level:$SHLVL subshell-level: $BASH_SUBSHELL \nsource-file:${BASH_SOURCE} line#:${LINENO} function:${FUNCNAME[0]:+${FUNCNAME[0]}(): }\nstatement: '
+    #export PS4='+ [${BASH_SOURCE##*/}:${FUNCNAME[0]:+${FUNCNAME[0]}()}:${LINENO}:${BASH_LINENO[*]}] '  
+    export PS4='+ [${BASH_SOURCE:-$0} in ${FUNCNAME[0]}() at ${LINENO}]  '
     _post_pses "$@"
 }
 

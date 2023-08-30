@@ -22,7 +22,7 @@ rgb () {
     local eol_= text_="$@"
     if [[ $* =~ (^|[\ ])-l ]]; then
         eol_="\n"
-        text_=$(echo $text_ | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
+        text_=$(printf -- "$text_" | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
         shift
     fi
     colour_="${!foreground_}"
@@ -52,7 +52,7 @@ show_command () {
     unset args_[0]
     for arg_ in "${args_[@]}"; do
         [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
-        lgreen "$arg_ "
+        lblue "$arg_ "
     done
     echo ""
 }
@@ -102,7 +102,7 @@ source_crayons () {
         [[ $colour == "black" ]] || crayon $colour
         crayon l$colour
         crayon ${colour}_line "$colour -l"
-        crayon l${colour}_line "$colour -l"
+        crayon l${colour}_line "l$colour -l"
     done
     . $crayons_
 }
