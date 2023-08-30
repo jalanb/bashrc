@@ -134,16 +134,13 @@ git_data () {
 
 dir_data () {
     local rlf_="$(readlink -f .)"
-    if [[ "$rlf_" != "$PROMPT_RLF" ]]; then
+    if [[ "$rlf_" == "$PROMPT_RLF" ]]; then
+        local dir_data_="$(short_pwd)"
+        [[ $dir_data_ ]] || dir_data_=$(basename $(readlink -f .))
+        echo $dir_data_
+    else
         readlink -f .
-        return 0
     fi
-    local path_="$(short_path)"
-    if [[ $path_ ]]; then
-        echo $path_
-        return 0
-    fi
-    readlink -f .
 }
 
 lblue_dir () {
@@ -158,8 +155,8 @@ colour_prompt () {
 blue_user () {
     local user_=$(whoami)
     local blue_user_=$(blue ${user_:$USER})
+    # echo "${lblue_user_}@$(lblue_host)"
     echo "${blue_user_}"
-  # echo "${lblue_user_}@$(lblue_host)"
 }
 
 lblue_host () {
