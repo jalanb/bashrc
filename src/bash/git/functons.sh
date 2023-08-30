@@ -43,10 +43,10 @@ gb () {
     fi
     sought_="$@"
     if [[ $sought_ ]]; then
-        show_command "git branch $option_ | grep $sought_"
+        show_command git branch $option_ \| grep $sought_
         grep_branch "$sought_" "$option_" 2>&1 | grep -v -e warning | grep --color $sought_
     else
-        show_command "git branch $option_"
+        show_command git branch $option_
         git branch $option_ 2>&1 | grep -v -e warning
     fi
 }
@@ -112,7 +112,7 @@ go () {
     local _doc___="git checkout"
     local stashed_=
     local current_branch_=$(get_branch) wanted_branch_="${@##*/}"
-    show_command "git checkout $wanted_branch_"
+    show_command git checkout $wanted_branch_
     [[ "$wanted_branch_" == $current_branch_ ]] && show_error "Already on $current_branch_"
     [[ "$wanted_branch_" == $current_branch_ ]] && return 0
     if any_git_changes_ .; then
@@ -126,7 +126,7 @@ go () {
 }
 
 gp () {
-    show_command "git push $@"
+    show_command git push "$@"
     if ! MSG=$(git push "$@" 2>&1); then
         if [[ $MSG =~ set-upstream ]]; then
             local command_=$(echo "$MSG" | grep set-upstream)
@@ -274,7 +274,8 @@ gcs () {
 }
 
 gcu () {
-    show_command "git config user.name; git config user.email"
+    show_command git config user.name
+    show_command git config user.email
     echo "$(git config user.name) "'<'"$(git config user.email)"'>'
 }
 
