@@ -60,6 +60,10 @@ vj () {
     (cd ~/jab; mvim .; gsi)
 }
 
+vk () {
+    vim_keys "$@"
+}
+
 vl () {
     local stdout_=$(history -p !-1)
     vim -p $($stdout_)

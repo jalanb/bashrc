@@ -104,9 +104,9 @@ __main__ () {
 }
 
 post_bashrc () {
-    cde .
+    [[ -f .cd ]] && cde .
     pwd
-    l
+    lo
 }
 
 [[ $- =~ i ]] && __main__  "$@" # > $bashrc_log 2>&1

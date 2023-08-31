@@ -150,13 +150,15 @@ nnoremap z<down> zR
 nnoremap ] <C-]>
 nnoremap [ <C-T>
 nnoremap ; q:
+"noremap : 
 nnoremap ' bp
 nnoremap " m'
 "noremap \ - leader
-nnoremap < .?<cr>
-nnoremap , n.
-nnoremap > j.
+"noremap | - leader
+nnoremap , /<cr>.
+nnoremap < ?<cr>.
 "noremap . - repeat
+nnoremap > j.
 "noremap / - search
 "noremap / - search
 "noremap `
@@ -164,7 +166,6 @@ nnoremap > j.
 "noremap {
 "noremap }
 "noremap : - command line
-nnoremap " bn
 "noremap "
 "noremap |
 "noremap < -

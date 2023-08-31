@@ -25,6 +25,16 @@ qx () {
 #
 # xxx
 # xxxx
+
+from () {
+    local source_="$1"
+    local import_=$2
+    local type_=$3
+    qt "$type_" && return 0
+    test -f "$source_" || return 2
+    source "$source_"
+}
+
 # xxxxx
 # xxxxxx
 # xxxxxxx
