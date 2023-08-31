@@ -45,6 +45,20 @@ minimally () {
     ) >&2
 }
 
+minimally () {
+    local red_="\033[1;31m"
+    local green_="\033[1;32m"
+    local yellow_="\033[1;33m"
+    local blue_="\033[0;34m"
+    local off_="\033[0m"
+    (
+        printf "# ${red_}MINIMAL ${blue_}$ $green_"
+        echo -n "$@" 
+        printf "$off_"
+        echo
+    ) >&2
+}
+
 g () {
     git "$@"
     minimally "git " "$@"
