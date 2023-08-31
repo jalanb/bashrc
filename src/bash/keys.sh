@@ -80,4 +80,4 @@ vim_keys () {
     keys_read
 }
 
-read_keys
+keys_read

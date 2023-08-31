@@ -29,9 +29,8 @@ export WHYP_EDITOR=vv
 # echo $HOME/jab/pyth
 . ~/hub/jalanb/pyth/pyth.sh
 # echo $HOME/jab/cde
-. ~/hub/jalanb/cde/cde.sh
+. ~/cde.sh
 # echo $HOME/jab/environ.d
-
 . ~/jab/environ.d/__init__.sh optional
 # echo $HOME/jab/bash
 . ~/jab/src/bash/__init__.sh

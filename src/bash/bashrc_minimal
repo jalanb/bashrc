@@ -1,28 +1,18 @@
 # This file is sourced early from ~/.bashrc
 
-# It contains simplified version of my essential commands
-#     so that I can work easier even if ~/.bashrc failed
+# It contains simplified versions of my essential commands
+#     so that I can work more easily even if ~/.bashrc fails later
 
 SOURCE_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
 source "${SOURCE_DIR}/quietly.sh"
 
-from () {
-    local source_="$1"
-    local import_=$2
-    local type_=$3
-    qt "$type_" && return 0
-    test -f "$source_" || return 2
-    source "$source_"
-}
-
 import_essentials () {
     from ~/cde.sh import cde
     from ~/whyp.sh import whyp
-    from ~/bash/keys import read_keys
-    read_keys
+    from ~/bash/keys.sh import keys_read
 }
 
-quietly import_essentials
+unalias -a
 
 g () {
     git "$@"
@@ -54,3 +44,6 @@ vv () {
     vim -p "$@"
     echo "# MINIMAL $ vim -p " "$@">&2
 }
+
+quietly import_essentials
+keys_read

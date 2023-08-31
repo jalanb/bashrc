@@ -27,7 +27,7 @@ kl () {
 }
 
 kr () {
-    read_keys
+    keys_read
 }
 
 kv () {

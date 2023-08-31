@@ -115,7 +115,7 @@ green_python () {
     echo "${green_python_}${join_}${green_venv_}"
 }
 
-short_path () {
+short_pwd () {
     echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
 }
 
