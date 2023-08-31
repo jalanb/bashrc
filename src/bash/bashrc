@@ -104,7 +104,7 @@ __main__ () {
 }
 
 post_bashrc () {
-    cde .
+    [[ -f .cd ]] && cde .
     pwd
     l
 }
