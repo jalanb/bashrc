@@ -37,7 +37,6 @@ minimally () {
     local blue_="\033[0;34m"
     local off_="\033[0m"
     (
-        echo
         printf "# ${red_}MINIMAL ${blue_}$ $green_"
         echo -n "$@" 
         printf "$off_"
@@ -68,6 +67,7 @@ l () {
 ll () {
     l -l "$@"
     minimally "ls -l " "$@"
+    echo "# MINIMAL $ ls -l""$@" >&2
 }
 
 vd () {
