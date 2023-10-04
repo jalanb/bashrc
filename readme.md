@@ -24,6 +24,17 @@ $ source jab/__init__.sh
 and I can get back to coding 
 
 # New Motto
+
+<script type='text/javascript' 
+     src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'>
+</script>
+<script type='text/javascript'>
+    kofiwidget2.init('We should do coffee', '#29abe0', 'B0B3BLDJF');
+    kofiwidget2.draw();
+</script> 
+
+# Old Motto
+
 ```
 Live
     Let Go
@@ -31,4 +42,3 @@ Live
     Love
 Laugh
 ```
-
