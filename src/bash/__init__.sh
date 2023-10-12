@@ -25,7 +25,7 @@ __version__=0.8.76
 # echo ~/bash python
 . ~/bash/python.sh
 # echo ~/bash rf
-. ~/bash/rf.sh
+# . ~/bash/rf.sh
 # echo ~/bash work
 . ~/bash/work.sh
 # echo ~/bash git
