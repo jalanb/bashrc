@@ -20,6 +20,11 @@ rf () {
     python ~/jab/src/python/rf.py "$@"
 }
 
+rg () {
+    [[ "$@" ]] && c "$@"
+    ranger
+}
+
 ri () {
     local arg_=
     for arg_ in "$@"; do
@@ -50,6 +55,15 @@ rr () {
         return 1
     fi
     rm $options_ "$@" >/dev/null 2>&1
+}
+
+ru () {
+    local __doc__="""do da root root route, do da ru !"""
+    if [[ -z "$@" ]]; then
+        SUDO
+    else
+        sudo "$@"
+    fi
 }
 
 ry () {

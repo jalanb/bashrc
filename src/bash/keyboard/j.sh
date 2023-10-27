@@ -21,8 +21,16 @@ jj () {
     jd ~/jalanb
 }
 
+jjb () {
+    kk ~/bash "$@"
+}
+
 jjj () {
     . ~/jab/__init__.sh
+}
+
+jjy () {
+    kk ~/jab/src/python "$@"
 }
 
 jjjj () {

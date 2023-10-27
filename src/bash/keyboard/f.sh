@@ -41,33 +41,43 @@ fd_option () {
 
 # xxx
 
+#
 fd_ () {
+    local __doc__="""fd_ (""$@"")"""
     local dir_=. glob_=. options_==--follow
     for arg_ in "$@"; do
         [[ -f "$arg_" ]] && dir_=$(dirname "$arg_")
         [[ -d "$arg_" ]] && dir_="$arg_"
     done
-    local option_= 
+    local option_=
     for arg_ in "$@"; do
         for option_ in expression type follow; do
             options_="$options_ $(fd_option $arg_ $option_)"
         done
     done
-    [[ $1 =~ ^[-] ]] && options_="$options_ $1" 
+    [[ $1 =~ ^[-] ]] && options_="$options_ $1"
     show_command fd $options_ "$glob_" "$dir_"
     fd $options_ "$glob_" "$dir_"
 }
 
 fd_ () {
-    local dir_= names_= follow_=--follow options_=
+    local dir_= names_= options_= quiet_=
+    local follow_=--follow color_=
     while [[ "$@" ]]; do
-        if [[ $1 =~ ^-(e|-expression)$ ]]; then
+        if [[ $1 =~ ^-e$ ]]; then
             shift
-            options_="$options_ --expression $1"
+            options_="$options_ -e $1"
         elif [[ $1 =~ ^[-](f|-no-follow)$ ]]; then follow_=
-        elif [[ $1 =~ ^-(t|-type) ]]; then 
-            options_="$options_ $1 $2"
-            shift
+        elif [[ $1 =~ ^[-](c|-no-color)$ ]]; then color_='--color=never'
+        elif [[ $1 =~ ^[-](q|-quiet) ]]; then quiet_=1
+        elif [[ $1 =~ ^-td ]]; then options_="$options_ -td"
+        elif [[ $1 =~ ^-tf ]]; then options_="$options_ -tf"
+        elif [[ $1 =~ ^-(t|-type) ]]; then
+            if [[ $2 =~ [fdle] ]]; then
+                options_="$options_ $1 $2"
+                [[ $2 =~ ^l ]] && follow_=
+                shift
+            fi
         elif [[ $1 =~ ^[-] ]]; then options_="$options_ $1"
         elif [[ -d "$1" ]]; then dir_="$1"
         elif [[ -f "$1" ]]; then dir_=$(dirname "$1")
@@ -76,10 +86,10 @@ fd_ () {
         fi
         shift
     done
-    options_="$options_ $follow_"
+    options_="$options_ $follow_ $color_"
     [[ $names_ ]] || names_=.
     [[ $dir_ ]] || dir_=.
-    show_command fd $options_ "$names_" "$dir_"
+    [[ $quiet_ ]] || show_command fd $options_ "$names_" "$dir_"
     fd $options_ "$names_" "$dir_"
 }
 
@@ -88,15 +98,13 @@ fdb () {
 }
 
 fdd () {
-    _fdt d "$@"
-}
-
-fde () {
-    fd_ --expression "$@"
+    local __doc__="""Find directories"""
+    fd_ --type d "$@"
 }
 
 fdf () {
-    _fdt f "$@"
+    local __doc__="""Find files"""
+    fd_ --type f "$@"
 }
 
 fdg () {
@@ -104,16 +112,31 @@ fdg () {
     fd_ "$name_" "$@" | g "$name_"
 }
 
-_fdt () {
-    fd_ --type "$@"
+fdl () {
+    local __doc__="""Find links"""
+    fd_ --type l "$@"
+}
+
+fdp () {
+    fd -e py "$@"
+}
+
+fdv () {
+    vim -p $(fd "$@")
 }
 
 fdx () {
-    _fdt x "$@"
+    local __doc__="""Find executable files"""
+    fd_ --type x "$@"
 }
 
 fdy () {
     fde py "$@"
+}
+
+fdz () {
+    local __doc__="""Find empty files"""
+    fd_ --type e "$@"
 }
 
 fee () {
@@ -122,6 +145,22 @@ fee () {
 
 fff () {
     freds | tr ' ' '\n'
+}
+
+fgg () {
+    fgv *.py "$@"
+}
+
+fgp () {
+    fgv *.py "$@"
+}
+
+fgt () {
+    fgv *.test *.tests "$@"
+}
+
+ftt () {
+    fgv *.test *.tests "$@"
 }
 
 fll () {

@@ -5,7 +5,8 @@ source ~/keys/q.sh
 # x
 
 l () {
-    $(ls_command) "$@"
+    ls_colours
+    $(ls_command "$@")
 }
 
 # xx
@@ -16,6 +17,10 @@ l1 () {
 
 l0 () {
     l -1 "$@"
+}
+
+lA () {
+    l -a "$@"
 }
 
 la () {
@@ -38,7 +43,7 @@ lf () {
         rlf "$file_"
     done
     [[ $file_ ]] && return 0
-    rlf fred* 2>&1 | grep -q "No such" && echo "fredless" >&2 
+    rlf fred* 2>&1 | grep -q "No such" && echo "fredless" >&2
     return 1
 }
 
@@ -50,20 +55,31 @@ lk () {
     l0 "$@"
 }
 
-ll () {
-    local dir_option_=-a path_=
-    for path_ in "$@"; do
-        dir_option_=-a
-        test -e $path_ || continue
-        [[ -d "$path_" ]] && dir_option_=-d
-        [[ "$path_" =~ /$ ]] && dir_option_=-a
-        [[ -d "$path_" ]] && path_="$path_/"
-        l -l $dir_option_ "$path_"
-        [[ "$dir_option_" =~ [-]d ]] && dir_option_=-a
-    done
-    [[ $path_ ]] && return 0
-    l -l ./
 
+ll () {
+    local __doc__="""Long list the args"""
+    local arg_= paths_= options_=-lh
+    for arg_ in "$@"; do
+        test -e $arg_ || continue
+        if [[ -d "$arg_" ]]; then
+            if [[ $arg_ =~ /$ ]]; then
+                options_="$options_ -d"
+                args_="${arg_}%/}"
+            else
+                options_="$options_ -A"
+            fi
+        fi
+        paths_="${paths_} ${arg_}"
+    done
+    [[ $paths_ ]] || paths_=.
+    green_line $PWD
+    show_command -q l $options_ $paths_
+    echo
+    #(set +x
+        local fred="$options_"
+        local fred_=$paths_
+        l "$options_" $paths_
+    #)
 }
 
 lo () {
@@ -88,7 +104,7 @@ lx () {
 
 ly () {
     local dir_=.
-    [[ -d "$1" ]] && dir_="$1" 
+    [[ -d "$1" ]] && dir_="$1"
     l ${dir_}/*.py
 }
 
@@ -103,7 +119,7 @@ lao () {
 }
 
 lal () {
-    l -a -l "$@"
+    l -a -lh "$@"
 }
 
 lda () {
@@ -216,7 +232,7 @@ lrd () {
 }
 
 lrt () {
-    l --color=always -lrth "$@" | tel
+    l --color=always -lhtr "$@" | tel
 }
 
 ls1 () {
@@ -362,24 +378,30 @@ ls_has_option () {
 
 ls_options () {
     local __doc__="""Use available options"""
-    local by_dir_= colour_=-G classify_=-F
     local dimension_=-C
     [[ $1 =~ -[v1] ]] && dimension_=-1
-    if ls_has_option $colour_; then
-        colour_=--color
-        by_dir_=--group-directories-first
+    local colour_=-G classify_=-F by_dir_=
+    if ls_has_option '--color' ; then
+        colour_="--color=auto"
         classify_=--classify
+        by_dir_=--group-directories-first
     fi
-    echo "-h $dimension_ $colour_ $by_dir_ $classify_"
-
+    echo "-h $dimension_ $colour_ $classify_ $by_dir_"
 }
 
 
 ls_command () {
-    echo "$(ls_program)" "$(ls_options "$@")"
+    local __doc__="ls_command ""$@"
+    local __program__="$(ls_program)"
+    local __options__="$(ls_options)"
+    echo "$(ls_program)" "$(ls_options)" "$@"
 }
 
 # _xxxxxxxxxx
+
+ls_colours () {
+    [[ $LS_COLORS ]] || eval $(dircolors ~/.dircolors)
+}
 
 
 

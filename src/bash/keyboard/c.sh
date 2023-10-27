@@ -18,12 +18,12 @@ cb () {
 cc () {
     cde $CDE.sh
 }
-
-cd () {
-    command cd "$@" || return 1
-    local cde_=$HOME/cde
-    PYTHONPATH=$cde_ $cde_/.venv/bin/python3 -m cde --QUIETLY --add .
-}
+# 
+# cd () {
+#     command cd "$@" || return 1
+#     local cde_=$HOME/cde
+#     PYTHONPATH=$cde_ $cde_/.venv/bin/python3 -m cde --QUIETLY --add .
+# }
 
 cg () {
     local _where=.
@@ -73,11 +73,11 @@ can () {
     cat -n "$@"
 }
 
-cdj () {
+cdb () {
     cde ~/jab
 }
 
-cdn () {
+cdj () {
     cde ~/jalanb
 }
 

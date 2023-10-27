@@ -5,13 +5,30 @@
 
 # _
 # x
-
+#
 I () {
     printf "%s" "$*"
 }
 
 # xx
+#
+IP () {
+    local _break=yes
+    if [[ $1 == all ]]; then
+        _break=no
+    fi
+    for number in 10 172 193 192 100
+    do
+        if ~/jab/bin/mifconfig $number; then
+            if [[ $_break == yes ]]; then
+                break
+            fi
+        fi
+    done
+}
 
+# xxx
+#
 inj () {
     ind ~/jalanb "$@"
 }
