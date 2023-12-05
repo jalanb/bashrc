@@ -28,21 +28,6 @@ typed pii || . ~/bash/python.sh
 
 # xx
 
-3d () {
-    3l -d "$@"
-}
-
-3l () {
-    local options_= shifts_=
-    [[ $1 =~ ^[-]d$ ]] && options_="-d" && shift
-    [[ $1 =~ ^[0-9]+$ ]] && options_="-L $1" && shifts_=1
-    [[ $1 =~ ^[-]L$ ]] && options_="$1 $2" && shifts_=2
-    [[ $options_ ]] || options_="-L 3"
-    [[ $1 =~ ^[-]P$ ]] && options_="$options_ $1 $2" && shifts_=2
-    [[ $shifts_ ]] && shift $shifts_
-    Tree $options_ "$@"
-}
-
 arg_dirs () {
     local dir_=. arg_= path_= result_=1
     for arg_ in "$@"; do
@@ -63,362 +48,13 @@ arg_dir () {
     return 0
 }
 
-3y () {
-    local dir_=.
-    if [[ -e "$1" ]]; then
-        [[ -d "$1" ]] && dir_="$1"
-        [[ -f "$1" ]] && dir_=$(dirname "$1")
-        shift
-    fi
-    3l -P "*.py" $dir_ "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
-}
-
-IP () {
-    local _break=yes
-    if [[ $1 == all ]]; then
-        _break=no
-    fi
-    for number in 10 172 193 192 100
-    do
-        if ~/jab/bin/mifconfig $number; then
-            if [[ $_break == yes ]]; then
-                break
-            fi
-        fi
-    done
-}
-
 
 _free_line_here () {
     :
 }
 
 
-ml () {
-    memo -l 9
-}
-
-pg () {
-    ps -ef | grep -v grep | grep "$@"
-}
-
-rg () {
-    [[ "$@" ]] && c "$@"
-    ranger
-}
-
-ru () {
-    local __doc__="""do da root root route, do da ru !"""
-    if [[ -z "$@" ]]; then
-        SUDO
-    else
-        sudo "$@"
-    fi
-}
-
-tm () {
-    if [[ -z $1 ]]; then SESSION=$(jostname)
-    else
-        SESSION=$1
-        shift
-    fi
-    ! tmux attach-session -t $SESSION "$@" && tmux new-session -s $SESSION "$@"
-}
-
-tf () {
-    [[ $? -eq 0 ]] && echo "true" || echo "false"
-}
-
-tt () {
-    if echo $1 | grep -q "gz$"; then
-        contents=tz
-        extract=xz
-    else
-        contents=t
-        extract=x
-    fi
-    tar ${extract}f $1
-    cd $(tar ${contents}f $1 | head -n 1)
-    ranger
-}
-
 # xxx
-
-add () {
-    echo $(($1 + $2))
-}
-
-ask () {
-    local _answer=
-    read -e -n1 -p "$1 " _answer
-    echo $_answer
-}
-
-dir () {
-    local _where=.
-    [[ -n "$@" ]] && _where="$@"
-    say $(short_dir $_where)
-}
-
-envv () {
-    env | grep VIRTUAL_ENV= | grep '=.*'
-}
-
-fdv () {
-    vim -p $(fd "$@")
-}
-
-fgg () {
-    fgv *.py "$@"
-}
-
-fgp () {
-    fgv *.py "$@"
-}
-
-fgt () {
-    fgv *.test *.tests "$@"
-}
-
-ftt () {
-    fgv *.test *.tests "$@"
-}
-
-ght () {
-    gh "$@" | tel
-}
-
-ghv () {
-    local __doc__="edit stuff from history"
-    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
-}
-
-gre () {
-    [[ -z $* ]] && echo "gre what?" >&2 || $(which grep) -h --color=never "$@"
-}
-
-gv. () {
-    PYTHONPATH=$(realpath .) gv .
-}
-
-gvd () {
-    EDITOR=gvim vd "$@"
-}
-
-hd1 () {
-    head -n 1 "$@"
-}
-
-hed () {
-    SCREEN=$(screen_height)
-    SCREEN=${LINES:-$(screen_height)}
-    HALF_SCREEN=`expr $SCREEN / 2`
-    HEADLINES=${HEADLINES:-$HALF_SCREEN}
-    head -n ${1:-$HEADLINES} "$@"
-}
-
-hub () {
-    local _directory=~/hub
-    local _remote=
-    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
-    [[ $1 =~ http.*git ]] && _remote="$1" && shift
-    local _destination=
-    if [[ -n "$@" ]]; then
-        if cde_ok ~/hub "$@"; then
-            _directory=$(cde_first ~/hub "$@")
-        fi
-    fi
-    if [[ $_remote =~ http ]]; then
-        [[ -d $_directory ]] && cd $_directory
-        _directory=$(clone -n $_remote)
-    fi
-    [[ -d $_directory ]] && cde $_directory
-    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
-    cde $_directory
-}
-
-inj () {
-    ind ~/jab "$@"
-}
-
-jjb () {
-    kk ~/bash "$@"
-}
-
-jjy () {
-    kk ~/jab/src/python "$@"
-}
-
-mkd () {
-    show_command mkdir -p "$@"
-    mkdir -p "$@"
-}
-
-sai () {
-    [[ -f /usr/bin/say ]] || return
-    local _one=$1
-    local _voices="-v Moira"
-    if [[ $_one =~ ^v(oices*)*$ ]]; then
-        shift
-        local _two=$1; [[ -n $_two ]] && shift
-        _voices="-v?";
-        if [[ $_one == "voice" ]]; then
-            _voices="-v $_two"
-        elif [[ $_one == v ]]; then
-            local _voice=
-            [[ -n $_two ]] &&  _voice=$_two
-            _voices="-v $_two"
-        fi
-    fi
-    local _message="$@"
-    local _dir=
-    [[ -d $_message ]] && _dir=$_message && _message=
-    [[ -d "$1" ]] && _dir="$1" && shift && _message="$@"
-    [[ -d $_dir ]] && _dir=$(short_dir $_dir) || _dir=
-    # From https://stackoverflow.com/a/31189843/500942
-    ( { { /usr/bin/say $_voices $_dir $_message >&2; } 2>&3- & } 3>&2 2>/dev/null )
-}
-
-ses () {
-    local _old="$1"; shift
-    local _new="$1"; shift
-    echo "$@" | sed -e "s:$_old:$_new:"
-}
-
-sib () {
-    . ~/.bashrc
-}
-
-sto () {
-    firefox "http://stackoverflow.com/search?q=$*"
-}
-
-tel () {
-    # Using "$*" instead of "$@" deliberately here
-    # Side effect: args are now text, not args
-    HEADLINES=${HEADLINES:-(( ${LINES:-$(screen_height)} / 2 ))}
-    head -n ${1:-$HEADLINES} "$@"
-    lines=$(echo "$*" | sed -e "s/ *-n.\([0-9]\+\)/\1/")
-    if [[ -n $lines ]]; then
-        args=$(echo "$*" | sed -e "s/^\(.*\) *-n.\([0-9]\+\)\(.*\)/\1\3/")
-        echo tel $lines $args
-        tail -n $lines $args
-    else
-        tail -n $(( ${LINES:-$(screen_height)} / 2 )) "$@"
-    fi
-}
-
-tma () {
-    tmux new-session -A -s jabtmux
-}
-
-tmp () {
-    cde ~/tmp
-}
-
-tti () {
-    tty | cut -d'/' -f3
-}
-
-vaf () {
-    vim -p $(aliases) $(functons)
-    sa
-    sf
-}
-
-vat () {
-    vimcat "$@"
-}
-
-vfg () {
-    _sought="$1" && shift
-    vf "$@" +/$_sought
-}
-
-vfh () {
-    vim -p $( $( h1 ) | space_lines ) "$@"
-}
-
-vfr () {
-    python ~/jab/src/python/vim_traceback.py "$@"
-}
-
-vgf () {
-    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
-}
-
-vla () {
-    _edit_locals aliases.sh "$@"
-}
-
-vle () {
-    _edit_locals environ.sh "$@"
-}
-
-vlf () {
-    _edit_locals functons.sh "$@"
-}
-
-vla () {
-    _edit_locals aliases.sh "$@"
-}
-
-vwa () {
-    _edit_work aliases.sh
-}
-
-vwe () {
-    _edit_work environ.sh
-}
-
-vwf () {
-    _edit_work functons.sh
-}
-
-vlo () {
-    vv $(locate "$@")
-}
-
-vpe () {
-    _edit_source ~/jab/environ.d/python
-}
-
-vpr () {
-    local _crappy_program_py=$1
-    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
-}
-
-vtc () {
-    vtr -c
-}
-
-vtr () {
-    python ~/jab/src/python/tracebacks.py -e "$@"
-}
-
-VIM () {
-    sudo vim "$@"
-}
-
-wtb () {
-    . ~/bash/__init__.sh
-}
-
-wvb () {
-    vim -p ~/bash "$@"
-}
-
-wvj () {
-    vim -p ~/jab/__init__.sh "$@"
-}
-
-wvw () {
-    vim -p ~/hub/whyp/whyp.sh "$@"
-}
-
-xib () {
-    bash -x ~/.bashrc
-}
 
 # xxxx
 
@@ -582,20 +218,20 @@ SUDO () {
         console_title_off "${me}@${here}"
 }
 
-dicp () {
-    COMMAND_FOR_SAME_FILES=cp _dixx "$1" "$2"
+dic () {
+    _dixx cp "$1" "$2"
 }
 
-dihh () {
-    COMMAND_FOR_SAME_FILES=hd _dixx "$@"
+dih () {
+    _dixx hd "$@"
 }
 
-diic () {
-    COMMAND_FOR_SAME_FILES=icdiff _dixx "$@"
+dii () {
+    _dixx icdiff "$@"
 }
 
-divv () {
-    COMMAND_FOR_SAME_FILES=vd _dixx "$@"
+div () {
+    _dixx vd "$@"
 }
 
 over () {
