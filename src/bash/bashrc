@@ -78,7 +78,7 @@ bbb () {
 }
     
 bashrc () {
-    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     export PS1="\$? [$(colour_user):$(colour_here)]\n$ "
     bashrc_source ~/jab/bash/bashrc_minimal
     bashrc_source $HOME/jab/__init__.sh || return 1
