@@ -77,7 +77,10 @@ red_date () {
 }
 
 path_to_venv () {
-    env | grep VIRTUAL_ENV= | cut -d= -f2
+    local path_to_venv_=$(env | grep VIRTUAL_ENV= | cut -d= -f2)
+    local join_="/"
+    [[ $path_to_venv_ =~ ~ ]] && join_="~"
+    [[ $path_to_venv_ =~ ^[.] ]] && join_="."
 }
 
 lgreen_venv() {
@@ -134,17 +137,13 @@ git_data () {
 
 dir_data () {
     local rlf_="$(readlink -f .)"
-    if [[ "$rlf_" == "$PROMPT_RLF" ]]; then
-        local dir_data_="$(short_pwd)"
-        [[ $dir_data_ ]] || dir_data_=$(basename $(readlink -f .))
-        echo $dir_data_
-    else
-        readlink -f .
-    fi
+    [[ "$rlf_" == "$PROMPT_RLF" ]] && basename "$rlf_" || echo "$rlf_"
 }
 
 lblue_dir () {
-    lblue "$(dir_data) $(git_data)"
+    local dir_=$(dir_data)
+    local git_=$(git_data)
+    lblue "$git_ $dir_"
 }
 
 colour_prompt () {
