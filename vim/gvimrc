@@ -53,8 +53,3 @@ endfunction
 " tear down {{{2
 let &cpo = save_cpo
 "
-
-" screen {{{2 
-" Start in fullscreen
-set fullscreen
-
