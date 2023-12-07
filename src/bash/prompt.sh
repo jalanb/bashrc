@@ -205,14 +205,17 @@ export_pses () {
     local status_=$1
     PROMPT_STATUS=$status_
     export PROMPT_STATUS
-    # export ITERM2_SQUELCH_MARK=1
     pre_pses
     export PS1=$(colour_prompt $status_)
-    export PS2="... "  # Continuation line
-    export PS3="#?"    # Prompt for select command
-    export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
-                                                    # Thanks to pyenv for the (ahem) prompt
-    post_pses "$@"
+    # Continuation line
+    export PS2="... "
+    # Prompt for select command
+    export PS3="#?"
+    # Used by “set -x” to prefix tracing output
+    # export PS4="+ [${BASH_SOURCE##*/}:${FUNCNAME[0]}():${LINENO}] "
+    export PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] '
+    set_status_bit "$status_"
+    post_pses
 }
 
 
