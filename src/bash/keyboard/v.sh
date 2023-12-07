@@ -6,8 +6,9 @@
 
 unalias v >/dev/null 2>&1
 unalias vv >/dev/null 2>&1
+
 v () {
-    mvim "$@"
+    open /Applications/MacVim.app "$@"
 }
 
 # xx
@@ -57,7 +58,7 @@ vg () {
 # vi
 
 vj () {
-    (cd ~/jab; mvim .; gsi)
+    (cd ~/jab; vv .; gsi)
 }
 
 vk () {
@@ -99,7 +100,19 @@ vu () {
 }
 
 vv () {
-    [[ $1 ]] && vim -p "$@" || vim ~/.vimrc
+    local gsi_= source_=
+    if [[ $1 =~ ^- ]]; then
+        [[ $1 =~ -g ]] && gsi_=1
+        [[ $1 =~ -s ]] && source_=1
+        shift
+    fi
+    local dir_="$HOME"
+    [[ -f $1 ]] && dir_=$(dirname $(readlink "$1"))
+    [[ -d $1 ]] && dir_=$(basename $(readlink "$1"))
+    [[ $* ]] && vim -p "$@" || vim -p ~/keys/v.sh ~/.vimrc
+    [[ $gsi_ ]] && (cd $dir_; gsi)
+    [[ $1 =~ [.]sh$ ]] || return 0
+    [[ $source_ ]] && source "$@" 
 }
 
 vw () {
@@ -121,6 +134,12 @@ VIM () {
 }
 
 # vaf
+
+vaf () {
+    vim -p $(aliases) $(functons)
+    sa
+    sf
+}
 
 vat () {
     vimcat "$@"
@@ -187,16 +206,55 @@ vfd () {
     vim -p $(fd --follow "$@")
 }
 
+vfg () {
+    _sought="$1" && shift
+    vf "$@" +/$_sought
+}
+
+vfh () {
+    vim -p $( $( h1 ) | space_lines ) "$@"
+}
+
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
+}
+
+vfr () {
+    python ~/jab/src/python/vim_traceback.py "$@"
+}
+
+vgf () {
+    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
+}
+
+
+vla () {
+    _edit_locals aliases.sh "$@"
+}
+
+vle () {
+    _edit_locals environ.sh "$@"
+}
+
+vlf () {
+    _edit_locals functons.sh "$@"
+}
+
+vla () {
+    _edit_locals aliases.sh "$@"
 }
 
 vlo () {
     vv $(locate "$@")
 }
 
-vtc () {
-    vtr -c
+vpe () {
+    _edit_source ~/jab/environ.d/python
+}
+
+vpr () {
+    local _crappy_program_py=$1
+    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
 }
 
 vss () {
@@ -209,8 +267,28 @@ vss () {
     vim -p $files_
 }
 
+vtc () {
+    vtr -c
+}
+
+vtr () {
+    python ~/jab/src/python/tracebacks.py -e "$@"
+}
+
 vtt () {
     python "$1" | python ~/jab/src/python/vim_traceback.py -i
+}
+
+vwa () {
+    _edit_work aliases.sh
+}
+
+vwe () {
+    _edit_work environ.sh
+}
+
+vwf () {
+    _edit_work functons.sh
 }
 
 vvb () {
@@ -241,7 +319,7 @@ vvu () {
 
 vvv () {
     (cd ~/jab/vim
-    v "$@" .
+    vv -g . "$@"
     gsi)
 }
 
@@ -260,7 +338,7 @@ vd13 () {
 }
 
 vd21 () {
-    vd ~/one ~/two "$@"
+    vd ~/two ~/one "$@"
 }
 
 vd23 () {
@@ -268,11 +346,11 @@ vd23 () {
 }
 
 vd32 () {
-    vd ~/one ~/two "$@"
+    vd ~/three ~/two "$@"
 }
 
 vd31 () {
-    vd ~/two ~/three "$@"
+    vd ~/three ~/one "$@"
 }
 
 vims () {
@@ -353,7 +431,7 @@ vim_diff () {
 
 vim_none () {
     (echo "" > ~/tmp/fred
-    mvim ~/tmp/fred)
+    open /Applications/MacVim.app ~/tmp/fred)
 }
 
 vim_some () {

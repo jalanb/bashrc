@@ -11,7 +11,7 @@ get_git_status() {
     local branch_=$1; shift
     local bump_version_=$1; shift
     [[ $bump_version_ =~ [0-9] ]] && branch_="$branch_ v$bump_version_"
-    local modified_=$(quietly git status --porcelain | wc -l | tr -d ' ')
+    local modified_=$(quietly git status --porcelain | wc -l | tr -d " ")
     local remote="$(git config --get branch.${branch_}.remote 2>/dev/null)"
     local remote_branch_="$(git config --get branch.${branch_}.merge)"
     local pushes_=$(git rev-list --count ${remote_branch_/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
@@ -38,7 +38,7 @@ get_git_status() {
 }
 
 upper () {
-    echo "$@" | tr '[:lower:]' '[:upper:]'
+    echo "$@" | tr "[:lower:]" "[:upper:]"
 }
 
 pro_rgb () {
@@ -71,16 +71,19 @@ emoji_errors () {
 }
 
 red_date () {
-    local red_day_=$(red $(date +'%A'))
-    local red_date_=$(lred $(date +' %F %H:%M'))
-    echo $red_day_ $red_date_
+    local red_day_=$(red $(date +"%A"))
+    local lred_date_=$(lred $(date +" %F %H:%M"))
+    echo $red_day_ $lred_date_
 }
 
 path_to_venv () {
-    env | grep VIRTUAL_ENV= | cut -d= -f2
+    local path_to_venv_=$(env | grep VIRTUAL_ENV= | cut -d= -f2)
+    local join_="/"
+    [[ $path_to_venv_ =~ ~ ]] && join_="~"
+    [[ $path_to_venv_ =~ ^[.] ]] && join_="."
 }
 
-lgreen_venv_name () {
+lgreen_venv() {
     local path_to_venv_=$(path_to_venv)
     [[ -e $path_to_venv_ ]] || return 1
     local venv_name_=$(basename "$path_to_venv_")
@@ -101,18 +104,18 @@ green_python () {
         virtual_env_name_=$(basename "$virtual_env_directory_")
     fi
 
-    local python_version_=$(python -V 2>&1 | head -n1 | cut -d' ' -f2)
+    local python_version_=$(python -V 2>&1 | head -n1 | cut -d" " -f2)
     local green_python_=$(green "${python_version_}")
-    local green_venv_=$(lgreen_venv_name)
-    if [[ ! $green_venv_ ]]; then
+    local lgreen_venv_=$(lgreen_venv)
+    if [[ ! $lgreen_venv_ ]]; then
         echo $green_python_
         return 0
     fi
     local path_to_venv_=$(path_to_venv)
-    local join_='/'
-    [[ $path_to_venv_ =~ ~ ]] && join_='~'
-    [[ $path_to_venv_ =~ ^[.] ]] && join_='.'
-    echo "${green_python_}${join_}${green_venv_}"
+    local join_="/"
+    [[ $path_to_venv_ =~ ~ ]] && join_="~"
+    [[ $path_to_venv_ =~ ^[.] ]] && join_="."
+    echo "${green_python_}${join_}${lgreen_venv_}"
 }
 
 short_pwd () {
@@ -134,17 +137,13 @@ git_data () {
 
 dir_data () {
     local rlf_="$(readlink -f .)"
-    if [[ "$rlf_" == "$PROMPT_RLF" ]]; then
-        local dir_data_="$(short_pwd)"
-        [[ $dir_data_ ]] || dir_data_=$(basename $(readlink -f .))
-        echo $dir_data_
-    else
-        readlink -f .
-    fi
+    [[ "$rlf_" == "$PROMPT_RLF" ]] && basename "$rlf_" || echo "$rlf_"
 }
 
 lblue_dir () {
-    lblue "$(dir_data) $(git_data)"
+    local dir_=$(dir_data)
+    local git_=$(git_data)
+    lblue "$git_ $dir_"
 }
 
 colour_prompt () {
@@ -197,8 +196,8 @@ pre_pses () {
 
 post_pses () {
     local __doc__="""Stuff to do after setting the prompt"""
-    set_status_bit "$@"
-    export PROMPT_RLF=$(readlink -f .)
+    PROMPT_RLF=$(readlink -f .)
+    export PROMPT_RLF
 }
 
 export_pses () {
@@ -206,14 +205,17 @@ export_pses () {
     local status_=$1
     PROMPT_STATUS=$status_
     export PROMPT_STATUS
-    # export ITERM2_SQUELCH_MARK=1
     pre_pses
     export PS1=$(colour_prompt $status_)
-    export PS2="... "  # Continuation line
-    export PS3="#?"    # Prompt for select command
-    export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] '  # Used by “set -x” to prefix tracing output
-                                                    # Thanks to pyenv for the (ahem) prompt
-    post_pses "$@"
+    # Continuation line
+    export PS2="... "
+    # Prompt for select command
+    export PS3="#?"
+    # Used by “set -x” to prefix tracing output
+    # export PS4="+ [${BASH_SOURCE##*/}:${FUNCNAME[0]}():${LINENO}] "
+    export PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] '
+    set_status_bit "$status_"
+    post_pses
 }
 
 
@@ -222,5 +224,5 @@ if [[ "$PROMPT_COLOUR" == "None" ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
     export_pses
-    export PROMPT_COMMAND='export_pses $?'
+    export PROMPT_COMMAND="export_pses $?"
 fi

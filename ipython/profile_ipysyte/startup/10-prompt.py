@@ -16,7 +16,10 @@ def prompt():
     virtual_env = os.environ.get("VIRTUAL_ENV", "")
     virtual_environment = ""
     if virtual_env:
-        virtual_environment = ".%s" % os.path.basename(virtual_env)
+        name = os.path.basename(virtual_env)
+        if name in ('venv', '.venv'):
+            name = os.path.dirname(virtual_env)
+        virtual_environment = f'.{name}'
     return "%s0 %s[%s%s python%s%s %s@%s:%s%s]%s%s\n>>> " % (
         color.White,
         color.LightRed,

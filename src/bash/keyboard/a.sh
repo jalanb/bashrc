@@ -26,7 +26,7 @@ a () {
 # aa is in ackvim.sh
 
 ab () {
-    ash "$@" ~/bash
+    ack "$@" ~/bash
 }
 
 ag () {
@@ -38,7 +38,7 @@ aj () {
 }
 
 ak () {
-    ash "$@" ~/keys
+    ack "$@" ~/keys
 }
 
 # _xx
@@ -59,12 +59,22 @@ aaj () {
     aa "$@" ~/jalanb
 }
 
+add () {
+    echo $(($1 + $2))
+}
+
 ajj () {
     a "$@" ~/jalanb/
 }
 
 asb () {
     red ab "$@" ~/bash
+}
+
+ask () {
+    local _answer=
+    read -e -n1 -p "$1 " _answer
+    echo $_answer
 }
 
 avb () {

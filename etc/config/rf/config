@@ -11,5 +11,5 @@ development = tags a.out *.log *.retry
 old = *.old
 swaps = .*.sw[a-z] *.recovered
 python = *.pyc *.pyo *.fail *$py.class *.profile __pycache__ htmlcov *.egg-info
-temporary = *.bak *.orig temp.* *.tmp *~ .*~ fred fred.* mary mary.* one two tmp*-vim.sh *.retry out.log out.err
+temporary = *.bak *.orig temp.* *.tmp *~ .*~ fred fred.* mary mary.* one two tmp*-vim.sh *.retry out.log out.err *-e =*
 big = *.hprof

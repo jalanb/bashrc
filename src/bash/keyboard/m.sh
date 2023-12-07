@@ -12,8 +12,17 @@ md () {
     mkdir -p "$@" 2>/dev/null
 }
 
+ml () {
+    memo -l 9
+}
+
+# xxx
+
+unalias man
+unalias batman
+
 man () {
-    batman "$@"
+    /opt/homebrew/bin/batman "$@"
 }
 
 min () {
@@ -35,6 +44,8 @@ mkd () {
     [[ -d "$1" ]]
 }
 
+# xxxx
+#
 mkcd () {
     local __doc__='make a directory and cd to it';
     mkd  -q "$1" || return 1

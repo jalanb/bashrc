@@ -59,7 +59,7 @@ keys_read () {
     . $(key_init)
 }
 
-vim_keys () {
+keys_vim () {
     local init_=$(key_init) files_=
     if [[ ! "$@" ]]; then
         files_="$(key_scripts)"

@@ -1211,7 +1211,7 @@ glone () {
 # xxxxxxx
 
 standup () {
-    for dir in $(fd -H -td .git ~/lab/sparky/ -X dirname)
+    for dir in $(fd -H -td .git ~/lab/alan/ -X dirname)
     do
         if git -C $dir standup | grep -q nothing; then
             if [[ $(git -C $dir status --porcelain) ]]; then

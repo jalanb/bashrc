@@ -38,26 +38,43 @@ sz () {
     export PS4=
 }
 
-yt () {
-    # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
-    local _dir=~/Downloads/youtube.dl
-    if [[ -d "$1" ]]; then
-        _dir="$1"
-        shift
-    elif [[ -d "$_dir/$1" ]]; then
-        _dir="$_dir/$1"
-        shift
-    fi
-    local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
-    ( cd $_dir
-    [[ "$@" ]] && youtube-dl $_options "$@"
-    pwd
-    ll -htr
-    )
-}
-
 # _xx
 # xxx
+
+sai () {
+    [[ -f /usr/bin/say ]] || return
+    local _one=$1
+    local _voices="-v Moira"
+    if [[ $_one =~ ^v(oices*)*$ ]]; then
+        shift
+        local _two=$1; [[ -n $_two ]] && shift
+        _voices="-v?";
+        if [[ $_one == "voice" ]]; then
+            _voices="-v $_two"
+        elif [[ $_one == v ]]; then
+            local _voice=
+            [[ -n $_two ]] &&  _voice=$_two
+            _voices="-v $_two"
+        fi
+    fi
+    local _message="$@"
+    local _dir=
+    [[ -d $_message ]] && _dir=$_message && _message=
+    [[ -d "$1" ]] && _dir="$1" && shift && _message="$@"
+    [[ -d $_dir ]] && _dir=$(short_dir $_dir) || _dir=
+    # From https://stackoverflow.com/a/31189843/500942
+    ( { { /usr/bin/say $_voices $_dir $_message >&2; } 2>&3- & } 3>&2 2>/dev/null )
+}
+
+ses () {
+    local _old="$1"; shift
+    local _new="$1"; shift
+    echo "$@" | sed -e "s:$_old:$_new:"
+}
+
+sib () {
+    . ~/.bashrc
+}
 
 sla () {
     s $(aliases -l)
@@ -69,6 +86,10 @@ sgf () {
 
 slf () {
     JAB_LOCAL_FUNCS= s $(functons -l)
+}
+
+sto () {
+    firefox "http://stackoverflow.com/search?q=$*"
 }
 
 swf () {

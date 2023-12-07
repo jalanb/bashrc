@@ -16,7 +16,6 @@ typed pii || . ~/bash/python.sh
 
 # x
 
-# _x
 
 ,. () {
     [[ -f .cd ]] && . .cd
@@ -27,21 +26,6 @@ typed pii || . ~/bash/python.sh
 }
 
 # xx
-
-3d () {
-    3l -d "$@"
-}
-
-3l () {
-    local options_= shifts_=
-    [[ $1 =~ ^[-]d$ ]] && options_="-d" && shift
-    [[ $1 =~ ^[0-9]+$ ]] && options_="-L $1" && shifts_=1
-    [[ $1 =~ ^[-]L$ ]] && options_="$1 $2" && shifts_=2
-    [[ $options_ ]] || options_="-L 3"
-    [[ $1 =~ ^[-]P$ ]] && options_="$options_ $1 $2" && shifts_=2
-    [[ $shifts_ ]] && shift $shifts_
-    Tree $options_ "$@"
-}
 
 arg_dirs () {
     local dir_=. arg_= path_= result_=1
@@ -63,362 +47,13 @@ arg_dir () {
     return 0
 }
 
-3y () {
-    local dir_=.
-    if [[ -e "$1" ]]; then
-        [[ -d "$1" ]] && dir_="$1"
-        [[ -f "$1" ]] && dir_=$(dirname "$1")
-        shift
-    fi
-    3l -P "*.py" $dir_ "$@"  --prune | sed -e 's/^│/ /' -e 's/\\s/_/g' -e 's/[│├└]/ /g' -e 's:──:/:'
-}
 
-IP () {
-    local _break=yes
-    if [[ $1 == all ]]; then
-        _break=no
-    fi
-    for number in 10 172 193 192 100
-    do
-        if ~/jab/bin/mifconfig $number; then
-            if [[ $_break == yes ]]; then
-                break
-            fi
-        fi
-    done
-}
-
-
-_free_line_here () {
+free_line_here () {
     :
 }
 
 
-ml () {
-    memo -l 9
-}
-
-pg () {
-    ps -ef | grep -v grep | grep "$@"
-}
-
-rg () {
-    [[ "$@" ]] && c "$@"
-    ranger
-}
-
-ru () {
-    local __doc__="""do da root root route, do da ru !"""
-    if [[ -z "$@" ]]; then
-        SUDO
-    else
-        sudo "$@"
-    fi
-}
-
-tm () {
-    if [[ -z $1 ]]; then SESSION=$(jostname)
-    else
-        SESSION=$1
-        shift
-    fi
-    ! tmux attach-session -t $SESSION "$@" && tmux new-session -s $SESSION "$@"
-}
-
-tf () {
-    [[ $? -eq 0 ]] && echo "true" || echo "false"
-}
-
-tt () {
-    if echo $1 | grep -q "gz$"; then
-        contents=tz
-        extract=xz
-    else
-        contents=t
-        extract=x
-    fi
-    tar ${extract}f $1
-    cd $(tar ${contents}f $1 | head -n 1)
-    ranger
-}
-
 # xxx
-
-add () {
-    echo $(($1 + $2))
-}
-
-ask () {
-    local _answer=
-    read -e -n1 -p "$1 " _answer
-    echo $_answer
-}
-
-dir () {
-    local _where=.
-    [[ -n "$@" ]] && _where="$@"
-    say $(short_dir $_where)
-}
-
-envv () {
-    env | grep VIRTUAL_ENV= | grep '=.*'
-}
-
-fdv () {
-    vim -p $(fd "$@")
-}
-
-fgg () {
-    fgv *.py "$@"
-}
-
-fgp () {
-    fgv *.py "$@"
-}
-
-fgt () {
-    fgv *.test *.tests "$@"
-}
-
-ftt () {
-    fgv *.test *.tests "$@"
-}
-
-ght () {
-    gh "$@" | tel
-}
-
-ghv () {
-    local __doc__="edit stuff from history"
-    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
-}
-
-gre () {
-    [[ -z $* ]] && echo "gre what?" >&2 || $(which grep) -h --color=never "$@"
-}
-
-gv. () {
-    PYTHONPATH=$(realpath .) gv .
-}
-
-gvd () {
-    EDITOR=gvim vd "$@"
-}
-
-hd1 () {
-    head -n 1 "$@"
-}
-
-hed () {
-    SCREEN=$(screen_height)
-    SCREEN=${LINES:-$(screen_height)}
-    HALF_SCREEN=`expr $SCREEN / 2`
-    HEADLINES=${HEADLINES:-$HALF_SCREEN}
-    head -n ${1:-$HEADLINES} "$@"
-}
-
-hub () {
-    local _directory=~/hub
-    local _remote=
-    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
-    [[ $1 =~ http.*git ]] && _remote="$1" && shift
-    local _destination=
-    if [[ -n "$@" ]]; then
-        if cde_ok ~/hub "$@"; then
-            _directory=$(cde_first ~/hub "$@")
-        fi
-    fi
-    if [[ $_remote =~ http ]]; then
-        [[ -d $_directory ]] && cd $_directory
-        _directory=$(clone -n $_remote)
-    fi
-    [[ -d $_directory ]] && cde $_directory
-    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
-    cde $_directory
-}
-
-inj () {
-    ind ~/jab "$@"
-}
-
-jjb () {
-    kk ~/bash "$@"
-}
-
-jjy () {
-    kk ~/jab/src/python "$@"
-}
-
-mkd () {
-    show_command mkdir -p "$@"
-    mkdir -p "$@"
-}
-
-sai () {
-    [[ -f /usr/bin/say ]] || return
-    local _one=$1
-    local _voices="-v Moira"
-    if [[ $_one =~ ^v(oices*)*$ ]]; then
-        shift
-        local _two=$1; [[ -n $_two ]] && shift
-        _voices="-v?";
-        if [[ $_one == "voice" ]]; then
-            _voices="-v $_two"
-        elif [[ $_one == v ]]; then
-            local _voice=
-            [[ -n $_two ]] &&  _voice=$_two
-            _voices="-v $_two"
-        fi
-    fi
-    local _message="$@"
-    local _dir=
-    [[ -d $_message ]] && _dir=$_message && _message=
-    [[ -d "$1" ]] && _dir="$1" && shift && _message="$@"
-    [[ -d $_dir ]] && _dir=$(short_dir $_dir) || _dir=
-    # From https://stackoverflow.com/a/31189843/500942
-    ( { { /usr/bin/say $_voices $_dir $_message >&2; } 2>&3- & } 3>&2 2>/dev/null )
-}
-
-ses () {
-    local _old="$1"; shift
-    local _new="$1"; shift
-    echo "$@" | sed -e "s:$_old:$_new:"
-}
-
-sib () {
-    . ~/.bashrc
-}
-
-sto () {
-    firefox "http://stackoverflow.com/search?q=$*"
-}
-
-tel () {
-    # Using "$*" instead of "$@" deliberately here
-    # Side effect: args are now text, not args
-    HEADLINES=${HEADLINES:-(( ${LINES:-$(screen_height)} / 2 ))}
-    head -n ${1:-$HEADLINES} "$@"
-    lines=$(echo "$*" | sed -e "s/ *-n.\([0-9]\+\)/\1/")
-    if [[ -n $lines ]]; then
-        args=$(echo "$*" | sed -e "s/^\(.*\) *-n.\([0-9]\+\)\(.*\)/\1\3/")
-        echo tel $lines $args
-        tail -n $lines $args
-    else
-        tail -n $(( ${LINES:-$(screen_height)} / 2 )) "$@"
-    fi
-}
-
-tma () {
-    tmux new-session -A -s jabtmux
-}
-
-tmp () {
-    cde ~/tmp
-}
-
-tti () {
-    tty | cut -d'/' -f3
-}
-
-vaf () {
-    vim -p $(aliases) $(functons)
-    sa
-    sf
-}
-
-vat () {
-    vimcat "$@"
-}
-
-vfg () {
-    _sought="$1" && shift
-    vf "$@" +/$_sought
-}
-
-vfh () {
-    vim -p $( $( h1 ) | space_lines ) "$@"
-}
-
-vfr () {
-    python ~/jab/src/python/vim_traceback.py "$@"
-}
-
-vgf () {
-    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
-}
-
-vla () {
-    _edit_locals aliases.sh "$@"
-}
-
-vle () {
-    _edit_locals environ.sh "$@"
-}
-
-vlf () {
-    _edit_locals functons.sh "$@"
-}
-
-vla () {
-    _edit_locals aliases.sh "$@"
-}
-
-vwa () {
-    _edit_work aliases.sh
-}
-
-vwe () {
-    _edit_work environ.sh
-}
-
-vwf () {
-    _edit_work functons.sh
-}
-
-vlo () {
-    vv $(locate "$@")
-}
-
-vpe () {
-    _edit_source ~/jab/environ.d/python
-}
-
-vpr () {
-    local _crappy_program_py=$1
-    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
-}
-
-vtc () {
-    vtr -c
-}
-
-vtr () {
-    python ~/jab/src/python/tracebacks.py -e "$@"
-}
-
-VIM () {
-    sudo vim "$@"
-}
-
-wtb () {
-    . ~/bash/__init__.sh
-}
-
-wvb () {
-    vim -p ~/bash "$@"
-}
-
-wvj () {
-    vim -p ~/jab/__init__.sh "$@"
-}
-
-wvw () {
-    vim -p ~/hub/whyp/whyp.sh "$@"
-}
-
-xib () {
-    bash -x ~/.bashrc
-}
 
 # xxxx
 
@@ -427,13 +62,13 @@ back () {
 }
 
 bins () {
-    local _name="$1"; shift
-    [[ -z $_name ]] && return 1
-    while [[ -n $_name ]]; do
+    local name_="$1"; shift
+    [[ -z $name_ ]] && return 1
+    while [[ -n $name_ ]]; do
         for root in $HOME /bin /usr; do
-            find $root -wholename "bin/*$_name*" -print 2>/dev/null
-        done | grep -e $_name | sort | uniq | grep $_name 2>/dev/null
-        _name="$1"; shift
+            find $root -wholename "bin/*$name_*" -print 2>/dev/null
+        done | grep -e $name_ | sort | uniq | grep $name_ 2>/dev/null
+        name_="$1"; shift
     done
 }
 
@@ -446,9 +81,9 @@ bool () {
     if whyp -q "$1"; then
         if [[ $1 == "[[" ]]; then
             eval "$@"
-            local _result=$?
-            [[ $_result == 0 ]] && echo True || echo False
-            return $_result
+            local result_=$?
+            [[ $result_ == 0 ]] && echo True || echo False
+            return $result_
         else
             "$@" 2> ~/fd2 && echo True && return 0
         fi
@@ -465,50 +100,50 @@ brew () {
 }
 
 bump () {
-    local _show=
-    local _get=
+    local show_=
+    local get_=
     if [[ $1 == show ]]; then
-        _show=1
+        show_=1
         shift
     fi
     if [[ $1 == get ]]; then
-        _get=1
+        get_=1
         shift
     fi
-    local _pulled=
+    local pulled_=
     if [[ $1 == pulled ]]; then
-        _pulled=1
+        pulled_=1
         shift
     fi
     if [[ -d "$1" ]]; then
-        bump_dir="$1"
+        bumpdir_="$1"
         shift
     fi
-    local _name=$(basename_ $1)
-    local _config=
-    [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
-    [[ -n $_config ]] && shift
-    local _bump_root=$(git_root -q .)
-    local _part=${1:-patch}; shift
-    if [[ -z $_show && -z $_get ]]; then
-        if [[ -n $_part ]]; then
-            [[ $_pulled == 1 ]] || git pull --rebase
-            cd "$_bump_root"
-            local _options=
-            [[ -n $config ]] && _options="--config-file $_name"
-            if bumpversion $_options $_part "$@"; then
+    local name_=$(basename_ $1)
+    local config_=
+    [[ $name = ".bumpversion.cfg" ]] && config_="$1"
+    [[ -n $config_ ]] && shift
+    local bump_root_=$(git_root -q .)
+    local part_=${1:-patch}; shift
+    if [[ -z $show_ && -z $get_ ]]; then
+        if [[ -n $part_ ]]; then
+            [[ $pulled_ == 1 ]] || git pull --rebase
+            cd "$bump_root_"
+            local options_=
+            [[ -n $config ]] && options_="--config-file $name_"
+            if bumpversion $options_ $part_ "$@"; then
                 git push
                 git push origin v$(bump get)
             fi
         fi
     fi
-    [[ -z $_config ]] && _config="$_bump_root/.bumpversion.cfg"
-    [[ -f $_config ]] || return 2
-    local _sought=^current_version
-    if [[ -n $_show ]]; then
-        grep $_sought $_config | grep --colour '\d[0-9a-z.]\+$'
-    elif [[ -n $_get ]]; then
-        grep $_sought $_config | sed -e 's/.*= //'
+    [[ -z $config ]] && config_="$bump_root_/.bumpversion.cfg"
+    [[ -f $config_ ]] || return 2
+    local sought_=^current_version
+    if [[ -n $show_ ]]; then
+        grep $sought_ $config_ | grep --colour '\d[0-9a-z.]\+$'
+    elif [[ -n $get_ ]]; then
+        grep $sought_ $config_ | sed -e 's/.*= //'
     else
         bumpversion "$@"
     fi
@@ -520,6 +155,10 @@ down () {
     l -tr . | tail
 }
 
+envv () {
+    env | grep VIRTUAL_ENV= | grep '=.*'
+}
+
 hhhh () {
     echo '#' | clip_in
 }
@@ -529,9 +168,9 @@ lkra () {
 }
 
 left () {
-    local last_command="$1"
+    local lastcommand_="$1"
     echo $last_command
-    local last_command_line="$@"
+    local lastcommand_line_="$@"
     echo $last_command_line
 }
 
@@ -570,7 +209,7 @@ mkv3 () {
 SUDO () {
     if [[ -n $1 ]]; then
         user="-u $1"
-        you_sir="$1"
+        yousir_="$1"
     else
         user=
         you_sir=root
@@ -582,20 +221,20 @@ SUDO () {
         console_title_off "${me}@${here}"
 }
 
-dicp () {
-    COMMAND_FOR_SAME_FILES=cp _dixx "$1" "$2"
+dic () {
+    dixx_ cp "$1" "$2"
 }
 
-dihh () {
-    COMMAND_FOR_SAME_FILES=hd _dixx "$@"
+dih () {
+    dixx_ hd "$@"
 }
 
-diic () {
-    COMMAND_FOR_SAME_FILES=icdiff _dixx "$@"
+dii () {
+    dixx_ icdiff "$@"
 }
 
-divv () {
-    COMMAND_FOR_SAME_FILES=vd _dixx "$@"
+div () {
+    dixx_ vd "$@"
 }
 
 over () {
@@ -606,8 +245,18 @@ popq () {
     popd >/dev/null 2>&1
 }
 
-this () {
+pythis () {
     python -c "import this"
+}
+
+this () {
+    if [[ "$@" =~ -q ]]; then
+        pythis
+    else
+        pythis | head -n1 | green
+        echo
+        pythis | tail -n+2 | lgreen
+    fi
 }
 
 Tree () {
@@ -637,11 +286,11 @@ build () {
 }
 
 detab () {
-    local _expand=$(which expand)
-    whype -q gexpand && _expand=$(whyp -f gexpand)
+    local expand_=$(which expand)
+    whype -q gexpand && expand_=$(whyp -f gexpand)
     if [[ -f "$1" ]]; then
         if grep -Pq "^\s*\t\s*[^ \t]" $1; then
-            $_expand -i --tabs=4 $1 > /tmp/txt
+            $expand_ -i --tabs=4 $1 > /tmp/txt
             mv /tmp/txt $1
             echo detabbed
         else
@@ -654,8 +303,8 @@ detab () {
 
 fewer () {
     if [[ -n "$@" && -f "$1" ]]; then
-        local _lines=$(wc -l "$1" | cut -d' ' -f1)
-        if [[ $_lines -lt ${LINES:-$(screen_height)} ]]; then
+        local lines_=$(wc -l "$1" | cut -d' ' -f1)
+        if [[ $lines_ -lt ${LINES:-$(screen_height)} ]]; then
             cat -n "$1"
         else
             lesen "$1"
@@ -673,8 +322,8 @@ hello () {
 }
 
 jalanb () {
-    local _root=~/src/git/jalanb
-    for repo in $(readlink -f $_root/*); do
+    local root_=~/src/git/jalanb
+    for repo in $(readlink -f $root_/*); do
         [[ -d $repo ]] || continue
         git_dirty $repo || continue
         echo
@@ -729,9 +378,9 @@ given () {
 }
 
 ptags () {
-    local _source="$1"
-    [[ -n $_source ]] || _source="."
-    python ~/jab/src/python/ptags.py $_source
+    local source_="$1"
+    [[ -n $source ]] || source_="."
+    python ~/jab/src/python/ptags.py $source_
 }
 
 pushq () {
@@ -739,35 +388,38 @@ pushq () {
 }
 
 quack () {
-    local _result=1
+    local result_=1
     for $item in "$@"; do
-        if _like_duck $item; then
+        if like_duck $item; then
             python  $1
-            _result=0
+            result_=0
         fi
     done
-    return $_result
+    return $result_
 }
 
+
 range () {
-    local destination=.
+    local __doc__="""range(""$@"")"""
+    local dir_=.
     if [[ -n "$*" ]]; then
-        local cde_script=~/hub/cde/cd.py
-        if ! destination=$(PYTHONPATH=$python_directory python $cde_script "$@" 2>&1); then
-            echo "$destination"
+#       local cde_script_=~/hub/cde/cd.py
+        local cde_script_=~/cde/cde/__main__.py
+        if ! dir_=$(PYTHONPATH=$python_directory python $cde_script_ "$@" 2>&1); then
+            echo "$dir_"
             return 1
         fi
     fi
-    local real_destination=$(PYTHONPATH=$python_directory python -c "import os; print os.path.realpath('$destination')")
-    if [[ $destination != $real_destination ]]; then
-        echo "ranger ($destination ->) $real_destination"
-        destination=$real_destination
-    elif [[ $destination != $1 && $1 != "-" ]]; then
-        echo "ranger $destination"
+    local rlf_=$(readlink -f "$dir_")
+    if [[ $dir_ != $rlf_ ]]; then
+        dir_=$rlf_
+        echo "ranger ($dir_ ->) $rlf_"
+    elif [[ $dir_ != $1 && $1 != "-" ]]; then
+        echo "ranger $dir_"
     fi
-    pushq "$destination"
+    pushq "$dir_"
     source $(which ranger) $(which ranger)
-    console_whoami
+    echo; green_line $PWD; echo; l
     return 0
 }
 
@@ -791,10 +443,10 @@ bumper () {
         echo Please specify branch to bump >&2
         return 1
     fi
-    local _bump_branch=$1; shift
-    local _current_branch=$(git rev-parse --abbrev-ref HEAD)
-    if [[ $_current_branch != $_bump_branch ]]; then
-        if git co $_bump_branch; then
+    local bump_branch_=$1; shift
+    local current_branch_=$(git rev-parse --abbrev-ref HEAD)
+    if [[ $current_branch_ != $bump_branch_ ]]; then
+        if git co $bump_branch_; then
             return
         fi
     fi
@@ -821,7 +473,7 @@ howdoi () {
     /usr/local/bin/howdoi -c -a "$@"
 }
 
-_lesser () {
+lesser () {
     less -R "$@"
 }
 
@@ -839,7 +491,7 @@ mkvenv () {
         dir_="$1"
         shift
     fi
-    venv_dir_="$dir_/.venv"
+    venvdir__="$dir_/.venv"
     deactivate
     rm -rf $venv_dir_
     python3 -m venv "$venv_dir_"
@@ -848,16 +500,16 @@ mkvenv () {
 }
 
 show_line () {
-    local _prefix=$1; shift
-    local _server= _suffix=
-    [[ $1 ]] && _server=$1
-    [[ $2 ]] && _suffix=", $2"
-    echo "$_prefix ${_server}$_suffix"
+    local prefix_=$1; shift
+    local server_= suffix_=
+    [[ $1 ]] && server_=$1
+    [[ $2 ]] && suffix_=", $2"
+    echo "$prefix_ ${server_}$suffix_"
 }
 
 pysyon () {
     local python_path_=/users/jab/pysyte
-    [[ $PYTHONPATH ]] && python_path_="$python_path_:$PYTHONPATH"
+    [[ $PYTHONPATH ]] && pythonpath__="$python_path_:$PYTHONPATH"
     PYTHONPATH="$python_path_" python "$@"
 }
 
@@ -891,10 +543,26 @@ tailer () {
 # xxxxxxx
 
 aliases () {
-    local _sub_dir="src/bash"
-    [[ $1 == -l ]] && _sub_dir="local"
-    [[ $1 == -w ]] && _sub_dir="work"
-    echo "$HOME/jab/${_sub_dir}/aliases.sh"
+    local sub_dir_="src/bash"
+    [[ $1 == -l ]] && sub_dir_="local"
+    [[ $1 == -w ]] && sub_dir_="work"
+    echo "$HOME/jab/${sub_dir_}/aliases.sh"
+}
+
+brewup () {
+    local update_=
+    if [[ $@ ]]; then
+        update_=1
+    else
+        brew upgrade "$@" > ~/tmp/brew.upgrade.out 2>  ~/tmp/brew.upgrade 
+        grep "You have [0-9]+ outdated formulae" ~/tmp/brew.upgrade.out && update_=1
+        grep "[0-9]+ outdated cask installed" ~/tmp/brew.upgrade.out && update_=1
+    fi
+    if [[ $update_ ]]; then
+        brew update
+    fi
+    [[ $* ]] || return 0
+    brew upgrade "$@"
 }
 
 clearly () {
@@ -937,13 +605,13 @@ relpath () {
 }
 
 whiches () {
-    local _which=$(which $1)
-    local _located=
-    for _located in $(locate -f $1); do
+    local which_=$(which $1)
+    local located_=
+    for located_ in $(locate -f $1); do
         echo
-        if $_located --version >/dev/null 2>&1; then
-            $_located --version | grep --color ' [0,7,8]\.[0-9]'
-            ll $_located | grep --color $_which || ll $_located
+        if $located_ --version >/dev/null 2>&1; then
+            $located_ --version | grep --color ' [0,7,8]\.[0-9]'
+            ll $located_ | grep --color $which_ || ll $located_
         fi
     done
 }
@@ -951,13 +619,13 @@ whiches () {
 umports () {
     local old_venv_=$VIRTUAL_ENV
     local pysyte_=$HOME/jalanb/pysyse/__main__
-    QUIETLY deactivate 
+    QUIETLY deactivate
     source $pysyte_/.venv/bin/activate
     for file in "$@"; do
         reorder-python-imports "$file"
         python -m pysyte.imports -ume "$file"
     done
-    QUIETLY deactivate 
+    QUIETLY deactivate
     [[ $old_venv_ ]] || return 0
     source $old_venv_/bin/activate
 }
@@ -965,15 +633,15 @@ umports () {
 # xxxxxxxx
 
 doctests () {
-    py.test --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests --doctest-glob=*.md
+    .venv/bin/pytest --doctest-modules --doctest-glob=*.test --doctest-glob=*.tests --doctest-glob=*.md
 }
 
 functons () {
-    local _sub_dir="src/bash"
-    [[ $1 == -g ]] && _sub_dir="$_sub_dir/git"
-    [[ $1 == -l ]] && _sub_dir="local"
-    [[ $1 == -w ]] && _sub_dir="work"
-    echo "$HOME/jab/${_sub_dir}/functons.sh"
+    local sub_dir_="src/bash"
+    [[ $1 == -g ]] && sub_dir_="$sub_dir_/git"
+    [[ $1 == -l ]] && sub_dir_="local"
+    [[ $1 == -w ]] && sub_dir_="work"
+    echo "$HOME/jab/${sub_dir_}/functons.sh"
 }
 
 jostname () {
@@ -983,21 +651,21 @@ jostname () {
 }
 
 maketest () {
-    local path="$1"
+    local path_="$1"
     if [[ ! -f "$path" ]]; then
         echo $path is not a file >&2
         return 1
     fi
-    local filename=$(basename_ $path)
-    local stem=${filename%.*}
-    local classname=$(python -c "print 'Test%s' % '$stem'.title()")
-    local methodname="test_$stem"
-    local test_file=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
+    local filename_=$(basename_ $path)
+    local stem_=${filename%.*}
+    local classname_=$(python -c "print 'Test%s' % '$stem'.title()")
+    local methodname_="test_$stem"
+    local test_file_=$(python -c "import os; print os.path.join(os.path.dirname(os.path.abspath('$path')), 'test', 'test_%s' % os.path.basename('$path'))")
     if [[ -f "$test_file" ]]; then
         echo $test_file is already a file >&2
         return 1
     fi
-    local test_dir=$(files_dirs $test_file)
+    local test_dir_=$(files_dirs $test_file)
     [[ -d "$test_dir" ]] || mkdir -p "$test_dir"
     sed -e s/TestClass/$classname/ -e s/test_case/$methodname/ ~/jab/src/python/test_.py > $test_file
 }
@@ -1013,8 +681,8 @@ ssh_tippy () {
 }
 
 sudo_ssh () {
-    local _host=$1; shift
-    ssh -t -q $_host "sudo ""$@"
+    local host_=$1; shift
+    ssh -t -q $host_ "sudo ""$@"
 }
 
 thirteen () {
@@ -1024,8 +692,8 @@ thirteen () {
 
 
 todo_edit () {
-    local todo_txt="~/jab/todo.txt"
-    local git_options="--git-dir=~/jab/.git --work-tree=~/jab"
+    local todotxt_="~/jab/todo.txt"
+    local gitoptions_="--git-dir=~/jab/.git --work-tree=~/jab"
     if [[ -f todo.txt ]]; then
         todo_txt=todo.txt
         git_options=
@@ -1044,24 +712,24 @@ todo_edit () {
 
 files_dirs () {
     local __doc__="""echo all args' directories"""
-    local _result=1
-    for _arg in "$@"; do
-        [[ -e "$_arg" ]] || continue
-        dirname "$_arg"
-        _result=0
+    local result_=1
+    for arg_ in "$@"; do
+        [[ -e "$arg_" ]] || continue
+        dirname "$arg_"
+        result_=0
     done
-    return $_result
+    return $result_
 }
 
 dirnames () {
     local __doc__="""echo all directories in args"""
-    local _result=1
-    for _arg in "$@"; do
-        [[ -e "$_arg" ]] || continue
-        [[ -d "$_arg" ]] && echo "$_arg" || dirname "$_arg"
-        _result=0
+    local result_=1
+    for arg_ in "$@"; do
+        [[ -e "$arg_" ]] || continue
+        [[ -d "$arg_" ]] && echo "$arg_" || dirname "$arg_"
+        result_=0
     done
-    return $_result
+    return $result_
 }
 
 quietless () {
@@ -1079,38 +747,38 @@ twkgit00 () {
 
 twkgit30 () {
     is_a_file .git/config || return 1
-    local _twkgit30=$(work twkgit30)
-    sed -i -e s/$(work git)/${_twkgit30}/ .git/config
-    sed -i -e s/$(work twkgit20)/${_twkgit30}/ .git/config
-    sed -i -e s/$(work tools)/${_twkgit30}/ .git/config
-    sed -i -e s/$(work tooltest)/${_twkgit30}/ .git/config
-    sed -i -e 's!http://${_twkgit30}!https://${_twkgit30}!' .git/config
+    local twkgit30_=$(work twkgit30)
+    sed -i -e s/$(work git)/${twkgit30_}/ .git/config
+    sed -i -e s/$(work twkgit20)/${twkgit30_}/ .git/config
+    sed -i -e s/$(work tools)/${twkgit30_}/ .git/config
+    sed -i -e s/$(work tooltest)/${twkgit30_}/ .git/config
+    sed -i -e 's,http://${twkgit30_},https://${twkgit30_},' .git/config
 }
 
 unittest () {
     local __doc__="""unittest args"""
-    local _pythonpath=$(readlink -f .)
+    local pythonpath_=$(readlink -f .)
     local option_=--failfast
     if [[ $1 =~ [-][vf] ]]; then
         option_=
         shift
     fi
-    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    [[ $PYTHONPATH ]] && pythonpath_="$PYTHONPATH:$pythonpath_"
     local target_="$@"
     [[ $target_ ]] || target_=.
-    (PYTHONPATH="$_pythonpath" python -m unittest $option_ "$target_")
+    (PYTHONPATH="$pythonpath_" python -m unittest $option_ "$target_")
 }
 
 # xxxxxxxxx
 
-basename_ () {
-    local _result=1
-    for _arg in "$@"; do
-        [[ -e "$_arg" ]] || continue
-        basename "$_arg"
-        _result=0
+basename () {
+    local result_=1
+    for arg_ in "$@"; do
+        [[ -e "$arg_" ]] || continue
+        basename "$arg_"
+        result_=0
     done
-    return $_result
+    return $result_
 }
 
 first_num () {
@@ -1144,7 +812,7 @@ autostyle () {
 }
 
 # xxxxxxxxxx
-_like_duck () {
+like_duck () {
     has_py "$*"
 }
 
@@ -1154,26 +822,26 @@ al_email () {
 
 
 continuing () {
-    local _answer=$(ask "Continue ?")
-    [[ $_answer =~ [yY] ]]
+    local answer_=$(ask "Continue ?")
+    [[ $answer_ =~ [yY] ]]
 }
 
 jab_hub () {
-    local _dir=
-    local _dirs=
-    [[ $1 == -d ]] && _dirs=1
-    [[ $1 == -D ]] && _dirs=2
+    local dir_=
+    local dirs_=
+    [[ $1 == -d ]] && dirs_=1
+    [[ $1 == -D ]] && dirs_=2
     (
         cd ~/hub;
-        local _result=$(
+        local result_=$(
         grep slack -H */.travis.yml | \
             sed -e "s/:.*//" -e "s:..travis.yml::" | \
             grep -v -e old -e master -e suds | \
             sort | uniq
         )
-        [[ $_dirs == 1 ]] && for _dir in $_result; do short_dir $_dir; done
-        [[ $_dirs == 2 ]] && for _dir in $_result; do rlf $_dir; done
-        [[ $_dirs ]] || echo $_result | spaces_to_lines
+        [[ $dirs_ == 1 ]] && for dir_ in $result_; do short_dir $dir_; done
+        [[ $dirs_ == 2 ]] && for dir_ in $result_; do rlf $dir_; done
+        [[ $dirs_ ]] || echo $result_ | spaces_to_lines
     )
 }
 
@@ -1190,17 +858,15 @@ thirty_two () {
     2
 }
 
-# _______________
-
-_diff_two_files () {
+diff_two_files () {
     ! diff -q $1 $2 >/dev/null 2>&1
 }
 
-_any_diff () {
-    _diff_two_files $1 $2 && return 0
+any_diff () {
+    diff_two_files_ $1 $2 && return 0
     [[ -z $3 ]] && return 1
-    _diff_two_files $1 $3 && return 0
-    _diff_two_files $2 $3 && return 0
+    diff_two_files_ $1 $3 && return 0
+    diff_two_files_ $2 $3 && return 0
     return 1
 }
 
@@ -1225,12 +891,12 @@ blank_script () {
 
 project_root () {
     git_root -q "$@" 2>/dev/null && return 0
-    local _arg= _file= _path=
-    for _arg in "$@"; do
-        for _path in $(~/jab/bin/parents $_arg); do
-            for _file in .bumpversion.cfg .gitignore .travis.tml setup.py requirements.txt README.rst readme.md LICENSE tox.ini; do
-                if [[ -f $_path/$_file ]]; then
-                    echo $_path
+    local arg_= file_= path_=
+    for arg_ in "$@"; do
+        for path_ in $(~/jab/bin/parents $arg_); do
+            for file_ in .bumpversion.cfg .gitignore .travis.tml setup.py requirements.txt README.rst readme.md LICENSE tox.ini; do
+                if [[ -f $path_/$file_ ]]; then
+                    echo $path_
                     return 1
                 fi
             done
@@ -1295,7 +961,7 @@ source_aliases () {
 
 brew_install_all () {
     for brew_ in "$@";
-    do 
+    do
         GIT= brew install $brew_ 3>&1 1>&2 2>&3 | grep -v -e "already installed" -e re[-]*install
     done
 }
@@ -1348,39 +1014,40 @@ console_title_off () {
     fi
 }
 
-# _xxxxxxxxxxxxxxxxxxx
+# xxxxxxxxxxxxxxxxxxx_
 
-_publish_Localhost () {
+publish_Localhost () {
     /bin/bash ~/jab/bin/publish_host.sh $HOME/public_html/index.html
 }
 
 # functions starting with an underscore are intended for use within this file only
 
-_dixx () {
-    local _source_dir="$1"
-    local _destination_dir="$2"
-    local number_in_both=$(_divv_get_difference "$1" "$2" | grep Files | wc -l)
+dixx () {
+    local command_=$1; shift
+    local source_dir_="$1"; shift
+    local destination_dir_="$1"; shift
+    local number_in_both_=$(divv_get_difference_ "$1" "$2" | grep Files | wc -l)
     if [[ $number_in_both -gt 0 ]]; then
         echo
         echo "# Files 1 and 2 differ"
-        _divv_get_difference "$1" "$2" | grep Files | sed -e 's/Files /'$COMMAND_FOR_SAME_FILES' "/' -e 's/ and /" "/' -e 's/ differ/"/'
+        divv_get_difference_ "$1" "$2" | grep Files | sed -e 's/Files /'$COMMAND_FOR_SAME_FILES' "/' -e 's/ and /" "/' -e 's/ differ/"/'
     fi
-    local number_in_source=$(_divv_get_difference "$1" "$2" | grep "Only in $_source_dir" | wc -l)
+    local number_insource_=$(divv_get_difference_ "$1" "$2" | grep "Only in $source_dir_" | wc -l)
     if [[ $number_in_source -gt 0 ]]; then
         echo
-        echo "Only in $_source_dir"
-        _divv_get_difference "$1" "$2" | grep "Only in $_source_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+        echo "Only in $source_dir_"
+        divv_get_difference_ "$1" "$2" | grep "Only in $source_dir_" | sed -e "s/Only in/vim /" -e "s|: |/|"
     fi
-    local number_in_destination=$(_divv_get_difference "$1" "$2" | grep "Only in $_destination_dir" | wc -l)
+    local number_in_destination_=$(divv_get_difference_ "$1" "$2" | grep "Only in $destination_dir_" | wc -l)
     if [[ $number_in_destination -gt 0 ]]; then
         echo
-        echo "Only in $_destination_dir"
-        _divv_get_difference "$1" "$2" | grep "Only in $_destination_dir" | sed -e "s/Only in/vim /" -e "s|: |/|"
+        echo "Only in $destination_dir_"
+        divv_get_difference_ "$1" "$2" | grep "Only in $destination_dir_" | sed -e "s/Only in/vim /" -e "s|: |/|"
     fi
 }
 
-_edit_source () {
-    local filepath=$1
+edit_source () {
+    local filepath_=$1
     shift
     blank_script $filepath
     filedir=$(files_dirs $filepath)
@@ -1398,29 +1065,29 @@ _edit_source () {
     fi
 }
 
-_edit_locals () {
-    local local_dir=~/jalanb/local
+edit_locals () {
+    local local_dir_=~/jalanb/local
     [[ -d "$local_dir" ]] || mkdir -p $local_dir
     local name_="$1" force_=
     shift
     [[ $1 =~ -f ]] && force_=--force
     [[ $force_ ]] || return 0
-    _edit_source "$local_dir/$name_"
+    editsource_ "$local_dir/$name_"
 }
 
-_edit_work () {
-    local local_dir=~/jab/work
+edit_work () {
+    local local_dir_=~/jab/work
     [[ -d "$local_dir" ]] || mkdir -p $local_dir
-    _edit_source $local_dir/$1
+    editsource_ $local_dir/$1
 }
 
-_divv_get_difference () {
-    local _source_dir="$1"
-    local _destination_dir="$2"
-    local _source_gitignore=
-    [[ -f "$_source_dir/.gitignore" ]] && _source_gitignore="--exclude-from=$_source_dir/.gitignore"
-    local destination_gitignore=
-    [[ -f "$_destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$_destination_dir/.gitignore"
+divv_get_difference () {
+    local source_dir_="$1"
+    local destination_dir_="$2"
+    local source_gitignore_=
+    [[ -f "$source_dir/.gitignore" ]] && source_gitignore_="--exclude-from=$source_dir_/.gitignore"
+    local destination_gitignore_=
+    [[ -f "$destination_dir/.gitignore" ]] && destination_gitignore_="--exclude-from=$destination_dir_/.gitignore"
     diff -q -r \
         --exclude=.svn \
         --exclude=.git \
@@ -1434,9 +1101,9 @@ _divv_get_difference () {
         --exclude="*.beam" \
         --exclude="*.a" \
         --exclude="*.o" \
-        $_source_gitignore \
+        $source_gitignore_ \
         $destination_gitignore \
-    "$_source_dir" "$_destination_dir" 2> ~/fd2
+    "$source_dir_" "$destination_dir_" 2> ~/fd2
 }
 
 unremembered () {
@@ -1458,14 +1125,14 @@ unremembered () {
 }
 
 copy_from_work_server () {
-    local _server_name=$1
-    local _source="$2"
-    local _source_dir=$(dirnames "$_source")
-    local _here_root=$(homework $_server_name)
-    [[ -d $_here_root ]] || mkdir -p $_here_root
-    local _here_path=$_here_root/"$_source_dir"
-    [[ -d "$_here_path" ]] || mkdir -p "$_here_path"
-    rsync -av $_server_name:"$_source" "$_here_path"
+    local server_name_=$1
+    local source_="$2"
+    local source_dir_=$(dirnames "$source_")
+    local here_root_=$(homework $server_name_)
+    [[ -d $here_root_ ]] || mkdir -p $here_root_
+    local here_path_=$here_root_/"$source_dir_"
+    [[ -d "$here_path_" ]] || mkdir -p "$here_path_"
+    rsync -av $server_name_:"$source_" "$here_path_"
 }
 
 jalanb_hub ()

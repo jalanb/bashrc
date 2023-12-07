@@ -48,7 +48,7 @@ unalias -a
 # t()
 # alias u=
 # v()
-alias w=whyp
+# alias w=
 # x()
 # y()
 # z()
@@ -57,9 +57,6 @@ alias X='set -x'
 alias Z='set +x'
 
 alias ..='cdup'
-
-alias .c='whyp_source ~/cde.sh'
-alias .w="whyp_source $WHYP_SOURCE"
 
 alias p-="echo $OLDPWD"
 
@@ -79,7 +76,7 @@ alias gti=git
 alias jab=j
 alias jlf="sst jlfieblu jlf.ie"
 
-alias man=batman
+#alias man=batman
 alias out=to_release
 
 alias sle="whyp_source ~/jalanb/local/environ.sh optional"

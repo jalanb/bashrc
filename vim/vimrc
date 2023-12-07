@@ -21,6 +21,7 @@ nnoremap <F11>      :map <F11>
 nnoremap <F12>      :map <F12>
 
 " modifier keys {{{2
+nnoremap <D-bs>     :set fu!<cr>
 nnoremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
 nnoremap <S-F5>     <C-W>=
@@ -33,7 +34,6 @@ nnoremap <bs>= I    <esc>j
 nnoremap <bs>- 04xk
 "noremap =
 "noremap -
-"noremap ;
 "noremap
 "noremap 9
 "noremap 8
@@ -68,6 +68,8 @@ nnoremap ££ :noremap @@<up>
 " letters {{{3
 "a-y {{{4
 " /map \zs[a-yA-Y]\([<][^ ]*\|[^ ]\)
+"noremap ;
+nnoremap ' bp
 "noremap a - append
 "noremap b - backword
 "noremap c - start cutting
@@ -80,7 +82,6 @@ nnoremap ££ :noremap @@<up>
 "noremap i - insert
 nnoremap j jzz
 nnoremap k kzz
-"noremap l - go right
 "noremap l :call AfterPressing("l")<CR>
 "noremap m - set mark
 nnoremap nb ?<cr>zvzz
@@ -150,7 +151,6 @@ nnoremap z<down> zR
 nnoremap ] <C-]>
 nnoremap [ <C-T>
 nnoremap ; q:
-"noremap : 
 nnoremap ' bp
 nnoremap " m'
 "noremap \ - leader
@@ -278,7 +278,7 @@ nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>c used by ftplugin/python/jab
 "noremap <leader>d used by ftplugin/python/jab
 "noremap <leader>e used by plugin/EasyMotion.vim
-"noremap <leader>f used by plugin/EasyMotion.vim
+"noremap <leader>f was used by plugin/EasyMotion.vim
 nnoremap <leader>g :GitGutterToggle<cr>
 nnoremap <leader>h :call AfterPressing("h")<CR>
 nnoremap <leader>l :call AfterPressing("l")<CR>
@@ -287,6 +287,7 @@ nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>k used by plugin/EasyMotion.vim
 nnoremap <leader>M gg/^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
+nnoremap <leader>N :call ToggleRelativeNumber()<cr>
 nnoremap <leader>n :call ToggleNumber()<cr>
 "noremap <leader>o
 nnoremap <leader>p :set paste<cr>
@@ -353,6 +354,18 @@ endif
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Plugins {{{1
+" vim-plug {{{2
+" Vim plugin manager
+"
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/vim-easy-align'
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"
+Plug 'dense-analysis/neural'
+Plug 'muniftanjim/nui.nvim'
+Plug 'elpiloto/significant.nvim'
+"
 " Pathogen {{{2
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)
@@ -532,6 +545,7 @@ set scrolloff=9 " Minimal number of screen lines to keep above and below the cur
 set ruler
 set shortmess=atI
 set visualbell
+set rtp+=/opt/homebrew/bin/fzf
 " Assortment {{{2
 " http://www.pixelbeat.org/settings/.vimrc
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
@@ -581,13 +595,10 @@ function! ChangeNumber() " {{{3
     if exists('&relativenumber')
         call CycleNumber()
     else
-        call ToggleNumber()
+        call ToggleRelativeNumber()
     endif
 endfunction
 
-" <leader>n is bound (above) to ToggleNumber()
-"
-function! ToggleNumber() " {{{3
     "	From vimhelp
 "	The 'relativenumber' option changes the displayed number to be
 "	relative to the cursor.  Together with 'number' there are these
@@ -599,18 +610,27 @@ function! ToggleNumber() " {{{3
 "	    |apple          |  1 apple      |  2 apple      |  2 apple
 "	    |pear           |  2 pear       |  1 pear       |  1 pear
 "	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
-"
-" I want the first and last of these
-"
-    if &number == 0 || &relativenumber == 0
+
+" <leader>n is bound (above) to ToggleNumber()
+function! ToggleNumber() " {{{3
+    if &number == 1 
         set nonu
         set nornu
     else
         set nu
-        set rnu
     endif
 endfunction
 
+" <leader>N is bound (above) to ToggleRelativeNumber()
+"
+function! ToggleRelativeNumber() " {{{3
+    if &relativenumber == 1
+        set nornu
+    else
+        set rnu
+    endif
+endfunction
+"
 set number    " Start with line numbers
 " Search {{{2
 " Today's tip is from /u/dddbbb at http://www.reddit.com/r/vim/comments/2h5xce/vim_greplikes/ckpsxci

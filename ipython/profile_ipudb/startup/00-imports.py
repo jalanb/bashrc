@@ -1,9 +1,12 @@
-"""Imports for IPython"""
+"""Imports for ibots"""
 
 import os
 import re
 import sys
 import inspect
+
+import bots
+from bots.issues import issues
 
 pyprint = print
 
@@ -15,9 +18,6 @@ try:
     console = Console(color_system="standard")
     print = console.print
     mores += ["rich"]
-    from rich import pretty
-
-    pretty.install()
 except ImportError:
     pass
 
@@ -42,7 +42,7 @@ try:
     from pysyte.types.paths import path
     from pysyte import cli
 except ImportError as e:
-    print(e)
+    sys.stderr.write(str(e))
     sys.stderr.write("pip install pysyte # please")
 
 try:
@@ -50,17 +50,16 @@ try:
 
     mores += ["Path"]
 except ImportError:
-    pass
+    from pysyte.types.paths import path as Path
+
 
 more = ", ".join([" "] + mores) if mores else ""
 executable = sys.executable.replace(os.environ["HOME"], "~")
 version = sys.version.split()[0]
 stdout = lambda x: sys.stdout.write(f"{x}\n")
 
-fred = "fred"
-hello, world = "hello", "world"
-
 stdout(f"import os, re, sys, inspect, pysyte, paths, path, cli{more}")
-
+stdout(f"import bots, bots.issues.issues")
 stdout("")
 stdout(f"{executable} {version}")
+stdout(f"{bots.__file__} {bots.__version__}")

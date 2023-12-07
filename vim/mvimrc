@@ -6,7 +6,3 @@
 " vim {{{ 3
 
 set nocompatible
-
-" screen {{{2 
-set fullscreen
-

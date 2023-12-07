@@ -22,9 +22,9 @@ add_to_a_path () {
         local new_paths_=$(add_to_a_path_py "$@")
         for word in "$@"; do
             [[ $1 =~ - ]] || break
-            local _shifts=
-            [[ $1 == '-i' || $1 == '--index' ]] && _shifts=2
-            shift $_shifts
+            local shifts_=
+            [[ $1 == '-i' || $1 == '--index' ]] && shifts_=2
+            shift $shifts_
         done
         if [[ -n $new_paths_ ]]; then
             eval $new_paths_
@@ -50,38 +50,49 @@ add_dir_to_PATH () {
 }
 
 show_value () {
-    local name=${1-SHELL}
-    local value=${!name}
+    local name_=${1-SHELL}
+    local value=${!name_}
     if [[ -z "$value" ]]; then
-        echo \$$name is not set
+        echo \$$name_ is not set
     else
         local where=${2-bash}
-        printf "$where has set \$$name to\n\t$value\n"
+        printf "$where has set \$$name_ to\n\t$value\n"
     fi
 }
 
+setter_arg () {
+    local result_=
+    [[ $1 =~ bash ]] && result_=1
+    [[ $1 =~ user ]] && result_=2
+    [[ $result_ ]] || return 1
+    echo $result_
+    return 0
+}
+
+quiet_opt () {
+    local result_=
+    [[ $1 =~  -[qQ] ]] && result_=1
+    [[ $result_ ]] || return 1
+    echo $result_
+    return 0
+}
+
 show_a_path () {
-    local _quiet=
-    [[ -z $1 ]] && return 1
-    [[ $1 == "-q" ]] && _quiet=1 && shift
-    local name=$1 && shift
-    [[ $1 == "-q" ]] && _quiet=1 && shift
-    local setter=bash
-    if [[ -n $1 ]]; then
-        setter=$1
-        shift
-    fi
-    [[ $1 == "-q" ]] && _quiet=1 && shift
-    [[ $_quiet ]] || echo "$setter has set \$$name to:"
-    local old_ifs=$IFS
-    IFS=":"
-    local path=
-    local paths=${!name}
-    for path in $paths
-    do
-        echo "  $path"
+    [[ $1 ]] || return 1
+    local setter_=bash
+    local quiet_= arg_= name_=
+    for arg_ in "$@"; do
+        quiet_=$(quiet_opt $arg_) && continue
+        setter=$(setter_arg $arg_) && continue
+        name_=$1
     done
-    IFS=$old_ifs
+    [[ $quiet_ ]] || echo "$setter_ has set \$$name_ to:"
+    (
+        local paths_=${!name_} path_=
+        IFS=":" for path_ in $paths_; do
+            echo "  $path_"
+        done
+    )
 }
 
 show_path () {

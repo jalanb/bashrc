@@ -7,6 +7,6 @@ date > $LOG
 echo "/usr/bin/sudo /bin/bash /usr/local/Cellar/findutils/4.4.2/bin/updatedb" >> $LOG
 LC_ALL='C' /usr/bin/sudo \
     /bin/bash \
-        /usr/local/Cellar/findutils/4.4.2/bin/updatedb \
+        /usr/libexec/locate.updatedb \
         --prunepaths="$PRUNEPATHS" \
         >> $LOG 2>&1

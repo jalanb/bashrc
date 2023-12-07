@@ -13,6 +13,10 @@ p () {
 
 # xx
 
+pg () {
+    ps -ef | grep -v grep | grep "$@"
+}
+
 pm () {
     local option_=
     if [[ $1 == "-q" ]]; then

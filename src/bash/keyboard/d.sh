@@ -26,6 +26,12 @@ ddu () {
     open -n "https://duckduckgo.com/?q=$@"
 }
 
+dir () {
+    local _where=.
+    [[ -n "$@" ]] && _where="$@"
+    say $(short_dir $_where)
+}
+
 dn1 () {
     "$@" > /dev/null
 }

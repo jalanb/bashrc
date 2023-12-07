@@ -7,7 +7,7 @@ g () {
 
 gr () {
     if [[ "$@" ]]; then
-        egrep --color "$@" | cut_err  "Is a directory"
+        egrep "$@" | cut_err  "Is a directory" | egrep --color=auto "$@"
     else
         show_command git pull --rebase
         git pull --rebase
@@ -15,10 +15,20 @@ gr () {
 }
 
 gv () {
-    local readme="show grep results as vim commands"
-    sought="$1"
-    shift
-    grep "$sought" "$@" | sed -e "s/^/vim /" -e "s|:.*| +/\"$sought\"|" | uniq
+    grep -v "$@"
+}
+
+ght () {
+    gh "$@" | tel
+}
+
+ghv () {
+    local __doc__="edit stuff from history"
+    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
+}
+
+gre () {
+    [[ -z $* ]] && echo "gre what?" >&2 || $(which grep) -h --color=never "$@"
 }
 
 gre () {
@@ -34,6 +44,16 @@ grv () {
     gr -v "$@"
 }
 
+gv. () {
+    PYTHONPATH=$(realpath .) gv .
+}
+
+gvd () {
+    EDITOR=gvim vd "$@"
+}
+
+# xxxx
+#
 grbp () {
     local __doc__"""coulded grep"""
 }
@@ -51,6 +71,10 @@ gree () {
     )
 }
 
+# xxxxx
+#
+# xxx_xxx
+#
 cut_err () {
     # See SO for the fancy piping: https://stackoverflow.com/a/2381643/500942
     #   Allows cutting text out of stderr

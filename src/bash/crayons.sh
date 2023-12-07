@@ -12,6 +12,7 @@ rgb () {
     local colour_=$1
     [[ $colour_ ]] || return 9
     shift
+
     local light_=
     [[ $colour_ =~ ^l ]] && light_=1
     [[ $light_ ]] && colour_=${colour_:1}
@@ -24,7 +25,7 @@ rgb () {
         shift
     fi
     local eol_= text_="$@"
-    if [[ $* =~ (^|[\ ])-l ]]; then
+    if [[ $* =~ (^|[\ ])-[ln] ]]; then
         eol_="\n"
         text_=$(printf -- "$text_" | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
         shift
@@ -38,16 +39,16 @@ rgb () {
 }
 
 show_data () {
-    lblue_line "$@"
+    lblue -n "$@"
 }
 
 show_fail () {
-    red_line "$@" >&2
+    red -n "$@" >&2
     return 1
 }
 
 show_pass () {
-    lgreen_line "$@"
+    lgreen -n "$@"
     return 0
 }
 
@@ -60,19 +61,24 @@ show_error () {
 # xxxxxxxxxxxx
 
 show_command () {
-    local arg_= args_=("$@")
-    lgreen "$ ${args_[0]} "
+    local verbose_=yes
+    [[ $1 =~ -q ]] && verbose_=
+    [[ $verbose_ ]] || shift
+    local arg_= args_=("$@") out_=
+    lblack "$ "
+    lgreen "${args_[0]} "
     unset args_[0]
     for arg_ in "${args_[@]}"; do
         [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
-        lblue "$arg_ "
+        out_="$out_ $arg_ "
     done
-    echo ""
+    lblue $out_
+    [[ $verbose_ ]] && echo ""
 }
 
 
 rgb_line () {
-    rgb "$@" "\n"
+    rgb -n "$@"
 }
 
 show_run_command () {
@@ -81,8 +87,8 @@ show_run_command () {
     "$@" > ~/fd1 2> ~/fd2
     if test -s ~/fd1; then
         local text_=
-        grep -q '0m' ~/fd1 && cat ~/fd1 || lblue_line $(cat ~/fd1)
-        else lblue_line $(cat ~/fd1)
+        grep -q '0m' ~/fd1 && cat ~/fd1 || lblue -n $(cat ~/fd1)
+        else lblue -n $(cat ~/fd1)
     fi
     if test -s ~/fd2; then
         show_fail $(cat ~/fd2)
@@ -106,7 +112,7 @@ crayon () {
 crayon_line () {
     local name_=$1 body_=$2
     [[ $body_ ]] || body_=$name_
-    printf "$name_ () {\n    rgb_line $body_ "'"$@"'" \n}\n\n" >> $(crayons)
+    printf "$name_ () {\n    rgb -n $body_ "'"$@"'" \n}\n\n" >> $(crayons)
 }
 
 source_crayons () {
@@ -119,6 +125,8 @@ source_crayons () {
         crayon_line ${colour}_line "$colour"
         crayon_line l${colour}_line "l$colour"
     done
+    crayon grey lblack
+    crayon_line grey lblack
     . $crayons_
 }
 

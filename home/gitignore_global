@@ -23,11 +23,13 @@
 #
 # Developers temporary files
 #
+fred
 fred.[a-z]*
 .cd
 .cd.sh
 .venv
 *.fail
+*.gwt
 *.history
 *.ilk
 *.kate-swp

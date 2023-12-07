@@ -77,12 +77,12 @@ ppd () {
 
 ppe () {
     local dir_=$1 upgrade_=
-    [[ -d $dir_ ]] || dir_=.
+    [[ -d "$dir_" ]] && show_command cd "$dir_" || dir_=.
     (
-        [[ $dir_ == "." ]] || show_command cd "$dir_"
         cd "$dir_"
         Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
-        ppi $upgrade_ -e .
+        ppi $upgrade_ -e . | grep -v -e uninstall -e satisfied -e existing -e collected
+        [[ -f requirements/development.txt ]] && ppr requirements/development.txt
     )
 }
 
@@ -94,8 +94,15 @@ ppf () {
     fi
 }
 
+install_ppi () {
+    # quietly ppf wheel && return 0
+    pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
+    ppu setuptools>=65.5.1 wheel pip
+}
+
 ppi () {
     [[ $1 == install ]] && shift
+    install_ppi
     show_command $(_python_command) -m pip install "$@"
     pmp install "$@" 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
 }
@@ -148,37 +155,36 @@ venv () {
     fi
     [[ $VIRTUAL_ENV ]] && deactivate
     hash -d python3 python 2>/dev/null
-    pym venv --copies "$venv_dir_"
+    pym venv --copies --clear "$venv_dir_"
     unhash_activate "$venv_dir_"
     show_command $(_python_command) -m ensurepip
-    pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
-    ppu setuptools>=65.5.1 wheel pip
-    install_requirements_at "$dir_" -p
+    install_requirements "$dir_" -p
 }
 
-install_requirements_at () {
+install_requirements () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1"
+    [[ -d "$dir_" ]] || return 1 
+
+    local requirement_=requirements.txt requirements_=
+    [[ -f $requirement_ ]] && requirements_="requirements"
+    [[ -d "$dir_/requirements" ]] && requirements_=$(ls "$dir_/requirements/*.txt")
+    [[ -d "$requirements_" ]] || requirements_="$requirement_"
+
     [[ $2 =~ -p ]] || ppp
     local requirement_file_= requirements_=
-    for requirement_file_ in requirements/devops.txt requirements/development.txt requirements/testing.txt requirements/requirements.txt requirements.txt; do
-        requirements_="$dir_/$requirement_file_"
-        [[ -f "$requirements_" ]] || continue
-        lblue_line Found requirements $requirements_
-        ppr "$requirements_"
+    for requirement_ in $requirements_; do
+        [[ -f "$requirement_" ]] || continue
+        lblue_line Found requirements in $requirement_
+        ppr "$requirement_"
         break
     done
 }
 
 pip_install_develop () {
     local __doc__="""pip install a directory for development"
-    local dir_=.
-    if [[ -d "$1" ]]; then
-        dir_="$1"
-        shift
-    fi
-    install_requirements_at "$dir_"
-    ppie "$dir_"
+    install_requirements "$@"
+    ppe "$dir_"
 }
 
 show_python () {

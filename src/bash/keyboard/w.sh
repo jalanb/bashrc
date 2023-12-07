@@ -9,6 +9,10 @@ typed () {
 typed red ~/bash/crayons.sh
 
 # Show last status
+wtb () {
+    . ~/bash/__init__.sh
+}
+
 wtf () {
     [[ "$@" ]] && "$@"
     status_=$?
@@ -20,5 +24,13 @@ wtf () {
     [[ $colour_ ]] || return 1
     $colour_ $message_
     return $status_
+}
+
+wvj () {
+    vim -p ~/jab/__init__.sh "$@"
+}
+
+wvw () {
+    vim -p ~/hub/whyp/whyp.sh "$@"
 }
 

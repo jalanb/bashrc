@@ -22,15 +22,16 @@ bd () {
     l
 }
 
+bk () {
+    local __doc__="""Mature abbreviation"""
+    [[ $1 ]] && black "$@" || black .
+}
+
 bu () {
     brew upgrade "$@"
 }
 
 alias bfd=fdb
-
-bbb () {
-    . ~/.bashrc
-}
 
 bub () {
     brew update

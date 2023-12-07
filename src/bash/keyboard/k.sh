@@ -3,7 +3,13 @@
 # x
 
 k () {
-    # cd to the directory $1 and run args
+    kk ~ "$@"
+}
+
+# xx
+
+kd () {
+    local __doc__="""cd to directory $1 and run args"""
     [[ $2 ]] || return 2
     local dir_="$1"
     shift
@@ -13,17 +19,16 @@ k () {
     "$@"
 }
 
-# xx
-
 kk () {
-    (
-        k "$@"
-    )
+    local __doc__="""cd to directory $1; run args; cd back"""
+    local oldpwd_="$(readlink -f $PWD)"
+    kd "$@"
+    [[ -d "$oldpwd_" ]] && cd "$oldpwd_"
 }
 
 kl () {
     # cd to the directory $1 and run ls
-    k "$1" l
+    kd "$1" l
 }
 
 kr () {
@@ -31,11 +36,11 @@ kr () {
 }
 
 kv () {
-    vim_keys "$@"
+    keys_vim "$@"
 }
 
 kw () {
-    write_keys
+    keys_write
 }
 
 # xxx
@@ -76,4 +81,9 @@ key () {
     [[ "$command_" ]] || return 2
     $command_ $path_
     [[ $command_ == "$vim_command_" ]] && whyp_source $path_
+}
+
+kkk () {
+    local __doc__="""cd ~; run args; cd back"""
+    kk ~ "$@"
 }

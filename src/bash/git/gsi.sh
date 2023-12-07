@@ -61,6 +61,7 @@ gxi () {
     [[ -n $STASHED_ ]] && gxit stash pop
     gxit dn --staged
     gxit status
+    echo
 }
 
 gxit () {
