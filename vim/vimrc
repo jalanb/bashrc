@@ -151,7 +151,6 @@ nnoremap z<down> zR
 nnoremap ] <C-]>
 nnoremap [ <C-T>
 nnoremap ; q:
-nnoremap ' bp
 nnoremap " m'
 "noremap \ - leader
 "noremap | - leader

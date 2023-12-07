@@ -28,7 +28,6 @@ import_essentials () {
     from ~/bash/keys.sh import keys_read
 }
 
-quietly import_essentials
 
 minimally () {
     local red_="\033[1;31m"
@@ -68,6 +67,7 @@ l () {
 ll () {
     l -l "$@"
     minimally "ls -l " "$@"
+    echo "# MINIMAL $ ls -l""$@" >&2
 }
 
 vd () {
@@ -90,3 +90,5 @@ w () {
     quietly type "$@" | grep -v "is a function"
     minimally "type" "$@"
 }
+
+quietly import_essentials
