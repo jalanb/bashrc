@@ -33,7 +33,6 @@ nnoremap <bs>= I    <esc>j
 nnoremap <bs>- 04xk
 "noremap =
 "noremap -
-"noremap ;
 "noremap
 "noremap 9
 "noremap 8
@@ -68,6 +67,8 @@ nnoremap ££ :noremap @@<up>
 " letters {{{3
 "a-y {{{4
 " /map \zs[a-yA-Y]\([<][^ ]*\|[^ ]\)
+"noremap ;
+nnoremap ' bp
 "noremap a - append
 "noremap b - backword
 "noremap c - start cutting
@@ -80,7 +81,6 @@ nnoremap ££ :noremap @@<up>
 "noremap i - insert
 nnoremap j jzz
 nnoremap k kzz
-"noremap l - go right
 "noremap l :call AfterPressing("l")<CR>
 "noremap m - set mark
 nnoremap nb ?<cr>zvzz
@@ -150,7 +150,6 @@ nnoremap z<down> zR
 nnoremap ] <C-]>
 nnoremap [ <C-T>
 nnoremap ; q:
-"noremap : 
 nnoremap ' bp
 nnoremap " m'
 "noremap \ - leader
