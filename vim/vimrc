@@ -277,7 +277,7 @@ nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>c used by ftplugin/python/jab
 "noremap <leader>d used by ftplugin/python/jab
 "noremap <leader>e used by plugin/EasyMotion.vim
-"noremap <leader>f used by plugin/EasyMotion.vim
+"noremap <leader>f was used by plugin/EasyMotion.vim
 nnoremap <leader>g :GitGutterToggle<cr>
 nnoremap <leader>h :call AfterPressing("h")<CR>
 nnoremap <leader>l :call AfterPressing("l")<CR>
@@ -353,6 +353,18 @@ endif
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Plugins {{{1
+" vim-plug {{{2
+" Vim plugin manager
+"
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/vim-easy-align'
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"
+Plug 'dense-analysis/neural'
+Plug 'muniftanjim/nui.nvim'
+Plug 'elpiloto/significant.nvim'
+"
 " Pathogen {{{2
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
 " And it must be set up before the plugin on command (next)
@@ -532,6 +544,7 @@ set scrolloff=9 " Minimal number of screen lines to keep above and below the cur
 set ruler
 set shortmess=atI
 set visualbell
+set rtp+=/opt/homebrew/bin/fzf
 " Assortment {{{2
 " http://www.pixelbeat.org/settings/.vimrc
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.

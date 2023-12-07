@@ -22,6 +22,7 @@ src/bash/fd
 etc/history
 bin/venv_bin
 vim/bundle.remote
+vim/plugged
 src/bash/keyboard/__init__.sh
 src/bash/crayons.sh.sh
 local
