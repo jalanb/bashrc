@@ -36,11 +36,11 @@ kr () {
 }
 
 kv () {
-    vim_keys "$@"
+    keys_vim "$@"
 }
 
 kw () {
-    write_keys
+    keys_write
 }
 
 # xxx

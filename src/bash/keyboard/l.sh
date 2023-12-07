@@ -90,6 +90,13 @@ lO () {
     l -C "$@"
 }
 
+lp () {
+    echo
+    green -n $PWD
+    echo
+    l "$@"
+}
+
 lr () {
     l -tr "$@"
 }

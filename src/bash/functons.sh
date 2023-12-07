@@ -63,13 +63,13 @@ back () {
 }
 
 bins () {
-    local _name="$1"; shift
+    local name_=$1"; shift
     [[ -z $_name ]] && return 1
     while [[ -n $_name ]]; do
         for root in $HOME /bin /usr; do
             find $root -wholename "bin/*$_name*" -print 2>/dev/null
         done | grep -e $_name | sort | uniq | grep $_name 2>/dev/null
-        _name="$1"; shift
+        name_=$1"; shift
     done
 }
 
@@ -117,12 +117,12 @@ bump () {
         shift
     fi
     if [[ -d "$1" ]]; then
-        bump_dir="$1"
+        bumpdir_=$1"
         shift
     fi
     local _name=$(basename_ $1)
     local _config=
-    [[ $_name = ".bumpversion.cfg" ]] && _config="$1"
+    [[ $name = ".bumpversion.cfg" ]] && _config_=$1"
     [[ -n $_config ]] && shift
     local _bump_root=$(git_root -q .)
     local _part=${1:-patch}; shift
@@ -131,14 +131,14 @@ bump () {
             [[ $_pulled == 1 ]] || git pull --rebase
             cd "$_bump_root"
             local _options=
-            [[ -n $config ]] && _options="--config-file $_name"
+            [[ -n $config ]] && options_=--config-file $_name"
             if bumpversion $_options $_part "$@"; then
                 git push
                 git push origin v$(bump get)
             fi
         fi
     fi
-    [[ -z $_config ]] && _config="$_bump_root/.bumpversion.cfg"
+    [[ -z $config ]] && _config_=$_bump_root/.bumpversion.cfg"
     [[ -f $_config ]] || return 2
     local _sought=^current_version
     if [[ -n $_show ]]; then
@@ -165,9 +165,9 @@ lkra () {
 }
 
 left () {
-    local last_command="$1"
+    local lastcommand_=$1"
     echo $last_command
-    local last_command_line="$@"
+    local lastcommand_line_=$@"
     echo $last_command_line
 }
 
@@ -206,7 +206,7 @@ mkv3 () {
 SUDO () {
     if [[ -n $1 ]]; then
         user="-u $1"
-        you_sir="$1"
+        yousir_=$1"
     else
         user=
         you_sir=root
@@ -365,8 +365,8 @@ given () {
 }
 
 ptags () {
-    local _source="$1"
-    [[ -n $_source ]] || _source="."
+    local source_=$1"
+    [[ -n $source ]] || _source_=."
     python ~/jab/src/python/ptags.py $_source
 }
 
@@ -475,7 +475,7 @@ mkvenv () {
         dir_="$1"
         shift
     fi
-    venv_dir_="$dir_/.venv"
+    venvdir__=$dir_/.venv"
     deactivate
     rm -rf $venv_dir_
     python3 -m venv "$venv_dir_"
@@ -487,13 +487,13 @@ show_line () {
     local _prefix=$1; shift
     local _server= _suffix=
     [[ $1 ]] && _server=$1
-    [[ $2 ]] && _suffix=", $2"
+    [[ $2 ]] && suffix_=, $2"
     echo "$_prefix ${_server}$_suffix"
 }
 
 pysyon () {
     local python_path_=/users/jab/pysyte
-    [[ $PYTHONPATH ]] && python_path_="$python_path_:$PYTHONPATH"
+    [[ $PYTHONPATH ]] && pythonpath__=$python_path_:$PYTHONPATH"
     PYTHONPATH="$python_path_" python "$@"
 }
 
@@ -527,9 +527,9 @@ tailer () {
 # xxxxxxx
 
 aliases () {
-    local _sub_dir="src/bash"
-    [[ $1 == -l ]] && _sub_dir="local"
-    [[ $1 == -w ]] && _sub_dir="work"
+    local sub_dir_=src/bash"
+    [[ $1 == -l ]] && sub_dir_=local"
+    [[ $1 == -w ]] && sub_dir_=work"
     echo "$HOME/jab/${_sub_dir}/aliases.sh"
 }
 
@@ -605,10 +605,10 @@ doctests () {
 }
 
 functons () {
-    local _sub_dir="src/bash"
-    [[ $1 == -g ]] && _sub_dir="$_sub_dir/git"
-    [[ $1 == -l ]] && _sub_dir="local"
-    [[ $1 == -w ]] && _sub_dir="work"
+    local sub_dir_=src/bash"
+    [[ $1 == -g ]] && sub_dir_=$_sub_dir/git"
+    [[ $1 == -l ]] && sub_dir_=local"
+    [[ $1 == -w ]] && sub_dir_=work"
     echo "$HOME/jab/${_sub_dir}/functons.sh"
 }
 
@@ -660,8 +660,8 @@ thirteen () {
 
 
 todo_edit () {
-    local todo_txt="~/jab/todo.txt"
-    local git_options="--git-dir=~/jab/.git --work-tree=~/jab"
+    local todotxt_=~/jab/todo.txt"
+    local gitoptions_=--git-dir=~/jab/.git --work-tree=~/jab"
     if [[ -f todo.txt ]]; then
         todo_txt=todo.txt
         git_options=
@@ -731,7 +731,7 @@ unittest () {
         option_=
         shift
     fi
-    [[ $PYTHONPATH ]] && _pythonpath="$PYTHONPATH:$_pythonpath"
+    [[ $PYTHONPATH ]] && pythonpath_=$PYTHONPATH:$_pythonpath"
     local target_="$@"
     [[ $target_ ]] || target_=.
     (PYTHONPATH="$_pythonpath" python -m unittest $option_ "$target_")
@@ -993,8 +993,9 @@ _publish_Localhost () {
 # functions starting with an underscore are intended for use within this file only
 
 _dixx () {
-    local _source_dir="$1"
-    local _destination_dir="$2"
+    local command_=$1; shift
+    local source_dir_=$1"; shift
+    local destination_dir_=$1"; shift
     local number_in_both=$(_divv_get_difference "$1" "$2" | grep Files | wc -l)
     if [[ $number_in_both -gt 0 ]]; then
         echo
@@ -1051,12 +1052,12 @@ _edit_work () {
 }
 
 _divv_get_difference () {
-    local _source_dir="$1"
-    local _destination_dir="$2"
+    local source_dir_=$1"
+    local destination_dir_=$2"
     local _source_gitignore=
-    [[ -f "$_source_dir/.gitignore" ]] && _source_gitignore="--exclude-from=$_source_dir/.gitignore"
+    [[ -f "$source_dir/.gitignore" ]] && _source_gitignore_=--exclude-from=$_source_dir/.gitignore"
     local destination_gitignore=
-    [[ -f "$_destination_dir/.gitignore" ]] && destination_gitignore="--exclude-from=$_destination_dir/.gitignore"
+    [[ -f "$destination_dir/.gitignore" ]] && destination_gitignore_=--exclude-from=$_destination_dir/.gitignore"
     diff -q -r \
         --exclude=.svn \
         --exclude=.git \
@@ -1095,7 +1096,7 @@ unremembered () {
 
 copy_from_work_server () {
     local _server_name=$1
-    local _source="$2"
+    local source_=$2"
     local _source_dir=$(dirnames "$_source")
     local _here_root=$(homework $_server_name)
     [[ -d $_here_root ]] || mkdir -p $_here_root
