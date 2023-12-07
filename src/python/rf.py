@@ -22,7 +22,7 @@ def get_module_name():
 
 def _get_path_to_config():
     name = get_module_name()
-    path_to_config = f"~/.config/{name}.ini"
+    path_to_config = f"~/.config/{name}/config"
     return os.path.expanduser(path_to_config)
 
 
