@@ -61,7 +61,7 @@ links_into_home () {
     link_clone_to_home home/tmuxrc               .tmux.conf
     link_clone_to_home home/xonshrc              .xonshrc
     link_clone_to_home home/gvimrc               .gvimrc
-    link_clone_to_home home/dir_colors           .dir_colors
+    link_clone_to_home home/dircolors            .dircolors
     link_clone_to_home home/vim                  .vim
 
     link_into_home ~/src/git/hub        hub
