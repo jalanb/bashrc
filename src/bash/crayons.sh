@@ -61,14 +61,19 @@ show_error () {
 # xxxxxxxxxxxx
 
 show_command () {
-    local arg_= args_=("$@")
-    lgreen "$ ${args_[0]} "
+    local verbose_=yes
+    [[ $1 =~ -q ]] && verbose_=
+    [[ $verbose_ ]] || shift
+    local arg_= args_=("$@") out_=
+    lblack "$ "
+    lgreen "${args_[0]} "
     unset args_[0]
     for arg_ in "${args_[@]}"; do
         [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
-        lblue "$arg_ "
+        out_="$out_ $arg_ "
     done
-    echo ""
+    lblue $out_
+    [[ $verbose_ ]] && echo ""
 }
 
 
@@ -120,6 +125,8 @@ source_crayons () {
         crayon_line ${colour}_line "$colour"
         crayon_line l${colour}_line "l$colour"
     done
+    crayon grey lblack
+    crayon_line grey lblack
     . $crayons_
 }
 
