@@ -21,25 +21,30 @@ show_pythonpath () {
     show_green_line PYTHONPATH==$PYTHONPATH after "$1"
 }
 
-# echo $HOME/jab/whyp
+# echo $HOME minimal
+. ~/.minimal
+# echo $HOME whyp
 . ~/whyp.sh
-export WHYP_EDITOR=vv
-# echo $HOME/jab/ackvim
+# echo $HOME jalanb ackvim
 . ~/hub/jalanb/ackvim/ackvim.sh
-# echo $HOME/jab/pyth
+# echo $HOME jalanb pyth
 . ~/hub/jalanb/pyth/pyth.sh
-# echo $HOME/jab/cde
+# echo $HOME cde
 . ~/cde.sh
-# echo $HOME/jab/environ.d
+# echo $HOME jab environ.d
 . ~/jab/environ.d/__init__.sh optional
-# echo $HOME/jab/bash
+# echo $HOME bash
 . ~/jab/src/bash/__init__.sh
-# echo $HOME/jab/local
+# echo $HOME jalanb local
 . ~/jalanb/local/__init__.sh optional
-# echo $HOME/jab/work
+# echo $HOME jab work
 . ~/jab/work/__init__.sh optional
+#
+# better to let whyp re-source itself after all that
+#
+.w
+export WHYP_EDITOR=vv
 
-# echo $HOME/jab/uname
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
 
 activate_dir="$HOME/jab/.venv"

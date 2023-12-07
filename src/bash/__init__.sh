@@ -2,38 +2,38 @@
 
 __version__=0.8.72
 
-# echo $HOME/bash/tput
+# echo ~/bash tput
 . ~/bash/tput.sh
-# echo $HOME/bash/aliases
+# echo ~/bash aliases
 . ~/bash/aliases.sh
-# echo $HOME/bash/asserts
+# echo ~/bash asserts
 . ~/bash/asserts.sh
-# echo $HOME/bash/crayons
+# echo ~/bash crayons
 . ~/bash/crayons.sh
-# echo $HOME/bash/functons
+# echo ~/bash functons
 . ~/bash/functons.sh
-# echo $HOME/bash/github
+# echo ~/bash github
 . ~/bash/github.sh
-# echo $HOME/bash/hosts
+# echo ~/bash hosts
 . ~/bash/hosts.sh
-# echo $HOME/bash/history
+# echo ~/bash history
 . ~/bash/history.sh
-# echo $HOME/bash/jabnet
+# echo ~/bash jabnet
 . ~/bash/jabnet.sh
-# echo $HOME/bash/prompt
+# echo ~/bash prompt
 . ~/bash/prompt.sh green
-# echo $HOME/bash/python
+# echo ~/bash python
 . ~/bash/python.sh
-# echo $HOME/bash/rf
+# echo ~/bash rf
 . ~/bash/rf.sh
-# echo $HOME/bash/work
+# echo ~/bash work
 . ~/bash/work.sh
-# echo $HOME/bash/git
+# echo ~/bash git
 . ~/bash/git/__init__.sh
-# echo $HOME/bash/keys
+# echo ~/bash keys
 . ~/bash/keys.sh
 
-# echo $HOME/bash/keys_read
+# echo ~/bash keys_read
 keys_read
 
 export _BASH_DIR=~/bash
