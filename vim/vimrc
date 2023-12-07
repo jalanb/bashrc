@@ -21,6 +21,7 @@ nnoremap <F11>      :map <F11>
 nnoremap <F12>      :map <F12>
 
 " modifier keys {{{2
+nnoremap <D-bs>     :set fu!<cr>
 nnoremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
 nnoremap <S-F5>     <C-W>=
