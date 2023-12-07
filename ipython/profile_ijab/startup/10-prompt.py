@@ -1,0 +1,1 @@
+../../profile_default/startup/10-prompt.py
