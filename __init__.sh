@@ -45,6 +45,9 @@ show_pythonpath () {
 .w
 export WHYP_EDITOR=vv
 
+# bring in fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
 
 activate_dir="$HOME/jab/.venv"
