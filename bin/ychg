@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+PYTHONPATH=/opt/clones/github/jalanb/jabs/jab/src/python/site \
+    /Users/jab/yysyte/.venv/bin/pudb \
+        /opt/clones/github/jalanb/jabs/jab/bin/ycho
