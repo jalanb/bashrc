@@ -109,10 +109,13 @@ __main__ () {
     post_bashrc
 }
 
-post_bashrc () {
-    [[ -f .cd ]] && cde .
+cd_dot () {
     green_line $green_line $PWD
     lo
+}
+
+post_bashrc () {
+    [[ -f .cd ]] && cde . || cd_dot
 }
 
 [[ $- =~ i ]] && __main__  "$@" # > $bashrc_log 2>&1

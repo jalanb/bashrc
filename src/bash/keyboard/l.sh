@@ -5,12 +5,11 @@ source ~/keys/q.sh
 # x
 
 l () {
-    local args_=$1
     local ls_=$(ls_command)
     if [[ $1 ]]; then
-        $(ls_command) "$@"
+        $ls_ "$@"
     else
-        $(ls_command) .
+        $ls_ .
     fi
 }
 
@@ -417,6 +416,7 @@ ls_command () {
     local __program__="$(ls_program)"
     local __options__="$(ls_options)"
     echo "$(ls_program)" "$(ls_options)" "$@"
+    [[ $@ ]] && echo "$__program__" "__options__" "$@" || echo "$__program__"
 }
 
 # _xxxxxxxxxx
