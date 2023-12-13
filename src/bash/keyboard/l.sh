@@ -5,8 +5,13 @@ source ~/keys/q.sh
 # x
 
 l () {
-    ls_colours
-    $(ls_command "$@")
+    local args_=$1
+    local ls_=$(ls_command)
+    if [[ $1 ]]; then
+        $(ls_command) "$@"
+    else
+        "$ls_" .
+    fi
 }
 
 # xx
@@ -369,7 +374,7 @@ ls_program () {
     local __doc__="""Use gls if available, or ls if not"""
     local gls_=$(quietly which gls)
     local ls_=$(quietly which ls)
-    local which_=${gls:-$ls_}
+    local which_=${gls_:-$ls_}
     [[ $which_ ]] || show_fail "No ls available"
     [[ $which_ ]] || return 1
     local link_=$(readlink -f $which_)
@@ -402,6 +407,7 @@ ls_command () {
     local __program__="$(ls_program)"
     local __options__="$(ls_options)"
     echo "$(ls_program)" "$(ls_options)" "$@"
+    [[ $@ ]] && echo "$__program__" "__options__" "$@" || echo "$__program__"
 }
 
 # _xxxxxxxxxx
