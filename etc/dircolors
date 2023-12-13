@@ -1,0 +1,144 @@
+# Text color codes:
+# 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
+# Background color codes:
+# 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+
+# I do not like defaults for these two.
+STICKY_OTHER_WRITABLE 01;36 # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
+
+# Code I want to write - RED
+.bash_logout  00;31
+.bashrc       00;31
+.c            00;31
+.cpp          00;31
+.erl          00;31
+.h            00;31
+.hrl          00;31
+.js           00;31
+.rb           00;31
+.py           00;31
+.sh           00;31
+.sql          00;31
+
+
+# Code that's lying around, but came from someone else - LIGHT RED
+.cgi          01;31
+.fcgi         01;31
+.wsgi         01;31
+
+
+# Support for code - configurations, outputs, tests, ... - MAGENTA
+.app          00;35
+.bnf          00;35
+.cfg          00;35
+.conf         00;35
+.config       00;35
+.css          00;35
+.ebnf         00;35
+.g            00;35
+.parsley      00;35
+.html         00;35
+.json         00;35
+.ini          00;35
+.in           00;35
+.pth          00;35
+.py3          00;35
+.spec         00;35
+.test         00;35
+.tests        00;35
+.xml          00;35
+.yml          00;35
+.yaml         00;35
+*Makefile     00;35
+
+
+# Other files found near code - LIGHT MAGENTA
+.beam         01;35
+.class        01;35
+.ezt          01;35
+.fail         01;35
+.htaccess     01;35
+.lprof        01;35
+.o            01;35
+.pyc          01;35
+.prof         01;35
+.swf          01;35
+.tmpl         01;35
+.xsl          01;35
+.so           01;35
+
+
+# Containers - BLUE (directories are LIGHT BLUE)
+.bz2          00;34
+.deb          00;34
+.egg          00;34
+.gz           00;34
+.jar          00;34
+.iso          00;34
+.rpm          00;34
+.tar          00;34
+.tbz          00;34
+.tgz          00;34
+.zip          00;34
+
+
+# Text - Yellow
+.csv          00;33
+.doc          00;33
+.eml          00;33
+.log          00;33
+.md           00;33
+.odt          00;33
+.doc          00;33
+.docx         00;33
+.pdf          00;33
+.txt          00;33
+*README*      00;33
+*readme*      00;33
+*Readme*      00;33
+.text         00;33
+
+# Data - CYAN
+.bmp          00;36
+.dat          00;36
+.data         00;36
+.gif          00;36
+.ico          00;36
+.jpg          00;36
+.list         00;36
+.mbr          00;36
+.m3u          00;36
+.m3u8         00;36
+.png          00;36
+.rdf          00;36
+.xls          00;36
+.xlsx         00;36
+
+
+# Something else - YELLOW
+.else         00;33
+
+
+# Data I rarely use directly
+.crt          01;36
+.original     01;36
+.key          01;36
+.pub          01;36
+.pem          01;36
+.sf           01;36
+
+
+# Fred - GRAY
+.fred         00;37
+.one          00;37
+.old          00;37
+.two          00;37
+.tmp          00;37
+.new          00;37
+.new2         00;37
+.new3         00;37
+
+
+# Other - WHITE
+.dist         01;37
