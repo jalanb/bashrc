@@ -10,7 +10,7 @@ l () {
     if [[ $1 ]]; then
         $(ls_command) "$@"
     else
-        "$ls_" .
+        $(ls_command) .
     fi
 }
 
@@ -407,7 +407,6 @@ ls_command () {
     local __program__="$(ls_program)"
     local __options__="$(ls_options)"
     echo "$(ls_program)" "$(ls_options)" "$@"
-    [[ $@ ]] && echo "$__program__" "__options__" "$@" || echo "$__program__"
 }
 
 # _xxxxxxxxxx

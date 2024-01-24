@@ -40,7 +40,10 @@ echo_keys () {
 }
 
 key_scripts () {
-    ls $(echo_keys [a-z12].sh)
+    (
+        command cd $(keyboard_path)
+        readlink -f $(echo_keys [a-z12].sh)
+    )
 }
 
 key_init () {
