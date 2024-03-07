@@ -27,7 +27,7 @@ rgb () {
     local eol_= text_="$@"
     if [[ $* =~ (^|[\ ])-[ln] ]]; then
         eol_="\n"
-        text_=$(printf -- "$text_" | sed -e 's,\(^\|[ ]\)-l\($\| \),,g')
+        text_=$(printf -- "$text_" | sed -e 's,\(^\|[ ]\)-[ln]\($\| \),,g')
         shift
     fi
     colour_="${!foreground_}"
