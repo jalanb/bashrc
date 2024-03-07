@@ -67,10 +67,6 @@ pym () {
     $(_python_command) -m "${args[@]}"
 }
 
-pmp () {
-    pym pip --require-virtualenv "$@" 
-}
-
 ppd () {
     pip_install_develop "$@"
 }
@@ -88,23 +84,17 @@ ppe () {
 
 ppf () {
     if [[ "$@" ]]; then
-        pmp freeze | grep "$@"
+        pyp freeze | grep "$@"
     else
-        pmp freeze
+        pyp freeze
     fi
-}
-
-install_ppi () {
-    # quietly ppf wheel && return 0
-    pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
-    ppu "setuptools>=65.5.1" wheel pip
 }
 
 ppi () {
     [[ $1 == install ]] && shift
     install_ppi
     show_command $(_python_command) -m pip install "$@"
-    pmp install "$@" 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
+    pyp install "$@" 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
 }
 
 ppp () {
@@ -120,7 +110,11 @@ ppu () {
 }
 
 ppy () {
-    pmp uninstall -y "$@"
+    pyp uninstall -y "$@"
+}
+
+pyp () {
+    pym pip --require-virtualenv "$@" 
 }
 
 # xxxx
@@ -159,6 +153,12 @@ venv () {
     unhash_activate "$venv_dir_"
     show_command $(_python_command) -m ensurepip
     install_requirements "$dir_" -p
+}
+
+install_ppi () {
+    # quietly ppf wheel && return 0
+    pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
+    ppu "setuptools>=65.5.1" wheel pip
 }
 
 install_requirements () {
