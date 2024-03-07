@@ -88,11 +88,7 @@ ll () {
 }
 
 lo () {
-    l -C "$@"
-}
-
-lO () {
-    l -C "$@"
+    l $(ls_dimension) "$@"
 }
 
 lp () {
@@ -127,7 +123,7 @@ l1d () {
 }
 
 lao () {
-    la -C "$@"
+    la $(ls_dimension) "$@"
 }
 
 lal () {
@@ -371,10 +367,12 @@ lllllllllg () {
 # _xxxxxxxxx
 
 ls_program () {
-    local __doc__="""Use gls if available, or ls if not"""
+    local __doc__="""Use eza if availabe, else gls, else ls"""
+    local eza_=$(quietly which eza)
     local gls_=$(quietly which gls)
     local ls_=$(quietly which ls)
-    local which_=${gls_:-$ls_}
+    local best_ls_=${gls_:-$ls_}
+    local which_=${eza_:-$best_ls_}
     [[ $which_ ]] || show_fail "No ls available"
     [[ $which_ ]] || return 1
     local link_=$(readlink -f $which_)
@@ -388,10 +386,22 @@ ls_has_option () {
     return 2
 }
 
+ls_dimension () {
+    if ls_has_option '-C'; then
+        echo "-C"
+    elif ls_has_option '-G'; then
+        echo "-G"
+    elif [[ $1 =~ -[v1] ]]; then
+        echo "-1"
+    else
+        return 1
+    fi
+    return 0
+}
+
 ls_options () {
     local __doc__="""Use available options"""
-    local dimension_=-C
-    [[ $1 =~ -[v1] ]] && dimension_=-1
+    local dimension_=$(ls_dimension "$1")
     local colour_=-G classify_=-F by_dir_=
     if ls_has_option '--color' ; then
         colour_="--color=auto"
