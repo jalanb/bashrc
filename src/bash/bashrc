@@ -42,14 +42,20 @@ pre_bashrc () {
     fi
 }
 
-colour_user () {
-    local _colour_username=$(lblue "${USER:-$(whoami)}")
-    local _colour_host=$(lred ${HOSTNAME:-$(hostname -s)})
-    echo ${_colour_username}@$_colour_host
+luser () {
+    printf $(lusername)@$(lhost)
 }
 
-colour_here () {
-    lgreen $PWD
+lusername () {
+    lblue "${USER:-$(whoami)}"
+}
+
+lhost () {
+    lred ${HOSTNAME:-$(hostname -s)}
+}
+
+lhere () {
+    lgreen $(readlink -f $PWD)
 }
 
 bashrc_source () {
@@ -57,12 +63,12 @@ bashrc_source () {
     source "$@"
 }
 
-bashrc_log=$HOME/log/bashrc.log
-
 echo_if_file () {
     [[ -f "$1" ]] || return 1
     echo "        $1"
 }
+
+bashrc_log=$HOME/log/bashrc.log
 
 bbb () {
     echo ""
@@ -79,7 +85,7 @@ bbb () {
     
 bashrc () {
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
-    export PS1="\$? [$(colour_user):$(colour_here)]\n$ "
+    export PS1="\$? [$(luser):$(lhere)]\n$ "
     bashrc_source ~/jab/bash/bashrc_minimal
     bashrc_source $HOME/jab/__init__.sh || return 1
     bashrc_source $HOME/bash/prompt.sh green

@@ -781,7 +781,7 @@ unittest () {
 
 # xxxxxxxxx
 
-basename () {
+basenames () {
     local result_=1
     for arg_ in "$@"; do
         [[ -e "$arg_" ]] || continue
