@@ -28,7 +28,7 @@
     r = pull --rebase
     s = status
     t = tag
-    w = show
+    w = switch
 
     aa = add .
     ai = add --interactive
