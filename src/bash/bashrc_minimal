@@ -26,6 +26,7 @@ import_essentials () {
     from ~/cde.sh import cde
     from ~/whyp.sh import whyp
     from ~/bash/keys.sh import keys_read
+    from ~/bash/crayons.sh.sh import green_line
 }
 
 
@@ -66,8 +67,6 @@ l () {
 
 ll () {
     l -l "$@"
-    minimally "ls -l " "$@"
-    echo "# MINIMAL $ ls -l""$@" >&2
 }
 
 vd () {
@@ -81,8 +80,15 @@ vv () {
     minimally "vim -p " "$@"
 }
 
+vbb () {
+    vim -p ~/.bashrc $BASH_SOURCE "$@" +/BASH_SOURCE
+    minimally "vim -p ~/.bashrc $BASH_SOURCE $@"
+    . ~/.bashrc
+    minimally ". ~/.bashrc"
+}
+
 vd12 () {
-    vd ~/one ~/two
+    vim -dO ~/one ~/two
     minimally "vim -dO ~/one ~/two "
 }
 
