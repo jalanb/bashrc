@@ -137,7 +137,7 @@ read_history () {
     local history_command_="^history\(_[a-z-]*\)*" history_search_="^[Hh][Gghnt]" h_command="^h [0-9][0-9]*$"
     local history_log_="-e $history_command_ -e $history_search_ -e $h_command"
     local format_=
-    if [[ $1 == -d ]]; then
+    if [[ $1 =~ [-]+d[ate]* ]]; then
         shift
         format_="%Y/%m/%d:%H:%M:%S "
     fi
@@ -181,7 +181,7 @@ history_grep () {
     local _back=
     [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
     local _sought="$@"
-    read_history -d | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
+    read_history --date | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
 }
 
 history_tail_dateless () {

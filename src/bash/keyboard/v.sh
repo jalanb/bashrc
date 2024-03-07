@@ -103,8 +103,8 @@ vv () {
         shift
     fi
     local dir_="$HOME"
-    [[ -f $1 ]] && dir_=$(dirname $(readlink "$1"))
-    [[ -d $1 ]] && dir_=$(basename $(readlink "$1"))
+    [[ -f $1 ]] && dir_=$(dirname $(readlink -f "$1"))
+    [[ -d $1 ]] && dir_=$(basename $(readlink -f "$1"))
     [[ $* ]] && vim -p "$@" || vim -p ~/keys/v.sh ~/.vimrc
     [[ $gsi_ ]] && (cd $dir_; gsi)
     [[ $1 =~ [.]sh$ ]] || return 0
