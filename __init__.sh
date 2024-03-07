@@ -42,7 +42,7 @@ show_pythonpath () {
 #
 # better to let whyp re-source itself after all that
 #
-.w
+. ~/whyp.sh
 export WHYP_EDITOR=vv
 
 # bring in fzf

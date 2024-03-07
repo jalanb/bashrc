@@ -97,7 +97,7 @@ ppf () {
 install_ppi () {
     # quietly ppf wheel && return 0
     pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
-    ppu setuptools>=65.5.1 wheel pip
+    ppu "setuptools>=65.5.1" wheel pip
 }
 
 ppi () {

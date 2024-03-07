@@ -357,6 +357,7 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Vim plugin manager
 "
 call plug#begin('~/.vim/plugged')
+Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
 Plug 'junegunn/vim-easy-align'
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }

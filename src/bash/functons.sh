@@ -583,6 +583,16 @@ has_ext () {
     [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
 }
 
+cde_bash () {
+    show_command "$@"
+    local cde_="$CDE_DIR" cde_out_="$cde_/std.out" cde_err_=$cde_/std.err
+    local result_=0
+    "$@" > $cde_out 2> $cde_err && result_=$?
+    show_pass $(cat $cde_out)
+    show_fail $(cat $cde_err)
+    return $result_
+}
+
 headline () {
     [[ $1 ]] && head -n 1 "$1" || cat | head -n 1
 }
@@ -771,7 +781,7 @@ unittest () {
 
 # xxxxxxxxx
 
-basename () {
+basenames () {
     local result_=1
     for arg_ in "$@"; do
         [[ -e "$arg_" ]] || continue

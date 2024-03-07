@@ -225,13 +225,17 @@ docs/_build/
 # PyBuilder
 target/
 
+
+# pudb 
+
+pudb/pudb.cfg
+
 #####=== Redis ===#####
 # Ignore redis binary dump (dump.rdb) files
 
 *.rdb
 
 #####=== Ruby ===#####
-
 *.gem
 *.rbc
 /.config

@@ -1,7 +1,8 @@
 #! /bin/cat
 
 keyboard_path () {
-    echo ~/bash/keyboard/$1
+    # echo ~/bash/keyboard/$1
+    echo /opt/clones/github/jalanb/jabs/jab/src/bash/keyboard/$1
 }
 
 key_exists () {
@@ -24,16 +25,26 @@ ls_path_to_key () {
 echo_key () {
     [[ $1 ]] || return 4
     local script_=$(path_to_key $1)
-    echo -n $script_
+    echo $script_
 }
 
 echo_keys () {
     [[ $@ ]] || return 0
-    for arg_ in "$@"; do echo_key $arg_; done
+    (
+        command cd $(keyboard_path)
+        for arg_ in $(quietly ls $@); do
+            [[ $arg_ =~ __init__ ]] && continue
+            [[ $arg_ ]] || continue
+            ls $arg_
+        done
+    )
 }
 
 key_scripts () {
-    ls $(echo_keys '[a-z12].sh')
+    (
+        command cd $(keyboard_path)
+        readlink -f $(echo_keys [a-z12].sh)
+    )
 }
 
 key_init () {
