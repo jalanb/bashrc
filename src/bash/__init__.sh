@@ -1,6 +1,6 @@
 
 
-__version__=0.8.76
+__version__=0.8.73
 
 # echo ~/bash tput
 . ~/bash/tput.sh
