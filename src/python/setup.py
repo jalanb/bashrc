@@ -7,7 +7,7 @@ from setuptools import setup
 setup(
     name="jab",
     packages=["jab"],
-    version="0.8.78",
+    version="0.8.79",
     url="https://github.com/jalanb/jab/",
     license="MIT License",
     author="J Alan Brogan",

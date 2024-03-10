@@ -32,7 +32,7 @@ echo_keys () {
     [[ $@ ]] || return 0
     (
         command cd $(keyboard_path)
-        for arg_ in $(quietly ls $@); do
+        for arg_ in $(quietly ls "$@"); do
             [[ $arg_ =~ __init__ ]] && continue
             [[ $arg_ ]] || continue
             ls $arg_
