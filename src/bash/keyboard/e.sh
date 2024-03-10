@@ -49,7 +49,8 @@ eft () {
 }
 
 etf () {
-    et || ef
+    local result_=$?
+    [[ $result_ == 0 ]] && et || ef
 }
 
 ett () {
