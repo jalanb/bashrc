@@ -5,7 +5,7 @@
 # xxx
 
 _python_command () {
-    local __doc__="""Cpommand to be used in this script is python3, or can be over-written with $PYTHON"""
+    local __doc__="""Command to be used in this script is python3, or can be over-written with $PYTHON"""
     local python_=${PYTHON:-python3}
     $python_  -c"import sys; print(sys.executable)"
 }
@@ -19,7 +19,7 @@ i () {
 
 ip () {
     local __doc__="Run ipython with tab title"
-    local me=$USER 
+    local me=$USER
     local here_=$(jostname)
     local options_=-noconfirm_exit
     local _ipython=${IPYTHON:-ipython}
@@ -58,19 +58,6 @@ act () {
     return 1
 }
 
-pym () {
-    local args=("$@") quiet_=
-    for i in "${!args[@]}"; do
-        [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
-    done
-    [[ $quiet_ ]] || show_command "$(_python_command) -m" "${args[@]}"
-    $(_python_command) -m "${args[@]}"
-}
-
-pmp () {
-    pym pip --require-virtualenv "$@" 
-}
-
 ppd () {
     pip_install_develop "$@"
 }
@@ -81,30 +68,37 @@ ppe () {
     (
         cd "$dir_"
         Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
-        ppi $upgrade_ -e . | grep -v -e uninstall -e satisfied -e existing -e collected
+        ppi $upgrade_ -e .
+        # | grep -v -e uninstall -e satisfied -e existing -e collected
         [[ -f requirements/development.txt ]] && ppr requirements/development.txt
     )
 }
 
-ppf () {
-    if [[ "$@" ]]; then
-        pmp freeze | grep "$@"
-    else
-        pmp freeze
-    fi
+freeze_special () {
+    [[ $1 =~ ^(pip|wheel|setuptools)$ ]]
 }
 
-install_ppi () {
-    # quietly ppf wheel && return 0
-    pym ensurepip 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
-    ppu "setuptools>=65.5.1" wheel pip
+ppf () {
+    local quiet_=
+    [[ $1 =~ -q ]] && shift && quiet_=-q
+    if [[ "$@" ]]; then
+        if freeze_special $1; then
+            import_version $1
+        elif [[ $quiet_ ]]; then
+            pyp $quiet_ freeze | grep -q "$@"
+        else
+            pyp $quiet_ freeze | grep --color "$@"
+        fi && return 0 || return 1
+    else
+        pyp $quiet_ freeze
+    fi
 }
 
 ppi () {
     [[ $1 == install ]] && shift
-    install_ppi
-    show_command $(_python_command) -m pip install "$@"
-    pmp install "$@" 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
+    local __doc__="""Install $* with pip"""
+    pyp install --quiet "$@"
+    # 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
 }
 
 ppp () {
@@ -120,7 +114,25 @@ ppu () {
 }
 
 ppy () {
-    pmp uninstall -y "$@"
+    pyp uninstall --quiet -y "$@"
+}
+
+pyc () {
+    $(_python_command) -c "$@"
+}
+
+pym () {
+    local args=("$@") quiet_=
+    for i in "${!args[@]}"; do
+        [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
+    done
+    local cmd_=$(_python_command)
+    [[ $quiet_ ]] || show_command $cmd_ -m "${args[@]}"
+    $(_python_command) -m "${args[@]}"
+}
+
+pyp () {
+    pym pip --require-virtualenv "$@"
 }
 
 # xxxx
@@ -157,14 +169,37 @@ venv () {
     hash -d python3 python 2>/dev/null
     pym venv --copies --clear "$venv_dir_"
     unhash_activate "$venv_dir_"
-    show_command $(_python_command) -m ensurepip
     install_requirements "$dir_" -p
 }
+
+# xxxxx
+
+install_pip () {
+    local quiet_=
+    [[ $1 =~ -q ]] && shift && quiet_=-q
+    # quietly ppf wheel && return 0
+    pym $quiet_ ensurepip
+    # 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
+    ppu $quiet_ "setuptools>=65.5.1" wheel pip
+}
+
+import_version () {
+    local quiet_=
+    [[ $1 =~ -q ]] && shift && quiet_=-q
+    local module_=$1; shift
+    local version_=$(pyc "import $module_; print($module_.__version__)")
+    [[ $version_ ]] || return 1
+    [[ $quiet_ =~ -q ]] && return 0
+    echo "$module_==$(version_)"
+    return 0
+}
+
+import_version -q pip || install_pip -q
 
 install_requirements () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1"
-    [[ -d "$dir_" ]] || return 1 
+    [[ -d "$dir_" ]] || return 1
 
     local requirement_=requirements.txt requirements_=
     [[ -f $requirement_ ]] && requirements_="requirements"
