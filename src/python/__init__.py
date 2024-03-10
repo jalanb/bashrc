@@ -1,3 +1,3 @@
 #! /user/bin/env python
 
-__version__ = "0.8.78"
+__version__ = "0.8.79"
