@@ -413,10 +413,10 @@ ls_options () {
 
 ls_command () {
     local __doc__="ls_command ""$@"
-    local __program__="$(ls_program)"
-    local __options__="$(ls_options)"
+    local program_="$(ls_program)"
+    local options_="$(ls_options)"
     echo "$(ls_program)" "$(ls_options)" "$@"
-    [[ $@ ]] && echo "$__program__" "__options__" "$@" || echo "$__program__"
+    [[ $@ ]] && echo "$program_" "$options_" "$@" || echo "$program_"
 }
 
 # _xxxxxxxxxx
