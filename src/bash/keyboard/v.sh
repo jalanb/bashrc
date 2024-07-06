@@ -421,7 +421,7 @@ vim_diff () {
     fi
     [[ -e "$1" ]] && two_="$1" && shift
     [[ -e "$1" ]] && three_="$1" && shift
-    if ! _any_diff "$one_ " "$two_" "$three_"; then
+    if ! any_diff "$one_ " "$two_" "$three_"; then
         echo same 
         return 1
     fi

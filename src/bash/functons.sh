@@ -867,10 +867,10 @@ diff_two_files () {
 }
 
 any_diff () {
-    diff_two_files_ $1 $2 && return 0
+    diff_two_files $1 $2 && return 0
     [[ -z $3 ]] && return 1
-    diff_two_files_ $1 $3 && return 0
-    diff_two_files_ $2 $3 && return 0
+    diff_two_files $1 $3 && return 0
+    diff_two_files $2 $3 && return 0
     return 1
 }
 
