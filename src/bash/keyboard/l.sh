@@ -83,11 +83,7 @@ ll () {
     green_line $PWD
     show_command -q l $options_ $paths_
     echo
-    #(set +x
-        local fred="$options_"
-        local fred_=$paths_
-        l "$options_" $paths_
-    #)
+    l $options_ $paths_
 }
 
 lo () {
@@ -423,7 +419,6 @@ ls_command () {
     local __doc__="ls_command ""$@"
     local program_="$(ls_program)"
     local options_="$(ls_options)"
-    echo "$(ls_program)" "$(ls_options)" "$@"
     [[ $@ ]] && echo "$program_" "$options_" "$@" || echo "$program_"
 }
 
