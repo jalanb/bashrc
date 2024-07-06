@@ -27,6 +27,7 @@ fred
 fred.[a-z]*
 .cd
 .cd.sh
+.python-version
 .venv
 *.fail
 *.gwt
