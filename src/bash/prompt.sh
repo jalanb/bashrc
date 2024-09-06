@@ -167,10 +167,10 @@ lblue_host () {
 set_status_bit () {
     local __doc__="""Set the status bit from $?"""
     local one_=$1; shift
-    local status_=
     [[ -z "$one_" ]] && one_="-z \$?"
     local status_color_=red
     [[ $one_ == 0 ]] && status_color_=green
+    local status_=
     status_=$(rgb $status_color_ $one_)
     export STATUS=$status_
 }
