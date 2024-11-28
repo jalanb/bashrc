@@ -45,10 +45,6 @@ add_dir_to_a_path () {
     add_to_a_path "$@"
 }
 
-add_dir_to_PATH () {
-    add_dir_to_a_path PATH "$@"
-}
-
 show_value () {
     local name_=${1-SHELL}
     local value=${!name_}
