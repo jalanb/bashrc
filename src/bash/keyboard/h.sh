@@ -9,8 +9,8 @@
 
 h () {
     local __doc__="tail history for half a screen"
-    local _options=$(( $LINES / 2 ))
-    history_tail "$@" $_options
+    local lines_=$(( $LINES / 2 ))
+    history_tail $lines_ "$@"
 }
 
 # _x
@@ -51,7 +51,7 @@ hl () {
 }
 
 ht () {
-    history_tail_dateless "$@"
+    history_tail "$@"
 }
 
 hv () {
@@ -137,8 +137,8 @@ hgt () {
     hg "$@" | tail
 }
 
-ht1 () {
-    history_tail 2 | head -n 1
+htt () {
+    history_tail 2 | head -n 2
 }
 
 hub () {
@@ -219,15 +219,11 @@ big_history_grep () {
 
 history_grep () {
     local __doc__="grep in history"
-    [[ $1 =~ (-h|--help) ]] && ww hg && return 0
+    [[ $1 =~ (-h|--help) ]] && ww history_grep && return 0
     local _back=
     [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
     local _sought="$@"
     read_history --date | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
-}
-
-history_tail_dateless () {
-    history_tail "$@"
 }
 
 history_tail () {
