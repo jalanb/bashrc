@@ -92,7 +92,7 @@ lo () {
 
 lp () {
     echo
-    green -n $PWD
+    green -l $PWD
     echo
     l "$@"
 }
