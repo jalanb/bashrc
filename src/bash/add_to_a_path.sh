@@ -30,8 +30,8 @@ add_to_a_path () {
             eval $new_paths_
             export $1
         else
-            echo $?
-            echo $new_paths_
+            echo $PATH
+            echo "$? - Failed to add for '""$@""', got '$new_paths_'"
         fi
     fi
 }
