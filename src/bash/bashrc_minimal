@@ -94,8 +94,8 @@ vv () {
     minimally "vim -p " "$@"
 }
 
-vbb () {
-    vim -p ~/.bashrc $BASH_SOURCE "$@" +/BASH_SOURCE
+vvb () {
+    vim -p $BASH_SOURCE ~/.bashrc "$@" +/BASH_SOURCE
     minimally "vim -p ~/.bashrc $BASH_SOURCE $@"
     . ~/.bashrc
     minimally ". ~/.bashrc"
