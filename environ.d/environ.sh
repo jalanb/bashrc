@@ -61,13 +61,23 @@ _set_option () {
 }
 
 _source_jab_environ () {
+   # echo x1
     set_paths
+   # echo x2
     export_symbols
+   # echo x3
     set_bucket
+   # echo x4
     show_dir_colors
+   # echo x5
     _set_option cdspell
+   # echo x6
     _set_option autocd
+   # echo x7
     set -o vi
+   # echo x8
 }
 
+# echo before _source_jab_environ
 _source_jab_environ
+# echo after _source_jab_environ
