@@ -108,19 +108,19 @@ crayons () {
 }
 
 crayon () {
-    local name_=$1 body_=$2
-    [[ $body_ ]] || body_=$name_
-    printf "$name_ () {\n    rgb $body_ "'"$@"'" \n}\n\n" >> $(crayons)
+    local function_name_=$1 rgb_colour_=$2
+    [[ $rgb_colour_ ]] || rgb_colour_=$function_name_
+    printf "$function_name_ () {\n    rgb $rgb_colour_ "'"$@"'" \n}\n\n" >> $(crayons)
 }
 
 crayon_line () {
-    local name_=$1 body_=$2
-    [[ $body_ ]] || body_=$name_
-    printf "$name_ () {\n    rgb -n $body_ "'"$@"'" \n}\n\n" >> $(crayons)
+    local function_name_=$1 rgb_colour_=$2
+    [[ $rgb_colour_ ]] || rgb_colour_=$function_name_
+    printf "$function_name_ () {\n    rgb -l $rgb_colour_  "'"$@"'" \n}\n\n" >> $(crayons)
 }
 
 source_crayons () {
-    local crayons_=$(crayons) name=$1 body_=$2
+    local crayons_=$(crayons)
     echo > $crayons_
     crayon no_colour off
     for colour in red green blue cyan magenta yellow black white; do
