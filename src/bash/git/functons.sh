@@ -1120,13 +1120,13 @@ rgl_ () {
 clonn () {
     local name_=${1:-pysyte}
     [[ $name_ ]] || return 12
-    local here_=`readlink -f .`
-    local dir_=`dirname $here_`
+    local here_=$(readlink -f .)
+    local dir_=$(dirname $here_)
     local url_="https://github.com/jalanb/${name_}.git"
-    local pwd_=`pwd`
+    local pwd_=$(pwd)
     if [[ -d $name_ ]]; then
         cd $name_
-        local gurl_=`git remote get-url origin`
+        local gurl_=$(git remote get-url origin)
         [[ $url_ == $gurl_ ]] || return 15
         pwd
         return 0
@@ -1305,7 +1305,7 @@ local_gcu () {
 # xxxxxxxxx_
 
 to_branch_ () {
-    echo "$1" | tr ' ' '_'
+    printf '%s\n' "${1// /_}"
 }
 # xxxxxxxxxx
 
