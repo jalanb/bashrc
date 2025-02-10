@@ -1,6 +1,5 @@
+-r linting.txt
 -r testing.txt
-
-ansible-pull
 
 bumpversion
 twine

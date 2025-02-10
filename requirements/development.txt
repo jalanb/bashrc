@@ -1,7 +1,6 @@
 -r devops.txt
 
 ipython
-isort
 pudb
 pytest-icdiff
 pytest-instafail
