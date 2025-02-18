@@ -137,7 +137,7 @@
     oo = restore
 
     pa =  push --atomic --all
-    pf =  push --atomic --force-with-lease
+    pf =  push --atomic --force-with-lease --force-if-includes
     pff = push --atomic --force
     pod = push origin --delete
     pt =  push --tags
