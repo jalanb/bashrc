@@ -170,13 +170,13 @@
     enabled = true
 [icdiff]
     options = --highlight --line-numbers
-[mergetool "diffconflicts"]
-    keepBackup = false
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
     tool = diffconflicts
     conflictstyle = merge
+[mergetool "diffconflicts"]
+    keepBackup = false
 [mergetool "splice"]
     cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
     trustExitCode = true
@@ -200,4 +200,4 @@
     process = git-lfs filter-process
     required = true
 [init]
-	defaultBranch = __main__
+    defaultBranch = __main__
