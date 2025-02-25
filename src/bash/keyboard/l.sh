@@ -81,9 +81,9 @@ ll () {
     done
     [[ $paths_ ]] || paths_=.
     green_line $PWD
-    show_command -q l $options_ $paths_
+    show_command -q ls $options_ $paths_
     echo
-    l $options_ $paths_
+    ls $options_ $paths_
 }
 
 lo () {

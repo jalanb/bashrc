@@ -18,8 +18,8 @@ ml () {
 
 # xxx
 
-unalias man
-unalias batman
+quietly unalias man
+quietly unalias batman
 
 man () {
     /opt/homebrew/bin/batman "$@"

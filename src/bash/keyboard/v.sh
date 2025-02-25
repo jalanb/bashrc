@@ -29,6 +29,14 @@ vd () {
     vim_diff -O "$@"
 }
 
+ve () {
+    edit_source ~/jab/environ.d/jab.sh "$@"
+}
+
+vf () {
+    edit_source $(functons) "$@"
+}
+
 vg () {
     local user_config_=$(readlink -f ~/.gitconfig 2>/dev/null) clone_config_="$(get_root)/.git/config"
     local user_ignore_=$(readlink -f ~/.gitignore_global 2>/dev/null) clone_ignore_="$(get_root)/.gitignore"
@@ -58,7 +66,7 @@ vl () {
 # vn
 # vo
 vp () {
-    _edit_source ~/bash/prompt.sh +/^colour_prompt "$@"
+    edit_source ~/bash/prompt.sh +/^colour_prompt "$@"
 }
 
 # vq
@@ -222,7 +230,7 @@ vfr () {
 }
 
 vgf () {
-    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
+    edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
 }
 
 
@@ -305,13 +313,8 @@ vvf () {
 }
 
 vvp () {
-    vvf python
+    vvf ftplugin/python
 }
-
-vvy () {
-    vvf python/jab.vim
-}
-
 
 vvu () {
     __doc__="Edit ~/jab/vim files and ~/vim files if different"
