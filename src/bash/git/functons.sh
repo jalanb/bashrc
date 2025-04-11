@@ -934,6 +934,20 @@ gdis () {
     gc d --staged  "$@"
 }
 
+gits ()
+{
+    local cmd_=$1;
+    shift;
+    [[ -n $cmd_ ]] || return 1;
+    [[ -n $@ ]] || return 2;
+    for dir in "$@";
+    do
+        echo $dir;
+        git -C "$dir" $cmd_;
+        echo;
+    done
+}
+
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
     show_command gc lg "$@" > $stdout_
