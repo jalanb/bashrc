@@ -51,11 +51,8 @@ iz () {
     ip izatso
 }
 
-act () {
-    unhash_activate "$1" && return 0
-    local file_=$(venv_activator "$@")
-    [[ -f "$file_" ]] || ls $(readlink -f "$file_")
-    return 1
+wp () {
+    which_python "$@"
 }
 
 ppd () {
@@ -135,7 +132,25 @@ pyp () {
     pym pip --require-virtualenv "$@"
 }
 
+vba () {
+    if [[ -f .venv/bin/activate ]]; then
+        source .venv/bin/activate
+    elif [[ -f ../.venv/bin/activate ]]; then
+        source ../.venv/bin/activate
+    else
+        echo ".venv not found" >&2
+        return 1
+    fi
+}
+
 # xxxx
+
+acti () {
+    unhash_activate "$1" && return 0
+    local file_=$(venv_activator "$@")
+    [[ -f "$file_" ]] || ls $(readlink -f "$file_")
+    return 1
+}
 
 pipv () {
     local dir_=$PWD setup_py_= setup_cfg= requires_=
@@ -257,36 +272,39 @@ unhash_deactivate () {
 
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
-    local python_=${PYTHON:-python}
+    local default_python_=python
+    QUIETLY which python || default_python_=python3
+    local python_=${PYTHON:-$default_python_}
     local exec_=$($python_ -c"import sys; print(sys.executable)")
     local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
-    local rlf_=$(readlink -f $exec_)
+    local real_exec_=$(readlink -f $exec_)
     local shown_=
     if [[ $python_ =~ ^python3? ]]; then
         local which_=$(which $python_)
         if [[ $exec_ != $which_ ]]; then
             show_data "   bash: $which_"
             show_data " python: $exec_"
-            [[ $rlf_ == $exec_ ]] || show_data "   real: $rlf_"
+            [[ $real_exec_ == $exec_ ]] || show_data "   real: $real_exec_"
             shown_=1
         fi
     fi
     if [[ ! $shown_ ]]; then
-        if [[ $rlf_ == $exec_ ]]; then
+        if [[ $real_exec_ == $exec_ ]]; then
             show_data " python: $exec_"
         else
             show_data " python: $exec_"
-            show_data "   real: $rlf_"
+            show_data "   real: $real_exec_"
         fi
     fi
     show_data "version: $version_"
 }
 
 ipython_profile () {
-    [[ $1 ]] || return 1
+    local arg_=$1
+    [[ $arg_ ]] || arg_=default
     local profile_=
     for profile_ in $(ipython profile list | grep '^    ' | grep -v = | sed -e "s,^ *,,") ; do
-        if [[ $profile_ =~ $1 ]]; then
+        if [[ $profile_ =~ $arg_ ]]; then
             echo $profile_
             return 0
         fi
