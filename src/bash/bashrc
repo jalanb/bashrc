@@ -1,5 +1,6 @@
 #! /usr/local/bin/bash -x
 
+
 lcolour () {
     local colour_="[1;${1}m" no_colour_="[0m"
     shift
@@ -27,7 +28,7 @@ usr_local () {
     echo "/usr/local/$1"
 }
 
-pre_bashrc () {
+set_paths () {
     local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local
     local locals_="$(usr_local gnu):/opt/homebrew/bin:$(usr_local bin):$(usr_local opt):$(usr_local go/bin)"
     local bins_=/usr/bin:/bin:/usr/sbin:/sbin
@@ -84,16 +85,11 @@ bbb () {
 }
     
 bashrc () {
-    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
+    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     export PS1="\$? [$(luser):$(lhere)]\n$ "
     bashrc_source ~/jab/bash/bashrc_minimal
     bashrc_source $HOME/jab/__init__.sh || return 1
     bashrc_source $HOME/bash/prompt.sh green
-}
-
-vbb () {
-    vim -p $(bbb)
-    readlink -f $(bbb) 2>/dev/null
 }
 
 min () {
@@ -103,7 +99,7 @@ min () {
 }
 
 __main__ () {
-    pre_bashrc
+    set_paths
     bashrc
     set +m
     post_bashrc
@@ -118,4 +114,9 @@ post_bashrc () {
     [[ -f .cd ]] && cde . || cd_dot
 }
 
-[[ $- =~ i ]] && __main__  "$@" # > $bashrc_log 2>&1
+[[ $- =~ i ]] && __main__  "$@" > $bashrc_log 2>&1
+
+vbb () {
+    vim -p $(bbb)
+    readlink -f $(bbb) 2>/dev/null
+}
