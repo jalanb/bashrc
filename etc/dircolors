@@ -20,6 +20,7 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .py           00;31
 .sh           00;31
 .sql          00;31
+.yml          00;31
 
 
 # Code that's lying around, but came from someone else - LIGHT RED
@@ -48,7 +49,6 @@ OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
 .test         00;35
 .tests        00;35
 .xml          00;35
-.yml          00;35
 .yaml         00;35
 *Makefile     00;35
 
