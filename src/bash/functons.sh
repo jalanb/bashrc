@@ -224,19 +224,19 @@ SUDO () {
 }
 
 dic () {
-    _dixx cp "$1" "$2"
+    dixx cp "$1" "$2"
 }
 
 dih () {
-    _dixx hd "$@"
+    dixx hd "$@"
 }
 
 dii () {
-    _dixx icdiff "$@"
+    dixx icdiff "$@"
 }
 
 div () {
-    _dixx vd "$@"
+    dixx vd "$@"
 }
 
 over () {
@@ -511,6 +511,7 @@ pysyon () {
 please () {
     local command_=$(history -p !-1)
     [[ "$@" ]] && command_="$@"
+    command_=$(eval echo "$command_")
     show_run_command sudo $command_
 }
 
@@ -569,9 +570,14 @@ doctest () {
     local __doc__="""doctest args"""
     local pythonpath_=$(readlink -f .)
     [[ $PYTHONPATH ]] && pythonpath_="$PYTHONPATH:$pythonpath_"
+    local options_=
+    if [[ $1 =~ [-][vf] ]]; then
+        options_="$1"
+        shift
+    fi
     local target_="$@"
     [[ $target_ ]] || target_=.
-    (PYTHONPATH="$pythonpath_" python -m doctest -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
+    (PYTHONPATH="$pythonpath_" python -m doctest $options_ -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
 }
 
 has_ext () {
@@ -1027,28 +1033,107 @@ publish_Localhost () {
 
 # functions starting with an underscore are intended for use within this file only
 
-_dixx () {
+dixx_different_files() {
+    local command_="$1"
+    local source_dir_="$2"
+    local destination_dir_="$3"
+    
+    local number_in_both_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | wc -l)
+    if [[ $number_in_both_ -gt 0 ]]; then
+        # Output header directly for display
+        echo ""
+        echo "# Dirs 1 and 2 differ"
+        # Output commands for execution
+        divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | 
+            sed -e "s/Files /$command_ \"/" -e 's/ and /" "/' -e 's/ differ/"/'
+    fi
+}
+
+dixx_only_in_source() {
+    local command_="$1"
+    local source_dir_="$2"
+    local destination_dir_="$3"
+    
+    local number_insource_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" | wc -l)
+    if [[ $number_insource_ -gt 0 ]]; then
+        echo ""
+        echo "# Only in $source_dir_"
+        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" | 
+            sed -e "s/Only in/$command_ /" -e "s|: |/|"
+    fi
+}
+
+dixx_only_in_destination() {
+    local command_="$1"
+    local source_dir_="$2"
+    local destination_dir_="$3"
+    
+    local number_in_destination_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" | wc -l)
+    if [[ $number_in_destination_ -gt 0 ]]; then
+        echo ""
+        echo "# Only in $destination_dir_"
+        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" | 
+            sed -e "s/Only in/$command_ /" -e "s|: |/|"
+    fi
+}
+
+dixx() {
+    local command_=$1; shift
+    local args=()
+    local execute=false
+    
+    # Parse arguments, check for -x/--execute flag
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -x|--execute)
+                execute=true
+                shift
+                ;;
+            *)
+                args+=("$1")
+                shift
+                ;;
+        esac
+    done
+    
+    local source_dir_="${args[0]}"
+    local destination_dir_="${args[1]}"
+    
+    # Create a temporary file for all output
+    local dixx_sh=$(mktemp)
+    
+    # Generate all output only once
+    dixx_different_files "$command_" "$source_dir_" "$destination_dir_" > "$dixx_sh"
+    dixx_only_in_source "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_sh"
+    dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_sh"
+    
+    if [[ "$execute" == true ]]; then
+        # Execute only the commands (not headers or blank lines)
+        grep -v "^#" "$dixx_sh" | grep -v "^$" | while IFS= read -r cmd; do
+            eval "$cmd"
+        done
+    else
+        # Display the full output
+        cat "$dixx_sh"
+    fi
+    
+    # Clean up
+    rm "$dixx_sh"
+}
+
+dixx() {
     local command_=$1; shift
     local source_dir_="$1"; shift
     local destination_dir_="$1"; shift
-    local number_in_both_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | wc -l)
-    if [[ $number_in_both_ -gt 0 ]]; then
-        echo
-        echo "# Files 1 and 2 differ"
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | sed -e 's/Files /'$command_' "/' -e 's/ and /" "/' -e 's/ differ/"/'
-    fi
-    local number_in_source_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" | wc -l)
-    if [[ $number_in_source_ -gt 0 ]]; then
-        echo
-        echo "Only in $source_dir_"
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" | sed -e "s/Only in/vim /" -e "s|: |/|"
-    fi
-    local number_in_destination_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" | wc -l)
-    if [[ $number_in_destination_ -gt 0 ]]; then
-        echo
-        echo "Only in $destination_dir_"
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" | sed -e "s/Only in/vim /" -e "s|: |/|"
-    fi
+    
+    # Generate commands for different file types
+    local dixx_out=$(mktemp)
+    dixx_different_files "$command_" "$source_dir_" "$destination_dir_" > "$dixx_out"
+    dixx_only_in_source "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_out"
+    dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_out"
+    cat "$dixx_out" | pbcopy
+    pbpaste
+    rm "$dixx_out"
 }
 
 edit_source () {
@@ -1089,26 +1174,31 @@ edit_work () {
 divv_get_difference () {
     local source_dir_="$1"
     local destination_dir_="$2"
-    local source_gitignore_=
-    [[ -f "$source_dir_/.gitignore" ]] && source_gitignore_="--exclude-from=$source_dir_/.gitignore"
-    local destination_gitignore_=
-    [[ -f "$destination_dir_/.gitignore" ]] && destination_gitignore_="--exclude-from=$destination_dir_/.gitignore"
-    diff -q -r \
-        --exclude=.svn \
-        --exclude=.git \
-        --exclude=.DS_Store \
-        --exclude="*.fail" \
-        --exclude="*.py[co]" \
-        --exclude=tags \
-        --exclude=".*sw[po]" \
-        --exclude=tmp \
-        --exclude="*~" \
-        --exclude="*.beam" \
-        --exclude="*.a" \
-        --exclude="*.o" \
-        $source_gitignore_ \
-        $destination_gitignore \
-    "$source_dir_" "$destination_dir_" 2> ~/fd2
+    
+    # Build basic exclude args
+    local exclude_args=(
+        "--exclude=.svn"
+        "--exclude=.git"
+        "--exclude=.DS_Store"
+        "--exclude=*.fail"
+        "--exclude=*.py[co]"
+        "--exclude=tags"
+        "--exclude=.*sw[po]"
+        "--exclude=tmp"
+        "--exclude=*~"
+        "--exclude=*.beam"
+        "--exclude=*.a"
+        "--exclude=*.o"
+        "--exclude=.venv"
+        "--exclude=.tox"
+    )
+    
+    # Add gitignore files as exclude-from if they exist
+    [[ -f "$source_dir_/.gitignore" ]] && exclude_args+=("--exclude-from=$source_dir_/.gitignore")
+    [[ -f "$destination_dir_/.gitignore" ]] && exclude_args+=("--exclude-from=$destination_dir_/.gitignore")
+    
+    # Run diff with all the exclude arguments
+    diff -q -r "${exclude_args[@]}" "$source_dir_" "$destination_dir_" 2> ~/fd2
 }
 
 unremembered () {
