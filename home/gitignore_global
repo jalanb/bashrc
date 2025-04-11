@@ -37,6 +37,7 @@ fred.[a-z]*
 *.pyproj
 .colours/
 [a-z.]*-[a-z.]*.html
+scripts/
 #
 # Developers' data
 *.log
@@ -302,6 +303,5 @@ Session.vim
 .Python
 Include
 Lib
-Scripts
 pyvenv.cfg
 pip-selfcheck.json

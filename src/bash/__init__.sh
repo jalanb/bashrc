@@ -32,6 +32,7 @@ __version__=0.8.81
 . ~/bash/git/__init__.sh
 # echo ~/bash keys
 . ~/bash/keys.sh
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # echo ~/bash keys_read
 keys_read

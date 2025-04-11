@@ -1,8 +1,11 @@
 #! /bin/cat
 
+KEYBOARD="$(dirname $(readlink -f $BASH_SOURCE))/keyboard"
+
 keyboard_path () {
-    # echo ~/bash/keyboard/$1
-    echo /opt/clones/github/jalanb/jabs/jab/src/bash/keyboard/$1
+    local file_=
+    [[ $* ]] && file_=$1
+    echo "$KEYBOARD/$file_"
 }
 
 key_exists () {
@@ -31,7 +34,7 @@ echo_key () {
 echo_keys () {
     [[ $@ ]] || return 0
     (
-        command cd $(keyboard_path)
+        command cd $(keyboard_path " ")
         for arg_ in $(quietly ls "$@"); do
             [[ $arg_ =~ __init__ ]] && continue
             [[ $arg_ ]] || continue
