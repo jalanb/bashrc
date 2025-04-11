@@ -2,11 +2,11 @@
 
 brew update
 
-GIT= brew install codeclimate
 GIT=/usr/bin/git brew install git
 brew install ack
 brew install bash
 brew install bumpversion
+brew install coreutils
 brew install elasticsearch
 brew install find
 brew install findutils
@@ -17,11 +17,9 @@ brew install gnu-sed --with-default-names
 brew install graphviz
 brew install hg
 brew install htop
-brew install meld
 brew install mysql
 brew install ncdu
 brew install pgrep
-brew install ping
 brew install qfinder
 brew install ranger
 brew install sloccount
