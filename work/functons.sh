@@ -20,6 +20,10 @@ is_work_server () {
     [[ "$1" =~ ${WORK}[.]com$ ]]
 }
 
+work_github () {
+    echo "https://github.com/BrightbeamAI"
+}
+
 check () {
     local root_=$(get_root)
     local script_=$(find $root_ -name "check")
