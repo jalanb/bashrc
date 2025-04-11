@@ -8,6 +8,11 @@ upper () {
 
 rgb () {
     [[ $1 ]] || return 7
+    local eol_=
+    if [[ $* =~ (^|[\ ])-[ln] ]]; then
+        eol_="\n"
+        shift
+    fi
     [[ $1 =~ ^l?(off|red|green|blue|cyan|magenta|black|white)$ ]] || return 8
     local colour_=$1
     [[ $colour_ ]] || return 9
@@ -24,17 +29,12 @@ rgb () {
         background_="BACK_$(echo $1 | tr [:lower:] [:upper:])"
         shift
     fi
-    local eol_= text_="$@"
-    if [[ $* =~ (^|[\ ])-[ln] ]]; then
-        eol_="\n"
-        text_=$(printf -- "$text_" | sed -e 's,\(^\|[ ]\)-[ln]\($\| \),,g')
-        shift
-    fi
+    local text_="$@"
     colour_="${!foreground_}"
     [[ $background_ ]] && colour_="${colour_}${!background_}"
-    if [[ "$text_" ]];
-    then printf -- "${colour_}$text_""${NO_COLOUR}${eol_}"
-    else printf -- "${colour_}$(cat)${NO_COLOUR}${eol_}"
+    if [[ "$text_" ]]; then printf -- "${colour_}${text_}""${NO_COLOUR}${eol_}"
+    elif [ ! -t 0 ]; then printf -- "${colour_}$(cat)${NO_COLOUR}${eol_}"
+    else printf -- "${NO_COLOUR}${eol_}"
     fi
 }
 
