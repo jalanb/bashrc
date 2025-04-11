@@ -13,7 +13,7 @@ QQ () {
 }
 
 qt () {
-    qq type "$@"
+    QQ type "$@"
 }
 
 QT () {
