@@ -1159,10 +1159,16 @@ clone () {
         cat -n $clone_log_
     else
         cd $(grep Cloning.into $clone_log_ | sed -e "s/Cloning into '//" -e "s/'.*//")
-        if [[ $remote_ =~ $(work) ]]; then
-            git config --local user.name "Alan Brogan"
-            git config --local user.email $(work_email alan.brogan)
+        local username_= useremail_=
+        if [[ $remote_ =~ $(work_github) ]]; then
+            username_="Alan Brogan"
+            useremail_=$(work_email alan.brogan)
+        else
+            username_="J Alan Brogan"
+            useremail_=$(github_email)
         fi
+        git config --local user.name "$username_"
+        git config --local user.email "$useremail_"
         runnable $range_ && $range_
     fi
 }

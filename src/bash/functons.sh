@@ -831,7 +831,6 @@ al_email () {
     echo "$@@al-got-rhythm.net"
 }
 
-
 continuing () {
     local answer_=$(ask "Continue ?")
     [[ $answer_ =~ [yY] ]]
@@ -898,6 +897,10 @@ blank_script () {
     [[ -f "$1" ]] && return
     echo "#! /bin/bash" > $1
     echo "" >> $1
+}
+
+github_email () {
+    al_email github
 }
 
 project_root () {
