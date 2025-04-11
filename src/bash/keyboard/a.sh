@@ -11,7 +11,7 @@ args_array() {
 
 # _
 
-. ~/hub/jalanb/ackvim/ackvim.sh
+. ~/ackvim/ackvim.sh
 
 # x
 

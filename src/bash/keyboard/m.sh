@@ -18,11 +18,15 @@ ml () {
 
 # xxx
 
-unalias man
-unalias batman
+unalias man >/dev/null 2>&1
+unalias batman >/dev/null 2>&1
 
 man () {
     /opt/homebrew/bin/batman "$@"
+}
+
+mat () {
+    mdcat "$@"
 }
 
 min () {

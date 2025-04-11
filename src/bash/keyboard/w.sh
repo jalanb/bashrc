@@ -31,6 +31,6 @@ wvj () {
 }
 
 wvw () {
-    vim -p ~/hub/whyp/whyp.sh "$@"
+    vim -p ~/whyp.sh "$@"
 }
 

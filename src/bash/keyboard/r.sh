@@ -20,11 +20,6 @@ rf () {
     python ~/jab/src/python/rf.py "$@"
 }
 
-rg () {
-    [[ "$@" ]] && c "$@"
-    ranger
-}
-
 ri () {
     local arg_=
     for arg_ in "$@"; do
