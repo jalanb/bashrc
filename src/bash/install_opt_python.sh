@@ -1,1 +1,0 @@
-/opt/clones/gitlab/bots/deploys/__main__/roles/portal/templates/install_alt_python.sh
