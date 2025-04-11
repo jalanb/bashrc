@@ -18,6 +18,13 @@ gv () {
     grep -v "$@"
 }
 
+gat () {
+    case "$1" in
+        -h|--help) glow -h | sed -e "s,glow ,gat ," ;;
+        *) glow "$@" ;;
+    esac
+}
+
 ght () {
     gh "$@" | tel
 }

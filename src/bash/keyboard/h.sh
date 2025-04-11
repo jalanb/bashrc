@@ -30,11 +30,11 @@ hd () {
 }
 
 hb () {
-    big_history_grep
+    big_history_grep "$@"
 }
 
 hg () {
-    history_grep
+    history_grep "$@"
 }
 
 hh () {
@@ -220,10 +220,11 @@ big_history_grep () {
 history_grep () {
     local __doc__="grep in history"
     [[ $1 =~ (-h|--help) ]] && ww history_grep && return 0
-    local _back=
+    local _back= date_=
     [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
+    [[ $1 =~ -d ]] && date_=--date && shift
     local _sought="$@"
-    read_history --date | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
+    read_history $date_ | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
 }
 
 history_tail () {

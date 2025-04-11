@@ -83,7 +83,7 @@ ll () {
     green_line $PWD
     show_command -q ls $options_ $paths_
     echo
-    ls $options_ $paths_
+    l "$options_" $paths_
 }
 
 lo () {
@@ -419,7 +419,7 @@ ls_command () {
     local __doc__="ls_command ""$@"
     local program_="$(ls_program)"
     local options_="$(ls_options)"
-    [[ $@ ]] && echo "$program_" "$options_" "$@" || echo "$program_"
+    echo "$(ls_program)" "$(ls_options)" "$@"
 }
 
 # _xxxxxxxxxx

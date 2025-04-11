@@ -1,7 +1,7 @@
 #! /bin/cat
 
 
-type whyp_source >/dev/null 2>&1 || source ~/hub/whyp/whyp.sh
+type whyp_source >/dev/null 2>&1 || source ~/whyp.sh
 
 # _
 # x
