@@ -30,6 +30,8 @@ gxi () {
     GXI_DIR=$dir_
     export GXI_DIR
 
+    (cd $GXI_DIR
+
     STASHED_=
     GXI_QUERY=
     LESS=MRFX g lll
@@ -62,6 +64,7 @@ gxi () {
     gxit dn --staged
     gxit status
     echo
+    )
 }
 
 gxit () {
