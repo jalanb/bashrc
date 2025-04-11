@@ -89,7 +89,8 @@ show_a_path () {
     [[ $quiet_ ]] || echo "$setter_ has set \$$name_ to:"
     (
         local paths_=${!name_} path_=
-        IFS=":" for path_ in $paths_; do
+        IFS=":" 
+        for path_ in $paths_; do
             echo "  $path_"
         done
     )
