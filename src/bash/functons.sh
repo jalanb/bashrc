@@ -347,7 +347,8 @@ paste () {
 }
 
 blacken () {
-    black -l 79 "$@"
+    black -S "$@"
+    QT blackdoc && blackdoc -S --include="[.](md|py|test|tests)" "$@"
 }
 
 clipvim () {
