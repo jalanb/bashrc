@@ -11,7 +11,6 @@ I () {
 }
 
 # xx
-#
 IP () {
     local _break=yes
     if [[ $1 == all ]]; then
@@ -25,6 +24,18 @@ IP () {
             fi
         fi
     done
+}
+
+ib () {
+    ind ~/bash/ "$@"
+}
+
+ij () {
+    ind ~/jab/ "$@"
+}
+
+ijg () {
+    inj git "$@"
 }
 
 # xxx

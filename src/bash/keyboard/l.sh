@@ -326,6 +326,10 @@ loo () {
 
 # xxxx
 
+lkra () {
+    lkr -a "$@"
+}
+
 lllg () {
     gl_ 5 "$@"
 }

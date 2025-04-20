@@ -179,6 +179,10 @@ fss () {
     $(freds --shell "$@")
 }
 
+ftt () {
+    fgv *.test *.tests "$@"
+}
+
 fvv () {
     $(freds --edit "$@")
 }

@@ -110,6 +110,28 @@ hvv () {
 
 # xxx
 
+hd1 () {
+    head -n 1 "$@"
+}
+
+hed () {
+    SCREEN=$(screen_height)
+    SCREEN=${LINES:-$(screen_height)}
+    HALF_SCREEN=`expr $SCREEN / 2`
+    HEADLINES=${HEADLINES:-$HALF_SCREEN}
+    head -n ${1:-$HEADLINES} "$@"
+}
+
+hgf () {
+    local sought_="$1"; shift
+    local message_="$1"; shift
+    (history | head -n 31 | grep --color $sought_ ) && show_fail "$message_"
+}
+
+hgg () {
+    close_kaufman "$@"
+}
+
 hgt () {
     local __doc__="grep and tail history"
     hg "$@" | tail
@@ -117,6 +139,26 @@ hgt () {
 
 ht1 () {
     history_tail 2 | head -n 1
+}
+
+hub () {
+    local _directory=~/hub
+    local _remote=
+    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
+    [[ $1 =~ http.*git ]] && _remote="$1" && shift
+    local _destination=
+    if [[ -n "$@" ]]; then
+        if cde_ok ~/hub "$@"; then
+            _directory=$(cde_first ~/hub "$@")
+        fi
+    fi
+    if [[ $_remote =~ http ]]; then
+        [[ -d $_directory ]] && cd $_directory
+        _directory=$(clone -n $_remote)
+    fi
+    [[ -d $_directory ]] && cde $_directory
+    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
+    cde $_directory
 }
 
 
@@ -206,16 +248,7 @@ history_vim () {
     vim $tmp_ $vim_suffix_
 }
 
-hgf () {
-    local sought_="$1"; shift
-    local message_="$1"; shift
-    (history | head -n 31 | grep --color $sought_ ) && show_fail "$message_"
-}
-
 close_kaufman () {
     hgf jeffkaufman "Close window"
 }
 
-hgg () {
-    close_kaufman "$@"
-}
