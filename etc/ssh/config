@@ -1,7 +1,4 @@
 Include macs
-Include ab13173
-include jab
-Include keys/config
 
 Host *
     AddKeysToAgent yes
