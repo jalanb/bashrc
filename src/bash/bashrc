@@ -23,6 +23,10 @@ quietly () {
     "$@" 2>/dev/null
 }
 
+QUIETLY () {
+    "$@" 1>/dev/null 2>&1
+}
+
 usr_local () {
     echo "/usr/local/$1"
 }
@@ -84,16 +88,24 @@ bbb () {
 }
     
 bashrc () {
-    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
-    export PS1="\$? [$(luser):$(lhere)]\n$ "
+    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann &
+    export PS1="\$? [$(colour_user):$(colour_here)]\n$ "
     bashrc_source ~/jab/bash/bashrc_minimal
     bashrc_source $HOME/jab/__init__.sh || return 1
     bashrc_source $HOME/bash/prompt.sh green
 }
 
 vbb () {
-    vim -p $(bbb)
-    readlink -f $(bbb) 2>/dev/null
+    local bbb_="$(bbb)"  
+    vim -p $bbb_         # unquoted to split on whitespace
+    QUIETLY bashrc_source $bbb_  
+    quietly readlink -f $bbb_ 
+}
+
+min () {
+    local bashrc_=~/jab/bash/bashrc_minimal
+    vim $bashrc_
+    bashrc_source $bashrc_
 }
 
 min () {
@@ -109,13 +121,11 @@ __main__ () {
     post_bashrc
 }
 
-cd_dot () {
-    green_line $green_line $PWD
-    lo
-}
-
 post_bashrc () {
-    [[ -f .cd ]] && cde . || cd_dot
+    cde .
+    pwd
+    l
 }
 
-[[ $- =~ i ]] && __main__  "$@" # > $bashrc_log 2>&1
+[[ $- =~ i ]] && __main__  "$@"
+# set -x; [[ $- =~ i ]] && __main__  "$@"  > $bashrc_log 2>&1; set +x
