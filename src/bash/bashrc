@@ -114,13 +114,6 @@ min () {
     . $min_
 }
 
-show_pwd () {
-    show_command cd -
-    grey_line "#    -> '$PWD'"
-    show_command cd /opt/clones/github/jalanb/
-    cd /opt/clones/github/jalanb/
-}
-
 __main__ () {
     set_paths
     bashrc
@@ -128,8 +121,10 @@ __main__ () {
 }
 
 post_main () {
-    cde .
-    pwd
+    show_command cd -
+    grey_line "#    -> '$PWD'"
+    show_command cd /opt/clones/github/jalanb/
+    cd /opt/clones/github/jalanb/
     l
 }
 
