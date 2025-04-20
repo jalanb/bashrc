@@ -232,6 +232,10 @@ vgg () {
     vg $user_creds_
 }
 
+vfr () {
+    python ~/jab/src/python/vim_traceback.py "$@"
+}
+
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
 }

@@ -247,14 +247,29 @@ popq () {
     popd >/dev/null 2>&1
 }
 
+lower () {
+    echo "$@"  | tr '[:upper:]' '[:lower:]'
+}
+
 this () {
-    if [[ "$@" ]]; then
-        pythis | head -n1 | green
-        echo
-        pythis | tail -n+2 | lgreen
-    else
-        pythis
-    fi
+	if [[ "$@" =~ -q ]]; then
+		pythis
+	else
+		local lower_sought=$(lower "$1")
+		[[ $lower_sought ]] || lower_sought="NOT ACTUALLY LOWER"
+		echo
+		pythis | head -n1 | green
+		echo
+		while IFS= read -r line; do
+			local lower_line=$(lower "$line")
+			if [[ $lower_line =~ $lower_sought ]]; then
+				lred_line $line
+			else
+				lgreen_line $line
+			fi
+		done < <(pythis | tail -n+2)
+		echo
+	fi
 }
 
 Tree () {
@@ -550,7 +565,7 @@ brewup () {
     if [[ $@ ]]; then
         update_=1
     else
-        brew upgrade "$@" > ~/tmp/brew.upgrade.out 2>  ~/tmp/brew.upgrade 
+        brew upgrade "$@" > ~/tmp/brew.upgrade.out 2>  ~/tmp/brew.upgrade
         grep "You have [0-9]+ outdated formulae" ~/tmp/brew.upgrade.out && update_=1
         grep "[0-9]+ outdated cask installed" ~/tmp/brew.upgrade.out && update_=1
     fi
@@ -1040,14 +1055,14 @@ dixx_different_files() {
     local command_="$1"
     local source_dir_="$2"
     local destination_dir_="$3"
-    
+
     local number_in_both_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | wc -l)
     if [[ $number_in_both_ -gt 0 ]]; then
         # Output header directly for display
         echo ""
         echo "# Dirs 1 and 2 differ"
         # Output commands for execution
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | 
+        divv_get_difference "$source_dir_" "$destination_dir_" | grep Files |
             sed -e "s/Files /$command_ \"/" -e 's/ and /" "/' -e 's/ differ/"/'
     fi
 }
@@ -1056,12 +1071,12 @@ dixx_only_in_source() {
     local command_="$1"
     local source_dir_="$2"
     local destination_dir_="$3"
-    
+
     local number_insource_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" | wc -l)
     if [[ $number_insource_ -gt 0 ]]; then
         echo ""
         echo "# Only in $source_dir_"
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" | 
+        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $source_dir_" |
             sed -e "s/Only in/$command_ /" -e "s|: |/|"
     fi
 }
@@ -1070,12 +1085,12 @@ dixx_only_in_destination() {
     local command_="$1"
     local source_dir_="$2"
     local destination_dir_="$3"
-    
+
     local number_in_destination_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" | wc -l)
     if [[ $number_in_destination_ -gt 0 ]]; then
         echo ""
         echo "# Only in $destination_dir_"
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" | 
+        divv_get_difference "$source_dir_" "$destination_dir_" | grep "Only in $destination_dir_" |
             sed -e "s/Only in/$command_ /" -e "s|: |/|"
     fi
 }
@@ -1084,7 +1099,7 @@ dixx () {
     local command_="$1"; shift
     local args=()
     local execute=false
-    
+
     # Parse arguments, check for -x/--execute flag
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -1098,18 +1113,18 @@ dixx () {
                 ;;
         esac
     done
-    
+
     local source_dir_="${args[0]}"
     local destination_dir_="${args[1]}"
-    
+
     # Create a temporary file for all output
     local dixx_sh=$(mktemp)
-    
+
     # Generate all output only once
     dixx_different_files "$command_" "$source_dir_" "$destination_dir_" > "$dixx_sh"
     dixx_only_in_source "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_sh"
     dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_sh"
-    
+
     if [[ "$execute" == true ]]; then
         grep -v "^#" "$dixx_sh" | grep -v "^$" | while IFS= read -r cmd; do
             eval "$cmd"
@@ -1117,7 +1132,7 @@ dixx () {
     else
         cat "$dixx_sh"
     fi
-    
+
     # Clean up
     rm "$dixx_sh"
 }
@@ -1160,7 +1175,7 @@ edit_work () {
 divv_get_difference () {
     local source_dir_="$1"
     local destination_dir_="$2"
-    
+
     # Build basic exclude args
     local exclude_args=(
         "--exclude=.svn"
@@ -1178,11 +1193,11 @@ divv_get_difference () {
         "--exclude=.venv"
         "--exclude=.tox"
     )
-    
+
     # Add gitignore files as exclude-from if they exist
     [[ -f "$source_dir_/.gitignore" ]] && exclude_args+=("--exclude-from=$source_dir_/.gitignore")
     [[ -f "$destination_dir_/.gitignore" ]] && exclude_args+=("--exclude-from=$destination_dir_/.gitignore")
-    
+
     # Run diff with all the exclude arguments
     diff -q -r "${exclude_args[@]}" "$source_dir_" "$destination_dir_" 2> ~/fd2
 }
