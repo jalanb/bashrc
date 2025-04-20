@@ -4,7 +4,7 @@ lcolour () {
     local colour_="[1;${1}m" no_colour_="[0m"
     shift
     local text_="$@"
-    printf "$colour_$text_$no_colour_"
+    printf "${colour_}${text_}${no_colour_}"
 }
 
 lred () {

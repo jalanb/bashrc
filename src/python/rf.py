@@ -41,7 +41,7 @@ def default_options():
     globs = {
         "development": "tags a.out *.log",
         "old": "*.old",
-        "python": "*.pyc *.pyo *.fail *$py.class *.profile",
+        "python": "*.pyc *.pyo *.fail *$py.class *.profile *.egg-info",
         "temporary": "*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two",
         "vim": "*.sw[opqrs]",
     }

@@ -64,7 +64,11 @@ ll () {
     local __doc__="""Long list the args"""
     local arg_= paths_= options_=-lh
     for arg_ in "$@"; do
-        test -e $arg_ || continue
+        if [[ ! -e $arg_ ]]; then
+            [[ $arg_ =~ ^- ]] || continue
+            options_="$options_ $arg_"
+            continue
+        fi
         if [[ -d "$arg_" ]]; then
             if [[ $arg_ =~ /$ ]]; then
                 options_="$options_ -d"
@@ -77,13 +81,9 @@ ll () {
     done
     [[ $paths_ ]] || paths_=.
     green_line $PWD
-    show_command -q l $options_ $paths_
+    show_command -q ls $options_ $paths_
     echo
-    #(set +x
-        local fred="$options_"
-        local fred_=$paths_
-        l "$options_" $paths_
-    #)
+    ls $options_ $paths_
 }
 
 lo () {
@@ -92,7 +92,7 @@ lo () {
 
 lp () {
     echo
-    green -n $PWD
+    green -l $PWD
     echo
     l "$@"
 }
@@ -419,7 +419,6 @@ ls_command () {
     local __doc__="ls_command ""$@"
     local program_="$(ls_program)"
     local options_="$(ls_options)"
-    echo "$(ls_program)" "$(ls_options)" "$@"
     [[ $@ ]] && echo "$program_" "$options_" "$@" || echo "$program_"
 }
 

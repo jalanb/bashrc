@@ -30,8 +30,8 @@ add_to_a_path () {
             eval $new_paths_
             export $1
         else
-            echo $?
-            echo $new_paths_
+            echo $PATH
+            echo "$? - Failed to add for '""$@""', got '$new_paths_'"
         fi
     fi
 }
@@ -43,10 +43,6 @@ add_to_PATH () {
 add_dir_to_a_path () {
     [[ -d "$2" ]] || return 1
     add_to_a_path "$@"
-}
-
-add_dir_to_PATH () {
-    add_dir_to_a_path PATH "$@"
 }
 
 show_value () {

@@ -27,6 +27,7 @@ fred
 fred.[a-z]*
 .cd
 .cd.sh
+.python-version
 .venv
 *.fail
 *.gwt
@@ -103,6 +104,7 @@ hs_err_pid*
 ## Directory-based project format:
 .vscode/
 .idea/
+dhist
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:

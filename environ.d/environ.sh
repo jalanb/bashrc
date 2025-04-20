@@ -5,24 +5,24 @@ set_paths () {
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then
         . ~/jab/src/bash/add_to_a_path.sh
-        add_dir_to_PATH $HOME/bin
-        add_dir_to_PATH ~/jab/bin
-        add_dir_to_PATH $HOME/.local
-        add_dir_to_PATH $HOME/.local/bin
-        add_dir_to_PATH ${VIRTUAL_ENV}/bin
-        add_dir_to_PATH /opt/homebrew/bin
-        add_dir_to_PATH /usr/local/gnu
-        add_dir_to_PATH /usr/local/bin
-        add_dir_to_PATH /bin
-        add_dir_to_PATH /usr/bin
-#       add_dir_to_PATH /usr/local/opt/python/libexec/bin
-        add_dir_to_PATH /usr/local/sbin
-#       add_dir_to_PATH $HOME/git/bin
-#       add_dir_to_PATH /opt/local/bin
-        add_dir_to_PATH /sbin
-        add_dir_to_PATH /usr/sbin
-        add_dir_to_PATH /usr/local/go/bin
-#       add_dir_to_PATH ~/.cargo/bin
+        add_to_PATH $HOME/bin
+        add_to_PATH ~/jab/bin
+        add_to_PATH $HOME/.local
+        add_to_PATH $HOME/.local/bin
+        add_to_PATH ${VIRTUAL_ENV}/bin
+        add_to_PATH /opt/homebrew/bin
+        add_to_PATH /usr/local/gnu
+        add_to_PATH /usr/local/bin
+        add_to_PATH /bin
+        add_to_PATH /usr/bin
+#       add_to_PATH /usr/local/opt/python/libexec/bin
+        add_to_PATH /usr/local/sbin
+#       add_to_PATH $HOME/git/bin
+#       add_to_PATH /opt/local/bin
+        add_to_PATH /sbin
+        add_to_PATH /usr/sbin
+        add_to_PATH /usr/local/go/bin
+#       add_to_PATH ~/.cargo/bin
         export PATH
     else
         echo ~/jab is not a directory
@@ -61,13 +61,23 @@ _set_option () {
 }
 
 _source_jab_environ () {
+   # echo x1
     set_paths
+   # echo x2
     export_symbols
+   # echo x3
     set_bucket
+   # echo x4
     show_dir_colors
+   # echo x5
     _set_option cdspell
+   # echo x6
     _set_option autocd
+   # echo x7
     set -o vi
+   # echo x8
 }
 
+# echo before _source_jab_environ
 _source_jab_environ
+# echo after _source_jab_environ

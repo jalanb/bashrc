@@ -31,6 +31,8 @@ pv () {
     [[ $1 =~ -f ]] && rm -rf .venv
     [[ -d .venv ]] || python -m venv .venv
     . .venv/bin/activate
+    python -c"import sys; print(sys.executable)"
+    python -V
 }
 
 pvf () {

@@ -13,13 +13,13 @@ quietly () {
 
 from () {
     [[ $3 ]] || return 1
-    local from_=$0     
-    local source="$1" 
-    local import_=$2   
-    local type=$3     
-    QUIETLY type "$type" && return 0
-    quietly test -f "$source" || return 2
-    source "$source"
+    local from_=$0
+    local source_="$1"
+    local import_=$2
+    local type_=$3
+    QUIETLY type "$type_" && return 0
+    QUIETLY test -f "$source_" || return 2
+    source "$source_"
 }
 
 import_essentials () {
@@ -39,21 +39,7 @@ minimally () {
     (
         echo
         printf "# ${red_}MINIMAL ${blue_}$ $green_"
-        echo -n "$@" 
-        printf "$off_"
-        echo
-    ) >&2
-}
-
-minimally () {
-    local red_="\033[1;31m"
-    local green_="\033[1;32m"
-    local yellow_="\033[1;33m"
-    local blue_="\033[0;34m"
-    local off_="\033[0m"
-    (
-        printf "# ${red_}MINIMAL ${blue_}$ $green_"
-        echo -n "$@" 
+        echo -n "$@"
         printf "$off_"
         echo
     ) >&2
@@ -94,8 +80,8 @@ vv () {
     minimally "vim -p " "$@"
 }
 
-vbb () {
-    vim -p ~/.bashrc $BASH_SOURCE "$@" +/BASH_SOURCE
+vvb () {
+    vim -p $BASH_SOURCE ~/.bashrc "$@" +/BASH_SOURCE
     minimally "vim -p ~/.bashrc $BASH_SOURCE $@"
     . ~/.bashrc
     minimally ". ~/.bashrc"

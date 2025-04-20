@@ -20,7 +20,7 @@
     e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
-    i = commit
+    i = commit --verbose
     l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
     m = merge
     o = checkout
@@ -161,13 +161,15 @@
 
 [push]
     default = simple
+    autoSetupRemote = true
 [help]
-    autocorrect = 1
+    autocorrect = prompt
 [advice]
     detachedHead = False
 # See http://git-scm.com/book/en/v2/Git-Tools-Rerere
 [rerere]
     enabled = true
+    autoupdate = true
 [icdiff]
     options = --highlight --line-numbers
 [mergetool "diffconflicts"]
@@ -200,4 +202,19 @@
     process = git-lfs filter-process
     required = true
 [init]
-	defaultBranch = __main__
+    defaultBranch = __main__
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true

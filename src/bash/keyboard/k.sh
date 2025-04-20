@@ -31,6 +31,10 @@ kl () {
     kd "$1" l
 }
 
+km () {
+    keys_merge
+}
+
 kr () {
     keys_read
 }

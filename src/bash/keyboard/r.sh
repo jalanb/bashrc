@@ -76,6 +76,10 @@ rfq () {
     rf -q "$@"
 }
 
+rfr () {
+    rf -r "$@"
+}
+
 rlf () {
     if [[ ! "$@" ]]; then
         l -d $(readlink -f .)
@@ -138,6 +142,10 @@ rrr () {
 }
 
 # xxxx
+
+rfrr () {
+    QUIETLY rf -rp "$@"
+}
 
 rr.. () {
     local here_=$(readlink -f .)

@@ -25,6 +25,6 @@ yt () {
     ( command cd $_dir
     [[ "$@" ]] && yt-dlp $_options "$@"
     pwd
-    ll -htr ./
+    ls -l -htr ./
     )
 }
