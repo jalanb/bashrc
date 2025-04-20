@@ -21,24 +21,18 @@ rgb () {
     local light_=
     [[ $colour_ =~ ^l ]] && light_=1
     [[ $light_ ]] && colour_=${colour_:1}
-    colour_=$(echo $colour_ | tr [:lower:] [:upper:])
+    colour_=$(echo "$colour_" | tr [:lower:] [:upper:])
     local ight_=NIGHT_
     [[ $light_ ]] && ight_=LIGHT_
     local foreground_="$ight_$colour_" background_=
     if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
-        background_="BACK_$(echo $1 | tr [:lower:] [:upper:])"
-        shift
-    fi
-    local eol_= text_="$@"
-    if [[ $* =~ (^|[\ ])-[ln] ]]; then
-        eol_="\n"
-        text_=$(printf -- "$text_" | sed -e 's,\(^\|[ ]\)-[ln]\($\| \),,g')
+        background_="BACK_${1^^}"
         shift
     fi
     colour_="${!foreground_}"
     [[ $background_ ]] && colour_="${colour_}${!background_}"
-    if [[ "$text_" ]];
-    then printf -- "${colour_}$text_""${NO_COLOUR}${eol_}"
+    if [[ "$@" ]];
+    then printf -- "${colour_}""$@""${NO_COLOUR}${eol_}"
     else printf -- "${colour_}$(cat)${NO_COLOUR}${eol_}"
     fi
 }
