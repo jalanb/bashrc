@@ -42,6 +42,12 @@ ddf () {
     ( shopt -s extdebug; declare -F "$1" )
 }
 
+dir () {
+    local _where=.
+    [[ -n "$@" ]] && _where="$@"
+    say $(short_dir $_where)
+}
+
 dn2 () {
     "$@" 2> /dev/null
 }

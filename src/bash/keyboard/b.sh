@@ -12,10 +12,6 @@ b () {
 
 alias bt="set -eu; source ~/bash/bashtrace.sh"
 
-bb () {
-    l bbb
-}
-
 bd () {
     cd $1
     clear
@@ -47,11 +43,6 @@ bup () {
 
 but () {
     bu tig
-}
-
-bbbb () {
-    deactivate
-    hash -d python python3 2>/dev/null
 }
 
 balck () {

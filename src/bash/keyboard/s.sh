@@ -84,6 +84,14 @@ sgf () {
     s $(functons -g)
 }
 
+sib () {
+    . ~/.bashrc
+}
+
+sla () {
+    s $(aliases -l)
+}
+
 slf () {
     JAB_LOCAL_FUNCS= s $(functons -l)
 }

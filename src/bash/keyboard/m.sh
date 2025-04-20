@@ -40,16 +40,38 @@ mkd () {
         echo Directory existed "$@" >&2
         return 1
     fi
+    [[ $verbose_ ]] && show_command mkdir -p "$1"
     md "$1"
     [[ -d "$1" ]]
 }
 
-# xxxx
-#
+main () {
+    shift_dir "$@" && shift
+    [[ -n $* ]] && cp ~/jab/src/python/main.py $1 || cp ~/jab/src/python/main.py $dir
+}
+
+mann () {
+    man -P /usr/local/gnu/cat $1 | col -b
+}
+
+mine () {
+    sudo chown -R $(id -un):$(id -gn) "$@"
+}
+
 mkcd () {
     local __doc__='make a directory and cd to it';
     mkd  -q "$1" || return 1
     cd "$1"
+}
+
+mkpy () {
+    mkd "$1"
+    touch "$1"/__init__.py
+}
+
+mkv3 () {
+    mkvirtualenv -v --clear --system-site-packages --relocatable --python=$(which python3) $1
+    virtualenv --python=$(which python3) /Users/jab/.virtualenvs/$1
 }
 
 mvim () {

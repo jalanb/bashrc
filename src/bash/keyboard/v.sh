@@ -21,24 +21,12 @@ v. () {
     vv .
 }
 
-va () {
-    _edit_source $(aliases) "$@"
-}
-
 vc () {
     vim_cde ~/keys/c.sh
 }
 
 vd () {
     vim_diff -O "$@"
-}
-
-ve () {
-    _edit_source ~/jab/environ.d/jab.sh "$@"
-}
-
-vf () {
-    _edit_source $(functons) "$@"
 }
 
 vg () {
@@ -141,6 +129,16 @@ vat () {
     vimcat "$@"
 }
 
+vba () {
+    if [[ -f .venv/bin/activate ]];then 
+        source .venv/bin/activate
+    elif [[ -f ../.venv/bin/activate ]];then 
+        source ../.venv/bin/activate
+    else
+        echo "no .venv/bin/activate" >&2
+    fi
+}
+
 vd1 () {
     vd ~/one "$@"
 }
@@ -211,6 +209,10 @@ vfh () {
     vim -p $( $( h1 ) | space_lines ) "$@"
 }
 
+vfr () {
+    python ~/jab/src/python/vim_traceback.py "$@"
+}
+
 vin () {
     vim -c "setlocal buftype=nofile bufhidden=hide noswapfile" -
 }
@@ -242,10 +244,6 @@ vla () {
 
 vlo () {
     vv $(locate "$@")
-}
-
-vpe () {
-    _edit_source ~/jab/environ.d/python
 }
 
 vpr () {
@@ -288,7 +286,18 @@ vwf () {
 }
 
 vvb () {
-    vvf sh.vim
+    (
+        cd ~/jab
+        local local_=local/__init__.sh
+        [[ -f $local_ ]] || local_=
+        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc "
+        vim -p $files_ "$@"
+        readlink -f $files_
+    )
+}
+
+vve () {
+    vv $(!!)
 }
 
 vvf () {
@@ -347,6 +356,10 @@ vd32 () {
 
 vd31 () {
     vd ~/three ~/one "$@"
+}
+
+vini () {
+    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
 }
 
 vims () {

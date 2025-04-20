@@ -27,6 +27,21 @@ typed pii || . ~/bash/python.sh
 
 # xx
 
+3d () {
+    3l -d "$@"
+}
+
+3l () {
+    local options_= shifts_=
+    [[ $1 =~ ^[-]d$ ]] && options_="-d" && shift
+    [[ $1 =~ ^[0-9]+$ ]] && options_="-L $1" && shifts_=1
+    [[ $1 =~ ^[-]L$ ]] && options_="$1 $2" && shifts_=2
+    [[ $options_ ]] || options_="-L 3"
+    [[ $1 =~ ^[-]P$ ]] && options_="$options_ $1 $2" && shifts_=2
+    [[ $shifts_ ]] && shift $shifts_
+    Tree $options_ "$@"
+}
+
 arg_dirs () {
     local dir_=. arg_= path_= result_=1
     for arg_ in "$@"; do
@@ -48,18 +63,45 @@ arg_dir () {
 }
 
 
-free_line_here () {
-    :
-}
-
-
 # xxx
 
-# xxxx
-
-back () {
-    tput rmcup
+envv () {
+    env | grep VIRTUAL_ENV= | grep '=.*'
 }
+
+vgf () {
+    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
+}
+
+vla () {
+    _edit_locals aliases.sh "$@"
+}
+
+vle () {
+    _edit_locals environ.sh "$@"
+}
+
+vlf () {
+    _edit_locals functons.sh "$@"
+}
+
+vwa () {
+    _edit_work aliases.sh
+}
+
+vwe () {
+    _edit_work environ.sh
+}
+
+vwf () {
+    _edit_work functons.sh
+}
+
+vpe () {
+    _edit_source ~/jab/environ.d/python
+}
+
+# xxxx
 
 bins () {
     local name_="$1"; shift
@@ -70,10 +112,6 @@ bins () {
         done | grep -e $name_ | sort | uniq | grep $name_ 2>/dev/null
         name_="$1"; shift
     done
-}
-
-bash4 () {
-    /usr/local/bin/bash4 "$@"
 }
 
 bool () {
@@ -163,47 +201,11 @@ hhhh () {
     echo '#' | clip_in
 }
 
-lkra () {
-    lkr -a "$@"
-}
-
 left () {
     local lastcommand_="$1"
     echo $last_command
     local lastcommand_line_="$@"
     echo $last_command_line
-}
-
-main () {
-    shift_dir "$@" && shift
-    [[ -n $* ]] && cp ~/jab/src/python/main.py $1 || cp ~/jab/src/python/main.py $dir
-}
-
-mann () {
-    man -P /usr/local/gnu/cat $1 | col -b
-}
-
-mine () {
-    sudo chown -R $(id -un):$(id -gn) "$@"
-}
-
-mkcd () {
-    local __doc__='make a directory and start using it';
-    show_command mkdir -p "$1"
-    mkdir -p "$1"
-    [[ -d "$1" ]] || return 1
-    show_command cd "$1"
-    cd "$1"
-}
-
-mkpy () {
-    mkd "$1"
-    touch "$1"/__init__.py
-}
-
-mkv3 () {
-    mkvirtualenv -v --clear --system-site-packages --relocatable --python=$(which python3) $1
-    virtualenv --python=$(which python3) /Users/jab/.virtualenvs/$1
 }
 
 SUDO () {
@@ -245,7 +247,7 @@ popq () {
     popd >/dev/null 2>&1
 }
 
-pythis () {
+this () {
     python -c "import this"
 }
 
@@ -261,14 +263,6 @@ this () {
 
 Tree () {
     tree "$@" | less -R
-}
-
-vims () {
-    whiches vim
-}
-
-vini () {
-    vim -p $(find $( rlf ~/jab ) -name __init__.sh | lines_to_spaces)
 }
 
 # xxxxx

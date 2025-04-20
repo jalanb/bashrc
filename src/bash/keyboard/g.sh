@@ -31,13 +31,13 @@ gre () {
     [[ -z $* ]] && echo "gre what?" >&2 || $(which grep) -h --color=never "$@"
 }
 
-gre () {
-    if [[ "$@" ]]
-    then gr "$@"
-    else 
-        echo "gre what?" >&2
-        return 1
-    fi
+ght () {
+    gh "$@" | tel
+}
+
+ghv () {
+    local __doc__="edit stuff from history"
+    history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
 grv () {
@@ -50,12 +50,6 @@ gv. () {
 
 gvd () {
     EDITOR=gvim vd "$@"
-}
-
-# xxxx
-#
-grbp () {
-    local __doc__"""coulded grep"""
 }
 
 gree () {

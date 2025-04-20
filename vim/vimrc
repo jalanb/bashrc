@@ -103,11 +103,6 @@ noremap tf :tabnew ~/tmp/fred.txt
 noremap tn :tabnew<Space>
 noremap tp :tabprev<cr>:tabnew<Space>
 noremap tv :tabprev<cr>:tabnew ~/.vimrc<cr>
-nnoremap tq <esc>;iq<CR>
-nnoremap ttq <esc>;iqa!<CR>
-nnoremap tw <esc>;iwa!<CR>qa!<CR>
-nnoremap tz :! /Users/jab/src/git/hub/jab/bin/Digging "Thumber Tarzan Climber"<cr>
-nnoremap tzx :! /Users/jab/src/git/hub/jab/bin/Under "a spreading chest tree"<cr>
 "noremap u - undo
 "noremap v - start visual
 "noremap w - forword
@@ -122,7 +117,6 @@ nnoremap z= zo
 nnoremap z- zc
 nnoremap z_ zC
 nnoremap zq zC
-"noremap zQ zc
 nnoremap zw zO
 nnoremap zW zo
 "noremap ze
@@ -150,7 +144,8 @@ nnoremap z<down> zR
 " Punctuation {{{3
 nnoremap ] <C-]>
 nnoremap [ <C-T>
-nnoremap ; q:
+"noremap ; EasyMotion leader
+nnoremap ' bp
 nnoremap " m'
 "noremap \ - leader
 "noremap | - leader
@@ -376,7 +371,7 @@ filetype plugin on
 filetype indent on  " load filetype-specific indent files
 "EasyMotion {{{2
 let g:EasyMotion_keys = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-let g:EasyMotion_leader_key = '<Space>'
+let g:EasyMotion_leader_key = ';'
 " Tagging plugins {{{2
 let g:easytags_auto_highlight = 0
 " pylint {{{2
