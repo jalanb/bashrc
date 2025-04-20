@@ -185,6 +185,10 @@ fvv () {
 
 # xxxx
 
+_fdt () {
+    fd_ --type "$@"
+}
+
 # xxxxx
 
 fdout () {

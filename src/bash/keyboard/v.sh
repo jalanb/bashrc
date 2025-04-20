@@ -141,6 +141,16 @@ vat () {
     vimcat "$@"
 }
 
+vba () {
+    if [[ -f .venv/bin/activate ]];then 
+        source .venv/bin/activate
+    elif [[ -f ../.venv/bin/activate ]];then 
+        source ../.venv/bin/activate
+    else
+        echo "no .venv/bin/activate" >&2
+    fi
+}
+
 vd1 () {
     vd ~/one "$@"
 }
@@ -288,7 +298,18 @@ vwf () {
 }
 
 vvb () {
-    vvf sh.vim
+    (
+        cd ~/jab
+        local local_=local/__init__.sh
+        [[ -f $local_ ]] || local_=
+        local files_="$HOME/.bashrc __init__.sh environ.d/__init__.sh src/bash/__init__.sh $local_ $HOME/.vimrc "
+        vim -p $files_ "$@"
+        readlink -f $files_
+    )
+}
+
+vve () {
+    vv $(!!)
 }
 
 vvf () {
