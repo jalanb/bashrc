@@ -45,7 +45,12 @@ show_pythonpath () {
 . ~/whyp.sh
 export WHYP_EDITOR=vv
 
-# bring in fzf
+. ~/cde.sh
+. ~/jab/environ.d/__init__.sh optional
+. ~/jab/src/bash/__init__.sh
+. ~/jalanb/local/__init__.sh optional
+. ~/jab/work/__init__.sh optional
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
