@@ -150,25 +150,27 @@ pipv () {
     vim -p "$setup_py_" "$setup_cfg_" "$requires_"
 }
 
+reactivate () {
+	unhash_activate "$1"
+	ppp
+}
+
 venv () {
     local __doc__="""Activate a .venv (make it if needed)"""
     local dir_=.
-    [[ -d "$1" ]] && dir_="$1"
-    local venv_dir_="$dir_/.venv"
-    if [[ -d "$venv_dir_" ]]; then
-        if [[ $1 =~ ^-(f|-force)$ ]]; then
-            show_command "rm -rf \"$venv_dir_\""
-            rm -rf "$venv_dir_" >/dev/null
-        else
-            unhash_activate "$venv_dir_"
-            ppp
-            return 0
-        fi
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
     fi
-    [[ $VIRTUAL_ENV ]] && deactivate
+    local venv_dir_="$dir_/.venv"
+    if [[ -d "$venv_dir_" && $1 =~ ^-(f|-force)$ ]]; then
+        show_command "rm -rf \"$venv_dir_\""
+        rm -rf "$venv_dir_" >/dev/null
+    fi
+    de_activate
     hash -d python3 python 2>/dev/null
     pym venv --copies --clear "$venv_dir_"
-    unhash_activate "$venv_dir_"
+    reactivate "$venv_dir_"
     install_requirements "$dir_" -p
 }
 
@@ -240,19 +242,26 @@ venv_activator () {
 unhash_activate () {
     local file_=$(venv_activator "$@")
     [[ -f "$file_" ]] || return 1
-    unhash_deactivate -q
+    unactivate -q
     show_command "source \"$file_\""
     source "$file_"
     which_python
 }
 
-unhash_deactivate () {
+de_activate () {
+    QT deactivate && deactivate
+    [[ $VIRTUAL_ENV ]] && QUIETLY deactivate
+}
+
+unactivate () {
     local arg_=
-    QUIETLY type deactivate && deactivate
-    for arg_ in python python2 python3 ipython ipython2 ipython3 pudb pudb3 pdb ipdb pip pip2 pip3; do
-        QUIETLY hash -d $arg_
-    done
+    de_activate
+    unhash_py
     [[ $1 == -q ]] || show_python
+}
+
+unhash_py () {
+    QUIETLY hash -d python python2 python3 ipython ipython2 ipython3 pudb pudb3 pdb ipdb pip pip2 pip3
 }
 
 which_python () {
