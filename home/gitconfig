@@ -137,7 +137,7 @@
     oo = restore
 
     pa =  push --atomic --all
-    pf =  push --atomic --force-with-lease
+    pf =  push --atomic --force-with-lease --force-if-includes
     pff = push --atomic --force
     pod = push origin --delete
     pt =  push --tags
@@ -172,13 +172,13 @@
     autoupdate = true
 [icdiff]
     options = --highlight --line-numbers
-[mergetool "diffconflicts"]
-    keepBackup = false
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [merge]
     tool = diffconflicts
     conflictstyle = merge
+[mergetool "diffconflicts"]
+    keepBackup = false
 [mergetool "splice"]
     cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
     trustExitCode = true

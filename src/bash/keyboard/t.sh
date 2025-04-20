@@ -9,6 +9,10 @@ t () {
 
 # xx
 
+td () {
+    tree -d "$@"
+}
+
 tf () {
     [[ $? -eq 0 ]] && echo "true" || echo "false"
 }
@@ -17,7 +21,7 @@ tl () {
     tree -d -L 1
     l "$@"
 }
-    
+
 tm () {
     if [[ -z $1 ]]; then SESSION=$(jostname)
     else
@@ -80,6 +84,15 @@ tmp () {
 
 too () {
     PYTHONPATH= tox "$@"
+}
+
+tre () {
+    tree --gitignore "$@"
+    # -I '.git|.venv|__pycache__|pyc|*.egg-info' "$@"
+}
+
+try () {
+    tre -P '*.py'
 }
 
 tti () {

@@ -425,7 +425,9 @@ gll () {
 }
 
 glm () {
-    g l __main__^..
+    local main_branch_=$(main_branch)
+    local start_=$(git merge-base $main_branch_ HEAD)
+    g l ${start_}..HEAD
 }
 
 gln () {
@@ -484,6 +486,10 @@ gol () {
 
 gom () {
     local main_branch_=$(main_branch) source_=$(get_branch)
+    if [[ ! $main_branch_ ]]; then
+        echo "no main branch to check out" >&2
+        return 1
+    fi
     [[ $source_ == $main_branch_ ]] && return
     go $main_branch_ "$@"
 }
@@ -575,6 +581,10 @@ main_branch () {
         echo __main__
         return 0
     fi
+    if grep_branch -r -q main; then
+        echo main
+        return 0
+    fi
     if grep_branch -q master; then
         grep_branch master
         return 0
@@ -627,7 +637,7 @@ grc () {
 }
 
 grf () {
-    local branch_=__main__
+    local branch_=$(main_branch)
     [[ $1 ]] && branch_=$1
     gru
     gcu
@@ -865,7 +875,7 @@ gbac () {
 
 gbdd () {
     local branch_=
-    for branch_ in $(grep_branch -v -e __main__ -e master); do
+    for branch_ in $(grep_branch -v $(main_branch)); do
         if mastered $branch_; then
             gbd $branch_
         fi
@@ -902,7 +912,7 @@ gcme () {
     gcm --edit "$@"
 }
 
-gcua () {
+gcub () {
     local_gcu 'Alan Brogan' $(work_email alan.brogan)
 }
 
@@ -910,19 +920,11 @@ gcuh () {
     local_gcu jalanb $(al_email github)
 }
 
-gcug () {
-    local_gcu 'Git Lab' $(work_email gitlab)
+gcul () {
+    local_gcu 'Git Lab' $(al_email gitlab)
 }
 
 alias gcuj=gcuh
-
-gcus () {
-    local_gcu 'Sparky' $(work_email alan.brogan)
-}
-
-gcuw () {
-    local_gcu 'Alan Brogan' $(work_email ab13173)
-}
 
 gdil () {
     gdi | less -R
@@ -930,6 +932,20 @@ gdil () {
 
 gdis () {
     gc d --staged  "$@"
+}
+
+gits ()
+{
+    local cmd_=$1;
+    shift;
+    [[ -n $cmd_ ]] || return 1;
+    [[ -n $@ ]] || return 2;
+    for dir in "$@";
+    do
+        echo $dir;
+        git -C "$dir" $cmd_;
+        echo;
+    done
 }
 
 glgg () {
@@ -957,12 +973,8 @@ godr () {
     bump show
 }
 
-gomb () {
-    gob "$@" master
-}
-
 gomr () {
-    gom
+    gom || return 1
     show_command git pull --rebase
     git pull --rebase
     bump show
@@ -1161,10 +1173,16 @@ clone () {
         cat -n $clone_log_
     else
         cd $(grep Cloning.into $clone_log_ | sed -e "s/Cloning into '//" -e "s/'.*//")
-        if [[ $remote_ =~ $(work) ]]; then
-            git config --local user.name "Alan Brogan"
-            git config --local user.email $(work_email alan.brogan)
+        local username_= useremail_=
+        if [[ $remote_ =~ $(work_github) ]]; then
+            username_="Alan Brogan"
+            useremail_=$(work_email alan.brogan)
+        else
+            username_="J Alan Brogan"
+            useremail_=$(github_email)
         fi
+        git config --local user.name "$username_"
+        git config --local user.email "$useremail_"
         runnable $range_ && $range_
     fi
 }
@@ -1384,7 +1402,7 @@ clean_clone () {
     git clean -f -d -f
     git fetch --all
     git checkout $main_branch_
-    for branch in $(git branch --format="%(refname:short)" | grep -v -e __main__ -e master -e deployed-to); do
+    for branch in $(git branch --format="%(refname:short)" | grep -v -e $(main_branch) -e deployed-to); do
         [[ -f $branch ]] && continue
         git branch -d $branch 2>/dev/null
     done

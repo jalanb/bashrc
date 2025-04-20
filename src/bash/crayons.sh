@@ -9,7 +9,7 @@ upper () {
 rgb () {
     [[ $1 ]] || return 7
     local eol_=
-    if [[ "$1"  =~ ^-[l]$ ]]; then
+    if [[ $* =~ (^|[\ ])-[l] ]]; then
         eol_="\n"
         shift
     fi
@@ -29,11 +29,12 @@ rgb () {
         background_="BACK_${1^^}"
         shift
     fi
+    local text_="$@"
     colour_="${!foreground_}"
     [[ $background_ ]] && colour_="${colour_}${!background_}"
-    if [[ "$@" ]];
-    then printf -- "${colour_}""$@""${NO_COLOUR}${eol_}"
-    else printf -- "${colour_}$(cat)${NO_COLOUR}${eol_}"
+    if [[ "$text_" ]]; then printf -- "${colour_}${text_}""${NO_COLOUR}${eol_}"
+    elif [ ! -t 0 ]; then printf -- "${colour_}$(cat)${NO_COLOUR}${eol_}"
+    else printf -- "${NO_COLOUR}${eol_}"
     fi
 }
 

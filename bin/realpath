@@ -15,7 +15,7 @@ from pysyte.types.paths import path
 
 
 def add_args(parser: arguments.ArgumentsParser) -> arguments.ArgumentsParser:
-    parser.positionals("paths", help="files, dirs, ...")
+    parser.positional("paths", help="files, dirs, ...")
     return parser
 
 

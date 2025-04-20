@@ -77,10 +77,7 @@ red_date () {
 }
 
 path_to_venv () {
-    local path_to_venv_=$(env | grep VIRTUAL_ENV= | cut -d= -f2)
-    local join_="/"
-    [[ $path_to_venv_ =~ ~ ]] && join_="~"
-    [[ $path_to_venv_ =~ ^[.] ]] && join_="."
+    env | grep VIRTUAL_ENV= | cut -d= -f2
 }
 
 lgreen_venv() {
@@ -130,7 +127,7 @@ git_data () {
         [[ $bump_version_ == v ]] && bump_version_=
         git_data_=":$branch_name_ $bump_version_"
     fi
-    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z.-]*\)[/]\([A-Za-z.-]*\).git,\1/\2.git,")
+    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z._-]*\)[/]\([A-Za-z._-]*\).git,\1/\2,")
     [[ $project_ ]] && git_data_="${project_}${git_data_}"
     echo $git_data_
 }
@@ -224,5 +221,5 @@ if [[ "$PROMPT_COLOUR" == "None" ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
     export_pses
-    export PROMPT_COMMAND="export_pses $?"
+    export PROMPT_COMMAND=' export_pses $? '
 fi

@@ -74,11 +74,22 @@ can () {
 }
 
 cdb () {
-    cde ~/jab
+    cde /opt/clones/github/brightbeam/
 }
 
 cdj () {
     cde ~/jalanb
+}
+
+cdr () {
+    local dir_=$(get_root)
+    if [[ ! $dir_ ]]; then
+        show_error "No git root directory found" >&2
+        return 1
+    fi
+    cdq $dir_
+    white "Origin: "; green_line $(git remote get-url origin)
+    white " Local: "; green_line $(rlf .)
 }
 
 cjy () {
