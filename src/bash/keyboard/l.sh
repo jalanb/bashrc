@@ -72,7 +72,7 @@ ll () {
         if [[ -d "$arg_" ]]; then
             if [[ $arg_ =~ /$ ]]; then
                 options_="$options_ -d"
-                args_="${arg_%/}"
+                arg_="${arg_%/}"
             else
                 options_="$options_ -A"
             fi
