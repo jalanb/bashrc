@@ -76,10 +76,6 @@ show_command () {
 }
 
 
-rgb_line () {
-    rgb_line "$@"
-}
-
 show_run_command () {
     show_command "$@"
     echo
