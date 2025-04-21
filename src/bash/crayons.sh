@@ -21,7 +21,7 @@ rgb () {
     local light_=
     [[ $colour_ =~ ^l ]] && light_=1
     [[ $light_ ]] && colour_=${colour_:1}
-    colour_=$(echo "${colour_^^}")
+    colour_=${colour_^^}
     local ight_=NIGHT_
     [[ $light_ ]] && ight_=LIGHT_
     local foreground_="$ight_$colour_" background_=
