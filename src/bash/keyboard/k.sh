@@ -32,11 +32,11 @@ kl () {
 }
 
 km () {
-    keys_merge
+    keys_merge "$@"
 }
 
 kr () {
-    keys_read
+    keys_read "$@"
 }
 
 kv () {
@@ -44,7 +44,7 @@ kv () {
 }
 
 kw () {
-    keys_write
+    keys_write "$@"
 }
 
 # xxx
