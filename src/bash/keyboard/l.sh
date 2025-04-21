@@ -64,7 +64,7 @@ ll () {
     local __doc__="""Long list the args"""
     local arg_= paths_= options_=-lh
     for arg_ in "$@"; do
-        if [[ ! -e $arg_ ]]; then
+        if [[ ! -e "$arg_" ]]; then
             [[ $arg_ =~ ^- ]] || continue
             options_="$options_ $arg_"
             continue
