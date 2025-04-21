@@ -16,9 +16,6 @@ commit_key_file () {
     local file_=$1
     local letter_=$(basename "$file_" .sh)
 
-    # Get the latest merge commit from __main__ to keyboard
-    local latest_merge_=$()
-
     # Check if a commit with the same message (letter) exists after the last merge from __main__
     local existing_commit_=$(keys_git log keyboard --pretty=format:"%H" --grep="^$letter_$" --since="$(main_to_keyboard)")
 

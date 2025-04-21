@@ -157,9 +157,9 @@ bump () {
         bumpdir_="$1"
         shift
     fi
-    local name_=$(basename_ $1)
+    local name_=$(basename_ "$1")
     local config_=
-    [[ $name = ".bumpversion.cfg" ]] && config_="$1"
+    [[ $name_ = ".bumpversion.cfg" ]] && config_="$1"
     [[ -n $config_ ]] && shift
     local bump_root_=$(git_root -q .)
     local part_=${1:-patch}; shift
@@ -248,16 +248,12 @@ popq () {
 }
 
 this () {
-    python -c "import this"
-}
-
-this () {
-    if [[ "$@" =~ -q ]]; then
-        pythis
-    else
+    if [[ "$@" ]]; then
         pythis | head -n1 | green
         echo
         pythis | tail -n+2 | lgreen
+    else
+        pythis
     fi
 }
 
@@ -283,15 +279,15 @@ detab () {
     local expand_=$(which expand)
     whype -q gexpand && expand_=$(whyp -f gexpand)
     if [[ -f "$1" ]]; then
-        if grep -Pq "^\s*\t\s*[^ \t]" $1; then
-            $expand_ -i --tabs=4 $1 > /tmp/txt
-            mv /tmp/txt $1
+        if grep -Pq "^\s*\t\s*[^ \t]" "$1"; then
+            $expand_ -i --tabs=4 "$1" > /tmp/txt
+            mv /tmp/txt "$1"
             echo detabbed
         else
             echo no tabs
         fi
     else
-        echo not a file $1
+        echo not a file "$1"
     fi
 }
 
@@ -384,9 +380,9 @@ pushq () {
 
 quack () {
     local result_=1
-    for $item in "$@"; do
+    for item in "$@"; do
         if like_duck $item; then
-            python  $1
+            python  "$item"
             result_=0
         fi
     done
@@ -409,7 +405,7 @@ range () {
     if [[ $dir_ != $rlf_ ]]; then
         dir_=$rlf_
         echo "ranger ($dir_ ->) $rlf_"
-    elif [[ $dir_ != $1 && $1 != "-" ]]; then
+    elif [[ $dir_ != "$1" && "$1" != "-" ]]; then
         echo "ranger $dir_"
     fi
     pushq "$dir_"
@@ -438,10 +434,10 @@ bumper () {
         echo Please specify branch to bump >&2
         return 1
     fi
-    local bump_branch_=$1; shift
+    local bump_branch_="$1"; shift
     local current_branch_=$(git rev-parse --abbrev-ref HEAD)
     if [[ $current_branch_ != $bump_branch_ ]]; then
-        if git co $bump_branch_; then
+        if git co "$bump_branch_"; then
             return
         fi
     fi
@@ -506,6 +502,10 @@ pysyon () {
     local python_path_=/users/jab/pysyte
     [[ $PYTHONPATH ]] && pythonpath__="$python_path_:$PYTHONPATH"
     PYTHONPATH="$python_path_" python "$@"
+}
+
+pythis () {
+    python -c "import this"
 }
 
 please () {
@@ -581,25 +581,25 @@ doctest () {
 }
 
 has_ext () {
-    [[ -n $(ls ${2:-.}/*.$1 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
+    [[ -n $(ls ${2:-.}/*."$1" 2>/dev/null | grep -v -e fred -e log  | head -n 1) ]]
 }
 
 cde_bash () {
     show_command "$@"
     local cde_="$CDE_DIR" cde_out_="$cde_/std.out" cde_err_=$cde_/std.err
     local result_=0
-    "$@" > $cde_out 2> $cde_err && result_=$?
-    show_pass $(cat $cde_out)
-    show_fail $(cat $cde_err)
+    "$@" > $cde_out_ 2> $cde_err_ && result_=$?
+    show_pass $(cat $cde_out_)
+    show_fail $(cat $cde_err_)
     return $result_
 }
 
 headline () {
-    [[ $1 ]] && head -n 1 "$1" || cat | head -n 1
+    [[ "$1" ]] && head -n 1 "$1" || cat | head -n 1
 }
 
 tailline () {
-    [[ $1 ]] && tail -n 1 "$1" || cat | tail -n 1
+    [[ "$1" ]] && tail -n 1 "$1" || cat | tail -n 1
 }
 
 is_a_dir () {
@@ -616,9 +616,9 @@ relpath () {
 }
 
 whiches () {
-    local which_=$(which $1)
+    local which_=$(which "$1")
     local located_=
-    for located_ in $(locate -f $1); do
+    for located_ in $(locate -f "$1"); do
         echo
         if $located_ --version >/dev/null 2>&1; then
             $located_ --version | grep --color ' [0,7,8]\.[0-9]'
@@ -682,7 +682,7 @@ maketest () {
 }
 
 pong_work () {
-    pong -t3 $1.$(work $1)
+    pong -t3 "$1".$(work "$1")
 }
 
 ssh_tippy () {
@@ -692,7 +692,7 @@ ssh_tippy () {
 }
 
 sudo_ssh () {
-    local host_=$1; shift
+    local host_="$1"; shift
     ssh -t -q $host_ "sudo ""$@"
 }
 
@@ -869,14 +869,14 @@ thirty_two () {
 }
 
 diff_two_files () {
-    ! diff -q $1 $2 >/dev/null 2>&1
+    ! diff -q "$1" "$2" >/dev/null 2>&1
 }
 
 any_diff () {
-    diff_two_files $1 $2 && return 0
-    [[ -z $3 ]] && return 1
-    diff_two_files $1 $3 && return 0
-    diff_two_files $2 $3 && return 0
+    diff_two_files "$1" "$2" && return 0
+    [[ -z "$3" ]] && return 1
+    diff_two_files "$1" "$3" && return 0
+    diff_two_files "$2" "$3" && return 0
     return 1
 }
 
@@ -895,8 +895,8 @@ lines_to_spaces () {
 
 blank_script () {
     [[ -f "$1" ]] && return
-    echo "#! /bin/bash" > $1
-    echo "" >> $1
+    echo "#! /bin/bash" > "$1"
+    echo "" >> "$1"
 }
 
 github_email () {
@@ -968,7 +968,7 @@ console_whoami () {
 source_aliases () {
     local __doc__='source files which have aliases and remember the filenames'
     ALIASES="$ALIASES:$1"
-    source $1
+    source "$1"
 }
 
 # xxxxxxxxxxxxxxx
@@ -1003,7 +1003,7 @@ console_title_on () {
 
 show_functons_in ()
 {
-    for f in $(grep "^[a-z][a-z_]\+ .. .$" $1  | sed -e "s: .. .$::"); do
+    for f in $(grep "^[a-z][a-z_]\+ .. .$" "$1"  | sed -e "s: .. .$::"); do
         whype -v $f
     done | fewer
 }
@@ -1080,8 +1080,8 @@ dixx_only_in_destination() {
     fi
 }
 
-dixx() {
-    local command_=$1; shift
+dixx () {
+    local command_="$1"; shift
     local args=()
     local execute=false
     
@@ -1111,12 +1111,10 @@ dixx() {
     dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_sh"
     
     if [[ "$execute" == true ]]; then
-        # Execute only the commands (not headers or blank lines)
         grep -v "^#" "$dixx_sh" | grep -v "^$" | while IFS= read -r cmd; do
             eval "$cmd"
         done
     else
-        # Display the full output
         cat "$dixx_sh"
     fi
     
@@ -1124,23 +1122,8 @@ dixx() {
     rm "$dixx_sh"
 }
 
-dixx() {
-    local command_=$1; shift
-    local source_dir_="$1"; shift
-    local destination_dir_="$1"; shift
-    
-    # Generate commands for different file types
-    local dixx_out=$(mktemp)
-    dixx_different_files "$command_" "$source_dir_" "$destination_dir_" > "$dixx_out"
-    dixx_only_in_source "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_out"
-    dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_out"
-    cat "$dixx_out" | pbcopy
-    pbpaste
-    rm "$dixx_out"
-}
-
 edit_source () {
-    local filepath_=$1
+    local filepath_="$1"
     shift
     blank_script $filepath
     filedir=$(files_dirs $filepath)
@@ -1160,18 +1143,18 @@ edit_source () {
 
 edit_locals () {
     local local_dir_=~/jalanb/local
-    [[ -d "$local_dir" ]] || mkdir -p $local_dir
+    [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
     local name_="$1" force_=
     shift
     [[ $1 =~ -f ]] && force_=--force
     [[ $force_ ]] || return 0
-    editsource_ "$local_dir/$name_"
+    editsource_ "$local_dir_/$name_"
 }
 
 edit_work () {
     local local_dir_=~/jab/work
-    [[ -d "$local_dir" ]] || mkdir -p $local_dir
-    editsource_ $local_dir/$1
+    [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
+    editsource_ $local_dir_/"$1"
 }
 
 divv_get_difference () {
@@ -1223,7 +1206,7 @@ unremembered () {
 }
 
 copy_from_work_server () {
-    local server_name_=$1
+    local server_name_="$1"
     local source_="$2"
     local source_dir_=$(dirnames "$source_")
     local here_root_=$(homework $server_name_)

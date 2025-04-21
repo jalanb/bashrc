@@ -18,13 +18,8 @@ ml () {
 
 # xxx
 
-<<<<<<< HEAD
-quietly unalias man
-quietly unalias batman
-=======
 unalias man >/dev/null 2>&1
 unalias batman >/dev/null 2>&1
->>>>>>> 1d815e6f (Add keyboard)
 
 man () {
     /opt/homebrew/bin/batman "$@"
