@@ -588,9 +588,9 @@ cde_bash () {
     show_command "$@"
     local cde_="$CDE_DIR" cde_out_="$cde_/std.out" cde_err_=$cde_/std.err
     local result_=0
-    "$@" > $cde_out 2> $cde_err && result_=$?
-    show_pass $(cat $cde_out)
-    show_fail $(cat $cde_err)
+    "$@" > $cde_out_ 2> $cde_err_ && result_=$?
+    show_pass $(cat $cde_out_)
+    show_fail $(cat $cde_err_)
     return $result_
 }
 
@@ -1143,18 +1143,18 @@ edit_source () {
 
 edit_locals () {
     local local_dir_=~/jalanb/local
-    [[ -d "$local_dir" ]] || mkdir -p $local_dir
+    [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
     local name_="$1" force_=
     shift
     [[ $1 =~ -f ]] && force_=--force
     [[ $force_ ]] || return 0
-    editsource_ "$local_dir/$name_"
+    editsource_ "$local_dir_/$name_"
 }
 
 edit_work () {
     local local_dir_=~/jab/work
-    [[ -d "$local_dir" ]] || mkdir -p $local_dir
-    editsource_ $local_dir/"$1"
+    [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
+    editsource_ $local_dir_/"$1"
 }
 
 divv_get_difference () {
