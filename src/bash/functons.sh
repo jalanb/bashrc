@@ -248,16 +248,12 @@ popq () {
 }
 
 this () {
-    python -c "import this"
-}
-
-this () {
-    if [[ "$@" =~ -q ]]; then
-        pythis
-    else
+    if [[ "$@" ]]; then
         pythis | head -n1 | green
         echo
         pythis | tail -n+2 | lgreen
+    else
+        pythis
     fi
 }
 
@@ -506,6 +502,10 @@ pysyon () {
     local python_path_=/users/jab/pysyte
     [[ $PYTHONPATH ]] && pythonpath__="$python_path_:$PYTHONPATH"
     PYTHONPATH="$python_path_" python "$@"
+}
+
+pythis () {
+    python -c "import this"
 }
 
 please () {
