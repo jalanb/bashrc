@@ -380,7 +380,7 @@ pushq () {
 
 quack () {
     local result_=1
-    for $item in "$@"; do
+    for item in "$@"; do
         if like_duck $item; then
             python  "$1"
             result_=0
