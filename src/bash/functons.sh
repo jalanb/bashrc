@@ -437,7 +437,7 @@ bumper () {
     local bump_branch_="$1"; shift
     local current_branch_=$(git rev-parse --abbrev-ref HEAD)
     if [[ $current_branch_ != $bump_branch_ ]]; then
-        if git co $bump_branch_; then
+        if git co "$bump_branch_"; then
             return
         fi
     fi
