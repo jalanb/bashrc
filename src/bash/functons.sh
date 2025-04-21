@@ -1080,7 +1080,7 @@ dixx_only_in_destination() {
     fi
 }
 
-dixx() {
+dixx () {
     local command_=$1; shift
     local args=()
     local execute=false
@@ -1111,32 +1111,15 @@ dixx() {
     dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_sh"
     
     if [[ "$execute" == true ]]; then
-        # Execute only the commands (not headers or blank lines)
         grep -v "^#" "$dixx_sh" | grep -v "^$" | while IFS= read -r cmd; do
             eval "$cmd"
         done
     else
-        # Display the full output
         cat "$dixx_sh"
     fi
     
     # Clean up
     rm "$dixx_sh"
-}
-
-dixx() {
-    local command_=$1; shift
-    local source_dir_="$1"; shift
-    local destination_dir_="$1"; shift
-    
-    # Generate commands for different file types
-    local dixx_out=$(mktemp)
-    dixx_different_files "$command_" "$source_dir_" "$destination_dir_" > "$dixx_out"
-    dixx_only_in_source "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_out"
-    dixx_only_in_destination "$command_" "$source_dir_" "$destination_dir_" >> "$dixx_out"
-    cat "$dixx_out" | pbcopy
-    pbpaste
-    rm "$dixx_out"
 }
 
 edit_source () {
