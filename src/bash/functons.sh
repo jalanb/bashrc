@@ -159,7 +159,7 @@ bump () {
     fi
     local name_=$(basename_ "$1")
     local config_=
-    [[ $name = ".bumpversion.cfg" ]] && config_="$1"
+    [[ $name_ = ".bumpversion.cfg" ]] && config_="$1"
     [[ -n $config_ ]] && shift
     local bump_root_=$(git_root -q .)
     local part_=${1:-patch}; shift
