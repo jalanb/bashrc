@@ -382,7 +382,7 @@ quack () {
     local result_=1
     for item in "$@"; do
         if like_duck $item; then
-            python  "$1"
+            python  "$item"
             result_=0
         fi
     done
