@@ -255,8 +255,8 @@ vlo () {
 }
 
 vpr () {
-    local _crappy_program_py=$1
-    python _crappy_program_py | python ~/jab/src/python/vim_traceback.py
+    local crappy_program_py_="$1"
+    python "$crappy_program_py_" | python ~/jab/src/python/vim_traceback.py
 }
 
 vss () {
