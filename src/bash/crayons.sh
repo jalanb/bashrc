@@ -22,9 +22,9 @@ rgb () {
     [[ $colour_ =~ ^l ]] && light_=1
     [[ $light_ ]] && colour_=${colour_:1}
     colour_=${colour_^^}
-    local ight_=NIGHT_
-    [[ $light_ ]] && ight_=LIGHT_
-    local foreground_="$ight_$colour_" background_=
+    local light_=NIGHT_
+    [[ $light_ ]] && light_=LIGHT_
+    local foreground_="$light_$colour_" background_=
     if [[ $1 =~ ^(red|green|blue|cyan|magenta|black|white)$ ]]; then
         background_="BACK_${1^^}"
         shift
