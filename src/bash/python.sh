@@ -1,8 +1,15 @@
 #! /bin/cat
 
+PYTHON_SOURCE="$BASH_SOURCE"
 # x
 # xx
+
+.p () {
+    source "$PYTHON_SOURCE"
+}
+
 # xxx
+
 
 _python_command () {
     local __doc__="""Command to be used in this script is python3, or can be over-written with $PYTHON"""
@@ -281,8 +288,8 @@ unhash_py () {
 
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
-    local default_python_=python
-    QUIETLY which python || default_python_=python3
+    local default_python_=python3
+    QUIETLY which $default_python_ || default_python_=python
     local python_=${PYTHON:-$default_python_}
     local exec_=$($python_ -c"import sys; print(sys.executable)")
     local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
@@ -306,6 +313,14 @@ which_python () {
         fi
     fi
     show_data "version: $version_"
+}
+
+which_pythons () {
+    [[ $1 ]] && for arg in "$@"; do which_python $arg; done
+    which_python python
+    which_python python3
+    which_python ipython
+    which_python pudb
 }
 
 ipython_profile () {

@@ -13,6 +13,8 @@
 --type-set=test=.test,.tests
 --type-add=test:match:/test.*.py$/
 --type-set=text=.txt
+--type-set=texts=.txt,.md
+--type-set=makdown=.md
 --ignore-dir=.idea
 --ignore-dir=.ipynb_checkpoints
 --ignore-dir=.mypy_cache
