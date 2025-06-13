@@ -1,5 +1,11 @@
 #! /usr/local/bin/bash -x
 
+.b () {
+    local jab_=$HOME/jab
+    [[ $1 == "-m" ]] && bashrc_source $jab_/bash/bashrc_minimal
+    bashrc_source $jab_/__init__.sh || return 1
+    bashrc_source $jab_/src/bash/prompt.sh green
+}
 
 lcolour () {
     local colour_="[1;${1}m" no_colour_="[0m"
@@ -20,6 +26,10 @@ lblue () {
     lcolour 34 "$@"
 }
 
+QUIETLY () {
+    "$@" 2>/dev/null 1>&2
+}
+
 quietly () {
     "$@" 2>/dev/null
 }
@@ -35,7 +45,7 @@ usr_local () {
 set_paths () {
     local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local
     local locals_="$(usr_local gnu):/opt/homebrew/bin:$(usr_local bin):$(usr_local opt):$(usr_local go/bin)"
-    local bins_=/usr/bin:/bin:/usr/sbin:/sbin
+    local bins_=/opt/uv/bin:/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
 
     local all_="$homes_:$locals_:$bins_"
@@ -64,7 +74,7 @@ lhere () {
 }
 
 bashrc_source () {
-    [[ -f $1 ]] || return 1
+    [[ -f "$1" ]] || return 1
     source "$@"
 }
 
@@ -84,16 +94,18 @@ bbb () {
     echo_if_file $HOME/jab/local/__init__.sh
     echo_if_file $HOME/jalanb/local/__init__.sh
     echo_if_file $HOME/.vimrc
-    echo_if_file $bashrc_log 
-    echo_if_file $HOME/jab/bash/bashrc_minimal 
+    echo_if_file $bashrc_log
+    echo_if_file $HOME/jab/bash/bashrc_minimal
 }
-    
+
 bashrc () {
     # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     export PS1="\$? [$(luser):$(lhere)]\n$ "
-    bashrc_source ~/jab/bash/bashrc_minimal
-    bashrc_source $HOME/jab/__init__.sh || return 1
-    bashrc_source $HOME/bash/prompt.sh green
+    export PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] '
+    local jab_=$HOME/jab
+    bashrc_source $jab_/bash/bashrc_minimal
+    bashrc_source $jab_/__init__.sh || return 1
+    bashrc_source $jab_/src/bash/prompt.sh green
 }
 
 min () {
@@ -102,22 +114,36 @@ min () {
     . $min_
 }
 
+show_pwd () {
+    show_command cd -
+    grey_line "#    -> '$PWD'"
+    show_command cd /opt/clones/github/jalanb/
+    cd /opt/clones/github/jalanb/
+}
+
 __main__ () {
     set_paths
     bashrc
     set +m
-    post_bashrc
 }
 
-post_bashrc () {
+post_main () {
     cde .
     pwd
     l
 }
 
-[[ $- =~ i ]] && __main__  "$@" > $bashrc_log 2>&1
-
 vbb () {
+    local __doc__="""Must be last function to over-write same func from bashrc_minimal"""
     vim -p $(bbb)
     readlink -f $(bbb) 2>/dev/null
 }
+
+if [[ $- =~ i ]]; then
+    set -x;
+    __main__ "$@" > $bashrc_log 2>&1
+    set +x
+    post_main
+else
+    __main__  "$@"
+fi
