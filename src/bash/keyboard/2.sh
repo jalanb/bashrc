@@ -1,24 +1,6 @@
 #! /bin/cat
 
 
-home_echo () {
-    local _named=$1; shift
-    local _named_too=$1; shift
-    local _match_dir=$( (
-        cd $_named
-        for _arg_path in $_named_too "$@"; do
-            if [[ -d $_arg_path ]]; then
-                readlink -f $_arg_path
-                break
-            fi
-        done
-    ) )
-    local _dir=$_named
-    [[ -d "$_match_dir" ]] && _dir="$_match_dir"
-    [[ -d "$_dir" ]] || return 1
-    echo $_dir
-}
-
 count_dirs () {
     local _count=0
     (
@@ -35,41 +17,28 @@ count_dirs () {
 }
 
 
-home_cd_dir () {
+home_cd () {
     local cde_=
-    local echo_=
-    local arg_=
+    local verbose_=0
+    local level_=1
     cd
-    while [[ $# > 0 ]]
-    do
-        arg_="$1"
-        [[ "$arg_" ]] || break 
-        if [[ "$arg_" =~ -[ve] ]]; then
-            [[ $arg_ == -v ]] && echo_=1
-            [[ $arg_ == -e ]] && cde_=cde
-            shift
-            continue
-        fi
-        if [[ -d "$arg_" ]]; then
-            cd "$arg_"
-            [[ $echo_ ]] && pwd
-        fi
-        shift
+    for arg_ in "$@"; do
+        [[ $arg_ =~ ^-v+$ ]] && verbose_=$(( verbose_ + ${#arg_} - 1 )) && continue
+        [[ $arg_ == -e ]] && cde_=cde && continue
+        [[ -d "$arg_" ]] || continue
+        cd "$arg_"
+        level_=$(( $level_ + 1 ))
+        [[ $verbose_ > $level_ ]] && pwd
     done
-    [[ $echo_ ]] && pwd
+    [[ $verbose_ > 0 ]] && pwd
     [[ $cde_ ]] && cde .
 }
 
 home_ls () {
     local _doc="""Try $1, and $1/$2 as a directory under $HOME"""
-    local $_dir=$(home_cd_dir "$@" && pwd)
+    local $_dir=$(home_cd -v "$@")
     CDE_header=$( ls -1 -d $ $_dir * 2>/dev/null )
     # set +x
-}
-
-home_cd () {
-    local _return=$(count_dirs "$@")
-    home_cd_dir "$@"
 }
 
 home_cde () {
@@ -77,25 +46,13 @@ home_cde () {
 }
 
 home_range () {
-    home_cd_dir "$@"
+    home_cd "$@"
     ranger
 }
 
-home_echo () {
-    (
-        home_cd -v "$@"
-    )
-}
-
-home_fd () {
-    (
-        home_cd "$@"
-        shift $?
-        fd --follow "$@"
-    )
-}
-
 home_vim () {
-    vim -p $(home_fd "$@")    
+    home_cd "$1"
+    shift
+    vim -p $(fd --follow "$@")    
 }
 

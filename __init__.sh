@@ -22,7 +22,7 @@ show_pythonpath () {
 }
 
 # echo $HOME minimal
-. ~/.minimal
+# . ~/.minimal
 # echo $HOME whyp
 . ~/whyp.sh
 # echo $HOME jalanb ackvim
@@ -55,7 +55,6 @@ export WHYP_EDITOR=vv
 
 [[ $(uname) == Darwin ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
 
-activate_dir="$HOME/jab/.venv"
-[[ -d ".venv" ]] && activate_dir=".venv"
-cde_activate_venv $activate_dir
+jab_venv="$HOME/jab/.venv"
+test -f $jab_venv/bin/activate && source $jab_venv/bin/activate
 ACTIVE_PYTHON=$(which python)
