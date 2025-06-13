@@ -131,14 +131,14 @@ nnoremap zs jzck
 "noremap zj
 "noremap zk
 "noremap zl
-nnoremap zx jzoz<cr>
-nnoremap zX jzOz<cr>
+nnoremap zx jzo<cr>
+nnoremap zX jzO<cr>
 nnoremap zn nzMzvzz
 nnoremap zN NzMzvzz
 nnoremap z/ /<cr>zMzvzz
 nnoremap z? ?<cr>zMzvzz
 nnoremap z<up> zM
-nnoremap z<right> zczoz<cr>
+nnoremap z<right> zczo<cr>
 nnoremap z<left> zm
 nnoremap z<down> zR
 " Punctuation {{{3
@@ -242,8 +242,8 @@ inoremap    <A-q> <Esc>:qa!<CR>
 inoremap <A-Right> <Esc>:tabnext<CR>
 inoremap <A-Left> <Esc>:tabprev<CR>
 " Leader keys {{{2
-"noremap <leader>"
-nnoremap <leader>' :call Unsearch()<cr><c-l>
+nnoremap <leader>" :call Unsearch()<cr><c-l>
+"noremap <leader>'
 "noremap <leader>(
 "noremap <leader>)
 "noremap <leader>/
@@ -283,14 +283,16 @@ nnoremap <leader>M gg/^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr
 nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
 nnoremap <leader>N :call ToggleRelativeNumber()<cr>
 nnoremap <leader>n :call ToggleNumber()<cr>
-"noremap <leader>o
-nnoremap <leader>p :set paste<cr>
+nnoremap <leader>o mvO<c-r>.=<c-r>"<esc>`v
+nnoremap <leader>p mvO<c-r>. = <c-r>"<esc>`v
 "noremap <leader>q
 nnoremap <leader>r :set wrap!<cr>
 "noremap <leader>s
 nnoremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
 nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
+nnoremap <leader>v :set paste<cr>
+
+
 nnoremap <leader>w :wq<cr>
 nnoremap <leader>x :call RangerExplorer()<cr>
 "noremap <leader>y
@@ -594,21 +596,21 @@ function! ChangeNumber() " {{{3
     endif
 endfunction
 
-    "	From vimhelp
-"	The 'relativenumber' option changes the displayed number to be
-"	relative to the cursor.  Together with 'number' there are these
-"	four combinations (cursor in line 3):
+    "   From vimhelp
+"   The 'relativenumber' option changes the displayed number to be
+"   relative to the cursor.  Together with 'number' there are these
+"   four combinations (cursor in line 3):
 "
-"		'nonu'          'nu'            'nonu'          'nu'
-"		'nornu'         'nornu'         'rnu'           'rnu'
+"       'nonu'          'nu'            'nonu'          'nu'
+"       'nornu'         'nornu'         'rnu'           'rnu'
 "
-"	    |apple          |  1 apple      |  2 apple      |  2 apple
-"	    |pear           |  2 pear       |  1 pear       |  1 pear
-"	    |nobody         |  3 nobody     |  0 nobody     |3   nobody
+"       |apple          |  1 apple      |  2 apple      |  2 apple
+"       |pear           |  2 pear       |  1 pear       |  1 pear
+"       |nobody         |  3 nobody     |  0 nobody     |3   nobody
 
 " <leader>n is bound (above) to ToggleNumber()
 function! ToggleNumber() " {{{3
-    if &number == 1 
+    if &number == 1
         set nonu
         set nornu
     else
