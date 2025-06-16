@@ -143,7 +143,7 @@ gp () {
 
 gs () {
     local _doc___="""git status front end"""
-    gc "$@" status 2>/dev/null 
+    gc "$@" status 2>/dev/null
 }
 
 gt () {
@@ -255,7 +255,7 @@ gcc () {
     local c_="." d_=
     [[ -d $1 ]] && c_=$1 && d_=d
     [[ $d_ == d ]] && shift
-    echo $c_ 
+    echo $c_
     [[ $d_ == d ]] && return 0
     return 1
 }
@@ -576,6 +576,10 @@ dir_has_branch () {
     is_branch "$@"
 }
 
+exclude_mains () {
+    grep -v -e __main__ -e master "$@"
+}
+
 main_branch () {
     if grep_branch -r -q __main__; then
         echo __main__
@@ -762,7 +766,7 @@ gsg () {
 
 gss () {
     local _doc___="""git short status"""
-    gc "$@" status --short 2>/dev/null 
+    gc "$@" status --short 2>/dev/null
 }
 
 gso () {
@@ -771,7 +775,7 @@ gso () {
 
 gsp () {
     local _doc___="""Porcelain status"""
-    gc "$@" status --porcelain 2>/dev/null 
+    gc "$@" status --porcelain 2>/dev/null
 }
 
 gta () {
@@ -787,7 +791,7 @@ gtD () {
 }
 
 gtl () {
-    if [[ "$@" ]]; then 
+    if [[ "$@" ]]; then
         gt --list | grep "$@"
     else
         gt --list
@@ -875,7 +879,7 @@ gbac () {
 
 gbdd () {
     local branch_=
-    for branch_ in $(grep_branch -v $(main_branch)); do
+    for branch_ in $(git branch | exclude_mains); do
         if mastered $branch_; then
             gbd $branch_
         fi
@@ -951,7 +955,7 @@ gits ()
 glgg () {
     local stdout_=~/fd1 stderr_=~/fd2
     show_command gc lg "$@" > $stdout_
-    gc lg "$@" >> $stdout_ 2> $stderr_ 
+    gc lg "$@" >> $stdout_ 2> $stderr_
     [[ $? == 0 ]] && (cat $stderr_; return 1)
     local count_=$(wc -l $stdout_)
     if [[ $count_ < $(( $LINES - 2 )) ]]; then gc lg "$@"
@@ -1233,7 +1237,7 @@ standup () {
     do
         if git -C $dir standup | grep -q nothing; then
             if [[ $(git -C $dir status --porcelain) ]]; then
-                ( 
+                (
                     show_command cd $dir
                     cd $dir
                     ls -ltc --time-style=+"xxx%a %b %d%Y" $(git status --porcelain | sed -e "s,...,," -e "s,.*-> ,,") | sed -e "s/.*xxx/ /g" -e "/^total/d"
@@ -1402,7 +1406,7 @@ clean_clone () {
     git clean -f -d -f
     git fetch --all
     git checkout $main_branch_
-    for branch in $(git branch --format="%(refname:short)" | grep -v -e $(main_branch) -e deployed-to); do
+    for branch in $(git branch --format="%(refname:short)" | exclude_mains -e deployed-to); do
         [[ -f $branch ]] && continue
         git branch -d $branch 2>/dev/null
     done
@@ -1456,9 +1460,9 @@ list_branches () {
 grep_branch () {
     local regexp_= git_options_= grep_options_=
     while [[ $1 ]]; do
-        if [[ $1 =~ ^-[aqrv] ]]; then
+        if [[ $1 =~ ^-[arqev] ]]; then
             [[ $1 =~ ^-[ar] ]] && git_options_="$git_options_ $1"
-            [[ $1 =~ ^-[qv] ]] && grep_options_="$grep_options_ $1"
+            [[ $1 =~ ^-[qev] ]] && grep_options_="$grep_options_ $1"
         else
             regexp_=$1
         fi

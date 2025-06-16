@@ -5,25 +5,17 @@ The script contains a known list of globs for temporary files
 """
 
 
-import os
-import bdb
-import sys
+from configparser import ConfigParser
 import argparse
+import bdb
 import fnmatch
+import os
+import shutil
+import sys
 
 
-from six.moves import configparser
+from pysyte.types import paths
 
-
-def get_module_name():
-    name, _ = os.path.splitext(os.path.basename(__file__))
-    return name
-
-
-def _get_path_to_config():
-    name = get_module_name()
-    path_to_config = f"~/.config/{name}/config"
-    return os.path.expanduser(path_to_config)
 
 
 def has_true(value):
@@ -41,7 +33,7 @@ def default_options():
     globs = {
         "development": "tags a.out *.log",
         "old": "*.old",
-        "python": "*.pyc *.pyo *.fail *$py.class *.profile *.egg-info",
+        "python": "*.pyc *.pyo *.fail *$py.class *.profile *.egg-info build",
         "temporary": "*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two",
         "vim": "*.sw[opqrs]",
     }
@@ -49,10 +41,16 @@ def default_options():
 
 
 def read_configuration():
-    parser = configparser.ConfigParser()
-    path = _get_path_to_config()
+
+    def path_to_config() -> paths.FilePath:
+        module_name, _ = os.path.splitext(os.path.basename(__file__))
+        path = paths.path(f"~/.config/{module_name}/config")
+        return os.path.expanduser(f"~/.config/{module_name}/config")
+
+    path = path_to_config()
     if not os.path.isfile(path):
         return default_options()
+    parser = ConfigParser()
     parser.read(path)
     options = {k: has_true(v) for k, v in parser.items("options")}
     globs = dict(parser.items("globs"))
@@ -145,6 +143,8 @@ def get_paths_under(directory, glob):
         if name in (".git", ".idea", ".venv", ".tox", ".pytest_cache"):
             continue
         path = os.path.join(directory, name)
+        if 'egg' in name and 'egg' in glob:
+            pass
         if fnmatch.fnmatch(name, glob):
             result.append(path)
         elif os.path.isdir(path):
@@ -158,62 +158,68 @@ def get_paths_under(directory, glob):
 def get_files_under(directory, globs):
     """Get a list of files under that directory, matching those globs"""
     paths = get_paths_under(directory, globs)
-    return [path for path in paths if os.path.isfile(path)]
+    return [_ for _ in paths if os.path.isfile(_)]
 
 
 def get_files_in(directory, globs):
     """Get a list of files in that directory, matching those globs"""
     paths = get_paths_in(directory, globs)
-    return [path for path in paths if os.path.isfile(path)]
+    return [_ for _ in paths if os.path.isfile(_)]
 
 
-def get_files(directory, globs, recursive):
+def get_paths(directory, globs, recursive, filter_):
     """Get a list of files under that directory, matching those globs"""
-    get_paths = get_files_under if recursive else get_files_in
+    get_paths_ = get_paths_under if recursive else get_paths_in
     result = []
     for glob in globs:
-        result.extend(get_paths(directory, glob))
+        paths = get_paths_(directory, glob)
+        result.extend([_ for _ in paths if filter_(_)])
     return result
 
 
-def remove_files(files, quiet, trial_run):
-    """Remove all those files
+def remove_paths(paths: list[str], quiet: bool, trial_run: bool) -> int:
+    """Remove all those paths
 
-    Print out each file removed, unless quiet is True
+    Print out each path removed, unless quiet is True
     Do not actually delete if trial_run is True
+
+    If deleting paths leaves directories empty, delete them too
     """
-    dirs = set()
+    dirs = []
     result = os.EX_OK
-    for a_file in files:
+    for path in paths:
         try:
             if not trial_run:
-                if os.path.isfile(a_file):
-                    os.remove(a_file)
-                    dirs.add(os.path.dirname(a_file))
+                if os.path.exists(path):
+                    remover = os.remove if os.path.isfile(path) else shutil.rmtree
+                    try:
+                        remover(path)
+                        dirs.append(os.path.dirname(path))
+                    except NotADirectoryError:
+                        pass
             if not quiet:
-                print(a_file)
+                print(path)
         except (IOError, OSError) as e:
             print(e)
             result = os.EX_IOERR
-    for a_dir in dirs:
-        if not os.listdir(a_dir):
+    for dir_ in dirs:
+        if not os.listdir(dir_):
             try:
-                os.removedirs(a_dir)
+                os.removedirs(dir_)
             except NotADirectoryError:
                 continue
             if not quiet:
-                print(a_dir)
+                print(dir_)
     return result
-
 
 def script(paths, args, globs):
     """Run the script"""
     result = os.EX_OK
     for path_ in paths:
-        files = get_files(path_, globs, args.recursive)
-        file_result = remove_files(files, args.quiet, args.Trial_Run)
-        if file_result != os.EX_OK:
-            result = file_result
+        sub_paths = get_paths(path_, globs, args.recursive, os.path.exists)
+        remove_result = remove_paths(sub_paths, args.quiet, args.Trial_Run)
+        if remove_result != os.EX_OK:
+            result = remove_result
     return result
 
 
@@ -226,26 +232,26 @@ def parse_options():
         "paths", default=["."], nargs="*", help="paths to clean (default .)"
     )
     args = parser.parse_args(None)
+    globs = wanted_globs(args, configured_globs)
     paths = args.paths
     delattr(args, "paths")
     if args.all:
         _ = [setattr(args, name, True) for name in configured_globs.keys()]
     if args.quiet and args.Trial_Run:
         raise NotImplementedError("Using --quiet and --Trial-Run: Do nothing")
-    return paths, args, wanted_globs(args, configured_globs)
+    return paths, args, globs
 
 
 def main():
-    """Run the program"""
     try:
         paths, args, globs = parse_options()
+        return script(paths, args, globs)
     except bdb.BdbQuit:
-        return 0
+        return os.EX_OK
     except NotImplementedError as e:
         breakpoint()
         print(e, file=sys.stderr)
         return os.EX_USAGE
-    return script(paths, args, globs)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,9 @@
 #
 # http://en.wikipedia.org/wiki/ANSI_escape_sequences#Colors
 #
+export          NIGHT_BOLD="\033[1m"
+export        NIGHT_ITALIC="\033[3m"
+export         NIGHT_UNDER="\033[4m"
 
 export           NO_COLOUR="\033[0m"
 export           NIGHT_OFF=$NO_COLOUR

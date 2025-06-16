@@ -8,7 +8,8 @@ unalias v >/dev/null 2>&1
 unalias vv >/dev/null 2>&1
 
 v () {
-    open /Applications/MacVim.app "$@"
+    /Applications/MacVim.app/Contents/bin/mvim --remote-tab-silent "$@"
+#    open /Applications/MacVim.app "$@"
 }
 
 # xx
@@ -21,12 +22,17 @@ v. () {
     vv .
 }
 
+va () {
+    vv $(ack -l "$@") +/"$1"
+}
+
 vc () {
     vim_cde ~/keys/c.sh
 }
 
 vd () {
-    vim_diff -O "$@"
+    # vim_diff -O "$@"
+    vim -dO "$@"
 }
 
 ve () {
@@ -44,11 +50,10 @@ vg () {
     [[ -f $clone_config_ ]] || clone_config_=
     [[ -f $user_ignore_ ]] || user_ignore_=
     [[ -f $clone_ignore_ ]] || clone_ignore_=
-    if [[ $1 ]]; then
-        vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_ +/"$1"
-    else
-        vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_
-    fi
+    local suffix_=
+    [[ $1 ]] && suffix_=+/"$1"
+    [[ -f "$1" ]] && suffix_="$@"
+    vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_ $suffix_
 }
 
 # vi
@@ -104,7 +109,7 @@ vv () {
     [[ $* ]] && vim -p "$@" || vim -p ~/keys/v.sh ~/.vimrc
     [[ $gsi_ ]] && (cd $dir_; gsi)
     [[ $1 =~ [.]sh$ ]] || return 0
-    [[ $source_ ]] && source "$@" 
+    [[ $source_ ]] && source "$@"
 }
 
 vw () {
@@ -190,7 +195,7 @@ vdd () {
 ved () {
     local __doc__="""Use vim ex commands in a pipe editor"""
     # echo "foo" | ved '%s,o,x,g' -> "fxx"
-    [[ $* ]] || show_fail "Usage: ved <commands>" 
+    [[ $* ]] || show_fail "Usage: ved <commands>"
     [[ $* ]] || return 1
     vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
 }
@@ -199,7 +204,7 @@ ven () {
     local """Use vim normal commands in a pipe editor"""
     # https://www.reddit.com/r/vim/comments/53mhut/using_vim_like_awk/d7ude9m
     # echo "hello world" | ven 'wdw' -> "hello "
-    [[ $* ]] || show_fail "Usage: ven <commands>" 
+    [[ $* ]] || show_fail "Usage: ven <commands>"
     [[ $* ]] || return 1
     vim - -u NONE -es '+1' "+normal $*" '+%print' '+:qa!' | tail -n +2
 }
@@ -215,6 +220,16 @@ vfg () {
 
 vfh () {
     vim -p $( $( h1 ) | space_lines ) "$@"
+}
+
+vfr () {
+    python ~/jab/src/python/vim_traceback.py "$@"
+}
+
+vgg () {
+    local user_creds_=$(readlink -f ~/.git-credentials 2>/dev/null)
+    [[ -f $user_creds_ ]] || return 1
+    vg $user_creds_
 }
 
 vfr () {
@@ -418,7 +433,7 @@ vim_diff () {
     [[ $diff_opts_ ]] || diff_opts_=-dO
     [[ $diff_opts_ =~ -[Dd] ]] || diff_opts_="-dO $diff_opts_"
     [[ -e "$1" ]] && one_="$1" && shift
-    if [[ ! $one_ ]]; then 
+    if [[ ! $one_ ]]; then
         echo none >&2
         return 1
     fi
@@ -437,7 +452,7 @@ vim_diff () {
 
 
 # v () {
-#     [[ $1 ]] && vim_some "$@" || vim_none 
+#     [[ $1 ]] && vim_some "$@" || vim_none
 # }
 #
 

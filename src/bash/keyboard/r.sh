@@ -77,14 +77,14 @@ rfr () {
 
 rlf () {
     if [[ ! "$@" ]]; then
-        l -d $(readlink -f .)
+        ls -d $(readlink -f .)
         return 0
     fi
     local path_= rlf_path_= result_=1
     for path_ in "$@"; do
         rlf_path_=$(readlink -f "$path_")
         if [[ -e $rlf_path_ ]]; then
-            l -d "$rlf_path_"
+            ls -d "$rlf_path_"
             result_=0
         elif [[ $rlf_path_ ]]; then
             show_fail "$path_ (-> $rlf_path_) does not exist"

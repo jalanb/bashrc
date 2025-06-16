@@ -161,6 +161,26 @@ hub () {
     cde $_directory
 }
 
+hub () {
+    local _directory=~/hub
+    local _remote=
+    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
+    [[ $1 =~ http.*git ]] && _remote="$1" && shift
+    local _destination=
+    if [[ -n "$@" ]]; then
+        if cde_ok ~/hub "$@"; then
+            _directory=$(cde_first ~/hub "$@")
+        fi
+    fi
+    if [[ $_remote =~ http ]]; then
+        [[ -d $_directory ]] && cd $_directory
+        _directory=$(clone -n $_remote)
+    fi
+    [[ -d $_directory ]] && cde $_directory
+    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
+    cde $_directory
+}
+
 
 # xxxxxxxxx
 

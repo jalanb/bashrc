@@ -4,8 +4,10 @@
 "
 nnoremap <up>               ?<cr>zv
 nnoremap <down>             /<cr>zv
-nnoremap <left>             #zv
-nnoremap <right>            *zv
+"noremap <left>             #zv
+"noremap <right>            *zv
+nnoremap <left>             :call ClaudeLeftSearch()<cr>
+nnoremap <right>            :call ClaudeRightSearch()<cr>
 "
 " Normal Shift Arrows
 "
@@ -48,3 +50,63 @@ nnoremap t<right> gt
 " nnoremap <right><right>       *zv
 "
 
+" Claude code starts here
+"
+" Auto-fold navigation for Fred's workflow
+"
+" Track which folds we auto-opened so we only close our own
+let b:auto_opened_folds = []
+
+function! ExpandBodyOfCode()
+    let line = getline('.')
+    let lnum = line('.')
+
+    " jzoz:
+    "  j: down one line (go to body of code)
+    "  zo / zO : open one/all folds
+    "  z: centre this line on screen
+    
+    " Python class: expand one level
+    if line =~ '^\s*class\s'
+        execute 'normal! jzoz'
+        call add(b:auto_opened_folds, lnum)
+        return
+    endif
+    
+    " Python def: expand all
+    if line =~ '^\s*def\s'
+        execute 'normal! jzOz'
+        call add(b:auto_opened_folds, lnum)
+        return
+    endif
+    
+    " Bash function: expand all
+    if line =~ '^\w\+\s*()\s*{$'
+        execute 'normal! jzOz'
+        call add(b:auto_opened_folds, lnum)
+        return
+    endif
+endfunction
+
+function! CloseFoldsWhenLeaving()
+    " Close all folds we auto-opened
+    for lnum in b:auto_opened_folds
+        execute lnum . 'foldclose'
+    endfor
+    " Clear the tracking list
+    let b:auto_opened_folds = []
+endfunction
+
+function! ClaudeSearch(direction)
+    call CloseFoldsWhenLeaving()
+    execute 'normal! ' . a:direction . 'zvz'
+    call ExpandBodyOfCode()
+endfunction
+
+function! ClaudeLeftSearch()
+    call ClaudeSearch('#')
+endfunction
+
+function! ClaudeRightSearch()
+    call ClaudeSearch('*')
+endfunction

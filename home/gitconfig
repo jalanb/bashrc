@@ -104,12 +104,12 @@
     leeeee = l --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
     lf = lc --stat
     lg = l --grep
-    ll = l -32
-    lll = l -16
-    llll = l -8
-    lllll = l -4
-    llllll = l -2
-    lllllll = l -1
+    ll = l -1
+    lll = l -2
+    llll = l -4
+    lllll = l -8
+    llllll = l -16
+    lllllll = l -32
     llllllll = log -n 1
     lllllllll = log -n 0
     lpppppp = lp -32

@@ -11,19 +11,14 @@ args_array() {
 
 # _
 
-. ~/ackvim/ackvim.sh
+. ~/jalanb/avs/__main__/ackvim.sh
+
+# That gives us a, aa, aaa, aaaa.
+# And ac, ae, af, ah, ai, al, ap, at, ay, av.
+# And more
 
 # x
-
-# a was in ackvim.sh
-
-a () {
-    ack_find "$@"
-}
-
 # xx
-
-# aa is in ackvim.sh
 
 ab () {
     ack "$@" ~/bash
@@ -48,8 +43,6 @@ _av () {
 }
 
 # xxx
-
-# aaa is in ackvim.sh
 
 aab () {
     aash "$@" ~/bash
@@ -119,8 +112,6 @@ avv () {
 
 
 # xxxx
-
-# aaaa is in ackvim.sh
 
 aajj () {
     aa "$@" ~/jalanb/jab

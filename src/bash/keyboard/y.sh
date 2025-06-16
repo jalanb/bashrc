@@ -11,20 +11,31 @@ y () {
 }
 
 
-yt () {
-    # -o ~/Downloads/youtube.dl/%(artist)s-%(album)s-%(release_year)s-%(track)s.mp3"
-    local _dir=~/Downloads/yt
-    if [[ -d "$1" ]]; then
-        _dir="$1"
-        shift
-    elif [[ -d "$_dir/$1" ]]; then
-        _dir="$_dir/$1"
-        shift
-    fi
-    local _options=" --no-check-certificate --extract-audio --audio-format=mp3 --audio-quality=0 "
-    ( command cd $_dir
-    [[ "$@" ]] && yt-dlp $_options "$@"
+ytdl () {
+    local type_=
+    [[ $1 =~ ^mp[34]$ ]] && type_=$1 || return 1
+    shift
+    local dir_="${HOME}/Downloads/yt-${type_}/"
+    [[ $YOUTUBES ]] && dir_="${YOUTUBES}/${type_}/"
+    local options_=" --no-check-certificate"
+    case $type_ in
+        mp3) options_+=" --extract-audio --audio-format=mp3 --audio-quality=0" ;;
+        mp4) options_+=" --format 'bv*[height<=1080]+ba/b[height<=1080]'" ;;
+    esac
+    local output_="%(uploader)s/%(upload_date>%Y)s/%(upload_date>%m)s/%(title)s.%(ext)s"
+    ( command cd $dir_
+    [[ "$@" ]] && yt-dlp $options_ -o "$output_" "$@"
     pwd
-    ls -l -htr ./
+    eza -1tr ./
     )
+}
+
+YOUTUBES=/Users/jab/youtubes
+
+ytmp3 () {
+   ytdl mp3 "$@"
+}
+
+ytmp4 () {
+   ytdl mp4 "$@"
 }

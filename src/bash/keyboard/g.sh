@@ -59,6 +59,16 @@ gvd () {
     EDITOR=gvim vd "$@"
 }
 
+gwd () {
+    green_line $(pwd)
+}
+
+# xxxx
+#
+grbp () {
+    local __doc__"""coulded grep"""
+}
+
 gree () {
     local options_= arg_= list_=
     local paths_=

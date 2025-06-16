@@ -20,6 +20,10 @@ QT () {
     QQ type "$@"
 }
 
+QT () {
+    QQ type "$@"
+}
+
 qx () {
     local doc_="""Catch an edge case in terminal"""
     local doc__="""set -x writes to stderr, even after a subshell"""
@@ -31,10 +35,11 @@ qx () {
 # xxxx
 
 from () {
+    [[ $3 ]] || return 1
     local source_="$1"
     local import_=$2
     local type_=$3
-    QT "$type_" && return 0
+    QUIETLY type "$type_" && return 0
     QUIETLY test -f "$source_" || return 2
     source "$source_"
 }

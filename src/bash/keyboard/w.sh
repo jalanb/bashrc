@@ -1,5 +1,13 @@
 #! /bin/cat
 
+wp () {
+    which_python "$@"
+}
+
+wpp () {
+    which_pythons "$@"
+}
+
 typed () {
     type "$1" >/dev/null 2>&1
     [[ $2 ]] || return 0

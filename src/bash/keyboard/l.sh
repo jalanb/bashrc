@@ -419,7 +419,8 @@ ls_command () {
     local __doc__="ls_command ""$@"
     local program_="$(ls_program)"
     local options_="$(ls_options)"
-    echo "$(ls_program)" "$(ls_options)" "$@"
+    local command_="$program_ $options_"
+    [[ $@ ]] && echo $command_ "$@" || echo $command_
 }
 
 # _xxxxxxxxxx
