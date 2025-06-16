@@ -73,6 +73,10 @@ can () {
     cat -n "$@"
 }
 
+cd- () {
+    cd -
+}
+
 cdb () {
     cde /opt/clones/github/brightbeam/
 }
