@@ -10,7 +10,7 @@ CRAYONS_SOURCE="$BASH_SOURCE"
 }
 
 upper () {
-    echo ${1^^}
+    echo ${1} | tr '[:lower:]' '[:upper:]'
 }
 
 rgb () {
