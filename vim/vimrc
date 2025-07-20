@@ -279,8 +279,8 @@ nnoremap <leader>l :call AfterPressing("l")<CR>
 nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
-nnoremap <leader>M gg/^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
-nnoremap <leader>m /^\(\(<\{2,}\)\\|\(=\{2,}\)\\|\(\|\{2,}\)\\|\(>\{2,}\)\)<cr>z<cr>
+nnoremap <leader>M gg/^\(\(<\{4,}\)\\|\(=\{4,}\)\\|\(\|\{4,}\)\\|\(>\{4,}\)\)<cr>z<cr>
+nnoremap <leader>m /^\(\(<\{4,}\)\\|\(=\{4,}\)\\|\(\|\{4,}\)\\|\(>\{4,}\)\)<cr>z<cr>
 nnoremap <leader>N :call ToggleRelativeNumber()<cr>
 nnoremap <leader>n :call ToggleNumber()<cr>
 nnoremap <leader>o mvO<c-r>.=<c-r>"<esc>`v
