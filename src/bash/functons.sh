@@ -252,24 +252,24 @@ lower () {
 }
 
 this () {
-	if [[ "$@" =~ -q ]]; then
-		pythis
-	else
-		local lower_sought=$(lower "$1")
-		[[ $lower_sought ]] || lower_sought="NOT ACTUALLY LOWER"
-		echo
-		pythis | head -n1 | green
-		echo
-		while IFS= read -r line; do
-			local lower_line=$(lower "$line")
-			if [[ $lower_line =~ $lower_sought ]]; then
-				lred_line $line
-			else
-				lgreen_line $line
-			fi
-		done < <(pythis | tail -n+2)
-		echo
-	fi
+    if [[ "$@" =~ -q ]]; then
+        pythis
+    else
+        local lower_sought=$(lower "$1")
+        [[ $lower_sought ]] || lower_sought="NOT ACTUALLY LOWER"
+        echo
+        pythis | head -n1 | green
+        echo
+        while IFS= read -r line; do
+            local lower_line=$(lower "$line")
+            if [[ $lower_line =~ $lower_sought ]]; then
+                lred_line $line
+            else
+                lgreen_line $line
+            fi
+        done < <(pythis | tail -n+2)
+        echo
+    fi
 }
 
 Tree () {
@@ -383,6 +383,10 @@ given () {
     cat ~/tmp/given.txt | pbcopy
 }
 
+gemini () {
+    npx https://github.com/google-gemini/gemini-cli
+}
+
 ptags () {
     local source_="$1"
     [[ -n $source ]] || source_="."
@@ -465,6 +469,10 @@ cd_one () {
     clear
     shift_dir "$@" && shift
     cde $dir
+}
+
+claude () {
+    /opt/homebrew/bin/claude "$@"
 }
 
 has_py () {
@@ -898,6 +906,16 @@ any_diff () {
 # xxxxxxxxxx
 
 # xxxxxxxxxxx
+
+find_recent() {
+    local days=${1:-1}
+    find . -type f -mtime -${days} | grep -v \
+        -e '/\.' \
+        -e doc.tags \
+        -e history.sqlite \
+        -e __pycache__ \
+         
+}
 
 spaces_to_lines () {
     tr ' ' '\n'
