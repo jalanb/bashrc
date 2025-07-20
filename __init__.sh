@@ -26,7 +26,7 @@ show_pythonpath () {
 # echo $HOME whyp
 . ~/whyp.sh
 # echo $HOME jalanb ackvim
-. ~/hub/jalanb/ackvim/ackvim.sh
+. ~/jalanb/avs/__main__/ackvim/ackvim.sh
 # echo $HOME jalanb pyth
 . ~/hub/jalanb/pyth/pyth.sh
 # echo $HOME cde

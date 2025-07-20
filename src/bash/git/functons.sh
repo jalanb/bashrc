@@ -142,7 +142,7 @@ gp () {
 }
 
 gs () {
-    local _doc___="""git status front end"""
+    local __doc__="""git status front end"""
     gc "$@" status 2>/dev/null
 }
 
@@ -1257,6 +1257,18 @@ git_kd_ () {
 }
 
 # xxxxxxxx
+#
+statused () {
+    local dir_=
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+        cd "$dir_"
+    fi
+    local status_=$(git status --porcelain "$@")
+    [[ $dir_ ]] && QUIETLY cd -
+    [[ $status_ ]]
+}
 
 mastered () {
     local main_branch_=$(main_branch)

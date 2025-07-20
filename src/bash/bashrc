@@ -134,11 +134,13 @@ vbb () {
     readlink -f $(bbb) 2>/dev/null
 }
 
-if [[ $- =~ i ]]; then
-    set -x;
-    __main__ "$@" > $bashrc_log 2>&1
-    set +x
-    post_main
-else
-    __main__  "$@"
+if [[ ! $CLAUDECODE ]]; then
+    if [[ $- =~ i ]]; then
+        set -x;
+        __main__ "$@" > $bashrc_log 2>&1
+        set +x
+        post_main
+    else
+        __main__  "$@"
+    fi
 fi
