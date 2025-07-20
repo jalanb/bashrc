@@ -66,6 +66,8 @@ alias z.="zm \*"
 
 alias ...='cdupp'
 
+alias acl=ack
+
 alias bim=vim
 alias cim=vim
 

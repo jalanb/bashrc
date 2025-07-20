@@ -18,7 +18,7 @@ cb () {
 cc () {
     cde $CDE.sh
 }
-# 
+#
 # cd () {
 #     command cd "$@" || return 1
 #     local cde_=$HOME/cde
@@ -81,8 +81,12 @@ cdb () {
     cde /opt/clones/github/brightbeam/
 }
 
+cdh () {
+    cd /opt/clones/github/jalanb/jalanb/hub/hub
+}
+
 cdj () {
-    cde ~/jalanb
+    cd /opt/clones/github/jalanb/"$1"
 }
 
 cdr () {
