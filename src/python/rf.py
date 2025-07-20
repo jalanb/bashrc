@@ -31,11 +31,13 @@ def default_options():
         "Trial-Run": False,
     }
     globs = {
-        "development": "tags a.out *.log",
+        "development": "tags a.out *.log *.retry",
         "old": "*.old",
-        "python": "*.pyc *.pyo *.fail *$py.class *.profile *.egg-info build",
-        "temporary": "*.bak *.orig temp.* *.tmp *~ .*~ fred.* mary mary.* one two",
-        "vim": "*.sw[opqrs]",
+        "swaps": ".*.sw[a-z] *.recovered",
+        "python": "*.pyc *.pyo *.fail *$py.class *.profile __pycache__ htmlcov *.egg-info",
+        "temporary": "*.bak *.orig temp.* *.tmp *~ .*~ fred fred.* mary mary.* one two tmp*-vim.sh *.retry out.log out.err *-e =*",
+        "big": "*.hprof",
+        "extras": ".venv .tox dist .pytest_cache .mypy_cache .coverage .coverage.* coverage.xml .ruff_cache",
     }
     return options, globs
 
@@ -113,12 +115,15 @@ def add_arguments(parser, configured_options, configured_globs):
 
 def wanted_globs(options, configured_globs):
     """A list of globs for all files to be deleted"""
-    return [
-        glob
-        for key, value in configured_globs.items()
-        if getattr(options, key)
-        for glob in value.split()
-    ]
+    result = []
+    for key, value in configured_globs.items():
+        # Special handling for extras - only include if both python and extras are set
+        if key == "extras":
+            if getattr(options, "python", False) and getattr(options, "extras", False):
+                result.extend(value.split())
+        elif getattr(options, key, False):
+            result.extend(value.split())
+    return result
 
 
 def get_names_in(directory):
