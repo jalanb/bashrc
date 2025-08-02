@@ -425,7 +425,7 @@ gll () {
 glm () {
     local main_branch_=$(main_branch)
     local start_=$(git merge-base $main_branch_ HEAD)
-    g l ${start_}..HEAD
+    g l ${start_}^..HEAD
 }
 
 gln () {
