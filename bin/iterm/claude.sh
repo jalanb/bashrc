@@ -1,6 +1,5 @@
 #! /usr/bin/env bash
 
-cd /opt/clones/github/jalanb
-pwd
-export PATH=/opt/homebrew/bin:$PATH
-claude "$@"
+
+IF_I_WAS_YOU_WOULDNT_START_FROM_HERE_AT_ALL_AT_ALL=$(dirname "$BASH_SOURCE")/jalanb.sh
+bash "$IF_I_WAS_YOU_WOULDNT_START_FROM_HERE_AT_ALL_AT_ALL" claude
