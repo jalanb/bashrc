@@ -1,18 +1,4 @@
-#! /usr/bin/env head -n 3
 
-# This script is intended to be sourced, not run
-
-
-# set -e
-. ~/bash/types.sh
-
-typed green || . ~/bash/crayons.sh
-typed pong || . ~/bash/pong.sh
-typed pii || . ~/bash/python.sh
-
-# Called functons.sh because "functions" is ... something else
-
-# sorted by strcmp of function name, punctuation before letters
 
 # x
 
@@ -846,6 +832,27 @@ autostyle () {
 }
 
 # xxxxxxxxxx
+
+drive_free() {
+    df -h / | tail -1 | awk '
+        {
+            used = int($5)
+            total = $2; used_size = $3; free_size = $4
+            
+            printf "Main Drive: %s [", $5
+            for(i=0; i<used/2; i++) printf "█"
+            for(i=0; i<50-used/2; i++) printf "░"
+            printf "] %s free\n", $4
+            
+            printf "\n"
+            printf "┌─────────────┬─────────────┬─────────────┐\n"
+            printf "│    TOTAL    │    USED     │    FREE     │\n"
+            printf "├─────────────┼─────────────┼─────────────┤\n"
+            printf "│%11s  │%11s  │%11s  │\n", total, used_size, free_size
+            printf "└─────────────┴─────────────┴─────────────┘\n"
+        }'
+}
+
 like_duck () {
     has_py "$*"
 }
