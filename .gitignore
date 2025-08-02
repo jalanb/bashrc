@@ -22,6 +22,7 @@ src/bash/fd
 etc/config/pudb/pudb.cfg
 etc/history
 bin/venv_bin
+vim/bundle/
 vim/bundle.remote
 vim/plugged
 src/bash/keyboard/__init__.sh
@@ -33,23 +34,59 @@ tags
 *.pyc
 .noseids
 
-# root-level directories
-/include/
-/local/
-/lib/
-/share/
-/vim/black
-/vim/bundle
-/vim/pack
-/vim/view
+# Jupyter Notebook
+.ipynb_checkpoints
 
-# from root-level directories
-/ipython/profile_default/db/
-/ipython/README
-/ipython/profile_default/static/
-/ipython/profile_default/security/
+# IPython
+profile_default/
+ipython_config.py
 
-# for python virtualenvs
-bin/activate
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.cd
+.pysyte
+.env
 .venv
-.jab
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.vscode
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/

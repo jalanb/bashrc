@@ -26,6 +26,7 @@
 fred
 fred.[a-z]*
 local.env
+.env
 .cd
 .cd.sh
 .python-version
