@@ -1,5 +1,7 @@
 #! cat
 
+. ~/bash/quietly.sh
+
 # x
 
 r () {
@@ -49,7 +51,7 @@ rr () {
         echo "Will not remove $1" >&2
         return 1
     fi
-    rm $options_ "$@" >/dev/null 2>&1
+    QUIETLY rm $options_ "$@"
 }
 
 ru () {

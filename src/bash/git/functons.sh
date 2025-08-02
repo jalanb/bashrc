@@ -11,8 +11,6 @@
 
 # functons.sh for git
 
-git_status_char_regexp_="[ MADRCU]"
-git_status_regexp_="^${git_status_char_regexp_}${git_status_char_regexp_}"
 # sorted by strcmp of function name
 
 # x
@@ -1510,12 +1508,15 @@ show_git_time () {
 
 # xxxxxxxxxxxxxxx
 
+git_status_char_regexp_="[ MADRCU]"
+any_git_changes_regexp_="^${git_status_char_regexp_}${git_status_char_regexp_}"
+
 any_git_changes_ () {
     local _doc___="whether the current dir has modified or untacked files"
     local dir_=$1
     [[ -z $dir_ ]] && dir_=$PWD
     [[ -d "${dir_}/.git" ]] || return 1
-    git -C $dir_ status --porcelain | grep "$git_status_regexp_"
+    git -C $dir_ status --porcelain | grep "$any_git_changes_regexp_"
 }
 
 has_git_changes_ () {
@@ -1532,7 +1533,7 @@ git_simple_status () {
     local arg_dir="${1:-$PWD}"
     has_git_changes_ $arg_dir || return 1
     local git_dir_=$(git_root "$arg_dir")
-    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> ~/fd2 | grep "$git_status_regexp_"
+    [[ -d $git_dir_ ]] && git_status_line_dir "$git_dir_" 2> ~/fd2 | grep "$any_git_changes_regexp_"
 }
 
 show_git_time_log_ () {

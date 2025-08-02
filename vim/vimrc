@@ -99,6 +99,11 @@ nnoremap qz :qa!<cr>
 "noremap r - change one char
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
+noremap tf :tabnew ~/tmp/fred.txt
+nnoremap th :tabnew ~/jalanb/jalanb/hub/hub/
+noremap tn :tabnew<Space>
+noremap tp :tabprev<cr>:tabnew<Space>
+noremap tv :tabprev<cr>:tabnew ~/.vimrc<cr>
 "noremap u - undo
 nnoremap vf - :so ~./vimrc<cr> 
 nnoremap vv :tabprev<cr>:tabnew ~/.vimrc<cr>
@@ -202,8 +207,6 @@ nnoremap X :wa!<cr>:qa!<cr>
 nnoremap Z XC
 " ordinary keys for movement {{{2
 nnoremap <Space><Space>  <PageDown>zz
-nnoremap th       gT
-nnoremap tl       gt
 "
 " Normal Arrows
 "
