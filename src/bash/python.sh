@@ -290,25 +290,29 @@ which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
     local default_python_=python3
     QUIETLY which $default_python_ || default_python_=python
+    QUIETLY which $default_python_ || (red "no python available" >&2 && return 1)
     local python_=${PYTHON:-$default_python_}
-    local exec_=$($python_ -c"import sys; print(sys.executable)")
+    local sys_exec_=$($python_ -c"import sys; print(sys.executable)")
+    local python_exec_="$sys_exec_"
+    local venv_exec_=.venv/bin/$python_
+    same_path "$sys_exec_" $venv_exec_ && python_exec_="venv_exec_"
     local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
-    local real_exec_=$(readlink -f $exec_)
+    local real_exec_=$(readlink -f $sys_exec_)
     local shown_=
     if [[ $python_ =~ ^python3? ]]; then
-        local which_=$(which $python_)
-        if [[ $exec_ != $which_ ]]; then
-            show_data "   bash: $which_"
-            show_data " python: $exec_"
-            [[ $real_exec_ == $exec_ ]] || show_data "   real: $real_exec_"
+        local bash_exec_=$(which $python_)
+        if [[ $sys_exec_ != $bash_exec_ ]]; then
+            show_data "   bash: $bash_exec_"
+            show_data " python: $python_exec_"
+            [[ $real_exec_ == $sys_exec_ ]] || show_data "   real: $real_exec_"
             shown_=1
         fi
     fi
     if [[ ! $shown_ ]]; then
-        if [[ $real_exec_ == $exec_ ]]; then
-            show_data " python: $exec_"
+        if [[ $real_exec_ == $sys_exec_ ]]; then
+            show_data " python: $python_exec_"
         else
-            show_data " python: $exec_"
+            show_data " python: $show_exec_"
             show_data "   real: $real_exec_"
         fi
     fi
