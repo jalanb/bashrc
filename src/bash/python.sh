@@ -290,17 +290,17 @@ which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
     local default_python_=python3
     QUIETLY which $default_python_ || default_python_=python
-    QUIETLY which $default_python_ || (red "no python available" >&2 && return 1)
+    QUIETLY which $default_python_ || $(red "no python available" >&2 && return 1)
     local python_=${PYTHON:-$default_python_}
     local sys_exec_=$($python_ -c"import sys; print(sys.executable)")
     local python_exec_="$sys_exec_"
-    local venv_exec_=.venv/bin/$python_
-    same_path "$sys_exec_" $venv_exec_ && python_exec_="venv_exec_"
+    local venv_exec_=".venv/bin/$python_"
+    same_path "$sys_exec_" "$venv_exec_" && python_exec_="$venv_exec_"
     local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
     local real_exec_=$(readlink -f $sys_exec_)
     local shown_=
-    if [[ $python_ =~ ^python3? ]]; then
-        local bash_exec_=$(which $python_)
+    if [[ $python_ =~ ^python? ]]; then
+        local bash_exec_=$(which $pytho/\[\[.*\]\].*\[\[n_)
         if [[ $sys_exec_ != $bash_exec_ ]]; then
             show_data "   bash: $bash_exec_"
             show_data " python: $python_exec_"
@@ -338,4 +338,65 @@ ipython_profile () {
         fi
     done
     return 2
+}
+
+_pyv_strip_trailing_colons() {
+    local path_=$1
+    echo "$path_" | sed 's/:*$//'
+}
+
+_pyv_has_spaces_in_path() {
+    echo "$PATH" | grep -q ' ' && {
+        red_line "PATH contains spaces, cannot safely manipulate" >&2
+        return 0
+    }
+    return 1
+}
+
+_pyv_find_exact_version() {
+    local version_=$1 pythons_dir=/opt/pythons
+    [[ -d "$pythons_dir" ]] || return 1
+    local pattern_="^${version_}\$"  # exact match
+    [[ "$version_" =~ \.[0-9]+$ ]] || pattern_="^${version_}\."  # prefix for partial
+    local dir_= matches_=()
+    for dir_ in $(ls -1 "$pythons_dir" 2>/dev/null | sort -V -r); do
+        [[ "$dir_" =~ $pattern_ ]] || continue
+        local bin_dir="$pythons_dir/$dir_/bin"
+        local python_exe=
+        [[ -x "$bin_dir/python3" ]] && python_exe="$bin_dir/python3"
+        [[ -x "$bin_dir/python" ]] && [[ ! $python_exe ]] && python_exe="$bin_dir/python"
+        [[ $python_exe ]] || continue
+        matches_+=("$bin_dir")
+    done
+    [[ ${#matches_[@]} -eq 0 ]] && return 1
+    [[ ${#matches_[@]} -gt 1 ]] && {
+        red_line "Multiple Python $version_ found, call a sysadmin:" >&2
+        printf '%s\n' "${matches_[@]}" | red >&2
+        return 1
+    }
+    echo "${matches_[0]}"
+    return 0
+}
+
+_pyv_offer_download() {
+    local version_=$1
+    yellow_line "Python $version_ not found in /opt/pythons"
+    # TODO: offer to download/compile or suggest available versions
+    return 1
+}
+
+pyv() {
+    [[ $# -eq 0 ]] && which_python && return 0
+    _pyv_has_spaces_in_path && return 1
+    local target_=$(_pyv_find_exact_version "$1")
+    [[ $target_ ]] || {
+        _pyv_offer_download "$1"
+        return 1
+    }
+    _pyv_validate_first
+    local new_path=$(_pyv_strip_pythons)
+    new_path=$(_pyv_strip_trailing_colons "$new_path")
+    export PATH="$target_:$new_path"
+    green_line "Switched to $target_"
+    which_python
 }
