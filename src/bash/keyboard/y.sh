@@ -18,13 +18,17 @@ ytdl () {
     local dir_="${HOME}/Downloads/yt-${type_}/"
     [[ $YOUTUBES ]] && dir_="${YOUTUBES}/${type_}/"
     local options_=" --no-check-certificate"
+    local output_=
     case $type_ in
-        mp3) options_+=" --extract-audio --audio-format=mp3 --audio-quality=0" ;;
-        mp4) options_+=" --format 'bv*[height<=1080]+ba/b[height<=1080]'" ;;
+        mp3) options_+=" --extract-audio --audio-format=mp3 --audio-quality=0"
+            output_="%(uploader)s/%(upload_date>%Y)s/%(upload_date>%m)s/%(title)s.%(ext)s"
+            ;;
+        mp4) options_+="" 
+            output_="./%(title)s.mp4"
+            ;;
     esac
-    local output_="%(uploader)s/%(upload_date>%Y)s/%(upload_date>%m)s/%(title)s.%(ext)s"
     ( command cd $dir_
-    [[ "$@" ]] && yt-dlp $options_ -o "$output_" "$@"
+    [[ "$@" ]] && yt-dlp $options_ -o "$output_" "$@" | grep -v Downloading
     pwd
     eza -1tr ./
     )

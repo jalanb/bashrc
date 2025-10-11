@@ -116,3 +116,7 @@ avv () {
 aajj () {
     aa "$@" ~/jalanb/jab
 }
+
+alan () {
+    sudo -u alan -i
+}

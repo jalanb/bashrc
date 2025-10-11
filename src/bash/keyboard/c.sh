@@ -75,6 +75,7 @@ can () {
 
 cd- () {
     cd -
+    [[ -f .venv/bin/activate ]] && source .venv/bin/activate
 }
 
 cdb () {
@@ -86,7 +87,27 @@ cdh () {
 }
 
 cdj () {
-    cd /opt/clones/github/jalanb/"$1"
+    local __doc__="cd to jalanb dir [and run a command (a, f, h, l, r)]"
+    cd /opt/clones/github/jalanb/ || return 1
+    if [[ -n "${1-}" && -d "$1" ]]; then
+        cd "$1" || return 1
+        shift
+    fi
+    [[ "$@" ]] || return 0
+    local command_=
+    case "${1-}" in
+        a) command_=ack;    shift ;;
+        f) command_=fd;     shift ;;
+        h) command_=hub;    shift ;;
+        l) command_=l;      shift ;;
+        r) command_=ranger; shift ;;
+    esac
+    [[ "$command_" ]] || return 0
+    if [[ "$command_" == hub ]]; then
+        fd -td hub "$@" .
+    else
+        "$command_" "$@" .
+    fi
 }
 
 cdr () {
@@ -120,11 +141,16 @@ cls () {
     clean_clear_ls --wide "$@"
 }
 
+# xxxx
+
+cdjj () {
+    (cdj "$@")
+}
+
 clla () {
     clean_clear_ls --long --all "$@"
 }
 
-# xxxx
 # _xxx
 # xxxxx
 

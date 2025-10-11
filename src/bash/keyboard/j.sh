@@ -21,6 +21,10 @@ jj () {
     jd ~/jalanb
 }
 
+jab () {
+    sudo -u jab -i
+}
+
 jjb () {
     kk ~/bash "$@"
 }
@@ -39,3 +43,6 @@ jjjj () {
 
 # xxx
 
+jalanb () {
+    sudo -u jalanb -i
+}

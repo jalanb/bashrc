@@ -145,8 +145,10 @@ vat () {
 vba () {
     if [[ -f .venv/bin/activate ]];then 
         source .venv/bin/activate
+        which_python
     elif [[ -f ../.venv/bin/activate ]];then 
         source ../.venv/bin/activate
+        which_python
     else
         echo "no .venv/bin/activate" >&2
     fi
@@ -198,6 +200,10 @@ ved () {
     [[ $* ]] || show_fail "Usage: ved <commands>"
     [[ $* ]] || return 1
     vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
+}
+
+vee() {
+    tee /dev/tty | vin
 }
 
 ven () {

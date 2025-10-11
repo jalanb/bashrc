@@ -112,6 +112,10 @@ fdg () {
     fd_ "$name_" "$@" | g "$name_"
 }
 
+fdj () {
+    fd "$@" /opt/clones/github/jalanb
+}
+
 fdl () {
     local __doc__="""Find links"""
     fd_ --type l "$@"
