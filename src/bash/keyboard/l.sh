@@ -5,15 +5,21 @@ source ~/keys/q.sh
 # x
 
 l () {
-    local ls_=$(ls_command)
-    if [[ $1 ]]; then
-        $ls_ "$@"
-    else
-        $ls_ .
-    fi
+    local command_=$(ls_command)
+    [[ $1 ]] && $command_ "$@" || $command_ .
 }
 
 # xx
+
+l, () {
+    local dir_="$PWD"
+    if [[ -e "$1" ]]; then
+        [[ -d "$1" ]] && dir_="$1" || dir_=$(dirname "$1")
+    fi
+    echo
+    green_line $(readlink -f "$dir_")
+    l "$@"
+}
 
 l1 () {
     l -1 "$@"
@@ -82,7 +88,7 @@ ll () {
     done
     [[ $paths_ ]] || paths_=.
     green_line $PWD
-    show_command -q ls -l $options_ $paths_
+    show_command ls -l $options_ $paths_
     echo
     ls_ls_command -l "$options_" $paths_
 }

@@ -35,7 +35,6 @@ ri () {
     rri "$@"
 }
 
-
 rr () {
     local options_="-rf"
     if [[ $1 =~ ^[-][rfv]+$ ]]; then

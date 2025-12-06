@@ -5,6 +5,10 @@ g () {
     git "$@"
 }
 
+gq () {
+    quietly gr "$@"
+}
+
 gr () {
     if [[ "$@" ]]; then
         egrep "$@" | cut_err  "Is a directory" | egrep --color=auto "$@"
@@ -16,6 +20,11 @@ gr () {
 
 gv () {
     grep -v "$@"
+}
+
+gak () {
+    git add src/bash/keyboard
+    git commit -m "Add keyboard"
 }
 
 gat () {
