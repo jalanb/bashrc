@@ -50,4 +50,3 @@ export WHYP_EDITOR=vv
 
 jab_venv="$HOME/jab/.venv"
 test -f $jab_venv/bin/activate && source $jab_venv/bin/activate
-ACTIVE_PYTHON=$(which python)
