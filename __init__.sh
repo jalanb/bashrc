@@ -24,12 +24,12 @@ show_pythonpath () {
 }
 
 # echo $HOME minimal
-# . ~/.minimal
+. ~/.minimal
 # echo $HOME whyp
 . ~/whyp.sh
 export WHYP_EDITOR=vv
 # echo $HOME jalanb ackvim
-. ~/jalanb/avs/__main__/ackvim/ackvim.sh
+. ~/hub/jalanb/avs/__main__/ackvim.sh
 # echo $HOME jalanb pyth
 . ~/hub/jalanb/pyth/pyth.sh
 # echo $HOME cde
