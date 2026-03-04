@@ -32,7 +32,7 @@ from () {
 }
 
 import_essentials () {
-    debug_ "import_essentials"
+    # debug_ "import_essentials"
     from ~/cde.sh import cde
     from ~/whyp.sh import whyp
     from ~/bash/keys.sh import keys_read
@@ -120,5 +120,5 @@ w () {
     quietly type "$@" | grep -v "is a function"
 }
 
-debug_ "MINIMAL_SOURCE=$MINIMAL_SOURCE"
+# debug_ "MINIMAL_SOURCE=$MINIMAL_SOURCE"
 quietly import_essentials
