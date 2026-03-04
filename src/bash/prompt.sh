@@ -122,11 +122,11 @@ git_data () {
     local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
     local git_data_=
     if [[ $branch_name_ ]]; then
-        local bump_version_="v$(bump get)"
+        local bump_version_="v$(bump get 2>/dev/null)"
         [[ $bump_version_ == v ]] && bump_version_=
         git_data_=":$branch_name_ $bump_version_"
     fi
-    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z._-]*\)[/]\([A-Za-z._-]*\).git,\1/\2,")
+    local project_=$(git remote get-url origin 2>/dev/null | sed -E 's/\.git$//' | sed -E 's,.*[:/]+([A-Za-z0-9._-]+)/([A-Za-z0-9._-]+)$,\1/\2,')
     [[ $project_ ]] && git_data_="${project_}${git_data_}"
     echo $git_data_
 }
@@ -178,14 +178,14 @@ echo_prompt_colour () {
         green ) prompt_colour_="$LIGHT_GREEN";;
           red ) prompt_colour_="$LIGHT_RED";;
          blue ) prompt_colour_="$LIGHT_BLUE";;
+         * ) return 1
     esac
-    [[ -n $prompt_colour_ ]] && shift || prompt_colour_=None
     echo $prompt_colour_
 }
 
 pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
-    console_whoami
+    # console_whoami
     cde_python --add . >/dev/null 2>&1
     history -a
 }

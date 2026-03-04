@@ -40,7 +40,7 @@ set_bucket () {
 }
 
 show_dir_colors () {
-    local _dircolors=$(quietly realpath $(which gdircolors dircolors | head -n1) )
+    local _dircolors=$(quietly realpath $(quietly which gdircolors dircolors | head -n1) )
     [[ $_dircolors ]] || return 1
     eval $($_dircolors ~/.dircolors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 }
