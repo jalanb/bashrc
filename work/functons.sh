@@ -1,8 +1,8 @@
 #! /bin/bash
 
 SOURCE_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
-WORK=brightbeam
-WORK_COM=${WORK}.com
+WORK=smbc
+WORK_COM=smbcgroup.com
 
 work () {
     echo "$@"."${WORK_COM}"
