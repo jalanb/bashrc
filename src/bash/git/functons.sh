@@ -775,7 +775,7 @@ gsg () {
 }
 
 gsm () {
-    gc "$@" status --porcelain | grep -e "^M" -e "^UU" | sed -e "s,^...,,"
+    gc "$@" status --porcelain | grep -e "^M" -e "^ M" -e "^UU" | sed -e "s,^...,,"
 }
 
 gso () {
@@ -1114,7 +1114,7 @@ grupp () {
 }
 
 gsmv () {
-    vim -p $(gsm | tr '\n' ' ')
+    git dv $(gsm | tr '\n' ' ')
 }
 
 gsri () {
