@@ -187,10 +187,6 @@ down () {
     l -tr . | tail
 }
 
-envv () {
-    env | grep VIRTUAL_ENV= | grep '=.*'
-}
-
 hhhh () {
     echo '#' | clip_in
 }
@@ -463,10 +459,6 @@ cd_one () {
     clear
     shift_dir "$@" && shift
     cde $dir
-}
-
-claude () {
-    /opt/homebrew/bin/claude "$@"
 }
 
 has_py () {
@@ -846,12 +838,10 @@ drive_free() {
         {
             used = int($5)
             total = $2; used_size = $3; free_size = $4
-            
             printf "Main Drive: %s [", $5
             for(i=0; i<used/2; i++) printf "█"
             for(i=0; i<50-used/2; i++) printf "░"
             printf "] %s free\n", $4
-            
             printf "\n"
             printf "┌─────────────┬─────────────┬─────────────┐\n"
             printf "│    TOTAL    │    USED     │    FREE     │\n"
@@ -928,8 +918,7 @@ find_recent() {
         -e '/\.' \
         -e doc.tags \
         -e history.sqlite \
-        -e __pycache__ \
-         
+        -e __pycache__
 }
 
 spaces_to_lines () {
@@ -1262,10 +1251,4 @@ copy_from_work_server () {
     local here_path_=$here_root_/"$source_dir_"
     [[ -d "$here_path_" ]] || mkdir -p "$here_path_"
     rsync -av $server_name_:"$source_" "$here_path_"
-}
-
-jalanb_hub ()
-{
-    ( cd ~/hub;
-    grep slack -H */.travis.yml | sed -e "s/:.*//" -e "s:..travis.yml::" | grep -v -e old -e master -e suds | sort | uniq )
 }

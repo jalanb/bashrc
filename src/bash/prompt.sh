@@ -100,7 +100,6 @@ green_python () {
         local virtual_env_directory_=$(dirname $VIRTUAL_ENV)
         virtual_env_name_=$(basename "$virtual_env_directory_")
     fi
-
     local python_version_=$(python -V 2>&1 | head -n1 | cut -d" " -f2)
     local green_python_=$(green "${python_version_}")
     local lgreen_venv_=$(lgreen_venv)

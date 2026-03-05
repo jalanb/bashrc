@@ -80,9 +80,6 @@ show_error () {
 # xxxxxxxxxxxx
 
 show_command () {
-    local verbose_=yes
-    [[ $1 =~ -q ]] && verbose_=
-    [[ $verbose_ ]] || shift
     local arg_= 
     lblack "$ "
     lgreen "$1 "
@@ -91,7 +88,6 @@ show_command () {
         [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
         lblue "$arg_ "
     done
-    [[ $verbose_ ]] && echo ""
 }
 
 show_run_command () {
