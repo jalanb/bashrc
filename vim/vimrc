@@ -368,6 +368,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'dense-analysis/neural'
 Plug 'muniftanjim/nui.nvim'
 Plug 'elpiloto/significant.nvim'
+
+Plug 'dense-analysis/ale'
+
+call plug#end()
+
 "
 " Pathogen {{{2
 " Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
