@@ -64,7 +64,7 @@ envv () {
 }
 
 vgf () {
-    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
+    edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
 }
 
 vla () {
@@ -92,7 +92,7 @@ vwf () {
 }
 
 vpe () {
-    _edit_source ~/jab/environ.d/python
+    edit_source ~/jab/environ.d/python
 }
 
 # xxxx
@@ -1173,36 +1173,36 @@ dixx () {
 edit_source () {
     local filepath_="$1"
     shift
-    blank_script $filepath
-    filedir=$(files_dirs $filepath)
+    blank_script $filepath_
+    filedir=$(files_dirs $filepath_)
     if [[ $filedir == "." ]]; then
-        vv $filepath "$@"
+        vv $filepath_ "$@"
     else
         pushq $filedir
-        vv $filepath "$@"
+        vv $filepath_ "$@"
         popq
     fi
-    if [[ $filepath =~ alias ]]; then
-        source_aliases $filepath
+    if [[ $filepath_ =~ alias ]]; then
+        source_aliases $filepath_
     else
-        . $filepath "$@"
+        . $filepath_ "$@"
     fi
 }
 
-edit_locals () {
+_edit_locals () {
     local local_dir_=~/jalanb/local
     [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
     local name_="$1" force_=
     shift
     [[ $1 =~ -f ]] && force_=--force
     [[ $force_ ]] || return 0
-    editsource_ "$local_dir_/$name_"
+    edit_source "$local_dir_/$name_"
 }
 
-edit_work () {
+_edit_work () {
     local local_dir_=~/jab/work
     [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
-    editsource_ $local_dir_/"$1"
+    edit_source $local_dir_/"$1"
 }
 
 divv_get_difference () {
