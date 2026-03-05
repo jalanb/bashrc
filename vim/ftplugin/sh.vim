@@ -1,7 +1,6 @@
 "
 " Adaptations for shell scripts
 "
-Limelight 0.7
 "
 " Keyboard
 "

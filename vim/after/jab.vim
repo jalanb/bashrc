@@ -1,5 +1,4 @@
 set nospell
-Limelight!
 
 "	From ie-build-1:/usr/share/vim/vim70/vimrc_example.vim
 

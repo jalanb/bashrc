@@ -1,7 +1,3 @@
-[Limelight]
-source = https://github.com/junegunn/limelight.vim.git
-type = git
-
 [cute-python]
 source = https://github.com/ehamberg/vim-cute-python.git
 type = git
