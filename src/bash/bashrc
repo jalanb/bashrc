@@ -131,12 +131,6 @@ post_main () {
     l
 }
 
-vbb () {
-    local __doc__="""Must be last function to over-write same func from bashrc_minimal"""
-    vim -p $(bbb)
-    readlink -f $(bbb) 2>/dev/null
-}
-
 if [[ ! $CLAUDECODE ]]; then
     if [[ $- =~ i ]]; then
         set -x;
@@ -147,3 +141,11 @@ if [[ ! $CLAUDECODE ]]; then
         __main__  "$@"
     fi
 fi
+
+# This function has to be last, after __main__
+vbb () {
+    local __doc__="""Must be last function to over-write same func from bashrc_minimal"""
+    vim -p $(bbb)
+    readlink -f $(bbb) 2>/dev/null
+}
+
