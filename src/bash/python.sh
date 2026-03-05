@@ -173,8 +173,8 @@ pipv () {
 }
 
 reactivate () {
-	unhash_activate "$1"
-	ppp
+    unhash_activate "$1"
+    ppp
 }
 
 venv () {
@@ -286,37 +286,31 @@ unhash_py () {
     QUIETLY hash -d python python2 python3 ipython ipython2 ipython3 pudb pudb3 pdb ipdb pip pip2 pip3
 }
 
+some_python3 () {
+    local __doc__="""It's a Python Dev's machine, there must be some python3 installed"""
+    local python_=
+    if [[ -x "$PYTHON" ]] ; then
+        python_="$PYTHON"
+    elif QUIETLY which python3 ; then
+        python_=python3
+    fi
+    if [[ ! $python_ ]]; then
+        [[ $1 =~ -q ]] || show_fail "No python available"
+        return 1
+    fi
+    $python_ -c"import sys; print(sys.executable)"
+}
+
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
-    local default_python_=python3
-    QUIETLY which $default_python_ || default_python_=python
-    QUIETLY which $default_python_ || $(red "no python available" >&2 && return 1)
-    local python_=${PYTHON:-$default_python_}
-    local sys_exec_=$($python_ -c"import sys; print(sys.executable)")
-    local python_exec_="$sys_exec_"
-    local venv_exec_=".venv/bin/$python_"
-    same_path "$sys_exec_" "$venv_exec_" && python_exec_="$venv_exec_"
-    local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
-    local real_exec_=$(readlink -f $sys_exec_)
-    local shown_=
-    if [[ $python_ =~ ^python? ]]; then
-        local bash_exec_=$(which $pytho/\[\[.*\]\].*\[\[n_)
-        if [[ $sys_exec_ != $bash_exec_ ]]; then
-            show_data "   bash: $bash_exec_"
-            show_data " python: $python_exec_"
-            [[ $real_exec_ == $sys_exec_ ]] || show_data "   real: $real_exec_"
-            shown_=1
-        fi
-    fi
-    if [[ ! $shown_ ]]; then
-        if [[ $real_exec_ == $sys_exec_ ]]; then
-            show_data " python: $python_exec_"
-        else
-            show_data " python: $show_exec_"
-            show_data "   real: $real_exec_"
-        fi
-    fi
+    local python_exec_=$(some_python3 -q) || return 1
+    local which_exec_=$(which python3)
+    same_path "$python_exec_" "$which_exec_" || show_data "   bash: $which_exec_"
+    show_data " python: $python_exec_"
+    local version_=$($python_exec_ -c"import sys; print(sys.version.split()[0])")
     show_data "version: $version_"
+    local real_exec_=$(readlink -f $python_exec_)
+    same_path "$python_exec_" "$real_exec_" || show_data "   real: $real_exec_"
 }
 
 which_pythons () {
