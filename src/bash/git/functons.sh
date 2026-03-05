@@ -460,12 +460,24 @@ gmt () {
     git merge --no-ff --no-edit -X theirs "$@"
 }
 
+
 gob () {
-    local new_branch_=$(to_branch_ "$1") old_commit_=$2
-    shift 2
-    [[ $new_branch_ ]] || return 1
-    [[ $old_commit_ ]] || old_commit_=$(get_branch)
-    git checkout -b $new_branch_ $old_commit_
+    local old_ref_=$1 new_name_=$2
+    [[ $old_ref_ ]] || return 4
+    # If only 1 arg: check if it's an existing branch (ambiguous!)
+    if [[ ! $new_name_ ]]; then
+        if QUIETLY git rev-parse --verify "$old_ref_"; then
+            show_fail "\"$old_ref_\" exists already, try"
+            show_command gob "$old_ref_ new name"
+            return 1
+        fi
+        new_name_=$old_ref_
+        old_ref_=$(get_branch)
+    fi
+    [[ $new_name_ ]] || return 8
+    new_name_=$(as_branch_ "$new_name_")
+    [[ $new_name_ ]] || return 16
+    git checkout -b $new_name_ $old_ref_
 }
 
 gof () {
@@ -762,9 +774,8 @@ gsg () {
     glg
 }
 
-gss () {
-    local _doc___="""git short status"""
-    gc "$@" status --short 2>/dev/null
+gsm () {
+    gc "$@" status --porcelain | grep -e "^M" -e "^UU" | sed -e "s,^...,,"
 }
 
 gso () {
@@ -772,8 +783,27 @@ gso () {
 }
 
 gsp () {
-    local _doc___="""Porcelain status"""
-    gc "$@" status --porcelain 2>/dev/null
+    local __doc__="""Porcelain status"""
+    local arg_=$1 
+    local quiet_=-q  # Porcelain should default to quiet, not showing command
+    shift
+    if [[ $arg_ =~ [vV] ]]; then
+        quiet_=
+        sought_=$1
+        shift
+    else
+        sought_=$arg_
+    fi
+    if [[ $sought_ ]]; then
+        gc $quiet_"$@" status --porcelain 2>/dev/null | grep "$sought_" | sed -e "s,$sought_ ,,"
+    else
+        gc $quiet_ "$@" status --porcelain 2>/dev/null
+    fi
+}
+
+gss () {
+    local _doc___="""git short status"""
+    gc "$@" status --short 2>/dev/null
 }
 
 gta () {
@@ -831,20 +861,22 @@ gbd_ () {
                 return 1
             fi
         else
-            gom
+            go $main_branch_
         fi
     elif [[ "$1" =~ ^-[dD]$ ]]; then
         options_="$1"
         shift
-        local arg_= branches_=
+        local arg_= branches_=()
         for arg_ in "$@"; do
             is_branch $arg_ || continue
-            branches_="$branches_ $arg_"
+            branches_+=("$arg_")
         done
-        [[ "$branches_" ]] && delete_branch_="$branches_"
+        [[ ${#branches_[@]} -gt 0 ]] && delete_branch_="${branches_[*]}"
         if [[ $delete_branch_ == "$main_branch_" ]]; then
-            show_error Please checkout another branch before deleting $main_branch_
-            return 1
+            if [[ $current_branch_ == "$main_branch_" ]]; then
+                show_error Please checkout another branch before deleting $main_branch_
+                return 1
+            fi
         fi
         local answer_=N
         if [[ $delete_branch_ == "fred" ]]; then
@@ -862,7 +894,7 @@ gbd_ () {
         if git status 2>&1 | grep -q git.merge...abort; then
             gma
         fi
-        gom
+        [[ $delete_branch_ == $main_branch_ ]] || go $main_branch_
         show_command git branch "$options_" $delete_branch_
         git branch "$options_" $delete_branch_
         return 0
@@ -1079,6 +1111,10 @@ grupp () {
     git gc --prune=now --aggressive 2>&1 | grep -v -e objects -e ' reused '
     show_command git repack -a -d
     git repack -a -d 2>&1
+}
+
+gsmv () {
+    vim -p $(gsm | tr '\n' ' ')
 }
 
 gsri () {
@@ -1336,7 +1372,7 @@ local_gcu () {
 
 # xxxxxxxxx_
 
-to_branch_ () {
+as_branch_ () {
     printf '%s\n' "${1// /_}"
 }
 # xxxxxxxxxx
@@ -1372,10 +1408,8 @@ get_branch () {
 
 git_branch () {
     local show_=show_run_command ref_=HEAD
-    [[ $1 == -q ]] && show_=
-    [[ $1 == -q ]] && shift
-    [[ $1 == -v ]] && show_=show_run_command
-    [[ $1 == -v ]] && shift
+    [[ $1 == -q ]] && show_= && shift
+    [[ $1 == -v ]] && show_=show_run_command && shift
     [[ "$@" ]] && ref_=$1
     $show_ git rev-parse --abbrev-ref $ref_ 2> /dev/null || return 1
 }
