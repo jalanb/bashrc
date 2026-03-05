@@ -109,6 +109,7 @@
 	lppp = lp -4
 	lpp = lp -2
 	lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
+	ls = l --numstat
 	lm = l __main__^..
 	lom = l origin/__main__^..
 	lt = l --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
@@ -131,6 +132,8 @@
 	pt = push --tags
 	pu = push --set-upstream
 	puu = push --unset-upstream
+	rl = reflog --color=always --oneline --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+	rlt = rl --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto) %h "%s"'
 	ru = remote get-url origin
 	sp = status --porcelain
 	sp = status --porcelain
