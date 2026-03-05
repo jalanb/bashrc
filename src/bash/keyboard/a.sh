@@ -1,22 +1,12 @@
 #! /bin/cat
 
-args_array() {
-    local args=()
-    args=("$@")
-    echo -n "${args[0]} ("
-    unset args[0]
-    echo -n ${args[@]}
-    echo ")"
-}
-
-# _
-
+# Sourcing ackvim gives us 
+#     a, aa, aaa, aaaa.
+#     ac, ae, af, ah, ai, al, ap, at, ay, av.
+#     more
 . ~/jalanb/avs/__main__/ackvim.sh
 
-# That gives us a, aa, aaa, aaaa.
-# And ac, ae, af, ah, ai, al, ap, at, ay, av.
-# And more
-
+# _
 # x
 # xx
 
@@ -29,11 +19,15 @@ ag () {
 }
 
 aj () {
-    a "$@" ~/jab/
+    a "$@" ~/jalanb/
 }
 
 ak () {
     ack "$@" ~/keys
+}
+
+aq () {
+    quietly a "$@"
 }
 
 # _xx
@@ -49,15 +43,15 @@ aab () {
 }
 
 aaj () {
-    aa "$@" ~/jalanb
+    aa "$@" ~/jalanb/
 }
 
 add () {
     echo $(($1 + $2))
 }
 
-ajj () {
-    a "$@" ~/jalanb/
+ajb () {
+    a "$@" ~/jab/
 }
 
 asb () {
@@ -115,4 +109,18 @@ avv () {
 
 aajj () {
     aa "$@" ~/jalanb/jab
+}
+
+alan () {
+    sudo -u alan -i
+}
+
+args_array() {
+    local args=()
+    args=("$@")
+    echo -n "args[0]:${args[0]}"
+    echo -n "args[@]:${args[@]}"
+    unset args[0]
+    echo -n "args[0]:${args[0]}"
+    echo -n "args[@]:${args[@]}"
 }

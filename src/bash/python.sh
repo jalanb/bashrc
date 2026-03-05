@@ -173,8 +173,8 @@ pipv () {
 }
 
 reactivate () {
-	unhash_activate "$1"
-	ppp
+    unhash_activate "$1"
+    ppp
 }
 
 venv () {
@@ -286,33 +286,31 @@ unhash_py () {
     QUIETLY hash -d python python2 python3 ipython ipython2 ipython3 pudb pudb3 pdb ipdb pip pip2 pip3
 }
 
+some_python3 () {
+    local __doc__="""It's a Python Dev's machine, there must be some python3 installed"""
+    local python_=
+    if [[ -x "$PYTHON" ]] ; then
+        python_="$PYTHON"
+    elif QUIETLY which python3 ; then
+        python_=python3
+    fi
+    if [[ ! $python_ ]]; then
+        [[ $1 =~ -q ]] || show_fail "No python available"
+        return 1
+    fi
+    $python_ -c"import sys; print(sys.executable)"
+}
+
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
-    local default_python_=python3
-    QUIETLY which $default_python_ || default_python_=python
-    local python_=${PYTHON:-$default_python_}
-    local exec_=$($python_ -c"import sys; print(sys.executable)")
-    local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
-    local real_exec_=$(readlink -f $exec_)
-    local shown_=
-    if [[ $python_ =~ ^python3? ]]; then
-        local which_=$(which $python_)
-        if [[ $exec_ != $which_ ]]; then
-            show_data "   bash: $which_"
-            show_data " python: $exec_"
-            [[ $real_exec_ == $exec_ ]] || show_data "   real: $real_exec_"
-            shown_=1
-        fi
-    fi
-    if [[ ! $shown_ ]]; then
-        if [[ $real_exec_ == $exec_ ]]; then
-            show_data " python: $exec_"
-        else
-            show_data " python: $exec_"
-            show_data "   real: $real_exec_"
-        fi
-    fi
+    local python_exec_=$(some_python3 -q) || return 1
+    local which_exec_=$(which python3)
+    same_path "$python_exec_" "$which_exec_" || show_data "   bash: $which_exec_"
+    show_data " python: $python_exec_"
+    local version_=$($python_exec_ -c"import sys; print(sys.version.split()[0])")
     show_data "version: $version_"
+    local real_exec_=$(readlink -f $python_exec_)
+    same_path "$python_exec_" "$real_exec_" || show_data "   real: $real_exec_"
 }
 
 which_pythons () {
@@ -334,4 +332,65 @@ ipython_profile () {
         fi
     done
     return 2
+}
+
+_pyv_strip_trailing_colons() {
+    local path_=$1
+    echo "$path_" | sed 's/:*$//'
+}
+
+_pyv_has_spaces_in_path() {
+    echo "$PATH" | grep -q ' ' && {
+        red_line "PATH contains spaces, cannot safely manipulate" >&2
+        return 0
+    }
+    return 1
+}
+
+_pyv_find_exact_version() {
+    local version_=$1 pythons_dir=/opt/pythons
+    [[ -d "$pythons_dir" ]] || return 1
+    local pattern_="^${version_}\$"  # exact match
+    [[ "$version_" =~ \.[0-9]+$ ]] || pattern_="^${version_}\."  # prefix for partial
+    local dir_= matches_=()
+    for dir_ in $(ls -1 "$pythons_dir" 2>/dev/null | sort -V -r); do
+        [[ "$dir_" =~ $pattern_ ]] || continue
+        local bin_dir="$pythons_dir/$dir_/bin"
+        local python_exe=
+        [[ -x "$bin_dir/python3" ]] && python_exe="$bin_dir/python3"
+        [[ -x "$bin_dir/python" ]] && [[ ! $python_exe ]] && python_exe="$bin_dir/python"
+        [[ $python_exe ]] || continue
+        matches_+=("$bin_dir")
+    done
+    [[ ${#matches_[@]} -eq 0 ]] && return 1
+    [[ ${#matches_[@]} -gt 1 ]] && {
+        red_line "Multiple Python $version_ found, call a sysadmin:" >&2
+        printf '%s\n' "${matches_[@]}" | red >&2
+        return 1
+    }
+    echo "${matches_[0]}"
+    return 0
+}
+
+_pyv_offer_download() {
+    local version_=$1
+    yellow_line "Python $version_ not found in /opt/pythons"
+    # TODO: offer to download/compile or suggest available versions
+    return 1
+}
+
+pyv() {
+    [[ $# -eq 0 ]] && which_python && return 0
+    _pyv_has_spaces_in_path && return 1
+    local target_=$(_pyv_find_exact_version "$1")
+    [[ $target_ ]] || {
+        _pyv_offer_download "$1"
+        return 1
+    }
+    _pyv_validate_first
+    local new_path=$(_pyv_strip_pythons)
+    new_path=$(_pyv_strip_trailing_colons "$new_path")
+    export PATH="$target_:$new_path"
+    green_line "Switched to $target_"
+    which_python
 }

@@ -66,15 +66,14 @@ alias z.="zm \*"
 
 alias ...='cdupp'
 
+alias acl=ack
+
 alias bim=vim
 alias cim=vim
 
 alias doc="cde ~/Documents"
 
 alias gti=git
-
-alias jab=j
-alias jlf="sst jlfieblu jlf.ie"
 
 #alias man=batman
 alias out=to_release

@@ -7,12 +7,12 @@ set_paths () {
         . ~/jab/src/bash/add_to_a_path.sh
         add_to_PATH $HOME/bin
         add_to_PATH ~/jab/bin
-        add_to_PATH $HOME/.local
         add_to_PATH $HOME/.local/bin
         add_to_PATH ${VIRTUAL_ENV}/bin
-        add_to_PATH /opt/homebrew/bin
         add_to_PATH /usr/local/gnu
         add_to_PATH /usr/local/bin
+        add_to_PATH /opt/uv/bin
+        add_to_PATH /opt/homebrew/bin
         add_to_PATH /bin
         add_to_PATH /usr/bin
 #       add_to_PATH /usr/local/opt/python/libexec/bin

@@ -43,7 +43,7 @@ usr_local () {
 }
 
 set_paths () {
-    local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local
+    local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local/bin
     local locals_="$(usr_local gnu):/opt/homebrew/bin:$(usr_local bin):$(usr_local opt):$(usr_local go/bin)"
     local bins_=/opt/uv/bin:/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
@@ -99,7 +99,7 @@ bbb () {
 }
 
 bashrc () {
-    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
+    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     export PS1="\$? [$(luser):$(lhere)]\n$ "
     export PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] '
     local jab_=$HOME/jab
@@ -121,24 +121,31 @@ __main__ () {
 }
 
 post_main () {
-    show_command cd -
-    grey_line "#    -> '$PWD'"
+    if [[ $PWD != /opt/clones/github/jalanb ]]; then
+        show_command cd -
+        grey_line "#    -> '$PWD'"
+    fi
     show_command cd /opt/clones/github/jalanb/
     cd /opt/clones/github/jalanb/
+    source .venv/bin/activate
     l
 }
 
+if [[ ! $CLAUDECODE ]]; then
+    if [[ $- =~ i ]]; then
+        set -x;
+        __main__ "$@" > $bashrc_log 2>&1
+        set +x
+        post_main
+    else
+        __main__  "$@"
+    fi
+fi
+
+# This function has to be last, after __main__
 vbb () {
     local __doc__="""Must be last function to over-write same func from bashrc_minimal"""
     vim -p $(bbb)
     readlink -f $(bbb) 2>/dev/null
 }
 
-if [[ $- =~ i ]]; then
-    set -x;
-    __main__ "$@" > $bashrc_log 2>&1
-    set +x
-    post_main
-else
-    __main__  "$@"
-fi

@@ -1,5 +1,7 @@
 #! cat
 
+. ~/bash/quietly.sh
+
 # x
 
 r () {
@@ -33,7 +35,6 @@ ri () {
     rri "$@"
 }
 
-
 rr () {
     local options_="-rf"
     if [[ $1 =~ ^[-][rfv]+$ ]]; then
@@ -44,12 +45,12 @@ rr () {
         echo "Will not remove $1" >&2
         return 1
     fi
-    local rr_home_=$(rr_path $HOME) rr_one_=$(rr_path "$1")
+    local rr_home_=$(rlce $HOME) rr_one_=$(rlce "$1")
     if [[ "$rr_one_" == "$rr_home_" ]]; then
         echo "Will not remove $1" >&2
         return 1
     fi
-    rm $options_ "$@" >/dev/null 2>&1
+    QUIETLY rm $options_ "$@"
 }
 
 ru () {
@@ -77,12 +78,12 @@ rfr () {
 
 rlf () {
     if [[ ! "$@" ]]; then
-        ls -d $(readlink -f .)
+        ls -d $(rlce .)
         return 0
     fi
     local path_= rlf_path_= result_=1
     for path_ in "$@"; do
-        rlf_path_=$(readlink -f "$path_")
+        rlf_path_=$(rlce "$path_")
         if [[ -e $rlf_path_ ]]; then
             ls -d "$rlf_path_"
             result_=0
@@ -121,11 +122,11 @@ rri () {
     [[ $reply =~ [qQ] ]] && return 1
     [[ $reply =~ (^$|[yY]) ]] || return 0
     local _result=1
-    local _opts='-f'
+    local _opts='--canonicalize-existing'
     for path in "$@"; do
         [[ -e "$path" ]] || continue
         _result=0
-        _opts='-f'
+        _opts='--canonicalize-existing'
         [[ -d "$path" ]] && _opts='-rf'
         rr $_opts "$path"
     done
@@ -142,14 +143,18 @@ rfrr () {
     QUIETLY rf -rp "$@"
 }
 
+rovo () {
+    acli rovodev "$@"
+}
+
 rr.. () {
-    local here_=$(readlink -f .)
+    local here_=$(rlce .)
     cd ..
     rr "$here_"
 }
 
 # xxxxxxx
 
-rr_path () {
-    readlink -f "$1"
+rlce () {
+    readlink --canonicalize-existing "$@"
 }

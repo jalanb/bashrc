@@ -17,12 +17,20 @@ f () {
 # _
 # xx
 
+fb () {
+    fd "$@" ~/bash/
+}
+
 fa () {
     fv "$@"
 }
 
 ff () {
     fdf "$@"
+}
+
+fj () {
+    fdj "$@"
 }
 
 fl () {
@@ -110,6 +118,10 @@ fdf () {
 fdg () {
     local name_="$1"; shift
     fd_ "$name_" "$@" | g "$name_"
+}
+
+fdj () {
+    fd "$@" /opt/clones/github/jalanb
 }
 
 fdl () {

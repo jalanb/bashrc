@@ -8,9 +8,24 @@ unalias v >/dev/null 2>&1
 unalias vv >/dev/null 2>&1
 
 v () {
-    /Applications/MacVim.app/Contents/bin/mvim --remote-tab-silent "$@"
-#    open /Applications/MacVim.app "$@"
+    local __doc__="""Pass everything on to MacVim.app"""
+    local mvim_=/Applications/MacVim.app/Contents/bin/mvim
+    local mvims_=$(quietly $mvim_ --serverlist)
+    local rts_=--remote-tab-silent
+    [[ $mvims_ ]] || rts_=
+
+    if [ -t 0 ]; then
+        # pass on args
+        $mvim_ $rts_ "$@"
+    else
+        # fred captures stdin
+        local fred_=$HOME/tmp/fred
+        rm -f "$fred_" $HOME/tmp/.fred.sw*
+        cat > "$fred_"
+        $mvim_ $rts_ "$fred_"
+    fi
 }
+
 
 # xx
 
@@ -143,10 +158,12 @@ vat () {
 }
 
 vba () {
-    if [[ -f .venv/bin/activate ]];then 
+    if [[ -f .venv/bin/activate ]];then
         source .venv/bin/activate
-    elif [[ -f ../.venv/bin/activate ]];then 
+        which_python
+    elif [[ -f ../.venv/bin/activate ]];then
         source ../.venv/bin/activate
+        which_python
     else
         echo "no .venv/bin/activate" >&2
     fi
@@ -198,6 +215,10 @@ ved () {
     [[ $* ]] || show_fail "Usage: ved <commands>"
     [[ $* ]] || return 1
     vim - -u NONE -es '+1' "+$*" '+%print' '+:qa!' | tail -n +2
+}
+
+vee() {
+    tee /dev/tty | vin
 }
 
 ven () {
@@ -440,7 +461,7 @@ vim_diff () {
     [[ -e "$1" ]] && two_="$1" && shift
     [[ -e "$1" ]] && three_="$1" && shift
     if ! any_diff "$one_ " "$two_" "$three_"; then
-        echo same 
+        echo same
         return 1
     fi
     if [[ $three_ ]]; then

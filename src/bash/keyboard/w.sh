@@ -17,12 +17,7 @@ typed () {
 typed red ~/bash/crayons.sh
 
 wp () {
-    if [[ $1 =~ -[v] ]]; then
-        shift
-        which_python_version "$@"
-    else
-        which_python "$@"
-    fi
+    which_python "$@"
 }
 
 # Show last status

@@ -21,6 +21,14 @@ jj () {
     jd ~/jalanb
 }
 
+jab () {
+    sudo -u jab -i
+}
+
+jdd () {
+    kk /opt/clones/github/jalanb "$@"
+}
+
 jjb () {
     kk ~/bash "$@"
 }
@@ -39,3 +47,6 @@ jjjj () {
 
 # xxx
 
+jalanb () {
+    sudo -u jalanb -i
+}

@@ -11,7 +11,7 @@ Bash commands are toooooo long
 ## Solution
 
 ```shell
-$ git clone https://github.com/jalanb/jab (and /cde, /whyp, /ackvim)
+$ git clone https://github.com/jalanb/bashrc jab (and clone my other projects: cde, whyp, ackvim)
 $ cd jab
 $ bash home/.link
 $ source jab/__init__.sh
@@ -29,6 +29,6 @@ and I can get back to coding
 Live
     Let Go
            Lose It 
-    Love
-Laugh
+    Laugh
+Love
 ```

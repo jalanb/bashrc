@@ -32,9 +32,9 @@ __version__=0.8.88
 . ~/bash/git/__init__.sh
 # echo ~/bash keys
 . ~/bash/keys.sh
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# echo ~/bash keys_read
+echo ~/bash keys_read
 keys_read
+echo ~/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export _BASH_DIR=~/bash

@@ -6,8 +6,6 @@
 # _x
 # xx
 
-alias d=echo
-
 di () {
     icdiff "$@"
 }

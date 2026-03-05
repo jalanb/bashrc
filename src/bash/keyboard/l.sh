@@ -5,15 +5,21 @@ source ~/keys/q.sh
 # x
 
 l () {
-    local ls_=$(ls_command)
-    if [[ $1 ]]; then
-        $ls_ "$@"
-    else
-        $ls_ .
-    fi
+    local command_=$(ls_command)
+    [[ $1 ]] && $command_ "$@" || $command_ .
 }
 
 # xx
+
+l, () {
+    local dir_="$PWD"
+    if [[ -e "$1" ]]; then
+        [[ -d "$1" ]] && dir_="$1" || dir_=$(dirname "$1")
+    fi
+    echo
+    green_line $(readlink -f "$dir_")
+    l "$@"
+}
 
 l1 () {
     l -1 "$@"
@@ -66,6 +72,7 @@ ll () {
     for arg_ in "$@"; do
         if [[ ! -e "$arg_" ]]; then
             [[ $arg_ =~ ^- ]] || continue
+            [[ $arg_ =~ -l ]] && ls_command=ls
             options_="$options_ $arg_"
             continue
         fi
@@ -81,9 +88,9 @@ ll () {
     done
     [[ $paths_ ]] || paths_=.
     green_line $PWD
-    show_command -q ls $options_ $paths_
+    show_command ls -l $options_ $paths_
     echo
-    l "$options_" $paths_
+    ls_ls_command -l "$options_" $paths_
 }
 
 lo () {
@@ -194,7 +201,10 @@ llo () {
 
 llr () {
     rlg "$@"
-    ll -htr "$@"
+    local options_=-lhtr
+    local ls_app_=$(basename $(ls_program))
+    [[ $ls_app_ == eza ]] && options_="-lh --sort oldest"
+    l $options_ "$@"
 }
 
 lly () {
@@ -376,11 +386,15 @@ ls_program () {
     local ls_=$(quietly which ls)
     local best_ls_=${gls_:-$ls_}
     local which_=${eza_:-$best_ls_}
+    [[ $1 == "ls" ]] && which_=$best_ls_
+    local which_command_=
+    QUIETLY type "$which_" && which_command_=$which_
+    [[ -x $which_command_ ]] || return 1
     [[ $which_ ]] || show_fail "No ls available"
     [[ $which_ ]] || return 1
-    local link_=$(readlink -f $which_)
-    [[ -x $link_ ]] || return 1
-    echo $link_
+    local path_=$(readlink -f $which_)
+    [[ -x $path_ ]] || return 1
+    echo $path_
 }
 
 ls_has_option () {
@@ -415,9 +429,13 @@ ls_options () {
 }
 
 
+ls_ls_command () {
+    ls_command ls "$@"
+}
+
 ls_command () {
     local __doc__="ls_command ""$@"
-    local program_="$(ls_program)"
+    local program_="$(ls_program "$@")"
     local options_="$(ls_options)"
     local command_="$program_ $options_"
     [[ $@ ]] && echo $command_ "$@" || echo $command_

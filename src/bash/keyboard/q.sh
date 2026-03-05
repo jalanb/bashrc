@@ -1,7 +1,7 @@
 #! /usr/bin/env bat -l bash
 
-. ~/jab/src/bash/queue.sh
-. ~/jab/src/bash/quietly.sh
+. ~/bash/queue.sh
+. ~/bash/quietly.sh
 
 # quit may be defined in queue.sh
 # x

@@ -45,6 +45,10 @@
 :TlistUnlock	taglist.txt	/*:TlistUnlock*
 :TlistUpdate	taglist.txt	/*:TlistUpdate*
 :ToggleRaibowParenthesis	rainbow_parenthsis.txt	/*:ToggleRaibowParenthesis*
+:VimHistory	vim-history.txt	/*:VimHistory*
+:VimHistoryMonth	vim-history.txt	/*:VimHistoryMonth*
+:VimHistoryToday	vim-history.txt	/*:VimHistoryToday*
+:VimHistoryWeek	vim-history.txt	/*:VimHistoryWeek*
 CreateBundleSnippet	snippets_emu.txt	/*CreateBundleSnippet*
 CreateSnippet	snippets_emu.txt	/*CreateSnippet*
 EasyMotion_do_mapping	easymotion.txt	/*EasyMotion_do_mapping*
@@ -179,3 +183,9 @@ taglist-session	taglist.txt	/*taglist-session*
 taglist-todo	taglist.txt	/*taglist-todo*
 taglist-using	taglist.txt	/*taglist-using*
 taglist.txt	taglist.txt	/*taglist.txt*
+vim-history-commands	vim-history.txt	/*vim-history-commands*
+vim-history-contents	vim-history.txt	/*vim-history-contents*
+vim-history-examples	vim-history.txt	/*vim-history-examples*
+vim-history-introduction	vim-history.txt	/*vim-history-introduction*
+vim-history-usage	vim-history.txt	/*vim-history-usage*
+vim-history.txt	vim-history.txt	/*vim-history.txt*

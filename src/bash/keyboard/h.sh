@@ -181,6 +181,11 @@ hub () {
     cde $_directory
 }
 
+# xxxx
+
+hilp () {
+    quietly "$@" --help || "$@" -h
+}
 
 # xxxxxxxxx
 

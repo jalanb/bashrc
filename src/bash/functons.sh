@@ -1,18 +1,4 @@
-#! /usr/bin/env head -n 3
 
-# This script is intended to be sourced, not run
-
-
-# set -e
-. ~/bash/types.sh
-
-typed green || . ~/bash/crayons.sh
-typed pong || . ~/bash/pong.sh
-typed pii || . ~/bash/python.sh
-
-# Called functons.sh because "functions" is ... something else
-
-# sorted by strcmp of function name, punctuation before letters
 
 # x
 
@@ -65,12 +51,20 @@ arg_dir () {
 
 # xxx
 
+3dt () {
+    3d | grep -v -e __pycache__ -e egg
+}
+
+3dy () {
+    3dt | grep -v -e test
+}
+
 envv () {
     env | grep VIRTUAL_ENV= | grep '=.*'
 }
 
 vgf () {
-    _edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
+    edit_source ~/bash/git/functons.sh  ~/.gitconfig "$@"
 }
 
 vla () {
@@ -98,7 +92,7 @@ vwf () {
 }
 
 vpe () {
-    _edit_source ~/jab/environ.d/python
+    edit_source ~/jab/environ.d/python
 }
 
 # xxxx
@@ -193,10 +187,6 @@ down () {
     l -tr . | tail
 }
 
-envv () {
-    env | grep VIRTUAL_ENV= | grep '=.*'
-}
-
 hhhh () {
     echo '#' | clip_in
 }
@@ -252,24 +242,24 @@ lower () {
 }
 
 this () {
-	if [[ "$@" =~ -q ]]; then
-		pythis
-	else
-		local lower_sought=$(lower "$1")
-		[[ $lower_sought ]] || lower_sought="NOT ACTUALLY LOWER"
-		echo
-		pythis | head -n1 | green
-		echo
-		while IFS= read -r line; do
-			local lower_line=$(lower "$line")
-			if [[ $lower_line =~ $lower_sought ]]; then
-				lred_line $line
-			else
-				lgreen_line $line
-			fi
-		done < <(pythis | tail -n+2)
-		echo
-	fi
+    if [[ "$@" =~ -q ]]; then
+        pythis
+    else
+        local lower_sought=$(lower "$1")
+        [[ $lower_sought ]] || lower_sought="NOT ACTUALLY LOWER"
+        echo
+        pythis | head -n1 | green
+        echo
+        while IFS= read -r line; do
+            local lower_line=$(lower "$line")
+            if [[ $lower_line =~ $lower_sought ]]; then
+                lred_line $line
+            else
+                lgreen_line $line
+            fi
+        done < <(pythis | tail -n+2)
+        echo
+    fi
 }
 
 Tree () {
@@ -381,6 +371,10 @@ given () {
     cp /Users/jab/jab/txt/given.jira.txt ~/tmp/given.txt
     vim ~/tmp/given.txt
     cat ~/tmp/given.txt | pbcopy
+}
+
+gemini () {
+    npx https://github.com/google-gemini/gemini-cli
 }
 
 ptags () {
@@ -838,6 +832,25 @@ autostyle () {
 }
 
 # xxxxxxxxxx
+
+drive_free() {
+    df -h / | tail -1 | awk '
+        {
+            used = int($5)
+            total = $2; used_size = $3; free_size = $4
+            printf "Main Drive: %s [", $5
+            for(i=0; i<used/2; i++) printf "█"
+            for(i=0; i<50-used/2; i++) printf "░"
+            printf "] %s free\n", $4
+            printf "\n"
+            printf "┌─────────────┬─────────────┬─────────────┐\n"
+            printf "│    TOTAL    │    USED     │    FREE     │\n"
+            printf "├─────────────┼─────────────┼─────────────┤\n"
+            printf "│%11s  │%11s  │%11s  │\n", total, used_size, free_size
+            printf "└─────────────┴─────────────┴─────────────┘\n"
+        }'
+}
+
 like_duck () {
     has_py "$*"
 }
@@ -898,6 +911,15 @@ any_diff () {
 # xxxxxxxxxx
 
 # xxxxxxxxxxx
+
+find_recent() {
+    local days=${1:-1}
+    find . -type f -mtime -${days} | grep -v \
+        -e '/\.' \
+        -e doc.tags \
+        -e history.sqlite \
+        -e __pycache__
+}
 
 spaces_to_lines () {
     tr ' ' '\n'
@@ -1140,36 +1162,36 @@ dixx () {
 edit_source () {
     local filepath_="$1"
     shift
-    blank_script $filepath
-    filedir=$(files_dirs $filepath)
+    blank_script $filepath_
+    filedir=$(files_dirs $filepath_)
     if [[ $filedir == "." ]]; then
-        vv $filepath "$@"
+        vv $filepath_ "$@"
     else
         pushq $filedir
-        vv $filepath "$@"
+        vv $filepath_ "$@"
         popq
     fi
-    if [[ $filepath =~ alias ]]; then
-        source_aliases $filepath
+    if [[ $filepath_ =~ alias ]]; then
+        source_aliases $filepath_
     else
-        . $filepath "$@"
+        . $filepath_ "$@"
     fi
 }
 
-edit_locals () {
+_edit_locals () {
     local local_dir_=~/jalanb/local
     [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
     local name_="$1" force_=
     shift
     [[ $1 =~ -f ]] && force_=--force
     [[ $force_ ]] || return 0
-    editsource_ "$local_dir_/$name_"
+    edit_source "$local_dir_/$name_"
 }
 
-edit_work () {
+_edit_work () {
     local local_dir_=~/jab/work
     [[ -d "$local_dir_" ]] || mkdir -p $local_dir_
-    editsource_ $local_dir_/"$1"
+    edit_source $local_dir_/"$1"
 }
 
 divv_get_difference () {
@@ -1229,10 +1251,4 @@ copy_from_work_server () {
     local here_path_=$here_root_/"$source_dir_"
     [[ -d "$here_path_" ]] || mkdir -p "$here_path_"
     rsync -av $server_name_:"$source_" "$here_path_"
-}
-
-jalanb_hub ()
-{
-    ( cd ~/hub;
-    grep slack -H */.travis.yml | sed -e "s/:.*//" -e "s:..travis.yml::" | grep -v -e old -e master -e suds | sort | uniq )
 }

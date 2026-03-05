@@ -25,6 +25,8 @@
 #
 fred
 fred.[a-z]*
+local.env
+.env
 .cd
 .cd.sh
 .python-version
@@ -39,6 +41,7 @@ fred.[a-z]*
 .colours/
 [a-z.]*-[a-z.]*.html
 scripts/
+.claude/
 #
 # Developers' data
 *.log
@@ -307,3 +310,5 @@ Include
 Lib
 pyvenv.cfg
 pip-selfcheck.json
+
+tmp_code_*

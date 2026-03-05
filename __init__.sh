@@ -9,7 +9,9 @@ realdir () {
     done
 }
 
+# echo $HOME bash/add_to_a_path.sh
 . ~/bash/add_to_a_path.sh
+# echo $HOME bash/crayons.sh
 . ~/bash/crayons.sh
 
 source_pythonpath () {
@@ -25,8 +27,9 @@ show_pythonpath () {
 # . ~/.minimal
 # echo $HOME whyp
 . ~/whyp.sh
+export WHYP_EDITOR=vv
 # echo $HOME jalanb ackvim
-. ~/hub/jalanb/ackvim/ackvim.sh
+. ~/jalanb/avs/__main__/ackvim/ackvim.sh
 # echo $HOME jalanb pyth
 . ~/hub/jalanb/pyth/pyth.sh
 # echo $HOME cde
@@ -40,16 +43,6 @@ show_pythonpath () {
 # echo $HOME jab work
 . ~/jab/work/__init__.sh optional
 #
-# better to let whyp re-source itself after all that
-#
-. ~/whyp.sh
-export WHYP_EDITOR=vv
-
-. ~/cde.sh
-. ~/jab/environ.d/__init__.sh optional
-. ~/jab/src/bash/__init__.sh
-. ~/jalanb/local/__init__.sh optional
-. ~/jab/work/__init__.sh optional
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

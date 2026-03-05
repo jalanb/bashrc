@@ -3,8 +3,6 @@ if exists("g:loaded_jab_python")
 endif
 let g:loaded_jab_python = "v001"
 
-LimeLight 0.7
-
 let g:pymode_doc = 0
 
 nnoremap } :cn<cr>

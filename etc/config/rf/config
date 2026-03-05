@@ -9,7 +9,8 @@ Use-Debugger = False
 [globs]
 development = tags a.out *.log *.retry
 old = *.old
-swaps = .*.sw[a-z] *.recovered
+swaps = .*.sw[a-z] .sw[a-z] *.recovered
 python = *.pyc *.pyo *.fail *$py.class *.profile __pycache__ htmlcov *.egg-info
 temporary = *.bak *.orig temp.* *.tmp *~ .*~ fred fred.* mary mary.* one two tmp*-vim.sh *.retry out.log out.err *-e =*
 big = *.hprof
+extras = .venv .tox dist .pytest_cache .mypy_cache .coverage .coverage.* coverage.xml .ruff_cache

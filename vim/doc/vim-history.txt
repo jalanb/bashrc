@@ -1,0 +1,95 @@
+*vim-history.txt*  Show recent files from vim history by time period
+
+Author: Your Name
+License: Same terms as Vim itself (see |license|)
+
+==============================================================================
+CONTENTS                                                    *vim-history-contents*
+
+    1. Introduction ..................... |vim-history-introduction|
+    2. Usage ............................ |vim-history-usage|
+    3. Commands ......................... |vim-history-commands|
+    4. Examples ......................... |vim-history-examples|
+
+==============================================================================
+1. Introduction                                         *vim-history-introduction*
+
+vim-history shows files from your vim editing history that have been modified
+on disk within a specified time period in an interactive menu.
+
+It uses vim's built-in |v:oldfiles| (files you've edited in vim sessions) and
+filters them by filesystem modification time (not when you opened them in vim).
+
+The results are displayed in a navigable menu where you can select files to open.
+
+Navigation:
+    j / ↓    - Move down
+    k / ↑    - Move up  
+    <Enter>  - Open selected file in current tab
+    q / <Esc> - Close menu
+
+This means you'll see files you've edited in vim that were also changed on disk
+recently - useful for finding files you've been actively working on.
+
+==============================================================================
+2. Usage                                                       *vim-history-usage*
+
+The main command is: >
+    :VimHistory [count] [scale]
+<
+
+Where:
+    count - Number of time units to look back (default: 7)
+    scale - Time scale: h(ours), d(ays), w(eeks), m(onths) (default: d)
+
+==============================================================================
+3. Commands                                                 *vim-history-commands*
+
+                                                                    *:VimHistory*
+:VimHistory [count] [scale]
+    Open an interactive menu showing files from v:oldfiles (files you've 
+    edited in vim) that have been modified on disk in the last [count] [scale] 
+    time units.
+    
+    Use j/k or arrow keys to navigate, <Enter> to open a file, q to quit.
+    
+    Note: This filters by filesystem modification time, not when you opened
+    the file in vim. A file opened yesterday but last modified a week ago
+    won't appear when searching for files from yesterday.
+    
+    Examples: >
+        :VimHistory 3 h      " Last 3 hours
+        :VimHistory 7 d      " Last 7 days (default)
+        :VimHistory 2 w      " Last 2 weeks
+        :VimHistory 1 m      " Last month
+<
+
+                                                              *:VimHistoryToday*
+:VimHistoryToday
+    Shortcut for `:VimHistory 1 d` - files from today.
+
+                                                               *:VimHistoryWeek*
+:VimHistoryWeek  
+    Shortcut for `:VimHistory 1 w` - files from this week.
+
+                                                              *:VimHistoryMonth*
+:VimHistoryMonth
+    Shortcut for `:VimHistory 1 m` - files from this month.
+
+==============================================================================
+4. Examples                                                 *vim-history-examples*
+
+Show files edited in the last 2 days: >
+    :VimHistory 2 d
+<
+
+Show files edited in the last 6 hours: >
+    :VimHistory 6 h
+<
+
+Show files edited today: >
+    :VimHistoryToday
+<
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
