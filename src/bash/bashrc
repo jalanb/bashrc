@@ -99,7 +99,7 @@ bbb () {
 }
 
 bashrc () {
-    # /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
+    /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     export PS1="\$? [$(luser):$(lhere)]\n$ "
     export PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] '
     local jab_=$HOME/jab
