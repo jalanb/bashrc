@@ -326,6 +326,9 @@ set showmode        " If in Insert, Replace or Visual mode put a message on the 
 set showcmd         " Show (partial) command in the last line of the screen.
 set showmatch       " Show matching brackets.
 set nowrap          " Do not wrap lines (initially)
+set linebreak       " break at word boundaries
+set breakindent     " preserve indentation on wrapped lines
+set showbreak=↪\    " visual indicator for wrapped lines
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " Number of spaces to use for each step of (auto)indent.
