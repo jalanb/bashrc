@@ -121,10 +121,13 @@ __main__ () {
 }
 
 post_main () {
-    show_command cd -
-    grey_line "#    -> '$PWD'"
+    if [[ $PWD != /opt/clones/github/jalanb ]]; then
+        show_command cd -
+        grey_line "#    -> '$PWD'"
+    fi
     show_command cd /opt/clones/github/jalanb/
     cd /opt/clones/github/jalanb/
+    source .venv/bin/activate
     l
 }
 
