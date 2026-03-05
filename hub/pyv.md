@@ -176,5 +176,5 @@ All function names follow existing conventions in `python.sh` - using underscore
 ## Citations
 
 /opt/clones/github/jalanb/bashrcs/jab/src/bash/python.sh
-/opt/clones/github/jalanb/jalanb/hub/hub/howtomarkdown.md
-/opt/clones/github/jalanb/bashrcs/jab/hub/howtohub.md
+/opt/clones/github/jalanb/jalanb/library/howto/markdown.md
+/opt/clones/github/jalanb/jalanb/library/howto/hub.md
