@@ -16,7 +16,7 @@ cb () {
 }
 
 cc () {
-    cde $CDE.sh
+    cd "$CDE_DIR"
 }
 #
 # cd () {
@@ -71,6 +71,13 @@ cy () {
 
 can () {
     cat -n "$@"
+}
+
+ccd () {
+    cd $1
+    clear
+    pwd
+    l
 }
 
 cd- () {
@@ -159,6 +166,18 @@ cdjj () {
 #     clean_clear_ls --long --all "$@"
 # }
 #
+
+code () {
+    local cmd_=(/opt/homebrew/bin/cmd --create --read --trust)
+    (
+        if [[ -d "$1" ]] then
+            cd "$1"
+            shift
+        fi
+        "${cmd_[@]}" "$@"
+    )
+}
+
 # _xxx
 # xxxxx
 

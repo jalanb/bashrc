@@ -25,6 +25,10 @@ jab () {
     sudo -u jab -i
 }
 
+jdd () {
+    kk /opt/clones/github/jalanb "$@"
+}
+
 jjb () {
     kk ~/bash "$@"
 }

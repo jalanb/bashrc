@@ -17,16 +17,17 @@ ytdl () {
     shift
     local dir_="${HOME}/Downloads/yt-${type_}/"
     [[ $YOUTUBES ]] && dir_="${YOUTUBES}/${type_}/"
-    local options_=" --no-check-certificate"
-    local output_=
+    local options_=" --no-check-certificate" 
+    local ext_=none
     case $type_ in
         mp3) options_+=" --extract-audio --audio-format=mp3 --audio-quality=0"
-            output_="%(uploader)s/%(upload_date>%Y)s/%(upload_date>%m)s/%(title)s.%(ext)s"
+            ext_=mp3
             ;;
         mp4) options_+="" 
-            output_="./%(title)s.mp4"
+            ext_=mp4
             ;;
     esac
+    local output_="./%(title)s.$ext_"
     ( command cd $dir_
     [[ "$@" ]] && yt-dlp $options_ -o "$output_" "$@" | grep -v Downloading
     pwd
