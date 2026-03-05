@@ -43,7 +43,7 @@ usr_local () {
 }
 
 set_paths () {
-    local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local
+    local homes_=$HOME/jab/bin:$HOME/bin:$HOME/.local/bin
     local locals_="$(usr_local gnu):/opt/homebrew/bin:$(usr_local bin):$(usr_local opt):$(usr_local go/bin)"
     local bins_=/opt/uv/bin:/usr/bin:/bin:/usr/sbin:/sbin
     local mysite_=/Users/jab/jab/src/python/site/
