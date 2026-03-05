@@ -14,46 +14,32 @@
 #
 # See also https://github.com/jalanb/jab/commit/6e2e26b455b78a7da51a5e977d7f3fa3c098ddec
 
-vim_clone_to_home () {
-    source="$clone_link"/$1
-    destination="$HOME"/$2
-    test -f "$destination" && vim -d "$source" "$destination"
-    link_clone_to_home "$@"
-}
+SCRIPT_FILE=$(readlink -f $BASH_SOURCE)
 
 link_clone_to_home () {
-    link_into_home "$clone_link"/$1 $2
+    link_into_home "$HOME_CLONE"/$1 $2
 }
 
 link_into_home () {
     source="$1"
     destination="$HOME"/$2
     [[ -e "$destination" || -L "$destination" ]] && rm -rf "$destination"
-    ln -s "$source" "$destination"
-}
-
-back_into_home () {
-    local _path="$HOME"/$1
-    local _file=
-    if [[ -f "$_path" ]]; then
-        _file="$_path"
-    elif [[ -d "$_path" ]]; then
-        _file="$_path/$clone_name.bak"
+    if test -f "$destination"; then
+        if diff "$source" "$destination" >/dev/null 2>&1; then
+            vim -d "$source" "$destination"
+        fi
+        rm -f "$destination"
     fi
-    echo "#" >> "$_file"
-    echo "# $BASH_SOURCE was here" >> "$_file"
-    local _backup="$_path.$clone_name.bak"
-    cp -r "$_path" "$backup"
-    link_clone_to_home "$@"
+    ln -s "$source" "$destination"
 }
 
 links_into_home () {
     cd $HOME
-    vim_clone_to_home home/gitconfig             .gitconfig
-    vim_clone_to_home home/gitignore_global      .gitignore_global
-    vim_clone_to_home home/bashprofile           .bash_profile
-    vim_clone_to_home home/bashrc                .bashrc
-    vim_clone_to_home home/vimrc                 .vimrc
+    link_clone_to_home home/gitconfig             .gitconfig
+    link_clone_to_home home/gitignore_global      .gitignore_global
+    link_clone_to_home home/bashprofile           .bash_profile
+    link_clone_to_home home/bashrc                .bashrc
+    link_clone_to_home home/vimrc                 .vimrc
     link_clone_to_home home/ackrc                .ackrc
     link_clone_to_home home/editrc               .editrc
     link_clone_to_home home/inputrc              .inputrc
@@ -65,41 +51,39 @@ links_into_home () {
     link_clone_to_home home/vim                  .vim
 
     link_into_home ~/src/git/hub        hub
-    link_into_home ~/jab/src/bash       bash
+    link_into_home $HOME_CLONE/src/bash       bash
     link_into_home ~/bash/keyboard      keys
 
-    vim_clone_to_home home/pythonrc.py           .pythonrc.py
+    link_clone_to_home home/pythonrc.py           .pythonrc.py
     link_clone_to_home home/ipython              .ipython
-    link_into_home ~/jab/src/python     python
+    link_into_home $HOME_CLONE/src/python     python
+}
+
+get_git_dir () {
+    local script_dir=$(dirname $1)
+    local git_dir=$(git -C "$script_dir" rev-parse --git-dir 2>/dev/null)
+    if [[ ! $git_dir ]]; then
+        echo $SCRIPT_FILE assumes it is in a git clone
+        echo Could not find .git/
+        return 2
+    fi
+    echo $git_dir
 }
 
 renew_clone_link () {
-    local script_file=$(readlink -f $BASH_SOURCE)
-    local script_dir=$(dirname $script_file)
-    local script_parent=$(readlink -f $script_dir/..)
-    local clone_dir=
-    local sub_dir=
-    if [[ -d $script_parent/.git ]]; then
-        clone_dir=$script_parent
-        sub_dir=$(basename $script_dir)
-    elif [[ -d $script_dir/.git ]]; then
-        clone_dir=$script_dir
-    else
-        echo $script_file assumes it is in a git clone
-        echo $script_parent/.git is not a directory
-        echo $script_dir/.git is not a directory
-        return 2
-    fi
+    local git_dir=$(get_git_dir $SCRIPT_FILE)
+    [[ $git_dir ]] || return 2
+    local clone_dir=$(dirname $git_dir)
 
-    # clone_dir == ~/.../jab
-          clone_link=~/$(basename $clone_dir)       # ~/jab
-    local script_name=$(basename $script_file)      # .link
-    local linked_script=$clone_link/$sub_dir/$script_name    # ~/jab/home/.link
+    HOME_CLONE=~/$(basename $clone_dir)  # Assume we want the clone's name
+    [[ $1 ]] && HOME_CLONE=~/$1                    # Override with $1 if given
+    local script_name=$(basename $SCRIPT_FILE)   # ".link"
+    local script_dir=$(basename $(dirname $SCRIPT_FILE))        # "home"
+    local linked_script=$HOME_CLONE/$script_dir/$script_name
     [[ -f $linked_script ]] && return 0
-    [[ -f $clone_link ]] && rm -f $clone_link
-    [[ -h $clone_link ]] && rm -f $clone_link
-    [[ -d $clone_link ]] && mv $clone_link ${clone_link}~
-    ln -s $clone_dir $clone_link
+    [[ -h $HOME_CLONE ]] && rm -f $HOME_CLONE
+    [[ -d $HOME_CLONE ]] && mv $HOME_CLONE ${HOME_CLONE}~
+    ln -s $clone_dir $HOME_CLONE
     if [[ ! -f $linked_script ]]; then
         echo $linked_script is not a file >&2
         return 1
@@ -107,4 +91,4 @@ renew_clone_link () {
     return 0
 }
 
-renew_clone_link && links_into_home
+renew_clone_link "$1" && links_into_home
