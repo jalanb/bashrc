@@ -552,6 +552,10 @@ set ruler
 set shortmess=atI
 set visualbell
 set rtp+=/opt/homebrew/bin/fzf
+if argc() == 0
+  cd /opt/clones/github/jalanb
+endif
+set autochdir
 " Assortment {{{2
 " http://www.pixelbeat.org/settings/.vimrc
 set nojoinspaces    " Do not insert two spaces after a '.', '?' and '!' with a join command.
