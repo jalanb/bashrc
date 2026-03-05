@@ -9,7 +9,9 @@ realdir () {
     done
 }
 
+# echo $HOME bash/add_to_a_path.sh
 . ~/bash/add_to_a_path.sh
+# echo $HOME bash/crayons.sh
 . ~/bash/crayons.sh
 
 source_pythonpath () {
