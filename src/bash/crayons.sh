@@ -88,6 +88,7 @@ show_command () {
         [[ $arg_ =~ \  ]] && arg_="\"$arg_\""
         lblue "$arg_ "
     done
+    echo
 }
 
 show_run_command () {
