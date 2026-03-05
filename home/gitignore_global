@@ -41,6 +41,7 @@ local.env
 .colours/
 [a-z.]*-[a-z.]*.html
 scripts/
+.claude/
 #
 # Developers' data
 *.log
