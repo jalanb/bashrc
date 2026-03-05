@@ -51,6 +51,14 @@ arg_dir () {
 
 # xxx
 
+3dt () {
+    3d | grep -v -e __pycache__ -e egg
+}
+
+3dy () {
+    3dt | grep -v -e test
+}
+
 envv () {
     env | grep VIRTUAL_ENV= | grep '=.*'
 }
