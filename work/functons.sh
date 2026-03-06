@@ -1,6 +1,6 @@
 #! /bin/bash
 
-SOURCE_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
+WORK_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
 WORK=smbc
 WORK_COM=smbcgroup.com
 
@@ -17,19 +17,9 @@ work_email () {
 }
 
 is_work_server () {
-    [[ "$1" =~ ${WORK}[.]com$ ]]
+    [[ "$1" =~ ${WORK_COM} ]]
 }
 
 work_github () {
-    echo "https://github.com/BrightbeamAI"
-}
-
-check () {
-    local root_=$(get_root)
-    local script_=$(find $root_ -name "check")
-    local dest_=$(dirname $script_)
-    (
-        cd $dest_
-        PS4= ./check
-    )
+    echo "https://github.com/SMBCGitHub"
 }
