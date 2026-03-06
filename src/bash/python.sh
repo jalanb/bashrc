@@ -14,6 +14,10 @@ PYTHON_SOURCE="$BASH_SOURCE"
 _python_command () {
     local __doc__="""Command to be used in this script is python3, or can be over-written with $PYTHON"""
     local python_=${PYTHON:-python3}
+    if ! QUIETLY which $python_ ; then
+        echo $python_ not available >&2
+        return 1
+    fi
     $python_  -c"import sys; print(sys.executable)"
 }
 
@@ -122,7 +126,9 @@ ppy () {
 }
 
 pyc () {
-    $(_python_command) -c "$@"
+    local cmd_=$(quietly _python_command)
+    [[ $cmd_ ]] || return 1
+    $cmd_ -c "$@"
 }
 
 pym () {
@@ -130,9 +136,10 @@ pym () {
     for i in "${!args[@]}"; do
         [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
     done
-    local cmd_=$(_python_command)
+    local cmd_=$(quietly _python_command)
+    [[ $cmd_ ]] || return 1
     [[ $quiet_ ]] || show_command $cmd_ -m "${args[@]}"
-    $(_python_command) -m "${args[@]}"
+    $cmd_ -m "${args[@]}"
 }
 
 pyp () {
@@ -202,9 +209,9 @@ install_pip () {
     local quiet_=
     [[ $1 =~ -q ]] && shift && quiet_=-q
     # quietly ppf wheel && return 0
-    pym $quiet_ ensurepip
+    pym $quiet_ ensurepip --user
     # 2>&1 | grep -v -e Looking -e already -e "distutils config files" | grep [un]*installed
-    ppu $quiet_ "setuptools>=65.5.1" wheel pip
+    ppu $quiet_ --user "setuptools>=65.5.1" wheel pip
 }
 
 import_version () {

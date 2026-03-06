@@ -11,7 +11,11 @@
 # Once sourced there is one major command:
 #
 add_to_a_path_py () {
-    python3 ~/jab/src/python/add_to_a_path.py "$@"
+    if type python3 >/dev/null 2>&1; then
+        python3 ~/jab/src/python/add_to_a_path.py "$@"
+    else
+        echo "python3 unavailable, cannot set path" >&2
+    fi
 }
 
 add_to_a_path () {
