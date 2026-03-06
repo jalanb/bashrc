@@ -23,3 +23,11 @@ is_work_server () {
 work_github () {
     echo "https://github.com/SMBCGitHub"
 }
+
+ack () {
+    if [[ -x /usr/local/lib64/perl5 ]]; then
+        $HOME/.local/bin/ack "$@"
+    else
+        $HOME/.local/bin/rg "$@"
+    fi
+}
