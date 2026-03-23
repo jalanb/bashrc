@@ -607,6 +607,12 @@ main_branch () {
     return 1
 }
 
+branch_is_on_main() {
+    local current_branch_
+    current_branch_=$(git rev-parse --abbrev-ref HEAD)
+    [[ "$current_branch_" == "$(main_branch)" ]]
+}
+
 show_branch () {
     git_branch -v "$@"
 }
