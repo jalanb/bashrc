@@ -168,6 +168,7 @@ bump () {
                 git push origin v$(bump get)
             fi
         fi
+        return $?
     fi
     [[ -z $config ]] && config_="$bump_root_/.bumpversion.cfg"
     [[ -f $config_ ]] || return 2
