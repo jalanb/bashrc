@@ -54,7 +54,7 @@ cs () {
 }
 
 cw () {
-    cde $WHYP.sh
+    cde $WHYP_SOURCE
 }
 
 cv () {
