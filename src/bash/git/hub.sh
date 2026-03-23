@@ -46,7 +46,9 @@ create_pr () {
     local pr_url_=$(gh pr create \
         --base "$main_" \
         --head "$branch_" \
-        --title "$title_") || return 1
+        --title "$title_" \
+        --fill-verbose
+    ) || return 1
     local pr_number_=$(basename "$pr_url_")
     gh pr view "$pr_number_" >&2
     echo "$pr_number_"
@@ -59,7 +61,6 @@ merge_pr () {
     git fetch --all
 }
 
-
 merge_to_main() {
     if branch_is_on_main; then
         echo "Already on $(main_branch)" >&2
@@ -70,7 +71,7 @@ merge_to_main() {
         return 1
     fi
     local branch_=$(get_branch)
-    gp || return 1
+    gpf || return 1
     local pr_number_=$(create_pr) || return 1
     merge_pr "$pr_number_" || return 1
     gomr || return 1
@@ -82,5 +83,5 @@ merge_to_main() {
     else
         echo "No .bumpversion.cfg — skipping version bump" >&2
     fi
-    git branch -D "$branch_"
+    quietly git branch -D "$branch_"
 }
