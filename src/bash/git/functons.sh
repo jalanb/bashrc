@@ -5,8 +5,6 @@
 
 . ~/bash/arg_dirs.sh
 . ~/bash/crayons.sh
-. ~/bash/git/gsi.sh
-. ~/bash/git/status.sh
 . ~/bash/keyboard/r.sh
 
 # functons.sh for git
