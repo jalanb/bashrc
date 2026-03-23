@@ -105,10 +105,6 @@ show_run_command () {
     fi
 }
 
-show_this_branch () {
-    git branch $1 | grep --colour -B3 -A 3 $(get_branch)
-}
-
 crayons () {
     echo "${BASH_SOURCE}.sh"
 }

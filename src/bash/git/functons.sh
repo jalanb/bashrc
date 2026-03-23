@@ -5,8 +5,6 @@
 
 . ~/bash/arg_dirs.sh
 . ~/bash/crayons.sh
-. ~/bash/git/gsi.sh
-. ~/bash/git/status.sh
 . ~/bash/keyboard/r.sh
 
 # functons.sh for git
@@ -607,6 +605,12 @@ main_branch () {
         return 0
     fi
     return 1
+}
+
+branch_is_on_main() {
+    local current_branch_
+    current_branch_=$(git rev-parse --abbrev-ref HEAD)
+    [[ "$current_branch_" == "$(main_branch)" ]]
 }
 
 show_branch () {
@@ -1557,6 +1561,16 @@ has_git_changes_ () {
     local dir_=$1
     local files_=$(any_git_changes_ $dir_)
     [[ -n $files_ ]]
+}
+
+show_this_branch () {
+    git branch $1 | grep --colour -B3 -A 3 $(get_branch)
+}
+
+ahead_of_branch () {
+    local branch_=$1
+    local commit_count_=$(git rev-list --count "$branch_..HEAD" 2>/dev/null)
+    [[ "${commit_count_:-0}" -gt 0 ]]
 }
 
 # xxxxxxxxxxxxxxxx
