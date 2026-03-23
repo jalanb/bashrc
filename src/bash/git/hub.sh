@@ -33,3 +33,29 @@ cleanup_dependabot() {
   close_prs "$search_term"
   delete_branches "$search_term"
 }
+
+create_pr () {
+    local __doc__="""Create a PR on GitHub for current branch"""
+    local main_="$(main_branch)"
+    if ! ahead_of_branch $main_; then
+        echo "No commits ahead of $main_" >&2
+        return 1
+    fi
+    local branch_=$(git rev-parse --abbrev-ref HEAD)
+    local title_="${1:-$branch_}"
+    local pr_url_=$(gh pr create \
+        --base "$main_" \
+        --head "$branch_" \
+        --title "$title_") || return 1
+    local pr_number_=$(basename "$pr_url_")
+    gh pr view "$pr_number_" >&2
+    echo "$pr_number_"
+}
+
+merge_pr () {
+    local __doc__="""Merge the PR numbered as $1"""
+    local pr_number_="$1"
+    gh pr merge "$pr_number_" --merge --delete-branch || return 1
+    git fetch --all
+}
+

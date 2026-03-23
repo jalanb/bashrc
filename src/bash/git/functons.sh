@@ -1567,6 +1567,12 @@ show_this_branch () {
     git branch $1 | grep --colour -B3 -A 3 $(get_branch)
 }
 
+ahead_of_branch () {
+    local branch_=$1
+    local commit_count_=$(git rev-list --count "$branch_..HEAD" 2>/dev/null)
+    [[ "${commit_count_:-0}" -gt 0 ]]
+}
+
 # xxxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxxxx
