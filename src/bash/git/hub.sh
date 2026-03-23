@@ -59,3 +59,28 @@ merge_pr () {
     git fetch --all
 }
 
+
+merge_to_main() {
+    if branch_is_on_main; then
+        echo "Already on $(main_branch)" >&2
+        return 1
+    fi
+    if git_changes_here; then
+        echo "Uncommitted changes — commit or stash first" >&2
+        return 1
+    fi
+    local branch_=$(get_branch)
+    gp || return 1
+    local pr_number_=$(create_pr) || return 1
+    merge_pr "$pr_number_" || return 1
+    gomr || return 1
+    local bump_cfg_="$(get_root)/.bumpversion.cfg"
+    if [[ -f "$bump_cfg_" ]]; then
+        local current_=$(bump get)
+        bump patch --new-version "${current_%.*}.$pr_number_"
+        bump show
+    else
+        echo "No .bumpversion.cfg — skipping version bump" >&2
+    fi
+    git branch -D "$branch_"
+}
