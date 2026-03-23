@@ -1559,6 +1559,10 @@ has_git_changes_ () {
     [[ -n $files_ ]]
 }
 
+show_this_branch () {
+    git branch $1 | grep --colour -B3 -A 3 $(get_branch)
+}
+
 # xxxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxxxx
