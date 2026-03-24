@@ -100,7 +100,10 @@ green_python () {
         local virtual_env_directory_=$(dirname $VIRTUAL_ENV)
         virtual_env_name_=$(basename "$virtual_env_directory_")
     fi
-    local python_version_=$(python -V 2>&1 | head -n1 | cut -d" " -f2)
+
+    local python_app_=$(command -v python3 || command -v python)
+    [[ $python_app_ ]] || return 1
+    local python_version_=$($python_app_ -V 2>&1 | head -n1 | cut -d" " -f2)
     local green_python_=$(green "${python_version_}")
     local lgreen_venv_=$(lgreen_venv)
     if [[ ! $lgreen_venv_ ]]; then
