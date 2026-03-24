@@ -154,7 +154,11 @@ colour_prompt () {
 blue_user () {
     local user_=$(whoami)
     local blue_user_=$(blue ${user_:$USER})
-    if env | grep -v WORK= | grep -q $WORK; then
+    local show_host_=
+    if [[ $WORK ]]; then
+        show_host_=$(env | grep -v WORK= | grep -q $WORK)
+    fi
+    if $show_host_; then
         echo "${blue_user_}@$(lblue_host)"
     else
         echo "${blue_user_}"
