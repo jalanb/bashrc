@@ -4,7 +4,6 @@
 alias v="vim -p"
 
 # This alias is used to run playbooks with ansible-navigator
-alias run="ansible-navigator run"
 
 # This alias is used to set the collection path
 alias addcoll="export ANSIBLE_COLLECTIONS_PATHS=collections/"

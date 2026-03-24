@@ -29,7 +29,7 @@ ack () {
     fi
 }
 
-alint () {
+alin () {
     if [[ -d .github ]]; then
         quietly ansible-lint --exclude=.github "$@"
     else
@@ -70,3 +70,10 @@ cdj () {
     cd ~/github/jalanb/"$@"
 }
 
+anav () {
+    ansible-navigator "$@"
+}
+
+arun () {
+    nav run "$@"
+}
