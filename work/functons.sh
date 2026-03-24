@@ -75,5 +75,5 @@ anav () {
 }
 
 arun () {
-    nav run "$@"
+    anav run "$@"
 }
