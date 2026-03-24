@@ -142,6 +142,7 @@ dir_data () {
 lblue_dir () {
     local dir_=$(dir_data)
     local git_=$(git_data)
+    [[ $git_ =~ $dir_ ]] && dir_="."
     lblue "$git_ $dir_"
 }
 
