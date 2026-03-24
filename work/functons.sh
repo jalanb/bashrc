@@ -1,8 +1,5 @@
 #! /bin/bash
 
-WORK_DIR="$(dirname $(readlink -f $BASH_SOURCE))"
-WORK=smbc
-WORK_COM=smbcgroup.com
 
 work () {
     echo "$@"."${WORK_COM}"

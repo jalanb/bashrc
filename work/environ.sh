@@ -1,3 +1,6 @@
+export WORK=smbc
+export WORK_COM=smbcgroup.com
+
 set_vs_code_path () {
     CODE_DIR=$(ls -d $HOME/.vscode-server/cli/servers/Stable-*/server/bin/remote-cli 2>/dev/null)
     PATH="$PATH:$CODE_DIR"
