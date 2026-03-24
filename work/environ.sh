@@ -1,3 +1,8 @@
+set_vs_code_path () {
+    CODE_DIR=$(ls -d $HOME/.vscode-server/cli/servers/Stable-*/server/bin/remote-cli 2>/dev/null)
+    PATH="$PATH:$CODE_DIR"
+    export PATH
+}
 
 set_environment () {
     # A list of Global Environment variables you can set in your bashrc, not all values will be relevant to you. Each value can be overridden in your project directory
@@ -40,3 +45,4 @@ set_galaxy () {
 
 set_environment
 set_galaxy
+set_vs_code_path
