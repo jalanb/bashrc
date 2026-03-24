@@ -148,14 +148,17 @@ lblue_dir () {
 
 colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(lblue_dir)\n $ "
+    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(blue_user) $(lblue_dir)\n "
 }
 
 blue_user () {
     local user_=$(whoami)
     local blue_user_=$(blue ${user_:$USER})
-    # echo "${lblue_user_}@$(lblue_host)"
-    echo "${blue_user_}"
+    if env | grep -v WORK= | grep -q $WORK; then
+        echo "${blue_user_}@$(lblue_host)"
+    else
+        echo "${blue_user_}"
+    fi
 }
 
 lblue_host () {
