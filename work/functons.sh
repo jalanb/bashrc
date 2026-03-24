@@ -31,3 +31,11 @@ ack () {
         $HOME/.local/bin/rg "$@"
     fi
 }
+
+alint () {
+    if [[ -d .github ]]; then
+        quietly ansible-lint --exclude=.github "$@"
+    else
+        quietly ansible-lint "$@"
+    fi
+}
