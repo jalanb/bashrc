@@ -33,6 +33,7 @@ tags
 *.fail
 *.pyc
 .noseids
+environ.env
 
 # Jupyter Notebook
 .ipynb_checkpoints

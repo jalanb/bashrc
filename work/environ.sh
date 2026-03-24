@@ -1,3 +1,4 @@
+export WORK_DIR=$(dirname $BASH_SOURCE)
 export WORK=smbc
 export WORK_COM=smbcgroup.com
 
@@ -44,6 +45,7 @@ set_galaxy () {
     export ANSIBLE_GALAXY_SERVER_VALIDATED_REPO_URL=https://hub.aapprod.smbcgroup.com/api/galaxy/content/validated/
     export ANSIBLE_GALAXY_SERVER_SMBC_REPO_URL=https://hub.aapprod.smbcgroup.com/api/galaxy/content/smbc/
     export ANSIBLE_GALAXY_SERVER_COMMUNITY_REPO_URL=https://hub.aapprod.smbcgroup.com/api/galaxy/content/community/
+    source $WORK_DIR/environ.env
 }
 
 set_environment
