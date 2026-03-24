@@ -85,14 +85,6 @@ cd- () {
     [[ -f .venv/bin/activate ]] && source .venv/bin/activate
 }
 
-cdb () {
-    cde /opt/clones/github/brightbeam/
-}
-
-cdh () {
-    cd /opt/clones/github/jalanb/jalanb/hub/hub
-}
-
 cdj () {
     local __doc__="cd to jalanb dir [and run a command (a, f, h, l, r)]"
     cd /opt/clones/github/jalanb/ || return 1
@@ -100,7 +92,7 @@ cdj () {
         cd "$1" || return 1
         shift
     fi
-    [[ "$@" ]] || return 0
+    [[ "$*" ]] || return 0
     local command_=
     case "${1-}" in
         a) command_=ack;    shift ;;
