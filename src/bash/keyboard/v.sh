@@ -84,7 +84,12 @@ vl () {
 
 # vm
 # vn
-# vo
+vo () {
+    local __doc__="""vim output of last command"""
+    local last_cmd_=$(fc -ln -1) || return 1
+    vv $(eval $last_cmd_)
+}
+
 vp () {
     edit_source ~/bash/prompt.sh +/^colour_prompt "$@"
 }
