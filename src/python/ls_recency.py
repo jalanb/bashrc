@@ -12,6 +12,7 @@ the git root's .gitignore, and any .gitignore found while descending.
 import argparse
 import bdb
 import os
+import subprocess
 import sys
 from subprocess import getstatusoutput
 
@@ -56,8 +57,12 @@ def file_recency(path: str) -> float:
         return 0.0
 
 
-def dir_recency(path: str, spec: pathspec.PathSpec) -> float:
-    """Most recent mtime of any non-ignored item under a directory, recursively"""
+def dir_recency(path: str, spec: pathspec.PathSpec, levels: int) -> float:
+    """Most recent mtime of any non-ignored item under a directory
+
+    levels controls recursion depth: 0 means unlimited, 1 means this dir only,
+    N means recurse N levels deep.
+    """
     local = os.path.join(path, ".gitignore")
     if os.path.exists(local):
         spec = augment(spec, local)
@@ -68,7 +73,11 @@ def dir_recency(path: str, spec: pathspec.PathSpec) -> float:
                 continue
             try:
                 if entry.is_dir(follow_symlinks=False):
-                    t = dir_recency(entry.path, spec)
+                    if levels == 1:
+                        t = file_recency(entry.path)
+                    else:
+                        next_levels = levels - 1 if levels > 1 else 0
+                        t = dir_recency(entry.path, spec, next_levels)
                 else:
                     t = entry.stat(follow_symlinks=False).st_mtime
             except OSError:
@@ -80,14 +89,14 @@ def dir_recency(path: str, spec: pathspec.PathSpec) -> float:
     return best
 
 
-def recency(path: str, spec: pathspec.PathSpec) -> float:
+def recency(path: str, spec: pathspec.PathSpec, levels: int) -> float:
     """Recency of path: dirs use deepest-modified child, files use own mtime"""
     if os.path.isdir(path):
-        return dir_recency(path, spec)
+        return dir_recency(path, spec, levels)
     return file_recency(path)
 
 
-def list_by_recency(directory: str) -> list[str]:
+def list_by_recency(directory: str, levels: int) -> list[str]:
     """Names in directory sorted by most recently changed first, ignores excluded"""
     spec = build_initial_spec(directory)
     local = os.path.join(directory, ".gitignore")
@@ -100,17 +109,32 @@ def list_by_recency(directory: str) -> list[str]:
         return []
     paths = sorted(
         (os.path.join(directory, n) for n in names),
-        key=lambda p: recency(p, spec),
+        key=lambda p: recency(p, spec, levels),
         reverse=True,
     )
     return [os.path.basename(p) for p in paths]
 
 
-def script(directories: list[str]) -> int:
+def classify(path: str) -> str:
+    """Append '/' for dirs, '*' for executables, else empty string"""
+    if os.path.isdir(path):
+        return "/"
+    if os.access(path, os.X_OK):
+        return "*"
+    return ""
+
+
+def script(directories: list[str], levels: int, long: bool) -> int:
     """List each directory's contents by recency"""
     for directory in directories:
-        for item in list_by_recency(directory):
-            print(item)
+        items = list_by_recency(directory, levels)
+        if long:
+            full_paths = [os.path.normpath(os.path.join(directory, item)) for item in items]
+            subprocess.run(["ls", "-lhdUF"] + full_paths)
+        else:
+            for item in items:
+                path = os.path.join(directory, item)
+                print(f"{item}{classify(path)}")
     return os.EX_OK
 
 
@@ -124,6 +148,20 @@ def parse_args() -> argparse.Namespace:
         default=["."],
         help="directories to list (default: .)",
     )
+    parser.add_argument(
+        "-l",
+        "--long",
+        action="store_true",
+        help="long listing, like ls -lh",
+    )
+    parser.add_argument(
+        "-L",
+        "--level",
+        type=int,
+        default=2,
+        metavar="N",
+        help="recursion depth for recency (default: 2, 0 = unlimited)",
+    )
     return parser.parse_args()
 
 
@@ -131,7 +169,10 @@ def main() -> int:
     """Run the script"""
     try:
         args = parse_args()
-        return script(args.directories)
+        if args.level < 0:
+            print(f"error: --level must be >= 0, got {args.level}", file=sys.stderr)
+            return os.EX_USAGE
+        return script(args.directories, args.level, args.long)
     except bdb.BdbQuit:
         return os.EX_OK
     except KeyboardInterrupt:
