@@ -1,11 +1,10 @@
 #! /usr/bin/env python
 """Script to show the first number in its arguments"""
 
+import argparse
 import os
 import sys
-import argparse
 from bdb import BdbQuit
-
 
 __version__ = "0.1.0"
 

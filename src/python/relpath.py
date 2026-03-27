@@ -1,13 +1,12 @@
 #! /usr/bin/env python
 """Script to"""
 
+import argparse
 import os
 import sys
-import argparse
 from bdb import BdbQuit
 
 from pysyte.types.paths import pwd
-
 
 __version__ = "0.1.0"
 

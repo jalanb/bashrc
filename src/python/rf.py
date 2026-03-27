@@ -5,14 +5,13 @@ The script contains a known list of globs for temporary files
 """
 
 
-from configparser import ConfigParser
 import argparse
 import bdb
 import fnmatch
 import os
 import shutil
 import sys
-
+from configparser import ConfigParser
 
 from pysyte.types import paths
 

@@ -1,14 +1,13 @@
 #! /usr/bin/env python
 """Script to"""
 
+import argparse
 import os
 import sys
-import argparse
 from bdb import BdbQuit
 
-from pysyte.bash import shell
-
 import script_path
+from pysyte.bash import shell
 
 __version__ = "0.1.0"
 

@@ -6,10 +6,10 @@
 import os
 import sys
 
-from rich import print
 from pysyte.cli.arguments import ArgumentsParser
 from pysyte.cli.main import run
 from pysyte.types.paths import path
+from rich import print
 
 __version__ = "0.1.0"
 

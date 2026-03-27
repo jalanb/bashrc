@@ -19,10 +19,9 @@
 
 import json
 import socket
+import socketserver
 import sys
 import threading
-
-import socketserver
 
 
 class NameSpace(object):

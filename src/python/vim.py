@@ -1,11 +1,10 @@
 #! /usr/bin/env python3
 """Script to provide entry to the vim script"""
 
+import argparse
 import os
 import sys
-import argparse
 from bdb import BdbQuit
-
 
 __version__ = "0.1.0"
 

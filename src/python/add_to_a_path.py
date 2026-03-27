@@ -21,11 +21,10 @@ Examples of use:
     PATH=/usr/local/bin:/bin:/usr/bin
 """
 
+import argparse
 import os
 import sys
-import argparse
 from bdb import BdbQuit
-
 
 __version__ = "0.1.0"
 
