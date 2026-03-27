@@ -12,16 +12,16 @@ the git root's .gitignore, and any .gitignore found while descending.
 import argparse
 import bdb
 import os
+import shutil
 import subprocess
 import sys
-from subprocess import getstatusoutput
 
 import pathspec
 
 
 def git_root(path: str) -> str:
     """Git root above path, or empty string if not in a repo"""
-    status, output = getstatusoutput(f"git -C {path!r} rev-parse --show-toplevel")
+    status, output = subprocess.getstatusoutput(f"git -C {path!r} rev-parse --show-toplevel")
     return output.strip() if status == 0 else ""
 
 
@@ -115,6 +115,12 @@ def list_by_recency(directory: str, levels: int) -> list[str]:
     return [os.path.basename(p) for p in paths]
 
 
+def default_n_lines() -> int:
+    """90% of terminal height, falling back to 20 lines"""
+    lines = shutil.get_terminal_size().lines
+    return int(lines * 0.9) if lines > 0 else 20
+
+
 def classify(path: str) -> str:
     """Append '/' for dirs, '*' for executables, else empty string"""
     if os.path.isdir(path):
@@ -124,10 +130,14 @@ def classify(path: str) -> str:
     return ""
 
 
-def script(directories: list[str], levels: int, long: bool) -> int:
+def script(directories: list[str], levels: int, long: bool, head: int, tail: int) -> int:
     """List each directory's contents by recency"""
     for directory in directories:
         items = list_by_recency(directory, levels)
+        if head:
+            items = items[:head]
+        elif tail:
+            items = items[-tail:]
         if long:
             full_paths = [os.path.normpath(os.path.join(directory, item)) for item in items]
             subprocess.run(["ls", "-lhdUF"] + full_paths)
@@ -154,6 +164,27 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="long listing, like ls -lh",
     )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "-H",
+        "--head",
+        type=int,
+        nargs="?",
+        const=0,
+        default=None,
+        metavar="N",
+        help="show first N items (default: 90%% of terminal height)",
+    )
+    group.add_argument(
+        "-T",
+        "--tail",
+        type=int,
+        nargs="?",
+        const=0,
+        default=None,
+        metavar="N",
+        help="show last N items (default: 90%% of terminal height)",
+    )
     parser.add_argument(
         "-L",
         "--level",
@@ -172,7 +203,10 @@ def main() -> int:
         if args.level < 0:
             print(f"error: --level must be >= 0, got {args.level}", file=sys.stderr)
             return os.EX_USAGE
-        return script(args.directories, args.level, args.long)
+        default = default_n_lines()
+        head = default if args.head == 0 else (args.head or 0)
+        tail = default if args.tail == 0 else (args.tail or 0)
+        return script(args.directories, args.level, args.long, head, tail)
     except bdb.BdbQuit:
         return os.EX_OK
     except KeyboardInterrupt:
