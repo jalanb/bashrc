@@ -21,7 +21,6 @@ Examples of use:
     PATH=/usr/local/bin:/bin:/usr/bin
 """
 
-
 import os
 import sys
 import argparse

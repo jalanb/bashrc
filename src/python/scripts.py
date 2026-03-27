@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-"""Script to """
+"""Script to"""
 
 import os
 import sys

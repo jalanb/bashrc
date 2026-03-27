@@ -17,7 +17,6 @@ import sys
 from pysyte.types import paths
 
 
-
 def has_true(value):
     return value.lower() in ["true", "t", "yes", "y", "1"]
 
@@ -148,7 +147,7 @@ def get_paths_under(directory, glob):
         if name in (".git", ".idea", ".venv", ".tox", ".pytest_cache"):
             continue
         path = os.path.join(directory, name)
-        if 'egg' in name and 'egg' in glob:
+        if "egg" in name and "egg" in glob:
             pass
         if fnmatch.fnmatch(name, glob):
             result.append(path)
@@ -216,6 +215,7 @@ def remove_paths(paths: list[str], quiet: bool, trial_run: bool) -> int:
             if not quiet:
                 print(dir_)
     return result
+
 
 def script(paths, args, globs):
     """Run the script"""

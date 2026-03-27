@@ -1,6 +1,5 @@
 """Set up the jab/src/python project"""
 
-
 from setuptools import setup
 
 

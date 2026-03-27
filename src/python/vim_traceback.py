@@ -19,7 +19,6 @@ If you prefer to use splits instead of tabs, add the option "-s", e.g
 
 """
 
-
 import os
 import sys
 
@@ -42,10 +41,9 @@ def as_vim_command(lines, use_splits):
         first, rest = lines[0], lines[1:]
     except IndexError:
         raise ValueError(f"{lines=}")
-    command = 'vim %s +%s' % first
-    window = 'sp' if use_splits else 'tabnew'
-    args = [str('+"%s +%s %s"' % (window, line, file_))
-            for file_, line in rest]
+    command = "vim %s +%s" % first
+    window = "sp" if use_splits else "tabnew"
+    args = [str('+"%s +%s %s"' % (window, line, file_)) for file_, line in rest]
     args.insert(0, command)
     return " ".join(args)
 
@@ -58,6 +56,7 @@ def main(args):
         lines = [_ for _ in parsed if _]
         if not lines:
             from rich import inspect
+
             inspect(stream)
             continue
         try:

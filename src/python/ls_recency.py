@@ -21,7 +21,9 @@ import pathspec
 
 def git_root(path: str) -> str:
     """Git root above path, or empty string if not in a repo"""
-    status, output = subprocess.getstatusoutput(f"git -C {path!r} rev-parse --show-toplevel")
+    status, output = subprocess.getstatusoutput(
+        f"git -C {path!r} rev-parse --show-toplevel"
+    )
     return output.strip() if status == 0 else ""
 
 
@@ -130,7 +132,9 @@ def classify(path: str) -> str:
     return ""
 
 
-def script(directories: list[str], levels: int, long: bool, head: int, tail: int) -> int:
+def script(
+    directories: list[str], levels: int, long: bool, head: int, tail: int
+) -> int:
     """List each directory's contents by recency"""
     for directory in directories:
         items = list_by_recency(directory, levels)
@@ -139,7 +143,9 @@ def script(directories: list[str], levels: int, long: bool, head: int, tail: int
         elif tail:
             items = items[-tail:]
         if long:
-            full_paths = [os.path.normpath(os.path.join(directory, item)) for item in items]
+            full_paths = [
+                os.path.normpath(os.path.join(directory, item)) for item in items
+            ]
             subprocess.run(["ls", "-lhdUF"] + full_paths)
         else:
             for item in items:

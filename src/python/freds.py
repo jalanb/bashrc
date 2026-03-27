@@ -3,7 +3,6 @@
 "If in doubt, name it Fred"
 """
 
-
 import os
 import sys
 
@@ -15,15 +14,15 @@ from pysyte.types.paths import path
 __version__ = "0.1.0"
 
 
-
 class Freds(object):
     """Handle fred.* as strings, paths, files, ..."""
+
     def __init__(self, dirs):
         self._dirs = dirs
 
     def extended(self):
-        exts = ('', '.py', '.sh', '.txt', '.now', '.html')
-        return [str('%s/fred%s' % (d, e)) for d in self._dirs for e in exts]
+        exts = ("", ".py", ".sh", ".txt", ".now", ".html")
+        return [str("%s/fred%s" % (d, e)) for d in self._dirs for e in exts]
 
     def _paths(self):
         return [path(_) for _ in self.extended()]
