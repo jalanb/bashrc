@@ -12,9 +12,11 @@ the git root's .gitignore, and any .gitignore found while descending.
 import argparse
 import bdb
 import os
+import re
 import shutil
 import subprocess
 import sys
+from datetime import datetime
 
 import pathspec
 
@@ -117,6 +119,33 @@ def list_by_recency(directory: str, levels: int) -> list[str]:
     return [os.path.basename(p) for p in paths]
 
 
+_ANSI = re.compile(r"\x1b\[[0-9;]*[mK]")
+
+
+def strip_ansi(s: str) -> str:
+    return _ANSI.sub("", s)
+
+
+def date_col(ls_line: str) -> int:
+    """Character offset of the date field (month) in an ls -l output line"""
+    plain = strip_ansi(ls_line)
+    pos = 0
+    for _ in range(5):  # skip: perms, links, owner, group, size
+        while pos < len(plain) and plain[pos] == " ":
+            pos += 1
+        while pos < len(plain) and plain[pos] != " ":
+            pos += 1
+    while pos < len(plain) and plain[pos] == " ":
+        pos += 1
+    return pos
+
+
+def now_header() -> str:
+    """Current time formatted like ls -lh date column: 'Mar 30 09:15'"""
+    now = datetime.now()
+    return f"{now.strftime('%b')} {now.day:2d} {now.strftime('%H:%M')}"
+
+
 def default_n_lines() -> int:
     """90% of terminal height, falling back to 20 lines"""
     lines = shutil.get_terminal_size().lines
@@ -146,7 +175,16 @@ def script(
             full_paths = [
                 os.path.normpath(os.path.join(directory, item)) for item in items
             ]
-            subprocess.run(["ls", "-lhdUF"] + full_paths)
+            result = subprocess.run(
+                ["ls", "--color=always", "-lhdUF"] + full_paths,
+                capture_output=True,
+                text=True,
+            )
+            lines = result.stdout.splitlines()
+            if lines:
+                offset = date_col(lines[0])
+                print(" " * offset + now_header())
+            print(result.stdout, end="")
         else:
             for item in items:
                 path = os.path.join(directory, item)
