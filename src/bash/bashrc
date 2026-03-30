@@ -1,17 +1,16 @@
 #! /usr/local/bin/bash -x
 
 .b () {
-    local jab_=$HOME/jab
-    [[ $1 == "-m" ]] && bashrc_source $jab_/bash/bashrc_minimal
-    bashrc_source $jab_/__init__.sh || return 1
-    bashrc_source $jab_/src/bash/prompt.sh green
+    [[ $1 == "-m" ]] && jab_source bash/bashrc_minimal
+    jab_source __init__.sh || return 1
+    jab_source src/bash/prompt.sh green
 }
 
 lcolour () {
-    local colour_="[1;${1}m" no_colour_="[0m"
+    local colour_="[1;${1}m"
+    local no_colour_="[0m"
     shift
-    local text_="$@"
-    printf "${colour_}${text_}${no_colour_}"
+    echo "${colour_}$*${no_colour_}"
 }
 
 lred () {
@@ -24,10 +23,6 @@ lgreen () {
 
 lblue () {
     lcolour 34 "$@"
-}
-
-QUIETLY () {
-    "$@" 2>/dev/null 1>&2
 }
 
 quietly () {
@@ -58,7 +53,7 @@ set_paths () {
 }
 
 luser () {
-    printf $(lusername)@$(lhost)
+    echo "$(lusername)@$(lhost)"
 }
 
 lusername () {
@@ -66,39 +61,41 @@ lusername () {
 }
 
 lhost () {
-    lred ${HOSTNAME:-$(hostname -s)}
+    lred "${HOSTNAME:-$(hostname -s)}"
 }
 
 lhere () {
-    lgreen $(readlink -f $PWD)
+    lgreen "$(readlink -f .)"
 }
 
-bashrc_source () {
+jab_source () {
+    cd ~/jab || return 1
+    bashr_source "$@"
+    cd - || return 0
+}
+
+bashr_source () {
     [[ -f "$1" ]] || return 1
-    source "$@"
+    source "$1"
 }
 
-echo_if_file () {
-    [[ -f "$1" ]] || return 1
-    echo "        $1"
-}
-
-bashrc_log=$HOME/log/bashrc.log
+bashr_log=~/log/bashrc.log
 
 bashrc () {
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
-    export PS1="\$? [$(luser):$(lhere)]\n$ "
-    export PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] '
-    local jab_=$HOME/jab
-    bashrc_source $jab_/bash/bashrc_minimal
-    bashrc_source $jab_/__init__.sh || return 1
-    bashrc_source $jab_/src/bash/prompt.sh green
+    PS1="\$? [$(luser):$(lhere)]\n$ "; export PS1
+    PS4='+ [${BASH_SOURCE##*/}::${FUNCNAME[0]}():${LINENO}] ' ; export PS4
+    cd ~/jab || return 1
+    bashr_source bash/bashrc_minimal
+    bashr_source __init__.sh || return 1
+    bashr_source src/bash/prompt.sh green
+    cd - || return 0
 }
 
-min () {
+minrc () {
     local min_=~/jab/bash/bashrc_minimal
     vim $min_
-    . $min_
+    bashr_source "$min_"
 }
 
 __main__ () {
@@ -113,15 +110,15 @@ post_main () {
         grey_line "#    -> '$PWD'"
     fi
     show_command cd /opt/clones/github/jalanb/
-    cd /opt/clones/github/jalanb/
-    source .venv/bin/activate
+    cd /opt/clones/github/jalanb/ || return 1
+    bashr_source .venv/bin/activate
     l
 }
 
 if [[ ! $CLAUDECODE ]]; then
     if [[ $- =~ i ]]; then
         set -x;
-        __main__ "$@" > $bashrc_log 2>&1
+        __main__ "$@" > $bashr_log 2>&1
         set +x
         post_main
     else
@@ -129,22 +126,28 @@ if [[ ! $CLAUDECODE ]]; then
     fi
 fi
 
+echo_if_file () {
+    [[ -f "$1" ]] || return 1
+    echo "        $1"
+}
+
 bbb () {
     echo ""
-    echo_if_file $HOME/.bashrc
-    echo_if_file $HOME/jab/__init__.sh
-    echo_if_file $HOME/jab/environ.d/__init__.sh
-    echo_if_file $HOME/jab/src/bash/__init__.sh
-    echo_if_file $HOME/jab/local/__init__.sh
-    echo_if_file $HOME/jalanb/local/__init__.sh
-    echo_if_file $HOME/.vimrc
-    echo_if_file $bashrc_log
-    echo_if_file $HOME/jab/bash/bashrc_minimal
+    echo_if_file ~/.bashrc
+    echo_if_file ~/.minimal
+    echo_if_file ~/.vimrc
+    echo_if_file ~/jab/__init__.sh
+    echo_if_file ~/jab/environ.d/__init__.sh
+    echo_if_file ~/jab/src/bash/__init__.sh
+    echo_if_file ~/jab/local/__init__.sh
+    echo_if_file ~/jalanb/local/__init__.sh
+    echo_if_file $bashr_log
 }
+
 
 vbb () {
-    local __doc__="""Must be last function to over-write same func from bashrc_minimal"""
-    vim -p $(bbb)
-    readlink -f $(bbb) 2>/dev/null
+    # This function works best last
+    bbb_="$(bbb)"
+    vim -p "$bbb_"
+    quietly readlink -f "$(bbb)" 
 }
-
