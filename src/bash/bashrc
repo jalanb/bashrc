@@ -1,7 +1,6 @@
 #! /usr/local/bin/bash -x
 
 .b () {
-    [[ $1 == "-m" ]] && jab_source bash/bashrc_minimal
     jab_source __init__.sh || return 1
     jab_source src/bash/prompt.sh green
 }
