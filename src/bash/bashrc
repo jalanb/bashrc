@@ -68,9 +68,7 @@ lhere () {
 }
 
 jab_source () {
-    cd ~/jab || return 1
-    bashr_source "$@"
-    cd - || return 0
+    bashr_source "~/jab/$1"
 }
 
 bashr_source () {
@@ -88,7 +86,7 @@ bashrc () {
     bashr_source bash/bashrc_minimal
     bashr_source __init__.sh || return 1
     bashr_source src/bash/prompt.sh green
-    cd - || return 0
+    quietly cd - || return 0
 }
 
 minrc () {
