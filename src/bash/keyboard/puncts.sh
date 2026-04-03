@@ -6,52 +6,24 @@
 # x
 # ,x
 
-,. () {
-    [[ -f .cd ]] && . .cd
-}
-
-,, () {
-    cde . "$@"
-}
-
-,c () {
-    . $CDE.sh
-}
-
-,w () {
-    . $WHYP.sh
-}
-
 .a () {
     . $(aliases)
 }
 
 .b () {
-    . ~/.bashrc
-}
-
-.c () {
-    . ~/cde.sh
+    sb
 }
 
 .f () {
-    . $(functons)
+    sf
 }
 
 .g () {
-    . $(functons -g)
+    sgf
 }
 
 .l () {
-    JAB_LOCAL_FUNCS= . $(functons -l)
-}
-
-.p () {
-    . ~/prompt.sh "$@"
-}
-
-.w () {
-    . ~/whyp.sh
+    slf
 }
 
 .x () {
