@@ -42,6 +42,7 @@ local.env
 [a-z.]*-[a-z.]*.html
 scripts/
 .claude/
+.shellcheck/
 #
 # Developers' data
 *.log
