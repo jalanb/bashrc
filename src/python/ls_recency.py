@@ -100,8 +100,8 @@ def recency(path: str, spec: pathspec.PathSpec, levels: int) -> float:
     return file_recency(path)
 
 
-def list_by_recency(directory: str, levels: int) -> list[str]:
-    """Names in directory sorted by most recently changed first, ignores excluded"""
+def list_by_recency(directory: str, levels: int) -> list[tuple[str, float]]:
+    """(name, mtime) pairs sorted by most recently changed first, ignores excluded"""
     spec = build_initial_spec(directory)
     local = os.path.join(directory, ".gitignore")
     if os.path.exists(local):
@@ -111,12 +111,57 @@ def list_by_recency(directory: str, levels: int) -> list[str]:
     except OSError as e:
         print(e, file=sys.stderr)
         return []
-    paths = sorted(
-        (os.path.join(directory, n) for n in names),
-        key=lambda p: recency(p, spec, levels),
-        reverse=True,
-    )
-    return [os.path.basename(p) for p in paths]
+    pairs = [
+        (n, recency(os.path.join(directory, n), spec, levels)) for n in names
+    ]
+    pairs.sort(key=lambda x: x[1], reverse=True)
+    return pairs
+
+
+def age_group(mtime: float) -> tuple[int, str]:
+    """Return (sort_key, label) classifying mtime into a human age bucket"""
+    today = datetime.now().date()
+    file_date = datetime.fromtimestamp(mtime).date()
+    days = (today - file_date).days
+
+    if days <= 0:
+        return (0, "Today")
+    if days == 1:
+        return (1, "Yesterday")
+    if days <= 7:
+        return (days, f"{days} days ago")
+    if days <= 13:
+        return (8, "2 weeks ago")
+    if days <= 20:
+        return (9, "3 weeks ago")
+    if days <= 27:
+        return (10, "4 weeks ago")
+
+    months = (today.year - file_date.year) * 12 + today.month - file_date.month
+    months = max(months, 1)
+    if months <= 12:
+        label = "month" if months == 1 else "months"
+        return (10 + months, f"{months} {label} ago")
+
+    years = today.year - file_date.year
+    if (today.month, today.day) < (file_date.month, file_date.day):
+        years -= 1
+    years = max(years, 1)
+    label = "year" if years == 1 else "years"
+    return (10 + 12 + years, f"{years} {label} ago")
+
+
+def group_items(
+    items: list[tuple[str, float]],
+) -> list[tuple[str, list[str]]]:
+    """Group (name, mtime) pairs into age buckets, preserving recency order within each"""
+    seen: dict[int, tuple[str, list[str]]] = {}
+    for name, mtime in items:
+        key, label = age_group(mtime)
+        if key not in seen:
+            seen[key] = (label, [])
+        seen[key][1].append(name)
+    return [v for _, v in sorted(seen.items())]
 
 
 _ANSI = re.compile(r"\x1b\[[0-9;]*[mK]")
@@ -140,7 +185,7 @@ def date_col(ls_line: str) -> int:
     return pos
 
 
-def now_header() -> str:
+def now_str() -> str:
     """Current time formatted like ls -lh date column: 'Mar 30 09:15'"""
     now = datetime.now()
     return f"{now.strftime('%b')} {now.day:2d} {now.strftime('%H:%M')}"
@@ -164,31 +209,44 @@ def classify(path: str) -> str:
 def script(
     directories: list[str], levels: int, long: bool, head: int, tail: int
 ) -> int:
-    """List each directory's contents by recency"""
+    """List each directory's contents by recency, grouped by age"""
     for directory in directories:
-        items = list_by_recency(directory, levels)
+        pairs = list_by_recency(directory, levels)
         if head:
-            items = items[:head]
+            pairs = pairs[:head]
         elif tail:
-            items = items[-tail:]
-        if long:
-            full_paths = [
-                os.path.normpath(os.path.join(directory, item)) for item in items
-            ]
-            result = subprocess.run(
-                ["ls", "--color=always", "-lhdUF"] + full_paths,
-                capture_output=True,
-                text=True,
-            )
-            lines = result.stdout.splitlines()
-            if lines:
-                offset = date_col(lines[0])
-                print(" " * offset + now_header())
-            print(result.stdout, end="")
-        else:
-            for item in items:
-                path = os.path.join(directory, item)
-                print(f"{item}{classify(path)}")
+            pairs = pairs[-tail:]
+
+        groups = group_items(pairs)
+        offset = 0
+        first = True
+
+        for label, names in groups:
+            if long:
+                full_paths = [
+                    os.path.normpath(os.path.join(directory, n)) for n in names
+                ]
+                result = subprocess.run(
+                    ["ls", "--color=always", "-lhdUF"] + full_paths,
+                    capture_output=True,
+                    text=True,
+                )
+                ls_lines = result.stdout.splitlines()
+                if ls_lines and first:
+                    offset = date_col(ls_lines[0])
+                    print(" " * offset + now_str())
+                    first = False
+                print(f"\n{' ' * offset}{label}")
+                print(result.stdout, end="")
+            else:
+                if not first:
+                    print()
+                print(label)
+                first = False
+                for name in names:
+                    path = os.path.join(directory, name)
+                    print(f"  {name}{classify(path)}")
+
     return os.EX_OK
 
 
