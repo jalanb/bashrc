@@ -1,5 +1,7 @@
 #! /bin/cat -n
 
+PROMPT_SOURCE=$(readlink -f "$BASH_SOURCE")
+
 [[ $SOURCED_CRAYONS ]] || source  ~/bash/crayons.sh.sh
 declare | grep -q "^git_root" || source ~/bash/git/functons.sh
 
@@ -12,11 +14,11 @@ get_git_status() {
     local bump_version_=$1; shift
     [[ $bump_version_ =~ [0-9] ]] && branch_="$branch_ v$bump_version_"
     local modified_=$(quietly git status --porcelain | wc -l | tr -d " ")
-    local remote="$(git config --get branch.${branch_}.remote 2>/dev/null)"
+    local remote="$(quietly git config --get branch.${branch_}.remote )"
     local remote_branch_="$(git config --get branch.${branch_}.merge)"
-    local pushes_=$(git rev-list --count ${remote_branch_/refs\/heads/refs\/remotes\/$remote}..HEAD 2>/dev/null)
+    local pushes_=$(quietly git rev-list --count ${remote_branch_/refs\/heads/refs\/remotes\/$remote}..HEAD )
     [[ -z $pushes_ ]] && pushes_=?
-    local pulls_=$(git rev-list --count HEAD..${remote_branch_/refs\/heads/refs\/remotes\/$remote} 2>/dev/null)
+    local pulls_=$(quietly git rev-list --count HEAD..${remote_branch_/refs\/heads/refs\/remotes\/$remote} )
     [[ -z $pulls_ ]] && pulls_=?
     local short_branch_=$branch_
     [[ $branch_ =~ [A-Z][A-Z][A-Z][A-Z][-] ]] && short_branch_=$(echo $branch | sed -e "s,\(....-[0-9]*\).*,\1,")
@@ -31,7 +33,7 @@ get_git_status() {
             short_branch_="$short_branch_ $modified_+$pushes_"
         fi
     else
-        short_branch_="$short_branch_ $modified_+$pushes-$pulls_"
+        short_branch_="$short_branch_ $modified_+$pushes_-$pulls_"
     fi
     echo $short_branch_
     return 0
@@ -118,22 +120,25 @@ green_python () {
 }
 
 short_pwd () {
-    echo $(PYTHONPATH="$HOME/pysyte/" ~/pysyte/bin/short_dir "$PWD" 2> /dev/null)
+    echo $(PYTHONPATH="$HOME/pysyte/" quietly ~/pysyte/bin/short_dir "$PWD" )
 }
 
 git_data () {
-    local branch_name_="$(git_branch -q)"
-    local versioned_branch_=
+    local branch_name_="$(quietly git rev-parse --abbrev-ref HEAD )"
+    local git_data_=
     if [[ $branch_name_ ]]; then
         versioned_branch_=" $branch_name_"
         local bump_version_="v$(quietly bump get)"
         [[ $bump_version_ == v ]] && bump_version_=
         [[ $bump_version_ ]] && versioned_branch_+=" $bump_version_"
     fi
-
-    local repo_="$(github_owner_repo .)"
-    [[ $repo_ ]] || return
-    echo "${repo_}${versioned_branch_:+:$versioned_branch_}"
+    local project_=$(quietly git remote get-url origin \
+        | sed -e "s,://[^@]*@,://," \
+              -e "s,.*[/]\([A-Za-z._-]*\)[/]\([A-Za-z._-]*\)[.]git.*$,\1/\2," \
+              -e "s,.*[/]\([A-Za-z._-]*\)[/]\([A-Za-z._-]*\)$,\1/\2," \
+)
+    [[ $project_ ]] && git_data_="${project_}${git_data_}"
+    echo $git_data_
 }
 
 dir_data () {
@@ -144,7 +149,8 @@ dir_data () {
 lblue_dir () {
     local dir_=$(dir_data)
     local git_=$(git_data)
-    [[ $git_ =~ $dir_ ]] && dir_="."
+    [[ $git_ =~ $dir_ ]] && dir_=.
+    git_=${git_/SMBCGitHub\/SMBC-JRIA-/SMBC\/}
     lblue "$git_ $dir_"
 }
 
@@ -196,10 +202,16 @@ echo_prompt_colour () {
     echo $prompt_colour_
 }
 
+reload_prompt_if_changed () {
+    local current_mtime_=$(quietly stat -f %m "$PROMPT_SOURCE" )
+    [[ $current_mtime_ != $PROMPT_MTIME ]] && source "$PROMPT_SOURCE"
+}
+
 pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
-    # console_whoami
-    cde_python --add . >/dev/null 2>&1
+    reload_prompt_if_changed
+    console_whoami
+    QUIETLY cde_python --add .
     history -a
 }
 
@@ -228,10 +240,11 @@ export_pses () {
 }
 
 
+export PROMPT_MTIME=$(quietly stat -f %m "$PROMPT_SOURCE" )
 export PROMPT_COLOUR=$(echo_prompt_colour "$@")
 if [[ "$PROMPT_COLOUR" == "None" ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
 else
     export_pses
-    export PROMPT_COMMAND=' export_pses $? '
+    export PROMPT_COMMAND=" export_pses $? "
 fi
