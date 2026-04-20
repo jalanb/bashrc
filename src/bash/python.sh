@@ -10,11 +10,14 @@ PYTHON_SOURCE="$BASH_SOURCE"
 
 # xxx
 
+latest_python () {
+    quietly which $(compgen -c python3. | grep -v '[_-]' | sort -uV | tail -1)
+}
 
 python_command () {
-    local __doc__="""Command to be used in this script is python3, or can be over-written with $PYTHON"""
-    local python_=${PYTHON:-python3}
-    if ! QUIETLY which $python_ ; then
+    local __doc__="""Command to be used in shell is python3, or can be over-written with $PYTHON"""
+    local python_=${PYTHON:-"$(latest_python)"}
+    if ! QUIETLY command -v $python_ ; then
         echo $python_ not available >&2
         return 1
     fi
@@ -166,6 +169,10 @@ acti () {
     return 1
 }
 
+ppie () {
+    ppi -e "$@"
+}
+
 pipv () {
     local dir_=$PWD setup_py_= setup_cfg= requires_=
     [[ -d "$1" ]] && dir_="$1" && shift
@@ -180,7 +187,7 @@ pipv () {
 }
 
 reactivate () {
-    unhash_activate "$1"
+	unhash_activate "$1"
     ppp
 }
 
@@ -200,7 +207,7 @@ venv () {
     hash -d python3 python 2>/dev/null
     pym venv --copies --clear "$venv_dir_"
     reactivate "$venv_dir_"
-    install_requirements "$dir_" -p
+    install_python_project "$dir_" -p
 }
 
 # xxxxx
@@ -227,18 +234,70 @@ import_version () {
 
 import_version -q pip || install_pip -q
 
+has_pyproject_extra () {
+    local file="$1" group="$2"
+    awk '
+        $0 ~ /^\[project.optional-dependencies\]/ { in_section=1; next }
+        $0 ~ /^\[/ { in_section=0 }
+        in_section && $0 ~ "^"grp"[[:space:]]*=[[:space:]]*\\[" { found=1 }
+        END { exit(found ? 0 : 1) }
+    ' grp="$group" "$file"
+}
+
+as_requirement_file () {
+    local dir_="$1"
+    local name_=$2
+    local path_="$dir_/$name_.txt"
+    [[ -f "$path_" ]] || return 1
+    quietly readlink -f "$path_"
+}
+
+install_python_project () {
+    local dir_=.
+    [[ -d "$1" ]] && dir_="$1"
+    [[ -d "$dir_" ]] || return 1
+    [[ $2 =~ -p ]] || ppp
+    local pyproject_="$dir_/pyproject.toml"
+    local groups=(dev devops test lint)
+    if [[ -f "$pyproject_" ]]; then
+        for g in "${groups[@]}"; do
+            has_pyproject_extra "$pyproject_" "$g" || continue
+            lblue_line "Installing pyproject extra: $g"
+            ppie "${dir_}.[${g}]"
+            return 0
+        done
+    fi
+    local requirements_dir_="$dir_/requirements"
+    [[ -d "$requirements_dir_" ]] || requirements_dir_=
+    local path_
+    for g in "${groups[@]}"; do
+        path_="$(as_requirement_file "$requirements_dir_" "$g")"
+        [[ -f "$path_" ]] || continue
+        lblue_line "Installing requirement file: ${g}.txt"
+        ppr "$path_"
+        ppie "${dir_}"
+        return 0
+    done
+    path_="$dir_/requirements.txt" 
+    if [[ -f "$path_" ]]; then
+        ppr "$path_"
+        lblue_line "Installing requirements.txt"
+    fi
+    ppie "${dir_}"
+}
+
 install_requirements () {
     local dir_=.
     [[ -d "$1" ]] && dir_="$1"
     [[ -d "$dir_" ]] || return 1
 
-    local requirement_=requirements.txt requirements_=
-    [[ -f $requirement_ ]] && requirements_="requirements"
-    [[ -d "$dir_/requirements" ]] && requirements_=$(ls "$dir_/requirements/*.txt")
-    [[ -d "$requirements_" ]] || requirements_="$requirement_"
+    local requirement_=requirements.txt requirements_dir_=
+    [[ -f $requirement_ ]] && requirements_dir_="requirements"
+    [[ -d "$dir_/requirements" ]] && requirements_dir_=$(ls "$dir_/requirements/*.txt")
+    [[ -d "$requirements_dir_" ]] || requirements_dir_="$requirement_"
 
     [[ $2 =~ -p ]] || ppp
-    local requirement_file_= requirements_=
+    local requirement_file_= 
     for requirement_ in $requirements_; do
         [[ -f "$requirement_" ]] || continue
         lblue_line Found requirements in $requirement_
@@ -249,8 +308,7 @@ install_requirements () {
 
 pip_install_develop () {
     local __doc__="""pip install a directory for development"
-    install_requirements "$@"
-    ppe "$dir_"
+    install_python_project "$@"
 }
 
 show_python () {
@@ -310,11 +368,30 @@ some_python3 () {
 
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
-    local python_exec_=$(some_python3 -q) || return 1
-    local which_exec_=$(which python3)
-    same_path "$python_exec_" "$which_exec_" || show_data "   bash: $which_exec_"
-    show_data " python: $python_exec_"
-    local version_=$($python_exec_ -c"import sys; print(sys.version.split()[0])")
+    local default_python_="$(latest_python)"
+    QUIETLY which $default_python_ || default_python_=python
+    local python_=${PYTHON:-$default_python_}
+    local exec_=$($python_ -c"import sys; print(sys.executable)")
+    local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
+    local real_exec_=$(readlink -f $exec_)
+    local shown_=
+    if [[ $python_ =~ ^python3? ]]; then
+        local which_=$(which $python_)
+        if [[ $exec_ != $which_ ]]; then
+            show_data "   bash: $which_"
+            show_data " python: $exec_"
+            [[ $real_exec_ == $exec_ ]] || show_data "   real: $real_exec_"
+            shown_=1
+        fi
+    fi
+    if [[ ! $shown_ ]]; then
+        if [[ $real_exec_ == $exec_ ]]; then
+            show_data " python: $exec_"
+        else
+            show_data " python: $exec_"
+            show_data "   real: $real_exec_"
+        fi
+    fi
     show_data "version: $version_"
     local real_exec_=$(readlink -f $python_exec_)
     same_path "$python_exec_" "$real_exec_" || show_data "   real: $real_exec_"
