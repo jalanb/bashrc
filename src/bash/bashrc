@@ -85,19 +85,6 @@ echo_if_file () {
 
 bashrc_log=$HOME/log/bashrc.log
 
-bbb () {
-    echo ""
-    echo_if_file $HOME/.bashrc
-    echo_if_file $HOME/jab/__init__.sh
-    echo_if_file $HOME/jab/environ.d/__init__.sh
-    echo_if_file $HOME/jab/src/bash/__init__.sh
-    echo_if_file $HOME/jab/local/__init__.sh
-    echo_if_file $HOME/jalanb/local/__init__.sh
-    echo_if_file $HOME/.vimrc
-    echo_if_file $bashrc_log
-    echo_if_file $HOME/jab/bash/bashrc_minimal
-}
-
 bashrc () {
     /usr/bin/say -v Anna Ich möchte eine Maschine, die schreiben kann, wie ich kann
     export PS1="\$? [$(luser):$(lhere)]\n$ "
@@ -142,7 +129,19 @@ if [[ ! $CLAUDECODE ]]; then
     fi
 fi
 
-# This function has to be last, after __main__
+bbb () {
+    echo ""
+    echo_if_file $HOME/.bashrc
+    echo_if_file $HOME/jab/__init__.sh
+    echo_if_file $HOME/jab/environ.d/__init__.sh
+    echo_if_file $HOME/jab/src/bash/__init__.sh
+    echo_if_file $HOME/jab/local/__init__.sh
+    echo_if_file $HOME/jalanb/local/__init__.sh
+    echo_if_file $HOME/.vimrc
+    echo_if_file $bashrc_log
+    echo_if_file $HOME/jab/bash/bashrc_minimal
+}
+
 vbb () {
     local __doc__="""Must be last function to over-write same func from bashrc_minimal"""
     vim -p $(bbb)
