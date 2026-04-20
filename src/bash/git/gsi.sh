@@ -272,7 +272,7 @@ red_two () {
 
 python_realpath () {
     [[ $1 ]] || return 1
-    local result_=$(python -c"import os; print(os.path.realpath('""$1""'))")
+    local result_=$(python3 -c"import os; print(os.path.realpath('""$1""'))")
     test -d $result_ || return 2
     echo $result_
 }

@@ -134,6 +134,10 @@ brew () {
 bump () {
     local show_=
     local get_=
+    local quietly_=
+    [[ $1 == -q ]] && quietly_=quietly
+    [[ $1 == -Q ]] && quietly_=QUIETLY
+    [[ $1 =~ -[qQ] ]] && shift
     if [[ $1 == show ]]; then
         show_=1
         shift
@@ -164,8 +168,8 @@ bump () {
             local options_=
             [[ -n $config ]] && options_="--config-file $name_"
             if bumpversion $options_ $part_ "$@"; then
-                git push
-                git push origin v$(bump get)
+                $quietly_ git push
+                $quietly_ git push origin v$(bump get)
             fi
         fi
         return $?
@@ -178,7 +182,7 @@ bump () {
     elif [[ -n $get_ ]]; then
         grep $sought_ $config_ | sed -e 's/.*= //'
     else
-        bumpversion "$@"
+        $quietly_ bumpversion "$@"
     fi
 }
 
@@ -515,7 +519,7 @@ pysyon () {
 }
 
 pythis () {
-    python -c "import this"
+    $(python_command) -c "import this"
 }
 
 please () {
