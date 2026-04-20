@@ -101,13 +101,13 @@ vv () {
 }
 
 vbb () {
-    local log_= err_=
-    [[ -f ~/log/bashrc.log ]] && log_="$HOME/log/bashrc.log"
-    [[ -f ~/log/bashrc.err ]] && err_="$HOME/log/bashrc.err"
-    vim -p "$HOME/.bashrc" "$MINIMAL_SOURCE" "$log_" "$err_" "$@" +/BASH_SOURCE
-    source ~/.bashrc
-    minimally "vim -p ~/.bashrc $MINIMAL_SOURCE $log_ $err_ " "$@"
-    minimally ". ~/.bashrc"
+    local files_=~/.bashrc  
+    [[ -z ~/log/bashrc.log ]] && files_="$files_ ~/log/bashrc.log"
+    [[ -z ~/log/bashrc.err ]] && files_="$files_ ~/log/bashrc.log"
+    vim -p "$MINIMAL_SOURCE" $files_ "$@" +/MINIMAL_SOURCE
+    source $MINIMAL_SOURCE 
+    minimally "vim -p $MINIMAL_SOURCE $files_" "$@" +/MINIMAL_SOURCE
+    minimally "source $MINIMAL_SOURCE"
 }
 
 vd12 () {
@@ -120,5 +120,4 @@ w () {
     quietly type "$@" | grep -v "is a function"
 }
 
-# debug_ "MINIMAL_SOURCE=$MINIMAL_SOURCE"
 quietly import_essentials
