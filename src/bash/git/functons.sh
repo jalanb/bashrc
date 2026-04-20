@@ -1,4 +1,4 @@
-#! /usr/bin/env head -n 3
+#! /usr/bin/env head
 
 # This script is intended to be sourced, not run
 
@@ -62,7 +62,7 @@ gc () {
     [[ $1 =~ [-][qQ] ]] && quiet_=$1 && shift
     [[ $quiet_ =~ [-][Q] ]] && quietly_=Quietly
     if [[ -d "$1" ]]; then
-        local dir_="$1" && shift
+        local dir_="$(first_dir "$1")" && shift
         [[ $quiet_ ]] || show_command git -C "$dir_" "$@"
         $quietly_ git --no-pager -C "$dir_" "$@"
     else
@@ -754,14 +754,11 @@ grs () {
 }
 
 gru () {
-    local c_= quiet_= arg_=
-    for arg_ in "$@"; do
-        [[ -d "$arg_" ]] && c_="-C ""$arg_"
-        [[ $arg_ =~ [-]q ]] && quiet_=1
-    done
-    local args_="$c_ remote get-url origin"
-    [[ $quiet_ ]] || show_command git $args_
-    git $args_
+    local dir_="$(first_dir "$1")" && shift
+    local origin_=$(quietly get_origin $dir_)
+    [[ $origin_ ]] || return 1
+    [[ $* =~ -q ]] || show_command git -C $dir_ remote get-url origin
+    get_origin $dir_
 }
 
 gsa () {
@@ -1126,7 +1123,7 @@ gsri () {
 }
 
 git_status_line_dir () {
-    local dir_="$1"; shift
+    local dir_="$(first_dir "$1")" && shift
     git -C $dir_ "$@" status --short
 }
 alias gssd=git_status_line_dir
@@ -1180,7 +1177,7 @@ clonn () {
     local pwd_=$(pwd)
     if [[ -d $name_ ]]; then
         cd $name_
-        local gurl_=$(git remote get-url origin)
+        local gurl_=$(get_origin)
         [[ $url_ == $gurl_ ]] || return 15
         pwd
         return 0
@@ -1356,6 +1353,16 @@ git_root () {
 
 # xxxxxxxxx
 
+first_dir () {
+    if [[ -d "$1" ]]; then
+        echo "$1"
+        return 0
+    else
+        echo "."
+        return 1
+    fi
+}
+
 git_stash () {
     local _doc___="""git stash"""
     gc "$@" stash
@@ -1385,6 +1392,12 @@ has_branch () {
     git branch --contains $1 2>/dev/null | grep -q $2
 }
 
+get_origin () {
+    local dir_=. 
+    [[ -d "$1" ]] && dir_="$1"
+    quietly git -C $dir_ remote get-url origin 
+}
+
 git_stash_and () {
     local stashed_=
     if git_changes_here; then
@@ -1411,27 +1424,44 @@ get_branch () {
 }
 
 git_branch () {
-    local show_=show_run_command ref_=HEAD
-    [[ $1 == -q ]] && show_= && shift
-    [[ $1 == -v ]] && show_=show_run_command && shift
-    [[ "$@" ]] && ref_=$1
-    $show_ git rev-parse --abbrev-ref $ref_ 2> /dev/null || return 1
+    local quiet_= verbose_=
+    [[ $1 == -q ]] && quiet_=quietly
+    [[ $1 == -q ]] && shift
+    [[ $1 == -v ]] && verbose_=True
+    [[ $1 == -v ]] && shift
+    local ref_=HEAD
+    [[ "$@" ]] && ref_="$1"
+    [[ $verbose_ ]] && show_command git rev-parse --abbrev-ref $ref_ 
+    $quiet_ git rev-parse --abbrev-ref $ref_
+}
+
+set_sed_origin () {
+    git remote set-url origin $(sed_origin "$@")
 }
 
 sed_origin () {
-    git remote set-url origin $(git remote get-url origin | sed "$@")
+    local dir_=
+    [[ -d "$1" ]] && dir_="$1"
+    [[ $dir_ ]] && shift
+    get_origin "$dir_" | sed "$@"
+}
+
+gitless_origin () {
+    local dir_=
+    [[ -d "$1" ]] && dir_="$1"
+    [[ $dir_ ]] && shift
+    sed_origin "$dir_" "s,[.]git$,,"
 }
 
 show_clone () {
     local head_='===-===-==='
-    local dir_="$1"
-    [[ $dir_ ]] || dir_=.
+    local dir_="$(first_dir "$1")" && shift
     [[ -d "$dir_/.git" ]] || return 1
     local git_="git -C $dir_"
     echo
     blue_line $head_
     green_line $head_
-    green_line "$($git_ remote get-url origin) -> " $(rlf "$dir_")
+    green_line "$(get_remote $dir_) -> " $(rlf "$dir_")
     green_line $head_
     local status_=$($git_ status --porcelain)
     if [[ $status_ ]]; then
@@ -1551,14 +1581,13 @@ any_git_changes_regexp_="^${git_status_char_regexp_}${git_status_char_regexp_}"
 
 any_git_changes_ () {
     local _doc___="whether the current dir has modified or untacked files"
-    local dir_=$1
-    [[ -z $dir_ ]] && dir_=$PWD
+    local dir_="$(first_dir "$1")" && shift
     [[ -d "${dir_}/.git" ]] || return 1
     git -C $dir_ status --porcelain | grep "$any_git_changes_regexp_"
 }
 
 has_git_changes_ () {
-    local dir_=$1
+    local dir_="$(first_dir "$1")" && shift
     local files_=$(any_git_changes_ $dir_)
     [[ -n $files_ ]]
 }
@@ -1576,6 +1605,30 @@ ahead_of_branch () {
 # xxxxxxxxxxxxxxxx
 
 # xxxxxxxxxxxxxxxxx
+
+github_owner_repo () {
+    local arg_="$1" data_=
+    [[ $arg_ ]] || arg_=.
+    if [[ -d "$arg_" ]]; then
+        data_="$(gitless_origin $1)"
+    elif [[ $arg_ ]]; then
+        data_="$1"
+    fi
+    [[ $data_ ]] || return 1
+    # The old way:
+    # sed -E 's,.*[:/]+([A-Za-z0-9._-]+)/([A-Za-z0-9._-]+)$,\1/\2,'
+    case $data_ in
+        git@github.com:*)
+            printf '%s' "${data_#git@github.com:}"
+            ;;
+        https://github.com/*|ssh://git@github.com/*)
+            printf '%s' "${data_#*github.com/}"
+            ;;
+        *)
+            return 2
+            ;;
+    esac
+}
 
 git_simple_status () {
     local arg_dir="${1:-$PWD}"
@@ -1612,4 +1665,3 @@ log_test_file ()
 {
     grep_git_log_for_python_test_file 3
 }
-

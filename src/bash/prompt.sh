@@ -122,16 +122,18 @@ short_pwd () {
 }
 
 git_data () {
-    local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local git_data_=
+    local branch_name_="$(git_branch -q)"
+    local versioned_branch_=
     if [[ $branch_name_ ]]; then
-        local bump_version_="v$(bump get 2>/dev/null)"
+        versioned_branch_=" $branch_name_"
+        local bump_version_="v$(quietly bump get)"
         [[ $bump_version_ == v ]] && bump_version_=
-        git_data_=":$branch_name_ $bump_version_"
+        [[ $bump_version_ ]] && versioned_branch_+=" $bump_version_"
     fi
-    local project_=$(git remote get-url origin 2>/dev/null | sed -E 's/\.git$//' | sed -E 's,.*[:/]+([A-Za-z0-9._-]+)/([A-Za-z0-9._-]+)$,\1/\2,')
-    [[ $project_ ]] && git_data_="${project_}${git_data_}"
-    echo $git_data_
+
+    local repo_="$(github_owner_repo .)"
+    [[ $repo_ ]] || return
+    echo "${repo_}${versioned_branch_:+:$versioned_branch_}"
 }
 
 dir_data () {
