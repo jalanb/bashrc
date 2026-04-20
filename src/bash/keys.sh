@@ -75,8 +75,8 @@ push_changed_keys () {
 
 KEYBOARD="$(dirname $(readlink -f $BASH_SOURCE))/keyboard"
 
-KEYS_SOURCE=$(readlink -f $BASH_SOURCE)
-BASH_DIR=$(dirname $KEYS_SOURCE)
+KEYS_SOURCE="$(readlink -f "$BASH_SOURCE")"
+BASH_DIR="$(dirname "$KEYS_SOURCE")"
 KEYBOARD_DIR=$BASH_DIR/keyboard
 
 

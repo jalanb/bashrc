@@ -19,7 +19,7 @@ rd () {
 }
 
 rf () {
-    python ~/jab/src/python/rf.py "$@"
+    $(python_command) ~/jab/src/python/rf.py "$@"
 }
 
 ri () {

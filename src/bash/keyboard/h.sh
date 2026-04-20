@@ -1,4 +1,4 @@
-#! /usr/bin/env kat -n
+#! /usr/bin/env cat
 
 . ~/bash/history.sh
 . ~/bash/keyboard/v.sh
@@ -41,6 +41,10 @@ hh () {
     read_history | less -SNR
 }
 
+hi () {
+    fc -ln -1
+}
+
 hs () {
     history_start
 }
@@ -76,6 +80,11 @@ hed () {
     HALF_SCREEN=`expr $SCREEN / 2`
     HEADLINES=${HEADLINES:-$HALF_SCREEN}
     head -n ${1:-$HEADLINES} "$@"
+}
+
+hhi () {
+    fred=$(hhi)
+    echo $fred
 }
 
 hub () {
