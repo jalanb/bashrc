@@ -25,25 +25,39 @@ ack () {
     if [[ -x /usr/local/lib64/perl5 ]]; then
         $HOME/.local/bin/ack "$@"
     else
+        echo "Using rg instead" >&2
         $HOME/.local/bin/rg "$@"
     fi
 }
 
-alin () {
-    if [[ -d .github ]]; then
-        quietly ansible-lint --exclude=.github "$@"
+vack () {
+    vim -p $(ack -l "$@" 2>/dev/null)
+}
+
+cdd () {
+    cd ~/down
+    l
+}
+
+fzf () {
+    if test -x ~/.local/bin/fzf; then
+        ~/.local/bin/fzf "$@"
+        return 0
     else
-        quietly ansible-lint "$@"
+        echo "$@"
+        return 1
     fi
 }
 
-cdg () {
-    local base=~/github/SMBCGitHub
+cdb () {
+    local base=~/bitbucket/smbc
     cd $base || return 1
     [[ $1 ]] || return 0
 
     shopt -s nullglob
+    shopt -s nocaseglob
     local -a matches=( *"$1"* )
+    shopt -u nocaseglob
     shopt -u nullglob
     local choice
     case ${#matches[@]} in
@@ -66,14 +80,207 @@ cdg () {
     esac
 }
 
-cdj () {
-    cd ~/github/jalanb/"$@"
+cdg () {
+    cdx ~/github/SMBCGitHub "$@"
 }
 
+cdj () {
+    cdx ~/github/jalanb "$@"
+}
+
+cdw () {
+    cdx ~/workspaces "$@"
+}
+
+cdx () {
+    local base="$1"
+    cd $base || return 1
+    shift
+    if [[ ! $1 ]]; then
+        l
+        return 0
+    fi
+
+    shopt -s nullglob
+    shopt -s nocaseglob
+    local -a matches=( *"$1"*/ )
+    # declare -p matches
+    shopt -u nocaseglob
+    shopt -u nullglob
+    local choice
+    case ${#matches[@]} in
+        0) echo "No matched sub-dirs: $PWD/*$1*" >&2
+            return 2
+            ;;
+        1)  cd "${matches[0]}"
+            pwdl
+            return 0
+            ;;
+        *) echo "Matching sub-dirs:"
+            choice=$(
+                ls -d "$base"/*"$1"* \
+                | while IFS= read -r p; do [[ -d $p ]] && printf '%s\n' "${p##$base/}"; done \
+                | fzf --prompt="cdg> " --height=40% --reverse
+            ) || return 3
+            cd "$base/$choice" || return 4
+            pwdl
+            return 0
+            ;;
+    esac
+}
+
+pwdl () {
+    echo
+    lgreen $PWD
+    echo
+    echo
+    if [ -z "$(ls -A .)" ]; then
+        ls -la
+    else
+        l
+    fi
+    echo
+}
+
+alint () {
+    if [[ -d .github ]]; then
+        quietly ansible-lint --exclude=.github "$@"
+    elif [[ $@ ]]; then
+        quietly ansible-lint "$@"
+    else
+        quietly ansible-lint .
+    fi
+}
+
+COLLECTIONS=/u/abrogan/github/SMBCGitHub/SMBC-JRIA-Ansible_Github_as_Code/collections
 anav () {
+    addcoll
     ansible-navigator "$@"
+    remcoll
+}
+
+anavi () {
+    anav --mode interactive "$@"
+    clear
 }
 
 arun () {
-    anav run "$@"
+    anavi run "$@"
+}
+
+adeb () {
+    arun -v "$@"
+}
+
+aclean () {
+    local playbook_= arg_=
+    for arg_ in "$@"; do
+        if test -f $arg_; then
+            playbook_="$arg_"
+        fi
+    done
+
+    if [[ ! $playbook_ ]]; then
+        show_fail "No playbook found: ""$@"
+        return 1
+    fi
+    set -x
+    local log="${playbook_%yml}log"
+    env > "$log"
+    echo >> "$log"
+    TERM=dumb ANSIBLE_FORCE_COLOR=0 NO_COLOR=1 \
+        anav run --mode stdout -vvvv "$@" | ~/.local/bin/clean_navigator >> "$log"
+    set +x
+    echo "bat \"$log\""
+}
+
+GACWORK=/u/abrogam/workspaced/gac
+
+addcoll () {
+    export ANSIBLE_COLLECTIONS_PATH=$COLLECTIONS/
+    export ANSIBLE_COLLECTIONS_PATHS=$COLLECTIONS/
+}
+
+collinstall () {
+    ansible-galaxy install -r collections/requirements.yml --force -c
+}
+
+
+remcoll () {
+    unset ANSIBLE_COLLECTIONS_PATH
+    unset ANSIBLE_COLLECTIONS_PATHS
+}
+
+
+collect () {
+    local collections_=/u/abrogan/github/SMBCGitHub/SMBC-JRIA-Ansible_Github_as_Code/collections
+    case $1 in
+        add) addcoll
+            ;;
+        rem|remove)
+            remcoll
+            ;;
+        in|install)
+            ansible-galaxy install -r $COLLECTIONS/requirements.yml --force -c
+            ;;
+    esac
+}
+
+deduplicate_repo_url () {
+    local owner_repo=$1
+    local branch=$2
+
+    local owner=${owner_repo%%/*}
+    local repo=${owner_repo#*/}
+
+    # internal boilerplate collapse
+    if [[ $repo == SMBC-JRIA-* ]]; then
+        owner=SMBC
+        repo=${repo#SMBC-JRIA-}
+    fi
+
+    # normalisation helper
+    normalise () { tr '[:upper:]_- ' '[:lower:]' | tr -d '-_ '; }
+
+    local nrepo=$(printf '%s' "$repo" | normalise)
+    local nbranch=$(printf '%s' "$branch" | normalise)
+
+    # drop repo name from branch if duplicated
+    if [[ $nbranch == *$nrepo* ]]; then
+        branch=${branch//${branch%%-*}-/}
+    fi
+
+    printf '%s/%s:%s' "$owner" "$repo" "$branch"
+}
+
+test_netwrix_install () {
+    # Remember that "install" is the default action for linux_agents_netwrix
+    test_netwrix linux_agents_netwrix "$@"
+}
+
+test_netwrix_uninstall () {
+    test_netwrix linux_agents_netwrix_uninstall "$@"
+}
+
+test_netwrix () {
+    local tag_="$1"; shift || true
+    [[ $tag_ ]] || return 3
+    # Warning: WFM
+    # For developer testing only, we choose
+    #  - a company
+    #  - the team's dev server
+    #
+
+    cd ~/workspaces/netwrix; pwd
+    export INVENTORY="/u/abrogan/github/SMBCGitHub/SMBC-JRIA-Ansible_Github_as_Code/inventory.ini"
+    export ANSIBLE_COLLECTIONS_PATH="/u/abrogan/ansible-dev"
+    ansible-navigator run test_netwrix_install.yml \
+        --ee false \
+         -e snow_company=SMBC \
+        --inventory "$INVENTORY" \
+        -- \
+        --limit pagmgtdv01.smbcgroup.com \
+        --tags "$tag_" \
+        "$@"
+    # Rest of "$@" go to the playbook, not the navigator
 }
