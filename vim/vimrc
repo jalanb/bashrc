@@ -102,7 +102,8 @@ nnoremap qz :qa!<cr>
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 nnoremap tf :tabnew ~/tmp/fred.txt
-nnoremap th :tabnew ~/jalanb/jalanb/hub/hub/
+nnoremap th :tabnew /opt/clones/github/
+nnoremap tj :tabnew /opt/clones/github/jalanb/
 nnoremap tk :tabnew  ~/bash/keyboard/.sh<left><left><left>
 nnoremap ti :tabnew<Space><cr>i
 nnoremap tn :tabnew<Space>
