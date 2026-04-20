@@ -13,3 +13,5 @@ alias collinstall="ansible-galaxy install -r collections/requirements.yml --forc
 
 # This alias is used to remove the local collection path when not using local collection and wish to use collections installed in the Execution Environment
 alias remcoll="unset ANSIBLE_COLLECTIONS_PATHS"
+
+unalias addcoll remcoll collinstall
