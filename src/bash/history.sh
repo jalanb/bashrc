@@ -8,6 +8,7 @@ SHELL_SESSION_HISTORY=0
 # xxxx
 # xxxxx
 
+
 vhist () {
     local __doc__="edit unplugged stuff from history"
     _tease_history | [[ -n $* ]] && vim - +/"$@"

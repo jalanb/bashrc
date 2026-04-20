@@ -932,7 +932,7 @@ lines_to_spaces () {
 # xxxxxxxxxxxx
 
 blank_script () {
-    [[ -f "$1" ]] && return
+    [[ -f "$1" ]] && return 1
     echo "#! /bin/bash" > "$1"
     echo "" >> "$1"
 }

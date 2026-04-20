@@ -11,7 +11,7 @@ PYTHON_SOURCE="$BASH_SOURCE"
 # xxx
 
 
-_python_command () {
+python_command () {
     local __doc__="""Command to be used in this script is python3, or can be over-written with $PYTHON"""
     local python_=${PYTHON:-python3}
     if ! QUIETLY which $python_ ; then
@@ -126,7 +126,7 @@ ppy () {
 }
 
 pyc () {
-    local cmd_=$(quietly _python_command)
+    local cmd_=$(quietly python_command)
     [[ $cmd_ ]] || return 1
     $cmd_ -c "$@"
 }
@@ -136,7 +136,7 @@ pym () {
     for i in "${!args[@]}"; do
         [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
     done
-    local cmd_=$(quietly _python_command)
+    local cmd_=$(quietly python_command)
     [[ $cmd_ ]] || return 1
     [[ $quiet_ ]] || show_command $cmd_ -m "${args[@]}"
     $cmd_ -m "${args[@]}"
