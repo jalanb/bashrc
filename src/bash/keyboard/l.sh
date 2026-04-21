@@ -6,7 +6,9 @@ source ~/keys/q.sh
 
 l () {
     local command_=$(ls_command)
-    [[ $1 ]] && $command_ "$@" || $command_ .
+    local args_=("$@")
+    [[ ${#args_[@]} -eq 0 ]] && args_=(.)
+    l_runner $command_ "${args_[@]}"
 }
 
 # xx
@@ -376,6 +378,13 @@ lllllllllg () {
     gl_ 141 "$@"
 }
 
+
+# _xxxxxxxx
+
+l_runner () {
+    local cmd_=$1; shift
+    $cmd_ "$@";
+}
 
 # _xxxxxxxxx
 

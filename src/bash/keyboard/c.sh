@@ -176,6 +176,18 @@ code () {
 # _xxx
 # xxxxx
 
+cdclo () {
+    cde /opt/clones/"$@"
+}
+
+cdhub () {
+    cdclo github/"$@"
+}
+
+cdlab () {
+    cdclo gitlab/"$@"
+}
+
 clean () {
     rf -q "$@"
 }
@@ -184,31 +196,30 @@ clean () {
 # xxxxxx
 # _xxxxx
 
-cclot () {
-    local option_=$1
-    local arg_=$2
-    local i_=$3 name_=$4
-    [[ $option_ =~ (-$i_|--$name_) ]]
-    [[ $arg_ ]] && echo "option_=${option_}$arg_"
+ccl_option () {
+    [[ $1 =~ ^(-$2|--$3) ]]
 }
 
 clean_clear_ls () {
     local __doc__="clean, clear, ls"
-    [[ $1 =~ ^[-][-] ]] || return 1
-    local option_=$1; shift
+    [[ $1 =~ ^[-][-]* ]] || return 1
     local dir_=. ls_=ls
-    cclot "$option_" n clean && clean
-    cclot "$option_" r clear && clear
-    cclot "$option_" l ls && ls_=l
-    cclot "$option_" a all && option_="${option_}a"
-    cclot "$option_" 1 one && option_="${option_}1tr"
-    cclot "$option_" o long && option_="${option_}lhtr"
-    cclot "$option_" w wide && option_="${option_}C"
-    [[ $option_ ]] || option_="${option_}C"
-    [[ -d "$1" ]] && dir_="$1"
+    ccl_option $1 l ls && ls_=l
+    local arg_=
+    ccl_option $1 a all && arg_=a
+    ccl_option $1 1 one && arg_=1tr
+    ccl_option $1 o long && arg_=lhtr
+    ccl_option $1 w wide && arg_=C
+    shift
+    local option_=
+    [[ $arg_ ]] && option_=" -$arg_" || option_=" -C"
+    [[ "$1" ]] && dir_="$1"
     [[ -d "$dir_" ]] || return 1
     [[ $ls_ ]] || return 0
-    [[ $option_ ]] && option_=-$option_
-    $ls_ $option_ "$dir_"
+    clean
+    clear
+    green_line $PWD
+    echo
+    $(ls_program ls) $(ls_options) $option_ "$dir_"
 }
 
