@@ -358,7 +358,7 @@ blacken () {
 }
 
 clipvim () {
-    bash -x ~/jab/bin/tmp_fred.sh
+    bash -x ~/jab/bin/clipvim.sh
 }
 
 clip_in () {

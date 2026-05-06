@@ -58,7 +58,7 @@ cw () {
 }
 
 cv () {
-    cde $1; v $(basename_ $1)
+    bash ~/jab/bin/clipvim.sh
 }
 
 cy () {
