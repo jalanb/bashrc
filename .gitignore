@@ -38,6 +38,17 @@ environ.env
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# root-level directories
+/include/
+/local/
+/lib/
+/share/
+/vim/after/plugin
+/vim/black
+/vim/bundle
+/vim/pack
+/vim/view
+
 # IPython
 profile_default/
 ipython_config.py

@@ -1,6 +1,5 @@
 #! /bin/bash
 
-
 work () {
     echo "$@"."${WORK_COM}"
 }
@@ -30,7 +29,6 @@ cdb () {
     local base=~/bitbucket/smbc
     cd $base || return 1
     [[ $1 ]] || return 0
-
     shopt -s nullglob
     shopt -s nocaseglob
     local -a matches=( *"$1"* )
@@ -77,7 +75,6 @@ cdx () {
         l
         return 0
     fi
-
     shopt -s nullglob
     shopt -s nocaseglob
     local -a matches=( *"$1"*/ )
@@ -122,7 +119,7 @@ pwdl () {
     echo
     echo
     if [ -z "$(ls -A .)" ]; then
-        ls -la
+        ls -ld $PWD
     else
         l
     fi
@@ -166,7 +163,6 @@ aclean () {
             playbook_="$arg_"
         fi
     done
-
     if [[ ! $playbook_ ]]; then
         show_fail "No playbook found: ""$@"
         return 1
@@ -184,20 +180,16 @@ aclean () {
 GACWORK=/u/abrogam/workspaced/gac
 
 addcoll () {
-    export ANSIBLE_COLLECTIONS_PATH=$COLLECTIONS/
-    export ANSIBLE_COLLECTIONS_PATHS=$COLLECTIONS/
+    export ANSIBLE_COLLECTIONS_PATH=collections/
 }
 
 collinstall () {
-    ansible-galaxy install -r collections/requirements.yml --force -c
+    ansible-galaxy install -r collections/requirements.yml -c
 }
-
 
 remcoll () {
     unset ANSIBLE_COLLECTIONS_PATH
-    unset ANSIBLE_COLLECTIONS_PATHS
 }
-
 
 collect () {
     local collections_=/u/abrogan/github/SMBCGitHub/SMBC-JRIA-Ansible_Github_as_Code/collections
@@ -216,27 +208,18 @@ collect () {
 deduplicate_repo_url () {
     local owner_repo=$1
     local branch=$2
-
     local owner=${owner_repo%%/*}
     local repo=${owner_repo#*/}
-
-    # internal boilerplate collapse
     if [[ $repo == SMBC-JRIA-* ]]; then
         owner=SMBC
         repo=${repo#SMBC-JRIA-}
     fi
-
-    # normalisation helper
     normalise () { tr '[:upper:]_- ' '[:lower:]' | tr -d '-_ '; }
-
     local nrepo=$(printf '%s' "$repo" | normalise)
     local nbranch=$(printf '%s' "$branch" | normalise)
-
-    # drop repo name from branch if duplicated
     if [[ $nbranch == *$nrepo* ]]; then
         branch=${branch//${branch%%-*}-/}
     fi
-
     printf '%s/%s:%s' "$owner" "$repo" "$branch"
 }
 
@@ -249,25 +232,24 @@ test_netwrix_uninstall () {
     test_netwrix linux_agents_netwrix_uninstall "$@"
 }
 
+#       --ask-vault-pass \
+#        -e @/home/runner/.ansible/vault_become \
+#        -e snow_company=SMBC \
+#       /u/abrogan/github/SMBCGitHub/SMBC-JRIA-Netwrix_Collection/playbooks/deploy_netwrix.yml \
+
 test_netwrix () {
     local tag_="$1"; shift || true
     [[ $tag_ ]] || return 3
-    # Warning: WFM
-    # For developer testing only, we choose
-    #  - a company
-    #  - the team's dev server
-    #
-
+    addcoll
     cd ~/workspaces/netwrix; pwd
-    export INVENTORY="/u/abrogan/github/SMBCGitHub/SMBC-JRIA-Ansible_Github_as_Code/inventory.ini"
-    export ANSIBLE_COLLECTIONS_PATH="/u/abrogan/ansible-dev"
-    ansible-navigator run test_netwrix_install.yml \
-        --ee false \
-         -e snow_company=SMBC \
-        --inventory "$INVENTORY" \
+    set -x
+    ansible-navigator run \
+        test_netwrix_agent.yml \
+        --inventory ~/github/SMBCGitHub/SMBC-JRIA-Ansible_Linux_Inventory/DEV \
+        -bkK \
         -- \
-        --limit pagmgtdv01.smbcgroup.com \
+        --limit pagmgtdv02.smbcgroup.com \
         --tags "$tag_" \
         "$@"
-    # Rest of "$@" go to the playbook, not the navigator
+    set +x
 }
