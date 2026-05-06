@@ -95,7 +95,21 @@ vp () {
 }
 
 # vq
-# vr
+
+vr () {
+    local sought_=${@: -1}
+    local rg_args_=("${@:1:$#-1}")
+
+    mapfile -t files < <(rg -l "${rg_args_[@]}" "$sought_")
+    if (( ${#files[@]} )); then
+        vim -p +"/$sought_" "${files[@]}"
+    else
+        show_fail "Nothing to edit"
+    fi
+
+
+}
+
 vs () {
     vv "$@"
     local arg_=
