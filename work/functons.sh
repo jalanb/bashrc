@@ -21,32 +21,9 @@ work_github () {
     echo "https://github.com/SMBCGitHub"
 }
 
-ack () {
-    if [[ -x /usr/local/lib64/perl5 ]]; then
-        $HOME/.local/bin/ack "$@"
-    else
-        echo "Using rg instead" >&2
-        $HOME/.local/bin/rg "$@"
-    fi
-}
-
-vack () {
-    vim -p $(ack -l "$@" 2>/dev/null)
-}
-
 cdd () {
     cd ~/down
     l
-}
-
-fzf () {
-    if test -x ~/.local/bin/fzf; then
-        ~/.local/bin/fzf "$@"
-        return 0
-    else
-        echo "$@"
-        return 1
-    fi
 }
 
 cdb () {
@@ -127,6 +104,16 @@ cdx () {
             return 0
             ;;
     esac
+}
+
+fzf () {
+    if test -x ~/.local/bin/fzf; then
+        ~/.local/bin/fzf "$@"
+        return 0
+    else
+        echo "$@"
+        return 1
+    fi
 }
 
 pwdl () {
