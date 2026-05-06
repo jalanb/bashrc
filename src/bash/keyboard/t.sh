@@ -75,6 +75,10 @@ tel () {
     fi
 }
 
+tl () {
+    tail -n $(( $LINES - 3 ))
+}
+
 tma () {
     tmux new-session -A -s jabtmux
 }
