@@ -112,10 +112,13 @@ cdj () {
 cdr () {
     local dir_=$(get_root)
     if [[ ! $dir_ ]]; then
-        show_error "No git root directory found" >&2
+        show_fail "No git root directory found"
         return 1
     fi
-    cdq $dir_
+    if ! cdq $dir_; then
+        show_fail "Cannot cd to \"$dir_\""
+        return 1
+    fi
     white "Origin: "; green_line $(git remote get-url origin)
     white " Local: "; green_line $(rlf .)
 }
