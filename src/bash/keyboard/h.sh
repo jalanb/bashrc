@@ -10,7 +10,7 @@
 h () {
     local __doc__="tail history for half a screen"
     local lines_=$(( $LINES / 2 ))
-    history_tail $lines_ "$@"
+    history_view tail $lines_ "$@"
 }
 
 # _x
@@ -37,16 +37,12 @@ hg () {
     history_grep "$@"
 }
 
+hl () {
+    history_read | less -SNR
+}
+
 hh () {
-    read_history | less -SNR
-}
-
-hi () {
-    fc -ln -1
-}
-
-hs () {
-    history_start
+    history_view head "$@"
 }
 
 
@@ -55,7 +51,7 @@ hl () {
 }
 
 ht () {
-    history_tail "$@"
+    history_view tail "$@"
 }
 
 hv () {
@@ -83,23 +79,23 @@ hed () {
 }
 
 hub () {
-    local _directory=~/hub
-    local _remote=
-    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
-    [[ $1 =~ http.*git ]] && _remote="$1" && shift
-    local _destination=
+    local directory_=~/hub
+    local remote_=
+    [[ $( clipout ) =~ http.*git ]] && remote_=$( clipout )
+    [[ $1 =~ http.*git ]] && remote_="$1" && shift
+    local destination_=
     if [[ -n "$@" ]]; then
         if cde_ok ~/hub "$@"; then
-            _directory=$(cde_first ~/hub "$@")
+            directory_=$(cde_first ~/hub "$@")
         fi
     fi
-    if [[ $_remote =~ http ]]; then
-        [[ -d $_directory ]] && cd $_directory
-        _directory=$(clone -n $_remote)
+    if [[ $remote_ =~ http ]]; then
+        [[ -d $directory_ ]] && cd $directory_
+        directory_=$(clone -n $remote_)
     fi
-    [[ -d $_directory ]] && cde $_directory
-    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
-    cde $_directory
+    [[ -d $directory_ ]] && cde $directory_
+    [[ $(rlf $directory_) == $(rlf ~/hub) ]] && return 0
+    cde $directory_
 }
 
 hhv () {
@@ -142,47 +138,7 @@ hgt () {
 }
 
 htt () {
-    history_tail 2 | head -n 2
-}
-
-hub () {
-    local _directory=~/hub
-    local _remote=
-    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
-    [[ $1 =~ http.*git ]] && _remote="$1" && shift
-    local _destination=
-    if [[ -n "$@" ]]; then
-        if cde_ok ~/hub "$@"; then
-            _directory=$(cde_first ~/hub "$@")
-        fi
-    fi
-    if [[ $_remote =~ http ]]; then
-        [[ -d $_directory ]] && cd $_directory
-        _directory=$(clone -n $_remote)
-    fi
-    [[ -d $_directory ]] && cde $_directory
-    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
-    cde $_directory
-}
-
-hub () {
-    local _directory=~/hub
-    local _remote=
-    [[ $( clipout ) =~ http.*git ]] && _remote=$( clipout )
-    [[ $1 =~ http.*git ]] && _remote="$1" && shift
-    local _destination=
-    if [[ -n "$@" ]]; then
-        if cde_ok ~/hub "$@"; then
-            _directory=$(cde_first ~/hub "$@")
-        fi
-    fi
-    if [[ $_remote =~ http ]]; then
-        [[ -d $_directory ]] && cd $_directory
-        _directory=$(clone -n $_remote)
-    fi
-    [[ -d $_directory ]] && cde $_directory
-    [[ $(rlf $_directory) == $(rlf ~/hub) ]] && return 0
-    cde $_directory
+    history_view tail 2 | head -n 2
 }
 
 # xxxx
@@ -204,37 +160,8 @@ hash_bang () {
 
 # history_xxxx+
 
-read_history () {
-    local history_command_="^history\(_[a-z-]*\)*" history_search_="^[Hh][Gghnt]" h_command="^h [0-9][0-9]*$"
-    local history_log_="-e $history_command_ -e $history_search_ -e $h_command"
-    local format_=
-    if [[ $1 =~ [-]+d[ate]* ]]; then
-        shift
-        format_="%Y/%m/%d:%H:%M:%S "
-    fi
-    HISTTIMEFORMAT="$format_" history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "$history_log_"
-}
-
 type_executable  () {
     type "$@" > /dev/null 2>&1
-}
-
-history_view () {
-    local __doc__="view history"
-    local _viewer=
-    type_executable "$1" && _viewer="$1"
-    [[ $_viewer ]] && shift || _viewer=tail
-    local _options="-n $(( $LINES - 8 ))"
-    [[ $1 == -n ]] && shift
-    if [[ $1 =~ ^[0-9] ]]; then
-        _options="-n $1"
-        shift
-    fi
-    read_history "$@" | $_viewer $_options
-}
-
-history_start () {
-    history_view head "$@"
 }
 
 big_history_grep () {
@@ -249,15 +176,44 @@ big_history_grep () {
 history_grep () {
     local __doc__="grep in history"
     [[ $1 =~ (-h|--help) ]] && ww history_grep && return 0
-    local _back= date_=
-    [[ $1 =~ -B[0-9] ]] && _back=$1 && shift
+    local back_= date_=
+    [[ $1 =~ -B[0-9] ]] && back_=$1 && shift
     [[ $1 =~ -d ]] && date_=--date && shift
-    local _sought="$@"
-    read_history $date_ | sed -es':^ *::' -e 's: *$::' | grep --color $_back "${_sought/ /.}"
+    local sought_="$@"
+    history_read $date_ | sed -es':^ *::' -e 's: *$::' | grep --color $back_ "${sought_/ /.}"
 }
 
-history_tail () {
-    history_view tail "$@"
+history_read () {
+    local history_command_="^history\(_[a-z-]*\)*" history_search_="^[Hh][Gghnt]" h_command="^h [0-9][0-9]*$"
+    local history_log_="-e $history_command_ -e $history_search_ -e $h_command"
+    local format_=
+    if [[ $1 =~ [-]+d[ate]* ]]; then
+        shift
+        format_="%Y/%m/%d:%H:%M:%S "
+    fi
+    HISTTIMEFORMAT="$format_" history "$@" | sed -e "s/^ *[0-9]*  //"  | grep -v "$history_log_"
+}
+
+history_view () {
+    local __doc__="view history"
+    local viewer_=
+    type_executable "$1" && viewer_="$1"
+    [[ $viewer_ ]] && shift || viewer_="tail"
+    local lines_="-n $(( LINES - 8 ))"
+    if [[ $1 =~ ^[0-9] ]]; then
+        lines_="-n $1"
+        shift
+    elif [[ $1 =~ ^- ]]; then
+        if [[ $1 == -n ]]; then
+            shift
+            lines_="-n $1"
+            shift
+        elif [[ $1 =~ ^-[0-9] ]]; then
+            lines_="-n ${1#-}"
+            shift
+        fi
+    fi
+    history_read "$@" | "$viewer_" "$lines_"
 }
 
 history_vim () {
@@ -265,7 +221,7 @@ history_vim () {
     local tmp_=~/tmp/history.tmp historian_= 
     [[ $1 == -[ ]] && shift && historian_="history -p !-$1" && shift
     [[ $1 == -h ]] && shift && historian_=h
-    [[ $historian_ ]] || historian_=read_history
+    [[ $historian_ ]] || historian_=history_read
     $historian_ "$@" > $tmp_
     local vim_suffix_=+
     if [[ -n $* ]]; then

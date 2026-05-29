@@ -104,10 +104,8 @@ vr () {
     if (( ${#files[@]} )); then
         vim -p +"/$sought_" "${files[@]}"
     else
-        show_fail "Nothing to edit"
+        show_fail "nothing to edit"
     fi
-
-
 }
 
 vs () {

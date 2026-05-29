@@ -5,7 +5,7 @@
 # x
 
 r () {
-    [[ "$@" ]] && show_run_command rm -vrf "$@" || show_run_command ranger .
+    [[ "$*" ]] && show_run_command rm -vrf "$@" || show_run_command ranger .
 }
 
 # xx
@@ -35,6 +35,9 @@ ri () {
     rri "$@"
 }
 
+rj () {
+    rg "$@" /opt/clones/github/jalanb
+}
 rr () {
     local options_="-rf"
     if [[ $1 =~ ^[-][rfv]+$ ]]; then
