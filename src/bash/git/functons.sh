@@ -1461,7 +1461,7 @@ show_clone () {
     echo
     blue_line $head_
     green_line $head_
-    green_line "$(get_remote $dir_) -> " $(rlf "$dir_")
+    green_line "$(get_origin $dir_) -> " $(rlf "$dir_")
     green_line $head_
     local status_=$($git_ status --porcelain)
     if [[ $status_ ]]; then

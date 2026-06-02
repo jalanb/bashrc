@@ -191,7 +191,7 @@ echo_prompt_colour () {
         green ) prompt_colour_="$LIGHT_GREEN";;
           red ) prompt_colour_="$LIGHT_RED";;
          blue ) prompt_colour_="$LIGHT_BLUE";;
-         * ) return 1
+         * ) return 1;;
     esac
     echo $prompt_colour_
 }

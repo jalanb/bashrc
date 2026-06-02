@@ -82,11 +82,6 @@ hed () {
     head -n ${1:-$HEADLINES} "$@"
 }
 
-hhi () {
-    fred=$(hhi)
-    echo $fred
-}
-
 hub () {
     local _directory=~/hub
     local _remote=
