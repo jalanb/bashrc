@@ -298,7 +298,7 @@ install_requirements () {
 
     [[ $2 =~ -p ]] || ppp
     local requirement_file_= 
-    for requirement_ in $requirements_; do
+    for requirement_ in $requirements_dir_; do
         [[ -f "$requirement_" ]] || continue
         lblue_line Found requirements in $requirement_
         ppr "$requirement_"

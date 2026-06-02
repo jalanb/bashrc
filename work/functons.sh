@@ -185,6 +185,7 @@ addcoll () {
 
 collinstall () {
     ansible-galaxy install -r collections/requirements.yml -c
+#   ansible-galaxy install -r collections/requirements.yml --force -c
 }
 
 remcoll () {

@@ -160,7 +160,7 @@ blue_user () {
     if [[ $WORK ]]; then
         show_host_=$(env | grep -v WORK= | grep -q $WORK)
     fi
-    if $show_host_; then
+    if [[ $show_host_ ]]; then
         echo "${blue_user_}@$(lblue_host)"
     else
         echo "${blue_user_}"
