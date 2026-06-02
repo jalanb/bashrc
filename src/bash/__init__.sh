@@ -1,6 +1,13 @@
+#! /usr/bin/env cat
 
+INIT_SOURCE="$(readlink -f "$BASH_SOURCE")"
 
 __version__=0.8.91
+
+.b () {
+    source "$INIT_SOURCE"
+}
+
 
 # echo ~/bash tput
 . ~/bash/tput.sh

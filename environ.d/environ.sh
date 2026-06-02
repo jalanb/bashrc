@@ -1,28 +1,42 @@
 #! /bin/bash
 
+add_to_PATH_sh () {
+    local __doc__="""Add $1 to $PATH, simply at end of existing"""
+    # NB - use only bash here, i.e. do not depend on PATH
+    [[ -d "$1" ]] || return 1
+    if [[ ":$PATH:" == *":$1:"* ]]; then
+        # Already has $1
+        return 0
+    fi
+    if [[ $PATH ]]; then
+        PATH="$PATH:"
+    fi
+    PATH="${PATH}${1}"
+    export PATH
+}
 
 set_paths () {
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then
-        . ~/jab/src/bash/add_to_a_path.sh
-        add_to_PATH $HOME/bin
-        add_to_PATH ~/jab/bin
-        add_to_PATH $HOME/.local/bin
-        add_to_PATH ${VIRTUAL_ENV}/bin
-        add_to_PATH /usr/local/gnu
-        add_to_PATH /usr/local/bin
-        add_to_PATH /opt/uv/bin
-        add_to_PATH /opt/homebrew/bin
-        add_to_PATH /bin
-        add_to_PATH /usr/bin
-#       add_to_PATH /usr/local/opt/python/libexec/bin
-        add_to_PATH /usr/local/sbin
-#       add_to_PATH $HOME/git/bin
-#       add_to_PATH /opt/local/bin
-        add_to_PATH /sbin
-        add_to_PATH /usr/sbin
-        add_to_PATH /usr/local/go/bin
-#       add_to_PATH ~/.cargo/bin
+        PATH=
+        add_to_PATH_sh $HOME/bin
+        add_to_PATH_sh ~/jab/bin
+        add_to_PATH_sh $HOME/.local
+        add_to_PATH_sh $HOME/.local/bin
+        add_to_PATH_sh ${VIRTUAL_ENV}/bin
+        add_to_PATH_sh /opt/homebrew/bin
+        add_to_PATH_sh /usr/local/gnu
+        add_to_PATH_sh /usr/local/bin
+        add_to_PATH_sh /bin
+        add_to_PATH_sh /usr/bin
+#       add_to_PATH_sh /usr/local/opt/python/libexec/bin
+        add_to_PATH_sh /usr/local/sbin
+#       add_to_PATH_sh $HOME/git/bin
+#       add_to_PATH_sh /opt/local/bin
+        add_to_PATH_sh /sbin
+        add_to_PATH_sh /usr/sbin
+        add_to_PATH_sh /usr/local/go/bin
+#       add_to_PATH_sh ~/.cargo/bin
         export PATH
     else
         echo ~/jab is not a directory
@@ -40,7 +54,7 @@ set_bucket () {
 }
 
 show_dir_colors () {
-    local _dircolors=$(quietly realpath $(which gdircolors dircolors | head -n1) )
+    local _dircolors=$(quietly realpath $(quietly which gdircolors dircolors | head -n1) )
     [[ $_dircolors ]] || return 1
     eval $($_dircolors ~/.dircolors | sed -e "s/setenv LS_COLORS /export LS_COLORS=/")
 }

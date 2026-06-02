@@ -1,0 +1,68 @@
+# Converted from .ackrc
+# Types
+--type-add=code:*.py
+--type-add=code:*.test
+--type-add=code:*.tests
+--type-add=code:*.html
+--type-add=code:*.js
+--type-add=code:*.ini
+--type-add=code:*.sh
+--type-add=code:*.xml
+--type-add=code:*.sql
+--type-add=code:*.tmpl
+--type-add=code:*.ezt
+--type-add=code:*.wsgi
+--type-add=code:*.cgi
+
+--type-add=erl:*.erl
+--type-add=erl:*.hrl
+--type-add=erl:*.app
+
+--type-add=html:*.html
+--type-add=html:*.js
+--type-add=html:*.css
+
+--type-add=pyt:*.py
+--type-add=pyt:*.test
+--type-add=pyt:*.tests
+--type-add=pyt:*.pxi
+
+--type-add=test:*.test
+--type-add=test:*.tests
+
+--type-add=text:*.txt
+--type-add=texts:*.txt
+--type-add=texts:*.md
+--type-add=md:*.md
+
+--type-add=yaml:*.yml
+--type-add=yaml:*.yaml
+
+--type-add=shell:*.sh
+
+--type-add=snmp:*.mib
+--type-add=snmp:*.funcs
+
+--type-add=log:*.log
+
+# rg has no direct equivalent of ack's firstlinematch/match: — use -t pyt + --glob or a wrapper
+# pyt:firstlinematch:/^#!.*\bpython/ -> not supported natively
+# test:match:/test.*.py$/ -> not supported natively
+
+# Ignores (many already handled by .gitignore, but explicit here)
+--glob=!.idea
+--glob=!.ipynb_checkpoints
+--glob=!.mypy_cache
+--glob=!.pytest_cache
+--glob=!.tox
+--glob=!.venv
+--glob=!__pycache__
+--glob=!build
+--glob=!compliance.egg-info
+--glob=!coverage
+--glob=!dumps
+--glob=!htmlcov
+--glob=!vim
+--glob=!.coverage
+--glob=!.nose-stopwatch-times
+--glob=!tags

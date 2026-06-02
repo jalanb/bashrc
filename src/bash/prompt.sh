@@ -100,7 +100,10 @@ green_python () {
         local virtual_env_directory_=$(dirname $VIRTUAL_ENV)
         virtual_env_name_=$(basename "$virtual_env_directory_")
     fi
-    local python_version_=$(python -V 2>&1 | head -n1 | cut -d" " -f2)
+
+    local python_app_=$(command -v python3 || command -v python)
+    [[ $python_app_ ]] || return 1
+    local python_version_=$($python_app_ -V 2>&1 | head -n1 | cut -d" " -f2)
     local green_python_=$(green "${python_version_}")
     local lgreen_venv_=$(lgreen_venv)
     if [[ ! $lgreen_venv_ ]]; then
@@ -119,16 +122,18 @@ short_pwd () {
 }
 
 git_data () {
-    local branch_name_="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local git_data_=
+    local branch_name_="$(git_branch -q)"
+    local versioned_branch_=
     if [[ $branch_name_ ]]; then
-        local bump_version_="v$(bump get)"
+        versioned_branch_=" $branch_name_"
+        local bump_version_="v$(quietly bump get)"
         [[ $bump_version_ == v ]] && bump_version_=
-        git_data_=":$branch_name_ $bump_version_"
+        [[ $bump_version_ ]] && versioned_branch_+=" $bump_version_"
     fi
-    local project_=$(git remote get-url origin 2>/dev/null | sed -e "s,.*[/]\([A-Za-z._-]*\)[/]\([A-Za-z._-]*\).git,\1/\2,")
-    [[ $project_ ]] && git_data_="${project_}${git_data_}"
-    echo $git_data_
+
+    local repo_="$(github_owner_repo .)"
+    [[ $repo_ ]] || return
+    echo "${repo_}${versioned_branch_:+:$versioned_branch_}"
 }
 
 dir_data () {
@@ -139,19 +144,27 @@ dir_data () {
 lblue_dir () {
     local dir_=$(dir_data)
     local git_=$(git_data)
+    [[ $git_ =~ $dir_ ]] && dir_="."
     lblue "$git_ $dir_"
 }
 
 colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(lblue_dir)\n $ "
+    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(blue_user) $(lblue_dir)\n "
 }
 
 blue_user () {
     local user_=$(whoami)
     local blue_user_=$(blue ${user_:$USER})
-    # echo "${lblue_user_}@$(lblue_host)"
-    echo "${blue_user_}"
+    local show_host_=
+    if [[ $WORK ]]; then
+        show_host_=$(env | grep -v WORK= | grep -q $WORK)
+    fi
+    if [[ $show_host_ ]]; then
+        echo "${blue_user_}@$(lblue_host)"
+    else
+        echo "${blue_user_}"
+    fi
 }
 
 lblue_host () {
@@ -178,14 +191,14 @@ echo_prompt_colour () {
         green ) prompt_colour_="$LIGHT_GREEN";;
           red ) prompt_colour_="$LIGHT_RED";;
          blue ) prompt_colour_="$LIGHT_BLUE";;
+         * ) return 1;;
     esac
-    [[ -n $prompt_colour_ ]] && shift || prompt_colour_=None
     echo $prompt_colour_
 }
 
 pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
-    console_whoami
+    # console_whoami
     cde_python --add . >/dev/null 2>&1
     history -a
 }

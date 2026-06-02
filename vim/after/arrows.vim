@@ -11,17 +11,17 @@ nnoremap <right>            :call ClaudeRightSearch()<cr>
 "
 " Normal Shift Arrows
 "
+nmap     <s-up>             <up>zz
+nmap     <s-down>           <down>zz
 nnoremap <s-up>             <C-B>
-nnoremap <s-down>           <C-F>
-nnoremap <s-left>           gT
 nnoremap <s-right>          gt
 "noremap <s-left>           gT
 "noremap <s-right>          gt
 "
 " Normal Control Arrows
 "
-"noremap <c-up>             window up
-"noremap <c-down>           does nothing ?
+nmap     <c-up>             gg<down>
+nmap     <c-down>           G<up>
 "noremap <c-left>           prev desktop
 "noremap <c-right>          next desktop
 nnoremap <c-k>              window up

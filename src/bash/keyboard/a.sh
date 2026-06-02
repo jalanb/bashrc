@@ -1,10 +1,20 @@
-#! /bin/cat
-
 # Sourcing ackvim gives us 
 #     a, aa, aaa, aaaa.
 #     ac, ae, af, ah, ai, al, ap, at, ay, av.
 #     more
 . ~/jalanb/avs/__main__/ackvim.sh
+args_array() {
+    local args=()
+    args=("$@")
+    echo -n "${args[0]} ("
+    unset args[0]
+    echo -n ${args[@]}
+    echo ")"
+}
+
+# _
+
+. ~/hub/jalanb/avs/__main__/ackvim.sh
 
 # _
 # x
@@ -43,15 +53,24 @@ aab () {
 }
 
 aaj () {
+<<<<<<< HEAD
     aa "$@" ~/jalanb/
+=======
+    aa "$@" ~/hub/jalanb
+>>>>>>> bb068e3c (New job - some paths have moved)
 }
 
 add () {
     echo $(($1 + $2))
 }
 
+<<<<<<< HEAD
 ajb () {
     a "$@" ~/jab/
+=======
+ajj () {
+    a "$@" ~/hub/jalanb/
+>>>>>>> bb068e3c (New job - some paths have moved)
 }
 
 asb () {
@@ -108,7 +127,7 @@ avv () {
 # xxxx
 
 aajj () {
-    aa "$@" ~/jalanb/jab
+    aa "$@" ~/hub/jalanb/jab
 }
 
 alan () {

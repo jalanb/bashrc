@@ -55,12 +55,17 @@ set keymap vi-insert
 "\e[5~": "\ek0"
 # <PageDown>
 "\e[6~": "\ej$"
+# Alt E
+"\ee": " $(!!)"
+# Alt-Delete
+"\e[3;3~": "!$\r" 
 
 set keymap vi-command
 # <PageUp>
 "\e[5~": "k0"
 # <PageDown>
 "\e[6~": "j$"
-
+# Alt E
+"\ee": "$a $(!!)"
 
 $endif

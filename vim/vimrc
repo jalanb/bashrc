@@ -102,7 +102,8 @@ nnoremap qz :qa!<cr>
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
 nnoremap tf :tabnew ~/tmp/fred.txt
-nnoremap th :tabnew ~/jalanb/jalanb/hub/hub/
+nnoremap th :tabnew /opt/clones/github/
+nnoremap tj :tabnew /opt/clones/github/jalanb/
 nnoremap tk :tabnew  ~/bash/keyboard/.sh<left><left><left>
 nnoremap ti :tabnew<Space><cr>i
 nnoremap tn :tabnew<Space>
@@ -360,25 +361,15 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Vim plugin manager
 "
 call plug#begin('~/.vim/plugged')
-Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
 Plug 'junegunn/vim-easy-align'
+Plug 'dense-analysis/ale'
+" Ignore yaml line-length rule for ansible-lint
+let g:ale_ansible_ansible_lint_options = '--skip-list yaml[line-length]'
+Plug 'preservim/nerdtree'
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"
-Plug 'dense-analysis/neural'
-Plug 'muniftanjim/nui.nvim'
-Plug 'elpiloto/significant.nvim'
-
-Plug 'dense-analysis/ale'
-
 call plug#end()
-
 "
-" Pathogen {{{2
-" Pathogen helps install other vim scipts, see http://github.com/tpope/vim-pathogen
-" And it must be set up before the plugin on command (next)
-execute pathogen#infect()
-call pathogen#helptags()
 filetype on
 filetype plugin on
 filetype indent on  " load filetype-specific indent files
@@ -703,11 +694,11 @@ let g:explSplitRight=1
 let g:explDetailedList=1
 let g:explSortBy='date'
 
-let g:netrw_altv = 1
-let g:netrw_browse_split = 2
-let g:netrw_list_hide= '^ \.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[ceo],\.sw[p-z],\.DS_Store,\~\([^\i]\|$\)'
-let g:netrw_keepdir=0
-let g:netrw_banner = 0
+" let g:netrw_altv = 1
+" let g:netrw_browse_split = 2
+" let g:netrw_list_hide= '^ \.[^\.],\.gz\([^\i]\|$\),\.exe\([^\i]\|$\),\.zip\([^\i]\|$\),\.py[ceo],\.sw[p-z],\.DS_Store,\~\([^\i]\|$\)'
+" let g:netrw_keepdir=0
+" let g:netrw_banner = 0
 
 let g:jabHideFiles='^\.[^\.],\.gz$,\.exe$,\.zip$,\.py[ceo]$,\.sw[p-z],\.DS_Store,\~$'
 let g:jabVertical=1

@@ -74,7 +74,7 @@ vg () {
 # vi
 
 vj () {
-    (cd ~/jab; vv .; gsi)
+    (cd ~/jab; vv . && gsi)
 }
 
 vl () {
@@ -84,13 +84,32 @@ vl () {
 
 # vm
 # vn
-# vo
+vo () {
+    local __doc__="""vim output of last command"""
+    local last_cmd_=$(fc -ln -1) || return 1
+    vv $(eval $last_cmd_)
+}
+
 vp () {
     edit_source ~/bash/prompt.sh +/^colour_prompt "$@"
 }
 
 # vq
-# vr
+
+vr () {
+    local sought_=${@: -1}
+    local rg_args_=("${@:1:$#-1}")
+
+    mapfile -t files < <(rg -l "${rg_args_[@]}" "$sought_")
+    if (( ${#files[@]} )); then
+        vim -p +"/$sought_" "${files[@]}"
+    else
+        show_fail "Nothing to edit"
+    fi
+
+
+}
+
 vs () {
     vv "$@"
     local arg_=
@@ -113,18 +132,35 @@ vu () {
 
 vv () {
     local gsi_= source_=
-    if [[ $1 =~ ^- ]]; then
-        [[ $1 =~ -g ]] && gsi_=1
-        [[ $1 =~ -s ]] && source_=1
-        shift
+    local cache_=~/tmp/vv.last
+    local cacheable_="$*"
+    if [[ $1 =~ ^-[fgsv]+$ ]]; then
+        if [[ $1 =~ f ]]; then
+            shift
+            mapfile -t fuzz_file_ < <(fzf "$@")
+            set -- "$fuzz_file_[@]"
+        else
+            [[ $1 =~ g ]] && gsi_=1
+            [[ $1 =~ s ]] && source_=1
+            shift
+        fi
+        (( $# )) || return 1
     fi
     local dir_="$HOME"
-    [[ -f $1 ]] && dir_=$(dirname $(readlink -f "$1"))
-    [[ -d $1 ]] && dir_=$(basename $(readlink -f "$1"))
-    [[ $* ]] && vim -p "$@" || vim -p ~/keys/v.sh ~/.vimrc
-    [[ $gsi_ ]] && (cd $dir_; gsi)
-    [[ $1 =~ [.]sh$ ]] || return 0
-    [[ $source_ ]] && source "$@"
+    local link_="$(quietly readlink -f "$1")"
+    [[ -f $1 ]] && dir_="$(dirname "$link_")"
+    [[ -d $1 ]] && dir_=$link_
+    if (( $# )); then
+        printf "%s\n" > "$cache_"
+        vim -p "$@"
+        [[ $gsi_ ]] && (cd $dir_ && gsi)
+        [[ $1 =~ [.]sh$ ]] || return 0
+        [[ $source_ ]] && source "$@"
+    elif [[ -s "$cache_" ]]; then
+        vim -p $(cat "$cache_")
+    else
+        vim -p ~/keys/v.sh ~/.vimrc "$cache_"
+    fi
 }
 
 vw () {

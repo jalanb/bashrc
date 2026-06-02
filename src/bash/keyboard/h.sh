@@ -1,4 +1,4 @@
-#! /usr/bin/env kat -n
+#! /usr/bin/env cat
 
 . ~/bash/history.sh
 . ~/bash/keyboard/v.sh
@@ -39,6 +39,10 @@ hg () {
 
 hh () {
     read_history | less -SNR
+}
+
+hi () {
+    fc -ln -1
 }
 
 hs () {

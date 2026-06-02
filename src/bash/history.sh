@@ -8,6 +8,7 @@ SHELL_SESSION_HISTORY=0
 # xxxx
 # xxxxx
 
+
 vhist () {
     local __doc__="edit unplugged stuff from history"
     _tease_history | [[ -n $* ]] && vim - +/"$@"
@@ -60,8 +61,11 @@ set_history_file () {
     # OK, let's try again - the HIST...SIZE variables should be set, but have no value
     # This is explained at https://stackoverflow.com/questions/9457233/unlimited-bash-history/19533853#19533853
     # and https://superuser.com/questions/479726/how-to-get-infinite-command-history-in-bash/479727#479727
-    export HISTFILESIZE=
-    export HISTSIZE=
+    # Update: Since bash 4.3 blank values here suppress history
+    # These should be set to negative values instead to always work
+    # This is explained at https://stackoverflow.com/questions/9457233/unlimited-bash-history#12234989
+    export HISTFILESIZE=-1
+    export HISTSIZE=-1
     # Change the file location because certain bash sessions truncate .bash_history file upon close
     # http://stackoverflow.com/a/19533853/500942
     export HISTFILE=~/.bash_eternal_history

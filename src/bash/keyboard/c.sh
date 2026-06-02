@@ -58,7 +58,7 @@ cw () {
 }
 
 cv () {
-    cde $1; v $(basename_ $1)
+    bash ~/jab/bin/clipvim.sh
 }
 
 cy () {
@@ -85,14 +85,6 @@ cd- () {
     [[ -f .venv/bin/activate ]] && source .venv/bin/activate
 }
 
-cdb () {
-    cde /opt/clones/github/brightbeam/
-}
-
-cdh () {
-    cd /opt/clones/github/jalanb/jalanb/hub/hub
-}
-
 cdj () {
     local __doc__="cd to jalanb dir [and run a command (a, f, h, l, r)]"
     cd /opt/clones/github/jalanb/ || return 1
@@ -100,7 +92,7 @@ cdj () {
         cd "$1" || return 1
         shift
     fi
-    [[ "$@" ]] || return 0
+    [[ "$*" ]] || return 0
     local command_=
     case "${1-}" in
         a) command_=ack;    shift ;;
@@ -120,10 +112,13 @@ cdj () {
 cdr () {
     local dir_=$(get_root)
     if [[ ! $dir_ ]]; then
-        show_error "No git root directory found" >&2
+        show_fail "No git root directory found"
         return 1
     fi
-    cdq $dir_
+    if ! cdq $dir_; then
+        show_fail "Cannot cd to \"$dir_\""
+        return 1
+    fi
     white "Origin: "; green_line $(git remote get-url origin)
     white " Local: "; green_line $(rlf .)
 }
