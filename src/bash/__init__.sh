@@ -2,7 +2,7 @@
 
 INIT_SOURCE="$(readlink -f "$BASH_SOURCE")"
 
-__version__=0.8.91
+__version__=0.8.92
 
 .b () {
     source "$INIT_SOURCE"
