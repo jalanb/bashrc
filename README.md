@@ -22,6 +22,7 @@ $ source jab/__init__.sh
 * `pip install --force-reinstall requirements.txt; pip install --force-reinstall -e .` is now `pipy -f` 
 
 and I can get back to coding 
+ - YMMV
 
 # New Motto
 
