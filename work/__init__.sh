@@ -8,5 +8,3 @@ WORK_SOURCE="$(readlink -f "$BASH_SOURCE")"
 }
 
 . ~/jab/work/aliases.sh
-. ~/jab/work/environ.sh
-. ~/jab/work/functons.sh
