@@ -15,7 +15,6 @@
 	a = add
 	b = branch
 	c = cherry-pick
-	cl = clean -d -f -f -x
 	d = difftool -y --extcmd=\"icdiff --line-numbers -t \"
 	e = rebase
 	f = fetch
@@ -52,6 +51,7 @@
 	cs = cherry-pick --skip
 	cp = cherry-pick -x --allow-empty
 	cq = cherry-pick --quit
+	cl = clean -d -f -f -x
 	df = diff --name-only
 	dh = difftool -y --extcmd=\"vim -d -o\"
 	di = difftool -y --extcmd=\"icdiff --line-numbers \"

@@ -2,6 +2,7 @@
 # Ignore these files in all git repositories
 #
 #
+# CLAUDE.md
 # Extensions
 #
 # Compiled files by extension
@@ -40,7 +41,6 @@ local.env
 *.pyproj
 .colours/
 [a-z.]*-[a-z.]*.html
-scripts/
 .claude/
 .shellcheck
 #
