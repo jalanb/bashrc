@@ -79,6 +79,10 @@ rfr () {
     rf -r "$@"
 }
 
+rgj () {
+    from_jalanb rg "$@"
+}
+
 rlf () {
     if [[ ! "$@" ]]; then
         ls -d $(rlce .)

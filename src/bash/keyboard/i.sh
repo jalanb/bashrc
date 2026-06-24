@@ -44,6 +44,10 @@ inj () {
     ind ~/jalanb "$@"
 }
 
+ipm () {
+    npm install --ignore-scripts "$@"
+}
+
 init () {
     local __doc__="""LOok for __init__.sh here, there, or below and source it if found"""
     local _init=./__init__.sh

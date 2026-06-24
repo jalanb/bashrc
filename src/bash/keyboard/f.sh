@@ -121,7 +121,7 @@ fdg () {
 }
 
 fdj () {
-    fd "$@" /opt/clones/github/jalanb
+    from_jalanb fd "$@"
 }
 
 fdl () {
