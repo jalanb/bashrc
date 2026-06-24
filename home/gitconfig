@@ -1,207 +1,187 @@
 [user]
-	name = J Alan Brogan
-	email = github@al-got-rhythm.net
+    name = J Alan Brogan
+    email = github@al-got-rhythm.net
 [mailmap]
-	file = ~/mail.map
+    file = ~/mail.map
 [credential]
-	helper = store
+    helper = store
 [pager]
-	diff = 
+    diff =
 [core]
-	editor = vim
-	excludesfile = /opt/clones/github/jalanb/bashrcs/jab/home/gitignore_global
-	trustctime = false
+    editor = vim
+    excludesfile = /opt/clones/github/jalanb/bashrcs/jab/home/gitignore_global
+    trustctime = false
 [alias]
-	a = add
-	b = branch
-	c = cherry-pick
-	d = difftool -y --extcmd=\"icdiff --line-numbers -t \"
-	e = rebase
-	f = fetch
-	h = rev-parse --abbrev-ref HEAD
-	i = commit --verbose
-	l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
-	m = merge
-	o = checkout
-	p = push
-	r = pull --rebase
-	s = status
-	t = tag
-	w = switch
-	aa = add .
-	ai = add --interactive
-	aip = add --interactive --patch
-	ap = add --patch
-	ba = branch --all
-	bac = branch --all --contains
-	bb = switch
-	bc = branch --contains
-	bd = branch -d
-	bD = branch -D
-	bl = branch --list
-	bm = branch -m
-	bM = branch -M
-	br = branch --remotes
-	bp = branch --points-at
-	bu = branch --unset-upstream
-	cb = rev-parse --abbrev-ref HEAD
-	ca = cherry-pick --abort
-	ce = cherry-pick --edit
-	cc = cherry-pick --continue
-	cs = cherry-pick --skip
-	cp = cherry-pick -x --allow-empty
-	cq = cherry-pick --quit
-	cl = clean -d -f -f -x
-	df = diff --name-only
-	dh = difftool -y --extcmd=\"vim -d -o\"
-	di = difftool -y --extcmd=\"icdiff --line-numbers \"
-	dk = difftool -y -t Kaleidoscope
-	dm = difftool -y --extcmd=\"~/bin/meld  \"
-	dn = d --name-only
-	dv = difftool -y --extcmd=\"vim -d -O\"
-	dy = difftool -y --extcmd=\"pydiff\"
-	dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
-	dw = diff --word-diff
-	dr = rerere diff
-	ds = d --staged
-	dis = di --staged
-	dry = "!f() { git merge-tree `git merge-base $2 $1` $2 $1; }; f"
-	dump = cat-file -p
-	ea = rebase --abort
-	ec = rebase --continue
-	ei = rebase --interactive
-	em = rebase __main__
-	es = rebase --skip
-	eq = rebase --quit
-	eu = remote get-url origin
-	fa = fetch --all
-	fap = fetch --all --prune
-	fg = fetch --tags
-	ff = fetch --all --prune --tags
-	ia = commit --amend
-	ie = commit --edit
-	ii = commit --interactive
-	im = commit --message
-	iip = commit --interactive --patch
-	ip = commit --patch
-	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-	last = log -1 HEAD
-	lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
-	ld = ll -p
-	le = lllll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-	lee = llll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-	leee = lll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-	leeee = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-	leeeee = l --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
-	lf = lc --stat
-	lg = l --grep
-	ll = l -1
-	lll = l -2
-	llll = l -4
-	lllll = l -8
-	llllll = l -16
-	lllllll = l -32
-	llllllll = log -n 1
-	lllllllll = log -n 0
-	lpppppp = lp -32
-	lppppp = lp -16
-	lpppp = lp -8
-	lppp = lp -4
-	lpp = lp -2
-	lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
-	ls = l --numstat
-	lm = l __main__^..
-	lom = l origin/__main__^..
-	lt = l --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
-	ltt = l --pretty=format:'%Cgreen%ci %C(blue)%an, %C(auto)%d%Creset %C(auto)%h \"%s\"'
-	ma = merge --abort
-	mc = merge --continue
-	mo = merge origin/__main__
-	mm = merge --no-ff --no-edit
-	mm = merge --no-ff --no-edit -X theirs
-	mmo = mm -X ours
-	mmt = mm -X theirs
-	mq = merge --quit
-	ob = checkout -b
-	om = checkout __main__
-	oo = restore
-	pa = push --atomic --all
-	pf = push --atomic --force-with-lease --force-if-includes
-	pff = push --atomic --force
-	pod = push origin --delete
-	pt = push --tags
-	pu = push --set-upstream
-	puu = push --unset-upstream
-	rl = reflog --color=always --oneline --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
-	rlt = rl --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto) %h "%s"'
-	ru = remote get-url origin
-	sp = status --porcelain
-	sp = status --porcelain
-	st = stash
-	ss = status --short
-	stp = stash pop
-	stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
-	standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Thu == $(date +%a) ]] && echo last.tuesday || echo last.thursday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
-	td = tag -d
-	tf = fetch --tags
-	tl = tag --list
-	tp = push --tags
+    a = add
+    b = branch
+    c = cherry-pick
+    d = difftool -y --extcmd=\"icdiff --line-numbers -t \"
+    e = rebase
+    f = fetch
+    h = rev-parse --abbrev-ref HEAD
+    i = commit --verbose
+    l = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+    m = merge
+    o = checkout
+    p = push
+    r = pull --rebase
+    s = status
+    t = tag
+    w = switch
+    aa = add .
+    ai = add --interactive
+    aip = add --interactive --patch
+    ap = add --patch
+    ba = branch --all
+    bac = branch --all --contains
+    bb = switch
+    bc = branch --contains
+    bd = branch -d
+    bD = branch -D
+    bl = branch --list
+    bm = branch -m
+    bM = branch -M
+    br = branch --remotes
+    bp = branch --points-at
+    bu = branch --unset-upstream
+    cb = rev-parse --abbrev-ref HEAD
+    ca = cherry-pick --abort
+    ce = cherry-pick --edit
+    cc = cherry-pick --continue
+    cs = cherry-pick --skip
+    cp = cherry-pick -x --allow-empty
+    cq = cherry-pick --quit
+    cl = clean -d -f -f -x
+    df = diff --name-only
+    dh = difftool -y --extcmd=\"vim -d -o\"
+    di = difftool -y --extcmd=\"icdiff --line-numbers \"
+    dk = difftool -y -t Kaleidoscope
+    dm = difftool -y --extcmd=\"~/bin/meld  \"
+    dn = d --name-only
+    dv = difftool -y --extcmd=\"vim -d -O\"
+    dy = difftool -y --extcmd=\"pydiff\"
+    dy = difftool -y --extcmd=\"~/jab/bin/pydiff\"
+    dw = diff --word-diff
+    dr = rerere diff
+    ds = d --staged
+    dis = di --staged
+    dry = "!f() { git merge-tree `git merge-base $2 $1` $2 $1; }; f"
+    dump = cat-file -p
+    ea = rebase --abort
+    ec = rebase --continue
+    ei = rebase --interactive
+    em = rebase __main__
+    es = rebase --skip
+    eq = rebase --quit
+    eu = remote get-url origin
+    fa = fetch --all
+    fap = fetch --all --prune
+    fg = fetch --tags
+    ff = fetch --all --prune --tags
+    ia = commit --amend
+    ie = commit --edit
+    ii = commit --interactive
+    im = commit --message
+    iip = commit --interactive --patch
+    ip = commit --patch
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    last = log -1 HEAD
+    lc = log --color=always --decorate --oneline --graph --abbrev-commit --date=relative --pretty=format:'%h %an, %cr %d %s'
+    ld = ll -p
+    le = lllll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    lee = llll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    leee = lll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    leeee = ll --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    leeeee = l --pretty=format:'%C(auto)%h%Creset %C(blue)<%an %aE>, %Cgreen%cr %C(auto)%d%Creset %s'
+    lf = lc --stat
+    lg = l --grep
+    ll = l -1
+    lll = l -2
+    llll = l -4
+    lllll = l -8
+    llllll = l -16
+    lllllll = l -32
+    llllllll = log -n 1
+    lllllllll = log -n 0
+    lpppppp = lp -32
+    lppppp = lp -16
+    lpppp = lp -8
+    lppp = lp -4
+    lpp = lp -2
+    lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
+    ls = l --numstat
+    lm = l __main__^..
+    lom = l origin/__main__^..
+    lt = l --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+    ltt = l --pretty=format:'%Cgreen%ci %C(blue)%an, %C(auto)%d%Creset %C(auto)%h \"%s\"'
+    ma = merge --abort
+    mc = merge --continue
+    mo = merge origin/__main__
+    mm = merge --no-ff --no-edit
+    mm = merge --no-ff --no-edit -X theirs
+    mmo = mm -X ours
+    mmt = mm -X theirs
+    mq = merge --quit
+    ob = checkout -b
+    om = checkout __main__
+    oo = restore
+    pa = push --atomic --all
+    pf = push --atomic --force-with-lease --force-if-includes
+    pff = push --atomic --force
+    pod = push origin --delete
+    pt = push --tags
+    pu = push --set-upstream
+    puu = push --unset-upstream
+    rl = reflog --color=always --oneline --abbrev-commit --date=relative --pretty=format:'%Cgreen%cr%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
+    rlt = rl --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto) %h "%s"'
+    ru = remote get-url origin
+    sp = status --porcelain
+    sp = status --porcelain
+    st = stash
+    ss = status --short
+    stp = stash pop
+    stl = stash list --color=always --decorate --oneline --abbrev-commit --date=relative
+    standup = log --branches --remotes --tags --no-merges --author="Alan" --since=\"$([[ Thu == $(date +%a) ]] && echo last.tuesday || echo last.thursday)\" --pretty=format:'%C(auto)%h%Creset %C(blue)%an, %Cgreen%cr %C(auto)%d%Creset %s %Creset'
+    td = tag -d
+    tf = fetch --tags
+    tl = tag --list
+    tp = push --tags
 [push]
-	default = simple
-	autoSetupRemote = true
+    default = simple
+    autoSetupRemote = true
 [help]
-	autocorrect = prompt
+    autocorrect = prompt
 [advice]
-	detachedHead = False
+    detachedHead = False
 [rerere]
-	enabled = true
-	autoupdate = true
+    enabled = true
+    autoupdate = true
 [icdiff]
-	options = --highlight --line-numbers
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[merge]
-	tool = diffconflicts
-	conflictstyle = merge
+    options = --highlight --line-numbers
 [mergetool "diffconflicts"]
-	keepBackup = false
-[mergetool "splice"]
-	cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
-	trustExitCode = true
-[mergetool "kdiff3"]
-	path = "/usr/local/bin/kdiff3"
-	trustExitCode = true
-[mergetool "kdiffjab"]
-	path = "~/jab/bin/mergetool"
-	trustExitCode = true
-[difftool "kdiff3"]
-	path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3 "
-	trustExitCode = true
-[mergetool "meld"]
-	path = "/Applications/Meld.app/Contents/MacOS/Meld"
-	trustExitCode = false
+    keepBackup = false
 [color]
-	ui = auto
+    ui = auto
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 [init]
-	defaultBranch = __main__
+    defaultBranch = __main__
 [column]
-	ui = auto
+    ui = auto
 [branch]
-	sort = -committerdate
+    sort = -committerdate
 [tag]
-	sort = version:refname
+    sort = version:refname
 [diff]
-	algorithm = histogram
-	colorMoved = plain
-	mnemonicPrefix = true
-	renames = true
-	external = difft
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+    external = difft
 [fetch]
-	prune = true
-	pruneTags = true
-	all = true
+    prune = true
+    pruneTags = true
+    all = true
