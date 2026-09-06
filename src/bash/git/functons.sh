@@ -421,6 +421,8 @@ gll () {
 }
 
 glm () {
+    git_log_since $(main_branch)
+    return 0
     local main_branch_=$(main_branch)
     local start_=$(git merge-base $main_branch_ HEAD)
     g l ${start_}^..HEAD
@@ -428,6 +430,14 @@ glm () {
 
 gln () {
     gc "$@" l --name-only
+}
+
+glo () {
+    local upstream_=$(abbrev --symbolic-full-name @{upstream})
+    git_log_since $upstream_
+    return 0
+    local start_=$(git merge-base $upstream_ HEAD)
+    g l ${start_}^..HEAD
 }
 
 glp () {
@@ -609,7 +619,7 @@ main_branch () {
 
 branch_is_on_main() {
     local current_branch_
-    current_branch_=$(git rev-parse --abbrev-ref HEAD)
+    current_branch_=$(abbrev HEAD)
     [[ "$current_branch_" == "$(main_branch)" ]]
 }
 
@@ -753,12 +763,33 @@ grs () {
     git rebase --skip
 }
 
+gra () {
+    git remote add "$@"
+}
+
+gro () {
+    gra origin "$@"
+}
+
 gru () {
-    local dir_="$(first_dir "$1")" && shift
-    local origin_=$(quietly get_origin $dir_)
-    [[ $origin_ ]] || return 1
-    [[ $* =~ -q ]] || show_command git -C $dir_ remote get-url origin
-    get_origin $dir_
+    local c_='' quiet_='' arg_=''
+    if [[ ! "$*" ]]; then
+        show_command git remote get-url origin
+        git remote get-url origin
+        return 0
+    fi
+    for arg_ in "$@"; do
+        if [[ $arg_ =~ [-]q ]]; then
+            quiet_=1
+            break
+        fi
+    done
+    for arg_ in "$@"; do
+        [[ -d "$arg_" ]] || continue
+        args_="-C $arg_ remote get-url origin"
+        [[ $quiet_ ]] || show_command git $args_
+        git $args_
+    done
 }
 
 gsa () {
@@ -930,12 +961,12 @@ gbDD () {
 }
 
 gaai () {
-    local addable=.
+    local addable_=.
     if [[ -e "$1" ]]; then
-        addable=$1
+        addable_=$1
         shift
     fi
-    ga $addable && gi "$@"
+    ga "$addable_" && g im "$@"
 }
 
 gbta () {
@@ -1388,6 +1419,10 @@ as_branch_ () {
 }
 # xxxxxxxxxx
 
+abbrev () {
+    quietly git rev-parse --abbrev-ref "$@" || return 1
+}
+
 has_branch () {
     git branch --contains $1 2>/dev/null | grep -q $2
 }
@@ -1424,19 +1459,15 @@ get_branch () {
 }
 
 git_branch () {
-    local quiet_= verbose_=
-    [[ $1 == -q ]] && quiet_=quietly
-    [[ $1 == -q ]] && shift
-    [[ $1 == -v ]] && verbose_=True
-    [[ $1 == -v ]] && shift
-    local ref_=HEAD
-    [[ "$@" ]] && ref_="$1"
-    [[ $verbose_ ]] && show_command git rev-parse --abbrev-ref $ref_ 
-    $quiet_ git rev-parse --abbrev-ref $ref_
-}
-
-set_sed_origin () {
-    git remote set-url origin $(sed_origin "$@")
+    local show_=1 ref_=HEAD
+    [[ $1 == -q ]] && show_= && shift
+    [[ $1 == -v ]] && show_=1 && shift
+    [[ "$@" ]] && ref_=$1
+    if [ $show_ ]; then
+        w abbrev
+        show_command abbrev $ref_
+    fi
+    abbrev $ref_
 }
 
 sed_origin () {
@@ -1501,6 +1532,11 @@ git_changes_here () {
 # xxxxxxxxxxxx
 
 # xxxxxxxxxxxxx
+
+git_log_since () {
+    local start_=$(git merge-base "$1" HEAD)
+    g l ${start_}^..HEAD
+}
 
 untracked () {
     local path_="$1"; shift
