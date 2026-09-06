@@ -1,7 +1,8 @@
 #! /usr/bin/env bash
 
-cd /opt/clones/github/jalanb
+dir_="${ITERM3_START_DIR:-/opt/clones/github/jalanb}"
+[[ -d "$dir_" ]] && cd "$dir_" || exit 1
 pwd
-export PATH=/Users/jab/.local/bin:/opt/homebrew/bin:$PATH
+export PATH=~/.local/bin:/opt/homebrew/bin:$PATH
 "$@"
 
