@@ -15,9 +15,8 @@
     a = add
     b = branch
     c = cherry-pick
-    dd = difftool -y --extcmd=\"icdiff --line-numbers -t --cols=10 \"
-#   d = "!f() { git difftool -y --extcmd=\"icdiff --line-numbers -t --cols=$(tput cols)\" \"$@\"; }; f"
-    d = difftool -y --extcmd=\"difft\"
+    d = "!f() { git difftool -y --extcmd=\"icdiff --line-numbers -t --cols=$(tput cols)\" \"$@\"; }; f"
+    dd = difftool -y --extcmd=\"difft\"
     e = rebase
     f = fetch
     h = rev-parse --abbrev-ref HEAD
