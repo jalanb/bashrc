@@ -188,7 +188,7 @@ def remove_paths(paths: list[str], quiet: bool, trial_run: bool) -> int:
 
     If deleting paths leaves directories empty, delete them too
     """
-    dirs = []
+    directories = set()
     result = os.EX_OK
     for path in paths:
         try:
@@ -197,7 +197,9 @@ def remove_paths(paths: list[str], quiet: bool, trial_run: bool) -> int:
                     remover = os.remove if os.path.isfile(path) else shutil.rmtree
                     try:
                         remover(path)
-                        dirs.append(os.path.dirname(path))
+                        directory = os.path.dirname(path)
+                        if os.path.isdir(directory):
+                            directories.add(directory)
                     except NotADirectoryError:
                         pass
             if not quiet:
@@ -205,7 +207,9 @@ def remove_paths(paths: list[str], quiet: bool, trial_run: bool) -> int:
         except (IOError, OSError) as e:
             print(e)
             result = os.EX_IOERR
-    for dir_ in dirs:
+    for dir_ in directories:
+        if not os.path.isdir(dir_):
+            continue
         if not os.listdir(dir_):
             try:
                 os.removedirs(dir_)

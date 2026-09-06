@@ -203,6 +203,7 @@ echo_prompt_colour () {
 }
 
 reload_prompt_if_changed () {
+    test -f $PROMPT_SOURCE || return 1
     local current_mtime_=$(quietly stat -f %m "$PROMPT_SOURCE" )
     [[ $current_mtime_ != $PROMPT_MTIME ]] && source "$PROMPT_SOURCE"
 }
@@ -211,7 +212,7 @@ pre_pses () {
     local __doc__="""Stuff to do before setting the prompt"""
     reload_prompt_if_changed
     console_whoami
-    QUIETLY cde_python --add .
+    QUIETLY python_cde --add .
     history -a
 }
 
@@ -240,7 +241,7 @@ export_pses () {
 }
 
 
-export PROMPT_MTIME=$(quietly stat -f %m "$PROMPT_SOURCE" )
+export PROMPT_MTIME=$(quietly /usr/bin/stat -f %m "$PROMPT_SOURCE" )
 export PROMPT_COLOUR=$(echo_prompt_colour "$@")
 if [[ "$PROMPT_COLOUR" == "None" ]]; then
     export PS1="\$? [\u@\h:\$PWD]\n$ "
