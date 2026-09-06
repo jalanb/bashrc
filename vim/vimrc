@@ -215,10 +215,10 @@ nnoremap <Space><Space>  <PageDown>zz
 "
 " Normal Arrows
 "
-nnoremap <up>               ?<cr>zv
-nnoremap <down>             /<cr>zv
-nnoremap <left>             #zv
-nnoremap <right>            *zv
+nnoremap <left>               ?<cr>zv
+nnoremap <right>             /<cr>zv
+nnoremap <up>             #zv
+nnoremap <down>            *zv
 "
 " Shift Arrows
 "
