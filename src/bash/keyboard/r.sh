@@ -83,6 +83,18 @@ rgj () {
     from_jalanb rg "$@"
 }
 
+rgy () {
+    rg -t py "$@"
+}
+
+rgt () {
+    rg -l "$@" | trin
+}
+
+rgyt () {
+    rgy -l "$@" | grep -v -e test | trin
+}
+
 rlf () {
     if [[ ! "$@" ]]; then
         ls -d $(rlce .)

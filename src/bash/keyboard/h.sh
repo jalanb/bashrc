@@ -16,11 +16,6 @@ h () {
 # _x
 # xx
 
-HG () {
-    $(which hg 2>/dev/null)
-}
- # With apologies, but don't really use it
-
 h1 () {
     head -n 1 "$@"
 }
@@ -128,10 +123,6 @@ hgf () {
     (history | head -n 31 | grep --color $sought_ ) && show_fail "$message_"
 }
 
-hgg () {
-    close_kaufman "$@"
-}
-
 hgt () {
     local __doc__="grep and tail history"
     hg "$@" | tail
@@ -233,4 +224,3 @@ history_vim () {
 close_kaufman () {
     hgf jeffkaufman "Close window"
 }
-

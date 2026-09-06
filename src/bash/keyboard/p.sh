@@ -28,10 +28,13 @@ pm () {
 
 pv () {
     unhash_python_handlers
-    [[ $1 =~ -f ]] && rm -rf .venv
-    [[ -d .venv ]] || python -m venv .venv
+    [[ $1 == -f ]] && rm -rf .venv
+    if [[ ! -d .venv && ( $1 == "-f" || -f pyproject.toml ) ]]; then
+        python3 -m venv .venv
+    fi
+    [[ -d .venv ]] || return 9
     . .venv/bin/activate
-    python -c"import sys; print(sys.executable)"
+    python -c "import sys; print(sys.executable)"
     python -V
 }
 
@@ -56,7 +59,7 @@ pv_activable () {
    return 0
 }
 
-pv () {
+pvv () {
    local __doc__='activate closest .venv found searching up from here'
    [[ -n "$VIRTUAL_ENV" ]] && deactivate
    

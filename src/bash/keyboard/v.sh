@@ -51,7 +51,7 @@ vd () {
 }
 
 ve () {
-    edit_source ~/jab/environ.d/jab.sh "$@"
+    EDITOR=/Applications/MacVim.app/Contents/bin/mvim e "$@"
 }
 
 vf () {
@@ -68,13 +68,17 @@ vg () {
     local suffix_=
     [[ $1 ]] && suffix_=+/"$1"
     [[ -f "$1" ]] && suffix_="$@"
-    vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_ $suffix_
+    vim -p $user_config_ $clone_config_ $user_ignore_ $clone_ignore_ $suffix_~/bash/keyboard/g.sh ~/bash/git
 }
 
 # vi
 
 vj () {
     (cd ~/jab; vv . && gsi)
+}
+
+vk () {
+   kv "$@"
 }
 
 vl () {
@@ -85,9 +89,7 @@ vl () {
 # vm
 # vn
 vo () {
-    local __doc__="""vim output of last command"""
-    local last_cmd_=$(fc -ln -1) || return 1
-    vv $(eval $last_cmd_)
+    vim -p $($(fc -ln -1))
 }
 
 vp () {
@@ -273,10 +275,6 @@ vfg () {
     vf "$@" +/$_sought
 }
 
-vfh () {
-    vim -p $( $( h1 ) | space_lines ) "$@"
-}
-
 vfr () {
     python ~/jab/src/python/vim_traceback.py "$@"
 }
@@ -396,9 +394,7 @@ vvu () {
 }
 
 vvv () {
-    (cd ~/jab/vim
-    vv -g . "$@"
-    gsi)
+    vim -p ~/.vimrc ~/.vim ~/bash/keyboard/v.sh +/"\<vim\>"
 }
 
 # xxxx
