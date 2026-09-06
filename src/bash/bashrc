@@ -130,6 +130,7 @@ echo_if_file () {
 
 bbb () {
     echo ""
+    echo_if_file ~/.bash_profile
     echo_if_file ~/.bashrc
     echo_if_file ~/.minimal
     echo_if_file ~/.vimrc
@@ -144,7 +145,6 @@ bbb () {
 
 vbb () {
     # This function works best last
-    bbb_="$(bbb)"
-    vim -p "$bbb_"
+    vim -p $(bbb)
     quietly readlink -f "$(bbb)" 
 }
