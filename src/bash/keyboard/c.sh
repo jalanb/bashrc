@@ -109,6 +109,11 @@ cdj () {
     fi
 }
 
+cdl () {
+    [[ -d "$1" ]] && cd "$1"
+    l,
+}
+
 cdr () {
     local dir_=$(get_root)
     if [[ ! $dir_ ]]; then
@@ -123,6 +128,10 @@ cdr () {
     white " Local: "; green_line $(rlf .)
 }
 
+cdw () {
+    cd ~/whyp/
+}
+
 cjy () {
     cd ~/jab/src/python "$@"
 }
@@ -131,10 +140,6 @@ cla () {
     clean_clear_ls --all "$@"
 }
 
-cdl () {
-    [[ -d "$1" ]] && cd "$1"
-    l,
-}
 cll () {
     clean_clear_ls --long "$@"
 }

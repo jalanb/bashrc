@@ -130,7 +130,7 @@ fdl () {
 }
 
 fdp () {
-    fd -e py "$@"
+    fdy "$@"
 }
 
 fdv () {
@@ -143,7 +143,7 @@ fdx () {
 }
 
 fdy () {
-    fde py "$@"
+    fd -e py "$@"
 }
 
 fdz () {
