@@ -70,14 +70,14 @@ wp () {
 }
 
 ppd () {
-    pip_install_develop "$@"
+    ppu -e ".[dev]" "$@"
 }
 
 ppe () {
-    local dir_=$1 upgrade_=
+    local dir_="$1" upgrade_=
     [[ -d "$dir_" ]] && show_command cd "$dir_" || dir_=.
     (
-        cd "$dir_"
+        cd "$dir_" || return 1
         Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
         ppi $upgrade_ -e .
         # | grep -v -e uninstall -e satisfied -e existing -e collected
@@ -129,9 +129,7 @@ ppy () {
 }
 
 pyc () {
-    local cmd_=$(quietly python_command)
-    [[ $cmd_ ]] || return 1
-    $cmd_ -c "$@"
+    pyu -c "$*"
 }
 
 pym () {
@@ -147,6 +145,10 @@ pym () {
 
 pyp () {
     pym pip --require-virtualenv "$@"
+}
+
+pyu () {
+    $(python_command) -u "$@"
 }
 
 vba () {
@@ -207,7 +209,18 @@ venv () {
     hash -d python3 python 2>/dev/null
     pym venv --copies --clear "$venv_dir_"
     reactivate "$venv_dir_"
-    install_python_project "$dir_" -p
+    if [[ -f "$dir_/pyproject.toml" ]]; then
+        (
+            cd "$dir_"
+            if grep -qw ^dev pyproject.toml ]]; then
+                ppd
+            else
+                ppu -e .
+            fi
+        )
+    else
+        install_requirements "$dir_" -p
+    fi
 }
 
 # xxxxx
@@ -228,7 +241,7 @@ import_version () {
     local version_=$(pyc "import $module_; print($module_.__version__)")
     [[ $version_ ]] || return 1
     [[ $quiet_ =~ -q ]] && return 0
-    echo "$module_==$(version_)"
+    echo "$module_==$version_"
     return 0
 }
 

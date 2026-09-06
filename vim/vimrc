@@ -11,8 +11,8 @@ nnoremap <F4>      <c-w>w
 nnoremap <F5>      :map <F6>
 nnoremap <F6>      WQ
 nnoremap <F7>      :set list!<CR>
-"noremap <F8>      
-"noremap <F9>      
+"noremap <F8>
+"noremap <F9>
 nnoremap <F9>      :map <F9>
 inoremap <F9>      <esc>:w!<CR>
 nnoremap <F10>      :map <F10>
@@ -22,6 +22,7 @@ nnoremap <F12>      :map <F12>
 
 " modifier keys {{{2
 nnoremap <D-bs>     :set fu!<cr>
+nnoremap <D-[>      <C-O>
 nnoremap <S-F4>     <C-W>p
 nnoremap <C-F4>     <C-W>c
 nnoremap <S-F5>     <C-W>=
@@ -46,7 +47,8 @@ nnoremap <bs>- 04xk
 "noremap 1
 inoremap § <esc>
 nnoremap § :q!<cr>
-" shifted number row {{{3
+" Shifted number row {{{3
+" See also Punctuation below
 "noremap <S-bs> doesn't work
 nnoremap + zM/^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>jzO
 nnoremap _ zM?^\(def \zs\|\zs[^ ]\)[a-zA-Z0-9_]*<cr>jzO
@@ -68,8 +70,6 @@ nnoremap ££ :noremap @@<up>
 " letters {{{3
 "a-y {{{4
 " /map \zs[a-yA-Y]\([<][^ ]*\|[^ ]\)
-"noremap ;
-nnoremap ' bp
 "noremap a - append
 "noremap b - backword
 "noremap c - start cutting
@@ -101,16 +101,18 @@ nnoremap qz :qa!<cr>
 "noremap r - change one char
 "noremap s - start replacing
 "noremap t* - see also ftplugin/python/jab.vim, t* is test related for python
+nnoremap tb :ls<cr>:tab sbuffer<Space>
 nnoremap tf :tabnew ~/tmp/fred.txt
 nnoremap th :tabnew /opt/clones/github/
 nnoremap tj :tabnew /opt/clones/github/jalanb/
 nnoremap tk :tabnew  ~/bash/keyboard/.sh<left><left><left>
 nnoremap ti :tabnew<Space><cr>i
+nnoremap tj :tabnew<Space>/opt/clones/github/jalanb/
 nnoremap tn :tabnew<Space>
 nnoremap tp :tabprev<cr>:tabnew<Space>
 nnoremap tv :tabprev<cr>:tabnew ~/.vimrc<cr>
 "noremap u - undo
-nnoremap vf - :so ~./vimrc<cr> 
+nnoremap vf - :so ~./vimrc<cr>
 nnoremap vv :tabprev<cr>:tabnew ~/.vimrc<cr>
 "noremap w - forword
 "noremap x - remove char
@@ -149,28 +151,28 @@ nnoremap z<right> zczo<cr>
 nnoremap z<left> zm
 nnoremap z<down> zR
 " Punctuation {{{3
+" See also Shifted number row above
+" These are ordered from top left on keyboard, normal then shifted
 nnoremap ] <C-]>
+"noremap {
 nnoremap [ <C-T>
-"noremap ; EasyMotion leader
-nnoremap ' bp
-nnoremap " m'
+"noremap }
 "noremap \ - leader
 "noremap | - leader
-nnoremap , ./<cr>
-nnoremap < .?<cr>
+nnoremap ' bp
+nnoremap " m'
+"noremap :
+nnoremap ; .k
 "noremap . - repeat
-nnoremap > j.
+nnoremap , .j
+nnoremap < .?<cr>
+nnoremap > ./<cr>
 "noremap / - search
 "noremap / - search
 "noremap `
 " Shifted punctuation {{{3
-"noremap {
-"noremap }
-"noremap : - command line
 "noremap "
 "noremap |
-"noremap < -
-"noremap > -
 "noremap ? -
 "noremap ~ -
 "noremap !
@@ -228,22 +230,22 @@ inoremap <s-left>           <esc>gT
 inoremap <s-right>          <esc>gt
 
 " Other Control Keys {{{2
-nnoremap    <C-d> :qa<CR>
-nnoremap    <C-n> :next<CR>
-nnoremap    <C-p> :prev<CR>
-nnoremap    <C-q> :qa!<CR>
-nnoremap    <C-h> <c-w><c-h>
-nnoremap    <C-j> <c-w><c-j>
-nnoremap    <C-k> <c-w><c-k>
-nnoremap    <C-l> <c-w><c-l>
-     map    <C-b> dndndndd/<cr>
-     map    <C-m> dd/<cr>dndd/<cr>
-     map    <C-n> dndd/<cr>dd/<cr>
-inoremap    <C-d> <esc>:qa<CR>
-inoremap    <C-q> <Esc>:qa!<CR>
+nnoremap <C-d> :qa!<CR>
+nnoremap <C-n> :next<CR>
+nnoremap <C-p> :prev<CR>
+nnoremap <C-q> :qa!<CR>
+nnoremap <C-h> <c-w><c-h>
+nnoremap <C-j> <c-w><c-j>
+nnoremap <C-k> <c-w><c-k>
+nnoremap <C-l> <c-w><c-l>
+     map <C-b> dndndndd/<cr>
+     map <C-m> dd/<cr>dndd/<cr>
+     map <C-n> dndd/<cr>dd/<cr>
+inoremap <C-d> <esc>:qa<CR>
+inoremap <C-q> <Esc>:qa!<CR>
 " Alt keys {{{2
-nnoremap    <A-q>      :qa!<CR>
-inoremap    <A-q> <Esc>:qa!<CR>
+nnoremap <A-q>      :qa!<CR>
+inoremap <A-q> <Esc>:qa!<CR>
 inoremap <A-Right> <Esc>:tabnext<CR>
 inoremap <A-Left> <Esc>:tabprev<CR>
 " Leader keys {{{2
@@ -272,7 +274,9 @@ nnoremap <leader>2 :w! ~/two<cr>
 nnoremap <leader>3 :w! ~/three<cr>
 nnoremap <leader>0 /xxx<cr>
 
-nnoremap <leader>a :call SetAbsoluteNumber()<cr>
+nnoremap <leader>a :ALEToggle<cr>
+nnoremap <leader>A :ALEToggle<cr>:call ToggleNumber()<cr>
+"nnoremap <leader>af :ALEFix
 "noremap <leader>b used by plugin/EasyMotion.vim
 "noremap <leader>c used by ftplugin/python/jab
 "noremap <leader>d used by ftplugin/python/jab
@@ -280,8 +284,8 @@ nnoremap <leader>a :call SetAbsoluteNumber()<cr>
 "noremap <leader>f was used by plugin/EasyMotion.vim
 nnoremap <leader>g :GitGutterToggle<cr>
 nnoremap <leader>h :call AfterPressing("h")<CR>
-"noremap <leader>l 
-"noremap <leader>L 
+"noremap <leader>l
+"noremap <leader>L
 nnoremap <leader>i mm:w!<cr>:source $MYVIMRC<cr>`m
 "noremap <leader>j used by plugin/EasyMotion.vim
 "noremap <leader>k used by plugin/EasyMotion.vim
@@ -295,8 +299,7 @@ nnoremap <leader>q :q!<cr>
 nnoremap <leader>r :set wrap!<cr>
 nnoremap <leader>t :call RetabAndStripTrailingWhitespace()<CR>
 nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>v :set paste<cr>
-nnoremap <leader>v mvO<c-r>. = <c-r>"<esc>`v
+nnoremap <leader>v mvO<c-r>.<Space>=<Space><c-r>"<esc>`v
 nnoremap <leader>w :wq<cr>
 nnoremap <leader>x :call RangerExplorer()<cr>
 "noremap <leader>y
@@ -356,6 +359,14 @@ endif
 " " set a nicer cursor in insert mode (from terryma on github)
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+"Filetypes {{{1
+
+filetype on
+filetype plugin on
+filetype indent on  " load filetype-specific indent files
+
+au BufRead,BufNewFile *.sh set filetype=sh
+
 " Plugins {{{1
 " vim-plug {{{2
 " Vim plugin manager
@@ -366,12 +377,18 @@ Plug 'dense-analysis/ale'
 " Ignore yaml line-length rule for ansible-lint
 let g:ale_ansible_ansible_lint_options = '--skip-list yaml[line-length]'
 Plug 'preservim/nerdtree'
+Plug 'arzg/vim-sh'
+Plug 'keitheis/claude-code.vim'
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 filetype on
 filetype plugin on
 filetype indent on  " load filetype-specific indent files
+" ALE {{{2
+let g:ale_fixers = { 'sh': ['shfmt'] }
+let g:ale_sh_shfmt_options = '-i 4 -ci -kp -sr -s'
+let g:ale_sh_shfmt_executable = '/opt/homebrew/bin/shfmt'
 "EasyMotion {{{2
 let g:EasyMotion_keys = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
 let g:EasyMotion_leader_key = ';'
@@ -382,6 +399,10 @@ let g:pylint_show_rate = 0
 " YouCompleteMe {{{2
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+" Nerdtree {{{2
+" This remaps Enter to open files in a new tab instead of the current buffer.
+" The default for new tab is t, so this just swaps the defaults.
+let g:NERDTreeMapOpenInTab = '<CR>'
 " gitgutter {{{2
 " Faster updates (See the readme at https://github.com/airblade/vim-gitgutter)
 set updatetime=500
@@ -398,7 +419,7 @@ function EnterBuffer ()
         noremap <buffer> p :diffput<cr>
         noremap <buffer> ] ]czz
         noremap <buffer> [ [czz
-        syntax off
+        syntax on
         set diffopt=filler  ",iwhite
         function! DiffNoSpace()
             set diffopt=filler,iwhite
@@ -422,7 +443,8 @@ autocmd BufEnter * call EnterBuffer()
 autocmd BufLeave * call LeaveBuffer()
 
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | NERDTree argv()[0] | endif
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | exe 'NERDTree ' . argv()[0] | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | exe 'NERDTree ' . argv()[0] | wincmd p | close | endif
 
 function HereIs(sentinel_line, sentinel_col)
     return line('.') == a:sentinel_line && col('.') == a:sentinel_col

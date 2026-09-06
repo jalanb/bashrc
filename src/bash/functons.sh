@@ -14,7 +14,7 @@
 # xx
 
 3d () {
-    3l -d "$@"
+    3l -d "$@" | grv -e __ -e test$
 }
 
 3l () {
@@ -192,6 +192,10 @@ down () {
     l -tr . | tail
 }
 
+high () {
+    sed -u "s/\(${1}\)/$(printf "$RED")\1$(printf "$NO_COLOUR")/g"
+}
+
 hhhh () {
     echo '#' | clip_in
 }
@@ -206,7 +210,7 @@ left () {
 SUDO () {
     if [[ -n $1 ]]; then
         user="-u $1"
-        yousir_="$1"
+        you_sir="$1"
     else
         user=
         you_sir=root
@@ -460,6 +464,12 @@ bumper () {
     git push
 }
 
+claude () {
+    export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+    export DISABLE_GROWTHBOOK=1
+    /Users/jab/.local/bin/claude "$@"
+}
+
 cd_one () {
     clear
     shift_dir "$@" && shift
@@ -582,7 +592,7 @@ clearly () {
 
 doctest () {
     local __doc__="""doctest args"""
-    local pythonpath_=$(readlink -f .)
+    local pythonpath_="$(readlink -f .)"
     [[ $PYTHONPATH ]] && pythonpath_="$PYTHONPATH:$pythonpath_"
     local options_=
     if [[ $1 =~ [-][vf] ]]; then
@@ -591,7 +601,8 @@ doctest () {
     fi
     local target_="$@"
     [[ $target_ ]] || target_=.
-    (PYTHONPATH="$pythonpath_" python -m doctest $options_ -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
+    local command_="$(python_command)"
+    (PYTHONPATH="$pythonpath_" $command_ -m doctest $options_ -o REPORT_ONLY_FIRST_FAILURE -o FAIL_FAST "$target_")
 }
 
 has_ext () {
@@ -888,6 +899,10 @@ jab_hub () {
     )
 }
 
+from_jalanb () {
+    "$@" /opt/clones/github/jalanb
+}
+
 jab_scripts () {
     python ~/jab/src/python/scripts.py "$@"
 }
@@ -1078,19 +1093,42 @@ publish_Localhost () {
 
 # functions starting with an underscore are intended for use within this file only
 
+dixx_menu () {
+    local title="$1"
+    shift
+    local commands=("$@")
+
+    while true; do
+        local selected=$(printf '%s\n' "${commands[@]}" | \
+            fzf --header="$title (q to quit)" \
+                --preview='echo "Command: {}"' \
+                --bind='q:abort')
+        [[ -z "$selected" ]] && break
+        eval "$selected"
+    done
+}
+
 dixx_different_files() {
     local command_="$1"
     local source_dir_="$2"
     local destination_dir_="$3"
+    local menu_mode=false
+    local commands=()
+    while read -r cmd; do
+        commands+=("$cmd")
+    done < <(divv_get_difference "$source_dir_" "$destination_dir_" | grep -v mypy_cache | grep Files | sed -e "s/Files /$command_ \"/" -e 's/ and /" "/' -e 's/ differ/"/')
 
     local number_in_both_=$(divv_get_difference "$source_dir_" "$destination_dir_" | grep Files | wc -l)
     if [[ $number_in_both_ -gt 0 ]]; then
         # Output header directly for display
         echo ""
-        echo "# Dirs 1 and 2 differ"
+        echo "Different files"
         # Output commands for execution
-        divv_get_difference "$source_dir_" "$destination_dir_" | grep Files |
-            sed -e "s/Files /$command_ \"/" -e 's/ and /" "/' -e 's/ differ/"/'
+        if [[ "$menu_mode" == true ]]; then
+            dixx_menu "Different Files" commands[@]
+        else
+            printf '%s\n' "${commands[@]}"
+        fi
     fi
 }
 
@@ -1162,6 +1200,10 @@ dixx () {
 
     # Clean up
     rm "$dixx_sh"
+}
+
+underscores () {
+    declare -p | grep 'declare -- .*_=' | grep --color ' [^-]*_'
 }
 
 edit_source () {
