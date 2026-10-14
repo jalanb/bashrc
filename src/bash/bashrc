@@ -101,6 +101,12 @@ __main__ () {
     set +m
 }
 
+__debug__ () {
+    set -x 
+    __main__ "$@" > $bashr_log 2>&1
+    set +x
+}
+
 post_main () {
     if [[ $PWD != /opt/clones/github/jalanb ]]; then
         show_command cd -
@@ -114,9 +120,7 @@ post_main () {
 
 if [[ ! $CLAUDECODE ]]; then
     if [[ $- =~ i ]]; then
-        set -x;
-        __main__ "$@" > $bashr_log 2>&1
-        set +x
+        __debug__ "$@"
         post_main
     else
         __main__  "$@"
