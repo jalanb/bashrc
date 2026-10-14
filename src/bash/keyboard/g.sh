@@ -56,6 +56,10 @@ ghv () {
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
+grq () {
+    quietly gr "$@"
+}
+
 grv () {
     local option_=-e
     [[ $1 == -e ]] && option_=
@@ -91,6 +95,10 @@ gree () {
         done
         gr $options_ $paths_
     )
+}
+
+grqq () {
+    grq -q "$@"
 }
 
 # xxxxx

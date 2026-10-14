@@ -55,7 +55,7 @@ ve () {
 }
 
 vf () {
-    edit_source $(functons) "$@"
+    vim -p $(fd "$@")
 }
 
 vg () {
@@ -270,6 +270,10 @@ vfd () {
     vim -p $(fd --follow "$@")
 }
 
+vff () {
+    edit_source $(functons) "$@"
+}
+
 vfg () {
     _sought="$1" && shift
     vf "$@" +/$_sought
@@ -325,6 +329,10 @@ vlo () {
 vpr () {
     local crappy_program_py_="$1"
     python "$crappy_program_py_" | python ~/jab/src/python/vim_traceback.py
+}
+
+vpy () {
+    v ~/bash/python.sh
 }
 
 vss () {
