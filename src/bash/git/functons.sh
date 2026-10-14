@@ -86,7 +86,7 @@ gi () {
     local _doc___="git in"
     if [[ "$@" ]]; then
         local storage_=/tmp/gi.sh
-        python -c "print('git commit -m\"$*\"')" > $storage_
+        $(python_command) -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
         rm -f $storage_
@@ -159,10 +159,6 @@ gw () {
     else
         vv ~/.gitconfig +/alias
     fi
-}
-
-gdf () {
-    git "$@" df
 }
 
 gof () {
@@ -298,6 +294,10 @@ gdl () {
     git diff --color=always "$@"| fewer
 }
 
+gdm () {
+    git g "$(main_branch)"
+}
+
 gds () {
     local diff_=${1:-diff}
     git $diff_ --staged "$@"
@@ -367,29 +367,33 @@ gip () {
 
 gl_ () {
     local options_="-n 8"
+    [[ "$@" =~ [[:space:]]-n ]] && options_=
     if [[ $1 =~ ^[1-9][0-9]*$ ]]; then
         options_="-n $1"
         shift
     fi
+    local log_=l
     if [[ $1 =~ ^--* ]]; then
         if [[ $1 =~ ^--since ]]; then
             options_="$1"
+        elif [[ $1 =~ '--log' ]]; then
+            log_=log
         else
             options_="$options_ $1"
         fi
         shift
     fi
     if [[ $1 ]]; then
-        if git branch --all | grep -q $1; then
+        if git branch --all | grep -q ${@:-1}; then
             options_="$options_ $1"
             shift
         fi
     fi
-    gc "$@" l $options_
+    gc $log_ $options_ "$@"
 }
 
 gl1 () {
-    gl_ 1 "$@"
+    gl_ 1 --log --stat "$@"
 }
 
 gl2 () {
@@ -408,6 +412,11 @@ gla () {
     gc "$@" l --author=Alan.Brogan
 }
 
+glf () {
+    gl --stat "$@"
+}
+
+
 glg () {
     local sought_=$1; shift
     gc "$@" l --grep "$sought_" 2>/dev/null
@@ -422,10 +431,6 @@ gll () {
 
 glm () {
     git_log_since $(main_branch)
-    return 0
-    local main_branch_=$(main_branch)
-    local start_=$(git merge-base $main_branch_ HEAD)
-    g l ${start_}^..HEAD
 }
 
 gln () {
@@ -435,13 +440,14 @@ gln () {
 glo () {
     local upstream_=$(abbrev --symbolic-full-name @{upstream})
     git_log_since $upstream_
-    return 0
-    local start_=$(git merge-base $upstream_ HEAD)
-    g l ${start_}^..HEAD
 }
 
 glp () {
     gl -p "$@"
+}
+
+glss () {
+    gl --stat "$@"
 }
 
 glt () {
@@ -1095,7 +1101,9 @@ glgs () {
 }
 
 glp1 () {
-    gl1 -p "$@"
+    for arg_ in "$@"; do
+        gl1 -p "$@"
+    done
 }
 
 glf1 () {
@@ -1104,7 +1112,9 @@ glf1 () {
 }
 
 gls1 () {
-    gls -n 1 -l 31 "$@"
+    for arg_ in "$@"; do
+        gl1 --stat "$@"
+    done
 }
 
 gpod () {
