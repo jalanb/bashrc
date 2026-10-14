@@ -23,10 +23,12 @@ import pathspec
 
 def git_root(path: str) -> str:
     """Git root above path, or empty string if not in a repo"""
-    status, output = subprocess.getstatusoutput(
-        f"git -C {path!r} rev-parse --show-toplevel"
+    result = subprocess.run(
+        ["git", "-C", path, "rev-parse", "--show-toplevel"],
+        capture_output=True,
+        text=True,
     )
-    return output.strip() if status == 0 else ""
+    return result.stdout.strip() if result.returncode == 0 else ""
 
 
 def load_spec(path: str) -> pathspec.PathSpec:
