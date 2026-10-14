@@ -111,6 +111,7 @@
     lp = log --no-color --oneline --graph --abbrev-commit --date=relative --pretty=format:'%ci, %cN as %cE, %D %H \"%s\"'
     ls = l --numstat
     lm = l __main__^..
+    lo = l @{u}^..
     lom = l origin/__main__^..
     lt = l --date=format-local:'%Y/%m/%d %H:%M' --pretty=format:'%Cgreen%cd%Creset, %C(blue)%aN%Creset,%C(auto)%d%Creset %C(auto)%h \"%s\"'
     ltt = l --pretty=format:'%Cgreen%ci %C(blue)%an, %C(auto)%d%Creset %C(auto)%h \"%s\"'
