@@ -62,7 +62,7 @@ gc () {
     [[ $1 =~ [-][qQ] ]] && quiet_=$1 && shift
     [[ $quiet_ =~ [-][Q] ]] && quietly_=Quietly
     if [[ -d "$1" ]]; then
-        local dir_="$(first_dir "$1")" && shift
+        local dir_="$1" && shift
         [[ $quiet_ ]] || show_command git -C "$dir_" "$@"
         $quietly_ git --no-pager -C "$dir_" "$@"
     else
@@ -367,33 +367,43 @@ gip () {
 
 gl_ () {
     local options_="-n 8"
-    [[ "$@" =~ [[:space:]]-n ]] && options_=
     if [[ $1 =~ ^[1-9][0-9]*$ ]]; then
         options_="-n $1"
         shift
     fi
     local log_=l
-    if [[ $1 =~ ^--* ]]; then
-        if [[ $1 =~ ^--since ]]; then
-            options_="$1"
-        elif [[ $1 =~ '--log' ]]; then
+    local dir_=.
+    if test -d "$1"; then
+        dir_="$1"
+        shift
+    elif [[ $1 =~ ^--* ]]; then
+        if [[ $1 =~ -C ]]; then
+            if test -d "$2"; then
+                dir_="$2"
+                shift
+            fi
+        elif [[ $1 =~ -l ]]; then
+            log_=l
+        elif [[ $1 =~ --log ]]; then
             log_=log
+        elif [[ $1 =~ ^--since ]]; then
+            options_="$1"
         else
             options_="$options_ $1"
         fi
         shift
     fi
     if [[ $1 ]]; then
-        if git branch --all | grep -q ${@:-1}; then
+        if git branch --all | grep -q "${@:-1}"; then
             options_="$options_ $1"
             shift
         fi
     fi
-    gc $log_ $options_ "$@"
+    gc "$dir_" "$log_" "$options_" "$@"
 }
 
 gl1 () {
-    gl_ 1 --log --stat "$@"
+    gl_ 1 "$@"
 }
 
 gl2 () {
@@ -1107,9 +1117,7 @@ glgs () {
 }
 
 glp1 () {
-    for arg_ in "$@"; do
-        gl1 -p "$@"
-    done
+    gl1 "$@" -p
 }
 
 glf1 () {
@@ -1118,9 +1126,7 @@ glf1 () {
 }
 
 gls1 () {
-    for arg_ in "$@"; do
-        gl1 --stat "$@"
-    done
+    gl1 "$@" --stat
 }
 
 gpod () {
