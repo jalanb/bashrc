@@ -156,7 +156,7 @@ lblue_dir () {
 
 colour_prompt () {
     local __doc__="""Use a coloured prompt with helpful info"""
-    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(blue_user) $(lblue_dir)\n "
+    printf " \n$(emoji_errors $1) $(red_date) $(green_python) $(blue_user) $(lblue_dir)\n$ "
 }
 
 blue_user () {
@@ -203,9 +203,14 @@ echo_prompt_colour () {
 }
 
 reload_prompt_if_changed () {
-    test -f $PROMPT_SOURCE || return 1
-    local current_mtime_=$(quietly stat -f %m "$PROMPT_SOURCE" )
-    [[ $current_mtime_ != $PROMPT_MTIME ]] && source "$PROMPT_SOURCE"
+    [[ -f "$PROMPT_SOURCE" ]] || return 1
+    local options_="-f %m"
+    if quietly stat --version | head -1 | grep -q GNU; then
+        options_="-c %Y"
+    fi
+    local current_mtime_=$(quietly stat $options_ "$PROMPT_SOURCE" )
+    [[ $current_mtime_ ]] || return 2
+    [[ $current_mtime_ != "$PROMPT_MTIME" ]] && source "$PROMPT_SOURCE"
 }
 
 pre_pses () {
