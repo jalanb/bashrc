@@ -376,6 +376,14 @@ Plug 'junegunn/vim-easy-align'
 Plug 'dense-analysis/ale'
 " Ignore yaml line-length rule for ansible-lint
 let g:ale_ansible_ansible_lint_options = '--skip-list yaml[line-length]'
+let g:ale_python_flake8_options = '--extend-ignore=E731'
+
+let g:ale_python_flake8_executable = expand('~/jab/.venv/bin/flake8')
+let g:ale_python_flake8_use_global = 1
+
+let g:ale_python_mypy_executable = expand('~/jab/.venv/bin/mypy')
+let g:ale_python_mypy_use_global = 1
+
 Plug 'preservim/nerdtree'
 Plug 'arzg/vim-sh'
 Plug 'keitheis/claude-code.vim'
