@@ -365,7 +365,7 @@ filetype on
 filetype plugin on
 filetype indent on  " load filetype-specific indent files
 
-au BufRead,BufNewFile *.sh set filetype=sh
+au BufRead,BufNewFile *.sh set filetype=bash
 
 " Plugins {{{1
 " vim-plug {{{2
