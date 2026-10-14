@@ -16,6 +16,10 @@
 # Can also be used as command
 #      $ etf test -d /bin 
 # 
+ee () {
+    EDITOR=/Applications/MacVim.app/Contents/bin/mvim e "$@"
+}
+
 ef () {
     local result_=$?
     [[ $result_ == 0 ]] && return $result_

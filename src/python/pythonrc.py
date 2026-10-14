@@ -36,8 +36,8 @@ def _write_time_stamp(path_to_history):
 
 def _read_history(readline):
     """Load the history (if any) into readline"""
-    import os
     import atexit
+    import os
 
     path_to_history = _path_to_history(os)
     if os.path.isfile(path_to_history):

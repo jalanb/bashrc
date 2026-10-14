@@ -11,16 +11,6 @@ j () {
 
 # xx
 
-jd () {
-    cd $1
-    clear
-    l
-}
-
-jj () {
-    jd ~/jalanb
-}
-
 jab () {
     sudo -u jab -i
 }

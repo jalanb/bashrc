@@ -17,3 +17,4 @@ ENVIRON_DIR=~/jab/environ.d
 # echo ~/jab/environ.d/travis.sh
 . $ENVIRON_DIR/travis.sh
 
+. "$HOME/.cargo/env"

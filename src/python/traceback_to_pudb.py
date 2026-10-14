@@ -1,6 +1,5 @@
 """Convert a traceback to breakpoint lines for use with pudb"""
 
-
 import os
 import sys
 

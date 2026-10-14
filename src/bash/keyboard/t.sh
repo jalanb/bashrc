@@ -103,3 +103,15 @@ try () {
 tti () {
     tty | cut -d'/' -f3
 }
+
+tool () {
+    too -e lints
+}
+
+toot () {
+    too -e tests
+}
+
+trin () {
+    tree --fromfile .
+}

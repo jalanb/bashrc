@@ -38,7 +38,7 @@ create_pr () {
     local __doc__="""Create a PR on GitHub for current branch"""
     local main_="$(main_branch)"
     if ! ahead_of_branch $main_; then
-        echo "No commits ahead of $main_" >&2
+        show_fail "No commits ahead of $main_"
         return 1
     fi
     local branch_=$(git rev-parse --abbrev-ref HEAD)
@@ -63,11 +63,11 @@ merge_pr () {
 
 merge_to_main() {
     if branch_is_on_main; then
-        echo "Already on $(main_branch)" >&2
+        show_fail "Already on $(main_branch)"
         return 1
     fi
     if git_changes_here; then
-        echo "Uncommitted changes — commit or stash first" >&2
+        show_fail "Uncommitted changes — commit or stash first"
         return 1
     fi
     local branch_=$(get_branch)
@@ -81,7 +81,7 @@ merge_to_main() {
         bump patch --new-version "${current_%.*}.$pr_number_"
         bump show
     else
-        echo "No .bumpversion.cfg — skipping version bump" >&2
+        show_fail "No .bumpversion.cfg — skipping version bump"
     fi
     quietly git branch -D "$branch_"
 }

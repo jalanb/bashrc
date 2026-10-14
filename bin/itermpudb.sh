@@ -2,7 +2,7 @@
 
 source_=~/iterm.pudb # put your command in there
 mysyte=~/jab/python/site/
-pysyte=~/hub/pysyte
+pysyte=~/jalanb/pysyse/__dev__/
 
 sourced=
 if [[ ! -f $source_ ]]; then
@@ -12,7 +12,7 @@ if [[ ! -f $source_ ]]; then
     echo "print(sys.version.split()[0])" > $sourced
     echo "def main():" > $sourced
     echo "    print('Hello World!')" > $sourced
-    echo "    print('Welcome to "$sourced"')" > $sourced
+    echo "    print('Welcome to \"$sourced\"')" > $sourced
     echo "" > $sourced
     echo "$sourced" > $source_
 fi

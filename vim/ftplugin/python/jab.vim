@@ -5,6 +5,8 @@ let g:loaded_jab_python = "v001"
 
 let g:pymode_doc = 0
 
+syntax on
+
 nnoremap } :cn<cr>
 nnoremap { :cp<cr>
 

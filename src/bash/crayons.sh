@@ -1,16 +1,16 @@
 #! /bin/cat
 
-CRAYONS_SOURCE="$BASH_SOURCE"
+CRAYONS_SOURCE="${BASH_SOURCE[0]}"
 
 
-[[ $NO_COLOUR ]] || . ~/jab/environ.d/colour.sh
+[[ $NO_COLOUR ]] || . /Users/jab/jab/environ.d/colour.sh
 
 .r () {
-    SOURCED_CRAYONS= source "$CRAYONS_SOURCE"
+    SOURCED_CRAYONS=source "$CRAYONS_SOURCE"
 }
 
 upper () {
-    echo ${1} | tr '[:lower:]' '[:upper:]'
+    echo "${1}" | tr '[:lower:]' '[:upper:]'
 }
 
 rgb () {
@@ -80,7 +80,7 @@ show_error () {
 # xxxxxxxxxxxx
 
 show_command () {
-    local arg_= 
+    local arg_=
     lblack "$ "
     lgreen "$1 "
     shift
@@ -106,12 +106,12 @@ show_run_command () {
 }
 
 crayons () {
-    echo "${BASH_SOURCE}.sh"
+    echo "${BASH_SOURCE[0]}.sh"
 }
 
 crayon () {
-    local function_name_=$1 rgb_colour_=$2
-    [[ $rgb_colour_ ]] || rgb_colour_=$function_name_
+    local function_name_=$1 rgb_colour_=$1
+    [[ $# == 2 ]] && rgb_colour_=$2
     printf "$function_name_ () {\n    rgb $rgb_colour_ "'"$@"'" \n}\n\n" >> $(crayons)
 }
 
@@ -123,7 +123,7 @@ crayon_line () {
 
 source_crayons () {
     local crayons_=$(crayons)
-    echo > $crayons_
+    echo > "$crayons_"
     crayon no_colour off
     for colour in red green blue cyan magenta yellow black white; do
         [[ $colour == "black" ]] || crayon $colour
@@ -133,7 +133,8 @@ source_crayons () {
     done
     crayon grey lblack
     crayon_line grey_line lblack
-    . $crayons_
+    # shellcheck disable=SC1090
+    . "$crayons_"
 }
 
 if [[ ! $SOURCED_CRAYONS ]]; then

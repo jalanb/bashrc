@@ -10,8 +10,8 @@ gq () {
 }
 
 gr () {
-    if [[ "$@" ]]; then
-        egrep "$@" | cut_err  "Is a directory" | egrep --color=auto "$@"
+    if [[ "$*" ]]; then
+        grep -E "$@" | cut_err  "Is a directory" | grep -E --color=auto "$@"
     else
         show_command git pull --rebase
         git pull --rebase
@@ -56,8 +56,14 @@ ghv () {
     history | grep -v "\<\(history\|gh\)\>" | sed -e "s/^ *[0-9]\+ *//" -e "s/\([JFMASOND][a-z][a-z].[0-9][0-9] - [0-9:]\+\)\( \+\)/\1=/" | vim - +/"$@"
 }
 
+grq () {
+    quietly gr "$@"
+}
+
 grv () {
-    gr -v "$@"
+    local option_=-e
+    [[ $1 == -e ]] && option_=
+    gr -v $option_ "$@"
 }
 
 gv. () {
@@ -89,6 +95,10 @@ gree () {
         done
         gr $options_ $paths_
     )
+}
+
+grqq () {
+    grq -q "$@"
 }
 
 # xxxxx
