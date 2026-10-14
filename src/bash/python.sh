@@ -11,7 +11,16 @@ PYTHON_SOURCE="$BASH_SOURCE"
 # xxx
 
 latest_python () {
-    quietly which $(compgen -c python3. | grep -v '[_-]' | sort -uV | tail -1)
+    local python3_="$(quietly which $(compgen -c python3. | gr -v '[_-]' | sort -uV | tail -1))"
+    if [[ -x "$python3_" ]]; then
+        echo $python3_
+        return 0
+    fi
+    if QUIETLY which python3; then
+        which python3
+    else
+        which python
+    fi
 }
 
 python_command () {
@@ -37,7 +46,7 @@ ip () {
     local here_=$(jostname)
     local options_=-noconfirm_exit
     local _ipython=${IPYTHON:-ipython}
-    if [[ $($_ipython --help | grep no.*confirm) == "--no-confirm-exit" ]]; then
+    if [[ $($_ipython --help | gr no.*confirm) == "--no-confirm-exit" ]]; then
         options_=--no-confirm-exit
     fi
     local profile_=$(ipython_profile $1)
@@ -70,18 +79,36 @@ wp () {
 }
 
 ppd () {
-    ppu -e ".[dev]" "$@"
+    local __doc__="""install local project, confidently"""
+    if gr '[.]\[dev\]' pyproject.toml; then
+        ppu -e ".[dev]"
+    fi
+    if test -d .venv; then
+        QUIETLY deactivate
+        quietly source .venv/bin/activate
+    fi
 }
 
 ppe () {
-    local dir_="$1" upgrade_=
-    [[ -d "$dir_" ]] && show_command cd "$dir_" || dir_=.
+    local __doc__="""install local project, tentatively"""
+    local dir_="$1" 
+    if [[ -d "$dir_" ]]; then
+        show_command cd "$dir_"
+        shift
+    else
+        dir_=.
+    fi
     (
         cd "$dir_" || return 1
-        Quietly ppf $(basename $(readlink -f .)) && upgrade_=--upgrade
-        ppi $upgrade_ -e .
-        # | grep -v -e uninstall -e satisfied -e existing -e collected
-        [[ -f requirements/development.txt ]] && ppr requirements/development.txt
+        local upgrade_=
+        [[ $1 == -u ]] && upgrade_=--upgrade
+        Quietly ppf "$(basename "$(readlink -f .)")" && upgrade_=--upgrade
+        if quietly gr -q "dev = " pyproject.toml; then
+            ppi $upgrade_ -e .[dev]
+        else
+            ppi $upgrade_ -e .
+            [[ -f requirements/development.txt ]] && ppr requirements/development.txt
+        fi
     )
 }
 
@@ -92,9 +119,9 @@ freeze_special () {
 ppf () {
     local quiet_=
     [[ $1 =~ -q ]] && shift && quiet_=-q
-    if [[ "$@" ]]; then
-        if freeze_special $1; then
-            import_version $1
+    if [[ $# -gt 0 ]]; then
+        if freeze_special "$1"; then
+            import_version "$1"
         elif [[ $quiet_ ]]; then
             pyp $quiet_ freeze | grep -q "$@"
         else
@@ -106,8 +133,8 @@ ppf () {
 }
 
 ppi () {
-    [[ $1 == install ]] && shift
     local __doc__="""Install $* with pip"""
+    [[ $1 == install ]] && shift
     pyp install --quiet "$@"
     # 2>&1 | grep -v -e already -e "distutils config files" | grep --color [un]*installed
 }
@@ -138,7 +165,7 @@ pym () {
         [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
     done
     local cmd_=$(quietly python_command)
-    [[ $cmd_ ]] || return 1
+    [[ -x "$cmd_" ]] || return 1
     [[ $quiet_ ]] || show_command $cmd_ -m "${args[@]}"
     $cmd_ -m "${args[@]}"
 }
@@ -169,6 +196,10 @@ acti () {
     local file_=$(venv_activator "$@")
     [[ -f "$file_" ]] || ls $(readlink -f "$file_")
     return 1
+}
+
+ppeu () {
+    ppe -u "$@"
 }
 
 ppie () {
@@ -381,33 +412,31 @@ some_python3 () {
 
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
-    local default_python_="$(latest_python)"
-    QUIETLY which $default_python_ || default_python_=python
-    local python_=${PYTHON:-$default_python_}
-    local exec_=$($python_ -c"import sys; print(sys.executable)")
-    local version_=$($python_ -c"import sys; print(sys.version.split()[0])")
-    local real_exec_=$(readlink -f $exec_)
+    local latest_python_="$(latest_python)"
+    QUIETLY which $latest_python_ || latest_python_=python3
+    local python_=${PYTHON:-$latest_python_}
+    local sys_exec_=$($python_ -c"import sys; print(sys.executable)")
+    local real_exec_=$(readlink -f "$sys_exec_")
     local shown_=
     if [[ $python_ =~ ^python3? ]]; then
-        local which_=$(which $python_)
-        if [[ $exec_ != $which_ ]]; then
-            show_data "   bash: $which_"
-            show_data " python: $exec_"
-            [[ $real_exec_ == $exec_ ]] || show_data "   real: $real_exec_"
+        local which_=$(which python3)
+        if [[ $sys_exec_ != "$which_" ]]; then
+            show_data "  which: $which_"
+            show_data " python: $sys_exec_"
+            [[ $real_exec_ == $sys_exec_ ]] || show_data "   real: $real_exec_"
             shown_=1
         fi
     fi
     if [[ ! $shown_ ]]; then
-        if [[ $real_exec_ == $exec_ ]]; then
-            show_data " python: $exec_"
+        if [[ $real_exec_ == $sys_exec_ ]]; then
+            show_data " python: $sys_exec_"
         else
-            show_data " python: $exec_"
+            show_data " python: $sys_exec_"
             show_data "   real: $real_exec_"
         fi
     fi
+    local version_=$($sys_exec_ -c"import sys; print(sys.version.split()[0])")
     show_data "version: $version_"
-    local real_exec_=$(readlink -f $python_exec_)
-    same_path "$python_exec_" "$real_exec_" || show_data "   real: $real_exec_"
 }
 
 which_pythons () {
