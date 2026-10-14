@@ -13,7 +13,7 @@ PYTHON_SOURCE="$BASH_SOURCE"
 latest_python () {
     local python3_="$(quietly which $(compgen -c python3. | gr -v '[_-]' | sort -uV | tail -1))"
     if [[ -x "$python3_" ]]; then
-        echo $python3_
+        echo "$python3_"
         return 0
     fi
     if QUIETLY which python3; then
@@ -80,6 +80,7 @@ wp () {
 
 ppd () {
     local __doc__="""install local project, confidently"""
+    grep -q '^dev = [' "$pyproject_" || return 0
     if gr '[.]\[dev\]' pyproject.toml; then
         ppu -e ".[dev]"
     fi
@@ -219,6 +220,15 @@ pipv () {
     vim -p "$setup_py_" "$setup_cfg_" "$requires_"
 }
 
+mkvenv () {
+    local dir_=.
+    if [[ -d "$1" ]]; then
+        dir_="$1"
+        shift
+    fi
+    venv "$dir_" -f
+}
+
 reactivate () {
 	unhash_activate "$1"
     ppp
@@ -233,20 +243,21 @@ venv () {
     fi
     local venv_dir_="$dir_/.venv"
     if [[ -d "$venv_dir_" && $1 =~ ^-(f|-force)$ ]]; then
-        show_command "rm -rf \"$venv_dir_\""
+        [[ "$*" =~ '-q' ]] || show_command "rm -rf '$venv_dir_'"
         rm -rf "$venv_dir_" >/dev/null
+        shift
     fi
     de_activate
-    hash -d python3 python 2>/dev/null
-    pym venv --copies --clear "$venv_dir_"
-    reactivate "$venv_dir_"
+    "$(latest_python)" -m venv --copies --clear "$venv_dir_"
+    local activate_="$venv_dir_/bin/activate"
+    test -f "$activate_" && . "$activate_"
     if [[ -f "$dir_/pyproject.toml" ]]; then
         (
-            cd "$dir_"
-            if grep -qw ^dev pyproject.toml ]]; then
-                ppd
+            cd "$dir_" || return 1
+            if grep -qw ^dev pyproject.toml ; then
+                PYTHON="$venv_dir_/bin/python" ppd
             else
-                ppu -e .
+                PYTHON="$venv_dir_/bin/python" ppu -e .
             fi
         )
     else
@@ -380,8 +391,9 @@ unhash_activate () {
 }
 
 de_activate () {
-    QT deactivate && deactivate
-    [[ $VIRTUAL_ENV ]] && QUIETLY deactivate
+    QUIETLY type deactivate || return 0
+    QUIETLY deactivate
+    unhash_py
 }
 
 unactivate () {
@@ -413,7 +425,7 @@ some_python3 () {
 which_python () {
     local __doc__="""Show the real paths to python, from which, python and readlink"""
     local latest_python_="$(latest_python)"
-    QUIETLY which $latest_python_ || latest_python_=python3
+    [[ -x $latest_python_ ]] || latest_python_=python3
     local python_=${PYTHON:-$latest_python_}
     local sys_exec_=$($python_ -c"import sys; print(sys.executable)")
     local real_exec_=$(readlink -f "$sys_exec_")

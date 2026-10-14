@@ -500,20 +500,6 @@ lesen () {
     less -SNR "$@"
 }
 
-mkvenv () {
-    local dir_=. venv_dir_=
-    if [[ -d "$1" ]]; then
-        dir_="$1"
-        shift
-    fi
-    venvdir__="$dir_/.venv"
-    deactivate
-    rm -rf $venv_dir_
-    python3 -m venv "$venv_dir_"
-    . "$venv_dir_/bin/activate"
-    piup
-}
-
 show_line () {
     local prefix_=$1; shift
     local server_= suffix_=
