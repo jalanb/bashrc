@@ -757,6 +757,12 @@ grr () {
     git pull --rebase "$@"
 }
 
+grcs () {
+    grc
+    echo
+    gs
+}
+
 grim () {
     gri $(main_branch)
 }
