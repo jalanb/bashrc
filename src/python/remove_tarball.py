@@ -4,7 +4,6 @@ import os
 import sys
 import tarfile
 
-
 from pysyte.types.paths import path as makepath
 
 

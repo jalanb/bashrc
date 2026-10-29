@@ -53,24 +53,15 @@ aab () {
 }
 
 aaj () {
-<<<<<<< HEAD
     aa "$@" ~/jalanb/
-=======
-    aa "$@" ~/hub/jalanb
->>>>>>> bb068e3c (New job - some paths have moved)
 }
 
 add () {
     echo $(($1 + $2))
 }
 
-<<<<<<< HEAD
 ajb () {
     a "$@" ~/jab/
-=======
-ajj () {
-    a "$@" ~/hub/jalanb/
->>>>>>> bb068e3c (New job - some paths have moved)
 }
 
 asb () {

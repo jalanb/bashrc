@@ -14,6 +14,5 @@ ENVIRON_DIR=~/jab/environ.d
 . $ENVIRON_DIR/company.sh 2>/dev/null
 # echo ~/jab/environ.d/ssh_completion.sh
 . $ENVIRON_DIR/ssh_completion.sh
-# echo ~/jab/environ.d/travis.sh
-. $ENVIRON_DIR/travis.sh
 
+. "$HOME/.cargo/env"

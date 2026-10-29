@@ -17,7 +17,7 @@ sa () {
 }
 
 sb () {
-    s ~/bash/__init__.sh
+    s ~/.bashrc
 }
 
 sf () {
@@ -25,7 +25,7 @@ sf () {
 }
 
 sp () {
-    s ~/bash/prompt.sh "$@"
+    s ~/bash/prompt.sh "${@:-green}"
 }
 
 sx () {
@@ -72,20 +72,12 @@ ses () {
     echo "$@" | sed -e "s:$_old:$_new:"
 }
 
-sib () {
-    . ~/.bashrc
-}
-
 sla () {
     s $(aliases -l)
 }
 
 sgf () {
     s $(functons -g)
-}
-
-sib () {
-    . ~/.bashrc
 }
 
 sla () {

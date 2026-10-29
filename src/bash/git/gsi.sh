@@ -34,7 +34,6 @@ gxi () {
 
     STASHED_=
     GXI_QUERY=
-    LESS=MRFX g lll
     LESS=MRFX g lf -n1
     show_pre_loop_
     while gxitss; do

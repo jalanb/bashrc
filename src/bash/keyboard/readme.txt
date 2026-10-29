@@ -7,3 +7,4 @@ Aim: For a key `x` there should be commands `x`, `xx`, `xxx`
 In order to gain a script in this package a letter must provide at least the first three, but may have more.
 
 A script can contain similar commands as long as they start with `x`
+    (Any helper functions not starting with `x` should be moved up to a script in `~/bash`

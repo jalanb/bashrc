@@ -3,16 +3,13 @@
 import os
 import re
 import sys
-from fnmatch import fnmatch
 import tempfile
+from fnmatch import fnmatch
 from subprocess import getoutput
 
-
-from pysyte.types.lists import de_duplicate
-from pysyte.types import paths
-
-
 import script_path
+from pysyte.types import paths
+from pysyte.types.lists import de_duplicate
 
 
 def path_to_editor() -> str:

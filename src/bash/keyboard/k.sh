@@ -11,37 +11,31 @@ k () {
 kd () {
     local __doc__="""cd to directory $1 and run args"""
     [[ $1 ]] || return 2
-    local show_=true
-    local options_=
+    local verbose_=
     case $1 in
-        -v) show_=show_command; shift ;;
-        -q) show_=true; shift ;;
+        -v) verbose_=verbose; shift ;;
+        -q) verbose_=; shift ;;
         *) ;;
     esac
     local dir_="$1"
     [[ "$dir_" ]] || return 3
     [[ -d "$dir_" ]] || return 5
     shift
-    [[ $1 =~ -[v] ]] && show_=show_command
-    $show_ cd $dir_
-    command cd $dir_
+    case $1 in
+        -v) verbose_=verbose; shift ;;
+        -q) verbose_=; shift ;;
+        *) ;;
+    esac
+    [[ $verbose_ ]] && show_command cd "$dir_"
+    command cd "$dir_" || return 1
     "$@"
 }
 
 kk () {
     local __doc__="""cd to directory $1; run args; cd back"""
-    local oldpwd_="$(readlink -f $PWD)"
-    if [[ $1 =~ -[vq] ]]; then
-        local option_=-v
-        [[ $1 =~ $option_ ]] || option_=
-        shift
-        local command_=$1
-        shift
-        kd $command_ $option_ "$@"
-    else
-        kd "$@"
-    fi
-    [[ -d "$oldpwd_" ]] && command cd "$oldpwd_"
+    local oldpwd_="$(readlink -f "$PWD")"
+    kd "$@"
+    command cd "$oldpwd_" || return 2
 }
 
 kl () {

@@ -18,25 +18,23 @@ add_to_PATH_sh () {
 set_paths () {
     OLD_PATH=$PATH
     if [[ -d ~/jab ]]; then
-        PATH=
+        . ~/jab/src/bash/add_to_a_path.sh
+# User
         add_to_PATH_sh $HOME/bin
-        add_to_PATH_sh ~/jab/bin
-        add_to_PATH_sh $HOME/.local
+        add_to_PATH_sh $HOME/jab/bin
         add_to_PATH_sh $HOME/.local/bin
-        add_to_PATH_sh ${VIRTUAL_ENV}/bin
-        add_to_PATH_sh /opt/homebrew/bin
         add_to_PATH_sh /usr/local/gnu
         add_to_PATH_sh /usr/local/bin
+        add_to_PATH_sh /opt/uv/bin
+        add_to_PATH_sh /opt/homebrew/bin
+        add_to_PATH_sh $HOME/.cargo/bin
+# System
         add_to_PATH_sh /bin
         add_to_PATH_sh /usr/bin
-#       add_to_PATH_sh /usr/local/opt/python/libexec/bin
         add_to_PATH_sh /usr/local/sbin
-#       add_to_PATH_sh $HOME/git/bin
-#       add_to_PATH_sh /opt/local/bin
         add_to_PATH_sh /sbin
         add_to_PATH_sh /usr/sbin
         add_to_PATH_sh /usr/local/go/bin
-#       add_to_PATH_sh ~/.cargo/bin
         export PATH
     else
         echo ~/jab is not a directory

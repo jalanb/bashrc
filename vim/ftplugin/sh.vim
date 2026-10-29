@@ -32,3 +32,5 @@ set foldmethod=indent
 " Start with closed folds
 "
 set foldlevel=0
+
+syntax on

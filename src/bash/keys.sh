@@ -44,16 +44,11 @@ push_keys () {
             git checkout keyboard
         fi
 
-        # Process each modified file individually
-        for file_ in $(git ls-files -m); do
-            commit_key_file  "$file_"
-        done
-
-        # Push the keyboard branch to the remote repository
+        git add $(git ls-files -m)
+        git commit -m "Add keyboard"
         git push origin keyboard
-
-        # Return to the previous branch and apply the stashed changes
         git checkout -
+        git merge keyboard
         git stash pop 2>/dev/null
     )
 }
@@ -86,7 +81,7 @@ KEYBOARD_DIR=$BASH_DIR/keyboard
 }
 
 keyboard_path () {
-    echo ~/bash/keyboard/$1
+    readlink -f "$HOME/bash/keyboard/$1"
 }
 
 key_exists () {
@@ -184,24 +179,52 @@ keys_read () {
 }
 
 keys_vim () {
-    local init_=$(key_init) files_=
-    if [[ ! "$@" ]]; then
-        files_="$(key_scripts)"
-        vv $files_
+    local init_=$(key_init) 
+    if [[ ! "$*" ]]; then
+        vv "$(key_scripts)"
         return
     fi
-    local option_= path_= file_=
-    dir_=$(keyboard_path)
-    for option_ in "$@"; do
-        path_=$dir_/$option_
-        [[ -f ${path_} ]] && file_=${path_}
-        [[ -f ${path_}.sh ]] && file_=${path_}.sh
-        [[ -f $file_ ]] && files_="$files_ $file_"
+    local arg_="" file_="" 
+    local files_=()
+    local keyboard_dir_=$(keyboard_path)
+    local pattern_=""
+    for arg_ in "$@"; do
+        if [[ $arg_ =~ ^[+] ]]; then
+            pattern_="$pattern_ $arg_"
+            continue
+        fi
+        if [[ -f "$arg_" ]]; then
+            file_="$arg_"
+        else
+            key_file_=$keyboard_dir_/$arg_
+            [[ -f ${key_file_} ]] && file_=${key_file_}
+            [[ -f ${key_file_}.sh ]] && file_=${key_file_}.sh
+        fi
+        [[ -f $file_ ]] && files_+=("$file_")
         file_=
     done
-    [[ $files_ ]] || return 6
-    vim -p $files_
+    (( ${#files_[@]} )) || return 6
+    vim -p "${files_[@]}" "$pattern_"
     keys_read
+}
+
+fix_keyboard_init () {
+    local __doc__="""Correct path_to_file for files under keyboard/"""
+    [[ $path_to_file == */keyboard/__init__.sh ]] || return 0
+    local letter_=${1:0:1}
+    local real_file_=$(dirname "$path_to_file")/$letter_.sh
+    if [[ ! -f $real_file_ ]]; then
+        show_fail "keyboard glitch fix: no such file: $real_file_"
+        return 1
+    fi
+    path_to_file=$real_file_
+    local real_line_=$(grep -n "^$1 (" "$real_file_" | cut -d: -f1 | head -1)
+    [[ $real_line_ ]] && line_number=$real_line_
+}
+
+parse_function () {
+    parse_declare_function $(declare_function "$1")
+    fix_keyboard_init "$1"
 }
 
 keys_read

@@ -8,3 +8,6 @@
 
 alias u=echo
 
+upm () {
+    npm uninstall "$@"
+}

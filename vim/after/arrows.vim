@@ -2,12 +2,12 @@
 "
 " Normal Arrows
 "
-nnoremap <up>               ?<cr>zv
-nnoremap <down>             /<cr>zv
+nnoremap <left>             ?<cr>zv
+nnoremap <right>            /<cr>zv
 "noremap <left>             #zv
 "noremap <right>            *zv
-nnoremap <left>             :call ClaudeLeftSearch()<cr>
-nnoremap <right>            :call ClaudeRightSearch()<cr>
+nnoremap <up>             :call ClaudeLeftSearch()<cr>
+nnoremap <down>            :call ClaudeRightSearch()<cr>
 "
 " Normal Shift Arrows
 "
@@ -65,21 +65,21 @@ function! ExpandBodyOfCode()
     "  j: down one line (go to body of code)
     "  zo / zO : open one/all folds
     "  z: centre this line on screen
-    
+
     " Python class: expand one level
     if line =~ '^\s*class\s'
         execute 'normal! jzoz'
         call add(b:auto_opened_folds, lnum)
         return
     endif
-    
+
     " Python def: expand all
     if line =~ '^\s*def\s'
         execute 'normal! jzOz'
         call add(b:auto_opened_folds, lnum)
         return
     endif
-    
+
     " Bash function: expand all
     if line =~ '^\w\+\s*()\s*{$'
         execute 'normal! jzOz'

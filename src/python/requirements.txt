@@ -1,4 +1,6 @@
 ipython
+pathspec
+rich
 pudb
 pprintpp
 pysyte>=0.7.40

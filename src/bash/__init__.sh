@@ -41,7 +41,12 @@ __version__=0.8.92
 . ~/bash/keys.sh
 echo ~/bash keys_read
 keys_read
+
+# Others
+
 echo ~/.fzf.bash
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+eval "$(JUST_COMPLETE=bash just)"
 
 export _BASH_DIR=~/bash

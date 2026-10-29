@@ -121,7 +121,7 @@ fdg () {
 }
 
 fdj () {
-    fd "$@" /opt/clones/github/jalanb
+    from_jalanb fd "$@"
 }
 
 fdl () {
@@ -130,7 +130,7 @@ fdl () {
 }
 
 fdp () {
-    fd -e py "$@"
+    fdy "$@"
 }
 
 fdv () {
@@ -143,7 +143,7 @@ fdx () {
 }
 
 fdy () {
-    fde py "$@"
+    fd -e py "$@"
 }
 
 fdz () {

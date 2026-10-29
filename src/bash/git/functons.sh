@@ -62,7 +62,7 @@ gc () {
     [[ $1 =~ [-][qQ] ]] && quiet_=$1 && shift
     [[ $quiet_ =~ [-][Q] ]] && quietly_=Quietly
     if [[ -d "$1" ]]; then
-        local dir_="$(first_dir "$1")" && shift
+        local dir_="$1" && shift
         [[ $quiet_ ]] || show_command git -C "$dir_" "$@"
         $quietly_ git --no-pager -C "$dir_" "$@"
     else
@@ -86,7 +86,7 @@ gi () {
     local _doc___="git in"
     if [[ "$@" ]]; then
         local storage_=/tmp/gi.sh
-        python -c "print('git commit -m\"$*\"')" > $storage_
+        $(python_command) -c "print('git commit -m\"$*\"')" > $storage_
         cat $storage_
         bash $storage_
         rm -f $storage_
@@ -159,10 +159,6 @@ gw () {
     else
         vv ~/.gitconfig +/alias
     fi
-}
-
-gdf () {
-    git "$@" df
 }
 
 gof () {
@@ -298,6 +294,10 @@ gdl () {
     git diff --color=always "$@"| fewer
 }
 
+gdm () {
+    git g "$(main_branch)"
+}
+
 gds () {
     local diff_=${1:-diff}
     git $diff_ --staged "$@"
@@ -371,8 +371,22 @@ gl_ () {
         options_="-n $1"
         shift
     fi
-    if [[ $1 =~ ^--* ]]; then
-        if [[ $1 =~ ^--since ]]; then
+    local log_=l
+    local dir_=.
+    if test -d "$1"; then
+        dir_="$1"
+        shift
+    elif [[ $1 =~ ^--* ]]; then
+        if [[ $1 =~ -C ]]; then
+            if test -d "$2"; then
+                dir_="$2"
+                shift
+            fi
+        elif [[ $1 =~ -l ]]; then
+            log_=l
+        elif [[ $1 =~ --log ]]; then
+            log_=log
+        elif [[ $1 =~ ^--since ]]; then
             options_="$1"
         else
             options_="$options_ $1"
@@ -380,12 +394,12 @@ gl_ () {
         shift
     fi
     if [[ $1 ]]; then
-        if git branch --all | grep -q $1; then
+        if git branch --all | grep -q "${@:-1}"; then
             options_="$options_ $1"
             shift
         fi
     fi
-    gc "$@" l $options_
+    gc "$dir_" "$log_" "$options_" "$@"
 }
 
 gl1 () {
@@ -408,6 +422,11 @@ gla () {
     gc "$@" l --author=Alan.Brogan
 }
 
+glf () {
+    gl --stat "$@"
+}
+
+
 glg () {
     local sought_=$1; shift
     gc "$@" l --grep "$sought_" 2>/dev/null
@@ -421,17 +440,24 @@ gll () {
 }
 
 glm () {
-    local main_branch_=$(main_branch)
-    local start_=$(git merge-base $main_branch_ HEAD)
-    g l ${start_}^..HEAD
+    git_log_since $(main_branch)
 }
 
 gln () {
     gc "$@" l --name-only
 }
 
+glo () {
+    local upstream_=$(abbrev --symbolic-full-name @{upstream})
+    git_log_since $upstream_
+}
+
 glp () {
     gl -p "$@"
+}
+
+glss () {
+    gl --stat "$@"
 }
 
 glt () {
@@ -609,7 +635,7 @@ main_branch () {
 
 branch_is_on_main() {
     local current_branch_
-    current_branch_=$(git rev-parse --abbrev-ref HEAD)
+    current_branch_=$(abbrev HEAD)
     [[ "$current_branch_" == "$(main_branch)" ]]
 }
 
@@ -741,6 +767,12 @@ grr () {
     git pull --rebase "$@"
 }
 
+grcs () {
+    grc
+    echo
+    gs
+}
+
 grim () {
     gri $(main_branch)
 }
@@ -753,12 +785,33 @@ grs () {
     git rebase --skip
 }
 
+gra () {
+    git remote add "$@"
+}
+
+gro () {
+    gra origin "$@"
+}
+
 gru () {
-    local dir_="$(first_dir "$1")" && shift
-    local origin_=$(quietly get_origin $dir_)
-    [[ $origin_ ]] || return 1
-    [[ $* =~ -q ]] || show_command git -C $dir_ remote get-url origin
-    get_origin $dir_
+    local c_='' quiet_='' arg_=''
+    if [[ ! "$*" ]]; then
+        show_command git remote get-url origin
+        git remote get-url origin
+        return 0
+    fi
+    for arg_ in "$@"; do
+        if [[ $arg_ =~ [-]q ]]; then
+            quiet_=1
+            break
+        fi
+    done
+    for arg_ in "$@"; do
+        [[ -d "$arg_" ]] || continue
+        args_="-C $arg_ remote get-url origin"
+        [[ $quiet_ ]] || show_command git $args_
+        git $args_
+    done
 }
 
 gsa () {
@@ -930,12 +983,12 @@ gbDD () {
 }
 
 gaai () {
-    local addable=.
+    local addable_=.
     if [[ -e "$1" ]]; then
-        addable=$1
+        addable_=$1
         shift
     fi
-    ga $addable && gi "$@"
+    ga "$addable_" && g im "$@"
 }
 
 gbta () {
@@ -1064,7 +1117,7 @@ glgs () {
 }
 
 glp1 () {
-    gl1 -p "$@"
+    gl1 "$@" -p
 }
 
 glf1 () {
@@ -1073,7 +1126,7 @@ glf1 () {
 }
 
 gls1 () {
-    gls -n 1 -l 31 "$@"
+    gl1 "$@" --stat
 }
 
 gpod () {
@@ -1388,6 +1441,10 @@ as_branch_ () {
 }
 # xxxxxxxxxx
 
+abbrev () {
+    quietly git rev-parse --abbrev-ref "$@" || return 1
+}
+
 has_branch () {
     git branch --contains $1 2>/dev/null | grep -q $2
 }
@@ -1424,19 +1481,15 @@ get_branch () {
 }
 
 git_branch () {
-    local quiet_= verbose_=
-    [[ $1 == -q ]] && quiet_=quietly
-    [[ $1 == -q ]] && shift
-    [[ $1 == -v ]] && verbose_=True
-    [[ $1 == -v ]] && shift
-    local ref_=HEAD
-    [[ "$@" ]] && ref_="$1"
-    [[ $verbose_ ]] && show_command git rev-parse --abbrev-ref $ref_ 
-    $quiet_ git rev-parse --abbrev-ref $ref_
-}
-
-set_sed_origin () {
-    git remote set-url origin $(sed_origin "$@")
+    local show_=1 ref_=HEAD
+    [[ $1 == -q ]] && show_= && shift
+    [[ $1 == -v ]] && show_=1 && shift
+    [[ "$@" ]] && ref_=$1
+    if [ $show_ ]; then
+        w abbrev
+        show_command abbrev $ref_
+    fi
+    abbrev $ref_
 }
 
 sed_origin () {
@@ -1501,6 +1554,11 @@ git_changes_here () {
 # xxxxxxxxxxxx
 
 # xxxxxxxxxxxxx
+
+git_log_since () {
+    local start_=$(git merge-base "$1" HEAD)
+    g l ${start_}^..HEAD
+}
 
 untracked () {
     local path_="$1"; shift
