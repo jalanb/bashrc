@@ -10,6 +10,10 @@ x () {
     exit 1
 }
 
+xx () {
+    (set -x; "$@") 2>&1 | grep -v -e crayons.sh -e prompt.sh
+}
+
 # xxx
 #
 xib () {
