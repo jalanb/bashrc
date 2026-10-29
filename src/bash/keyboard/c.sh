@@ -88,24 +88,31 @@ cd- () {
 cdj () {
     local __doc__="cd to jalanb dir [and run a command (a, f, h, l, r)]"
     cd /opt/clones/github/jalanb/ || return 1
-    if [[ -n "${1-}" && -d "$1" ]]; then
-        cd "$1" || return 1
-        shift
+    if [[ -n "${1-}" ]]; then
+        if [[ -d "$1" ]]; then
+            cd "$1" && shift
+        fi
     fi
     [[ "$*" ]] || return 0
     local command_=
     case "${1-}" in
         a) command_=ack;    shift ;;
         f) command_=fd;     shift ;;
+        g) command_=rg;     shift ;;
         h) command_=hub;    shift ;;
         l) command_=l;      shift ;;
         r) command_=ranger; shift ;;
+        v) command_=vv; shift ;;
     esac
-    [[ "$command_" ]] || return 0
-    if [[ "$command_" == hub ]]; then
-        fd -td hub "$@" .
-    else
+    if [[ "$command_" ]]; then
         "$command_" "$@" .
+    else
+        [[ "$*" ]] || return 
+        if QUIETLY fd -td "$1"; then
+            cd "$(fd -td -g "$1"  | awk -F/ '{print NF, $0}' | sort -n -s | head -1 | cut -d' ' -f2-)" && shift
+        else
+            return 2
+        fi
     fi
 }
 
