@@ -23,11 +23,20 @@ latest_python () {
     fi
 }
 
+venv_python () {
+    [[ -d "$VIRTUAL_ENV" ]] || return 1
+    local venv_python_="$VIRTUAL_ENV/bin/python3"
+    [[ -x "$venv_python_" ]] || return 2
+    readlink -f "$venv_python_"
+}
+
 python_command () {
     local __doc__="""Command to be used in shell is python3, or can be over-written with $PYTHON"""
     local python_=${PYTHON:-"$(latest_python)"}
-    if ! QUIETLY command -v $python_ ; then
-        echo $python_ not available >&2
+    local venv_python_="$(venv_python)"
+    [[ -x "$venv_python_" ]] && python_="$venv_python_"
+    if ! QUIETLY command -v "$python_" ; then
+        echo "$python_ not available" >&2
         return 1
     fi
     $python_  -c"import sys; print(sys.executable)"
@@ -79,32 +88,29 @@ wp () {
 }
 
 ppd () {
-    local __doc__="""install local project, confidently"""
-    grep -q '^dev = [' "$pyproject_" || return 0
-    if gr '[.]\[dev\]' pyproject.toml; then
-        ppu -e ".[dev]"
-    fi
+    local __doc__="""install the project here, confidently"""
+    grep -q '^dev = ' pyproject.toml || return 1
     if test -d .venv; then
-        QUIETLY deactivate
-        quietly source .venv/bin/activate
+        de_activate
+        QUIETLY source .venv/bin/activate
     fi
+    ppi --upgrade -e ".[dev]"
 }
 
 ppe () {
-    local __doc__="""install local project, tentatively"""
-    local dir_="$1" 
-    if [[ -d "$dir_" ]]; then
-        show_command cd "$dir_"
+    local __doc__="""install project from anywhere, tentatively"""
+    local dir_=.
+    if [[ -d "$1" ]]; then
+        dir_="$1"
         shift
-    else
-        dir_=.
+        show_command cd "$dir_"
     fi
     (
         cd "$dir_" || return 1
         local upgrade_=
         [[ $1 == -u ]] && upgrade_=--upgrade
         Quietly ppf "$(basename "$(readlink -f .)")" && upgrade_=--upgrade
-        if quietly gr -q "dev = " pyproject.toml; then
+        if quietly gr -q "^dev = " pyproject.toml; then
             ppi $upgrade_ -e .[dev]
         else
             ppi $upgrade_ -e .
@@ -165,7 +171,7 @@ pym () {
     for i in "${!args[@]}"; do
         [[ ${args[$i]} =~ -q ]] && unset args[$i] && quiet_=1
     done
-    local cmd_=$(quietly python_command)
+    local cmd_=$(python_command)
     [[ -x "$cmd_" ]] || return 1
     [[ $quiet_ ]] || show_command $cmd_ -m "${args[@]}"
     $cmd_ -m "${args[@]}"
@@ -230,7 +236,7 @@ mkvenv () {
 }
 
 reactivate () {
-	unhash_activate "$1"
+    unhash_activate "$1"
     ppp
 }
 
@@ -240,6 +246,11 @@ venv () {
     if [[ -d "$1" ]]; then
         dir_="$1"
         shift
+    fi
+    local pyproject_="$dir_/pyproject.toml"
+    if [[ ! -f "$pyproject_" ]]; then
+        show_fail "$pyproject_" 
+        return 2
     fi
     local venv_dir_="$dir_/.venv"
     if [[ -d "$venv_dir_" && $1 =~ ^-(f|-force)$ ]]; then
@@ -251,18 +262,14 @@ venv () {
     "$(latest_python)" -m venv --copies --clear "$venv_dir_"
     local activate_="$venv_dir_/bin/activate"
     test -f "$activate_" && . "$activate_"
-    if [[ -f "$dir_/pyproject.toml" ]]; then
-        (
-            cd "$dir_" || return 1
-            if grep -qw ^dev pyproject.toml ; then
-                PYTHON="$venv_dir_/bin/python" ppd
-            else
-                PYTHON="$venv_dir_/bin/python" ppu -e .
-            fi
-        )
-    else
-        install_requirements "$dir_" -p
-    fi
+    (
+        cd "$dir_" || return 1
+        if grep -qw ^dev pyproject.toml ; then
+            PYTHON="$venv_dir_/bin/python" ppd
+        else
+            PYTHON="$venv_dir_/bin/python" ppu -e .
+        fi
+    )
 }
 
 # xxxxx
@@ -333,32 +340,12 @@ install_python_project () {
         ppie "${dir_}"
         return 0
     done
-    path_="$dir_/requirements.txt" 
+    path_="$dir_/requirements.txt"
     if [[ -f "$path_" ]]; then
         ppr "$path_"
         lblue_line "Installing requirements.txt"
     fi
     ppie "${dir_}"
-}
-
-install_requirements () {
-    local dir_=.
-    [[ -d "$1" ]] && dir_="$1"
-    [[ -d "$dir_" ]] || return 1
-
-    local requirement_=requirements.txt requirements_dir_=
-    [[ -f $requirement_ ]] && requirements_dir_="requirements"
-    [[ -d "$dir_/requirements" ]] && requirements_dir_=$(ls "$dir_/requirements/*.txt")
-    [[ -d "$requirements_dir_" ]] || requirements_dir_="$requirement_"
-
-    [[ $2 =~ -p ]] || ppp
-    local requirement_file_= 
-    for requirement_ in $requirements_dir_; do
-        [[ -f "$requirement_" ]] || continue
-        lblue_line Found requirements in $requirement_
-        ppr "$requirement_"
-        break
-    done
 }
 
 pip_install_develop () {
